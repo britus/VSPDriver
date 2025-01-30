@@ -1,0 +1,21 @@
+//
+//  VSPDriver.iig
+//  VSPDriver
+//
+//  Created by Björn Eschrich on 30.01.25.
+//
+
+#ifndef VSPDriver_h
+#define VSPDriver_h
+
+#include <Availability.h>
+#include <DriverKit/IOService.iig>
+
+class VSPDriver: public IOService
+{
+public:
+    virtual kern_return_t
+    Start(IOService * provider) override;
+};
+
+#endif /* VSPDriver_h */
