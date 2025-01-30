@@ -7,21 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		880539EB2D4BAFBD00E55104 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880539EA2D4BAFBD00E55104 /* AppDelegate.swift */; };
+		880539ED2D4BAFBF00E55104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 880539EC2D4BAFBF00E55104 /* Assets.xcassets */; };
+		880539F02D4BAFBF00E55104 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 880539EE2D4BAFBF00E55104 /* MainMenu.xib */; };
+		880539F62D4BB0F900E55104 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 880539F52D4BB0F900E55104 /* Info.plist */; };
 		88B40D5E2D4B666700DFE7C5 /* VSPDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B40D5D2D4B666700DFE7C5 /* VSPDriver.cpp */; };
 		88B40D602D4B666700DFE7C5 /* VSPDriver.iig in Sources */ = {isa = PBXBuildFile; fileRef = 88B40D5F2D4B666700DFE7C5 /* VSPDriver.iig */; };
 		88B40D682D4B669100DFE7C5 /* DriverKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B40D672D4B669100DFE7C5 /* DriverKit.framework */; };
 		88B40D6A2D4B669900DFE7C5 /* SerialDriverKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B40D692D4B669900DFE7C5 /* SerialDriverKit.framework */; };
 		88B40D6C2D4B669E00DFE7C5 /* USBSerialDriverKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B40D6B2D4B669E00DFE7C5 /* USBSerialDriverKit.framework */; };
 		88B40D6F2D4B7D8E00DFE7C5 /* VSPDriverPrivate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B40D6E2D4B7D8E00DFE7C5 /* VSPDriverPrivate.cpp */; };
-		88B40D8F2D4B8AE200DFE7C5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B40D8E2D4B8AE200DFE7C5 /* AppDelegate.swift */; };
-		88B40D912D4B8AE200DFE7C5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B40D902D4B8AE200DFE7C5 /* ViewController.swift */; };
-		88B40D932D4B8AE400DFE7C5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88B40D922D4B8AE400DFE7C5 /* Assets.xcassets */; };
-		88B40D962D4B8AE400DFE7C5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88B40D942D4B8AE400DFE7C5 /* Main.storyboard */; };
-		88B40D9B2D4B8B0400DFE7C5 /* SystemExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B40D842D4B873C00DFE7C5 /* SystemExtensions.framework */; };
 		88B40DB12D4B95EE00DFE7C5 /* VSPExtension.c in Sources */ = {isa = PBXBuildFile; fileRef = 88B40DB02D4B95EE00DFE7C5 /* VSPExtension.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		880539E82D4BAFBD00E55104 /* VSPInstall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VSPInstall.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		880539EA2D4BAFBD00E55104 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		880539EC2D4BAFBF00E55104 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		880539EF2D4BAFBF00E55104 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		880539F12D4BAFBF00E55104 /* VSPInstall.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VSPInstall.entitlements; sourceTree = "<group>"; };
+		880539F52D4BB0F900E55104 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88B40D572D4B666700DFE7C5 /* org.eof.tools.VSPDriver.dext */ = {isa = PBXFileReference; explicitFileType = "wrapper.driver-extension"; includeInIndex = 0; path = org.eof.tools.VSPDriver.dext; sourceTree = BUILT_PRODUCTS_DIR; };
 		88B40D5D2D4B666700DFE7C5 /* VSPDriver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VSPDriver.cpp; sourceTree = "<group>"; };
 		88B40D5F2D4B666700DFE7C5 /* VSPDriver.iig */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.iig; path = VSPDriver.iig; sourceTree = "<group>"; };
@@ -33,18 +38,19 @@
 		88B40D6E2D4B7D8E00DFE7C5 /* VSPDriverPrivate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VSPDriverPrivate.cpp; sourceTree = "<group>"; };
 		88B40D702D4B85ED00DFE7C5 /* VSPDriver.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VSPDriver.entitlements; sourceTree = "<group>"; };
 		88B40D842D4B873C00DFE7C5 /* SystemExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemExtensions.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/SystemExtensions.framework; sourceTree = DEVELOPER_DIR; };
-		88B40D8C2D4B8AE200DFE7C5 /* VSPInstall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VSPInstall.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		88B40D8E2D4B8AE200DFE7C5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		88B40D902D4B8AE200DFE7C5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		88B40D922D4B8AE400DFE7C5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		88B40D952D4B8AE400DFE7C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		88B40D972D4B8AE400DFE7C5 /* VSPInstall.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VSPInstall.entitlements; sourceTree = "<group>"; };
 		88B40DAE2D4B95EE00DFE7C5 /* VSPExtension.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VSPExtension.kext; sourceTree = BUILT_PRODUCTS_DIR; };
 		88B40DB02D4B95EE00DFE7C5 /* VSPExtension.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = VSPExtension.c; sourceTree = "<group>"; };
 		88B40DB22D4B95EE00DFE7C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		880539E52D4BAFBD00E55104 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		88B40D542D4B666700DFE7C5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -52,14 +58,6 @@
 				88B40D682D4B669100DFE7C5 /* DriverKit.framework in Frameworks */,
 				88B40D6C2D4B669E00DFE7C5 /* USBSerialDriverKit.framework in Frameworks */,
 				88B40D6A2D4B669900DFE7C5 /* SerialDriverKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		88B40D892D4B8AE200DFE7C5 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				88B40D9B2D4B8B0400DFE7C5 /* SystemExtensions.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,12 +71,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		880539E92D4BAFBD00E55104 /* VSPInstall */ = {
+			isa = PBXGroup;
+			children = (
+				880539F52D4BB0F900E55104 /* Info.plist */,
+				880539EA2D4BAFBD00E55104 /* AppDelegate.swift */,
+				880539EC2D4BAFBF00E55104 /* Assets.xcassets */,
+				880539EE2D4BAFBF00E55104 /* MainMenu.xib */,
+				880539F12D4BAFBF00E55104 /* VSPInstall.entitlements */,
+			);
+			path = VSPInstall;
+			sourceTree = "<group>";
+		};
 		88B40D4D2D4B666700DFE7C5 = {
 			isa = PBXGroup;
 			children = (
 				88B40D5C2D4B666700DFE7C5 /* VSPDriver */,
-				88B40D8D2D4B8AE200DFE7C5 /* VSPInstall */,
 				88B40DAF2D4B95EE00DFE7C5 /* VSPExtension */,
+				880539E92D4BAFBD00E55104 /* VSPInstall */,
 				88B40D592D4B666700DFE7C5 /* Frameworks */,
 				88B40D582D4B666700DFE7C5 /* Products */,
 			);
@@ -88,8 +98,8 @@
 			isa = PBXGroup;
 			children = (
 				88B40D572D4B666700DFE7C5 /* org.eof.tools.VSPDriver.dext */,
-				88B40D8C2D4B8AE200DFE7C5 /* VSPInstall.app */,
 				88B40DAE2D4B95EE00DFE7C5 /* VSPExtension.kext */,
+				880539E82D4BAFBD00E55104 /* VSPInstall.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -116,18 +126,6 @@
 				88B40D6E2D4B7D8E00DFE7C5 /* VSPDriverPrivate.cpp */,
 			);
 			path = VSPDriver;
-			sourceTree = "<group>";
-		};
-		88B40D8D2D4B8AE200DFE7C5 /* VSPInstall */ = {
-			isa = PBXGroup;
-			children = (
-				88B40D8E2D4B8AE200DFE7C5 /* AppDelegate.swift */,
-				88B40D902D4B8AE200DFE7C5 /* ViewController.swift */,
-				88B40D922D4B8AE400DFE7C5 /* Assets.xcassets */,
-				88B40D942D4B8AE400DFE7C5 /* Main.storyboard */,
-				88B40D972D4B8AE400DFE7C5 /* VSPInstall.entitlements */,
-			);
-			path = VSPInstall;
 			sourceTree = "<group>";
 		};
 		88B40DAF2D4B95EE00DFE7C5 /* VSPExtension */ = {
@@ -159,6 +157,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		880539E72D4BAFBD00E55104 /* VSPInstall */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 880539F22D4BAFBF00E55104 /* Build configuration list for PBXNativeTarget "VSPInstall" */;
+			buildPhases = (
+				880539E42D4BAFBD00E55104 /* Sources */,
+				880539E52D4BAFBD00E55104 /* Frameworks */,
+				880539E62D4BAFBD00E55104 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VSPInstall;
+			productName = VSPInstall;
+			productReference = 880539E82D4BAFBD00E55104 /* VSPInstall.app */;
+			productType = "com.apple.product-type.application";
+		};
 		88B40D562D4B666700DFE7C5 /* VSPDriver */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 88B40D642D4B666700DFE7C5 /* Build configuration list for PBXNativeTarget "VSPDriver" */;
@@ -176,23 +191,6 @@
 			productName = VSPDriver;
 			productReference = 88B40D572D4B666700DFE7C5 /* org.eof.tools.VSPDriver.dext */;
 			productType = "com.apple.product-type.driver-extension";
-		};
-		88B40D8B2D4B8AE200DFE7C5 /* VSPInstall */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 88B40D982D4B8AE400DFE7C5 /* Build configuration list for PBXNativeTarget "VSPInstall" */;
-			buildPhases = (
-				88B40D882D4B8AE200DFE7C5 /* Sources */,
-				88B40D892D4B8AE200DFE7C5 /* Frameworks */,
-				88B40D8A2D4B8AE200DFE7C5 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = VSPInstall;
-			productName = VSPInstall;
-			productReference = 88B40D8C2D4B8AE200DFE7C5 /* VSPInstall.app */;
-			productType = "com.apple.product-type.application";
 		};
 		88B40DAD2D4B95EE00DFE7C5 /* VSPExtension */ = {
 			isa = PBXNativeTarget;
@@ -222,10 +220,10 @@
 				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
-					88B40D562D4B666700DFE7C5 = {
+					880539E72D4BAFBD00E55104 = {
 						CreatedOnToolsVersion = 14.2;
 					};
-					88B40D8B2D4B8AE200DFE7C5 = {
+					88B40D562D4B666700DFE7C5 = {
 						CreatedOnToolsVersion = 14.2;
 					};
 					88B40DAD2D4B95EE00DFE7C5 = {
@@ -246,27 +244,28 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				88B40D8B2D4B8AE200DFE7C5 /* VSPInstall */,
 				88B40D562D4B666700DFE7C5 /* VSPDriver */,
 				88B40DAD2D4B95EE00DFE7C5 /* VSPExtension */,
+				880539E72D4BAFBD00E55104 /* VSPInstall */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		880539E62D4BAFBD00E55104 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				880539ED2D4BAFBF00E55104 /* Assets.xcassets in Resources */,
+				880539F02D4BAFBF00E55104 /* MainMenu.xib in Resources */,
+				880539F62D4BB0F900E55104 /* Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		88B40D552D4B666700DFE7C5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		88B40D8A2D4B8AE200DFE7C5 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				88B40D932D4B8AE400DFE7C5 /* Assets.xcassets in Resources */,
-				88B40D962D4B8AE400DFE7C5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +279,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		880539E42D4BAFBD00E55104 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				880539EB2D4BAFBD00E55104 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		88B40D532D4B666700DFE7C5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -287,15 +294,6 @@
 				88B40D5E2D4B666700DFE7C5 /* VSPDriver.cpp in Sources */,
 				88B40D6F2D4B7D8E00DFE7C5 /* VSPDriverPrivate.cpp in Sources */,
 				88B40D602D4B666700DFE7C5 /* VSPDriver.iig in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		88B40D882D4B8AE200DFE7C5 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				88B40D912D4B8AE200DFE7C5 /* ViewController.swift in Sources */,
-				88B40D8F2D4B8AE200DFE7C5 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,17 +308,79 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		88B40D942D4B8AE400DFE7C5 /* Main.storyboard */ = {
+		880539EE2D4BAFBF00E55104 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				88B40D952D4B8AE400DFE7C5 /* Base */,
+				880539EF2D4BAFBF00E55104 /* Base */,
 			);
-			name = Main.storyboard;
+			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		880539F32D4BAFBF00E55104 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = VSPInstall/VSPInstall.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 83NQU389JN;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 by EoF Software Labs.";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPInstall;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		880539F42D4BAFBF00E55104 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = VSPInstall/VSPInstall.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 83NQU389JN;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 by EoF Software Labs.";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPInstall;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		88B40D622D4B666700DFE7C5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -482,76 +542,6 @@
 			};
 			name = Release;
 		};
-		88B40D992D4B8AE400DFE7C5 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = VSPInstall/VSPInstall.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 83NQU389JN;
-				ENABLE_HARDENED_RUNTIME = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "VPS Installer";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Use location to best fit your experince.";
-				INFOPLIST_KEY_NSMainStoryboardFile = Main;
-				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 12.2;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPInstall;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		88B40D9A2D4B8AE400DFE7C5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = VSPInstall/VSPInstall.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 83NQU389JN;
-				ENABLE_HARDENED_RUNTIME = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "VPS Installer";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Use location to best fit your experince.";
-				INFOPLIST_KEY_NSMainStoryboardFile = Main;
-				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 12.2;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPInstall;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
 		88B40DB42D4B95EE00DFE7C5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -607,6 +597,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		880539F22D4BAFBF00E55104 /* Build configuration list for PBXNativeTarget "VSPInstall" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				880539F32D4BAFBF00E55104 /* Debug */,
+				880539F42D4BAFBF00E55104 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		88B40D512D4B666700DFE7C5 /* Build configuration list for PBXProject "VSPDriver" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -621,15 +620,6 @@
 			buildConfigurations = (
 				88B40D652D4B666700DFE7C5 /* Debug */,
 				88B40D662D4B666700DFE7C5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		88B40D982D4B8AE400DFE7C5 /* Build configuration list for PBXNativeTarget "VSPInstall" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				88B40D992D4B8AE400DFE7C5 /* Debug */,
-				88B40D9A2D4B8AE400DFE7C5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

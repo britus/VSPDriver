@@ -11,7 +11,7 @@
 			<key>IOClass</key>
 			<string>VSPDriver</string>
 			<key>IOMatchCategory</key>
-			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+			<string>org.eof.tools.VSPDriver</string>
 			<key>IOProviderClass</key>
 			<string>IOUserResources</string>
 			<key>IOResourceMatch</key>
@@ -19,7 +19,7 @@
 			<key>IOUserClass</key>
 			<string>VSPDriver</string>
 			<key>IOUserServerName</key>
-			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+			<string>org.eof.tools.VSPDriver</string>
 		</dict>
 	</dict>
 </dict>
