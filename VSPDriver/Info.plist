@@ -9,7 +9,7 @@
 			<key>CFBundleIdentifierKernel</key>
 			<string>com.apple.kpi.iokit</string>
 			<key>IOClass</key>
-			<string>IOUserService</string>
+			<string>VSPDriver</string>
 			<key>IOMatchCategory</key>
 			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 			<key>IOProviderClass</key>
@@ -22,7 +22,5 @@
 			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 		</dict>
 	</dict>
-	<key>OSBundleUsageDescription</key>
-	<string></string>
 </dict>
 </plist>

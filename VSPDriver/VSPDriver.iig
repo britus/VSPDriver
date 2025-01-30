@@ -4,18 +4,17 @@
 //
 //  Created by Björn Eschrich on 30.01.25.
 //
-
 #ifndef VSPDriver_h
 #define VSPDriver_h
 
 #include <Availability.h>
-#include <DriverKit/IOService.iig>
+#include <SerialDriverKit/IOUserSerial.iig>
 
-class VSPDriver: public IOService
+class VSPDriver: public IOUserSerial
 {
 public:
-    virtual kern_return_t
-    Start(IOService * provider) override;
+    virtual kern_return_t Start(IOService* provider) override;
+    virtual kern_return_t Stop(IOService* provider) override;
 };
 
 #endif /* VSPDriver_h */
