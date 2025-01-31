@@ -1,9 +1,9 @@
+// ********************************************************************
+// VSPDriver - VSPDriver.cpp
 //
-//  VSPDriverPrivate.h
-//  VSPDriver
-//
-//  Created by Björn Eschrich on 30.01.25.
-//
+// Copyright © 2025 by EoF Software Labs
+// SPDX-License-Identifier: MIT
+// ********************************************************************
 
 #ifndef VSPDriverPrivate_h
 #define VSPDriverPrivate_h
@@ -19,6 +19,12 @@ public:
     
     virtual IOReturn Start(IOService* provider);
     virtual IOReturn Stop(IOService* provider);
+    
+    virtual void RxDataAvailable();
+    virtual void TxFreeSpaceAvailable();
+    
+    virtual IOReturn SetModemStatus(bool cts, bool dsr, bool ri, bool dcd);
+    virtual IOReturn RxError(bool overrun, bool gotBreak, bool framingError, bool parityError);
     
 private:
     VSPDriver* m_driver;

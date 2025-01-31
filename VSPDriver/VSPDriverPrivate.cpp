@@ -1,9 +1,9 @@
+// ********************************************************************
+// VSPDriver - VSPDriver.cpp
 //
-//  VSPDriverPrivate.cpp
-//  VSPDriver
-//
-//  Created by Björn Eschrich on 30.01.25.
-//
+// Copyright © 2025 by EoF Software Labs
+// SPDX-License-Identifier: MIT
+// ********************************************************************
 
 #include <stdio.h>
 #include <os/log.h>
@@ -24,6 +24,8 @@
 #include "VSPDriverPrivate.h"
 #include "VSPDriver.h"
 
+#define DRIVER_NAME "VSP-PRIV"
+
 VSPDriverPrivate::VSPDriverPrivate(VSPDriver* driver)
     : m_driver(driver)
     , m_provider(0L)
@@ -33,10 +35,12 @@ VSPDriverPrivate::VSPDriverPrivate(VSPDriver* driver)
     , m_serverPort(9001)
     , m_isConnected(false)
 {
+    os_log(OS_LOG_DEFAULT, "[%s] constructor called.\n", DRIVER_NAME);
 }
 
 VSPDriverPrivate::~VSPDriverPrivate()
 {
+    os_log(OS_LOG_DEFAULT, "[%s] deconstructor called.\n", DRIVER_NAME);
     m_driver = 0L;
     m_provider = 0L;
 }
@@ -44,12 +48,16 @@ VSPDriverPrivate::~VSPDriverPrivate()
 IOReturn VSPDriverPrivate::Start(IOService* provider)
 {
     IOReturn ret = kIOReturnSuccess;
-    
+
+    os_log(OS_LOG_DEFAULT, "[%s] Start called.\n", DRIVER_NAME);
+
     if (!provider)
         return kIOReturnInvalid;
     
     // remember OS provider
     m_provider = provider;
+    
+    os_log(OS_LOG_DEFAULT, "[%s] Initialize RX/TX buffer.\n", DRIVER_NAME);
     
     // Initialize buffers
     IOBufferMemoryDescriptor::Create(kIOMemoryDirectionOut, 4096, 4, &m_txBuffer);
@@ -64,6 +72,8 @@ IOReturn VSPDriverPrivate::Start(IOService* provider)
         goto failed_exit;
     }
 
+    os_log(OS_LOG_DEFAULT, "[%s] Initialize RX/TX queues.\n", DRIVER_NAME);
+    
     IODispatchQueue::Create("vsp.rxQueue", 0, 0, &m_rxQueue);
     if (!m_rxQueue) {
         ret = kIOReturnNoMemory;
@@ -75,6 +85,8 @@ IOReturn VSPDriverPrivate::Start(IOService* provider)
         ret = kIOReturnNoMemory;
         goto failed_exit;
     }
+   
+    os_log(OS_LOG_DEFAULT, "[%s] prepare TCP socket.\n", DRIVER_NAME);
     
     // Default TCP server settings
     m_serverAddress = OSString::withCString("127.0.0.1");
@@ -96,10 +108,52 @@ failed_exit:
 
 IOReturn VSPDriverPrivate::Stop(IOService* provider)
 {
+    os_log(OS_LOG_DEFAULT, "[%s] Stop called.\n", DRIVER_NAME);
     OSSafeReleaseNULL(m_serverAddress);
     OSSafeReleaseNULL(m_rxQueue);
     OSSafeReleaseNULL(m_txQueue);
     OSSafeReleaseNULL(m_rxBuffer);
     OSSafeReleaseNULL(m_txBuffer);
+    return kIOReturnSuccess;
+}
+
+void VSPDriverPrivate::RxDataAvailable()
+{
+    os_log(OS_LOG_DEFAULT, "[%s] RxDataAvailable called.\n", DRIVER_NAME);
+}
+
+void VSPDriverPrivate::TxFreeSpaceAvailable()
+{
+    os_log(OS_LOG_DEFAULT, "[%s] TxFreeSpaceAvailable called.\n", DRIVER_NAME);
+}
+
+IOReturn VSPDriverPrivate::SetModemStatus(bool cts, bool dsr, bool ri, bool dcd)
+{
+    os_log(OS_LOG_DEFAULT, "[%s] SetModemStatus called.\n", DRIVER_NAME);
+    os_log(OS_LOG_DEFAULT, "[%s] CTS=%d DSR=%d RI=%d DCD=%d\n", DRIVER_NAME, cts, dsr, ri, dcd);
+
+    return kIOReturnSuccess;
+}
+
+IOReturn VSPDriverPrivate::RxError(bool overrun, bool gotBreak, bool framingError, bool parityError)
+{
+    os_log(OS_LOG_DEFAULT, "[%s] RxError called.\n", DRIVER_NAME);
+   
+    if (overrun) {
+        os_log(OS_LOG_DEFAULT, "[%s] RX overrun.\n", DRIVER_NAME);
+    }
+
+    if (gotBreak) {
+        os_log(OS_LOG_DEFAULT, "[%s] RX got break.\n", DRIVER_NAME);
+    }
+
+    if (framingError) {
+        os_log(OS_LOG_DEFAULT, "[%s] RX framing error.\n", DRIVER_NAME);
+    }
+
+    if (parityError) {
+        os_log(OS_LOG_DEFAULT, "[%s] RX parity error.\n", DRIVER_NAME);
+    }
+
     return kIOReturnSuccess;
 }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17150" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17150"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -11,60 +12,62 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
-        <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModuleProvider="target">
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="VSPInstall" customModuleProvider="target">
             <connections>
+                <outlet property="btnInstall" destination="Qqk-gS-5oA" id="8g7-1Z-t2r"/>
+                <outlet property="txtStatus" destination="Gy2-TL-KoG" id="VcN-XY-ukt"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
-                <menuItem title="VSPInstall" id="1Xt-HY-uBw">
+                <menuItem title="VSP Install" id="1Xt-HY-uBw">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="VSPInstall" systemMenu="apple" id="uQy-DD-JDr">
+                    <menu key="submenu" title="VSP Install" systemMenu="apple" id="uQy-DD-JDr">
                         <items>
-                            <menuItem title="About VSPInstall" id="5kV-Vb-QxS">
+                            <menuItem title="About VSPInstall" hidden="YES" id="5kV-Vb-QxS">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="orderFrontStandardAboutPanel:" target="-1" id="Exp-CZ-Vem"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
-                            <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW"/>
-                            <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
-                            <menuItem title="Services" id="NMo-om-nkz">
+                            <menuItem isSeparatorItem="YES" hidden="YES" id="VOq-y0-SEH"/>
+                            <menuItem title="Preferences…" hidden="YES" keyEquivalent="," id="BOF-NM-1cW"/>
+                            <menuItem isSeparatorItem="YES" hidden="YES" id="wFC-TO-SCJ"/>
+                            <menuItem title="Services" hidden="YES" id="NMo-om-nkz">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Services" systemMenu="services" id="hz9-B4-Xy5"/>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="4je-JR-u6R"/>
-                            <menuItem title="Hide VSPInstall" keyEquivalent="h" id="Olw-nP-bQN">
+                            <menuItem isSeparatorItem="YES" hidden="YES" id="4je-JR-u6R"/>
+                            <menuItem title="Hide VSPInstall" hidden="YES" keyEquivalent="h" id="Olw-nP-bQN">
                                 <connections>
                                     <action selector="hide:" target="-1" id="PnN-Uc-m68"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Hide Others" keyEquivalent="h" id="Vdr-fp-XzO">
+                            <menuItem title="Hide Others" hidden="YES" keyEquivalent="h" id="Vdr-fp-XzO">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
                                     <action selector="hideOtherApplications:" target="-1" id="VT4-aY-XCT"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Show All" id="Kd2-mp-pUS">
+                            <menuItem title="Show All" hidden="YES" id="Kd2-mp-pUS">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="unhideAllApplications:" target="-1" id="Dhg-Le-xox"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="kCx-OE-vgT"/>
+                            <menuItem isSeparatorItem="YES" hidden="YES" id="kCx-OE-vgT"/>
                             <menuItem title="Quit VSPInstall" keyEquivalent="q" id="4sb-4s-VLi">
                                 <connections>
-                                    <action selector="terminate:" target="-1" id="Te7-pn-YzF"/>
+                                    <action selector="onQuitClick:" target="Voe-Tx-rLC" id="CXn-1Q-k15"/>
                                 </connections>
                             </menuItem>
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="File" id="dMs-cI-mzQ">
+                <menuItem title="File" hidden="YES" id="dMs-cI-mzQ">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="File" id="bib-Uj-vzu">
                         <items>
@@ -127,7 +130,7 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="Edit" id="5QF-Oa-p0T">
+                <menuItem title="Edit" hidden="YES" id="5QF-Oa-p0T">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Edit" id="W48-6f-4Dl">
                         <items>
@@ -346,7 +349,7 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="Format" id="jxT-CU-nIS">
+                <menuItem title="Format" hidden="YES" id="jxT-CU-nIS">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Format" id="GEO-Iw-cKr">
                         <items>
@@ -608,7 +611,7 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="View" id="H8h-7b-M4v">
+                <menuItem title="View" hidden="YES" id="H8h-7b-M4v">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="View" id="HyV-fh-RgO">
                         <items>
@@ -640,7 +643,7 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="Window" id="aUF-d1-5bR">
+                <menuItem title="Window" hidden="YES" id="aUF-d1-5bR">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Window" systemMenu="window" id="Td7-aD-5lo">
                         <items>
@@ -665,7 +668,7 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="Help" id="wpr-3q-Mcd">
+                <menuItem title="Help" hidden="YES" id="wpr-3q-Mcd">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Help" systemMenu="help" id="F2S-fz-NVQ">
                         <items>
@@ -678,18 +681,63 @@
                     </menu>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="200" y="121"/>
+            <point key="canvasLocation" x="91" y="116"/>
         </menu>
-        <window title="VSPInstall" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="480" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+        <window title="VSP Installation" subtitle="DriverKit Extension" separatorStyle="shadow" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" animationBehavior="default" id="QvC-M9-y7g">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
+            <rect key="contentRect" x="465" y="319" width="521" height="277"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="875"/>
+            <value key="minSize" type="size" width="521" height="277"/>
+            <value key="maxSize" type="size" width="521" height="277"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
+                <rect key="frame" x="0.0" y="0.0" width="521" height="277"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Klw-PJ-jlX">
+                        <rect key="frame" x="13" y="184" width="101" height="32"/>
+                        <buttonCell key="cell" type="push" title="Test VSP" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rSt-tg-YLk">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="onTestClick:" target="Voe-Tx-rLC" id="djT-3K-vTJ"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sg5-EG-22q">
+                        <rect key="frame" x="15" y="230" width="99" height="32"/>
+                        <buttonCell key="cell" type="push" title="Install VSP" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Qqk-gS-5oA">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="onInstallClick:" target="Voe-Tx-rLC" id="D2i-R5-cRf"/>
+                        </connections>
+                    </button>
+                    <textField autoresizesSubviews="NO" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ejj-0I-QJT">
+                        <rect key="frame" x="6" y="22" width="509" height="148"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="148" id="OGk-A0-5Li"/>
+                        </constraints>
+                        <textFieldCell key="cell" lineBreakMode="charWrapping" selectable="YES" alignment="left" placeholderString="Click &quot;Install VSP&quot; to activate driver extension." allowsEditingTextAttributes="YES" id="Gy2-TL-KoG">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="ejj-0I-QJT" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="8" id="3cO-J6-quS"/>
+                    <constraint firstItem="Klw-PJ-jlX" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" symbolic="YES" id="AyZ-pZ-1Dp"/>
+                    <constraint firstItem="sg5-EG-22q" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="20" symbolic="YES" id="Q3U-b6-iEg"/>
+                    <constraint firstAttribute="bottom" secondItem="ejj-0I-QJT" secondAttribute="bottom" constant="22" id="RWb-Ec-k2X"/>
+                    <constraint firstItem="sg5-EG-22q" firstAttribute="trailing" secondItem="Klw-PJ-jlX" secondAttribute="trailing" id="WgB-1B-90s"/>
+                    <constraint firstItem="ejj-0I-QJT" firstAttribute="centerX" secondItem="EiT-Mj-1SZ" secondAttribute="centerX" id="dAw-br-2TJ"/>
+                    <constraint firstItem="sg5-EG-22q" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="22" id="v54-zq-Nkr"/>
+                    <constraint firstItem="ejj-0I-QJT" firstAttribute="top" secondItem="Klw-PJ-jlX" secondAttribute="bottom" constant="21" id="w6Q-r7-rfW"/>
+                </constraints>
             </view>
-            <point key="canvasLocation" x="200" y="400"/>
+            <contentBorderThickness minY="22"/>
+            <point key="canvasLocation" x="139" y="364"/>
         </window>
     </objects>
 </document>

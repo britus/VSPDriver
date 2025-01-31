@@ -7,19 +7,25 @@
 
 import Cocoa
 import SystemExtensions
+import AppKit
+import SwiftUI
+
+let DRIVER_EXTENSION : String = "org.eof.tools.VSPDriver"
 
 @main
-class AppDelegate: NSObject, NSApplicationDelegate, OSSystemExtensionRequestDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet var window: NSWindow!
+    @IBOutlet weak var txtStatus: NSTextFieldCell!
+
+    // --
+    
+    func applicationWillHide(_ notification: Notification) {
+        NSApplication.shared.terminate(nil)
+    }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        let request = OSSystemExtensionRequest.activationRequest(
-              forExtensionWithIdentifier: "com.example.VirtualSerialPortDriver",
-              queue: .main
-        )
-        request.delegate = self
-        OSSystemExtensionManager.shared.submitRequest(request)
+        //
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -30,22 +36,44 @@ class AppDelegate: NSObject, NSApplicationDelegate, OSSystemExtensionRequestDele
         return true
     }
     
-    func request(_ request: OSSystemExtensionRequest, actionForReplacingExtension existing: OSSystemExtensionProperties, withExtension ext: OSSystemExtensionProperties) -> OSSystemExtensionRequest.ReplacementAction {
-      return .replace
+    @IBAction func onInstallClick(_ sender: NSButton) {
+        let request = OSSystemExtensionRequest.activationRequest(
+              forExtensionWithIdentifier: DRIVER_EXTENSION,
+              queue: .main)
+        request.delegate = self
+   
+        OSSystemExtensionManager.shared.submitRequest(request)
+    }
+    
+    @IBAction func onTestClick(_ sender: NSButton) {
+        //
     }
 
-    func requestNeedsUserApproval(_ request: OSSystemExtensionRequest) {
-      print("User approval required.")
-    }
-
-    func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
-      print("Activation succeeded.")
-      NSApplication.shared.terminate(nil)
-    }
-
-    func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {
-      print("Activation failed: \(error)")
-      NSApplication.shared.terminate(nil)
+    @IBAction func onQuitClick(_ sender: Any) {
+        NSApplication.shared.terminate(nil)
     }
 }
 
+extension AppDelegate: OSSystemExtensionRequestDelegate
+{
+    func request(_ request: OSSystemExtensionRequest,
+                actionForReplacingExtension existing: OSSystemExtensionProperties,
+                withExtension ext: OSSystemExtensionProperties) -> OSSystemExtensionRequest.ReplacementAction {
+        return .replace
+    }
+
+    func requestNeedsUserApproval(_ request: OSSystemExtensionRequest) {
+        txtStatus.title = "VSP driver activation: User approval required.\n"
+        print(txtStatus.title)
+    }
+
+    func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
+        txtStatus.title = "VSP driver activation succeeded: \(result)\n"
+        print(txtStatus.title)
+    }
+
+    func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {
+        txtStatus.title = "VSP driver activation failed:\n \(error)"
+        print(txtStatus.title)
+    }
+}
