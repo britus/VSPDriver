@@ -9,7 +9,7 @@
 			<key>CFBundleIdentifierKernel</key>
 			<string>com.apple.driver.driverkit.serial</string>
 			<key>IOClass</key>
-			<string>VSPDriver</string>
+			<string>IOUserSerial</string>
 			<key>IOMatchCategory</key>
 			<string>org.eof.tools.VSPDriver</string>
 			<key>IOProviderClass</key>
@@ -22,5 +22,7 @@
 			<string>org.eof.tools.VSPDriver</string>
 		</dict>
 	</dict>
+	<key>com.apple.developer.driverkit.allow-any-userclient-access</key>
+	<true/>
 </dict>
 </plist>
