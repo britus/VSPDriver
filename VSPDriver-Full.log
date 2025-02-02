@@ -1,140 +1,202 @@
- kernel: (org.eof.tools.VSPDriver.dext) <private>
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] init called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] constructor called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] start called.
- kernel: (org.eof.tools.VSPDriver.dext) IOUserSerial::<private>: 40 0x600000da4058
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] Start called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] Connect INT/RX/TX buffer.
- kernel: (org.eof.tools.VSPDriver.dext) IOUserSerial::<private>: 59 0x600000da4058
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] prepare TCP socket.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] driver started successfully.
- kernel: DK: VSPDriver-0x100000753::start(IOUserResources-0x100000116) ok
- kernel: (IOUserSerial) IOUserSerial::allocResources: 904 <==
- kernel: (IOUserSerial) IOUserSerial::allocResources: 904 locklevel = 1
- kernel: (org.eof.tools.VSPDriver.dext) IOUserSerial::<private>: 59 0x600000da4058
- kernel: (IOUserSerial) IOUserSerial::allocResources: 904 ==>0
- kernel: (IOUserSerial) IOUserSerial::hwProgramMCR: 1115 <==
- kernel: (IOUserSerial) IOUserSerial::hwProgramMCR: 1115 locklevel = 1
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwProgramMCR called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramMCR called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramMCR: dtr=1 rts=1
- kernel: (IOUserSerial) IOUserSerial::hwProgramMCR: 1115 ==>0
- kernel: (IOUserSerial) IOUserSerial::hwActivate: 1069 <==
- kernel: (IOUserSerial) IOUserSerial::hwActivate: 1069 locklevel = 1
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwActivate called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwActivate called.
- kernel: (org.eof.tools.VSPDriver.dext) IOUserSerial::<private>: 130 0x600000da4058
- kernel: (IOUserSerial) IOUserSerial::hwActivate: 1069 ==>0
- kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 <==
- kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 locklevel = 1
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwResetFIFO called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwResetFIFO called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwResetFIFO: tx=1 rx=0
- kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 ==>0
- kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 <==
- kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 locklevel = 1
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwResetFIFO called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwResetFIFO called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwResetFIFO: tx=0 rx=1
- kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 ==>0
- kernel: (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 locklevel = 1
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwGetModemStatus called.
- kernel: (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 <==
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramFlowControl called.
- kernel: (IOUserSerial) IOUserSerial::hwProgramBaudRate: 1107 <==
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramBaudRate called.
- kernel: (IOUserSerial) IOUserSerial::hwProgramUART: 1100 <==
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramUART called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramUART: baudRate=9600 nDataBits=8 nHalfStopBits=2 parity=1
- kernel: (IOUserSerial) IOUserSerial::hwProgramUART: 1100 locklevel = 1
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramUART: baudRate=9600 nDataBits=8 nHalfStopBits=2 parity=1
- kernel: (IOUserSerial) IOUserSerial::hwProgramUART: 1100 locklevel = 1
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwProgramUART called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramUART: baudRate=9600 nDataBits=8 nHalfStopBits=2 parity=1
- kernel: (IOUserSerial) IOUserSerial::hwProgramUART: 1100 ==>0
- kernel: (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 locklevel = 1
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramFlowControl called.
- kernel: (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 locklevel = 1
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwGetModemStatus called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwGetModemStatus called.
- kernel: (IOUserSerial) IOUserSerial::handleEventDataLatency: 990 <==
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwProgramLatencyTimer called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramLatencyTimer: latency=15
- kernel: (IOUserSerial) IOUserSerial::hwProgramBaudRate: 1107 locklevel = 1
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramBaudRate called.
- kernel: (IOUserSerial) IOUserSerial::hwProgramBaudRate: 1107 ==>0
- kernel: (IOUserSerial) IOUserSerial::hwProgramUART: 1100 <==
- kernel: (IOUserSerial) IOUserSerial::hwProgramUART: 1100 locklevel = 1
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwProgramUART called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramUART called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramUART: baudRate=19200 nDataBits=8 nHalfStopBits=2 parity=1
- kernel: (IOUserSerial) IOUserSerial::hwProgramUART: 1100 ==>0
- kernel: (IOUserSerial) IOUserSerial::hwProgramUART: 1100 <==
- kernel: (IOUserSerial) IOUserSerial::hwProgramUART: 1100 locklevel = 1
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwProgramUART called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramUART called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramUART: baudRate=19200 nDataBits=8 nHalfStopBits=2 parity=1
- kernel: (IOUserSerial) IOUserSerial::hwProgramUART: 1100 ==>0
- kernel: (IOUserSerial) IOUserSerial::hwProgramUART: 1100 <==
- kernel: (IOUserSerial) IOUserSerial::hwProgramUART: 1100 locklevel = 1
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwProgramUART called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramUART called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramUART: baudRate=19200 nDataBits=8 nHalfStopBits=2 parity=1
- kernel: (IOUserSerial) IOUserSerial::hwProgramUART: 1100 ==>0
- kernel: (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 <==
- kernel: (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 locklevel = 1
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwProgramFlowControl called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramFlowControl called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramFlowControl: arg=00 xon=11 xoff=13
- kernel: (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 ==>0
- kernel: (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 <==
- kernel: (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 locklevel = 1
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwGetModemStatus called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwGetModemStatus called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwGetModemStatus: cts=0 dsr=0 ri=0 dcd=0
- kernel: (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 ==>0
- kernel: (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 <==
- kernel: (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 locklevel = 1
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwGetModemStatus called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwGetModemStatus called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwGetModemStatus: cts=0 dsr=0 ri=0 dcd=0
- kernel: (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 ==>0
- kernel: (IOUserSerial) IOUserSerial::hwSendBreak: 1083 <==
- kernel: (IOUserSerial) IOUserSerial::hwSendBreak: 1083 locklevel = 1
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwSendBreak called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwSendBreak called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwSendBreak: sendBreak=0
- kernel: (IOUserSerial) IOUserSerial::hwSendBreak: 1083 ==>0
- kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 <==
- kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 locklevel = 1
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwResetFIFO called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwResetFIFO called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwResetFIFO: tx=1 rx=0
- kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 ==>0
- kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 <==
- kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 locklevel = 1
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwResetFIFO called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwResetFIFO called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwResetFIFO: tx=0 rx=1
- kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 ==>0
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] TxDataAvailable called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] TxDataAvailable called.
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] TxDataAvailable: address=0x104c22000 length=16384
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] TxDataAvailable: debug TX buffer
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] TxDataAvailable: TX> 0x00
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] TxDataAvailable: TX> 0x00
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] TxDataAvailable: TX> 0x00
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] TxDataAvailable: TX> 0x00
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] TxDataAvailable: TX> 0x00
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] TxDataAvailable: TX> 0x00
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] TxDataAvailable: TX> 0x00
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] TxDataAvailable: TX> 0x00
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] TxDataAvailable: TX> 0x00
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] TxDataAvailable: TX> 0x00
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] TxDataAvailable: TX> 0x00
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] TxDataAvailable: TX> 0x00
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] TxDataAvailable: TX> 0x00
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] TxDataAvailable: TX> 0x00
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] TxDataAvailable: TX> 0x00
- kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] TxDataAvailable: TX> 0x00
- kernel: (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 <==
+$ log show --color always --backtrace --debug --info --process 0|egrep 'IOUserSerial|VSP'
+kernel: DK: VSPDriver-0x10000239b waiting for server org.eof.tools.VSPDriver-10000239b
+kernel: (Sandbox) /Library/SystemExtensions/6F284D6A-8DC6-4BEF-B8DE-BA8431644AFE/org.eof.tools.VSPDriver.dext/org.eof.tools.VSPDriver[4194] ==> com.apple.dext
+kernel: (org.eof.tools.VSPDriver.dext) <private>
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] init called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] constructor called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] start called.
+kernel: (org.eof.tools.VSPDriver.dext) IOUserSerial::<private>: 40 0x600001128058
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] Start called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] Connect INT/RX/TX buffers.
+kernel: (org.eof.tools.VSPDriver.dext) IOUserSerial::<private>: 59 0x600001128058
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] Start: Unable to set driver properties. code=-536870212
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] ^^ignored: want to set my own base name
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] driver started successfully.
+kernel: DK: VSPDriver-0x10000239b::start(IOUserResources-0x100000116) ok
+kernel: (IOUserSerial) IOUserSerial::allocResources: 904 <==
+kernel: (IOUserSerial) IOUserSerial::allocResources: 904 locklevel = 1
+kernel: (org.eof.tools.VSPDriver.dext) IOUserSerial::<private>: 59 0x600001128058
+kernel: (IOUserSerial) IOUserSerial::allocResources: 904 ==>0
+kernel: (IOUserSerial) IOUserSerial::hwProgramMCR: 1115 <==
+kernel: (IOUserSerial) IOUserSerial::hwProgramMCR: 1115 locklevel = 1
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwProgramMCR called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramMCR called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramMCR: dtr=1 rts=1
+kernel: (IOUserSerial) IOUserSerial::hwProgramMCR: 1115 ==>0
+kernel: (IOUserSerial) IOUserSerial::hwActivate: 1069 <==
+kernel: (IOUserSerial) IOUserSerial::hwActivate: 1069 locklevel = 1
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwActivate called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwActivate called.
+kernel: (org.eof.tools.VSPDriver.dext) IOUserSerial::<private>: 130 0x600001128058
+kernel: (IOUserSerial) IOUserSerial::hwActivate: 1069 ==>0
+kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 <==
+kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 locklevel = 1
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwResetFIFO called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwResetFIFO called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwResetFIFO: tx=1 rx=0
+kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 ==>0
+kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 <==
+kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 locklevel = 1
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwResetFIFO called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwResetFIFO called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwResetFIFO: tx=0 rx=1
+kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 ==>0
+kernel: (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 <==
+kernel: (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 locklevel = 1
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwGetModemStatus called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwGetModemStatus called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwGetModemStatus: cts=0 dsr=0 ri=0 dcd=0
+kernel: (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 ==>0
+kernel: (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 <==
+kernel: (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 locklevel = 1
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwProgramFlowControl called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramFlowControl called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramFlowControl: arg=00 xon=11 xoff=13
+kernel: (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 ==>0
+kernel: (IOUserSerial) IOUserSerial::hwProgramBaudRate: 1107 <==
+kernel: (IOUserSerial) IOUserSerial::hwProgramBaudRate: 1107 locklevel = 1
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwProgramBaudRate called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramBaudRate called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramBaudRate: baudRate=9600
+kernel: (IOUserSerial) IOUserSerial::hwProgramBaudRate: 1107 ==>0
+kernel: (IOUserSerial) IOUserSerial::hwProgramUART: 1100 <==
+kernel: (IOUserSerial) IOUserSerial::hwProgramUART: 1100 locklevel = 1
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwProgramUART called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramUART called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramUART: baudRate=9600 nDataBits=8 nHalfStopBits=2 parity=1
+kernel: (IOUserSerial) IOUserSerial::hwProgramUART: 1100 ==>0
+kernel: (IOUserSerial) IOUserSerial::hwProgramUART: 1100 <==
+kernel: (IOUserSerial) IOUserSerial::hwProgramUART: 1100 locklevel = 1
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwProgramUART called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramUART called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramUART: baudRate=9600 nDataBits=8 nHalfStopBits=2 parity=1
+kernel: (IOUserSerial) IOUserSerial::hwProgramUART: 1100 ==>0
+kernel: (IOUserSerial) IOUserSerial::hwProgramUART: 1100 <==
+kernel: (IOUserSerial) IOUserSerial::hwProgramUART: 1100 locklevel = 1
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwProgramUART called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramUART called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramUART: baudRate=9600 nDataBits=8 nHalfStopBits=2 parity=1
+kernel: (IOUserSerial) IOUserSerial::hwProgramUART: 1100 ==>0
+kernel: (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 <==
+kernel: (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 locklevel = 1
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwProgramFlowControl called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramFlowControl called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramFlowControl: arg=00 xon=11 xoff=13
+kernel: (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 ==>0
+kernel: (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 <==
+kernel: (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 locklevel = 1
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwGetModemStatus called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwGetModemStatus called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwGetModemStatus: cts=0 dsr=0 ri=0 dcd=0
+kernel: (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 <==
+kernel: (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 locklevel = 1
+kernel: (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 ==>0
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwProgramFlowControl called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramFlowControl called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramFlowControl: arg=00 xon=11 xoff=13
+kernel: (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 ==>0
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] TxDataAvailable called.
+kernel: (IOUserSerial) IOUserSerial::hwSendBreak: 1083 <==
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] TxDataAvailable called.
+kernel: (IOUserSerial) IOUserSerial::hwSendBreak: 1083 locklevel = 1
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] TxDataAvailable: Dump m_txqmd
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory: mapBuffer=0x100d20000 mapSize=16384
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory: debug mapped buffer
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] TxDataAvailable: Dump m_rxqmd
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory: mapBuffer=0x100d1a000 mapSize=16384
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory: debug mapped buffer
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] TxDataAvailable: Dump m_ifmd
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory: mapBuffer=0x100d17000 mapSize=4096
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory: debug mapped buffer
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] copy_md_memory> 0x00
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwSendBreak called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwSendBreak called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwSendBreak: sendBreak=0
+kernel: (IOUserSerial) IOUserSerial::hwSendBreak: 1083 ==>0
+kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 <==
+kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 locklevel = 1
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwResetFIFO called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwResetFIFO called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwResetFIFO: tx=0 rx=1
+kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 ==>0
+kernel: (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 <==
+kernel: (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 locklevel = 1
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwGetModemStatus called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwGetModemStatus called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwGetModemStatus: cts=0 dsr=0 ri=0 dcd=0
+kernel: (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 ==>0
+kernel: (IOUserSerial) IOUserSerial::hwProgramMCR: 1115 <==
+kernel: (IOUserSerial) IOUserSerial::hwProgramMCR: 1115 locklevel = 1
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwProgramMCR called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramMCR called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwProgramMCR: dtr=0 rts=0
+kernel: (IOUserSerial) IOUserSerial::hwProgramMCR: 1115 ==>0
+kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 <==
+kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 locklevel = 1
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwResetFIFO called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwResetFIFO called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwResetFIFO: tx=1 rx=0
+kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 ==>0
+kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 <==
+kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 locklevel = 1
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwResetFIFO called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwResetFIFO called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwResetFIFO: tx=0 rx=1
+kernel: (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 ==>0
+kernel: (IOUserSerial) IOUserSerial::hwActivate: 1069 <==
+kernel: (IOUserSerial) IOUserSerial::hwActivate: 1069 locklevel = 1
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] HwDeactivate called.
+kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] HwDeactivate called.
+kernel: (org.eof.tools.VSPDriver.dext) IOUserSerial::<private>: 137 0x600001128058
+kernel: (IOUserSerial) IOUserSerial::hwActivate: 1069 ==>0
+kernel: (IOUserSerial) IOUserSerial::freeResources: 949 <==
+kernel: (IOUserSerial) IOUserSerial::freeResources: 949 locklevel = 1
+kernel: (org.eof.tools.VSPDriver.dext) IOUserSerial::<private>: 110 0x600001128058
+kernel: (IOUserSerial) IOUserSerial::freeResources: 949 ==>0
