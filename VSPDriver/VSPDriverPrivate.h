@@ -58,7 +58,7 @@ public:
     virtual IOReturn HwProgramFlowControl(uint32_t arg, uint8_t xon, uint8_t xoff);
 
 protected:
-    virtual void CleanupResources();
+    inline void CleanupResources();
     virtual IOReturn SetupTTYBaseName();
     virtual IOReturn ConnectDriverQueues();
     virtual IOReturn SetupFIFOBuffers();

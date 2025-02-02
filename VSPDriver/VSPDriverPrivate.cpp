@@ -140,8 +140,7 @@ IOReturn VSPDriverPrivate::ConnectDriverQueues()
     }
     if (m_itBuffer == nullptr) {
         VSPLog(LOG_PREFIX, "Invalid interrupt buffer detected.\n");
-        ret = kIOReturnInvalid;
-        return ret;
+        return kIOReturnInvalid;
     }
     if (m_rxBuffer == nullptr) {
         VSPLog(LOG_PREFIX, "Invalid RX buffer detected.\n");
@@ -178,9 +177,8 @@ IOReturn VSPDriverPrivate::SetupFIFOBuffers()
     m_fifo.tx.buffer = reinterpret_cast<char*>(IOMallocZero(size));
     if (m_fifo.tx.buffer == nullptr) {
         VSPLog(LOG_PREFIX, "Start: Failed to allocate TX FIFO.\n");
-        ret = kIOReturnNoMemory;
         m_fifo.tx = {};
-        return ret;
+        return kIOReturnNoMemory;
     }
     
     // allocate internal fifo RX buffer
@@ -193,9 +191,8 @@ IOReturn VSPDriverPrivate::SetupFIFOBuffers()
     m_fifo.rx.buffer = reinterpret_cast<char*>(IOMallocZero(size));
     if (m_fifo.rx.buffer == nullptr) {
         VSPLog(LOG_PREFIX, "Start: Failed to allocate RX FIFO.\n");
-        ret = kIOReturnNoMemory;
         m_fifo.rx = {};
-        return ret;
+        return kIOReturnNoMemory;
     }
     
     return kIOReturnSuccess;
