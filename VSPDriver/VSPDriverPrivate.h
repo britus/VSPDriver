@@ -15,6 +15,7 @@
 #include <DriverKit/IOMemoryMap.h>
 #include <DriverKit/IOMemoryDescriptor.h>
 #include <DriverKit/IOBufferMemoryDescriptor.h>
+#include <DriverKit/IODataQueueDispatchSource.h>
 #include <DriverKit/IODispatchQueue.h>
 #include <DriverKit/IODispatchSource.h>
 #include <DriverKit/IOTimerDispatchSource.h>
@@ -110,11 +111,16 @@ private:
     VSPDriver* m_driver;
     IOService* m_provider;
     
-    IOBufferMemoryDescriptor *m_itBuffer;   // Interrupt related buffer
-    IOMemoryDescriptor *m_txBuffer;         // Transmit buffer
-    IOMemoryDescriptor *m_rxBuffer;         // Receive buffer
+    IOBufferMemoryDescriptor *m_ifmd;   // Interrupt related buffer
+    IOMemoryDescriptor *m_txqmd;         // Transmit buffer
+    IOMemoryDescriptor *m_rxqmd;         // Receive buffer
     OSAction* m_txAction;                   // Async get client TX packets action
+    OSData* m_txOSData;                     // ?? for ConfigureReport
+    OSData* m_rxOSData;                     // ?? for ConfigureReport
 
+    IODispatchQueue* m_txQueue = nullptr;
+    IODataQueueDispatchSource* m_txDataQDSource = nullptr;
+    
     IOLock* m_lock;
     
     // Serial interface

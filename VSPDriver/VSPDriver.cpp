@@ -103,11 +103,13 @@ kern_return_t IMPL(VSPDriver, Start)
     /* initialize private driver instance */
     if ((ret = ivars->p->Start(provider)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "Start (private): failed. code=%d\n", ret);
+        Stop(provider, SUPERDISPATCH);
         return ret;
     }  
-
+    
     if ((ret = RegisterService()) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "RegisterService failed. code=%d\n", ret);
+        Stop(provider, SUPERDISPATCH);
         return ret;
     }
 

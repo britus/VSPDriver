@@ -22,7 +22,7 @@
 // To search for logs from this driver, use either: `sudo dmesg | grep NullDriver`
 // or use Console.app search to find messages that start with "NullDriver -".
 #ifndef VSPLog
-#define VSPLog(prefix, fmt, ...) os_log(OS_LOG_DEFAULT, "[" prefix "] " fmt "\n", ##__VA_ARGS__)
+#define VSPLog(prefix, fmt, ...) os_log(OS_LOG_DEFAULT, "[" prefix "] " fmt, ##__VA_ARGS__)
 #endif
 
 #endif /* VSPLogger_h */

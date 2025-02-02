@@ -43,10 +43,14 @@
 VSPDriverPrivate::VSPDriverPrivate(VSPDriver* driver)
     : m_driver(driver)
     , m_provider(nullptr)
-    , m_itBuffer(nullptr)
-    , m_rxBuffer(nullptr)
-    , m_txBuffer(nullptr)
+    , m_ifmd(nullptr)
+    , m_rxqmd(nullptr)
+    , m_txqmd(nullptr)
     , m_txAction(nullptr)
+    , m_txOSData(nullptr)
+    , m_rxOSData(nullptr)
+    , m_txQueue(nullptr)
+    , m_txDataQDSource(nullptr)
     , m_serverAddress(nullptr)
     , m_serverPort(0)
     , m_isConnected(false)
@@ -78,13 +82,19 @@ VSPDriverPrivate::~VSPDriverPrivate()
 inline void VSPDriverPrivate::CleanupResources()
 {
     VSPLog(LOG_PREFIX, "CleanupResources called.\n");
-    
+
+    OSSafeReleaseNULL(m_txDataQDSource);
+    OSSafeReleaseNULL(m_txQueue);
+    OSSafeReleaseNULL(m_txAction);
+
     // Disconnect all queues. This deallocates
     // the INT/RX/TX buffer resources too
     m_driver->DisconnectQueues();
   
     OSSafeReleaseNULL(m_serverAddress);
-    OSSafeReleaseNULL(m_txAction);
+    OSSafeReleaseNULL(m_txOSData);
+    OSSafeReleaseNULL(m_rxOSData);
+
     IOLockFreeNULL(m_lock);
 
     // remove TX buffer ...
@@ -133,21 +143,21 @@ IOReturn VSPDriverPrivate::ConnectDriverQueues()
 {
     IOReturn ret;
     
-    ret = m_driver->ConnectQueues(&m_itBuffer, &m_rxBuffer, &m_txBuffer, nullptr, nullptr, 0, 0, 8, 8);
+    ret = m_driver->ConnectQueues(&m_ifmd, &m_rxqmd, &m_txqmd, nullptr, nullptr, 0, 0, 8, 8);
     if (ret != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "ConnectQueues failed to allocate IF/RX/TX buffers.\n");
         return ret;
     }
-    if (m_itBuffer == nullptr) {
-        VSPLog(LOG_PREFIX, "Invalid interrupt buffer detected.\n");
+    if (m_ifmd == nullptr) {
+        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid interrupt buffer detected.\n");
         return kIOReturnInvalid;
     }
-    if (m_rxBuffer == nullptr) {
-        VSPLog(LOG_PREFIX, "Invalid RX buffer detected.\n");
+    if (m_rxqmd == nullptr) {
+        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid RX buffer detected.\n");
         return kIOReturnInvalid;
     }
-    if (m_txBuffer == nullptr) {
-        VSPLog(LOG_PREFIX, "Invalid TX buffer detected.\n");
+    if (m_txqmd == nullptr) {
+        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid TX buffer detected.\n");
         return kIOReturnInvalid;
     }
     
@@ -162,39 +172,32 @@ IOReturn VSPDriverPrivate::SetupFIFOBuffers()
     uint64_t size = 0;
     IOReturn ret;
     
-    // connect drivers dispatcher queues
-    if ((ret = ConnectDriverQueues()) != kIOReturnSuccess) {
+    // --- allocate internal fifo TX buffer ---
+    if ((ret = m_txqmd->GetLength(&size)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "SetupFIFOBuffers: Unable to get TX buffer length.\n");
         return ret;
     }
-    
-    // allocate internal fifo TX buffer
-    if ((ret = m_txBuffer->GetLength(&size)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Unable to get TX buffer length.\n");
-        return ret;
-    }
-    
-    m_fifo.tx.size = size;
     m_fifo.tx.buffer = reinterpret_cast<char*>(IOMallocZero(size));
     if (m_fifo.tx.buffer == nullptr) {
-        VSPLog(LOG_PREFIX, "Start: Failed to allocate TX FIFO.\n");
+        VSPLog(LOG_PREFIX, "SetupFIFOBuffers: Failed to allocate TX FIFO.\n");
         m_fifo.tx = {};
         return kIOReturnNoMemory;
     }
-    
-    // allocate internal fifo RX buffer
-    if ((ret = m_rxBuffer->GetLength(&size)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Start: Unable to get RX buffer length.\n");
+    m_fifo.tx.size = size;
+
+    // --- allocate internal fifo RX buffer ---
+    if ((ret = m_rxqmd->GetLength(&size)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "SetupFIFOBuffers: Unable to get RX buffer length.\n");
         return ret;
     }
-
-    m_fifo.rx.size = size;
     m_fifo.rx.buffer = reinterpret_cast<char*>(IOMallocZero(size));
     if (m_fifo.rx.buffer == nullptr) {
-        VSPLog(LOG_PREFIX, "Start: Failed to allocate RX FIFO.\n");
+        VSPLog(LOG_PREFIX, "SetupFIFOBuffers: Failed to allocate RX FIFO.\n");
         m_fifo.rx = {};
         return kIOReturnNoMemory;
     }
-    
+    m_fifo.rx.size = size;
+
     return kIOReturnSuccess;
 }
 
@@ -221,15 +224,53 @@ IOReturn VSPDriverPrivate::Start(IOService* provider)
     }
 
     VSPLog(LOG_PREFIX, "Connect INT/RX/TX buffers.\n");
+    
+    // connect dispatcher queues and get its memory descriptors
+    if ((ret = ConnectDriverQueues()) != kIOReturnSuccess) {
+        return ret;
+    }
 
+    // Connect driver queues and get it memory descriptors
     if ((ret = SetupFIFOBuffers()) != kIOReturnSuccess) {
         goto error_exit;
     }
-    
+
+    // Async notification from IODataQueueDispatchSource::DataAvailable
     ret = m_driver->CreateActionTxPacketsAvailable(m_fifo.tx.size, &m_txAction);
-    if (ret != kIOReturnSuccess) {
+    if (ret != kIOReturnSuccess || m_txAction == nullptr) {
         VSPLog(LOG_PREFIX, "Start: Unable to create TX packet action. code=%d\n", ret);
-        return ret;
+        goto error_exit;
+    }
+
+    ret = m_driver->CopyDispatchQueue(kIOServiceDefaultQueueName, &m_txQueue);
+    if (ret != kIOReturnSuccess || m_txQueue == nullptr) {
+        VSPLog(LOG_PREFIX, "Start: m_txBuffer->CopyDispatchQueue failed. code=%d\n", ret);
+        goto error_exit;
+    }
+    
+    ret = IODataQueueDispatchSource::Create(m_fifo.tx.size, m_txQueue, &m_txDataQDSource);
+    if (ret != kIOReturnSuccess || m_txDataQDSource == nullptr) {
+        VSPLog(LOG_PREFIX, "Start: IODataQueueDispatchSource::Create failed. code=%d\n", ret);
+        goto error_exit;
+    }
+
+    // get OSData objects
+    m_txOSData = OSData::withBytesNoCopy(m_fifo.tx.buffer, m_fifo.tx.size);
+    if (m_txOSData == nullptr) {
+        VSPLog(LOG_PREFIX, "Start: Unable to create TX packet action. code=%d\n", ret);
+        goto error_exit;
+    }
+    
+    m_rxOSData = OSData::withBytesNoCopy(m_fifo.rx.buffer, m_fifo.rx.size);
+    if (m_rxOSData == nullptr) {
+        VSPLog(LOG_PREFIX, "Start: Unable to create TX packet action. code=%d\n", ret);
+        goto error_exit;
+    }
+    
+    ret = m_txDataQDSource->SetDataAvailableHandler(m_txAction);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "Start: m_txDataQDSource->SetDataAvailableHandler failed. code=%d\n", ret);
+        goto error_exit;
     }
 
     if ((ret = SetupTTYBaseName()) != kIOReturnSuccess) {
@@ -284,45 +325,83 @@ IOReturn VSPDriverPrivate::RxDataAvailable()
     return ret;
 }
 
+static inline IOReturn copy_md_memory(IOMemoryDescriptor* md, char* buffer, uint64_t size)
+{
+    IOMemoryMap* map = nullptr;
+    IOReturn ret;
+
+    if (md == nullptr) {
+        VSPLog(LOG_PREFIX, "copy_md_memory: Invalid memory descriptor (nullptr).\n");
+        return kIOReturnBadArgument;
+    }
+    if (size == 0 || buffer == nullptr) {
+        VSPLog(LOG_PREFIX, "copy_md_memory: Invalid buffer or size parameter.\n");
+        return kIOReturnBadArgument;
+    }
+
+    // Access memory of TX IOMemoryDescriptor
+    ret = md->CreateMapping(kIOMemoryMapReadOnly, 0, 0, 0, 0, &map);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "copy_md_memory: Failed to get memory map. code=%d\n", ret);
+        return ret;
+    }
+
+    // get mapped data...
+    const char* mapBuffer = reinterpret_cast<char*>(map->GetAddress());
+    const uint64_t mapSize = map->GetLength();
+
+    VSPLog(LOG_PREFIX, "copy_md_memory: mapBuffer=0x%llx mapSize=%llu\n", (uint64_t) mapBuffer, mapSize);
+    VSPLog(LOG_PREFIX, "copy_md_memory: debug mapped buffer\n");
+    
+    // !! Debug ....
+    for (uint64_t i = 0; i < mapSize && i < 16; i++) {
+        VSPLog(LOG_PREFIX, "copy_md_memory> 0x%02x %c\n", mapBuffer[i], mapBuffer[i]);
+    }
+    
+    // copy data to send into tx FIFO buffer
+    memcpy(buffer, mapBuffer, (mapSize < size ? mapSize : size));
+
+    OSSafeReleaseNULL(map);
+    return kIOReturnSuccess;
+}
+
 // --------------------------------------------------------------------
 //
 //
 IOReturn VSPDriverPrivate::TxDataAvailable()
 {
     IOReturn ret = kIOReturnSuccess;
-    IOMemoryMap* map = nullptr;
     
     VSPLog(LOG_PREFIX, "TxDataAvailable called.\n");
-    
-    if (m_txBuffer == nullptr) {
-        VSPLog(LOG_PREFIX, "TxDataAvailable: Invalid m_txBuffer pointer (nullptr).\n");
-        return kIOReturnBadArgument;
-    }
 
-    // Access memory of TX IOMemoryDescriptor
-    ret = m_txBuffer->CreateMapping(kIOMemoryMapReadOnly, 0, 0, 0, 0, &map);
+    // Lock to ensure thread safety
+    IOLockLock(m_lock);
+
+    VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_txqmd\n");
+    ret = copy_md_memory(m_txqmd, m_fifo.tx.buffer, m_fifo.tx.size);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "TxDataAvailable: Failed to get memory map. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "TxDataAvailable: copy_md_memory failed on m_txqmd\n");
+        IOLockUnlock(m_lock);
         return ret;
     }
 
-    // Send data to ...
-    const char* buffer = reinterpret_cast<char*>(map->GetAddress());
-    const uint64_t size = map->GetLength();
-
-    VSPLog(LOG_PREFIX, "TxDataAvailable: address=0x%llx length=%llu\n", (uint64_t) buffer, size);
-    VSPLog(LOG_PREFIX, "TxDataAvailable: debug TX buffer\n");
-    
-    // !! Debug ....
-    for (uint64_t i = 0; i < size && i < 16; i++) {
-        VSPLog(LOG_PREFIX, "TxDataAvailable: TX> 0x%02x %c\n", buffer[i], buffer[i]);
+    VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_rxqmd\n");
+    ret = copy_md_memory(m_rxqmd, m_fifo.rx.buffer, m_fifo.rx.size);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "TxDataAvailable: copy_md_memory failed on m_rxqmd\n");
+        IOLockUnlock(m_lock);
+        return ret;
     }
-    
-    // copy data to send into tx FIFO buffer
-    memcpy(m_fifo.tx.buffer, buffer, (size < m_fifo.tx.size ? size : m_fifo.tx.size));
-    
-    // !! cleanup
-    OSSafeReleaseNULL(map);
+
+    VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_ifmd\n");
+    ret = copy_md_memory(m_ifmd, m_fifo.tx.buffer, m_fifo.tx.size);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "TxDataAvailable: copy_md_memory failed on m_ifmd\n");
+        IOLockUnlock(m_lock);
+        return ret;
+    }
+
+    IOLockUnlock(m_lock);
     return kIOReturnSuccess;
 }
 
@@ -337,11 +416,15 @@ IOReturn VSPDriverPrivate::TxPacketsAvailable(OSAction* action)
         VSPLog(LOG_PREFIX, "TxPacketsAvailable: Invalid action object (nullptr).\n");
         return kIOReturnBadArgument;
     }
+    
+    // Lock to ensure thread safety
+    IOLockLock(m_lock);
 
     const uint64_t size = m_fifo.tx.size;
     const char* buffer = (char*)action->GetReference();
     if (buffer == nullptr) {
         VSPLog(LOG_PREFIX, "TxPacketsAvailable: Invalid buffer pointer (nullptr).\n");
+        IOLockUnlock(m_lock);
         return kIOReturnBadArgument;
     }
     
@@ -349,7 +432,12 @@ IOReturn VSPDriverPrivate::TxPacketsAvailable(OSAction* action)
     for (uint64_t i = 0; i < size && i < 16; i++) {
         VSPLog(LOG_PREFIX, "TxPacketsAvailable: TX> 0x%02x %c\n", buffer[i], buffer[i]);
     }
+    
+    // copy data to send into tx FIFO buffer
+    memcpy(m_fifo.tx.buffer, buffer, (size < m_fifo.tx.size ? size : m_fifo.tx.size));
 
+    // !! cleanup
+    IOLockUnlock(m_lock);
     return kIOReturnSuccess;
 }
 
