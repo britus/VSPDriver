@@ -230,7 +230,7 @@ IOReturn VSPDriverPrivate::Start(IOService* provider)
         return ret;
     }
 
-    // Connect driver queues and get it memory descriptors
+    // Allocate private FIFO buffers
     if ((ret = SetupFIFOBuffers()) != kIOReturnSuccess) {
         goto error_exit;
     }
@@ -242,6 +242,8 @@ IOReturn VSPDriverPrivate::Start(IOService* provider)
         goto error_exit;
     }
 
+    // ??? I expected that I can connect the m_txqmd, but this will not work.
+    // ??? This IOUserSerial dispatch queue will not work too
     ret = m_driver->CopyDispatchQueue(kIOServiceDefaultQueueName, &m_txQueue);
     if (ret != kIOReturnSuccess || m_txQueue == nullptr) {
         VSPLog(LOG_PREFIX, "Start: m_txBuffer->CopyDispatchQueue failed. code=%d\n", ret);
@@ -254,7 +256,7 @@ IOReturn VSPDriverPrivate::Start(IOService* provider)
         goto error_exit;
     }
 
-    // get OSData objects
+    // Get OSData objects with FIFO buffers
     m_txOSData = OSData::withBytesNoCopy(m_fifo.tx.buffer, m_fifo.tx.size);
     if (m_txOSData == nullptr) {
         VSPLog(LOG_PREFIX, "Start: Unable to create TX packet action. code=%d\n", ret);
@@ -325,6 +327,10 @@ IOReturn VSPDriverPrivate::RxDataAvailable()
     return ret;
 }
 
+// --------------------------------------------------------------------
+// ??? Called by TxDataAvailable() and here we get always 0x00 in all
+// ??? mapped buffer of the IOMemoryDescriptors m_txqmd, m_rxqmd and m_ifmd
+//
 static inline IOReturn copy_md_memory(IOMemoryDescriptor* md, char* buffer, uint64_t size)
 {
     IOMemoryMap* map = nullptr;
@@ -366,8 +372,8 @@ static inline IOReturn copy_md_memory(IOMemoryDescriptor* md, char* buffer, uint
 }
 
 // --------------------------------------------------------------------
-//
-//
+// Got this call event if the client app send data to /dev/serial-xxxxx
+// device. But no data bytes in the IOMemoryDescriptors ??????
 IOReturn VSPDriverPrivate::TxDataAvailable()
 {
     IOReturn ret = kIOReturnSuccess;
