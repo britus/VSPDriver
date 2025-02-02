@@ -255,6 +255,12 @@ IOReturn VSPDriverPrivate::Start(IOService* provider)
         VSPLog(LOG_PREFIX, "Start: IODataQueueDispatchSource::Create failed. code=%d\n", ret);
         goto error_exit;
     }
+    
+    ret = m_txDataQDSource->SetDataAvailableHandler(m_txAction);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "Start: m_txDataQDSource->SetDataAvailableHandler failed. code=%d\n", ret);
+        goto error_exit;
+    }
 
     // Get OSData objects with FIFO buffers
     m_txOSData = OSData::withBytesNoCopy(m_fifo.tx.buffer, m_fifo.tx.size);
@@ -266,12 +272,6 @@ IOReturn VSPDriverPrivate::Start(IOService* provider)
     m_rxOSData = OSData::withBytesNoCopy(m_fifo.rx.buffer, m_fifo.rx.size);
     if (m_rxOSData == nullptr) {
         VSPLog(LOG_PREFIX, "Start: Unable to create TX packet action. code=%d\n", ret);
-        goto error_exit;
-    }
-    
-    ret = m_txDataQDSource->SetDataAvailableHandler(m_txAction);
-    if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Start: m_txDataQDSource->SetDataAvailableHandler failed. code=%d\n", ret);
         goto error_exit;
     }
 
