@@ -31,30 +31,32 @@ struct VSPDriver_IVars {
 //
 bool VSPDriver::init()
 {
-    bool result = false;
+    bool result;
     
     VSPLog(LOG_PREFIX, "init called.\n");
     
     if (!(result = super::init())) {
         VSPLog(LOG_PREFIX, "free (super) falsed. result=%d\n", result);
-        goto exit_fail;
+        goto error_exit;
     }
 
     ivars = IONewZero(VSPDriver_IVars, 1);
     if (!ivars) {
-        VSPLog(LOG_PREFIX, "Unable to instance data.\n");
+        VSPLog(LOG_PREFIX, "Unable to allocate driver data.\n");
         result = false;
-        goto exit_fail;
+        goto error_exit;
     }
 
     ivars->p = new VSPDriverPrivate(this);
     if (!ivars->p) {
-        VSPLog(LOG_PREFIX, "Unable to allocate private VSP instance.\n");
+        VSPLog(LOG_PREFIX, "Unable to allocate private VSP object instance.\n");
         result = false;
-        goto exit_fail;
+        goto error_exit;
     }
-
-exit_fail:
+    
+    return true;
+    
+error_exit:
     return result;
 }
 
