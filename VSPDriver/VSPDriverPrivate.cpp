@@ -126,9 +126,11 @@ IOReturn VSPDriverPrivate::SetupTTYBaseName()
     
     baseName = OSString::withCString(TTY_BASE_NAME);
     properties->setObject(kIOTTYBaseNameKey, baseName);
+    
+    // write back to driver instance
     if ((ret = m_driver->SetProperties(properties)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Start: Unable to set driver properties. code=%d\n", ret);
-        //return ret;
+        VSPLog(LOG_PREFIX, "Start: Unable to set TTY base name. code=%d\n", ret);
+        //return ret; // ??? an error - why???
     }
     
     OSSafeReleaseNULL(baseName);
@@ -344,28 +346,51 @@ static inline IOReturn copy_md_memory(IOMemoryDescriptor* md, char* buffer, uint
         VSPLog(LOG_PREFIX, "copy_md_memory: Invalid buffer or size parameter.\n");
         return kIOReturnBadArgument;
     }
-
+    
+    // reset targer buffer
+    memset(buffer, 0, size);
+    
     // Access memory of TX IOMemoryDescriptor
     ret = md->CreateMapping(kIOMemoryMapReadOnly, 0, 0, 0, 0, &map);
     if (ret != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "copy_md_memory: Failed to get memory map. code=%d\n", ret);
         return ret;
     }
-
+    
     // get mapped data...
     const char* mapBuffer = reinterpret_cast<char*>(map->GetAddress());
     const uint64_t mapSize = map->GetLength();
 
-    VSPLog(LOG_PREFIX, "copy_md_memory: mapBuffer=0x%llx mapSize=%llu\n", (uint64_t) mapBuffer, mapSize);
-    VSPLog(LOG_PREFIX, "copy_md_memory: debug mapped buffer\n");
+    VSPLog(LOG_PREFIX, "copy_md_memory: 1 mapBuffer=0x%llx mapSize=%llu\n", (uint64_t) mapBuffer, mapSize);
+    VSPLog(LOG_PREFIX, "copy_md_memory: 1 debug mapped buffer\n");
     
     // !! Debug ....
     for (uint64_t i = 0; i < mapSize && i < 16; i++) {
-        VSPLog(LOG_PREFIX, "copy_md_memory> 0x%02x %c\n", mapBuffer[i], mapBuffer[i]);
+        VSPLog(LOG_PREFIX, "copy_md_memory_1> 0x%02x %c\n", mapBuffer[i], mapBuffer[i]);
     }
     
+    char* map2Buffer  = (char*) mapBuffer;
+    uint64_t map2Size = mapSize;
+
+    VSPLog(LOG_PREFIX, "copy_md_memory: 2 mapBuffer=0x%llx mapSize=%llu\n", (uint64_t) map2Buffer, map2Size);
+
+    ret = md->Map(kIOMemoryMapReadOnly, (uint64_t) buffer, size, 0, (uint64_t*)map2Buffer, &map2Size);
+    if (ret == kIOReturnSuccess) {
+        // !! Debug ....
+        for (uint64_t i = 0; i < map2Size && i < 16; i++) {
+            VSPLog(LOG_PREFIX, "copy_md_memory_2> 0x%02x %c\n", map2Buffer[i], map2Buffer[i]);
+        }
+    }
+    
+    VSPLog(LOG_PREFIX, "copy_md_memory: 3 mapBuffer=0x%llx mapSize=%llu\n", (uint64_t) buffer, size);
+
+    // !! Debug ....
+    for (uint64_t i = 0; i < map2Size && i < 16; i++) {
+        VSPLog(LOG_PREFIX, "copy_md_memory_3> 0x%02x %c\n", buffer[i], buffer[i]);
+    }
+
     // copy data to send into tx FIFO buffer
-    memcpy(buffer, mapBuffer, (mapSize < size ? mapSize : size));
+    memcpy(buffer, map2Buffer, (map2Size < size ? map2Size : size));
 
     OSSafeReleaseNULL(map);
     return kIOReturnSuccess;
@@ -383,7 +408,12 @@ IOReturn VSPDriverPrivate::TxDataAvailable()
     // Lock to ensure thread safety
     IOLockLock(m_lock);
 
-    VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_txqmd\n");
+    if (m_txDataQDSource->IsDataAvailable()) {
+        m_txDataQDSource->SendDataAvailable();
+    }
+   
+    
+    VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_txqmd -------------\n");
     ret = copy_md_memory(m_txqmd, m_fifo.tx.buffer, m_fifo.tx.size);
     if (ret != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "TxDataAvailable: copy_md_memory failed on m_txqmd\n");
@@ -391,18 +421,10 @@ IOReturn VSPDriverPrivate::TxDataAvailable()
         return ret;
     }
 
-    VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_rxqmd\n");
+    VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_rxqmd ------------\n");
     ret = copy_md_memory(m_rxqmd, m_fifo.rx.buffer, m_fifo.rx.size);
     if (ret != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "TxDataAvailable: copy_md_memory failed on m_rxqmd\n");
-        IOLockUnlock(m_lock);
-        return ret;
-    }
-
-    VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_ifmd\n");
-    ret = copy_md_memory(m_ifmd, m_fifo.tx.buffer, m_fifo.tx.size);
-    if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "TxDataAvailable: copy_md_memory failed on m_ifmd\n");
         IOLockUnlock(m_lock);
         return ret;
     }

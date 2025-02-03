@@ -158,10 +158,10 @@
 				88B40D702D4B85ED00DFE7C5 /* VSPDriver.entitlements */,
 				88B40D5D2D4B666700DFE7C5 /* VSPDriver.cpp */,
 				88B40D5F2D4B666700DFE7C5 /* VSPDriver.iig */,
-				88B40D6D2D4B7CF200DFE7C5 /* VSPDriverPrivate.h */,
 				88B40D6E2D4B7D8E00DFE7C5 /* VSPDriverPrivate.cpp */,
-				888281EE2D4D274B0037F07C /* VSPUserClient.iig */,
+				88B40D6D2D4B7CF200DFE7C5 /* VSPDriverPrivate.h */,
 				888281F02D4D27750037F07C /* VSPUserClient.cpp */,
+				888281EE2D4D274B0037F07C /* VSPUserClient.iig */,
 				889E8EBB2D4DF4BF002F387A /* VSPLogger.h */,
 			);
 			path = VSPDriver;
@@ -328,10 +328,12 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = VSPInstall/VSPInstall.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 23;
-				DEVELOPMENT_TEAM = 83NQU389JN;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 83NQU389JN;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -354,6 +356,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPInstall;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = VSPInstall_macOS_App_Development_All_Certs;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -372,10 +375,12 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = VSPInstall/VSPInstall.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 23;
-				DEVELOPMENT_TEAM = 83NQU389JN;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 83NQU389JN;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -398,6 +403,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPInstall;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = VSPInstall_macOS_App_Development_All_Certs;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -523,9 +529,11 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 31;
-				DEVELOPMENT_TEAM = 83NQU389JN;
+				"CODE_SIGN_IDENTITY[sdk=driverkit*]" = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=driverkit*]" = 83NQU389JN;
 				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -543,6 +551,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPDriver;
 				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=driverkit*]" = VSPDriver_Development_DriverKit_App_All_Certs;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = driverkit;
 				SKIP_INSTALL = YES;
@@ -555,9 +564,11 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 31;
-				DEVELOPMENT_TEAM = 83NQU389JN;
+				"CODE_SIGN_IDENTITY[sdk=driverkit*]" = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=driverkit*]" = 83NQU389JN;
 				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -575,6 +586,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPDriver;
 				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=driverkit*]" = VSPDriver_Development_DriverKit_App_All_Certs;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = driverkit;
 				SKIP_INSTALL = YES;

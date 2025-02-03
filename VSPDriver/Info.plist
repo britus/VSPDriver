@@ -11,7 +11,7 @@
 			<key>IOClass</key>
 			<string>IOUserSerial</string>
 			<key>IOMatchCategory</key>
-			<string>org.eof.tools.VSPDriver</string>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 			<key>IOProviderClass</key>
 			<string>IOUserResources</string>
 			<key>IOResourceMatch</key>
@@ -19,10 +19,14 @@
 			<key>IOUserClass</key>
 			<string>VSPDriver</string>
 			<key>IOUserServerName</key>
-			<string>org.eof.tools.VSPDriver</string>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 		</dict>
 	</dict>
 	<key>com.apple.developer.driverkit.allow-any-userclient-access</key>
+	<true/>
+	<key>com.apple.developer.system-extension.redistributable</key>
+	<true/>
+	<key>com.apple.developer.driverkit </key>
 	<true/>
 </dict>
 </plist>

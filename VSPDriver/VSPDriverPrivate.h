@@ -23,7 +23,7 @@
 #include <DriverKit/OSString.h>
 #include <DriverKit/OSArray.h>
 
-#define TX_BUFFER_SIZE 16384
+//#define TX_BUFFER_SIZE 16384
 
 class VSPDriver;
 class VSPDriverPrivate {
