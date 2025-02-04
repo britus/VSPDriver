@@ -45,6 +45,13 @@ public:
     
     /* Async callback to get client TX data packets */
     virtual void TxPacketsAvailable(OSAction* action) TYPE(IODataQueueDispatchSource::DataAvailable);
+    
+    // VSPDriver inrernals
+    virtual void CleanupResources() LOCAL;
+    virtual IOReturn SetupTTYBaseName() LOCAL;
+    virtual IOReturn ConnectDriverQueues() LOCAL;
+    virtual IOReturn SetupFIFOBuffers() LOCAL;
+    virtual IOReturn CopyMemory(IOMemoryDescriptor* md, char* buffer, uint64_t size) LOCAL;
 };
 
 #endif /* VSPDriver_h */

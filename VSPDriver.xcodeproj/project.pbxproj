@@ -12,8 +12,6 @@
 		880539F02D4BAFBF00E55104 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 880539EE2D4BAFBF00E55104 /* MainMenu.xib */; };
 		880539F82D4BB59900E55104 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880539F72D4BB59800E55104 /* AppKit.framework */; };
 		880539FA2D4BB5AD00E55104 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880539F92D4BB5AD00E55104 /* IOKit.framework */; };
-		888281EF2D4D274B0037F07C /* VSPUserClient.iig in Sources */ = {isa = PBXBuildFile; fileRef = 888281EE2D4D274B0037F07C /* VSPUserClient.iig */; };
-		888281F12D4D27750037F07C /* VSPUserClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 888281F02D4D27750037F07C /* VSPUserClient.cpp */; };
 		88906F482D4CCA9400E500BB /* VSPIOHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88906F462D4CCA9400E500BB /* VSPIOHelper.cpp */; };
 		889E8EBC2D4DF4BF002F387A /* VSPLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 889E8EBB2D4DF4BF002F387A /* VSPLogger.h */; };
 		88AEEFF72D5233D4007F2A4C /* IOReg-Outline.md in Resources */ = {isa = PBXBuildFile; fileRef = 88AEEFF62D5233D4007F2A4C /* IOReg-Outline.md */; };
@@ -22,7 +20,6 @@
 		88B40D682D4B669100DFE7C5 /* DriverKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B40D672D4B669100DFE7C5 /* DriverKit.framework */; };
 		88B40D6A2D4B669900DFE7C5 /* SerialDriverKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B40D692D4B669900DFE7C5 /* SerialDriverKit.framework */; };
 		88B40D6C2D4B669E00DFE7C5 /* USBSerialDriverKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B40D6B2D4B669E00DFE7C5 /* USBSerialDriverKit.framework */; };
-		88B40D6F2D4B7D8E00DFE7C5 /* VSPDriverPrivate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B40D6E2D4B7D8E00DFE7C5 /* VSPDriverPrivate.cpp */; };
 		88BEFD842D4BCF8900CD40E6 /* org.eof.tools.VSPDriver.dext in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 88B40D572D4B666700DFE7C5 /* org.eof.tools.VSPDriver.dext */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -59,8 +56,6 @@
 		880539F52D4BB0F900E55104 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		880539F72D4BB59800E55104 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
 		880539F92D4BB5AD00E55104 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOKit.framework; sourceTree = DEVELOPER_DIR; };
-		888281EE2D4D274B0037F07C /* VSPUserClient.iig */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.iig; path = VSPUserClient.iig; sourceTree = "<group>"; };
-		888281F02D4D27750037F07C /* VSPUserClient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VSPUserClient.cpp; sourceTree = "<group>"; };
 		88906F452D4CCA9400E500BB /* VSPInstall-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VSPInstall-Bridging-Header.h"; sourceTree = "<group>"; };
 		88906F462D4CCA9400E500BB /* VSPIOHelper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VSPIOHelper.cpp; sourceTree = "<group>"; };
 		88906F472D4CCA9400E500BB /* VSPIOHelper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VSPIOHelper.hpp; sourceTree = "<group>"; };
@@ -74,8 +69,6 @@
 		88B40D672D4B669100DFE7C5 /* DriverKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DriverKit.framework; path = System/DriverKit/System/Library/Frameworks/DriverKit.framework; sourceTree = SDKROOT; };
 		88B40D692D4B669900DFE7C5 /* SerialDriverKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SerialDriverKit.framework; path = System/DriverKit/System/Library/Frameworks/SerialDriverKit.framework; sourceTree = SDKROOT; };
 		88B40D6B2D4B669E00DFE7C5 /* USBSerialDriverKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = USBSerialDriverKit.framework; path = System/DriverKit/System/Library/Frameworks/USBSerialDriverKit.framework; sourceTree = SDKROOT; };
-		88B40D6D2D4B7CF200DFE7C5 /* VSPDriverPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VSPDriverPrivate.h; sourceTree = "<group>"; };
-		88B40D6E2D4B7D8E00DFE7C5 /* VSPDriverPrivate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VSPDriverPrivate.cpp; sourceTree = "<group>"; };
 		88B40D702D4B85ED00DFE7C5 /* VSPDriver.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VSPDriver.entitlements; sourceTree = "<group>"; };
 		88B40D842D4B873C00DFE7C5 /* SystemExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemExtensions.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/SystemExtensions.framework; sourceTree = DEVELOPER_DIR; };
 		88BEFD702D4BC84A00CD40E6 /* libEndpointSecurity.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libEndpointSecurity.tbd; path = usr/lib/libEndpointSecurity.tbd; sourceTree = SDKROOT; };
@@ -158,10 +151,6 @@
 			children = (
 				88B40D5F2D4B666700DFE7C5 /* VSPDriver.iig */,
 				88B40D5D2D4B666700DFE7C5 /* VSPDriver.cpp */,
-				88B40D6E2D4B7D8E00DFE7C5 /* VSPDriverPrivate.cpp */,
-				88B40D6D2D4B7CF200DFE7C5 /* VSPDriverPrivate.h */,
-				888281EE2D4D274B0037F07C /* VSPUserClient.iig */,
-				888281F02D4D27750037F07C /* VSPUserClient.cpp */,
 				889E8EBB2D4DF4BF002F387A /* VSPLogger.h */,
 				88B40D702D4B85ED00DFE7C5 /* VSPDriver.entitlements */,
 				88B40D612D4B666700DFE7C5 /* Info.plist */,
@@ -293,11 +282,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				888281F12D4D27750037F07C /* VSPUserClient.cpp in Sources */,
 				88B40D5E2D4B666700DFE7C5 /* VSPDriver.cpp in Sources */,
-				88B40D6F2D4B7D8E00DFE7C5 /* VSPDriverPrivate.cpp in Sources */,
 				88B40D602D4B666700DFE7C5 /* VSPDriver.iig in Sources */,
-				888281EF2D4D274B0037F07C /* VSPUserClient.iig in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
