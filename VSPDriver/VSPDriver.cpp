@@ -34,8 +34,9 @@
 #include <SerialDriverKit/IOUserSerial.h>
 
 // -- My
-#include "VSPDriver.h"
 #include "VSPLogger.h"
+#include "VSPDriver.h"
+#include "VSPSerialPort.h"
 
 #define LOG_PREFIX "VSPDriver"
 
@@ -108,6 +109,8 @@ struct VSPDriver_IVars {
     IODataQueueDispatchSource* m_dataSource = nullptr;
     OSAction* m_dataAction = nullptr;                   // Async get client TX packets action
 
+    VSPSerialPort* spService;
+    
     IOLock* m_lock = nullptr;
     
     // Serial interface
@@ -254,6 +257,17 @@ kern_return_t IMPL(VSPDriver, Start)
     }
     
     VSPLog(LOG_PREFIX, "prepare internal stuff.\n");
+   
+    // Create sub service object from SerialPortProperties in Info.plist
+    IOService* spService;
+    ret= provider->Create(this, "SerialPortProperties", &spService);
+    if (ret != kIOReturnSuccess || spService == nullptr) {
+        VSPLog(LOG_PREFIX, "Start: provider->Create(SerialPortProperties) failed. code=%d\n", ret);
+        goto error_exit;
+    }
+
+    // Check object type
+    
     
     // Default TCP server settings
     ivars->m_serverPort = SERVER_PORT;
