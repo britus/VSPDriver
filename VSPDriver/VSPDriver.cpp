@@ -48,6 +48,41 @@
 #define IOLockFreeNULL(l) { if (NULL != (l)) { IOLockFree(l); (l) = NULL; } }
 #endif
 
+/* ============================================================
+ <key>IOKitPersonalities</key>
+ <dict>
+     <key>VSPDriver</key>
+     <dict>
+         <key>CFBundleIdentifierKernel</key>
+         <string>com.apple.driver.driverkit.serial</string>
+         <key>IOClass</key>
+         <string>IOUserSerial</string>
+         <key>IOMatchCategory</key>
+         <string>org.eof.tools.VSPDriver</string>
+         <key>IOProviderClass</key>
+         <string>IOUserResources</string>
+         <key>IOResourceMatch</key>
+         <string>IOKit</string>
+         <key>IOUserClass</key>
+         <string>VSPDriver</string>
+         <key>IOUserServerName</key>
+         <string>org.eof.tools.VSPDriver</string>
+         <key>HiddenPort</key>
+         <false/>
+         <key>IOTTYBaseName</key>
+         <string>vsp</string>
+         <key>IOTTYSuffix</key>
+         <string>0</string>
+         <key>UserClientProperties</key>
+         <dict>
+             <key>IOClass</key>
+             <string>IOService</string>
+             <key>IOUserClass</key>
+             <string>VCPSerialPort</string>
+         </dict>
+     </dict>
+ </dict>
+ * ============================================================ */
 
 typedef struct {
     bool cts;
@@ -85,16 +120,16 @@ typedef struct {
 struct VSPDriver_IVars {
     IOService* m_provider = nullptr;
     IOBufferMemoryDescriptor *m_ifmd = nullptr;   // Interrupt related buffer
-    IOMemoryDescriptor *m_txqmd = nullptr;         // Transmit buffer
-    IOMemoryDescriptor *m_rxqmd = nullptr;         // Receive buffer
-    OSData* m_txOSData = nullptr;                     // ?? for ConfigureReport
-    OSData* m_rxOSData = nullptr;                     // ?? for ConfigureReport
-
+    IOMemoryDescriptor *m_txqmd = nullptr;        // Transmit buffer
+    IOMemoryDescriptor *m_rxqmd = nullptr;        // Receive buffer
+    OSData* m_txOSData = nullptr;                 // ?? for ConfigureReport
+    OSData* m_rxOSData = nullptr;                 // ?? for ConfigureReport
+    
     IODispatchQueue* m_dataQueue = nullptr;
     IODataQueueDispatchSource* m_dataSource = nullptr;
-    OSAction* m_dataAction = nullptr;                   // Async get client TX packets action
-
-    VSPSerialPort* spService;
+    OSAction* m_dataAction = nullptr;             // Async get client TX packets action
+    
+    VSPSerialPort* m_spService;
     
     IOLock* m_lock = nullptr;
     
@@ -242,17 +277,27 @@ kern_return_t IMPL(VSPDriver, Start)
     }
     
     VSPLog(LOG_PREFIX, "prepare internal stuff.\n");
-   
-    // Create sub service object from SerialPortProperties in Info.plist
+    
+#if 1
+    // Create sub service object from UserClientProperties in Info.plist
     IOService* spService;
-    ret= provider->Create(this, "SerialPortProperties", &spService);
+    ret= Create(this, "UserClientProperties", &spService);
     if (ret != kIOReturnSuccess || spService == nullptr) {
-        VSPLog(LOG_PREFIX, "Start: provider->Create(SerialPortProperties) failed. code=%d\n", ret);
-        goto error_exit;
+        VSPLog(LOG_PREFIX, "Start: provider->Create(UserClientProperties) failed. code=%d\n", ret);
+        goto sp_skip;
     }
 
     // Check object type
+    ivars->m_spService = OSDynamicCast(VSPSerialPort, spService);
+    if (ivars->m_spService == nullptr) {
+        VSPLog(LOG_PREFIX, "Start: Cast to VSPSerialPort failed.\n");
+        spService->release();
+        ret = kIOReturnInvalid;
+        goto error_exit;
+    }
     
+    sp_skip:
+#endif
     
     // Default TCP server settings
     ivars->m_serverPort = SERVER_PORT;

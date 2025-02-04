@@ -103,6 +103,12 @@ kern_return_t IMPL(VSPSerialPort, Start)
         return ret;
     }
     
+    ret = RegisterService();
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "Start: RegisterService() failed. code=%d\n", ret);
+        return ret;
+    }
+
     return ret;
 }
 
