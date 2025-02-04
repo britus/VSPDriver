@@ -195,7 +195,7 @@ extension AppDelegate
         var ok = false
 
         ok = dataToSend.withUnsafeBytes { ptr in
-            var result : IOReturn  = kIOReturnSuccess
+            let result : IOReturn  = kIOReturnSuccess
             
             // -- //
             

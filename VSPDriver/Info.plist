@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2025 by EoF Software Labs</string>
+	<key>OSBundleUsageDescription</key>
+	<string>Provide virtual serial port</string>
+	<key>com.apple.developer.driverkit</key>
+	<true/>
+	<key>com.apple.developer.driverkit.allow-any-userclient-access</key>
+	<true/>
 	<key>IOKitPersonalities</key>
 	<dict>
 		<key>VSPDriver</key>
@@ -11,7 +19,7 @@
 			<key>IOClass</key>
 			<string>IOUserSerial</string>
 			<key>IOMatchCategory</key>
-			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+			<string>org.eof.tools.VSPDriver</string>
 			<key>IOProviderClass</key>
 			<string>IOUserResources</string>
 			<key>IOResourceMatch</key>
@@ -19,14 +27,8 @@
 			<key>IOUserClass</key>
 			<string>VSPDriver</string>
 			<key>IOUserServerName</key>
-			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+			<string>org.eof.tools.VSPDriver</string>
 		</dict>
 	</dict>
-	<key>com.apple.developer.driverkit.allow-any-userclient-access</key>
-	<true/>
-	<key>com.apple.developer.system-extension.redistributable</key>
-	<true/>
-	<key>com.apple.developer.driverkit </key>
-	<true/>
 </dict>
 </plist>
