@@ -44,6 +44,22 @@
 #define IOLockFreeNULL(l) { if (NULL != (l)) { IOLockFree(l); (l) = NULL; } }
 #endif
 
+/*
+ <key>VSPDriverProperties</key>
+ <dict>
+     <key>IOClass</key>
+     <string>IOUserSerial</string>
+     <key>IOUserClass</key>
+     <string>VCPSerialPort</string>
+     <key>IOTTYBaseName</key>
+     <string>vsp</string>
+     <key>IOTTYSuffix</key>
+     <string>0</string>
+     <key>HiddenPort</key>
+     <false/>
+ </dict>
+*/
+
 typedef struct {
     bool cts;
     bool dsr;
@@ -76,46 +92,33 @@ typedef struct {
     bool parityError;
 } TErrorState;
 
-typedef struct {
-    struct RX {
-        char* buffer;
-        uint64_t size;
-    } rx;
-    struct TX {
-        char* buffer;
-        uint64_t size;
-    } tx;
-} THwFIFO;
-
 // Driver instance state resource
 struct VSPDriver_IVars {
-    IOService* m_provider;
-    
-    IOBufferMemoryDescriptor *m_ifmd;   // Interrupt related buffer
-    IOMemoryDescriptor *m_txqmd;         // Transmit buffer
-    IOMemoryDescriptor *m_rxqmd;         // Receive buffer
-    OSAction* m_txAction;                   // Async get client TX packets action
-    OSData* m_txOSData;                     // ?? for ConfigureReport
-    OSData* m_rxOSData;                     // ?? for ConfigureReport
+    IOService* m_provider = nullptr;
+    IOBufferMemoryDescriptor *m_ifmd = nullptr;   // Interrupt related buffer
+    IOMemoryDescriptor *m_txqmd = nullptr;         // Transmit buffer
+    IOMemoryDescriptor *m_rxqmd = nullptr;         // Receive buffer
+    OSAction* m_txAction = nullptr;                   // Async get client TX packets action
+    OSData* m_txOSData = nullptr;                     // ?? for ConfigureReport
+    OSData* m_rxOSData = nullptr;                     // ?? for ConfigureReport
 
     IODispatchQueue* m_txQueue = nullptr;
     IODataQueueDispatchSource* m_txDataQDSource = nullptr;
     
-    IOLock* m_lock;
+    IOLock* m_lock = nullptr;
     
     // Serial interface
-    TErrorState m_errorState;
-    TUartParameters m_uartParams;
-    THwSerialStatus m_hwStatus;
-    THwFlowControl m_hwFlowControl;
-    THwMCR m_hwMCR;
-    THwFIFO m_fifo;
+    TErrorState m_errorState = {};
+    TUartParameters m_uartParams = {};
+    THwSerialStatus m_hwStatus = {};
+    THwFlowControl m_hwFlowControl = {};
+    THwMCR m_hwMCR = {};
     uint32_t m_hwLatency;
     
     // TCP socket connection details
-    OSString *m_serverAddress;
-    uint16_t m_serverPort;
-    bool m_isConnected;
+    OSString *m_serverAddress = nullptr;
+    uint16_t m_serverPort = 0;
+    bool m_isConnected = false;
 };
 
 // --------------------------------------------------------------------
@@ -156,210 +159,6 @@ void VSPDriver::free(void)
     // Release instance state resource
     IOSafeDeleteNULL(ivars, VSPDriver_IVars, 1);
     super::free();
-}
-
-// --------------------------------------------------------------------
-// CleanupResources_Impl() Remove all resources
-//
-void IMPL(VSPDriver, CleanupResources)
-{
-    VSPLog(LOG_PREFIX, "CleanupResources called.\n");
-
-    OSSafeReleaseNULL(ivars->m_txDataQDSource);
-    OSSafeReleaseNULL(ivars->m_txOSData);
-    OSSafeReleaseNULL(ivars->m_rxOSData);
-    OSSafeReleaseNULL(ivars->m_txQueue);
-    OSSafeReleaseNULL(ivars->m_txAction);
-    OSSafeReleaseNULL(ivars->m_serverAddress);
-
-    // Disconnect all queues. This deallocates
-    // the INT/RX/TX buffer resources too
-    this->DisconnectQueues();
-  
-    // remove TX buffer ...
-    if (ivars->m_fifo.tx.buffer && ivars->m_fifo.tx.size) {
-        IOFree(ivars->m_fifo.tx.buffer, ivars->m_fifo.tx.size);
-    }
-    // remove RX buffer ...
-    if (ivars->m_fifo.rx.buffer && ivars->m_fifo.rx.size) {
-        IOFree(ivars->m_fifo.rx.buffer, ivars->m_fifo.rx.size);
-    }
-    // !! reset !!
-    ivars->m_fifo = {};
-    
-    IOLockFreeNULL(ivars->m_lock);
-}
-
-// --------------------------------------------------------------------
-// SetupTTYBaseName_Impl()
-//
-IOReturn IMPL(VSPDriver, SetupTTYBaseName)
-{
-    IOReturn ret;
-    OSDictionary* properties = nullptr;
-    OSString* baseName = nullptr;
-
-    // setup custom TTY name
-    if ((ret = CopyProperties(&properties)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Start: Unable to get driver properties. code=%d\n", ret);
-        return ret;
-    }
-    
-    baseName = OSString::withCString(TTY_BASE_NAME);
-    properties->setObject(kIOTTYBaseNameKey, baseName);
-    
-    // write back to driver instance
-    if ((ret = SetProperties(properties)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Start: Unable to set TTY base name. code=%d\n", ret);
-        //return ret; // ??? an error - why???
-    }
-    
-    OSSafeReleaseNULL(baseName);
-    OSSafeReleaseNULL(properties);
-    return kIOReturnSuccess;
-}
-
-// --------------------------------------------------------------------
-// SetupTTYBaseName_Impl()
-//
-IOReturn IMPL(VSPDriver, ConnectDriverQueues)
-{
-    IOReturn ret;
-    
-    ret = this->ConnectQueues(&ivars->m_ifmd,       // --
-                              &ivars->m_rxqmd,      // --
-                              &ivars->m_txqmd,      // --
-                              nullptr, nullptr, 0, 0, 8, 8);
-    if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "ConnectQueues failed to allocate IF/RX/TX buffers.\n");
-        return ret;
-    }
-    if (ivars->m_ifmd == nullptr) {
-        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid interrupt buffer detected.\n");
-        return kIOReturnInvalid;
-    }
-    if (ivars->m_rxqmd == nullptr) {
-        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid RX buffer detected.\n");
-        return kIOReturnInvalid;
-    }
-    if (ivars->m_txqmd == nullptr) {
-        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid TX buffer detected.\n");
-        return kIOReturnInvalid;
-    }
-    
-    return kIOReturnSuccess;
-}
-
-// --------------------------------------------------------------------
-// SetupFIFOBuffers_Impl()
-//
-IOReturn IMPL(VSPDriver, SetupFIFOBuffers)
-{
-    uint64_t size = 0;
-    IOReturn ret;
-    
-    // --- allocate internal fifo TX buffer ---
-    if ((ret = ivars->m_txqmd->GetLength(&size)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "SetupFIFOBuffers: Unable to get TX buffer length.\n");
-        return ret;
-    }
-    ivars->m_fifo.tx.buffer = reinterpret_cast<char*>(IOMallocZero(size));
-    if (ivars->m_fifo.tx.buffer == nullptr) {
-        VSPLog(LOG_PREFIX, "SetupFIFOBuffers: Failed to allocate TX FIFO.\n");
-        ivars->m_fifo.tx = {};
-        return kIOReturnNoMemory;
-    }
-    ivars->m_fifo.tx.size = size;
-
-    // --- allocate internal fifo RX buffer ---
-    if ((ret = ivars->m_rxqmd->GetLength(&size)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "SetupFIFOBuffers: Unable to get RX buffer length.\n");
-        return ret;
-    }
-    ivars->m_fifo.rx.buffer = reinterpret_cast<char*>(IOMallocZero(size));
-    if (ivars->m_fifo.rx.buffer == nullptr) {
-        VSPLog(LOG_PREFIX, "SetupFIFOBuffers: Failed to allocate RX FIFO.\n");
-        ivars->m_fifo.rx = {};
-        return kIOReturnNoMemory;
-    }
-    ivars->m_fifo.rx.size = size;
-
-    return kIOReturnSuccess;
-}
-
-// --------------------------------------------------------------------
-// ??? Called by TxDataAvailable() and here we get always 0x00 in all
-// ??? mapped buffer of the IOMemoryDescriptors m_txqmd, m_rxqmd and m_ifmd
-//
-IOReturn IMPL(VSPDriver, CopyMemory)
-{
-    IOMemoryMap* map = nullptr;
-    IOReturn ret;
-
-    VSPLog(LOG_PREFIX, "CopyMemory called.\n");
-
-    if (md == nullptr) {
-        VSPLog(LOG_PREFIX, "copy_md_memory: Invalid memory descriptor (nullptr).\n");
-        return kIOReturnBadArgument;
-    }
-    if (size == 0 || buffer == nullptr) {
-        VSPLog(LOG_PREFIX, "copy_md_memory: Invalid buffer or size parameter.\n");
-        return kIOReturnBadArgument;
-    }
-    
-    VSPLog(LOG_PREFIX, "CopyMemory: reset buffer.\n");
-    
-    // reset targer buffer
-    memset(buffer, 0, size);
-    
-    VSPLog(LOG_PREFIX, "CopyMemory: CreateMapping.\n");
-    
-    // Access memory of TX IOMemoryDescriptor
-    ret = md->CreateMapping(kIOMemoryMapReadOnly, 0, 0, 0, 0, &map);
-    if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "copy_md_memory: Failed to get memory map. code=%d\n", ret);
-        return ret;
-    }
-    
-    VSPLog(LOG_PREFIX, "CopyMemory: GetAddress.\n");
-    
-    // get mapped data...
-    const char* mapBuffer = reinterpret_cast<char*>(map->GetAddress());
-    const uint64_t mapSize = map->GetLength();
-
-    VSPLog(LOG_PREFIX, "copy_md_memory: 1 mapBuffer=0x%llx mapSize=%llu\n", (uint64_t) mapBuffer, mapSize);
-    VSPLog(LOG_PREFIX, "copy_md_memory: 1 debug mapped buffer\n");
-    
-    // !! Debug ....
-    for (uint64_t i = 0; i < mapSize && i < 16; i++) {
-        VSPLog(LOG_PREFIX, "copy_md_memory_1> 0x%02x %c\n", mapBuffer[i], mapBuffer[i]);
-    }
-    
-    char* map2Buffer  = (char*) mapBuffer;
-    uint64_t map2Size = mapSize;
-
-    VSPLog(LOG_PREFIX, "copy_md_memory: 2 mapBuffer=0x%llx mapSize=%llu\n", (uint64_t) map2Buffer, map2Size);
-
-    ret = md->Map(kIOMemoryMapReadOnly, (uint64_t) buffer, size, 0, (uint64_t*)map2Buffer, &map2Size);
-    if (ret == kIOReturnSuccess) {
-        // !! Debug ....
-        for (uint64_t i = 0; i < map2Size && i < 16; i++) {
-            VSPLog(LOG_PREFIX, "copy_md_memory_2> 0x%02x %c\n", map2Buffer[i], map2Buffer[i]);
-        }
-    }
-    
-    VSPLog(LOG_PREFIX, "copy_md_memory: 3 mapBuffer=0x%llx mapSize=%llu\n", (uint64_t) buffer, size);
-
-    // !! Debug ....
-    for (uint64_t i = 0; i < map2Size && i < 16; i++) {
-        VSPLog(LOG_PREFIX, "copy_md_memory_3> 0x%02x %c\n", buffer[i], buffer[i]);
-    }
-
-    // copy data to send into tx FIFO buffer
-    memcpy(buffer, map2Buffer, (map2Size < size ? map2Size : size));
-
-    OSSafeReleaseNULL(map);
-    return kIOReturnSuccess;
 }
 
 // --------------------------------------------------------------------
@@ -407,15 +206,18 @@ kern_return_t IMPL(VSPDriver, Start)
         goto error_exit;
     }
     
-    VSPLog(LOG_PREFIX, "Create FIFO buffers.\n");
-
-    // Allocate private FIFO buffers
-    if ((ret = SetupFIFOBuffers()) != kIOReturnSuccess) {
+    VSPLog(LOG_PREFIX, "Get TX descript size.\n");
+    
+    uint64_t txSize;
+    if ((ret = ivars->m_txqmd->GetLength(&txSize)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "Unable to get TX descriptor size.\n");
         goto error_exit;
     }
+    
+    VSPLog(LOG_PREFIX, "Connect IODataQueueDispatchSource::DataAvailable event.\n");
 
     // Async notification from IODataQueueDispatchSource::DataAvailable
-    ret = CreateActionTxPacketsAvailable(ivars->m_fifo.tx.size, &ivars->m_txAction);
+    ret = CreateActionTxPacketsAvailable(txSize, &ivars->m_txAction);
     if (ret != kIOReturnSuccess || ivars->m_txAction == nullptr) {
         VSPLog(LOG_PREFIX, "Start: Unable to create TX packet action. code=%d\n", ret);
         goto error_exit;
@@ -429,7 +231,7 @@ kern_return_t IMPL(VSPDriver, Start)
         goto error_exit;
     }
     
-    ret = IODataQueueDispatchSource::Create(ivars->m_fifo.tx.size, ivars->m_txQueue, &ivars->m_txDataQDSource);
+    ret = IODataQueueDispatchSource::Create(txSize, ivars->m_txQueue, &ivars->m_txDataQDSource);
     if (ret != kIOReturnSuccess || ivars->m_txDataQDSource == nullptr) {
         VSPLog(LOG_PREFIX, "Start: IODataQueueDispatchSource::Create failed. code=%d\n", ret);
         goto error_exit;
@@ -438,19 +240,6 @@ kern_return_t IMPL(VSPDriver, Start)
     ret = ivars->m_txDataQDSource->SetDataAvailableHandler(ivars->m_txAction);
     if (ret != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "Start: m_txDataQDSource->SetDataAvailableHandler failed. code=%d\n", ret);
-        goto error_exit;
-    }
-
-    // Get OSData objects with FIFO buffers
-    ivars->m_txOSData = OSData::withBytesNoCopy(ivars->m_fifo.tx.buffer, ivars->m_fifo.tx.size);
-    if (ivars->m_txOSData == nullptr) {
-        VSPLog(LOG_PREFIX, "Start: Unable to create TX packet action. code=%d\n", ret);
-        goto error_exit;
-    }
-    
-    ivars->m_rxOSData = OSData::withBytesNoCopy(ivars->m_fifo.rx.buffer, ivars->m_fifo.rx.size);
-    if (ivars->m_rxOSData == nullptr) {
-        VSPLog(LOG_PREFIX, "Start: Unable to create TX packet action. code=%d\n", ret);
         goto error_exit;
     }
 
@@ -492,7 +281,7 @@ kern_return_t IMPL(VSPDriver, Stop)
     
     VSPLog(LOG_PREFIX, "Stop called.\n");
     
-    /* remove all resources */
+    /* remove all IVars resources */
     CleanupResources();
     
     /* shutdown */
@@ -527,23 +316,11 @@ void IMPL(VSPDriver, TxDataAvailable)
 
     // Lock to ensure thread safety
     IOLockLock(ivars->m_lock);
-
-    // ****
-    //if (ivars->m_txDataQDSource->IsDataAvailable()) {
-    //    ivars->m_txDataQDSource->SendDataAvailable();
-    //}
        
     VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_txqmd -------------\n");
-    ret = CopyMemory(ivars->m_txqmd, ivars->m_fifo.tx.buffer, ivars->m_fifo.tx.size);
+    ret = CopyMemory(ivars->m_txqmd);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "TxDataAvailable: copy_md_memory failed on m_txqmd\n");
-        goto finished;
-    }
-
-    VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_rxqmd ------------\n");
-    ret = CopyMemory(ivars->m_rxqmd, ivars->m_fifo.rx.buffer, ivars->m_fifo.rx.size);
-    if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "TxDataAvailable: copy_md_memory failed on m_rxqmd\n");
+        VSPLog(LOG_PREFIX, "TxDataAvailable: CopyMemory failed on m_txqmd\n");
         goto finished;
     }
 
@@ -562,10 +339,15 @@ void IMPL(VSPDriver, TxPacketsAvailable)
         VSPLog(LOG_PREFIX, "TxPacketsAvailable: Invalid action object (nullptr).\n");
         return;
     }
-    
+
+    // ****
+    //if (ivars->m_txDataQDSource->IsDataAvailable()) {
+    //    ivars->m_txDataQDSource->SendDataAvailable();
+    //}
+
     // Lock to ensure thread safety
     IOLockLock(ivars->m_lock);
-
+/*
     const uint64_t size = ivars->m_fifo.tx.size;
     const char* buffer = (char*)action->GetReference();
     if (buffer == nullptr) {
@@ -577,10 +359,8 @@ void IMPL(VSPDriver, TxPacketsAvailable)
     for (uint64_t i = 0; i < size && i < 16; i++) {
         VSPLog(LOG_PREFIX, "TxPacketsAvailable: TX> 0x%02x %c\n", buffer[i], buffer[i]);
     }
+*/
     
-    // copy data to send into tx FIFO buffer
-    //memcpy(ivars->m_fifo.tx.buffer, buffer, (size < ivars->m_fifo.tx.size ? size : ivars->m_fifo.tx.size));
-
 finished:
     IOLockUnlock(ivars->m_lock);
 }
@@ -828,5 +608,136 @@ kern_return_t IMPL(VSPDriver, HwProgramFlowControl)
     ivars->m_hwFlowControl.xon = xon;
     ivars->m_hwFlowControl.xoff = xoff;
     
+    return kIOReturnSuccess;
+}
+
+// --------------------------------------------------------------------
+// CleanupResources_Impl() Remove all resources
+//
+void IMPL(VSPDriver, CleanupResources)
+{
+    VSPLog(LOG_PREFIX, "CleanupResources called.\n");
+
+    OSSafeReleaseNULL(ivars->m_txOSData);
+    OSSafeReleaseNULL(ivars->m_rxOSData);
+    OSSafeReleaseNULL(ivars->m_txDataQDSource);
+
+    OSSafeReleaseNULL(ivars->m_txQueue);
+    OSSafeReleaseNULL(ivars->m_txAction);
+
+    OSSafeReleaseNULL(ivars->m_serverAddress);
+
+    // Disconnect all queues. This deallocates
+    // the INT/RX/TX buffer resources too
+    this->DisconnectQueues();
+    
+    IOLockFreeNULL(ivars->m_lock);
+}
+
+// --------------------------------------------------------------------
+// SetupTTYBaseName_Impl()
+//
+IOReturn IMPL(VSPDriver, SetupTTYBaseName)
+{
+    IOReturn ret;
+    OSDictionary* properties = nullptr;
+    OSString* baseName = nullptr;
+
+    // setup custom TTY name
+    if ((ret = CopyProperties(&properties)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "Start: Unable to get driver properties. code=%d\n", ret);
+        return ret;
+    }
+    
+    baseName = OSString::withCString(TTY_BASE_NAME);
+    properties->setObject(kIOTTYBaseNameKey, baseName);
+    
+    // write back to driver instance
+    if ((ret = SetProperties(properties)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "Start: Unable to set TTY base name. code=%d\n", ret);
+        //return ret; // ??? an error - why???
+    }
+    
+    OSSafeReleaseNULL(baseName);
+    OSSafeReleaseNULL(properties);
+    return kIOReturnSuccess;
+}
+
+// --------------------------------------------------------------------
+// SetupTTYBaseName_Impl()
+//
+IOReturn IMPL(VSPDriver, ConnectDriverQueues)
+{
+    IOReturn ret;
+    
+    ret = this->ConnectQueues(&ivars->m_ifmd,       // --
+                              &ivars->m_rxqmd,      // --
+                              &ivars->m_txqmd,      // --
+                              nullptr, nullptr, 0, 0, 8, 8);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "ConnectQueues failed to allocate IF/RX/TX buffers.\n");
+        return ret;
+    }
+    if (ivars->m_ifmd == nullptr) {
+        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid interrupt buffer detected.\n");
+        return kIOReturnInvalid;
+    }
+    if (ivars->m_rxqmd == nullptr) {
+        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid RX buffer detected.\n");
+        return kIOReturnInvalid;
+    }
+    if (ivars->m_txqmd == nullptr) {
+        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid TX buffer detected.\n");
+        return kIOReturnInvalid;
+    }
+    
+    return kIOReturnSuccess;
+}
+
+// --------------------------------------------------------------------
+// CopyMemory_Impl(IOMemoryDescriptor* md)
+// ??? Called by TxDataAvailable() and here we get always 0x00 in all
+// ??? mapped buffer of the IOMemoryDescriptors m_txqmd, m_rxqmd and m_ifmd
+//
+IOReturn IMPL(VSPDriver, CopyMemory)
+{
+    IOMemoryMap* map = nullptr;
+    IOReturn ret;
+
+    VSPLog(LOG_PREFIX, "CopyMemory called. md=0x%llx\n", (uint64_t)md);
+
+    if (md == nullptr) {
+        VSPLog(LOG_PREFIX, "copy_md_memory: Invalid memory descriptor (nullptr).\n");
+        return kIOReturnBadArgument;
+    }
+    
+    VSPLog(LOG_PREFIX, "CopyMemory: CreateMapping.\n");
+    
+    // Access memory of TX IOMemoryDescriptor
+    uint64_t mapFlags =
+        kIOMemoryMapGuardedDefault |
+        kIOMemoryMapCacheModeDefault |
+        kIOMemoryMapReadOnly;
+    ret = md->CreateMapping(mapFlags, 0, 0, 0, 0, &map);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "copy_md_memory: Failed to get memory map. code=%d\n", ret);
+        return ret;
+    }
+    
+    VSPLog(LOG_PREFIX, "CopyMemory: GetAddress + GetLength.\n");
+    
+    // get mapped data...
+    const uint64_t mapSize = map->GetLength();
+    const uint8_t* mapBuff = (uint8_t*)(map->GetAddress());
+
+    VSPLog(LOG_PREFIX, "CopyMemory: dump mapped buffer\n");
+    VSPLog(LOG_PREFIX, "CopyMemory MAP> mapBuff=0x%llx mapSize=%llu\n", (uint64_t) mapBuff, mapSize);
+
+    // !! Debug ....
+    for (uint64_t i = 0; i < mapSize && i < 16; i++) {
+        VSPLog(LOG_PREFIX, "CopyMemory MAP> mapBuff[%lld]=0x%02x %c\n", i, mapBuff[i], mapBuff[i]);
+    }
+
+    OSSafeReleaseNULL(map);
     return kIOReturnSuccess;
 }

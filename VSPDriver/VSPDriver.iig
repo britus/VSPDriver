@@ -50,8 +50,7 @@ public:
     virtual void CleanupResources() LOCAL;
     virtual IOReturn SetupTTYBaseName() LOCAL;
     virtual IOReturn ConnectDriverQueues() LOCAL;
-    virtual IOReturn SetupFIFOBuffers() LOCAL;
-    virtual IOReturn CopyMemory(IOMemoryDescriptor* md, char* buffer, uint64_t size) LOCAL;
+    virtual IOReturn CopyMemory(IOMemoryDescriptor* md) LOCAL;
 };
 
 #endif /* VSPDriver_h */

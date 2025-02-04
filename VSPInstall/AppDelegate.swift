@@ -73,6 +73,7 @@ extension AppDelegate: OSSystemExtensionRequestDelegate
     func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
         txtStatus.title = "VSP driver activation succeeded:\n\(result)\n"
         print(txtStatus.title)
+        NSApplication.shared.terminate(nil)
     }
 
     func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {
