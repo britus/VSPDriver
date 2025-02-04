@@ -25,6 +25,9 @@
 #include <DriverKit/IODispatchQueue.h>
 #include <DriverKit/IODispatchSource.h>
 
+#include <DriverKit/IODataQueueDispatchSource.h>
+#include <DriverKit/IOInterruptDispatchSource.h>
+
 // -- SerialDriverKit
 #include <SerialDriverKit/SerialDriverKit.h>
 #include <SerialDriverKit/SerialPortInterface.h>
@@ -45,7 +48,7 @@
 #endif
 
 /*
- <key>VSPDriverProperties</key>
+ <key>SerialPortProperties</key>
  <dict>
      <key>IOClass</key>
      <string>IOUserSerial</string>
@@ -98,13 +101,13 @@ struct VSPDriver_IVars {
     IOBufferMemoryDescriptor *m_ifmd = nullptr;   // Interrupt related buffer
     IOMemoryDescriptor *m_txqmd = nullptr;         // Transmit buffer
     IOMemoryDescriptor *m_rxqmd = nullptr;         // Receive buffer
-    OSAction* m_txAction = nullptr;                   // Async get client TX packets action
     OSData* m_txOSData = nullptr;                     // ?? for ConfigureReport
     OSData* m_rxOSData = nullptr;                     // ?? for ConfigureReport
 
-    IODispatchQueue* m_txQueue = nullptr;
-    IODataQueueDispatchSource* m_txDataQDSource = nullptr;
-    
+    IODispatchQueue* m_dataQueue = nullptr;
+    IODataQueueDispatchSource* m_dataSource = nullptr;
+    OSAction* m_dataAction = nullptr;                   // Async get client TX packets action
+
     IOLock* m_lock = nullptr;
     
     // Serial interface
@@ -206,43 +209,46 @@ kern_return_t IMPL(VSPDriver, Start)
         goto error_exit;
     }
     
-    VSPLog(LOG_PREFIX, "Get TX descript size.\n");
+    VSPLog(LOG_PREFIX, "Get memory descriptor size.\n");
+     
+    uint64_t mdSize;
+    if ((ret = ivars->m_txqmd->GetLength(&mdSize)) != kIOReturnSuccess || mdSize == 0) {
+        VSPLog(LOG_PREFIX, "Unable to descriptor size.\n");
+        goto error_exit;
+    }
+
+    VSPLog(LOG_PREFIX, "Connect IODataQueueDispatchSource::DataAvailable event.\n");
+
+    IODispatchQueueName name;
+    strncpy(name, "vcpDataQueue", sizeof(IODispatchQueueName)-1);
     
-    uint64_t txSize;
-    if ((ret = ivars->m_txqmd->GetLength(&txSize)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Unable to get TX descriptor size.\n");
+    // 0 = No options are currently defined.
+    // 0 = No priorities are currently defined.
+    ret = IODispatchQueue::Create(name, 0, 0, &ivars->m_dataQueue);
+    if (ret != kIOReturnSuccess || ivars->m_dataQueue == nullptr) {
+        VSPLog(LOG_PREFIX, "Start: Unable to create ifQueue. code=%d\n", ret);
         goto error_exit;
     }
     
-    VSPLog(LOG_PREFIX, "Connect IODataQueueDispatchSource::DataAvailable event.\n");
+    ret = IODataQueueDispatchSource::Create(mdSize, ivars->m_dataQueue, &ivars->m_dataSource);
+    if (ret != kIOReturnSuccess || ivars->m_dataSource == nullptr) {
+        VSPLog(LOG_PREFIX, "Start: IODataQueueDispatchSource::Create failed. code=%d\n", ret);
+        goto error_exit;
+    }
 
     // Async notification from IODataQueueDispatchSource::DataAvailable
-    ret = CreateActionTxPacketsAvailable(txSize, &ivars->m_txAction);
-    if (ret != kIOReturnSuccess || ivars->m_txAction == nullptr) {
+    ret = CreateActionTxPacketsAvailable(mdSize, &ivars->m_dataAction);
+    if (ret != kIOReturnSuccess || ivars->m_dataAction == nullptr) {
         VSPLog(LOG_PREFIX, "Start: Unable to create TX packet action. code=%d\n", ret);
         goto error_exit;
     }
 
-    // ??? I expected that I can connect the m_txqmd, but this will not work.
-    // ??? This IOUserSerial dispatch queue will not work too
-    ret = CopyDispatchQueue(kIOServiceDefaultQueueName, &ivars->m_txQueue);
-    if (ret != kIOReturnSuccess || ivars->m_txQueue == nullptr) {
-        VSPLog(LOG_PREFIX, "Start: m_txBuffer->CopyDispatchQueue failed. code=%d\n", ret);
-        goto error_exit;
-    }
-    
-    ret = IODataQueueDispatchSource::Create(txSize, ivars->m_txQueue, &ivars->m_txDataQDSource);
-    if (ret != kIOReturnSuccess || ivars->m_txDataQDSource == nullptr) {
-        VSPLog(LOG_PREFIX, "Start: IODataQueueDispatchSource::Create failed. code=%d\n", ret);
-        goto error_exit;
-    }
-    
-    ret = ivars->m_txDataQDSource->SetDataAvailableHandler(ivars->m_txAction);
+    ret = ivars->m_dataSource->SetDataAvailableHandler(ivars->m_dataAction);
     if (ret != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "Start: m_txDataQDSource->SetDataAvailableHandler failed. code=%d\n", ret);
         goto error_exit;
     }
-
+    
     if ((ret = SetupTTYBaseName()) != kIOReturnSuccess) {
         goto error_exit;
     }
@@ -323,13 +329,18 @@ void IMPL(VSPDriver, TxDataAvailable)
         VSPLog(LOG_PREFIX, "TxDataAvailable: CopyMemory failed on m_txqmd\n");
         goto finished;
     }
-
+    
+    // next data from /dev/cu.serial-xxxxxxx device
+    TxFreeSpaceAvailable();
+    
+    // --
+    RxDataAvailable();
 finished:
     IOLockUnlock(ivars->m_lock);
 }
 
 // --------------------------------------------------------------------
-// TxPacketsAvailable_Impl() Async callback handler
+// TxPacketsAvailable_Impl(OSAction* action) Async callback handler
 //
 void IMPL(VSPDriver, TxPacketsAvailable)
 {
@@ -620,10 +631,10 @@ void IMPL(VSPDriver, CleanupResources)
 
     OSSafeReleaseNULL(ivars->m_txOSData);
     OSSafeReleaseNULL(ivars->m_rxOSData);
-    OSSafeReleaseNULL(ivars->m_txDataQDSource);
 
-    OSSafeReleaseNULL(ivars->m_txQueue);
-    OSSafeReleaseNULL(ivars->m_txAction);
+    OSSafeReleaseNULL(ivars->m_dataSource);
+    OSSafeReleaseNULL(ivars->m_dataQueue);
+    OSSafeReleaseNULL(ivars->m_dataAction);
 
     OSSafeReleaseNULL(ivars->m_serverAddress);
 
