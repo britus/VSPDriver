@@ -48,21 +48,6 @@
 #define IOLockFreeNULL(l) { if (NULL != (l)) { IOLockFree(l); (l) = NULL; } }
 #endif
 
-/*
- <key>SerialPortProperties</key>
- <dict>
-     <key>IOClass</key>
-     <string>IOUserSerial</string>
-     <key>IOUserClass</key>
-     <string>VCPSerialPort</string>
-     <key>IOTTYBaseName</key>
-     <string>vsp</string>
-     <key>IOTTYSuffix</key>
-     <string>0</string>
-     <key>HiddenPort</key>
-     <false/>
- </dict>
-*/
 
 typedef struct {
     bool cts;
