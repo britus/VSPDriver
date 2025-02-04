@@ -16,6 +16,7 @@
 		888281F12D4D27750037F07C /* VSPUserClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 888281F02D4D27750037F07C /* VSPUserClient.cpp */; };
 		88906F482D4CCA9400E500BB /* VSPIOHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88906F462D4CCA9400E500BB /* VSPIOHelper.cpp */; };
 		889E8EBC2D4DF4BF002F387A /* VSPLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 889E8EBB2D4DF4BF002F387A /* VSPLogger.h */; };
+		88AEEFF72D5233D4007F2A4C /* IOReg-Outline.md in Resources */ = {isa = PBXBuildFile; fileRef = 88AEEFF62D5233D4007F2A4C /* IOReg-Outline.md */; };
 		88B40D5E2D4B666700DFE7C5 /* VSPDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B40D5D2D4B666700DFE7C5 /* VSPDriver.cpp */; };
 		88B40D602D4B666700DFE7C5 /* VSPDriver.iig in Sources */ = {isa = PBXBuildFile; fileRef = 88B40D5F2D4B666700DFE7C5 /* VSPDriver.iig */; };
 		88B40D682D4B669100DFE7C5 /* DriverKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B40D672D4B669100DFE7C5 /* DriverKit.framework */; };
@@ -65,6 +66,7 @@
 		88906F472D4CCA9400E500BB /* VSPIOHelper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VSPIOHelper.hpp; sourceTree = "<group>"; };
 		88906F492D4CCACB00E500BB /* DriverKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DriverKit.framework; path = System/Library/Frameworks/DriverKit.framework; sourceTree = SDKROOT; };
 		889E8EBB2D4DF4BF002F387A /* VSPLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VSPLogger.h; sourceTree = "<group>"; };
+		88AEEFF62D5233D4007F2A4C /* IOReg-Outline.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "IOReg-Outline.md"; sourceTree = "<group>"; };
 		88B40D572D4B666700DFE7C5 /* org.eof.tools.VSPDriver.dext */ = {isa = PBXFileReference; explicitFileType = "wrapper.driver-extension"; includeInIndex = 0; path = org.eof.tools.VSPDriver.dext; sourceTree = BUILT_PRODUCTS_DIR; };
 		88B40D5D2D4B666700DFE7C5 /* VSPDriver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VSPDriver.cpp; sourceTree = "<group>"; };
 		88B40D5F2D4B666700DFE7C5 /* VSPDriver.iig */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.iig; path = VSPDriver.iig; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				889E8EBB2D4DF4BF002F387A /* VSPLogger.h */,
 				88B40D702D4B85ED00DFE7C5 /* VSPDriver.entitlements */,
 				88B40D612D4B666700DFE7C5 /* Info.plist */,
+				88AEEFF62D5233D4007F2A4C /* IOReg-Outline.md */,
 			);
 			path = VSPDriver;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88AEEFF72D5233D4007F2A4C /* IOReg-Outline.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
