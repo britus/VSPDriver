@@ -38,7 +38,7 @@
 
 // Driver instance state resource
 struct VSPSerialPort_IVars {
-    
+    VSPDriver* m_parent = nullptr;
 };
 
 // --------------------------------------------------------------------
