@@ -91,6 +91,31 @@ extension AppDelegate: OSSystemExtensionRequestDelegate
 extension AppDelegate: ORSSerialPortDelegate
 {
     func checkDevicePaths() {
+        /* clean up first */
+        self.cbxDevices.removeAllItems();
+
+        /* use package for lookup */
+        let ports = ORSSerialPortManager.shared().availablePorts
+        if !ports.isEmpty {
+            for port in ports {
+                let file = port.path
+                if file.contains("cu.serial-") {
+                    cbxDevices.addItem(withObjectValue: file);
+                }
+                else if file.contains("tty.serial-") {
+                    cbxDevices.addItem(withObjectValue: file);
+                }
+            }
+
+            cbxDevices.isEnabled = cbxDevices.numberOfItems > 0
+            btnTest.isEnabled = cbxDevices.isEnabled
+            if cbxDevices.isEnabled {
+                cbxDevices.selectItem(at: 0)
+            }
+            return
+        }
+        
+        /* lookup /dev directory */
         guard let pathUrl = URL(string: "/dev") else {
             return;
         }
@@ -101,8 +126,6 @@ extension AppDelegate: ORSSerialPortDelegate
             let map = directoryContents.map {
                 $0.absoluteString
             }
-            
-            self.cbxDevices.removeAllItems();
             
             for url in map {
                 let file = url.replacingOccurrences(of: "file://", with: "")
