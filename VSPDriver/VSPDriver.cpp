@@ -129,11 +129,9 @@ kern_return_t IMPL(VSPDriver, Start)
         return ret;
     }
     
-#if 1
-    if ((ret = LoadSerialPort(provider)) != kIOReturnSuccess) {
+    if ((ret = LoadSerialPort(provider, 4)) != kIOReturnSuccess) {
         goto error_exit;
     }
-#endif
 
     // Register driver instance to IOReg
     if ((ret = RegisterService()) != kIOReturnSuccess) {
@@ -171,28 +169,30 @@ kern_return_t IMPL(VSPDriver, Stop)
 // --------------------------------------------------------------------
 // LoadSerialPort(IOService* provider)
 // Load VSPSerialPort instance
-kern_return_t VSPDriver::LoadSerialPort(IOService* provider)
+kern_return_t VSPDriver::LoadSerialPort(IOService* provider, uint8_t count)
 {
     kern_return_t ret;
     IOService* service;
 
-    VSPLog(LOG_PREFIX, "Start: create VSPSerialPort from Info.plist.\n");
+    VSPLog(LOG_PREFIX, "LoadSerialPort: create #%d VSPSerialPort from Info.plist.\n", count);
     
-    // Create sub service object from UserClientProperties in Info.plist
-    ret= Create(this, "UserClientProperties", &service);
-    if (ret != kIOReturnSuccess || service == nullptr) {
-        VSPLog(LOG_PREFIX, "Start: provider->Create(UserClientProperties) failed. code=%d\n", ret);
-        return ret;
-    }
-    
-    VSPLog(LOG_PREFIX, "Start: check VSPSerialPort type.\n");
-    
-    // Check object type
-    ivars->m_serialPort = OSDynamicCast(VSPSerialPort, service);
-    if (ivars->m_serialPort == nullptr) {
-        VSPLog(LOG_PREFIX, "Start: Cast to VSPSerialPort failed.\n");
-        service->release();
-        return kIOReturnInvalid;
+    for (uint8_t i = 0; i < count; i++) {
+        // Create sub service object from UserClientProperties in Info.plist
+        ret= Create(this, "UserClientProperties", &service);
+        if (ret != kIOReturnSuccess || service == nullptr) {
+            VSPLog(LOG_PREFIX, "LoadSerialPort: create [%d] failed. code=%d\n", count, ret);
+            return ret;
+        }
+        
+        VSPLog(LOG_PREFIX, "LoadSerialPort: check VSPSerialPort type.\n");
+        
+        // Check object type
+        ivars->m_serialPort = OSDynamicCast(VSPSerialPort, service);
+        if (ivars->m_serialPort == nullptr) {
+            VSPLog(LOG_PREFIX, "LoadSerialPort: Cast to VSPSerialPort failed.\n");
+            service->release();
+            return kIOReturnInvalid;
+        }
     }
     
     return kIOReturnSuccess;

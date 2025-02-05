@@ -1,18 +1,51 @@
 beschric@NWHM0091:~ ()$ log show --color always --backtrace --debug --info --process 0|egrep 'IOUserSerial|VSP'
 
-kernel: DK: VSPDriver-0x100000418 waiting for server org.eof.tools.VSPDriver-100000418
-kernel: (Sandbox) /Library/SystemExtensions/8B73BFD2-FB7C-4596-ACCF-4716A02A5C31/org.eof.tools.VSPDriver.dext/org.eof.tools.VSPDriver[321] ==> com.apple.dext
-kernel: (org.eof.tools.VSPDriver.dext) <private>
-kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] init called.
-kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] constructor called.
-kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] start called.
-kernel: (org.eof.tools.VSPDriver.dext) IOUserSerial::<private>: 40 0x60000040c058
-kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] Start called.
-kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] Connect INT/RX/TX buffers.
-kernel: (org.eof.tools.VSPDriver.dext) IOUserSerial::<private>: 59 0x60000040c058
-kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] Start: Unable to set driver properties. code=-536870212
-kernel: (org.eof.tools.VSPDriver.dext) [VSPDriverPrivate] prepare TCP socket.
-kernel: (org.eof.tools.VSPDriver.dext) [VSPDriver] driver started successfully.
-kernel: DK: VSPDriver-0x100000418::start(IOUserResources-0x100000116) ok
-
-
+2025-02-05 08:25:53.106 Df kernel[0:9d4f] () [VSPDriver]: init called.
+2025-02-05 08:25:53.106 Df kernel[0:9d4f] () [VSPDriver]: Start: called.
+2025-02-05 08:25:53.106 Df kernel[0:9d4f] () [VSPDriver]: LoadSerialPort: create #4 VSPSerialPort from Info.plist.
+2025-02-05 08:25:53.106 Df kernel[0:9d4f] () [VSPSerialPort]: init called.
+2025-02-05 08:25:53.106 Df kernel[0:9d4f] () [VSPSerialPort]: Start: called.
+2025-02-05 08:25:53.106 Df kernel[0:9d4f] () IOUserSerial::<private>: 40 0x600002f54058
+2025-02-05 08:25:53.106 Df kernel[0:9d4f] () [VSPSerialPort]: Start: Connect INT/RX/TX buffers.
+2025-02-05 08:25:53.106 Df kernel[0:9d4f] () IOUserSerial::<private>: 59 0x600002f54058
+2025-02-05 08:25:53.106 Df kernel[0:9d4f] () [VSPSerialPort]: Start: Get memory descriptor size.
+2025-02-05 08:25:53.106 Df kernel[0:9d4f] () [VSPSerialPort]: Start: Connect IODataQueueDispatchSource::DataAvailable event.
+2025-02-05 08:25:53.107 Df kernel[0:9d4f] () [VSPSerialPort]: Start: Unable to set TTY base name. code=-536870212
+2025-02-05 08:25:53.107 Df kernel[0:9d4f] () [VSPSerialPort]: Start: prepare internal stuff.
+2025-02-05 08:25:53.107 Df kernel[0:9d4f] () [VSPSerialPort]: Start: driver started successfully.
+2025-02-05 08:25:53.107 Df kernel[0:9d4f] () [VSPDriver]: LoadSerialPort: check VSPSerialPort type.
+2025-02-05 08:25:53.107 Df kernel[0:9d4f] () [VSPSerialPort]: init called.
+2025-02-05 08:25:53.107 Df kernel[0:9d4f] () [VSPSerialPort]: Start: called.
+2025-02-05 08:25:53.107 Df kernel[0:9d4f] () IOUserSerial::<private>: 40 0x600002f54198
+2025-02-05 08:25:53.107 Df kernel[0:9d4f] () [VSPSerialPort]: Start: Connect INT/RX/TX buffers.
+2025-02-05 08:25:53.107 Df kernel[0:9d4f] () IOUserSerial::<private>: 59 0x600002f54198
+2025-02-05 08:25:53.107 Df kernel[0:9d4f] () [VSPSerialPort]: Start: Get memory descriptor size.
+2025-02-05 08:25:53.107 Df kernel[0:9d4f] () [VSPSerialPort]: Start: Connect IODataQueueDispatchSource::DataAvailable event.
+2025-02-05 08:25:53.107 Df kernel[0:9d4f] () [VSPSerialPort]: Start: Unable to set TTY base name. code=-536870212
+2025-02-05 08:25:53.107 Df kernel[0:9d4f] () [VSPSerialPort]: Start: prepare internal stuff.
+2025-02-05 08:25:53.107 Df kernel[0:9d4f] () [VSPSerialPort]: Start: driver started successfully.
+2025-02-05 08:25:53.107 Df kernel[0:9d4f] () [VSPDriver]: LoadSerialPort: check VSPSerialPort type.
+2025-02-05 08:25:53.107 Df kernel[0:9d4f] () [VSPSerialPort]: init called.
+2025-02-05 08:25:53.108 Df kernel[0:9d4f] () [VSPSerialPort]: Start: called.
+2025-02-05 08:25:53.108 Df kernel[0:9d4f] () IOUserSerial::<private>: 40 0x600002f50058
+2025-02-05 08:25:53.108 Df kernel[0:9d4f] () [VSPSerialPort]: Start: Connect INT/RX/TX buffers.
+2025-02-05 08:25:53.108 Df kernel[0:9d4f] () IOUserSerial::<private>: 59 0x600002f50058
+2025-02-05 08:25:53.108 Df kernel[0:9d4f] () [VSPSerialPort]: Start: Get memory descriptor size.
+2025-02-05 08:25:53.108 Df kernel[0:9d4f] () [VSPSerialPort]: Start: Connect IODataQueueDispatchSource::DataAvailable event.
+2025-02-05 08:25:53.108 Df kernel[0:9d4f] () [VSPSerialPort]: Start: Unable to set TTY base name. code=-536870212
+2025-02-05 08:25:53.108 Df kernel[0:9d4f] () [VSPSerialPort]: Start: prepare internal stuff.
+2025-02-05 08:25:53.108 Df kernel[0:9d4f] () [VSPSerialPort]: Start: driver started successfully.
+2025-02-05 08:25:53.108 Df kernel[0:9d4f] () [VSPDriver]: LoadSerialPort: check VSPSerialPort type.
+2025-02-05 08:25:53.108 Df kernel[0:9d4f] () [VSPSerialPort]: init called.
+2025-02-05 08:25:53.108 Df kernel[0:9d4f] () [VSPSerialPort]: Start: called.
+2025-02-05 08:25:53.108 Df kernel[0:9d4f] () IOUserSerial::<private>: 40 0x600002f50198
+2025-02-05 08:25:53.108 Df kernel[0:9d4f] () [VSPSerialPort]: Start: Connect INT/RX/TX buffers.
+2025-02-05 08:25:53.108 Df kernel[0:9d4f] () IOUserSerial::<private>: 59 0x600002f50198
+2025-02-05 08:25:53.108 Df kernel[0:9d4f] () [VSPSerialPort]: Start: Get memory descriptor size.
+2025-02-05 08:25:53.108 Df kernel[0:9d4f] () [VSPSerialPort]: Start: Connect IODataQueueDispatchSource::DataAvailable event.
+2025-02-05 08:25:53.109 Df kernel[0:9d4f] () [VSPSerialPort]: Start: Unable to set TTY base name. code=-536870212
+2025-02-05 08:25:53.109 Df kernel[0:9d4f] () [VSPSerialPort]: Start: prepare internal stuff.
+2025-02-05 08:25:53.109 Df kernel[0:9d4f] () [VSPSerialPort]: Start: driver started successfully.
+2025-02-05 08:25:53.109 Df kernel[0:9d4f] () [VSPDriver]: LoadSerialPort: check VSPSerialPort type.
+2025-02-05 08:25:53.109 Df kernel[0:9d4f] () [VSPDriver]: Start: driver started successfully.
+2025-02-05 08:25:53.109 Df kernel[0:9d40] DK: VSPDriver-0x100000a57::start(IOUserResources-0x100000116) ok
