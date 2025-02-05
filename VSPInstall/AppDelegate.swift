@@ -148,7 +148,7 @@ extension AppDelegate: ORSSerialPortDelegate
     }
     
     func checkDriverInstall() {
-        let dataToSend = "Hello".data(using: .utf8)
+        let dataToSend = "Hello World\r\n".data(using: .utf8)
         let index = cbxDevices.indexOfSelectedItem
         let path = cbxDevices.itemObjectValue(at: index)
         
@@ -157,23 +157,28 @@ extension AppDelegate: ORSSerialPortDelegate
             return
         }
         
-        guard var port = ORSSerialPort(path: dev) else {
+        guard let port = ORSSerialPort(path: dev) else {
             txtStatus.title += "[VSP-Test]: Can't open device: \(dev)"
             return
         }
         
         port.delegate = self
         port.baudRate = 9600
-        port.parity = .none
-        port.numberOfStopBits = 1
         port.usesRTSCTSFlowControl = true
-        
+        port.numberOfStopBits = 1
+        port.parity = .none
+
         guard let data = dataToSend else {
             txtStatus.title += "[VSP-Test]: booo \(String(describing: dataToSend))"
             return
             
         }
         
+        btnTest.isEnabled = false
+        cbxDevices.isEnabled = false
+        btnInstall.isEnabled = false
+        txtStatus.title = "Please wait..."
+
         if port.send(data) {
             txtStatus.title += "[VSP-Test]: SUCCESS\n"
         }
@@ -182,27 +187,45 @@ extension AppDelegate: ORSSerialPortDelegate
     func serialPort(_ serialPort: ORSSerialPort, didReceive data: Data) {
         let string = String(data: data, encoding: .utf8)
         txtStatus.title += "[VSP-Test]: Got answer\n\(String(describing: string))"
+        serialPort.close()
     }
     
     func serialPortWasClosed(_ serialPort: ORSSerialPort) {
         txtStatus.title += "[VSP-Test]: port closed"
+        btnTest.isEnabled = true
+        cbxDevices.isEnabled = true
+        btnInstall.isEnabled = true
     }
+
     func serialPortWasOpened(_ serialPort: ORSSerialPort) {
         txtStatus.title += "[VSP-Test]: port opened"
+        btnTest.isEnabled = false
+        cbxDevices.isEnabled = false
+        btnInstall.isEnabled = false
     }
+
     func serialPort(_ serialPort: ORSSerialPort, didEncounterError error: Error) {
         txtStatus.title += "[VSP-Test]: port error\n\(String(describing: error.localizedDescription))"
+        serialPort.close()
     }
+
     func serialPort(_ serialPort: ORSSerialPort, didReceiveResponse responseData: Data, to request: ORSSerialRequest) {
         txtStatus.title += "[VSP-Test]: \(responseData)"
+        serialPort.close()
     }
+
     func serialPort(_ serialPort: ORSSerialPort, requestDidTimeout request: ORSSerialRequest) {
         txtStatus.title += "[VSP-Test]: request timed out."
+        serialPort.close()
     }
+ 
     func serialPortWasRemovedFromSystem(_ serialPort: ORSSerialPort) {
         txtStatus.title += "[VSP-Test]: port removed."
+        serialPort.close()
     }
+    
     func serialPort(_ serialPort: ORSSerialPort, didReceivePacket packetData: Data, matching descriptor: ORSSerialPacketDescriptor) {
         txtStatus.title += "[VSP-Test]: \(packetData)"
+        serialPort.close()
     }
 }
