@@ -194,25 +194,25 @@ kern_return_t IMPL(VSPDriver, Start)
 {
     kern_return_t ret;
   
-    VSPLog(LOG_PREFIX, "start called.\n");
+    VSPLog(LOG_PREFIX, "Start: called.\n");
    
     /* check our private driver instance */
     if (!ivars) {
-        VSPLog(LOG_PREFIX, "Private driver instance is NULL\n");
+        VSPLog(LOG_PREFIX, "Start: Private driver instance is NULL\n");
         return kIOReturnInvalid;
     }
 
     /* call apple style super method */
     ret = Start(provider, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Start (super): failed. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "Start(super): failed. code=%d\n", ret);
         return ret;
     }
   
     // the locker
     ivars->m_lock = IOLockAlloc();
     if (ivars->m_lock == nullptr) {
-        VSPLog(LOG_PREFIX, "Unable to allocate lock object.\n");
+        VSPLog(LOG_PREFIX, "Start: Unable to allocate lock object.\n");
         goto error_exit;
     }
 
@@ -225,22 +225,22 @@ kern_return_t IMPL(VSPDriver, Start)
     ivars->m_uartParams.nDataBits = 8;
     ivars->m_uartParams.parity = 0;
     
-    VSPLog(LOG_PREFIX, "Connect INT/RX/TX buffers.\n");
+    VSPLog(LOG_PREFIX, "Start: Connect INT/RX/TX buffers.\n");
     
     // connect dispatcher queues and get its memory descriptors
     if ((ret = ConnectDriverQueues()) != kIOReturnSuccess) {
         goto error_exit;
     }
     
-    VSPLog(LOG_PREFIX, "Get memory descriptor size.\n");
+    VSPLog(LOG_PREFIX, "Start: Get memory descriptor size.\n");
      
     uint64_t mdSize;
     if ((ret = ivars->m_txqmd->GetLength(&mdSize)) != kIOReturnSuccess || mdSize == 0) {
-        VSPLog(LOG_PREFIX, "Unable to descriptor size.\n");
+        VSPLog(LOG_PREFIX, "Start: Unable to descriptor size.\n");
         goto error_exit;
     }
 
-    VSPLog(LOG_PREFIX, "Connect IODataQueueDispatchSource::DataAvailable event.\n");
+    VSPLog(LOG_PREFIX, "Start: Connect IODataQueueDispatchSource::DataAvailable event.\n");
 
     IODispatchQueueName name;
     strncpy(name, "vcpDataQueue", sizeof(IODispatchQueueName)-1);
@@ -276,7 +276,7 @@ kern_return_t IMPL(VSPDriver, Start)
         goto error_exit;
     }
     
-    VSPLog(LOG_PREFIX, "prepare internal stuff.\n");
+    VSPLog(LOG_PREFIX, "Start: prepare internal stuff.\n");
     
 #if 1
     // Create sub service object from UserClientProperties in Info.plist
@@ -309,11 +309,11 @@ kern_return_t IMPL(VSPDriver, Start)
    
     // Register driver instance to IOReg
     if ((ret = RegisterService()) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "RegisterService failed. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "Start: RegisterService failed. code=%d\n", ret);
         goto error_exit;
     }
 
-    VSPLog(LOG_PREFIX, "driver started successfully.\n");
+    VSPLog(LOG_PREFIX, "Start: driver started successfully.\n");
     return kIOReturnSuccess;
 
 error_exit:

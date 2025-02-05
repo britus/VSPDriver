@@ -29,9 +29,9 @@
 			<key>UserClientProperties</key>
 			<dict>
 				<key>IOClass</key>
-				<string>IOSerialBSDClient</string>
+				<string>IOService</string>
 				<key>IOUserClass</key>
-				<string>VCPSerialPort</string>
+				<string>VSPSerialPort</string>
 			</dict>
 			<key>HiddenPort</key>
 			<false/>
