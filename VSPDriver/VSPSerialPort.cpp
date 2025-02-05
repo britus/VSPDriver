@@ -421,15 +421,9 @@ kern_return_t IMPL(VSPSerialPort, SetModemStatus)
 //
 kern_return_t IMPL(VSPSerialPort, RxError)
 {
-    kern_return_t ret = kIOReturnIOError;
+    kern_return_t ret;
     
     VSPLog(LOG_PREFIX, "RxError called.\n");
-    
-    ret = RxError(overrun, gotBreak, framingError, parityError, SUPERDISPATCH);
-    if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "RxError (super) failed. code=%d\n", ret);
-        return ret;
-    }
     
     if (overrun) {
         VSPLog(LOG_PREFIX, "RX overrun.\n");
@@ -452,7 +446,14 @@ kern_return_t IMPL(VSPSerialPort, RxError)
     ivars->m_errorState.gotBreak = gotBreak;
     ivars->m_errorState.parityError = parityError;
     
-    return ret;
+    ret = RxError(overrun, gotBreak, framingError, parityError, SUPERDISPATCH);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "RxError (super) failed. code=%d\n", ret);
+        return ret;
+    }
+
+    
+    return kIOReturnSuccess;
 }
 
 // --------------------------------------------------------------------
@@ -703,8 +704,8 @@ IOReturn IMPL(VSPSerialPort, ConnectDriverQueues)
 
 // --------------------------------------------------------------------
 // CopyMemory_Impl(IOMemoryDescriptor* md)
-// ??? Called by TxDataAvailable() and here we get always 0x00 in all
-// ??? mapped buffer of the IOMemoryDescriptors m_txqmd, m_rxqmd and m_ifmd
+// ??? Called by TxDataAvailable() and here we get always 0x00 in MD
+// ??? mapped buffer of the IOMemoryDescriptors m_txqmd
 //
 IOReturn IMPL(VSPSerialPort, CopyMemory)
 {
