@@ -316,34 +316,27 @@ void VSPSerialPort::TxDataAvailable_Impl() //
     // reset
     ivars->m_txIsComplete = false;
 
-#if 0 /* ---------| txqmd Direct access | ------------- */
+    /* ---------| txqmd Direct access | ------------- */
     VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_txqmd -------------\n");
     
     /* OSData, action, outCount */
     // copy mapped buffer of IOMemoryDescriptor txqmd
-    ret = CopyMemory(ivars->m_txqmd, nullptr, 0);
+    IOReturn ret = CopyMemory(ivars->m_txqmd, nullptr, 0);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "TxDataAvailable: CopyMemory failed on m_txqmd\n");
+        VSPLog(LOG_PREFIX, "TxDataAvailable: CopyMemory failed on m_txqmd. code=%d\n", ret);
         goto finished;
     }
-    
-    // next data from /dev/cu.serial-xxxxxxx device
-    TxFreeSpaceAvailable();
-    
-    // --
-    RxDataAvailable();
-#else /* ---------| raise txqmd async | ------------- */
+
+    /* ---------| raise txqmd async?? | ------------- */
 
     // trigger available event ...
     if (ivars->m_dataSource->IsDataAvailable()) {
-        VSPLog(LOG_PREFIX, "TxDataAvailable: send DataAvailable\n");
+        VSPLog(LOG_PREFIX, "TxDataAvailable: (1) send DataAvailable\n");
         ivars->m_dataSource->SendDataAvailable();
     } else {
-        VSPLog(LOG_PREFIX, "TxDataAvailable: call DataAvailable\n");
+        VSPLog(LOG_PREFIX, "TxDataAvailable: (0) call DataAvailable\n");
         ivars->m_dataSource->DataAvailable(ivars->m_dataAction);
     }
-
-#endif
     
 finished:
     IOLockUnlock(ivars->m_lock);
