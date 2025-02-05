@@ -2,142 +2,215 @@
 
 $ echo Welcome > /dev/cu.serial-100000A5E
 
-2025-02-05 08:33:00.864 Df kernel[0:e27] (IOUserSerial) IOUserSerial::allocResources: 904 <==
-2025-02-05 08:33:00.864 Df kernel[0:e27] (IOUserSerial) IOUserSerial::allocResources: 904 locklevel = 1
-2025-02-05 08:33:00.864 Df kernel[0:9d4f] () IOUserSerial::<private>: 59 0x600002f50198
-2025-02-05 08:33:00.864 Df kernel[0:e27] (IOUserSerial) IOUserSerial::allocResources: 904 ==>0
-2025-02-05 08:33:00.864 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwProgramMCR: 1115 <==
-2025-02-05 08:33:00.864 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwProgramMCR: 1115 locklevel = 1
-2025-02-05 08:33:00.865 Df kernel[0:9d4f] () [VSPSerialPort]: HwProgramMCR called.
-2025-02-05 08:33:00.865 Df kernel[0:9d4f] () [VSPSerialPort]: HwProgramMCR: dtr=1 rts=1
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwProgramMCR: 1115 ==>0
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwActivate: 1069 <==
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwActivate: 1069 locklevel = 1
-2025-02-05 08:33:00.865 Df kernel[0:9d4f] () [VSPSerialPort]: HwActivate called.
-2025-02-05 08:33:00.865 Df kernel[0:9d4f] () IOUserSerial::<private>: 130 0x600002f50198
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwActivate: 1069 ==>0
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 <==
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 locklevel = 1
-2025-02-05 08:33:00.865 Df kernel[0:9d4f] () [VSPSerialPort]: HwResetFIFO called.
-2025-02-05 08:33:00.865 Df kernel[0:9d4f] () [VSPSerialPort]: HwResetFIFO: tx=1 rx=0
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 ==>0
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 <==
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 locklevel = 1
-2025-02-05 08:33:00.865 Df kernel[0:9d4f] () [VSPSerialPort]: HwResetFIFO called.
-2025-02-05 08:33:00.865 Df kernel[0:9d4f] () [VSPSerialPort]: HwResetFIFO: tx=0 rx=1
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 ==>0
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 <==
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 locklevel = 1
-2025-02-05 08:33:00.865 Df kernel[0:9d4f] () [VSPSerialPort]: HwGetModemStatus called.
-2025-02-05 08:33:00.865 Df kernel[0:9d4f] () [VSPSerialPort]: HwGetModemStatus: cts=0 dsr=0 ri=0 dcd=0
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 ==>0
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 <==
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 locklevel = 1
-2025-02-05 08:33:00.865 Df kernel[0:9d4f] () [VSPSerialPort]: HwProgramFlowControl called.
-2025-02-05 08:33:00.865 Df kernel[0:9d4f] () [VSPSerialPort]: HwProgramFlowControl: arg=00 xon=11 xoff=13
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 ==>0
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwProgramBaudRate: 1107 <==
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwProgramBaudRate: 1107 locklevel = 1
-2025-02-05 08:33:00.865 Df kernel[0:9d4f] () [VSPSerialPort]: HwProgramBaudRate called.
-2025-02-05 08:33:00.865 Df kernel[0:9d4f] () [VSPSerialPort]: HwProgramBaudRate: baudRate=9600
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwProgramBaudRate: 1107 ==>0
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 <==
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 locklevel = 1
-2025-02-05 08:33:00.865 Df kernel[0:9d4f] () [VSPSerialPort]: HwProgramUART called.
-2025-02-05 08:33:00.865 Df kernel[0:9d4f] () [VSPSerialPort]: HwProgramUART: baudRate=9600 nDataBits=8 nHalfStopBits=2 parity=1
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 ==>0
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 <==
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 locklevel = 1
-2025-02-05 08:33:00.865 Df kernel[0:9d4f] () [VSPSerialPort]: HwProgramUART called.
-2025-02-05 08:33:00.865 Df kernel[0:9d4f] () [VSPSerialPort]: HwProgramUART: baudRate=9600 nDataBits=8 nHalfStopBits=2 parity=1
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 ==>0
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 <==
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 locklevel = 1
-2025-02-05 08:33:00.865 Df kernel[0:9d4f] () [VSPSerialPort]: HwProgramUART called.
-2025-02-05 08:33:00.865 Df kernel[0:9d4f] () [VSPSerialPort]: HwProgramUART: baudRate=9600 nDataBits=8 nHalfStopBits=2 parity=1
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 ==>0
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 <==
-2025-02-05 08:33:00.865 Df kernel[0:e27] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 locklevel = 1
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: HwProgramFlowControl called.
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: HwProgramFlowControl: arg=00 xon=11 xoff=13
-2025-02-05 08:33:00.866 Df kernel[0:e27] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 ==>0
-2025-02-05 08:33:00.866 Df kernel[0:a7ff] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 <==
-2025-02-05 08:33:00.866 Df kernel[0:a7ff] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 locklevel = 1
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: HwGetModemStatus called.
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: HwGetModemStatus: cts=0 dsr=0 ri=0 dcd=0
-2025-02-05 08:33:00.866 Df kernel[0:e27] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 <==
-2025-02-05 08:33:00.866 Df kernel[0:e27] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 locklevel = 1
-2025-02-05 08:33:00.866 Df kernel[0:a7ff] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 ==>0
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: HwProgramFlowControl called.
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: HwProgramFlowControl: arg=00 xon=11 xoff=13
+2025-02-05 21:03:18.257 Df kernel[0:311c1] () [VSPDriver]: init called.
+2025-02-05 21:03:18.257 Df kernel[0:311c1] () [VSPDriver]: Start: called.
+2025-02-05 21:03:18.257 Df kernel[0:311c1] () [VSPDriver]: Start: NewUserClient failed. code=-536870212
+2025-02-05 21:03:18.257 Df kernel[0:311c1] () [VSPDriver]: LoadSerialPort: create #4 VSPSerialPort from Info.plist.
+2025-02-05 21:03:18.257 Df kernel[0:311c1] () [VSPSerialPort]: init called.
+2025-02-05 21:03:18.258 Df kernel[0:311c1] () [VSPSerialPort]: Start: called.
+2025-02-05 21:03:18.258 Df kernel[0:311c1] () IOUserSerial::<private>: 40 0x600001740058
+2025-02-05 21:03:18.258 Df kernel[0:311c1] () [VSPSerialPort]: Start: Connect INT/RX/TX buffers.
+2025-02-05 21:03:18.258 Df kernel[0:311c1] () IOUserSerial::<private>: 59 0x600001740058
+2025-02-05 21:03:18.258 Df kernel[0:311c1] () [VSPSerialPort]: Start: Get memory descriptor size.
+2025-02-05 21:03:18.258 Df kernel[0:311c1] () [VSPSerialPort]: Start: Connect IODataQueueDispatchSource::DataAvailable event.
+2025-02-05 21:03:18.258 Df kernel[0:311c1] () [VSPSerialPort]: Start: Unable to set TTY base name. code=-536870212
+2025-02-05 21:03:18.258 Df kernel[0:311c1] () [VSPSerialPort]: Start: prepare internal stuff.
+2025-02-05 21:03:18.258 Df kernel[0:311c1] () [VSPSerialPort]: Start: driver started successfully.
+2025-02-05 21:03:18.258 Df kernel[0:311c1] () [VSPDriver]: LoadSerialPort: check VSPSerialPort type.
+2025-02-05 21:03:18.258 Df kernel[0:311c1] () [VSPSerialPort]: init called.
+2025-02-05 21:03:18.259 Df kernel[0:311c1] () [VSPSerialPort]: Start: called.
+2025-02-05 21:03:18.259 Df kernel[0:311c1] () IOUserSerial::<private>: 40 0x6000017440f8
+2025-02-05 21:03:18.259 Df kernel[0:311c1] () [VSPSerialPort]: Start: Connect INT/RX/TX buffers.
+2025-02-05 21:03:18.259 Df kernel[0:311c1] () IOUserSerial::<private>: 59 0x6000017440f8
+2025-02-05 21:03:18.259 Df kernel[0:311c1] () [VSPSerialPort]: Start: Get memory descriptor size.
+2025-02-05 21:03:18.259 Df kernel[0:311c1] () [VSPSerialPort]: Start: Connect IODataQueueDispatchSource::DataAvailable event.
+2025-02-05 21:03:18.259 Df kernel[0:311c1] () [VSPSerialPort]: Start: Unable to set TTY base name. code=-536870212
+2025-02-05 21:03:18.259 Df kernel[0:311c1] () [VSPSerialPort]: Start: prepare internal stuff.
+2025-02-05 21:03:18.259 Df kernel[0:311c1] () [VSPSerialPort]: Start: driver started successfully.
+2025-02-05 21:03:18.259 Df kernel[0:311c1] () [VSPDriver]: LoadSerialPort: check VSPSerialPort type.
+2025-02-05 21:03:18.259 Df kernel[0:311c1] () [VSPSerialPort]: init called.
+2025-02-05 21:03:18.259 Df kernel[0:311c1] () [VSPSerialPort]: Start: called.
+2025-02-05 21:03:18.259 Df kernel[0:311c1] () IOUserSerial::<private>: 40 0x600001744238
+2025-02-05 21:03:18.260 Df kernel[0:311c1] () [VSPSerialPort]: Start: Connect INT/RX/TX buffers.
+2025-02-05 21:03:18.260 Df kernel[0:311c1] () IOUserSerial::<private>: 59 0x600001744238
+2025-02-05 21:03:18.260 Df kernel[0:311c1] () [VSPSerialPort]: Start: Get memory descriptor size.
+2025-02-05 21:03:18.260 Df kernel[0:311c1] () [VSPSerialPort]: Start: Connect IODataQueueDispatchSource::DataAvailable event.
+2025-02-05 21:03:18.260 Df kernel[0:311c1] () [VSPSerialPort]: Start: Unable to set TTY base name. code=-536870212
+2025-02-05 21:03:18.260 Df kernel[0:311c1] () [VSPSerialPort]: Start: prepare internal stuff.
+2025-02-05 21:03:18.260 Df kernel[0:311c1] () [VSPSerialPort]: Start: driver started successfully.
+2025-02-05 21:03:18.260 Df kernel[0:311c1] () [VSPDriver]: LoadSerialPort: check VSPSerialPort type.
+2025-02-05 21:03:18.261 Df kernel[0:311c1] () [VSPSerialPort]: init called.
+2025-02-05 21:03:18.261 Df kernel[0:311c1] () [VSPSerialPort]: Start: called.
+2025-02-05 21:03:18.261 Df kernel[0:311c1] () IOUserSerial::<private>: 40 0x60000174c0f8
+2025-02-05 21:03:18.261 Df kernel[0:311c1] () [VSPSerialPort]: Start: Connect INT/RX/TX buffers.
+2025-02-05 21:03:18.261 Df kernel[0:311c1] () IOUserSerial::<private>: 59 0x60000174c0f8
+2025-02-05 21:03:18.261 Df kernel[0:311c1] () [VSPSerialPort]: Start: Get memory descriptor size.
+2025-02-05 21:03:18.261 Df kernel[0:311c1] () [VSPSerialPort]: Start: Connect IODataQueueDispatchSource::DataAvailable event.
+2025-02-05 21:03:18.261 Df kernel[0:311c1] () [VSPSerialPort]: Start: Unable to set TTY base name. code=-536870212
+2025-02-05 21:03:18.261 Df kernel[0:311c1] () [VSPSerialPort]: Start: prepare internal stuff.
+2025-02-05 21:03:18.261 Df kernel[0:311c1] () [VSPSerialPort]: Start: driver started successfully.
+2025-02-05 21:03:18.261 Df kernel[0:311c1] () [VSPDriver]: LoadSerialPort: check VSPSerialPort type.
+2025-02-05 21:03:18.261 Df kernel[0:311c1] () [VSPDriver]: Start: driver started successfully.
+2025-02-05 21:03:18.261 Df kernel[0:311bc] DK: VSPDriver-0x10000243f::start(IOUserResources-0x100000116) ok
+2025-02-05 21:03:30.535 Df kernel[0:acf] (IOUserSerial) IOUserSerial::allocResources: 904 <==
+2025-02-05 21:03:30.535 Df kernel[0:acf] (IOUserSerial) IOUserSerial::allocResources: 904 locklevel = 1
+2025-02-05 21:03:30.535 Df kernel[0:311c1] () IOUserSerial::<private>: 59 0x6000017440f8
+2025-02-05 21:03:30.535 Df kernel[0:acf] (IOUserSerial) IOUserSerial::allocResources: 904 ==>0
+2025-02-05 21:03:30.535 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwProgramMCR: 1115 <==
+2025-02-05 21:03:30.535 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwProgramMCR: 1115 locklevel = 1
+2025-02-05 21:03:30.536 Df kernel[0:311c1] () [VSPSerialPort]: HwProgramMCR called.
+2025-02-05 21:03:30.536 Df kernel[0:311c1] () [VSPSerialPort]: HwProgramMCR: dtr=1 rts=1
+2025-02-05 21:03:30.536 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwProgramMCR: 1115 ==>0
+2025-02-05 21:03:30.536 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwActivate: 1069 <==
+2025-02-05 21:03:30.536 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwActivate: 1069 locklevel = 1
+2025-02-05 21:03:30.536 Df kernel[0:311c1] () [VSPSerialPort]: HwActivate called.
+2025-02-05 21:03:30.536 Df kernel[0:311c1] () IOUserSerial::<private>: 130 0x6000017440f8
+2025-02-05 21:03:30.536 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwActivate: 1069 ==>0
+2025-02-05 21:03:30.536 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 <==
+2025-02-05 21:03:30.536 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 locklevel = 1
+2025-02-05 21:03:30.536 Df kernel[0:311c1] () [VSPSerialPort]: HwResetFIFO called.
+2025-02-05 21:03:30.536 Df kernel[0:311c1] () [VSPSerialPort]: HwResetFIFO: tx=1 rx=0
+2025-02-05 21:03:30.536 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 ==>0
+2025-02-05 21:03:30.536 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 <==
+2025-02-05 21:03:30.536 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 locklevel = 1
+2025-02-05 21:03:30.536 Df kernel[0:311c1] () [VSPSerialPort]: HwResetFIFO called.
+2025-02-05 21:03:30.536 Df kernel[0:311c1] () [VSPSerialPort]: HwResetFIFO: tx=0 rx=1
+2025-02-05 21:03:30.536 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 ==>0
+2025-02-05 21:03:30.536 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 <==
+2025-02-05 21:03:30.536 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 locklevel = 1
+2025-02-05 21:03:30.536 Df kernel[0:311c1] () [VSPSerialPort]: HwGetModemStatus called.
+2025-02-05 21:03:30.536 Df kernel[0:311c1] () [VSPSerialPort]: HwGetModemStatus: cts=0 dsr=0 ri=0 dcd=0
+2025-02-05 21:03:30.536 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 ==>0
+2025-02-05 21:03:30.536 Df kernel[0:acf] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 <==
+2025-02-05 21:03:30.536 Df kernel[0:acf] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 locklevel = 1
+2025-02-05 21:03:30.536 Df kernel[0:311c1] () [VSPSerialPort]: HwProgramFlowControl called.
+2025-02-05 21:03:30.536 Df kernel[0:311c1] () [VSPSerialPort]: HwProgramFlowControl: arg=00 xon=11 xoff=13
+2025-02-05 21:03:30.536 Df kernel[0:acf] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 ==>0
+2025-02-05 21:03:30.536 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwProgramBaudRate: 1107 <==
+2025-02-05 21:03:30.536 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwProgramBaudRate: 1107 locklevel = 1
+2025-02-05 21:03:30.536 Df kernel[0:311c1] () [VSPSerialPort]: HwProgramBaudRate called.
+2025-02-05 21:03:30.536 Df kernel[0:311c1] () [VSPSerialPort]: HwProgramBaudRate: baudRate=9600
+2025-02-05 21:03:30.536 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwProgramBaudRate: 1107 ==>0
+2025-02-05 21:03:30.536 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 <==
+2025-02-05 21:03:30.536 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 locklevel = 1
+2025-02-05 21:03:30.536 Df kernel[0:311c1] () [VSPSerialPort]: HwProgramUART called.
+2025-02-05 21:03:30.536 Df kernel[0:311c1] () [VSPSerialPort]: HwProgramUART: baudRate=9600 nDataBits=8 nHalfStopBits=2 parity=1
+2025-02-05 21:03:30.536 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 ==>0
+2025-02-05 21:03:30.536 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 <==
+2025-02-05 21:03:30.536 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 locklevel = 1
+2025-02-05 21:03:30.536 Df kernel[0:311c1] () [VSPSerialPort]: HwProgramUART called.
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: HwProgramUART: baudRate=9600 nDataBits=8 nHalfStopBits=2 parity=1
+2025-02-05 21:03:30.537 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 ==>0
+2025-02-05 21:03:30.537 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 <==
+2025-02-05 21:03:30.537 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 locklevel = 1
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: HwProgramUART called.
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: HwProgramUART: baudRate=9600 nDataBits=8 nHalfStopBits=2 parity=1
+2025-02-05 21:03:30.537 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 ==>0
+2025-02-05 21:03:30.537 Df kernel[0:acf] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 <==
+2025-02-05 21:03:30.537 Df kernel[0:acf] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 locklevel = 1
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: HwProgramFlowControl called.
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: HwProgramFlowControl: arg=00 xon=11 xoff=13
+2025-02-05 21:03:30.537 Df kernel[0:acf] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 ==>0
+2025-02-05 21:03:30.537 Df kernel[0:3128e] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 <==
+2025-02-05 21:03:30.537 Df kernel[0:3128e] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 locklevel = 1
+2025-02-05 21:03:30.537 Df kernel[0:acf] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 <==
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: HwGetModemStatus called.
+2025-02-05 21:03:30.537 Df kernel[0:acf] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 locklevel = 1
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: HwGetModemStatus: cts=0 dsr=0 ri=0 dcd=0
+2025-02-05 21:03:30.537 Df kernel[0:3128e] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 ==>0
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: HwProgramFlowControl called.
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: HwProgramFlowControl: arg=00 xon=11 xoff=13
+2025-02-05 21:03:30.537 Df kernel[0:acf] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 ==>0
+2025-02-05 21:03:30.537 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwSendBreak: 1083 <==
+2025-02-05 21:03:30.537 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwSendBreak: 1083 locklevel = 1
 
--------------------------- [ WHERE THE DATA 'Welcome' ? ] -------------------------------------------------
+:: ????? ::
 
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: TxDataAvailable called.
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: TxDataAvailable: Dump m_txqmd -------------
-2025-02-05 08:33:00.866 Df kernel[0:e27] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 ==>0
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: CopyMemory called. md=0x600002c58d48
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: CopyMemory: CreateMapping.
-2025-02-05 08:33:00.866 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwSendBreak: 1083 <==
-2025-02-05 08:33:00.866 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwSendBreak: 1083 locklevel = 1
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: CopyMemory: GetAddress + GetLength.
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: CopyMemory: dump mapped buffer
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: CopyMemory MAP> mapBuff=0x1025c8000 mapSize=16384
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: CopyMemory MAP> mapBuff[0]=0x00
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: CopyMemory MAP> mapBuff[1]=0x00
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: CopyMemory MAP> mapBuff[2]=0x00
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: CopyMemory MAP> mapBuff[3]=0x00
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: CopyMemory MAP> mapBuff[4]=0x00
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: CopyMemory MAP> mapBuff[5]=0x00
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: CopyMemory MAP> mapBuff[6]=0x00
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: CopyMemory MAP> mapBuff[7]=0x00
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: CopyMemory MAP> mapBuff[8]=0x00
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: CopyMemory MAP> mapBuff[9]=0x00
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: CopyMemory MAP> mapBuff[10]=0x00
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: CopyMemory MAP> mapBuff[11]=0x00
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: CopyMemory MAP> mapBuff[12]=0x00
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: CopyMemory MAP> mapBuff[13]=0x00
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: CopyMemory MAP> mapBuff[14]=0x00
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: CopyMemory MAP> mapBuff[15]=0x00
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: TxFreeSpaceAvailable called.
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: RxDataAvailable called.
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: TxDataAvailable called.
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: TxDataAvailable: Dump m_txqmd -------------
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory called. md=0x600001448b08 buffer=0x700001f20a6c size=0
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory: CreateMapping.
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory: GetAddress + GetLength.
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory: dump mapped buffer
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff=0x10fe40000 mapSize=16384
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[00]=0x00
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[01]=0x00
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[02]=0x00
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[03]=0x00
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[04]=0x00
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[05]=0x00
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[06]=0x00
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[07]=0x00
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[08]=0x00
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[09]=0x00
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[10]=0x00
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[11]=0x00
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[12]=0x00
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[13]=0x00
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[14]=0x00
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[15]=0x00
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: TxDataAvailable: (0) call DataAvailable
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: TxPacketAvailable called. action=0x600001448f88
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: TxPacketAvailable: Dump m_txqmd +++--+++
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: TxPacketAvailable: call dataSource->dequeue()
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: TxPacketAvailable: dequeue incomplete, try action
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory called. md=0x0 buffer=0x700001f2117c size=16384
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory: using buffer/size.
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory: dump mapped buffer
 
--------------------------- [ SNIPPET : END ] ----------------------------------------------------------
+:: ????? ::
 
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: HwSendBreak called.
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: HwSendBreak: sendBreak=0
-2025-02-05 08:33:00.866 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwSendBreak: 1083 ==>0
-2025-02-05 08:33:00.866 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 <==
-2025-02-05 08:33:00.866 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 locklevel = 1
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: HwResetFIFO called.
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: HwResetFIFO: tx=0 rx=1
-2025-02-05 08:33:00.866 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 ==>0
-2025-02-05 08:33:00.866 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 <==
-2025-02-05 08:33:00.866 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 locklevel = 1
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: HwGetModemStatus called.
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: HwGetModemStatus: cts=0 dsr=0 ri=0 dcd=0
-2025-02-05 08:33:00.866 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 ==>0
-2025-02-05 08:33:00.866 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwProgramMCR: 1115 <==
-2025-02-05 08:33:00.866 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwProgramMCR: 1115 locklevel = 1
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: HwProgramMCR called.
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: HwProgramMCR: dtr=0 rts=0
-2025-02-05 08:33:00.866 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwProgramMCR: 1115 ==>0
-2025-02-05 08:33:00.866 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 <==
-2025-02-05 08:33:00.866 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 locklevel = 1
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: HwResetFIFO called.
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: HwResetFIFO: tx=1 rx=0
-2025-02-05 08:33:00.866 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 ==>0
-2025-02-05 08:33:00.866 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 <==
-2025-02-05 08:33:00.866 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 locklevel = 1
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: HwResetFIFO called.
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: HwResetFIFO: tx=0 rx=1
-2025-02-05 08:33:00.866 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 ==>0
-2025-02-05 08:33:00.866 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwActivate: 1069 <==
-2025-02-05 08:33:00.866 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwActivate: 1069 locklevel = 1
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () [VSPSerialPort]: HwDeactivate called.
-2025-02-05 08:33:00.866 Df kernel[0:9d4f] () IOUserSerial::<private>: 137 0x600002f50198
-2025-02-05 08:33:00.867 Df kernel[0:e27] (IOUserSerial) IOUserSerial::hwActivate: 1069 ==>0
-2025-02-05 08:33:00.867 Df kernel[0:e27] (IOUserSerial) IOUserSerial::freeResources: 949 <==
-2025-02-05 08:33:00.867 Df kernel[0:e27] (IOUserSerial) IOUserSerial::freeResources: 949 locklevel = 1
-2025-02-05 08:33:00.867 Df kernel[0:9d4f] () IOUserSerial::<private>: 110 0x600002f50198
-2025-02-05 08:33:00.867 Df kernel[0:e27] (IOUserSerial) IOUserSerial::freeResources: 949 ==>0
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff=0x700001f2117c mapSize=16384
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[01]=0x02 \^B
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[02]=0x08 \^H
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[03]=0x53 S
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[06]=0x6c l
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[07]=0x5a Z
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[09]=0x00
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[10]=0x00
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[11]=0x00
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[12]=0x00
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[13]=0x00
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[14]=0x00
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: CopyMemory MAP> mapBuff[15]=0x00
+
+...
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: HwSendBreak called.
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: HwSendBreak: sendBreak=0
+2025-02-05 21:03:30.537 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwSendBreak: 1083 ==>0
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: TxFreeSpaceAvailable called.
+2025-02-05 21:03:30.537 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 <==
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: RxDataAvailable called.
+2025-02-05 21:03:30.537 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 locklevel = 1
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: HwResetFIFO called.
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: HwResetFIFO: tx=0 rx=1
+2025-02-05 21:03:30.537 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 ==>0
+2025-02-05 21:03:30.537 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 <==
+2025-02-05 21:03:30.537 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 locklevel = 1
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: HwGetModemStatus called.
+2025-02-05 21:03:30.537 Df kernel[0:311c1] () [VSPSerialPort]: HwGetModemStatus: cts=0 dsr=0 ri=0 dcd=0
+2025-02-05 21:03:30.537 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 ==>0
+2025-02-05 21:03:30.537 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwProgramMCR: 1115 <==
+2025-02-05 21:03:30.537 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwProgramMCR: 1115 locklevel = 1
+2025-02-05 21:03:30.538 Df kernel[0:311c1] () [VSPSerialPort]: HwProgramMCR called.
+2025-02-05 21:03:30.538 Df kernel[0:311c1] () [VSPSerialPort]: HwProgramMCR: dtr=0 rts=0
+2025-02-05 21:03:30.538 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwProgramMCR: 1115 ==>0
+2025-02-05 21:03:30.538 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 <==
+2025-02-05 21:03:30.538 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 locklevel = 1
+2025-02-05 21:03:30.538 Df kernel[0:311c1] () [VSPSerialPort]: HwResetFIFO called.
+2025-02-05 21:03:30.538 Df kernel[0:311c1] () [VSPSerialPort]: HwResetFIFO: tx=1 rx=0
+2025-02-05 21:03:30.538 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 ==>0
+2025-02-05 21:03:30.538 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 <==
+2025-02-05 21:03:30.538 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 locklevel = 1
+2025-02-05 21:03:30.538 Df kernel[0:311c1] () [VSPSerialPort]: HwResetFIFO called.
+2025-02-05 21:03:30.538 Df kernel[0:311c1] () [VSPSerialPort]: HwResetFIFO: tx=0 rx=1
+2025-02-05 21:03:30.538 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 ==>0
+2025-02-05 21:03:30.538 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwActivate: 1069 <==
+2025-02-05 21:03:30.538 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwActivate: 1069 locklevel = 1
+2025-02-05 21:03:30.538 Df kernel[0:311c1] () [VSPSerialPort]: HwDeactivate called.
+2025-02-05 21:03:30.538 Df kernel[0:311c1] () IOUserSerial::<private>: 137 0x6000017440f8
+2025-02-05 21:03:30.538 Df kernel[0:acf] (IOUserSerial) IOUserSerial::hwActivate: 1069 ==>0
+2025-02-05 21:03:30.538 Df kernel[0:acf] (IOUserSerial) IOUserSerial::freeResources: 949 <==
+2025-02-05 21:03:30.538 Df kernel[0:acf] (IOUserSerial) IOUserSerial::freeResources: 949 locklevel = 1
+2025-02-05 21:03:30.538 Df kernel[0:311c1] () IOUserSerial::<private>: 110 0x6000017440f8
+2025-02-05 21:03:30.538 Df kernel[0:acf] (IOUserSerial) IOUserSerial::freeResources: 949 ==>0
