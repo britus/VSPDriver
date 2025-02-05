@@ -15,7 +15,9 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="VSPInstall" customModuleProvider="target">
             <connections>
-                <outlet property="btnInstall" destination="Qqk-gS-5oA" id="8g7-1Z-t2r"/>
+                <outlet property="btnInstall" destination="sg5-EG-22q" id="qmK-F5-eVs"/>
+                <outlet property="btnTest" destination="Klw-PJ-jlX" id="ChN-gX-OIt"/>
+                <outlet property="cbxDevices" destination="ZO2-Jg-D9H" id="And-nb-ESL"/>
                 <outlet property="txtStatus" destination="Gy2-TL-KoG" id="VcN-XY-ukt"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
@@ -694,7 +696,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Klw-PJ-jlX">
-                        <rect key="frame" x="13" y="184" width="101" height="32"/>
+                        <rect key="frame" x="231" y="132" width="89" height="32"/>
                         <buttonCell key="cell" type="push" title="Test VSP" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rSt-tg-YLk">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -703,8 +705,12 @@
                             <action selector="onTestClick:" target="Voe-Tx-rLC" id="djT-3K-vTJ"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sg5-EG-22q">
-                        <rect key="frame" x="15" y="230" width="99" height="32"/>
+                    <button verticalHuggingPriority="750" id="sg5-EG-22q">
+                        <rect key="frame" x="3" y="230" width="154" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="1D3-wv-TkM"/>
+                        </constraints>
                         <buttonCell key="cell" type="push" title="Install VSP" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Qqk-gS-5oA">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -714,30 +720,71 @@
                         </connections>
                     </button>
                     <textField autoresizesSubviews="NO" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ejj-0I-QJT">
-                        <rect key="frame" x="6" y="22" width="509" height="148"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="148" id="OGk-A0-5Li"/>
-                        </constraints>
+                        <rect key="frame" x="8" y="27" width="505" height="86"/>
                         <textFieldCell key="cell" lineBreakMode="charWrapping" selectable="YES" alignment="left" placeholderString="Click &quot;Install VSP&quot; to activate driver extension." allowsEditingTextAttributes="YES" id="Gy2-TL-KoG">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KOm-1w-yCv">
+                        <rect key="frame" x="8" y="166" width="210" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16" id="5bW-9V-xmZ"/>
+                        </constraints>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="Serial device path (/dev/cu.serial):" id="bJE-Pa-H5V">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZO2-Jg-D9H">
+                        <rect key="frame" x="10" y="136" width="209" height="25"/>
+                        <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="bpE-ur-CWZ">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            <objectValues>
+                                <string>Item 1</string>
+                                <string>Item 2</string>
+                                <string>Item 3</string>
+                            </objectValues>
+                        </comboBoxCell>
+                    </comboBox>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FNN-0i-ltM">
+                        <rect key="frame" x="206" y="198" width="307" height="67"/>
+                        <textFieldCell key="cell" truncatesLastVisibleLine="YES" alignment="center" title="To uninstall the VSP driver move this VSPInstall app into trash bin  and than reboot your Mac." id="FpQ-AQ-gtP">
+                            <font key="font" metaFont="system" size="17"/>
+                            <color key="textColor" name="systemOrangeColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="ejj-0I-QJT" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="8" id="3cO-J6-quS"/>
-                    <constraint firstItem="Klw-PJ-jlX" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" symbolic="YES" id="AyZ-pZ-1Dp"/>
-                    <constraint firstItem="sg5-EG-22q" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="20" symbolic="YES" id="Q3U-b6-iEg"/>
-                    <constraint firstAttribute="bottom" secondItem="ejj-0I-QJT" secondAttribute="bottom" constant="22" id="RWb-Ec-k2X"/>
-                    <constraint firstItem="sg5-EG-22q" firstAttribute="trailing" secondItem="Klw-PJ-jlX" secondAttribute="trailing" id="WgB-1B-90s"/>
-                    <constraint firstItem="ejj-0I-QJT" firstAttribute="centerX" secondItem="EiT-Mj-1SZ" secondAttribute="centerX" id="dAw-br-2TJ"/>
-                    <constraint firstItem="sg5-EG-22q" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="22" id="v54-zq-Nkr"/>
-                    <constraint firstItem="ejj-0I-QJT" firstAttribute="top" secondItem="Klw-PJ-jlX" secondAttribute="bottom" constant="21" id="w6Q-r7-rfW"/>
+                    <constraint firstAttribute="bottom" secondItem="ejj-0I-QJT" secondAttribute="bottom" constant="27" id="2Xx-Hz-8cV"/>
+                    <constraint firstItem="KOm-1w-yCv" firstAttribute="leading" secondItem="ZO2-Jg-D9H" secondAttribute="leading" id="6zL-gs-hYR"/>
+                    <constraint firstItem="FNN-0i-ltM" firstAttribute="leading" secondItem="sg5-EG-22q" secondAttribute="trailing" constant="58" id="Eg4-P5-cPo"/>
+                    <constraint firstItem="KOm-1w-yCv" firstAttribute="top" secondItem="sg5-EG-22q" secondAttribute="bottom" constant="55" id="G85-U6-SNI"/>
+                    <constraint firstItem="ZO2-Jg-D9H" firstAttribute="top" secondItem="KOm-1w-yCv" secondAttribute="bottom" constant="7" id="JDI-cO-bwX"/>
+                    <constraint firstItem="FNN-0i-ltM" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="12" id="JtH-0e-9mL"/>
+                    <constraint firstItem="ZO2-Jg-D9H" firstAttribute="centerY" secondItem="EiT-Mj-1SZ" secondAttribute="centerY" constant="-11" id="Kq5-Mk-1vD"/>
+                    <constraint firstItem="Klw-PJ-jlX" firstAttribute="top" secondItem="FNN-0i-ltM" secondAttribute="bottom" constant="39" id="NhN-uq-hUl"/>
+                    <constraint firstItem="FNN-0i-ltM" firstAttribute="trailing" secondItem="ejj-0I-QJT" secondAttribute="trailing" id="VMg-Bz-eab"/>
+                    <constraint firstItem="sg5-EG-22q" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="20" symbolic="YES" id="blK-i4-Ful"/>
+                    <constraint firstItem="sg5-EG-22q" firstAttribute="leading" secondItem="KOm-1w-yCv" secondAttribute="leading" id="dgS-3k-q76"/>
+                    <constraint firstItem="ZO2-Jg-D9H" firstAttribute="baseline" secondItem="Klw-PJ-jlX" secondAttribute="baseline" id="iAF-Df-LbV"/>
+                    <constraint firstItem="KOm-1w-yCv" firstAttribute="trailing" secondItem="ZO2-Jg-D9H" secondAttribute="trailing" id="ies-29-jiA"/>
+                    <constraint firstItem="ZO2-Jg-D9H" firstAttribute="baseline" secondItem="Klw-PJ-jlX" secondAttribute="firstBaseline" id="oNE-fU-w89"/>
+                    <constraint firstItem="sg5-EG-22q" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="10" id="q6Z-T2-rg7"/>
+                    <constraint firstItem="ZO2-Jg-D9H" firstAttribute="leading" secondItem="ejj-0I-QJT" secondAttribute="leading" id="svA-c2-SIk"/>
+                    <constraint firstItem="Klw-PJ-jlX" firstAttribute="leading" secondItem="ZO2-Jg-D9H" secondAttribute="trailing" constant="22" id="t6U-Od-luk"/>
+                    <constraint firstAttribute="trailing" secondItem="FNN-0i-ltM" secondAttribute="trailing" constant="10" id="vED-ZZ-LgV"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Klw-PJ-jlX" secondAttribute="trailing" constant="20" symbolic="YES" id="yac-2g-dou"/>
+                    <constraint firstItem="ejj-0I-QJT" firstAttribute="top" secondItem="Klw-PJ-jlX" secondAttribute="bottom" constant="26" id="yyb-bC-hmK"/>
                 </constraints>
             </view>
             <contentBorderThickness minY="22"/>
-            <point key="canvasLocation" x="139" y="364"/>
+            <point key="canvasLocation" x="142.5" y="346.5"/>
         </window>
     </objects>
 </document>

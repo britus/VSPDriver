@@ -723,9 +723,10 @@ IOReturn IMPL(VSPSerialPort, CopyMemory)
     
     // Access memory of TX IOMemoryDescriptor
     uint64_t mapFlags =
-    kIOMemoryMapGuardedDefault |
-    kIOMemoryMapCacheModeDefault |
-    kIOMemoryMapReadOnly;
+        kIOMemoryMapGuardedDefault |
+        kIOMemoryMapCacheModeDefault |
+        kIOMemoryMapReadOnly;
+    
     ret = md->CreateMapping(mapFlags, 0, 0, 0, 0, &map);
     if (ret != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "copy_md_memory: Failed to get memory map. code=%d\n", ret);

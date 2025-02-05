@@ -12,6 +12,7 @@ import SwiftUI
 import IOKit
 import IOKit.usb
 import IOKit.serial
+import ORSSerial
 
 let DRIVER_EXTENSION : String = "org.eof.tools.VSPDriver"
 
@@ -20,11 +21,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet var window: NSWindow!
     @IBOutlet weak var txtStatus: NSTextFieldCell!
+    @IBOutlet weak var btnInstall: NSButton!
+    @IBOutlet weak var btnTest: NSButton!
+    @IBOutlet weak var cbxDevices: NSComboBox!
 
     // --
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        //
+        btnTest.isEnabled = false
+        cbxDevices.isEnabled = false
+        checkDevicePaths()
     }
 
     func applicationWillHide(_ notification: Notification) {
@@ -82,166 +88,98 @@ extension AppDelegate: OSSystemExtensionRequestDelegate
     }
 }
 
-extension AppDelegate
+extension AppDelegate: ORSSerialPortDelegate
 {
-    // Define configuration struct (matching C layout)
-    struct SerialConfig {
-        var baudRate: UInt32
-        var dataBits: UInt8
-        var parity: UInt8
-        var stopBits: UInt8
-    }
-    
-    func connectToDriver() -> io_connect_t? {
-        // Match the IOUserSerial service
-        //let matchingDict = IOServiceMatching(kIOSerialBSDServiceValue)
-        let matchingDict = IOServiceMatching("IOUserSerial")
-
-        NSLog("[VSP-Test]: MatchDict: \(String(describing: matchingDict))")
-
-        // --
-        var iterator: io_iterator_t = IO_OBJECT_NULL
-        let result = IOServiceGetMatchingServices(kIOMainPortDefault, matchingDict, &iterator)
-        guard result == kIOReturnSuccess, iterator != IO_OBJECT_NULL else { return nil }
-        defer { IOObjectRelease(iterator) }
-        
-        // --
-        var service: io_service_t = IO_OBJECT_NULL
-        while case let device = IOIteratorNext(iterator), device != IO_OBJECT_NULL {
-            var state: Int = 0;
-            if let path = IORegistryEntryCreateCFProperty(device, kIOCalloutDeviceKey as CFString, kCFAllocatorDefault, 0) {
-                guard let path = path.takeRetainedValue() as? String else {
-                    return nil
+    func checkDevicePaths() {
+        guard let pathUrl = URL(string: "/dev") else {
+            return;
+        }
+        do {
+            // Get the directory contents urls (including subfolders urls)
+            let directoryContents = try FileManager.default.contentsOfDirectory(at: pathUrl,
+                                                                                includingPropertiesForKeys: nil)
+            let map = directoryContents.map {
+                $0.absoluteString
+            }
+            
+            self.cbxDevices.removeAllItems();
+            
+            for url in map {
+                let file = url.replacingOccurrences(of: "file://", with: "")
+                if file.contains("cu.serial-") {
+                    cbxDevices.addItem(withObjectValue: file);
                 }
-                NSLog("[VSP-Test]: kIOCalloutDeviceKey -> \(path)")
-                state += 1;
-            }
-            if let path = IORegistryEntryCreateCFProperty(device, kIODialinDeviceKey as CFString, kCFAllocatorDefault, 0) {
-                guard let path = path.takeRetainedValue() as? String else {
-                    return nil
+                else if file.contains("tty.serial-") {
+                    cbxDevices.addItem(withObjectValue: file);
                 }
-                NSLog("[VSP-Test]: kIODialinDeviceKey -> \(path)")
-                state += 1;
-            }
-            //if state != 0 {
-                service = device
-                break;
-            //}
-        }
-        guard service != IO_OBJECT_NULL else { return nil }
-        defer { IOObjectRelease(service) }
-        
-        // --
-        var connect: io_connect_t = IO_OBJECT_NULL
-        let openResult = IOServiceOpen(service, mach_task_self_, 0, &connect)
-        return openResult == kIOReturnSuccess ? connect : nil
-    }
-
-    func connectToDriver2() -> io_connect_t? {
-        let matchingDict = IOServiceMatching(kIOSerialBSDServiceValue)
-        var iterator: io_iterator_t = 0
-        
-        guard IOServiceGetMatchingServices(kIOMainPortDefault, matchingDict, &iterator) == KERN_SUCCESS else {
-            return nil
-        }
-        
-        defer { IOObjectRelease(iterator) }
-        
-        while case let device = IOIteratorNext(iterator), device != IO_OBJECT_NULL {
-            if let path = IORegistryEntryCreateCFProperty(device, kIOCalloutDeviceKey as CFString, kCFAllocatorDefault, 0) {
-                guard let path = path.takeRetainedValue() as? String else {
-                    return nil
-                }
-                NSLog("[VSP-Test]: kIOCalloutDeviceKey -> \(path)")
-            }
-            if let path = IORegistryEntryCreateCFProperty(device, kIODialinDeviceKey as CFString, kCFAllocatorDefault, 0) {
-                guard let path = path.takeRetainedValue() as? String else {
-                    return nil
-                }
-                NSLog("[VSP-Test]: kIODialinDeviceKey -> \(path)")
-            }
-            
-            let fd = IOServiceOpenAsFileDescriptor(device, O_RDWR);
-            if (fd != 0) {
-                NSLog("[VSP-Test]: service fd -> \(fd)")
             }
 
-            // --
-            var connect: io_connect_t = IO_OBJECT_NULL
-            let openResult = IOServiceOpen(device, mach_task_self_, 0, &connect)
-            
-            return openResult == kIOReturnSuccess ? connect : nil
+            cbxDevices.isEnabled = cbxDevices.numberOfItems > 0
+            btnTest.isEnabled = cbxDevices.isEnabled
+            if cbxDevices.isEnabled {
+                cbxDevices.selectItem(at: 0)
+            }
+        } catch {
+            txtStatus.title = "\(error)";
         }
-        
-        return nil
-    }
-
-    func configurePort(_ connect: io_connect_t) -> Bool {
-        let config = SerialConfig(
-            baudRate: 9600,
-            dataBits: 8,
-            parity: 0, // 0 = no parity
-            stopBits: 1
-        )
-        
-        if (config.baudRate != 0) {
-            
-        }
-        
-        return true
-    }
-
-    func writeTestData(_ connect: io_connect_t) -> Bool {
-        let dataToSend = "Hello, Serial!".data(using: .utf8)!
-        var ok = false
-
-        ok = dataToSend.withUnsafeBytes { ptr in
-            let result : IOReturn  = kIOReturnSuccess
-            
-            // -- //
-            
-            txtStatus.title = "[VSP-Test]: Write result: \(result)\n"
-            ok = (result == kIOReturnSuccess)
-            return ok;
-        }
-
-        return ok
-    }
-    
-    func readTestData(_ connect: io_connect_t) -> Bool {
-        var readBuffer = [UInt8](repeating: 0, count: 4096)
-        let bytesRead: Int = 0
-                
-        let data = Data(bytes: &readBuffer, count: bytesRead)
-        txtStatus.title = "[VSP-Test]: Received: \(bytesRead) bytes \(String(data: data, encoding: .utf8) ?? "")\n"
-        return true
     }
     
     func checkDriverInstall() {
-        guard let connect = connectToDriver() else {
-            txtStatus.title += "[VSP-Test]: Driver not found!\n"
+        let dataToSend = "Hello".data(using: .utf8)
+        let index = cbxDevices.indexOfSelectedItem
+        let path = cbxDevices.itemObjectValue(at: index)
+        
+        guard let dev = path as! String? else {
+            txtStatus.title += "[VSP-Test]: Can't find path: \(path)"
             return
         }
         
-        if configurePort(connect) == false {
-            txtStatus.title += "[VSP-Test]: Unable to configure serial port!\n"
-            IOServiceClose(connect)
+        guard var port = ORSSerialPort(path: dev) else {
+            txtStatus.title += "[VSP-Test]: Can't open device: \(dev)"
             return
         }
         
-        if writeTestData(connect) == false {
-            txtStatus.title += "[VSP-Test]: Unable to write serial port.\n"
-            IOServiceClose(connect)
+        port.delegate = self
+        port.baudRate = 9600
+        port.parity = .none
+        port.numberOfStopBits = 1
+        port.usesRTSCTSFlowControl = true
+        
+        guard let data = dataToSend else {
+            txtStatus.title += "[VSP-Test]: booo \(String(describing: dataToSend))"
             return
+            
         }
         
-        if readTestData(connect) == false {
-            txtStatus.title += "[VSP-Test]: Unable to read serial port.\n"
-            IOServiceClose(connect)
-            return
-        }
-
-        txtStatus.title += "[VSP-Test]: SUCCESS.\n"
-        IOServiceClose(connect)
+        port.send(data)
+        
+        txtStatus.title += "[VSP-Test]: SUCCESS\n"
+    }
+    
+    func serialPort(_ serialPort: ORSSerialPort, didReceive data: Data) {
+        let string = String(data: data, encoding: .utf8)
+        txtStatus.title += "[VSP-Test]: Got answer\n\(String(describing: string))"
+    }
+    
+    func serialPortWasClosed(_ serialPort: ORSSerialPort) {
+        txtStatus.title += "[VSP-Test]: port closed"
+    }
+    func serialPortWasOpened(_ serialPort: ORSSerialPort) {
+        txtStatus.title += "[VSP-Test]: port opened"
+    }
+    func serialPort(_ serialPort: ORSSerialPort, didEncounterError error: Error) {
+        txtStatus.title += "[VSP-Test]: port error\n\(String(describing: error.localizedDescription))"
+    }
+    func serialPort(_ serialPort: ORSSerialPort, didReceiveResponse responseData: Data, to request: ORSSerialRequest) {
+        txtStatus.title += "[VSP-Test]: \(responseData)"
+    }
+    func serialPort(_ serialPort: ORSSerialPort, requestDidTimeout request: ORSSerialRequest) {
+        txtStatus.title += "[VSP-Test]: request timed out."
+    }
+    func serialPortWasRemovedFromSystem(_ serialPort: ORSSerialPort) {
+        txtStatus.title += "[VSP-Test]: port removed."
+    }
+    func serialPort(_ serialPort: ORSSerialPort, didReceivePacket packetData: Data, matching descriptor: ORSSerialPacketDescriptor) {
+        txtStatus.title += "[VSP-Test]: \(packetData)"
     }
 }
