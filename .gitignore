@@ -2,6 +2,10 @@
 /build/
 
 # Xcode stuff
+/VSPDriver.xcodeproj/xcuserdata/
+/VSPDriver.xcodeproj/project.xcworkspace/xcuserdata/
+/VSPDriver.xcodeproj/project.xcworkspace/xcshareddata/
+/project.xcworkspace
 /project.xcworkspace/xcuserdata/
 /project.xcworkspace/xcshareddata/
 /xcshareddata/

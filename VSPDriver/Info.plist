@@ -47,5 +47,10 @@
 			</dict>
 		</dict>
 	</dict>
+    <key>OSBundleLibraries</key>
+    <dict>
+        <key>com.apple.iokit.IONetworkFamily</key>
+        <string>1.0</string>
+    </dict>
 </dict>
 </plist>
