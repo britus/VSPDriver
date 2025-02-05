@@ -1,7 +1,10 @@
 # Build
 /build/
+
+#Xcode user private stuff
+/VSPDriver.xcodeproj/project.xcworkspace/xcuserdata/
+/VSPDriver.xcodeproj/xcuserdata
 /xcuserdata/
-VSPDriver.xcodeproj/project.xcworkspace/xcuserdata/
 
 # Prerequisites
 *.d
