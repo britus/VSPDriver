@@ -174,9 +174,9 @@ extension AppDelegate: ORSSerialPortDelegate
             
         }
         
-        port.send(data)
-        
-        txtStatus.title += "[VSP-Test]: SUCCESS\n"
+        if port.send(data) {
+            txtStatus.title += "[VSP-Test]: SUCCESS\n"
+        }
     }
     
     func serialPort(_ serialPort: ORSSerialPort, didReceive data: Data) {
