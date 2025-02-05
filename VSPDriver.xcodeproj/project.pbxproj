@@ -12,6 +12,8 @@
 		880539F02D4BAFBF00E55104 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 880539EE2D4BAFBF00E55104 /* MainMenu.xib */; };
 		880539F82D4BB59900E55104 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880539F72D4BB59800E55104 /* AppKit.framework */; };
 		880539FA2D4BB5AD00E55104 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880539F92D4BB5AD00E55104 /* IOKit.framework */; };
+		88667D6B2D53474900DFA26E /* VSPDriver-Start.log in Resources */ = {isa = PBXBuildFile; fileRef = 88667D692D53474900DFA26E /* VSPDriver-Start.log */; };
+		88667D6C2D53474900DFA26E /* VSPDriver-Full.log in Resources */ = {isa = PBXBuildFile; fileRef = 88667D6A2D53474900DFA26E /* VSPDriver-Full.log */; };
 		88906F482D4CCA9400E500BB /* VSPIOHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88906F462D4CCA9400E500BB /* VSPIOHelper.cpp */; };
 		8899C34A2D525AD800E17727 /* VSPSerialPort.iig in Sources */ = {isa = PBXBuildFile; fileRef = 8899C3492D525AD800E17727 /* VSPSerialPort.iig */; };
 		8899C34C2D525AFB00E17727 /* VSPSerialPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8899C34B2D525AFB00E17727 /* VSPSerialPort.cpp */; };
@@ -60,6 +62,8 @@
 		880539F52D4BB0F900E55104 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		880539F72D4BB59800E55104 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
 		880539F92D4BB5AD00E55104 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOKit.framework; sourceTree = DEVELOPER_DIR; };
+		88667D692D53474900DFA26E /* VSPDriver-Start.log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "VSPDriver-Start.log"; sourceTree = "<group>"; };
+		88667D6A2D53474900DFA26E /* VSPDriver-Full.log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "VSPDriver-Full.log"; sourceTree = "<group>"; };
 		88906F452D4CCA9400E500BB /* VSPInstall-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VSPInstall-Bridging-Header.h"; sourceTree = "<group>"; };
 		88906F462D4CCA9400E500BB /* VSPIOHelper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VSPIOHelper.cpp; sourceTree = "<group>"; };
 		88906F472D4CCA9400E500BB /* VSPIOHelper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VSPIOHelper.hpp; sourceTree = "<group>"; };
@@ -126,6 +130,9 @@
 				88B40D5C2D4B666700DFE7C5 /* VSPDriver */,
 				880539E92D4BAFBD00E55104 /* VSPInstall */,
 				88DA7BA72D532C6700C8F759 /* LICENSE */,
+				88667D6A2D53474900DFA26E /* VSPDriver-Full.log */,
+				88667D692D53474900DFA26E /* VSPDriver-Start.log */,
+				88AEEFF62D5233D4007F2A4C /* IOReg-Outline.md */,
 				88DA7BA62D532C6700C8F759 /* README.md */,
 				88B40D592D4B666700DFE7C5 /* Frameworks */,
 				88B40D582D4B666700DFE7C5 /* Products */,
@@ -166,7 +173,6 @@
 				889E8EBB2D4DF4BF002F387A /* VSPLogger.h */,
 				88B40D702D4B85ED00DFE7C5 /* VSPDriver.entitlements */,
 				88B40D612D4B666700DFE7C5 /* Info.plist */,
-				88AEEFF62D5233D4007F2A4C /* IOReg-Outline.md */,
 			);
 			path = VSPDriver;
 			sourceTree = "<group>";
@@ -267,8 +273,10 @@
 			files = (
 				88DA7BA82D532C6800C8F759 /* README.md in Resources */,
 				880539ED2D4BAFBF00E55104 /* Assets.xcassets in Resources */,
+				88667D6B2D53474900DFA26E /* VSPDriver-Start.log in Resources */,
 				88DA7BA92D532C6800C8F759 /* LICENSE in Resources */,
 				880539F02D4BAFBF00E55104 /* MainMenu.xib in Resources */,
+				88667D6C2D53474900DFA26E /* VSPDriver-Full.log in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

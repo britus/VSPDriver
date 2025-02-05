@@ -28,9 +28,9 @@
      <key>VSPDriver</key>
      <dict>
          <key>CFBundleIdentifierKernel</key>
-         <string>com.apple.driver.driverkit.serial</string>
+         <string>com.apple.kpi.iokit</string>
          <key>IOClass</key>
-         <string>IOUserSerial</string>
+         <string>IOUserService</string>
          <key>IOMatchCategory</key>
          <string>org.eof.tools.VSPDriver</string>
          <key>IOProviderClass</key>
@@ -41,18 +41,22 @@
          <string>VSPDriver</string>
          <key>IOUserServerName</key>
          <string>org.eof.tools.VSPDriver</string>
-         <key>HiddenPort</key>
-         <false/>
-         <key>IOTTYBaseName</key>
-         <string>vsp</string>
-         <key>IOTTYSuffix</key>
-         <string>0</string>
          <key>UserClientProperties</key>
          <dict>
+             <key>CFBundleIdentifierKernel</key>
+             <string>com.apple.driver.driverkit.serial</string>
+             <key>IOProviderClass</key>
+             <string>IOSerialStreamSync</string>
              <key>IOClass</key>
-             <string>IOService</string>
+             <string>IOUserSerial</string>
              <key>IOUserClass</key>
              <string>VSPSerialPort</string>
+             <key>HiddenPort</key>
+             <false/>
+             <key>IOTTYBaseName</key>
+             <string>vsp</string>
+             <key>IOTTYSuffix</key>
+             <string>0</string>
          </dict>
      </dict>
  </dict>
@@ -108,7 +112,6 @@ void VSPDriver::free(void)
 //
 kern_return_t IMPL(VSPDriver, Start)
 {
-    IOService* service;
     kern_return_t ret;
   
     VSPLog(LOG_PREFIX, "Start: called.\n");
@@ -125,23 +128,13 @@ kern_return_t IMPL(VSPDriver, Start)
         VSPLog(LOG_PREFIX, "Start(super): failed. code=%d\n", ret);
         return ret;
     }
-
-    // Create sub service object from UserClientProperties in Info.plist
-    ret= Create(this, "UserClientProperties", &service);
-    if (ret != kIOReturnSuccess || service == nullptr) {
-        VSPLog(LOG_PREFIX, "Start: provider->Create(UserClientProperties) failed. code=%d\n", ret);
+    
+#if 1
+    if ((ret = LoadSerialPort(provider)) != kIOReturnSuccess) {
         goto error_exit;
     }
+#endif
 
-    // Check object type
-    ivars->m_serialPort = OSDynamicCast(VSPSerialPort, service);
-    if (ivars->m_serialPort == nullptr) {
-        VSPLog(LOG_PREFIX, "Start: Cast to VSPSerialPort failed.\n");
-        service->release();
-        ret = kIOReturnInvalid;
-        goto error_exit;
-    }
-   
     // Register driver instance to IOReg
     if ((ret = RegisterService()) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "Start: RegisterService failed. code=%d\n", ret);
@@ -173,4 +166,34 @@ kern_return_t IMPL(VSPDriver, Stop)
     }
     
     return ret;
+}
+
+// --------------------------------------------------------------------
+// LoadSerialPort(IOService* provider)
+// Load VSPSerialPort instance
+kern_return_t VSPDriver::LoadSerialPort(IOService* provider)
+{
+    kern_return_t ret;
+    IOService* service;
+
+    VSPLog(LOG_PREFIX, "Start: create VSPSerialPort from Info.plist.\n");
+    
+    // Create sub service object from UserClientProperties in Info.plist
+    ret= Create(this, "UserClientProperties", &service);
+    if (ret != kIOReturnSuccess || service == nullptr) {
+        VSPLog(LOG_PREFIX, "Start: provider->Create(UserClientProperties) failed. code=%d\n", ret);
+        return ret;
+    }
+    
+    VSPLog(LOG_PREFIX, "Start: check VSPSerialPort type.\n");
+    
+    // Check object type
+    ivars->m_serialPort = OSDynamicCast(VSPSerialPort, service);
+    if (ivars->m_serialPort == nullptr) {
+        VSPLog(LOG_PREFIX, "Start: Cast to VSPSerialPort failed.\n");
+        service->release();
+        return kIOReturnInvalid;
+    }
+    
+    return kIOReturnSuccess;
 }

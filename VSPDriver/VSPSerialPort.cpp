@@ -1,10 +1,11 @@
 // ********************************************************************
-// Driver - Driver.cpp
+// VSPSerialPort - Serial port implementation
 //
 // Copyright © 2025 by EoF Software Labs
 // Copyright © 2024 Apple Inc. (some copied parts)
 // SPDX-License-Identifier: MIT
 // ********************************************************************
+
 // -- OS
 #include <stdio.h>
 #include <os/log.h>
@@ -164,14 +165,16 @@ kern_return_t IMPL(VSPSerialPort, Start)
         VSPLog(LOG_PREFIX, "Start: Private driver instance is NULL\n");
         return kIOReturnInvalid;
     }
-    
+
+#if 0
     // Check caller object type VSPDriver
     ivars->m_parent = OSDynamicCast(VSPDriver, provider);
     if (ivars->m_parent == nullptr) {
         VSPLog(LOG_PREFIX, "Start: Cast to VSPDriver failed.\n");
         return kIOReturnBadArgument;
     }
-
+#endif
+    
     /* call apple style super method */
     ret = Start(provider, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
