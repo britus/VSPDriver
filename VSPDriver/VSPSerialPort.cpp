@@ -315,6 +315,7 @@ void VSPSerialPort::TxDataAvailable_Impl() //
     
     VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_txqmd -------------\n");
     
+    // copy mapped buffer of IOMemoryDescriptor txqmd
     ret = CopyMemory(ivars->m_txqmd, nullptr, 0);
     if (ret != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "TxDataAvailable: CopyMemory failed on m_txqmd\n");
@@ -353,14 +354,17 @@ void VSPSerialPort::TxPacketAvailable_Impl(OSAction* action)
     
     VSPLog(LOG_PREFIX, "TxDataAvailable(Action): Dump m_txqmd -------------\n");
     
+    // get lenght of the tx queue
     if ((ret = ivars->m_txqmd->GetLength(&mdSize)) != kIOReturnSuccess || mdSize == 0) {
         VSPLog(LOG_PREFIX, "TxDataAvailable(Action): Unable to get descriptor size. code=%d\n", ret);
         goto finished;
     }
 
+    // setup size and actions io buffer
     size = mdSize;
     buffer = (char*)action->GetReference();
 
+    // copy action buffer to local buffer
     ret = CopyMemory(nullptr, buffer, size);
     if (ret != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "TxDataAvailable(Action): CopyMemory failed on m_txqmd\n");
