@@ -15,7 +15,7 @@
 			<key>CFBundleIdentifierKernel</key>
 			<string>com.apple.iokit.IOSerialFamily</string>
 			<key>IOClass</key>
-			<string>IOUserSerial</string>
+			<string>IOService</string>
 			<key>IOMatchCategory</key>
 			<string>org.eof.tools.VSPDriver</string>
 			<key>IOProviderClass</key>
@@ -29,7 +29,7 @@
 			<key>UserClientProperties</key>
 			<dict>
 				<key>IOClass</key>
-				<string>IOService</string>
+				<string>IOUserSerial</string>
 				<key>IOUserClass</key>
 				<string>VSPSerialPort</string>
 			</dict>
