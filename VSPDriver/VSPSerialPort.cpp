@@ -206,11 +206,10 @@ kern_return_t IMPL(VSPSerialPort, Start)
     
     VSPLog(LOG_PREFIX, "Start: Connect IODataQueueDispatchSource::DataAvailable event.\n");
     
-    IODispatchQueueName name;
-    strncpy(name, "vcpDataQueue", sizeof(IODispatchQueueName)-1);
-    
     ret = CreateDefaultDispatchQueue(&ivars->m_dataQueue);
     if (ret != kIOReturnSuccess) {
+        IODispatchQueueName name;
+        strncpy(name, "vcpDataQueue", sizeof(IODispatchQueueName)-1);
         // 0 = No options are currently defined.
         // 0 = No priorities are currently defined.
         ret = IODispatchQueue::Create(name, 0, 0, &ivars->m_dataQueue);
@@ -218,15 +217,16 @@ kern_return_t IMPL(VSPSerialPort, Start)
             VSPLog(LOG_PREFIX, "Start: Unable to create ifQueue. code=%d\n", ret);
             goto error_exit;
         }
-        ret = IODataQueueDispatchSource::Create(mdSize, ivars->m_dataQueue, &ivars->m_dataSource);
-        if (ret != kIOReturnSuccess || ivars->m_dataSource == nullptr) {
-            VSPLog(LOG_PREFIX, "Start: IODataQueueDispatchSource::Create failed. code=%d\n", ret);
-            goto error_exit;
-        }
     }
-    
+
+    ret = IODataQueueDispatchSource::Create(mdSize, ivars->m_dataQueue, &ivars->m_dataSource);
+    if (ret != kIOReturnSuccess || ivars->m_dataSource == nullptr) {
+        VSPLog(LOG_PREFIX, "Start: IODataQueueDispatchSource::Create failed. code=%d\n", ret);
+        goto error_exit;
+    }
+
     // Async notification from IODataQueueDispatchSource::DataAvailable
-    ret = CreateActionTxPacketsAvailable(mdSize, &ivars->m_dataAction);
+    ret = CreateActionTxPacketAvailable(mdSize, &ivars->m_dataAction);
     if (ret != kIOReturnSuccess || ivars->m_dataAction == nullptr) {
         VSPLog(LOG_PREFIX, "Start: Unable to create TX packet action. code=%d\n", ret);
         goto error_exit;
@@ -234,7 +234,7 @@ kern_return_t IMPL(VSPSerialPort, Start)
     
     ret = ivars->m_dataSource->SetDataAvailableHandler(ivars->m_dataAction);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Start: m_txDataQDSource->SetDataAvailableHandler failed. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "Start: SetDataAvailableHandler failed. code=%d\n", ret);
         goto error_exit;
     }
     
@@ -303,9 +303,10 @@ void IMPL(VSPSerialPort, RxDataAvailable)
 // --------------------------------------------------------------------
 // TxDataAvailable_Impl()
 //
-void IMPL(VSPSerialPort, TxDataAvailable)
+void VSPSerialPort::TxDataAvailable_Impl() //
+//void IMPL(VSPSerialPort, TxDataAvailable)
 {
-    IOReturn ret = kIOReturnSuccess;
+    IOReturn ret;
     
     VSPLog(LOG_PREFIX, "TxDataAvailable called.\n");
     
@@ -314,7 +315,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     
     VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_txqmd -------------\n");
     
-    ret = CopyMemory(ivars->m_txqmd);
+    ret = CopyMemory(ivars->m_txqmd, nullptr, 0);
     if (ret != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "TxDataAvailable: CopyMemory failed on m_txqmd\n");
         goto finished;
@@ -332,22 +333,53 @@ finished:
 // --------------------------------------------------------------------
 // TxPacketsAvailable_Impl(OSAction* action) Async callback handler
 //
-void IMPL(VSPSerialPort, TxPacketsAvailable)
+//void IMPL(VSPSerialPort, TxDataAvailable) //
+void VSPSerialPort::TxPacketAvailable_Impl(OSAction* action)
 {
-    VSPLog(LOG_PREFIX, "TxPacketsAvailable called.\n");
+    IOReturn ret = 0;
+    uint64_t size;
+    char* buffer;
+    uint64_t mdSize;
+
+    VSPLog(LOG_PREFIX, "TxPacketsAvailable(Action) called. action=0x%llx\n", (uint64_t) action);
     
     if (action == nullptr) {
-        VSPLog(LOG_PREFIX, "TxPacketsAvailable: Invalid action object (nullptr).\n");
+        VSPLog(LOG_PREFIX, "TxPacketsAvailable(Action): Invalid action object (nullptr).\n");
         return;
     }
     
+    // Lock to ensure thread safety
+    IOLockLock(ivars->m_lock);
+    
+    VSPLog(LOG_PREFIX, "TxDataAvailable(Action): Dump m_txqmd -------------\n");
+    
+    if ((ret = ivars->m_txqmd->GetLength(&mdSize)) != kIOReturnSuccess || mdSize == 0) {
+        VSPLog(LOG_PREFIX, "TxDataAvailable(Action): Unable to get descriptor size. code=%d\n", ret);
+        goto finished;
+    }
+
+    size = mdSize;
+    buffer = (char*)action->GetReference();
+
+    ret = CopyMemory(nullptr, buffer, size);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "TxDataAvailable(Action): CopyMemory failed on m_txqmd\n");
+        goto finished;
+    }
+    
+    // next data from /dev/cu.serial-xxxxxxx device
+    TxFreeSpaceAvailable();
+    
+    // --
+    RxDataAvailable();
+
     // ****
     //if (ivars->m_txDataQDSource->IsDataAvailable()) {
     //    ivars->m_txDataQDSource->SendDataAvailable();
     //}
     
     // Lock to ensure thread safety
-    IOLockLock(ivars->m_lock);
+    // IOLockLock(ivars->m_lock);
     /*
      const uint64_t size = ivars->m_fifo.tx.size;
      const char* buffer = (char*)action->GetReference();
@@ -701,9 +733,11 @@ IOReturn IMPL(VSPSerialPort, ConnectDriverQueues)
 // ??? Called by TxDataAvailable() and here we get always 0x00 in MD
 // ??? mapped buffer of the IOMemoryDescriptors m_txqmd
 //
-IOReturn IMPL(VSPSerialPort, CopyMemory)
+IOReturn VSPSerialPort::CopyMemory_Impl(IOMemoryDescriptor* md, char* buffer, uint64_t size)
 {
     IOMemoryMap* map = nullptr;
+    uint64_t mapSize;
+    uint8_t* mapBuff;
     IOReturn ret;
     
     VSPLog(LOG_PREFIX, "CopyMemory called. md=0x%llx\n", (uint64_t)md);
@@ -715,23 +749,31 @@ IOReturn IMPL(VSPSerialPort, CopyMemory)
     
     VSPLog(LOG_PREFIX, "CopyMemory: CreateMapping.\n");
     
-    // Access memory of TX IOMemoryDescriptor
-    uint64_t mapFlags =
+    if (md != nullptr) {
+        // Access memory of TX IOMemoryDescriptor
+        uint64_t mapFlags =
         kIOMemoryMapGuardedDefault |
         kIOMemoryMapCacheModeDefault |
         kIOMemoryMapReadOnly;
-    
-    ret = md->CreateMapping(mapFlags, 0, 0, 0, 0, &map);
-    if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "copy_md_memory: Failed to get memory map. code=%d\n", ret);
-        return ret;
+        
+        ret = md->CreateMapping(mapFlags, 0, 0, 0, 0, &map);
+        if (ret != kIOReturnSuccess) {
+            VSPLog(LOG_PREFIX, "copy_md_memory: Failed to get memory map. code=%d\n", ret);
+            return ret;
+        }
+        
+        VSPLog(LOG_PREFIX, "CopyMemory: GetAddress + GetLength.\n");
+        
+        // get mapped data...
+        mapSize = map->GetLength();
+        mapBuff = (uint8_t*)(map->GetAddress());
+    } else if (buffer != nullptr && size >= 0) {
+        mapSize = size;
+        mapBuff = (uint8_t*) buffer;
+    } else {
+        VSPLog(LOG_PREFIX, "CopyMemory: Invalid args (nullptr).\n");
+        return kIOReturnBadArgument;
     }
-    
-    VSPLog(LOG_PREFIX, "CopyMemory: GetAddress + GetLength.\n");
-    
-    // get mapped data...
-    const uint64_t mapSize = map->GetLength();
-    const uint8_t* mapBuff = (uint8_t*)(map->GetAddress());
     
     VSPLog(LOG_PREFIX, "CopyMemory: dump mapped buffer\n");
     VSPLog(LOG_PREFIX, "CopyMemory MAP> mapBuff=0x%llx mapSize=%llu\n", (uint64_t) mapBuff, mapSize);

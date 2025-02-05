@@ -24,7 +24,10 @@ public:
     
     virtual void RxDataAvailable() override;
     virtual void TxDataAvailable() override;
-    
+
+    /* Async callback to get client TX data packets */
+    virtual void TxPacketAvailable(OSAction* action) TYPE(IODataQueueDispatchSource::DataAvailable);
+
     virtual void TxFreeSpaceAvailable() override;
     virtual void RxFreeSpaceAvailable() override;
     
@@ -43,15 +46,12 @@ public:
     virtual kern_return_t HwProgramMCR(bool dtr, bool rts) override;
     virtual kern_return_t HwProgramLatencyTimer(uint32_t latency) override;
     virtual kern_return_t HwProgramFlowControl(uint32_t arg, uint8_t xon, uint8_t xoff) override;
-    
-    // Async callback to get client TX data packets
-    virtual void TxPacketsAvailable(OSAction* action) TYPE(IODataQueueDispatchSource::DataAvailable);
-    
+
     // VSPDriver inrernals
     virtual void CleanupResources() LOCAL;
     virtual IOReturn SetupTTYBaseName() LOCAL;
     virtual IOReturn ConnectDriverQueues() LOCAL;
-    virtual IOReturn CopyMemory(IOMemoryDescriptor* md) LOCAL;
+    virtual IOReturn CopyMemory(IOMemoryDescriptor* md, char* buffer, uint64_t size) LOCAL;
 };
 
 
