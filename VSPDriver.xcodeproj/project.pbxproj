@@ -23,6 +23,8 @@
 		88B40D6A2D4B669900DFE7C5 /* SerialDriverKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B40D692D4B669900DFE7C5 /* SerialDriverKit.framework */; };
 		88B40D6C2D4B669E00DFE7C5 /* USBSerialDriverKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B40D6B2D4B669E00DFE7C5 /* USBSerialDriverKit.framework */; };
 		88BEFD842D4BCF8900CD40E6 /* org.eof.tools.VSPDriver.dext in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 88B40D572D4B666700DFE7C5 /* org.eof.tools.VSPDriver.dext */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		88DA7BA82D532C6800C8F759 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 88DA7BA62D532C6700C8F759 /* README.md */; };
+		88DA7BA92D532C6800C8F759 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 88DA7BA72D532C6700C8F759 /* LICENSE */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +78,8 @@
 		88B40D702D4B85ED00DFE7C5 /* VSPDriver.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VSPDriver.entitlements; sourceTree = "<group>"; };
 		88B40D842D4B873C00DFE7C5 /* SystemExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemExtensions.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/SystemExtensions.framework; sourceTree = DEVELOPER_DIR; };
 		88BEFD702D4BC84A00CD40E6 /* libEndpointSecurity.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libEndpointSecurity.tbd; path = usr/lib/libEndpointSecurity.tbd; sourceTree = SDKROOT; };
+		88DA7BA62D532C6700C8F759 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		88DA7BA72D532C6700C8F759 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +108,7 @@
 		880539E92D4BAFBD00E55104 /* VSPInstall */ = {
 			isa = PBXGroup;
 			children = (
+				88B40D5C2D4B666700DFE7C5 /* VSPDriver */,
 				880539F52D4BB0F900E55104 /* Info.plist */,
 				880539EA2D4BAFBD00E55104 /* AppDelegate.swift */,
 				880539EC2D4BAFBF00E55104 /* Assets.xcassets */,
@@ -120,7 +125,8 @@
 			isa = PBXGroup;
 			children = (
 				880539E92D4BAFBD00E55104 /* VSPInstall */,
-				88B40D5C2D4B666700DFE7C5 /* VSPDriver */,
+				88DA7BA72D532C6700C8F759 /* LICENSE */,
+				88DA7BA62D532C6700C8F759 /* README.md */,
 				88B40D592D4B666700DFE7C5 /* Frameworks */,
 				88B40D582D4B666700DFE7C5 /* Products */,
 			);
@@ -259,7 +265,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88DA7BA82D532C6800C8F759 /* README.md in Resources */,
 				880539ED2D4BAFBF00E55104 /* Assets.xcassets in Resources */,
+				88DA7BA92D532C6800C8F759 /* LICENSE in Resources */,
 				880539F02D4BAFBF00E55104 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

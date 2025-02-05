@@ -78,7 +78,7 @@
              <key>IOClass</key>
              <string>IOService</string>
              <key>IOUserClass</key>
-             <string>VCPSerialPort</string>
+             <string>VSPSerialPort</string>
          </dict>
      </dict>
  </dict>
@@ -127,7 +127,7 @@ struct VSPDriver_IVars {
     
     IODispatchQueue* m_dataQueue = nullptr;
     IODataQueueDispatchSource* m_dataSource = nullptr;
-    OSAction* m_dataAction = nullptr;             // Async get client TX packets action
+    OSAction* m_dataAction = nullptr;             // Async get packets action
     
     VSPSerialPort* m_spService;
     
