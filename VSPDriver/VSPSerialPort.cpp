@@ -165,15 +165,6 @@ kern_return_t IMPL(VSPSerialPort, Start)
         VSPLog(LOG_PREFIX, "Start: Private driver instance is NULL\n");
         return kIOReturnInvalid;
     }
-
-#if 0
-    // Check caller object type VSPDriver
-    ivars->m_parent = OSDynamicCast(VSPDriver, provider);
-    if (ivars->m_parent == nullptr) {
-        VSPLog(LOG_PREFIX, "Start: Cast to VSPDriver failed.\n");
-        return kIOReturnBadArgument;
-    }
-#endif
     
     /* call apple style super method */
     ret = Start(provider, SUPERDISPATCH);
@@ -218,18 +209,20 @@ kern_return_t IMPL(VSPSerialPort, Start)
     IODispatchQueueName name;
     strncpy(name, "vcpDataQueue", sizeof(IODispatchQueueName)-1);
     
-    // 0 = No options are currently defined.
-    // 0 = No priorities are currently defined.
-    ret = IODispatchQueue::Create(name, 0, 0, &ivars->m_dataQueue);
-    if (ret != kIOReturnSuccess || ivars->m_dataQueue == nullptr) {
-        VSPLog(LOG_PREFIX, "Start: Unable to create ifQueue. code=%d\n", ret);
-        goto error_exit;
-    }
-    
-    ret = IODataQueueDispatchSource::Create(mdSize, ivars->m_dataQueue, &ivars->m_dataSource);
-    if (ret != kIOReturnSuccess || ivars->m_dataSource == nullptr) {
-        VSPLog(LOG_PREFIX, "Start: IODataQueueDispatchSource::Create failed. code=%d\n", ret);
-        goto error_exit;
+    ret = CreateDefaultDispatchQueue(&ivars->m_dataQueue);
+    if (ret != kIOReturnSuccess) {
+        // 0 = No options are currently defined.
+        // 0 = No priorities are currently defined.
+        ret = IODispatchQueue::Create(name, 0, 0, &ivars->m_dataQueue);
+        if (ret != kIOReturnSuccess || ivars->m_dataQueue == nullptr) {
+            VSPLog(LOG_PREFIX, "Start: Unable to create ifQueue. code=%d\n", ret);
+            goto error_exit;
+        }
+        ret = IODataQueueDispatchSource::Create(mdSize, ivars->m_dataQueue, &ivars->m_dataSource);
+        if (ret != kIOReturnSuccess || ivars->m_dataSource == nullptr) {
+            VSPLog(LOG_PREFIX, "Start: IODataQueueDispatchSource::Create failed. code=%d\n", ret);
+            goto error_exit;
+        }
     }
     
     // Async notification from IODataQueueDispatchSource::DataAvailable
@@ -320,6 +313,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     IOLockLock(ivars->m_lock);
     
     VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_txqmd -------------\n");
+    
     ret = CopyMemory(ivars->m_txqmd);
     if (ret != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "TxDataAvailable: CopyMemory failed on m_txqmd\n");

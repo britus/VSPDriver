@@ -10,10 +10,11 @@
 #include <stdio.h>
 #include <os/log.h>
 
-#include <DriverKit/OSDictionary.h>
 #include <DriverKit/IOLib.h>
-#include <DriverKit/IOService.h>
 #include <DriverKit/IOTypes.h>
+#include <DriverKit/IOService.h>
+
+#include <DriverKit/OSDictionary.h>
 
 // -- My
 #include "VSPLogger.h"
@@ -128,7 +129,15 @@ kern_return_t IMPL(VSPDriver, Start)
         VSPLog(LOG_PREFIX, "Start(super): failed. code=%d\n", ret);
         return ret;
     }
+
+    IOUserClient* userClient;
     
+    ret = NewUserClient(1, &userClient);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "Start: NewUserClient failed. code=%d\n", ret);
+
+    }
+
     if ((ret = LoadSerialPort(provider, 4)) != kIOReturnSuccess) {
         goto error_exit;
     }

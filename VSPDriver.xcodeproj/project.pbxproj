@@ -12,6 +12,7 @@
 		880539F02D4BAFBF00E55104 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 880539EE2D4BAFBF00E55104 /* MainMenu.xib */; };
 		880539F82D4BB59900E55104 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880539F72D4BB59800E55104 /* AppKit.framework */; };
 		880539FA2D4BB5AD00E55104 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880539F92D4BB5AD00E55104 /* IOKit.framework */; };
+		881483502D53B906003FB561 /* build.sh in Resources */ = {isa = PBXBuildFile; fileRef = 8814834F2D53B906003FB561 /* build.sh */; };
 		88667D6B2D53474900DFA26E /* VSPDriver-Start.log in Resources */ = {isa = PBXBuildFile; fileRef = 88667D692D53474900DFA26E /* VSPDriver-Start.log */; };
 		88667D6C2D53474900DFA26E /* VSPDriver-Full.log in Resources */ = {isa = PBXBuildFile; fileRef = 88667D6A2D53474900DFA26E /* VSPDriver-Full.log */; };
 		88906F482D4CCA9400E500BB /* VSPIOHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88906F462D4CCA9400E500BB /* VSPIOHelper.cpp */; };
@@ -63,6 +64,7 @@
 		880539F52D4BB0F900E55104 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		880539F72D4BB59800E55104 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
 		880539F92D4BB5AD00E55104 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOKit.framework; sourceTree = DEVELOPER_DIR; };
+		8814834F2D53B906003FB561 /* build.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build.sh; sourceTree = "<group>"; };
 		88667D692D53474900DFA26E /* VSPDriver-Start.log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "VSPDriver-Start.log"; sourceTree = "<group>"; };
 		88667D6A2D53474900DFA26E /* VSPDriver-Full.log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "VSPDriver-Full.log"; sourceTree = "<group>"; };
 		88906F452D4CCA9400E500BB /* VSPInstall-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VSPInstall-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				88667D6A2D53474900DFA26E /* VSPDriver-Full.log */,
 				88AEEFF62D5233D4007F2A4C /* IOReg-Outline.md */,
 				88DA7BA62D532C6700C8F759 /* README.md */,
+				8814834F2D53B906003FB561 /* build.sh */,
 				88B40D592D4B666700DFE7C5 /* Frameworks */,
 				88B40D582D4B666700DFE7C5 /* Products */,
 			);
@@ -205,6 +208,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				8814834D2D5385EC003FB561 /* PBXTargetDependency */,
 				88BEFD6A2D4BC16200CD40E6 /* PBXTargetDependency */,
 			);
 			name = VSPInstall;
@@ -282,6 +286,7 @@
 				88DA7BA82D532C6800C8F759 /* README.md in Resources */,
 				880539ED2D4BAFBF00E55104 /* Assets.xcassets in Resources */,
 				88667D6B2D53474900DFA26E /* VSPDriver-Start.log in Resources */,
+				881483502D53B906003FB561 /* build.sh in Resources */,
 				88DA7BA92D532C6800C8F759 /* LICENSE in Resources */,
 				880539F02D4BAFBF00E55104 /* MainMenu.xib in Resources */,
 				88667D6C2D53474900DFA26E /* VSPDriver-Full.log in Resources */,
@@ -322,6 +327,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		8814834D2D5385EC003FB561 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 8814834C2D5385EC003FB561 /* ORSSerial */;
+		};
 		88BEFD6A2D4BC16200CD40E6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 88B40D562D4B666700DFE7C5 /* VSPDriver */;
@@ -373,6 +382,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.1;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPInstall;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -417,6 +427,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.1;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPInstall;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -536,6 +547,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 12.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -594,6 +606,7 @@
 					"$(SDKROOT)/System/DriverKit/usr/lib/system",
 				);
 				MARKETING_VERSION = 1.1;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPDriver;
 				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -648,6 +661,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8814834C2D5385EC003FB561 /* ORSSerial */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88D938112D53655E009AA45C /* XCRemoteSwiftPackageReference "ORSSerialPort" */;
+			productName = ORSSerial;
+		};
 		88D938122D53655E009AA45C /* ORSSerial */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 88D938112D53655E009AA45C /* XCRemoteSwiftPackageReference "ORSSerialPort" */;
