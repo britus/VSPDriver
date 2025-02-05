@@ -787,7 +787,7 @@ IOReturn VSPSerialPort::CopyMemory_Impl(IOMemoryDescriptor* md, char* buffer, ui
     
     // !! Debug ....
     for (uint64_t i = 0; i < mapSize && i < 16; i++) {
-        VSPLog(LOG_PREFIX, "CopyMemory MAP> mapBuff[%lld]=0x%02x %c\n", i, mapBuff[i], mapBuff[i]);
+        VSPLog(LOG_PREFIX, "CopyMemory MAP> mapBuff[%02lld]=0x%02x %c\n", i, mapBuff[i], mapBuff[i]);
     }
     
     OSSafeReleaseNULL(map);
