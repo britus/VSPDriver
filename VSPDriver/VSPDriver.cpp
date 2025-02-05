@@ -114,7 +114,7 @@ void VSPDriver::free(void)
 kern_return_t IMPL(VSPDriver, Start)
 {
     kern_return_t ret;
-  
+    
     VSPLog(LOG_PREFIX, "Start: called.\n");
    
     /* check our private driver instance */

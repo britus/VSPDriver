@@ -92,6 +92,7 @@ struct VSPSerialPort_IVars {
     IODispatchQueue* m_dataQueue = nullptr;
     IODataQueueDispatchSource* m_dataSource = nullptr;
     OSAction* m_dataAction = nullptr;               // Async get packets action
+    bool m_txIsComplete = false;
     
     VSPDriver* m_parent;
     
@@ -103,7 +104,8 @@ struct VSPSerialPort_IVars {
     THwSerialStatus m_hwStatus = {};
     THwFlowControl m_hwFlowControl = {};
     THwMCR m_hwMCR = {};
-    uint32_t m_hwLatency;
+    
+    uint32_t m_hwLatency = 0;
     
     // TCP socket connection details
     OSString *m_serverAddress = nullptr;
@@ -306,15 +308,18 @@ void IMPL(VSPSerialPort, RxDataAvailable)
 void VSPSerialPort::TxDataAvailable_Impl() //
 //void IMPL(VSPSerialPort, TxDataAvailable)
 {
-    IOReturn ret;
-    
     VSPLog(LOG_PREFIX, "TxDataAvailable called.\n");
     
     // Lock to ensure thread safety
     IOLockLock(ivars->m_lock);
     
+    // reset
+    ivars->m_txIsComplete = false;
+
+#if 0 /* ---------| txqmd Direct access | ------------- */
     VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_txqmd -------------\n");
     
+    /* OSData, action, outCount */
     // copy mapped buffer of IOMemoryDescriptor txqmd
     ret = CopyMemory(ivars->m_txqmd, nullptr, 0);
     if (ret != kIOReturnSuccess) {
@@ -327,6 +332,19 @@ void VSPSerialPort::TxDataAvailable_Impl() //
     
     // --
     RxDataAvailable();
+#else /* ---------| raise txqmd async | ------------- */
+
+    // trigger available event ...
+    if (ivars->m_dataSource->IsDataAvailable()) {
+        VSPLog(LOG_PREFIX, "TxDataAvailable: send DataAvailable\n");
+        ivars->m_dataSource->SendDataAvailable();
+    } else {
+        VSPLog(LOG_PREFIX, "TxDataAvailable: call DataAvailable\n");
+        ivars->m_dataSource->DataAvailable(ivars->m_dataAction);
+    }
+
+#endif
+    
 finished:
     IOLockUnlock(ivars->m_lock);
 }
@@ -338,21 +356,19 @@ finished:
 void VSPSerialPort::TxPacketAvailable_Impl(OSAction* action)
 {
     IOReturn ret = 0;
-    uint64_t size;
-    char* buffer;
     uint64_t mdSize;
 
-    VSPLog(LOG_PREFIX, "TxPacketsAvailable(Action) called. action=0x%llx\n", (uint64_t) action);
+    VSPLog(LOG_PREFIX, "TxPacketAvailable called. action=0x%llx\n", (uint64_t) action);
     
     if (action == nullptr) {
-        VSPLog(LOG_PREFIX, "TxPacketsAvailable(Action): Invalid action object (nullptr).\n");
+        VSPLog(LOG_PREFIX, "TxPacketAvailable: Invalid action object (nullptr).\n");
         return;
     }
     
     // Lock to ensure thread safety
     IOLockLock(ivars->m_lock);
     
-    VSPLog(LOG_PREFIX, "TxDataAvailable(Action): Dump m_txqmd -------------\n");
+    VSPLog(LOG_PREFIX, "TxPacketAvailable: Dump m_txqmd +++--+++\n");
     
     // get lenght of the tx queue
     if ((ret = ivars->m_txqmd->GetLength(&mdSize)) != kIOReturnSuccess || mdSize == 0) {
@@ -360,15 +376,33 @@ void VSPSerialPort::TxPacketAvailable_Impl(OSAction* action)
         goto finished;
     }
 
-    // setup size and actions io buffer
-    size = mdSize;
-    buffer = (char*)action->GetReference();
+    VSPLog(LOG_PREFIX, "TxPacketAvailable: call dataSource->dequeue()\n");
+    
+    ivars->m_dataSource->Dequeue(^(const void *data, size_t dataSize) {
+        // copy action buffer to local buffer
+        IOReturn ret = CopyMemory(nullptr, (char*) data, dataSize);
+        if (ret != kIOReturnSuccess) {
+            VSPLog(LOG_PREFIX, "TxPacketAvailable: CopyMemory() failed on m_txqmd\n");
+        } else {
+            ivars->m_txIsComplete = true;
+        }
+    });
+    
+    if (!ivars->m_txIsComplete) {
+        VSPLog(LOG_PREFIX, "TxPacketAvailable: dequeue incomplete, try action\n");
+        // copy action buffer to local buffer
+        char* abuffer = (char*) action->GetReference();
+        IOReturn ret = CopyMemory(nullptr, (char*) abuffer, mdSize);
+        if (ret != kIOReturnSuccess) {
+            VSPLog(LOG_PREFIX, "TxPacketAvailable: CopyMemory() failed on m_txqmd\n");
+        } else {
+            ivars->m_txIsComplete = true;
+        }
+    }
 
-    // copy action buffer to local buffer
-    ret = CopyMemory(nullptr, buffer, size);
-    if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "TxDataAvailable(Action): CopyMemory failed on m_txqmd\n");
-        goto finished;
+    // complete ???
+    if (ivars->m_txIsComplete) {
+        ivars->m_dataSource->SendDataServiced();
     }
     
     // next data from /dev/cu.serial-xxxxxxx device
@@ -376,27 +410,6 @@ void VSPSerialPort::TxPacketAvailable_Impl(OSAction* action)
     
     // --
     RxDataAvailable();
-
-    // ****
-    //if (ivars->m_txDataQDSource->IsDataAvailable()) {
-    //    ivars->m_txDataQDSource->SendDataAvailable();
-    //}
-    
-    // Lock to ensure thread safety
-    // IOLockLock(ivars->m_lock);
-    /*
-     const uint64_t size = ivars->m_fifo.tx.size;
-     const char* buffer = (char*)action->GetReference();
-     if (buffer == nullptr) {
-     VSPLog(LOG_PREFIX, "TxPacketsAvailable: Invalid buffer pointer (nullptr).\n");
-     goto finished;
-     }
-     
- // !! Debug ....
-     for (uint64_t i = 0; i < size && i < 16; i++) {
-     VSPLog(LOG_PREFIX, "TxPacketsAvailable: TX> 0x%02x %c\n", buffer[i], buffer[i]);
-     }
-     */
     
 finished:
     IOLockUnlock(ivars->m_lock);
@@ -744,16 +757,12 @@ IOReturn VSPSerialPort::CopyMemory_Impl(IOMemoryDescriptor* md, char* buffer, ui
     uint8_t* mapBuff;
     IOReturn ret;
     
-    VSPLog(LOG_PREFIX, "CopyMemory called. md=0x%llx\n", (uint64_t)md);
-    
-    if (md == nullptr) {
-        VSPLog(LOG_PREFIX, "copy_md_memory: Invalid memory descriptor (nullptr).\n");
-        return kIOReturnBadArgument;
-    }
-    
-    VSPLog(LOG_PREFIX, "CopyMemory: CreateMapping.\n");
-    
+    VSPLog(LOG_PREFIX, "CopyMemory called. md=0x%llx buffer=0x%llx size=%lld\n",
+           (uint64_t)md, (uint64_t) buffer, size);
+        
     if (md != nullptr) {
+        VSPLog(LOG_PREFIX, "CopyMemory: CreateMapping.\n");
+
         // Access memory of TX IOMemoryDescriptor
         uint64_t mapFlags =
         kIOMemoryMapGuardedDefault |
@@ -762,7 +771,7 @@ IOReturn VSPSerialPort::CopyMemory_Impl(IOMemoryDescriptor* md, char* buffer, ui
         
         ret = md->CreateMapping(mapFlags, 0, 0, 0, 0, &map);
         if (ret != kIOReturnSuccess) {
-            VSPLog(LOG_PREFIX, "copy_md_memory: Failed to get memory map. code=%d\n", ret);
+            VSPLog(LOG_PREFIX, "CopyMemory: Failed to get memory map. code=%d\n", ret);
             return ret;
         }
         
@@ -772,6 +781,7 @@ IOReturn VSPSerialPort::CopyMemory_Impl(IOMemoryDescriptor* md, char* buffer, ui
         mapSize = map->GetLength();
         mapBuff = (uint8_t*)(map->GetAddress());
     } else if (buffer != nullptr && size >= 0) {
+        VSPLog(LOG_PREFIX, "CopyMemory: using buffer/size.\n");
         mapSize = size;
         mapBuff = (uint8_t*) buffer;
     } else {
