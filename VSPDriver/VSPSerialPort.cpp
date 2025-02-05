@@ -208,19 +208,30 @@ kern_return_t IMPL(VSPSerialPort, Start)
     
     VSPLog(LOG_PREFIX, "Start: Connect IODataQueueDispatchSource::DataAvailable event.\n");
     
-    ret = CreateDefaultDispatchQueue(&ivars->m_dataQueue);
-    if (ret != kIOReturnSuccess) {
-        IODispatchQueueName name;
-        strncpy(name, "vcpDataQueue", sizeof(IODispatchQueueName)-1);
-        // 0 = No options are currently defined.
-        // 0 = No priorities are currently defined.
-        ret = IODispatchQueue::Create(name, 0, 0, &ivars->m_dataQueue);
-        if (ret != kIOReturnSuccess || ivars->m_dataQueue == nullptr) {
-            VSPLog(LOG_PREFIX, "Start: Unable to create ifQueue. code=%d\n", ret);
-            goto error_exit;
-        }
+    // Get dispatch size from IOMemoryDiscriptor.
+    if ((ret = ivars->m_txqmd->GetLength(&mdSize)) != kIOReturnSuccess || mdSize == 0) {
+        VSPLog(LOG_PREFIX, "Start: Unable to descriptor size.\n");
+        goto error_exit;
     }
 
+    // Get dispatch queue from IOMemoryDiscriptor. If failed, try alternate way ???
+    ret = ivars->m_txqmd->CopyDispatchQueue(kIOServiceDefaultQueueName, &ivars->m_dataQueue);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "Start: txqmd->CopyDispatchQueue failed, try alts. code=%d\n", ret);
+        ret = CreateDefaultDispatchQueue(&ivars->m_dataQueue);
+        if (ret != kIOReturnSuccess) {
+            IODispatchQueueName name;
+            strncpy(name, "vcpDataQueue", sizeof(IODispatchQueueName)-1);
+            // 0 = No options are currently defined.
+            // 0 = No priorities are currently defined.
+            ret = IODispatchQueue::Create(name, 0, 0, &ivars->m_dataQueue);
+            if (ret != kIOReturnSuccess || ivars->m_dataQueue == nullptr) {
+                VSPLog(LOG_PREFIX, "Start: Unable to create ifQueue. code=%d\n", ret);
+                goto error_exit;
+            }
+        }
+    }
+    
     ret = IODataQueueDispatchSource::Create(mdSize, ivars->m_dataQueue, &ivars->m_dataSource);
     if (ret != kIOReturnSuccess || ivars->m_dataSource == nullptr) {
         VSPLog(LOG_PREFIX, "Start: IODataQueueDispatchSource::Create failed. code=%d\n", ret);
