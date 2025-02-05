@@ -8,10 +8,4 @@
 #ifndef VSPIOHelper_hpp
 #define VSPIOHelper_hpp
 
-#import <IOKit/IOKitLib.h>
-#import <IOKit/serial/IOSerialKeys.h>
-#import <IOKit/serial/ioss.h>
-
-#include <stdio.h>
-
 #endif /* VSPIOHelper_hpp */

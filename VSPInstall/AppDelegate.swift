@@ -8,10 +8,6 @@
 import Cocoa
 import SystemExtensions
 import AppKit
-import SwiftUI
-import IOKit
-import IOKit.usb
-import IOKit.serial
 import ORSSerial
 
 let DRIVER_EXTENSION : String = "org.eof.tools.VSPDriver"

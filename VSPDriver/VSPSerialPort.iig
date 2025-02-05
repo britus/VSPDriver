@@ -44,10 +44,10 @@ public:
     virtual kern_return_t HwProgramLatencyTimer(uint32_t latency) override;
     virtual kern_return_t HwProgramFlowControl(uint32_t arg, uint8_t xon, uint8_t xoff) override;
     
-    /* Async callback to get client TX data packets */
+    // Async callback to get client TX data packets
     virtual void TxPacketsAvailable(OSAction* action) TYPE(IODataQueueDispatchSource::DataAvailable);
     
-        // VSPDriver inrernals
+    // VSPDriver inrernals
     virtual void CleanupResources() LOCAL;
     virtual IOReturn SetupTTYBaseName() LOCAL;
     virtual IOReturn ConnectDriverQueues() LOCAL;
