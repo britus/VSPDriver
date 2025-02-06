@@ -252,12 +252,6 @@ kern_return_t IMPL(VSPSerialPort, Stop)
 kern_return_t IMPL(VSPSerialPort, ConnectQueues)
 {
     VSPLog(LOG_PREFIX, "ConnectQueues called\n");
-    VSPLog(LOG_PREFIX, "ConnectQueues: ifmd=0x%llx rxqmd=0x%llx txqmd=0x%llx\n",
-           (uint64_t)(ifmd), (uint64_t)(rxqmd), (uint64_t)(txqmd));
-    VSPLog(LOG_PREFIX, "ConnectQueues: in_rxqmd=0x%llx in_rxqmd=0x%llx\n",
-           (uint64_t)in_rxqmd, (uint64_t)in_rxqmd);
-    VSPLog(LOG_PREFIX, "ConnectQueues: in_rxqoffset=%d in_txqoffset=%d in_rxqlogsz=%d in_txqlogsz=%d\n",
-           in_rxqoffset, in_txqoffset, in_rxqlogsz, in_txqlogsz);
 
     IOReturn ret = ConnectQueues(ifmd, rxqmd, txqmd,
                                  in_rxqmd,
@@ -271,7 +265,7 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
         return ret;
     }
     
-    // sane check ...
+    //-- sane check --//
     
     ivars->m_ifmd = OSDynamicCast(IOBufferMemoryDescriptor, (*ifmd));
     if (ivars->m_ifmd == nullptr) {
@@ -290,27 +284,6 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
         VSPLog(LOG_PREFIX, "ConnectQueues: Invalid RX memory descriptor detected.\n");
         return kIOReturnInvalid;
     }
-    
-    driverkit::serial::SerialPortInterface* spi;
-    IOAddressSegment seg;
-
-    if ((ret = ivars->m_txqmd->GetAddressRange(&seg)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "ConnectQueues: TX GetAddressRange failed. code=%d\n", ret);
-        return ret;
-    }
-
-    spi = (driverkit::serial::SerialPortInterface*) seg.address;
-    VSPLog(LOG_PREFIX, "ConnectQueues: txCI=0x%x txPI=0x%x txqoffset=%d\n",
-           spi->txCI, spi->txPI, spi->txqoffset);
-
-    if ((ret = ivars->m_rxqmd->GetAddressRange(&seg)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "ConnectQueues: RX GetAddressRange failed. code=%d\n", ret);
-        return ret;
-    }
-    
-    spi = (driverkit::serial::SerialPortInterface*) seg.address;
-    VSPLog(LOG_PREFIX, "ConnectQueues: rxCI=0x%x rxPI=0x%x rxqoffset=%d\n",
-           spi->rxCI, spi->rxPI, spi->rxqoffset);
 
     return kIOReturnSuccess;
 }
@@ -329,8 +302,7 @@ void IMPL(VSPSerialPort, RxDataAvailable)
 // --------------------------------------------------------------------
 // TxDataAvailable_Impl()
 //
-void VSPSerialPort::TxDataAvailable_Impl() //
-//void IMPL(VSPSerialPort, TxDataAvailable)
+void IMPL(VSPSerialPort, TxDataAvailable)
 {
     IOAddressSegment seg;
     char* buffer;
@@ -345,8 +317,6 @@ void VSPSerialPort::TxDataAvailable_Impl() //
     // reset
     ivars->m_txIsComplete = false;
 
-    VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_txqmd -------------\n");
-
     // get the address of the TX ring buffer
     if ((ret = ivars->m_txqmd->GetAddressRange(&seg)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "ConnectQueues: TX GetAddressRange failed. code=%d\n", ret);
@@ -354,14 +324,15 @@ void VSPSerialPort::TxDataAvailable_Impl() //
     }
     
     buffer = (char*) seg.address;
-    size = seg.length;
+    size   = seg.length;
     
-    VSPLog(LOG_PREFIX, "CopyMemory MAP> mapBuff=0x%llx mapSize=%llu\n",
+    VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_txqmd -------------\n");
+    VSPLog(LOG_PREFIX, "ConnectQueues> buffer=0x%llx size=%llu\n",
            (uint64_t) buffer, size);
     
     // !! Debug ....
     for (uint64_t i = 0; i < size && i < 16; i++) {
-        VSPLog(LOG_PREFIX, "CopyMemory MAP> mapBuff[%02lld]=0x%02x %c\n", i, buffer[i], buffer[i]);
+        VSPLog(LOG_PREFIX, "ConnectQueues> buffer[%02lld]=0x%02x %c\n", i, buffer[i], buffer[i]);
     }
 
     // ....
