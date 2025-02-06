@@ -336,7 +336,7 @@ void VSPSerialPort::TxDataAvailable_Impl() //
     
     spi = (driverkit::serial::SerialPortInterface*) seg.address;
 
-    VSPLog(LOG_PREFIX, "TxDataAvailable: txCI=%d txPI=%d txqoffset=%d\n",
+    VSPLog(LOG_PREFIX, "TxDataAvailable: txCI=0x%x txPI=0x%x txqoffset=%d\n",
            spi->txCI, spi->txPI, spi->txqoffset);
 
     // copy content for later use
