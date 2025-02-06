@@ -49,6 +49,20 @@
 #define IOLockFreeNULL(l) { if (NULL != (l)) { IOLockFree(l); (l) = NULL; } }
 #endif
 
+#define VSPAquireLock(ivars) \
+{ \
+    ++ivars->m_lockLevel; \
+    VSPLog(LOG_PREFIX, "=> lock level=%d", ivars->m_lockLevel); \
+    IOLockLock(ivars->m_lock); \
+}
+
+#define VSPUnlock(ivars) \
+{ \
+    VSPLog(LOG_PREFIX, "<= lock level=%d", ivars->m_lockLevel); \
+    --ivars->m_lockLevel; \
+    IOLockUnlock(ivars->m_lock); \
+}
+
 // Updated by SetModemStatus read by HwGetModemStatus
 typedef struct {
     bool cts;
@@ -92,6 +106,7 @@ struct VSPSerialPort_IVars {
     VSPDriver* m_parent = nullptr;
 
     IOLock* m_lock = nullptr;                       // for resource locking
+    volatile atomic_int m_lockLevel = 0;
 
     /* OS provided memory descriptors by overridden
      * method ConnectQueues(...) */
@@ -116,7 +131,7 @@ struct VSPSerialPort_IVars {
     THwSerialStatus m_hwStatus = {};
     THwFlowControl m_hwFlowControl = {};
     THwMCR m_hwMCR = {};
-    uint32_t m_hwLatency = 5;
+    uint32_t m_hwLatency = 25;
     
     bool m_txIsComplete = false;
     bool m_hwActivated = false;
@@ -426,7 +441,7 @@ void IMPL(VSPSerialPort, EchoAsyncEvent)
     }
 
     // Lock to ensure thread safety
-    IOLockLock(ivars->m_lock);
+    VSPAquireLock(ivars);
 
     if (!ivars->m_rxSource->IsDataAvailable()) {
         goto finished;
@@ -517,7 +532,7 @@ void IMPL(VSPSerialPort, EchoAsyncEvent)
     }
 
 finished:
-    IOLockUnlock(ivars->m_lock);
+    VSPUnlock(ivars);
 }
 
 // --------------------------------------------------------------------
@@ -535,7 +550,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     VSPLog(LOG_PREFIX, "TxDataAvailable called.\n");
     
     // Lock to ensure thread safety
-    IOLockLock(ivars->m_lock);
+    VSPAquireLock(ivars);
 
     // Reset first
     ivars->m_txIsComplete = false;
@@ -588,7 +603,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     ivars->m_rxSource->SendDataAvailable();
     
 finished:
-    IOLockUnlock(ivars->m_lock);
+    VSPUnlock(ivars);
 }
 
 // --------------------------------------------------------------------
@@ -611,17 +626,19 @@ kern_return_t IMPL(VSPSerialPort, SetModemStatus)
     VSPLog(LOG_PREFIX, "SetModemStatus called [in] CTS=%d DSR=%d RI=%d DCD=%d\n",
                cts, dsr, ri, dcd);
     
+    VSPAquireLock(ivars);
+    ivars->m_hwStatus.cts = cts;
+    ivars->m_hwStatus.dsr = dsr;
+    ivars->m_hwStatus.ri  = ri;
+    ivars->m_hwStatus.dcd = dcd;
+    VSPUnlock(ivars);
+    
     ret = SetModemStatus(cts, dsr, ri, dcd, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "super::SetModemStatus failed. code=%d\n", ret);
         return ret;
     }
-    
-    ivars->m_hwStatus.cts = cts;
-    ivars->m_hwStatus.dsr = dsr;
-    ivars->m_hwStatus.ri  = ri;
-    ivars->m_hwStatus.dcd = dcd;
-    
+
     return kIOReturnSuccess;
 }
 
@@ -650,10 +667,12 @@ kern_return_t IMPL(VSPSerialPort, RxError)
         VSPLog(LOG_PREFIX, "RX parity error.\n");
     }
     
+    VSPAquireLock(ivars);
     ivars->m_errorState.overrun = overrun;
     ivars->m_errorState.framingError = framingError;
     ivars->m_errorState.gotBreak = gotBreak;
     ivars->m_errorState.parityError = parityError;
+    VSPUnlock(ivars);
     
     ret = RxError(overrun, gotBreak, framingError, parityError, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
@@ -673,7 +692,9 @@ kern_return_t IMPL(VSPSerialPort, HwActivate)
     
     VSPLog(LOG_PREFIX, "HwActivate called.\n");
     
+    VSPAquireLock(ivars);
     ivars->m_hwActivated = true;
+    VSPUnlock(ivars);
     
     ret = HwActivate(SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
@@ -693,7 +714,9 @@ kern_return_t IMPL(VSPSerialPort, HwDeactivate)
     
     VSPLog(LOG_PREFIX, "HwDeactivate called.\n");
     
+    VSPAquireLock(ivars);
     ivars->m_hwActivated = false;
+    VSPUnlock(ivars);
     
     ret = HwDeactivate(SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
@@ -712,6 +735,7 @@ kern_return_t IMPL(VSPSerialPort, HwResetFIFO)
     VSPLog(LOG_PREFIX, "HwResetFIFO called -> tx=%d rx=%d\n",
                tx, rx);
     
+    VSPAquireLock(ivars);
     // ?? notify caller (IOUserSerial)
     if (rx) {
         ivars->m_hwStatus.cts = true;
@@ -723,6 +747,7 @@ kern_return_t IMPL(VSPSerialPort, HwResetFIFO)
         ivars->m_hwStatus.cts = true;
         ivars->m_hwStatus.dsr = true;
     }
+    VSPUnlock(ivars);
     
     return kIOReturnSuccess;
 }
@@ -734,7 +759,10 @@ kern_return_t IMPL(VSPSerialPort, HwSendBreak)
 {
     VSPLog(LOG_PREFIX, "HwSendBreak called -> sendBreak=%d\n", sendBreak);
     
+    VSPAquireLock(ivars);
     ivars->m_errorState.gotBreak = sendBreak;
+    VSPUnlock(ivars);
+    
     return kIOReturnSuccess;
 }
 
@@ -747,6 +775,7 @@ kern_return_t IMPL(VSPSerialPort, HwGetModemStatus)
                ivars->m_hwStatus.cts, ivars->m_hwStatus.dsr, //
                ivars->m_hwStatus.ri, ivars->m_hwStatus.dcd);
     
+    VSPAquireLock(ivars);
     if (cts != nullptr) {
         (*cts) = ivars->m_hwStatus.cts;
     }
@@ -762,6 +791,7 @@ kern_return_t IMPL(VSPSerialPort, HwGetModemStatus)
     if (dcd != nullptr) {
         (*dcd) = ivars->m_hwStatus.dcd;
     }
+    VSPUnlock(ivars);
     
     return kIOReturnSuccess;
 }
@@ -775,10 +805,12 @@ kern_return_t IMPL(VSPSerialPort, HwProgramUART)
                         "nDataBits=%d nHalfStopBits=%d parity=%d\n",
             baudRate, nDataBits, nHalfStopBits, parity);
     
+    VSPAquireLock(ivars);
     ivars->m_uartParams.baudRate = baudRate;
     ivars->m_uartParams.nDataBits = nDataBits;
     ivars->m_uartParams.nHalfStopBits = nHalfStopBits;
     ivars->m_uartParams.parity = parity;
+    VSPUnlock(ivars);
     
     return kIOReturnSuccess;
 }
@@ -790,7 +822,9 @@ kern_return_t IMPL(VSPSerialPort, HwProgramBaudRate)
 {
     VSPLog(LOG_PREFIX, "HwProgramBaudRate called -> baudRate=%d\n", baudRate);
     
+    VSPAquireLock(ivars);
     ivars->m_uartParams.baudRate = baudRate;
+    VSPUnlock(ivars);
     
     return kIOReturnSuccess;
 }
@@ -803,8 +837,10 @@ kern_return_t IMPL(VSPSerialPort, HwProgramMCR)
     VSPLog(LOG_PREFIX, "HwProgramMCR called -> DTR=%d RTS=%d\n",
                dtr, rts);
     
+    VSPAquireLock(ivars);
     ivars->m_hwMCR.dtr = dtr;
     ivars->m_hwMCR.rts = rts;
+    VSPUnlock(ivars);
     
     return kIOReturnSuccess;
 }
@@ -817,7 +853,9 @@ kern_return_t IMPL(VSPSerialPort, HwProgramLatencyTimer)
     VSPLog(LOG_PREFIX, "HwProgramLatencyTimer called -> latency=%d\n",
                latency);
     
+    VSPAquireLock(ivars);
     ivars->m_hwLatency = latency;
+    VSPUnlock(ivars);
     
     return kIOReturnSuccess;
 }
@@ -830,9 +868,11 @@ kern_return_t IMPL(VSPSerialPort, HwProgramFlowControl)
     VSPLog(LOG_PREFIX, "HwProgramFlowControl called -> arg=%02x xon=%02x xoff=%02x\n",
                arg, xon, xoff);
     
+    VSPAquireLock(ivars);
     ivars->m_hwFlowControl.arg = arg;
     ivars->m_hwFlowControl.xon = xon;
     ivars->m_hwFlowControl.xoff = xoff;
+    VSPUnlock(ivars);
     
     return kIOReturnSuccess;
 }
@@ -862,7 +902,7 @@ void VSPSerialPort::setParent(VSPDriver* parent)
 {
     VSPLog(LOG_PREFIX, "setParent called.\n");
 
-    if (ivars != nullptr) {
+    if (ivars != nullptr && !ivars->m_parent) {
         ivars->m_parent = parent;
     }
 }
@@ -921,8 +961,7 @@ kern_return_t VSPSerialPort::enqueueResponse(void* buffer, uint64_t size, void* 
 
     // Response by adding queue entry to RX queue source
     ret = ivars->m_rxSource->Enqueue((uint32_t) size, ^(void *data, size_t dataSize) {
-        VSPLog(LOG_PREFIX, "enqueueResponse: RX enqueue data=0x%llx size=%lld\n",
-               (uint64_t) data, size);
+        VSPLog(LOG_PREFIX, "enqueueResponse: RX enqueue data=0x%llx size=%lld\n", (uint64_t) data, size);
         memcpy(data, buffer, (dataSize < size ? dataSize : size));
     });
     if (ret != kIOReturnSuccess) {
