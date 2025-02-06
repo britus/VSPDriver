@@ -327,37 +327,13 @@ void VSPSerialPort::TxDataAvailable_Impl() //
 
     VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_txqmd -------------\n");
 
-    // copy mapped buffer of IOMemoryDescriptor txqmd
+    // get the address of the TX ring buffer
     if ((ret = ivars->m_txqmd->GetAddressRange(&seg)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "ConnectQueues: TX GetAddressRange failed. code=%d\n", ret);
         goto finished;
     }
-    ret = CopyMemory(NULL, (char*) seg.address, seg.length);
-    if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "TxDataAvailable: CopyMemory failed on m_txqmd. code=%d\n", ret);
-        goto finished;
-    }
-
-    VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_rxqmd -------------\n");
-
-    // copy mapped buffer of IOMemoryDescriptor txqmd
-    if ((ret = ivars->m_rxqmd->GetAddressRange(&seg)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "ConnectQueues: RX GetAddressRange failed. code=%d\n", ret);
-        goto finished;
-    }
-    ret = CopyMemory(NULL, (char*) seg.address, seg.length);
-    if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "TxDataAvailable: CopyMemory failed on m_txqmd. code=%d\n", ret);
-        goto finished;
-    }
-
-    VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_ifmd -------------\n");
-
-    // copy mapped buffer of IOMemoryDescriptor txqmd
-    if ((ret = ivars->m_ifmd->GetAddressRange(&seg)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "ConnectQueues: IF GetAddressRange failed. code=%d\n", ret);
-        goto finished;
-    }
+    
+    // copy content for later use
     ret = CopyMemory(NULL, (char*) seg.address, seg.length);
     if (ret != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "TxDataAvailable: CopyMemory failed on m_txqmd. code=%d\n", ret);
