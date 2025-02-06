@@ -70,8 +70,9 @@
 
 // Driver instance state resource
 struct VSPDriver_IVars {
-    IOUserClient* m_controller;
+    IOUserClient*   m_controller;
     VSPSerialPort** m_serialPorts;
+    uint8_t         m_portCount;
 };
 
 // --------------------------------------------------------------------
@@ -123,13 +124,13 @@ kern_return_t IMPL(VSPDriver, Start)
     
     VSPLog(LOG_PREFIX, "Start: called.\n");
    
-    /* check our private driver instance */
+    // sane check our driver instance vars
     if (!ivars) {
         VSPLog(LOG_PREFIX, "Start: Private driver instance is NULL\n");
         return kIOReturnInvalid;
     }
 
-    /* call apple style super method */
+    // Start service instance (Apple style super call)
     ret = Start(provider, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "Start(super): failed. code=%d\n", ret);
@@ -164,8 +165,14 @@ kern_return_t IMPL(VSPDriver, Stop)
     
     VSPLog(LOG_PREFIX, "Stop called.\n");
     
-    /* shutdown */
-     if ((ret= Stop(provider, SUPERDISPATCH)) != kIOReturnSuccess) {
+    // release allocated port list only.
+    // (not each instance itself!)
+    if (ivars && ivars->m_serialPorts && ivars->m_portCount) {
+        IOSafeDeleteNULL(ivars->m_serialPorts, VSPSerialPort*, ivars->m_portCount);
+    }
+    
+    // service instance (Apple style super call)
+    if ((ret= Stop(provider, SUPERDISPATCH)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "Stop (suprt) failed. code=%d\n", ret);
     } else {
         VSPLog(LOG_PREFIX, "driver successfully removed.\n");
@@ -185,8 +192,18 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count)
 
     VSPLog(LOG_PREFIX, "CreateSerialPort: create #%d VSPSerialPort from Info.plist.\n", count);
     
+    // Allocate serial port list. Holds each allocated
+    // instance of the VSPSerialPort object
     ivars->m_serialPorts = IONewZero(VSPSerialPort*, count);
+    if (!ivars->m_serialPorts) {
+        VSPLog(LOG_PREFIX, "CreateSerialPort: Ouch out of memory.\n");
+        return kIOReturnNoMemory;
+    }
     
+    // remember count for IOSafeDeleteNULL call
+    ivars->m_portCount = count;
+
+    // do it
     for (uint8_t i = 0; i < count; i++) {
         VSPLog(LOG_PREFIX, "CreateSerialPort: Create serial port %d.\n", i);
 

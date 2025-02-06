@@ -151,13 +151,13 @@ kern_return_t IMPL(VSPSerialPort, Start)
     
     VSPLog(LOG_PREFIX, "Start: called.\n");
     
-    /* check our private driver instance */
+    // sane check our driver instance vars
     if (!ivars) {
         VSPLog(LOG_PREFIX, "Start: Private driver instance is NULL\n");
         return kIOReturnInvalid;
     }
     
-    /* call apple style super method */
+    // call super method (apple style)
     ret = Start(provider, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "Start(super): failed. code=%d\n", ret);
@@ -167,22 +167,23 @@ kern_return_t IMPL(VSPSerialPort, Start)
     // remember OS provider
     ivars->m_provider = provider;
 
-    // the locker
+    // the resource locker
     ivars->m_lock = IOLockAlloc();
     if (ivars->m_lock == nullptr) {
         VSPLog(LOG_PREFIX, "Start: Unable to allocate lock object.\n");
         goto error_exit;
     }
-
-    // default UART parameters
-    ivars->m_uartParams.baudRate = 112500;
-    ivars->m_uartParams.nHalfStopBits = 1;
-    ivars->m_uartParams.nDataBits = 8;
-    ivars->m_uartParams.parity = 0;
     
+    // create our own TTY name and index
     if ((ret = SetupTTYBaseName()) != kIOReturnSuccess) {
         goto error_exit;
     }
+
+    // default UART parameters
+    ivars->m_uartParams.baudRate = 112500;
+    ivars->m_uartParams.nHalfStopBits = 2;
+    ivars->m_uartParams.nDataBits = 8;
+    ivars->m_uartParams.parity = 0;
 
     VSPLog(LOG_PREFIX, "Start: register service.\n");
 
