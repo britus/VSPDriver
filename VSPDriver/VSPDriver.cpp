@@ -225,7 +225,7 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count)
         }
         
         // set this as parent
-        port->SetParent(this);
+        port->setParent(this);
 
         // save instance for controller
         ivars->m_serialPorts[i] = port;

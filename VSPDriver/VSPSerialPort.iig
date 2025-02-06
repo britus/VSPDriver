@@ -9,10 +9,14 @@
 #define VSPSerialPort_h
 
 #include <Availability.h>
+
+#include <DriverKit/OSAction.iig>
 #include <DriverKit/IOService.iig>
 #include <DriverKit/IOMemoryDescriptor.iig>
 #include <DriverKit/IOBufferMemoryDescriptor.iig>
 #include <DriverKit/IODataQueueDispatchSource.iig>
+#include <DriverKit/IOTimerDispatchSource.iig>
+
 #include <SerialDriverKit/IOUserSerial.iig>
 
 class VSPDriver;
@@ -29,8 +33,8 @@ public:
     virtual kern_return_t Start(IOService* provider) override;
     virtual kern_return_t Stop(IOService* provider) override;
     
-    // IOUserSerial overridden stuff
-    
+    // ------ [IOUserSerial overridden stuff] -------------------------
+
     /* overridden to get the right MDs of the OS.
      * we don't (let OS do) provide any own MDs */
     virtual kern_return_t ConnectQueues(
@@ -45,10 +49,7 @@ public:
             uint8_t                    in_txqlogsz) override;
     virtual kern_return_t DisconnectQueues() override;
 
-    virtual void RxDataAvailable() override;
     virtual void TxDataAvailable() override;
-
-    virtual void TxFreeSpaceAvailable() override;
     virtual void RxFreeSpaceAvailable() override;
     
     virtual kern_return_t SetModemStatus(bool cts, bool dsr, bool ri, bool dcd) override;
@@ -67,16 +68,21 @@ public:
     virtual kern_return_t HwProgramLatencyTimer(uint32_t latency) override;
     virtual kern_return_t HwProgramFlowControl(uint32_t arg, uint8_t xon, uint8_t xoff) override;
 
-    // --- VSPSerialPort inrernals ---
+    virtual void EchoAsyncEvent(OSAction* action) TYPE(IODataQueueDispatchSource::DataAvailable);
     
+    // ------ [VSPSerialPort inrernals] -------------------------
+
     // Release all resource in IVars
-    void CleanupResources() LOCALONLY;
+    void cleanupResources() LOCALONLY;
     
-    // Set link to caller instance
-    void SetParent(VSPDriver* parent) LOCALONLY;
-    
+    // Called by VSPDriver to link owner
+    void setParent(VSPDriver* parent) LOCALONLY;
+
     // Set our TTY name
-    kern_return_t SetupTTYBaseName() LOCALONLY;
+    kern_return_t setupTTYBaseName() LOCALONLY;
+
+    // enque response (RX) buffer and raise async event
+    kern_return_t enqueueResponse(void* buffer, uint64_t size, void* spif) LOCALONLY;
 };
 
 

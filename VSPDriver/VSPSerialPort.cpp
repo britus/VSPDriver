@@ -27,6 +27,7 @@
 
 #include <DriverKit/IODataQueueDispatchSource.h>
 #include <DriverKit/IOInterruptDispatchSource.h>
+#include <DriverKit/IOTimerDispatchSource.h>
 
 // -- SerialDriverKit
 #include <SerialDriverKit/SerialDriverKit.h>
@@ -92,18 +93,24 @@ struct VSPSerialPort_IVars {
     IOBufferMemoryDescriptor *m_rxqmd = nullptr;    // HW -> OS Receive
     
     /* Response buffer created by TxAvailable() */
-    OSData* m_rxData = nullptr;
-    
+    IODispatchQueue* m_rxQueue = nullptr;
+    IODataQueueDispatchSource* m_rxSource = nullptr;
+    OSAction* m_rxAction = nullptr;                 // Async RX action
+
     // Serial interface
     TErrorState m_errorState = {};
     TUartParameters m_uartParams = {};
     THwSerialStatus m_hwStatus = {};
     THwFlowControl m_hwFlowControl = {};
     THwMCR m_hwMCR = {};
-    uint32_t m_hwLatency = 0;
+    uint32_t m_hwLatency = 5;
     
     bool m_txIsComplete = false;
+    bool m_hwActivated = false;
 };
+
+using namespace driverkit;
+using namespace serial;
 
 // --------------------------------------------------------------------
 // Allocate internal resources
@@ -178,7 +185,7 @@ kern_return_t IMPL(VSPSerialPort, Start)
     }
     
     // create our own TTY name and index
-    if ((ret = SetupTTYBaseName()) != kIOReturnSuccess) {
+    if ((ret = setupTTYBaseName()) != kIOReturnSuccess) {
         goto error_exit;
     }
 
@@ -200,7 +207,7 @@ kern_return_t IMPL(VSPSerialPort, Start)
     return kIOReturnSuccess;
     
 error_exit:
-    CleanupResources();
+    cleanupResources();
     Stop(provider, SUPERDISPATCH);
     return ret;
 }
@@ -218,7 +225,7 @@ kern_return_t IMPL(VSPSerialPort, Stop)
     ivars->m_parent = nullptr;
     
     // remove all IVars resources
-    CleanupResources();
+    cleanupResources();
     
     /* shutdown */
     if ((ret= Stop(provider, SUPERDISPATCH)) != kIOReturnSuccess) {
@@ -268,77 +275,177 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
         VSPLog(LOG_PREFIX, "ConnectQueues: Invalid RX memory descriptor detected.\n");
         return kIOReturnInvalid;
     }
+    
+    // -- setup RX response queue and dispatch --
+        
+    VSPLog(LOG_PREFIX, "Start: Connect IODataQueueDispatchSource::DataAvailable event.\n");
+ 
+    uint64_t size;
+    if ((ret = ivars->m_rxqmd->GetLength(&size)) != kIOReturnSuccess || size == 0) {
+        VSPLog(LOG_PREFIX, "Start: Unable to descriptor size.\n");
+        return ret;
+    }
+ 
+    // 0 = No options are currently defined.
+    // 0 = No priorities are currently defined.
+    ret = IODispatchQueue::Create("rxDataQueue", 0, 0, &ivars->m_rxQueue);
+    if (ret != kIOReturnSuccess || !ivars->m_rxQueue) {
+        VSPLog(LOG_PREFIX, "Start: Unable to create ifQueue. code=%d\n", ret);
+        return ret;
+    }
+    
+    ret = IODataQueueDispatchSource::Create(size, ivars->m_rxQueue, &ivars->m_rxSource);
+    if (ret != kIOReturnSuccess || !ivars->m_rxSource) {
+        VSPLog(LOG_PREFIX, "Start: IODataQueueDispatchSource::Create failed. code=%d\n", ret);
+        goto error_exit;
+    }
+
+    // Async notification from IODataQueueDispatchSource::DataAvailable
+    ret = CreateActionEchoAsyncEvent(size, &ivars->m_rxAction);
+    if (ret != kIOReturnSuccess || !ivars->m_rxAction) {
+        VSPLog(LOG_PREFIX, "Start: Unable to create TX packet action. code=%d\n", ret);
+        goto error_exit;
+    }
+    
+    // Set async async callback action
+    ret = ivars->m_rxSource->SetDataAvailableHandler(ivars->m_rxAction);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "Start: SetDataAvailableHandler failed. code=%d\n", ret);
+        goto error_exit;
+    }
 
     return kIOReturnSuccess;
-}
+    
+error_exit:
+    OSSafeReleaseNULL(ivars->m_rxAction);
+    OSSafeReleaseNULL(ivars->m_rxSource);
+    OSSafeReleaseNULL(ivars->m_rxQueue);
+    return ret;}
 
 // --------------------------------------------------------------------
-// ConnectQueues_Impl( ... )
+// DisconnectQueues( ... )
 //
 kern_return_t IMPL(VSPSerialPort, DisconnectQueues)
 {
     IOReturn ret;
-    
+
     VSPLog(LOG_PREFIX, "DisconnectQueues called\n");
-    
-    if ((ret = DisconnectQueues()) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "super::DisconnectQueues failed. code=%d\n", ret);
+
+    // reset obtained MD pointers
+    ivars->m_txqmd = nullptr;
+    ivars->m_rxqmd = nullptr;
+    ivars->m_ifmd  = nullptr;
+
+    ret = DisconnectQueues(SUPERDISPATCH);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "super::DisconnectQueues: failed. code=%d\n", ret);
         return ret;
     }
     
-    return kIOReturnSuccess;
+    return ret;
 }
 
 // --------------------------------------------------------------------
-// RxDataAvailable_Impl()
+// EchoAsyncEvent_Impl(OSAction* action)
 //
-void IMPL(VSPSerialPort, RxDataAvailable)
+void IMPL(VSPSerialPort, EchoAsyncEvent)
 {
-    IOAddressSegment seg;
-    const void* rxbuff;
-    char* buffer;
-    uint64_t size;
+    SerialPortInterface* spi;
+    IOAddressSegment ifseg;
+    IOAddressSegment rxseg;
     IOReturn ret;
+    char* buf;
 
-    VSPLog(LOG_PREFIX, "RxDataAvailable called.\n");
+    VSPLog(LOG_PREFIX, "EchoAsyncEvent called.\n");
     
-    if (!ivars->m_rxData)
+    // Make sure action object is valid
+    if (!action) {
+        VSPLog(LOG_PREFIX, "EchoAsyncEvent bad argument. action=0%llx\n", (uint64_t) action);
         return;
+    }
+
     // Lock to ensure thread safety
     IOLockLock(ivars->m_lock);
-    
-    // get the address of the TX ring buffer
-    if ((ret = ivars->m_rxqmd->GetAddressRange(&seg)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "RxDataAvailable: RX GetAddressRange failed. code=%d\n", ret);
+
+    // Lock RX dispatch queue source
+    if ((ret = ivars->m_rxSource->SetEnable(false)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "EchoAsyncEvent: RX source SetEnable false failed. code=%d\n", ret);
+        goto finished;
+    }
+
+    // Get the address of the IOSerialPortInterface
+    if ((ret = ivars->m_ifmd->GetAddressRange(&ifseg)) != kIOReturnSuccess) {
+       VSPLog(LOG_PREFIX, "EchoAsyncEvent: IF GetAddressRange failed. code=%d\n", ret);
+       goto finished;
+    }
+
+    // Get the address of the RX ring buffer
+    if ((ret = ivars->m_rxqmd->GetAddressRange(&rxseg)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "EchoAsyncEvent: RX GetAddressRange failed. code=%d\n", ret);
         goto finished;
     }
     
-    buffer = (char*) seg.address;
-    size   = seg.length;
+    // Pointer to the serial port interface
+    spi = (SerialPortInterface*) ifseg.address;
     
-    VSPLog(LOG_PREFIX, "RxDataAvailable: get m_rxData buffer\n");
-    
-    /* get rx buffer pointer */
-    rxbuff = ivars->m_rxData->getBytesNoCopy(0, size);
+    VSPLog(LOG_PREFIX, "EchoAsyncEvent> rxPI=%d rxCI=%d rxqoffset=%d rxqlogsz=%d\n",
+           spi->rxPI, spi->rxCI, spi->rxqoffset, spi->rxqlogsz);
 
-    VSPLog(LOG_PREFIX, "RxDataAvailable: copy m_rxData to rxqmd buffer\n");
+    // Pointer to the RX ring buffer
+    buf = (char*) rxseg.address;
 
-    /* copy data to rxqmd memory descriptor */
-    memcpy(buffer, rxbuff, size);
-    
-    VSPLog(LOG_PREFIX, "RxDataAvailable: Dump m_rxqmd -------------\n");
-    VSPLog(LOG_PREFIX, "RxDataAvailable> buffer=0x%llx size=%llu\n",
-           (uint64_t) buffer, size);
-    
-    // !! Debug ....
-    for (uint64_t i = 0; i < size && i < 16; i++) {
-        VSPLog(LOG_PREFIX, "TxDataAvailable> buffer[%02lld]=0x%02x %c\n", i, buffer[i], buffer[i]);
+    VSPLog(LOG_PREFIX, "EchoAsyncEvent: dequeue RX source\n");
+
+    // Remove queue entry from RX queue source
+    ret = ivars->m_rxSource->Dequeue(^(const void *data, size_t dataSize) {
+        VSPLog(LOG_PREFIX, "EchoAsyncEvent: RX dequeue: data=0x%llx size=%ld\n",
+               (uint64_t) data, dataSize);
+        // Copy to RX ring buffer
+        memcpy(buf, data, dataSize);
+        // Update RX producer index
+        spi->rxPI = (uint32_t) dataSize;
+    });
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "EchoAsyncEvent: RX dequeue failed. code=%d\n", ret);
+        switch (ret) {
+            case kIOReturnUnderrun:
+                VSPLog(LOG_PREFIX, "EchoAsyncEvent: ^^-> underrun\n");
+                break;
+            case kIOReturnError:
+                VSPLog(LOG_PREFIX, "EchoAsyncEvent: ^^-> corrupt\n");
+                break;
+        }
+        return;
     }
 
+    // !! Debug ....
+    VSPLog(LOG_PREFIX, "EchoAsyncEvent: Dump m_rxqmd -------------\n");
+    VSPLog(LOG_PREFIX, "EchoAsyncEvent> buffer=0x%llx size=%u\n",
+           (uint64_t) buf, spi->rxPI);
+    for (uint64_t i = 0; i < spi->rxPI; i++) {
+        VSPLog(LOG_PREFIX, "EchoAsyncEvent> buffer[%02lld]=0x%02x %c\n",
+               i, buf[i], buf[i]);
+    }
+
+    // Unlock RX queue source
+    if ((ret = ivars->m_rxSource->SetEnable(true)) != kIOReturnSuccess) {
+       VSPLog(LOG_PREFIX, "EchoAsyncEvent: RX source SetEnable true failed. code=%d\n", ret);
+       goto finished;
+    }
+    
+    // Notify queue entry has been removed
+    ivars->m_rxSource->SendDataServiced();
+
+    // Notify IOSerial rx has data
     RxDataAvailable(SUPERDISPATCH);
+    
+    // notify tx completion
+    if (ivars->m_txIsComplete) {
+        ivars->m_txIsComplete = false;
+        TxFreeSpaceAvailable(SUPERDISPATCH);
+    }
 
 finished:
-    OSSafeReleaseNULL(ivars->m_rxData);
     IOLockUnlock(ivars->m_lock);
 }
 
@@ -347,9 +454,11 @@ finished:
 //
 void IMPL(VSPSerialPort, TxDataAvailable)
 {
-    IOAddressSegment seg;
-    char* buffer;
-    uint64_t size;
+    SerialPortInterface* spi;
+    IOAddressSegment ifseg;
+    IOAddressSegment txseg;
+    char* buf;
+    uint64_t len;
     IOReturn ret;
     
     VSPLog(LOG_PREFIX, "TxDataAvailable called.\n");
@@ -357,37 +466,52 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     // Lock to ensure thread safety
     IOLockLock(ivars->m_lock);
 
-    // reset
+    // Reset first
     ivars->m_txIsComplete = false;
 
-    // get the address of the TX ring buffer
-    if ((ret = ivars->m_txqmd->GetAddressRange(&seg)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "TxDataAvailable: TX GetAddressRange failed. code=%d\n", ret);
-        goto finished;
+    // Get the address of the IOSerialPortInterface buffer
+    if ((ret = ivars->m_ifmd->GetAddressRange(&ifseg)) != kIOReturnSuccess) {
+       VSPLog(LOG_PREFIX, "TxDataAvailable: IF GetAddressRange failed. code=%d\n", ret);
+       goto finished;
     }
+
+    // Get the address of the TX ring buffer
+    if ((ret = ivars->m_txqmd->GetAddressRange(&txseg)) != kIOReturnSuccess) {
+       VSPLog(LOG_PREFIX, "TxDataAvailable: TX GetAddressRange failed. code=%d\n", ret);
+       goto finished;
+    }
+
+    /* serial port interface segment */
+    spi = (SerialPortInterface*) ifseg.address;
+
+    VSPLog(LOG_PREFIX, "TxDataAvailable> txPI=%x txCI=%x txqoffset=%d txqlogsz=%d\n",
+           spi->txPI, spi->txCI, spi->txqoffset, spi->txqlogsz);
+
+    /* txProducer: number bytes comming in */
+    len = spi->txPI;
     
-    buffer = (char*) seg.address;
-    size   = seg.length;
-    
-    VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_txqmd -------------\n");
-    VSPLog(LOG_PREFIX, "TxDataAvailable> buffer=0x%llx size=%llu\n",
-           (uint64_t) buffer, size);
-    
+    /* Address to the TX ring buffer */
+    buf = (char*) txseg.address;
+
     // !! Debug ....
-    for (uint64_t i = 0; i < size && i < 16; i++) {
-        VSPLog(LOG_PREFIX, "TxDataAvailable> buffer[%02lld]=0x%02x %c\n", i, buffer[i], buffer[i]);
+    VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_txqmd -------------\n");
+    VSPLog(LOG_PREFIX, "TxDataAvailable> buf=0x%llx len=%llu\n",
+           (uint64_t) buf, len);
+    for (uint64_t i = 0; i < len; i++) {
+        VSPLog(LOG_PREFIX, "TxDataAvailable> buffer[%02lld]=0x%02x %c\n",
+               i, buf[i], buf[i]);
     }
 
-    if (!ivars->m_rxData) {
-        ivars->m_rxData = OSData::withBytes(buffer, size);
+    // Enqueue TX as response (echo)
+    if ((ret = enqueueResponse(buf, len, spi)) != kIOReturnSuccess) {
+       VSPLog(LOG_PREFIX, "TxDataAvailable: enqueueResponse failed. code=%d\n", ret);
+       goto finished;
     }
-    
-    // response incomming to RX
-    RxDataAvailable();
-    
-    // notify completion
-    TxFreeSpaceAvailable();
 
+    // Raise response event
+    ivars->m_txIsComplete = true;
+    ivars->m_rxSource->SendDataAvailable();
+    
 finished:
     IOLockUnlock(ivars->m_lock);
 }
@@ -403,24 +527,14 @@ void IMPL(VSPSerialPort, RxFreeSpaceAvailable)
 }
 
 // --------------------------------------------------------------------
-// TxFreeSpaceAvailable_Impl()
-//
-void IMPL(VSPSerialPort, TxFreeSpaceAvailable)
-{
-    VSPLog(LOG_PREFIX, "TxFreeSpaceAvailable called.\n");
-    
-    TxFreeSpaceAvailable(SUPERDISPATCH);
-}
-
-// --------------------------------------------------------------------
 // SetModemStatus_Impl(bool cts, bool dsr, bool ri, bool dcd)
 //
 kern_return_t IMPL(VSPSerialPort, SetModemStatus)
 {
     IOReturn ret;
     
-    VSPLog(LOG_PREFIX, "SetModemStatus called.\n");
-    VSPLog(LOG_PREFIX, "CTS=%d DSR=%d RI=%d DCD=%d\n", cts, dsr, ri, dcd);
+    VSPLog(LOG_PREFIX, "SetModemStatus called [in] CTS=%d DSR=%d RI=%d DCD=%d\n",
+               cts, dsr, ri, dcd);
     
     ret = SetModemStatus(cts, dsr, ri, dcd, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
@@ -468,11 +582,10 @@ kern_return_t IMPL(VSPSerialPort, RxError)
     
     ret = RxError(overrun, gotBreak, framingError, parityError, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "super::RxError failed. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "super::RxError: failed. code=%d\n", ret);
         return ret;
     }
 
-    
     return kIOReturnSuccess;
 }
 
@@ -484,6 +597,8 @@ kern_return_t IMPL(VSPSerialPort, HwActivate)
     kern_return_t ret = kIOReturnIOError;
     
     VSPLog(LOG_PREFIX, "HwActivate called.\n");
+    
+    ivars->m_hwActivated = true;
     
     ret = HwActivate(SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
@@ -503,6 +618,8 @@ kern_return_t IMPL(VSPSerialPort, HwDeactivate)
     
     VSPLog(LOG_PREFIX, "HwDeactivate called.\n");
     
+    ivars->m_hwActivated = false;
+    
     ret = HwDeactivate(SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "super::HwDeactivate failed. code=%d\n", ret);
@@ -517,16 +634,20 @@ kern_return_t IMPL(VSPSerialPort, HwDeactivate)
 //
 kern_return_t IMPL(VSPSerialPort, HwResetFIFO)
 {
-    VSPLog(LOG_PREFIX, "HwResetFIFO called.\n");
-    VSPLog(LOG_PREFIX, "HwResetFIFO: tx=%d rx=%d\n", tx, rx);
+    VSPLog(LOG_PREFIX, "HwResetFIFO called -> tx=%d rx=%d\n",
+               tx, rx);
     
-    if (rx && ivars->m_rxData) {
-        OSSafeReleaseNULL(ivars->m_rxData);
+    // ?? notify caller (IOUserSerial)
+    if (rx) {
+        ivars->m_hwStatus.cts = true;
+        ivars->m_hwStatus.dsr = true;
     }
     
-    // TODO: FIFO implement reset
-    /*if (rx) fifoResetRx(); */
-    /*if (tx) fifoResetTx(); */
+    // ?? notify caller (IOUserSerial)
+    if (tx) {
+        ivars->m_hwStatus.cts = true;
+        ivars->m_hwStatus.dsr = true;
+    }
     
     return kIOReturnSuccess;
 }
@@ -536,8 +657,7 @@ kern_return_t IMPL(VSPSerialPort, HwResetFIFO)
 //
 kern_return_t IMPL(VSPSerialPort, HwSendBreak)
 {
-    VSPLog(LOG_PREFIX, "HwSendBreak called.\n");
-    VSPLog(LOG_PREFIX, "HwSendBreak: sendBreak=%d\n", sendBreak);
+    VSPLog(LOG_PREFIX, "HwSendBreak called -> sendBreak=%d\n", sendBreak);
     
     return kIOReturnSuccess;
 }
@@ -547,10 +667,9 @@ kern_return_t IMPL(VSPSerialPort, HwSendBreak)
 //
 kern_return_t IMPL(VSPSerialPort, HwGetModemStatus)
 {
-    VSPLog(LOG_PREFIX, "HwGetModemStatus called.\n");
-    VSPLog(LOG_PREFIX, "HwGetModemStatus: cts=%d dsr=%d ri=%d dcd=%d\n", //
-           ivars->m_hwStatus.cts, ivars->m_hwStatus.dsr, //
-           ivars->m_hwStatus.ri, ivars->m_hwStatus.dcd);
+    VSPLog(LOG_PREFIX, "HwGetModemStatus called [out] CTS=%d DSR=%d RI=%d DCD=%d\n", //
+               ivars->m_hwStatus.cts, ivars->m_hwStatus.dsr, //
+               ivars->m_hwStatus.ri, ivars->m_hwStatus.dcd);
     
     if (cts != nullptr) {
         (*cts) = ivars->m_hwStatus.cts;
@@ -576,9 +695,9 @@ kern_return_t IMPL(VSPSerialPort, HwGetModemStatus)
 //
 kern_return_t IMPL(VSPSerialPort, HwProgramUART)
 {
-    VSPLog(LOG_PREFIX, "HwProgramUART called.\n");
-    VSPLog(LOG_PREFIX, "HwProgramUART: baudRate=%d nDataBits=%d nHalfStopBits=%d parity=%d\n",
-           baudRate, nDataBits, nHalfStopBits, parity);
+    VSPLog(LOG_PREFIX, "HwProgramUART called -> baudRate=%d "
+                        "nDataBits=%d nHalfStopBits=%d parity=%d\n",
+            baudRate, nDataBits, nHalfStopBits, parity);
     
     ivars->m_uartParams.baudRate = baudRate;
     ivars->m_uartParams.nDataBits = nDataBits;
@@ -593,8 +712,7 @@ kern_return_t IMPL(VSPSerialPort, HwProgramUART)
 //
 kern_return_t IMPL(VSPSerialPort, HwProgramBaudRate)
 {
-    VSPLog(LOG_PREFIX, "HwProgramBaudRate called.\n");
-    VSPLog(LOG_PREFIX, "HwProgramBaudRate: baudRate=%d\n", baudRate);
+    VSPLog(LOG_PREFIX, "HwProgramBaudRate called -> baudRate=%d\n", baudRate);
     
     ivars->m_uartParams.baudRate = baudRate;
     
@@ -606,8 +724,8 @@ kern_return_t IMPL(VSPSerialPort, HwProgramBaudRate)
 //
 kern_return_t IMPL(VSPSerialPort, HwProgramMCR)
 {
-    VSPLog(LOG_PREFIX, "HwProgramMCR called.\n");
-    VSPLog(LOG_PREFIX, "HwProgramMCR: dtr=%d rts=%d\n", dtr, rts);
+    VSPLog(LOG_PREFIX, "HwProgramMCR called -> DTR=%d RTS=%d\n",
+               dtr, rts);
     
     ivars->m_hwMCR.dtr = dtr;
     ivars->m_hwMCR.rts = rts;
@@ -620,8 +738,8 @@ kern_return_t IMPL(VSPSerialPort, HwProgramMCR)
 //
 kern_return_t IMPL(VSPSerialPort, HwProgramLatencyTimer)
 {
-    VSPLog(LOG_PREFIX, "HwProgramLatencyTimer called.\n");
-    VSPLog(LOG_PREFIX, "HwProgramLatencyTimer: latency=%d\n", latency);
+    VSPLog(LOG_PREFIX, "HwProgramLatencyTimer called -> latency=%d\n",
+               latency);
     
     ivars->m_hwLatency = latency;
     
@@ -633,8 +751,8 @@ kern_return_t IMPL(VSPSerialPort, HwProgramLatencyTimer)
 //
 kern_return_t IMPL(VSPSerialPort, HwProgramFlowControl)
 {
-    VSPLog(LOG_PREFIX, "HwProgramFlowControl called.\n");
-    VSPLog(LOG_PREFIX, "HwProgramFlowControl: arg=%02x xon=%02x xoff=%02x\n", arg, xon, xoff);
+    VSPLog(LOG_PREFIX, "HwProgramFlowControl called -> arg=%02x xon=%02x xoff=%02x\n",
+               arg, xon, xoff);
     
     ivars->m_hwFlowControl.arg = arg;
     ivars->m_hwFlowControl.xon = xon;
@@ -646,22 +764,23 @@ kern_return_t IMPL(VSPSerialPort, HwProgramFlowControl)
 // --------------------------------------------------------------------
 // Remove all resources in IVars
 //
-void VSPSerialPort::CleanupResources()
+void VSPSerialPort::cleanupResources()
 {
-    VSPLog(LOG_PREFIX, "CleanupResources called.\n");
+    VSPLog(LOG_PREFIX, "cleanupResources called.\n");
     
-    // Disconnect all queues. This deallocates
-    // the INT/RX/TX MDs resources too
-    this->DisconnectQueues();
-    
+    OSSafeReleaseNULL(ivars->m_rxSource);
+    OSSafeReleaseNULL(ivars->m_rxAction);
+    OSSafeReleaseNULL(ivars->m_rxQueue);
     IOLockFreeNULL(ivars->m_lock);
 }
 
 // --------------------------------------------------------------------
 //
 //
-void VSPSerialPort::SetParent(VSPDriver* parent)
+void VSPSerialPort::setParent(VSPDriver* parent)
 {
+    VSPLog(LOG_PREFIX, "setParent called.\n");
+
     if (ivars != nullptr) {
         ivars->m_parent = parent;
     }
@@ -670,12 +789,14 @@ void VSPSerialPort::SetParent(VSPDriver* parent)
 // --------------------------------------------------------------------
 //
 //
-IOReturn VSPSerialPort::SetupTTYBaseName()
+kern_return_t VSPSerialPort::setupTTYBaseName()
 {
     IOReturn ret;
     OSDictionary* properties = nullptr;
     OSString* baseName = nullptr;
-    
+ 
+    VSPLog(LOG_PREFIX, "setupTTYBaseName called.\n");
+
     // setup custom TTY name
     if ((ret = CopyProperties(&properties)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "Start: Unable to get driver properties. code=%d\n", ret);
@@ -693,5 +814,55 @@ IOReturn VSPSerialPort::SetupTTYBaseName()
     
     OSSafeReleaseNULL(baseName);
     OSSafeReleaseNULL(properties);
+    return kIOReturnSuccess;
+}
+
+// --------------------------------------------------------------------
+// Enque given buffer in RX dispatch source and raise async event
+//
+kern_return_t VSPSerialPort::enqueueResponse(void* buffer, uint64_t size, void* spif)
+{
+    IOReturn ret = 0;
+
+    VSPLog(LOG_PREFIX, "enqueueResponse called.\n");
+
+    // Make sure everything is fine
+    if (!ivars || !ivars->m_rxSource || !buffer || !size) {
+        VSPLog(LOG_PREFIX, "enqueueResponse: Invalid arguments\n");
+        return kIOReturnBadArgument;
+    }
+    
+    // Disable dispatching on RX queue source
+    if ((ret = ivars->m_rxSource->SetEnable(false)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "enqueueResponse: RX source disable failed. code=%d\n", ret);
+        return ret;
+    }
+
+    // Response by adding queue entry to RX queue source
+    ret = ivars->m_rxSource->Enqueue((uint32_t) size, ^(void *data, size_t dataSize) {
+        VSPLog(LOG_PREFIX, "enqueueResponse: RX enqueue data=0x%llx size=%lld\n",
+               (uint64_t) data, size);
+        memcpy(data, buffer, (dataSize < size ? dataSize : size));
+    });
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "enqueueResponse: RX enqueue failed. code=%d\n", ret);
+        switch (ret) {
+            case kIOReturnOverrun:
+                VSPLog(LOG_PREFIX, "enqueueResponse: ^^-> overrun\n");
+                break;
+            case kIOReturnError:
+                VSPLog(LOG_PREFIX, "enqueueResponse: ^^-> corrupt\n");
+                break;
+        }
+        // Leave dispatch disabled (??)
+        return ret;
+    }
+    
+    // Enable dispatching on RX queue source
+    if ((ret = ivars->m_rxSource->SetEnable(true)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "enqueueResponse: RX source enable failed. code=%d\n", ret);
+        return ret;
+    }
+    
     return kIOReturnSuccess;
 }
