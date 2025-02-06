@@ -449,7 +449,7 @@ void IMPL(VSPSerialPort, EchoAsyncEvent)
     // Pointer to the serial port interface
     spi = (SerialPortInterface*) ifseg.address;
     
-    VSPLog(LOG_PREFIX, "EchoAsyncEvent> rxPI=%d rxCI=%d rxqoffset=%d rxqlogsz=%d\n",
+    VSPLog(LOG_PREFIX, "EchoAsyncEvent> IOSPI rxPI=%d rxCI=%d rxqoffset=%d rxqlogsz=%d\n",
            spi->rxPI, spi->rxCI, spi->rxqoffset, spi->rxqlogsz);
 
     // Pointer to the RX ring buffer
@@ -459,8 +459,7 @@ void IMPL(VSPSerialPort, EchoAsyncEvent)
 
     // Remove queue entry from RX queue source
     ret = ivars->m_rxSource->Dequeue(^(const void *data, size_t dataSize) {
-        VSPLog(LOG_PREFIX, "EchoAsyncEvent: RX dequeue: data=0x%llx size=%ld\n",
-               (uint64_t) data, dataSize);
+        VSPLog(LOG_PREFIX, "EchoAsyncEvent: RX dequeue: data=0x%llx size=%ld\n", (uint64_t) data, dataSize);
         // Copy to RX ring buffer
         memcpy(buf, data, dataSize);
         // Update RX producer index
@@ -478,14 +477,13 @@ void IMPL(VSPSerialPort, EchoAsyncEvent)
         }
     }
 
-    // !! Debug ....
+#ifdef DEBUG // !! Debug ....
     VSPLog(LOG_PREFIX, "EchoAsyncEvent: Dump m_rxqmd -------------\n");
-    VSPLog(LOG_PREFIX, "EchoAsyncEvent> buffer=0x%llx size=%u\n",
-           (uint64_t) buf, spi->rxPI);
+    VSPLog(LOG_PREFIX, "EchoAsyncEvent> buffer=0x%llx size=%u\n", (uint64_t) buf, spi->rxPI);
     for (uint64_t i = 0; i < spi->rxPI; i++) {
-        VSPLog(LOG_PREFIX, "EchoAsyncEvent> buffer[%02lld]=0x%02x %c\n",
-               i, buf[i], buf[i]);
+        VSPLog(LOG_PREFIX, "EchoAsyncEvent> buffer[%02lld]=0x%02x %c\n", i, buf[i], buf[i]);
     }
+#endif
     
     // Notify queue entry has been removed
     ivars->m_rxSource->SendDataServiced();
@@ -541,7 +539,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     /* serial port interface segment */
     spi = (SerialPortInterface*) ifseg.address;
 
-    VSPLog(LOG_PREFIX, "TxDataAvailable> txPI=%x txCI=%x txqoffset=%d txqlogsz=%d\n",
+    VSPLog(LOG_PREFIX, "TxDataAvailable> IOSPI txPI=%d txCI=%d txqoffset=%d txqlogsz=%d\n",
            spi->txPI, spi->txCI, spi->txqoffset, spi->txqlogsz);
 
     /* txProducer: number bytes comming in */
@@ -550,15 +548,14 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     /* Address to the TX ring buffer */
     buf = (char*) txseg.address;
 
-    // !! Debug ....
+#ifdef DEBUG // !! Debug ....
     VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_txqmd -------------\n");
-    VSPLog(LOG_PREFIX, "TxDataAvailable> buf=0x%llx len=%llu\n",
-           (uint64_t) buf, len);
+    VSPLog(LOG_PREFIX, "TxDataAvailable> buf=0x%llx len=%llu\n", (uint64_t) buf, len);
     for (uint64_t i = 0; i < len; i++) {
-        VSPLog(LOG_PREFIX, "TxDataAvailable> buffer[%02lld]=0x%02x %c\n",
-               i, buf[i], buf[i]);
+        VSPLog(LOG_PREFIX, "TxDataAvailable> buffer[%02lld]=0x%02x %c\n", i, buf[i], buf[i]);
     }
-
+#endif
+    
     // Enqueue TX as response (echo)
     if ((ret = enqueueResponse(buf, len, spi)) != kIOReturnSuccess) {
        VSPLog(LOG_PREFIX, "TxDataAvailable: enqueueResponse failed. code=%d\n", ret);

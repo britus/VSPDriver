@@ -14,15 +14,14 @@
 // This log to makes it easier to parse out individual logs from the driver,
 // since all logs will be prefixed with the same word/phrase. DriverKit logging
 // has no logging levels; some developers might want to prefix errors differently
-// than info messages.
-//
-// Another option is to #define a "DEBUG" case where some log messages only
-// exist when doing a debug build.
-//
-// To search for logs from this driver, use either: `sudo dmesg | grep NullDriver`
-// or use Console.app search to find messages that start with "NullDriver -".
+// than info messages. Another option is to #define a "DEBUG" case where some
+// log messages only exist when doing a debug build.
 #ifndef VSPLog
+#ifdef DEBUG
 #define VSPLog(prefix, fmt, ...) os_log(OS_LOG_DEFAULT, "[" prefix "]: " fmt, ##__VA_ARGS__)
+#else
+#define VSPLog(prefix, fmt, ...)
+#endif
 #endif
 
 #endif /* VSPLogger_h */
