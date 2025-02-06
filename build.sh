@@ -1,21 +1,27 @@
 #!/bin/bash
-#-arch x86_64
 
-if [ ! -d ${HOME}/EoF/tests/VSPDriver/build/GeneratedModuleMaps ]; then
-    mkdir -p ${HOME}/EoF/tests/VSPDriver/build/GeneratedModuleMaps
+prjroot=`pwd`
+
+# create build directory with ORSSerial module.map
+if [ ! -d ${prjroot}/build/GeneratedModuleMaps ]; then
+    mkdir -p ${prjroot}/build/GeneratedModuleMaps
 fi
  
-cd ${HOME}/EoF/tests/VSPDriver/build/GeneratedModuleMaps
+cd ${prjroot}/build/GeneratedModuleMaps
 
-prjmame="VSPDriver-fpldlsylchvopmfkgecwnfowmmsz"
 basedir="${HOME}/Library/Developer/Xcode/DerivedData"
 orspath="/SourcePackages/checkouts/ORSSerialPort/build/GeneratedModuleMaps"
-mappath="${basedir}/${prjmame}/${orspath}"
-echo ":> ${prjmame}
+prjname=`basename ${basedir}/VSPDriver-*`
+
+echo ":> ${basedir}"
+echo ":> ${prjname}"
+mappath="${basedir}/${prjname}${orspath}"
 ln -fs ${mappath}/ORSSerial.modulemap
 echo ":>"
-"
-cd ${HOME}/EoF/tests/VSPDriver
+
+cd ${prjroot}
+
+#-arch x86_64
 xcodebuild -project VSPDriver.xcodeproj \
 	-target VSPDriver \
 	-target VSPInstall
