@@ -27,6 +27,9 @@ public:
     virtual kern_return_t Stop(IOService* provider) override;
     
     // IOUserSerial overridden stuff
+    
+    /* overridden to get the right MDs of the OS.
+     * we don't (let OS do) provide any own MDs */
     virtual kern_return_t ConnectQueues(
             IOBufferMemoryDescriptor** ifmd,
             IOMemoryDescriptor**       rxqmd,
@@ -40,9 +43,6 @@ public:
     
     virtual void RxDataAvailable() override;
     virtual void TxDataAvailable() override;
-
-    /* Async callback to get client TX data packets */
-    virtual void TxPacketAvailable(OSAction* action) TYPE(IODataQueueDispatchSource::DataAvailable);
 
     virtual void TxFreeSpaceAvailable() override;
     virtual void RxFreeSpaceAvailable() override;
@@ -70,9 +70,6 @@ public:
     
     // Set our TTY name
     kern_return_t SetupTTYBaseName() LOCALONLY;
-    
-    // Transfer TX/RX
-    kern_return_t CopyMemory(IOMemoryDescriptor* md, char* buffer, uint64_t size) LOCALONLY;
 };
 
 
