@@ -1,8 +1,9 @@
 #!/bin/bash
 
 prjroot=`pwd`
+prjname="VSPDriver"
 
-# create build directory with ORSSerial module.map
+# create build directory with ORSSerial modulemap
 if [ ! -d ${prjroot}/build/GeneratedModuleMaps ]; then
     mkdir -p ${prjroot}/build/GeneratedModuleMaps
 fi
@@ -11,17 +12,16 @@ cd ${prjroot}/build/GeneratedModuleMaps
 
 basedir="${HOME}/Library/Developer/Xcode/DerivedData"
 orspath="/SourcePackages/checkouts/ORSSerialPort/build/GeneratedModuleMaps"
-prjname=`basename ${basedir}/VSPDriver-*`
+prjpath=`basename ${basedir}/${prjname}-*`
 
 echo ":> ${basedir}"
-echo ":> ${prjname}"
-mappath="${basedir}/${prjname}${orspath}"
+echo ":> ${prjpath}"
+mappath="${basedir}/${prjpath}${orspath}"
 ln -fs ${mappath}/ORSSerial.modulemap
-echo ":>"
 
 cd ${prjroot}
 
+echo ":> Build project..."
+
 #-arch x86_64
-xcodebuild -project VSPDriver.xcodeproj \
-	-target VSPDriver \
-	-target VSPInstall
+xcodebuild -project ${prjname}.xcodeproj -target VSPInstall
