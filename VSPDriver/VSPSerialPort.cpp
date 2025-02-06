@@ -115,7 +115,7 @@ bool VSPSerialPort::init(void)
     VSPLog(LOG_PREFIX, "init called.\n");
     
     if (!(result = super::init())) {
-        VSPLog(LOG_PREFIX, "free (super) falsed. result=%d\n", result);
+        VSPLog(LOG_PREFIX, "super::init falsed. result=%d\n", result);
         goto error_exit;
     }
     
@@ -222,7 +222,7 @@ kern_return_t IMPL(VSPSerialPort, Stop)
     
     /* shutdown */
     if ((ret= Stop(provider, SUPERDISPATCH)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Stop (super) failed. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "super::Stop failed. code=%d\n", ret);
     } else {
         VSPLog(LOG_PREFIX, "driver successfully removed.\n");
     }
@@ -245,7 +245,7 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
                                  in_rxqlogsz,
                                  in_txqlogsz, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "ConnectQueues (super): failed. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "super::ConnectQueues failed. code=%d\n", ret);
         return ret;
     }
     
@@ -269,6 +269,23 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
         return kIOReturnInvalid;
     }
 
+    return kIOReturnSuccess;
+}
+
+// --------------------------------------------------------------------
+// ConnectQueues_Impl( ... )
+//
+kern_return_t IMPL(VSPSerialPort, DisconnectQueues)
+{
+    IOReturn ret;
+    
+    VSPLog(LOG_PREFIX, "DisconnectQueues called\n");
+    
+    if ((ret = DisconnectQueues()) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "super::DisconnectQueues failed. code=%d\n", ret);
+        return ret;
+    }
+    
     return kIOReturnSuccess;
 }
 
@@ -407,7 +424,7 @@ kern_return_t IMPL(VSPSerialPort, SetModemStatus)
     
     ret = SetModemStatus(cts, dsr, ri, dcd, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "SetModemStatus (super) failed. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "super::SetModemStatus failed. code=%d\n", ret);
         return ret;
     }
     
@@ -451,7 +468,7 @@ kern_return_t IMPL(VSPSerialPort, RxError)
     
     ret = RxError(overrun, gotBreak, framingError, parityError, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "RxError (super) failed. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "super::RxError failed. code=%d\n", ret);
         return ret;
     }
 
@@ -470,7 +487,7 @@ kern_return_t IMPL(VSPSerialPort, HwActivate)
     
     ret = HwActivate(SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "HwActivate (super) failed. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "super::HwActivate failed. code=%d\n", ret);
         return ret;
     }
     
@@ -488,7 +505,7 @@ kern_return_t IMPL(VSPSerialPort, HwDeactivate)
     
     ret = HwDeactivate(SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "HwDeactivate (super) failed. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "super::HwDeactivate failed. code=%d\n", ret);
         return ret;
     }
     

@@ -43,7 +43,8 @@ public:
             uint32_t                   in_txqoffset,
             uint8_t                    in_rxqlogsz,
             uint8_t                    in_txqlogsz) override;
-    
+    virtual kern_return_t DisconnectQueues() override;
+
     virtual void RxDataAvailable() override;
     virtual void TxDataAvailable() override;
 
@@ -71,6 +72,7 @@ public:
     // Release all resource in IVars
     void CleanupResources() LOCALONLY;
     
+    // Set link to caller instance
     void SetParent(VSPDriver* parent) LOCALONLY;
     
     // Set our TTY name
