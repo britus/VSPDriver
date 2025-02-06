@@ -41,12 +41,14 @@
 
 #define LOG_PREFIX "VSPSerialPort"
 
-#define TTY_BASE_NAME "vsp"
+#define kVSPTTYBaseName "vsp"
+#define kRxDataQueueName "rxDataQueue"
 
 #ifndef IOLockFreeNULL
 #define IOLockFreeNULL(l) { if (NULL != (l)) { IOLockFree(l); (l) = NULL; } }
 #endif
 
+// Updated by SetModemStatus read by HwGetModemStatus
 typedef struct {
     bool cts;
     bool dsr;
@@ -54,17 +56,20 @@ typedef struct {
     bool dcd;
 } THwSerialStatus;
 
+// Updated by HwProgramFlowControl
 typedef struct{
     uint32_t arg;
     uint8_t xon;
     uint8_t xoff;
 } THwFlowControl;
 
+// Updated by HwProgramMCR
 typedef struct {
     bool dtr;
     bool rts;
 } THwMCR;
 
+// Updated by HwProgramUART and HwProgramBaudRate
 typedef struct {
     uint32_t baudRate;
     uint8_t nDataBits;
@@ -72,6 +77,7 @@ typedef struct {
     uint8_t parity;
 } TUartParameters;
 
+// Updated by RxError and HwSendBreak
 typedef struct {
     bool overrun;
     bool gotBreak;
@@ -92,7 +98,7 @@ struct VSPSerialPort_IVars {
     IOBufferMemoryDescriptor *m_txqmd = nullptr;    // OS -> HW Transmit
     IOBufferMemoryDescriptor *m_rxqmd = nullptr;    // HW -> OS Receive
     
-    /* Response buffer created by TxAvailable() */
+    // Response buffer created by TxAvailable()
     IODispatchQueue* m_rxQueue = nullptr;
     IODataQueueDispatchSource* m_rxSource = nullptr;
     OSAction* m_rxAction = nullptr;                 // Async RX action
@@ -221,13 +227,13 @@ kern_return_t IMPL(VSPSerialPort, Stop)
 
     VSPLog(LOG_PREFIX, "Stop called.\n");
     
-    // unlink VSP parent
+    // Unlink VSP parent
     ivars->m_parent = nullptr;
     
-    // remove all IVars resources
+    // Remove all IVars resources
     cleanupResources();
     
-    /* shutdown */
+    /* Shutdown instane */
     if ((ret= Stop(provider, SUPERDISPATCH)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "super::Stop failed. code=%d\n", ret);
     } else {
@@ -276,41 +282,39 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
         return kIOReturnInvalid;
     }
     
-    // -- setup RX response queue and dispatch --
-        
-    VSPLog(LOG_PREFIX, "Start: Connect IODataQueueDispatchSource::DataAvailable event.\n");
- 
+    // -- Setup RX response queue and dispatch source --
+    
     uint64_t size;
     if ((ret = ivars->m_rxqmd->GetLength(&size)) != kIOReturnSuccess || size == 0) {
-        VSPLog(LOG_PREFIX, "Start: Unable to descriptor size.\n");
+        VSPLog(LOG_PREFIX, "ConnectQueues: Unable to descriptor size.\n");
         return ret;
     }
  
     // 0 = No options are currently defined.
     // 0 = No priorities are currently defined.
-    ret = IODispatchQueue::Create("rxDataQueue", 0, 0, &ivars->m_rxQueue);
+    ret = IODispatchQueue::Create(kRxDataQueueName, 0, 0, &ivars->m_rxQueue);
     if (ret != kIOReturnSuccess || !ivars->m_rxQueue) {
-        VSPLog(LOG_PREFIX, "Start: Unable to create ifQueue. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "ConnectQueues: Unable to create RX queue. code=%d\n", ret);
         return ret;
     }
     
     ret = IODataQueueDispatchSource::Create(size, ivars->m_rxQueue, &ivars->m_rxSource);
     if (ret != kIOReturnSuccess || !ivars->m_rxSource) {
-        VSPLog(LOG_PREFIX, "Start: IODataQueueDispatchSource::Create failed. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "ConnectQueues: Unable to creade dispatch soure. code=%d\n", ret);
         goto error_exit;
     }
 
     // Async notification from IODataQueueDispatchSource::DataAvailable
     ret = CreateActionEchoAsyncEvent(size, &ivars->m_rxAction);
     if (ret != kIOReturnSuccess || !ivars->m_rxAction) {
-        VSPLog(LOG_PREFIX, "Start: Unable to create TX packet action. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "ConnectQueues: Unable to create RX action. code=%d\n", ret);
         goto error_exit;
     }
     
     // Set async async callback action
     ret = ivars->m_rxSource->SetDataAvailableHandler(ivars->m_rxAction);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Start: SetDataAvailableHandler failed. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "ConnectQueues: SetDataAvailableHandler failed. code=%d\n", ret);
         goto error_exit;
     }
 
@@ -659,6 +663,7 @@ kern_return_t IMPL(VSPSerialPort, HwSendBreak)
 {
     VSPLog(LOG_PREFIX, "HwSendBreak called -> sendBreak=%d\n", sendBreak);
     
+    ivars->m_errorState.gotBreak = sendBreak;
     return kIOReturnSuccess;
 }
 
@@ -799,16 +804,16 @@ kern_return_t VSPSerialPort::setupTTYBaseName()
 
     // setup custom TTY name
     if ((ret = CopyProperties(&properties)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Start: Unable to get driver properties. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "setupTTYBaseName: Unable to get properties. code=%d\n", ret);
         return ret;
     }
     
-    baseName = OSString::withCString(TTY_BASE_NAME);
+    baseName = OSString::withCString(kVSPTTYBaseName);
     properties->setObject(kIOTTYBaseNameKey, baseName);
     
     // write back to driver instance
     if ((ret = SetProperties(properties)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Start: Unable to set TTY base name. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "setupTTYBaseName: Unable to set TTY base name. code=%d\n", ret);
         //return ret; // ??? an error - why???
     }
     
