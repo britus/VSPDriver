@@ -83,9 +83,14 @@ typedef struct {
 // Driver instance state resource
 struct VSPSerialPort_IVars {
     IOService* m_provider = nullptr;
-    IOBufferMemoryDescriptor *m_ifmd = nullptr;     // Interrupt related buffer
-    IOMemoryDescriptor *m_txqmd = nullptr;          // Transmit buffer
-    IOMemoryDescriptor *m_rxqmd = nullptr;          // Receive buffer
+    
+    // Interrupt related data buffer
+    IOBufferMemoryDescriptor *m_ifmd = nullptr;
+    // OS -> HW Transmit tx data buffer
+    IOBufferMemoryDescriptor *m_txqmd = nullptr;
+    // HW -> OS Receive rx data buffer
+    IOBufferMemoryDescriptor *m_rxqmd = nullptr;
+    
     OSData* m_txOSData = nullptr;                   // ?? for ConfigureReport
     OSData* m_rxOSData = nullptr;                   // ?? for ConfigureReport
     
@@ -175,6 +180,9 @@ kern_return_t IMPL(VSPSerialPort, Start)
         return ret;
     }
     
+    // remember OS provider
+    ivars->m_provider = provider;
+
     // the locker
     ivars->m_lock = IOLockAlloc();
     if (ivars->m_lock == nullptr) {
@@ -182,75 +190,12 @@ kern_return_t IMPL(VSPSerialPort, Start)
         goto error_exit;
     }
     
-    // remember OS provider
-    ivars->m_provider = provider;
-    
     // default UART parameters
     ivars->m_uartParams.baudRate = 112500;
     ivars->m_uartParams.nHalfStopBits = 1;
     ivars->m_uartParams.nDataBits = 8;
     ivars->m_uartParams.parity = 0;
-    
-    VSPLog(LOG_PREFIX, "Start: Connect INT/RX/TX buffers.\n");
-    
-    // connect dispatcher queues and get its memory descriptors
-    if ((ret = ConnectDriverQueues()) != kIOReturnSuccess) {
-        goto error_exit;
-    }
-    
-    VSPLog(LOG_PREFIX, "Start: Get memory descriptor size.\n");
-    
-    uint64_t mdSize;
-    if ((ret = ivars->m_txqmd->GetLength(&mdSize)) != kIOReturnSuccess || mdSize == 0) {
-        VSPLog(LOG_PREFIX, "Start: Unable to descriptor size.\n");
-        goto error_exit;
-    }
-    
-    VSPLog(LOG_PREFIX, "Start: Connect IODataQueueDispatchSource::DataAvailable event.\n");
-    
-    // Get dispatch size from IOMemoryDiscriptor.
-    if ((ret = ivars->m_txqmd->GetLength(&mdSize)) != kIOReturnSuccess || mdSize == 0) {
-        VSPLog(LOG_PREFIX, "Start: Unable to descriptor size.\n");
-        goto error_exit;
-    }
-
-    // Get dispatch queue from IOMemoryDiscriptor. If failed, try alternate way ???
-    ret = ivars->m_txqmd->CopyDispatchQueue(kIOServiceDefaultQueueName, &ivars->m_dataQueue);
-    if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Start: txqmd->CopyDispatchQueue failed, try alts. code=%d\n", ret);
-        ret = CreateDefaultDispatchQueue(&ivars->m_dataQueue);
-        if (ret != kIOReturnSuccess) {
-            IODispatchQueueName name;
-            strncpy(name, "vcpDataQueue", sizeof(IODispatchQueueName)-1);
-            // 0 = No options are currently defined.
-            // 0 = No priorities are currently defined.
-            ret = IODispatchQueue::Create(name, 0, 0, &ivars->m_dataQueue);
-            if (ret != kIOReturnSuccess || ivars->m_dataQueue == nullptr) {
-                VSPLog(LOG_PREFIX, "Start: Unable to create ifQueue. code=%d\n", ret);
-                goto error_exit;
-            }
-        }
-    }
-    
-    ret = IODataQueueDispatchSource::Create(mdSize, ivars->m_dataQueue, &ivars->m_dataSource);
-    if (ret != kIOReturnSuccess || ivars->m_dataSource == nullptr) {
-        VSPLog(LOG_PREFIX, "Start: IODataQueueDispatchSource::Create failed. code=%d\n", ret);
-        goto error_exit;
-    }
-
-    // Async notification from IODataQueueDispatchSource::DataAvailable
-    ret = CreateActionTxPacketAvailable(mdSize, &ivars->m_dataAction);
-    if (ret != kIOReturnSuccess || ivars->m_dataAction == nullptr) {
-        VSPLog(LOG_PREFIX, "Start: Unable to create TX packet action. code=%d\n", ret);
-        goto error_exit;
-    }
-    
-    ret = ivars->m_dataSource->SetDataAvailableHandler(ivars->m_dataAction);
-    if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Start: SetDataAvailableHandler failed. code=%d\n", ret);
-        goto error_exit;
-    }
-    
+        
     if ((ret = SetupTTYBaseName()) != kIOReturnSuccess) {
         goto error_exit;
     }
@@ -264,7 +209,9 @@ kern_return_t IMPL(VSPSerialPort, Start)
         ret = kIOReturnNoMemory;
         goto error_exit;
     }
-    
+
+    VSPLog(LOG_PREFIX, "Start: register service.\n");
+
     // Register driver instance to IOReg
     if ((ret = RegisterService()) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "Start: RegisterService failed. code=%d\n", ret);
@@ -294,12 +241,60 @@ kern_return_t IMPL(VSPSerialPort, Stop)
     
     /* shutdown */
     if ((ret= Stop(provider, SUPERDISPATCH)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Stop (suprt) failed. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "Stop (super) failed. code=%d\n", ret);
     } else {
         VSPLog(LOG_PREFIX, "driver successfully removed.\n");
     }
     
     return ret;
+}
+
+// --------------------------------------------------------------------
+// ConnectQueues_Impl( ... )
+//
+kern_return_t IMPL(VSPSerialPort, ConnectQueues)
+{
+    VSPLog(LOG_PREFIX, "ConnectQueues called\n");
+    VSPLog(LOG_PREFIX, "ConnectQueues: ifmd=0x%llx rxqmd=0x%llx txqmd=0x%llx\n",
+           (uint64_t)(ifmd), (uint64_t)(rxqmd), (uint64_t)(txqmd));
+    VSPLog(LOG_PREFIX, "ConnectQueues: in_rxqmd=0x%llx in_rxqmd=0x%llx\n",
+           (uint64_t)in_rxqmd, (uint64_t)in_rxqmd);
+    VSPLog(LOG_PREFIX, "ConnectQueues: in_rxqoffset=%d in_txqoffset=%d in_rxqlogsz=%d in_txqlogsz=%d\n",
+           in_rxqoffset, in_txqoffset, in_rxqlogsz, in_txqlogsz);
+
+    IOReturn ret = ConnectQueues(ifmd, rxqmd, txqmd,
+                                 in_rxqmd,
+                                 in_txqmd,
+                                 in_rxqoffset,
+                                 in_txqoffset,
+                                 in_rxqlogsz,
+                                 in_txqlogsz, SUPERDISPATCH);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "ConnectQueues (super): failed. code=%d\n", ret);
+        return ret;
+    }
+    
+    // sane check ...
+    
+    ivars->m_ifmd = OSDynamicCast(IOBufferMemoryDescriptor, (*ifmd));
+    if (ivars->m_ifmd == nullptr) {
+        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid interrupt memory descriptor detected.\n");
+        return kIOReturnInvalid;
+    }
+    
+    ivars->m_txqmd = OSDynamicCast(IOBufferMemoryDescriptor, (*txqmd));
+    if (ivars->m_txqmd == nullptr) {
+        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid TX memory descriptor detected.\n");
+        return kIOReturnInvalid;
+    }
+
+    ivars->m_rxqmd = OSDynamicCast(IOBufferMemoryDescriptor, (*rxqmd));
+    if (ivars->m_rxqmd == nullptr) {
+        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid RX memory descriptor detected.\n");
+        return kIOReturnInvalid;
+    }
+
+    return kIOReturnSuccess;
 }
 
 // --------------------------------------------------------------------
@@ -319,36 +314,58 @@ void IMPL(VSPSerialPort, RxDataAvailable)
 void VSPSerialPort::TxDataAvailable_Impl() //
 //void IMPL(VSPSerialPort, TxDataAvailable)
 {
+    IOAddressSegment seg;
+    IOReturn ret;
+    
     VSPLog(LOG_PREFIX, "TxDataAvailable called.\n");
     
     // Lock to ensure thread safety
     IOLockLock(ivars->m_lock);
-    
+
     // reset
     ivars->m_txIsComplete = false;
 
-    /* ---------| txqmd Direct access | ------------- */
     VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_txqmd -------------\n");
-    
-    /* OSData, action, outCount */
+
     // copy mapped buffer of IOMemoryDescriptor txqmd
-    IOReturn ret = CopyMemory(ivars->m_txqmd, nullptr, 0);
+    if ((ret = ivars->m_txqmd->GetAddressRange(&seg)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "ConnectQueues: TX GetAddressRange failed. code=%d\n", ret);
+        goto finished;
+    }
+    ret = CopyMemory(NULL, (char*) seg.address, seg.length);
     if (ret != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "TxDataAvailable: CopyMemory failed on m_txqmd. code=%d\n", ret);
         goto finished;
     }
 
-    /* ---------| raise txqmd async?? | ------------- */
+    VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_rxqmd -------------\n");
 
-    // trigger available event ...
-    if (ivars->m_dataSource->IsDataAvailable()) {
-        VSPLog(LOG_PREFIX, "TxDataAvailable: (1) send DataAvailable\n");
-        ivars->m_dataSource->SendDataAvailable();
-    } else {
-        VSPLog(LOG_PREFIX, "TxDataAvailable: (0) call DataAvailable\n");
-        ivars->m_dataSource->DataAvailable(ivars->m_dataAction);
+    // copy mapped buffer of IOMemoryDescriptor txqmd
+    if ((ret = ivars->m_rxqmd->GetAddressRange(&seg)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "ConnectQueues: RX GetAddressRange failed. code=%d\n", ret);
+        goto finished;
     }
-    
+    ret = CopyMemory(NULL, (char*) seg.address, seg.length);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "TxDataAvailable: CopyMemory failed on m_txqmd. code=%d\n", ret);
+        goto finished;
+    }
+
+    VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_ifmd -------------\n");
+
+    // copy mapped buffer of IOMemoryDescriptor txqmd
+    if ((ret = ivars->m_ifmd->GetAddressRange(&seg)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "ConnectQueues: IF GetAddressRange failed. code=%d\n", ret);
+        goto finished;
+    }
+    ret = CopyMemory(NULL, (char*) seg.address, seg.length);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "TxDataAvailable: CopyMemory failed on m_txqmd. code=%d\n", ret);
+        goto finished;
+    }
+
+    // ....
+
 finished:
     IOLockUnlock(ivars->m_lock);
 }
@@ -667,9 +684,9 @@ kern_return_t IMPL(VSPSerialPort, HwProgramFlowControl)
 }
 
 // --------------------------------------------------------------------
-// CleanupResources_Impl() Remove all resources
+// Remove all resources in IVars
 //
-void IMPL(VSPSerialPort, CleanupResources)
+void VSPSerialPort::CleanupResources()
 {
     VSPLog(LOG_PREFIX, "CleanupResources called.\n");
     
@@ -690,9 +707,9 @@ void IMPL(VSPSerialPort, CleanupResources)
 }
 
 // --------------------------------------------------------------------
-// SetupTTYBaseName_Impl()
 //
-IOReturn IMPL(VSPSerialPort, SetupTTYBaseName)
+//
+IOReturn VSPSerialPort::SetupTTYBaseName()
 {
     IOReturn ret;
     OSDictionary* properties = nullptr;
@@ -719,42 +736,10 @@ IOReturn IMPL(VSPSerialPort, SetupTTYBaseName)
 }
 
 // --------------------------------------------------------------------
-// SetupTTYBaseName_Impl()
-//
-IOReturn IMPL(VSPSerialPort, ConnectDriverQueues)
-{
-    IOReturn ret;
-    
-    ret = this->ConnectQueues(&ivars->m_ifmd,   // --
-                              &ivars->m_rxqmd,  // --
-                              &ivars->m_txqmd,  // --
-                              nullptr, nullptr, 0, 0, 8, 8);
-    if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "ConnectQueues failed to allocate IF/RX/TX buffers.\n");
-        return ret;
-    }
-    if (ivars->m_ifmd == nullptr) {
-        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid interrupt buffer detected.\n");
-        return kIOReturnInvalid;
-    }
-    if (ivars->m_rxqmd == nullptr) {
-        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid RX buffer detected.\n");
-        return kIOReturnInvalid;
-    }
-    if (ivars->m_txqmd == nullptr) {
-        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid TX buffer detected.\n");
-        return kIOReturnInvalid;
-    }
-    
-    return kIOReturnSuccess;
-}
-
-// --------------------------------------------------------------------
-// CopyMemory_Impl(IOMemoryDescriptor* md)
 // ??? Called by TxDataAvailable() and here we get always 0x00 in MD
 // ??? mapped buffer of the IOMemoryDescriptors m_txqmd
 //
-IOReturn VSPSerialPort::CopyMemory_Impl(IOMemoryDescriptor* md, char* buffer, uint64_t size)
+IOReturn VSPSerialPort::CopyMemory(IOMemoryDescriptor* md, char* buffer, uint64_t size)
 {
     IOMemoryMap* map = nullptr;
     uint64_t mapSize;

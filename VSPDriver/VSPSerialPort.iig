@@ -10,17 +10,33 @@
 
 #include <Availability.h>
 #include <DriverKit/IOService.iig>
+#include <DriverKit/IOMemoryDescriptor.iig>
+#include <DriverKit/IOBufferMemoryDescriptor.iig>
 #include <DriverKit/IODataQueueDispatchSource.iig>
 #include <SerialDriverKit/IOUserSerial.iig>
 
 class VSPSerialPort: public IOUserSerial
 {
 public:
+    // OSObject life cycle
     virtual bool init() override;
     virtual void free() override;
     
+    // IOService life cylce
     virtual kern_return_t Start(IOService* provider) override;
     virtual kern_return_t Stop(IOService* provider) override;
+    
+    // IOUserSerial overridden stuff
+    virtual kern_return_t ConnectQueues(
+            IOBufferMemoryDescriptor** ifmd,
+            IOMemoryDescriptor**       rxqmd,
+            IOMemoryDescriptor**       txqmd,
+            IOMemoryDescriptor*        in_rxqmd,
+            IOMemoryDescriptor*        in_txqmd,
+            uint32_t                   in_rxqoffset,
+            uint32_t                   in_txqoffset,
+            uint8_t                    in_rxqlogsz,
+            uint8_t                    in_txqlogsz) override;
     
     virtual void RxDataAvailable() override;
     virtual void TxDataAvailable() override;
@@ -47,11 +63,16 @@ public:
     virtual kern_return_t HwProgramLatencyTimer(uint32_t latency) override;
     virtual kern_return_t HwProgramFlowControl(uint32_t arg, uint8_t xon, uint8_t xoff) override;
 
-    // VSPDriver inrernals
-    virtual void CleanupResources() LOCAL;
-    virtual IOReturn SetupTTYBaseName() LOCAL;
-    virtual IOReturn ConnectDriverQueues() LOCAL;
-    virtual IOReturn CopyMemory(IOMemoryDescriptor* md, char* buffer, uint64_t size) LOCAL;
+    // --- VSPSerialPort inrernals ---
+    
+    // Release all resource in IVars
+    void CleanupResources() LOCALONLY;
+    
+    // Set our TTY name
+    kern_return_t SetupTTYBaseName() LOCALONLY;
+    
+    // Transfer TX/RX
+    kern_return_t CopyMemory(IOMemoryDescriptor* md, char* buffer, uint64_t size) LOCALONLY;
 };
 
 
