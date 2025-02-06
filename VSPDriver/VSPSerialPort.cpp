@@ -41,8 +41,6 @@
 #define LOG_PREFIX "VSPSerialPort"
 
 #define TTY_BASE_NAME "vsp"
-#define SERVER_ADDRESS "127.0.0.1"
-#define SERVER_PORT 9001
 
 #ifndef IOLockFreeNULL
 #define IOLockFreeNULL(l) { if (NULL != (l)) { IOLockFree(l); (l) = NULL; } }
@@ -83,22 +81,15 @@ typedef struct {
 // Driver instance state resource
 struct VSPSerialPort_IVars {
     IOService* m_provider = nullptr;
-    
-    // Interrupt related data buffer
-    IOBufferMemoryDescriptor *m_ifmd = nullptr;
-    // OS -> HW Transmit tx data buffer
-    IOBufferMemoryDescriptor *m_txqmd = nullptr;
-    // HW -> OS Receive rx data buffer
-    IOBufferMemoryDescriptor *m_rxqmd = nullptr;
-    
-    OSData* m_txOSData = nullptr;                   // ?? for ConfigureReport
-    OSData* m_rxOSData = nullptr;                   // ?? for ConfigureReport
+    VSPDriver* m_parent = nullptr;
 
-    bool m_txIsComplete = false;
-    
-    VSPDriver* m_parent;
-    
-    IOLock* m_lock = nullptr;
+    IOLock* m_lock = nullptr;                       // for resource locking
+
+    /* OS provided memory descriptors by overridden
+     * method ConnectQueues(...) */
+    IOBufferMemoryDescriptor *m_ifmd = nullptr;     // Interrupt related
+    IOBufferMemoryDescriptor *m_txqmd = nullptr;    // OS -> HW Transmit
+    IOBufferMemoryDescriptor *m_rxqmd = nullptr;    // HW -> OS Receive
     
     // Serial interface
     TErrorState m_errorState = {};
@@ -106,13 +97,9 @@ struct VSPSerialPort_IVars {
     THwSerialStatus m_hwStatus = {};
     THwFlowControl m_hwFlowControl = {};
     THwMCR m_hwMCR = {};
-    
     uint32_t m_hwLatency = 0;
     
-    // TCP socket connection details
-    OSString *m_serverAddress = nullptr;
-    uint16_t m_serverPort = 0;
-    bool m_isConnected = false;
+    bool m_txIsComplete = false;
 };
 
 // --------------------------------------------------------------------
@@ -186,24 +173,14 @@ kern_return_t IMPL(VSPSerialPort, Start)
         VSPLog(LOG_PREFIX, "Start: Unable to allocate lock object.\n");
         goto error_exit;
     }
-    
+
     // default UART parameters
     ivars->m_uartParams.baudRate = 112500;
     ivars->m_uartParams.nHalfStopBits = 1;
     ivars->m_uartParams.nDataBits = 8;
     ivars->m_uartParams.parity = 0;
-        
+    
     if ((ret = SetupTTYBaseName()) != kIOReturnSuccess) {
-        goto error_exit;
-    }
-    
-    VSPLog(LOG_PREFIX, "Start: prepare internal stuff.\n");
-    
-    // Default TCP server settings
-    ivars->m_serverPort = SERVER_PORT;
-    ivars->m_serverAddress = OSString::withCString(SERVER_ADDRESS);
-    if (ivars->m_serverAddress == nullptr) {
-        ret = kIOReturnNoMemory;
         goto error_exit;
     }
 
@@ -319,7 +296,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
 
     // get the address of the TX ring buffer
     if ((ret = ivars->m_txqmd->GetAddressRange(&seg)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "ConnectQueues: TX GetAddressRange failed. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "TxDataAvailable: TX GetAddressRange failed. code=%d\n", ret);
         goto finished;
     }
     
@@ -327,12 +304,12 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     size   = seg.length;
     
     VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_txqmd -------------\n");
-    VSPLog(LOG_PREFIX, "ConnectQueues> buffer=0x%llx size=%llu\n",
+    VSPLog(LOG_PREFIX, "TxDataAvailable> buffer=0x%llx size=%llu\n",
            (uint64_t) buffer, size);
     
     // !! Debug ....
     for (uint64_t i = 0; i < size && i < 16; i++) {
-        VSPLog(LOG_PREFIX, "ConnectQueues> buffer[%02lld]=0x%02x %c\n", i, buffer[i], buffer[i]);
+        VSPLog(LOG_PREFIX, "TxDataAvailable> buffer[%02lld]=0x%02x %c\n", i, buffer[i], buffer[i]);
     }
 
     // ....
@@ -594,11 +571,6 @@ kern_return_t IMPL(VSPSerialPort, HwProgramFlowControl)
 void VSPSerialPort::CleanupResources()
 {
     VSPLog(LOG_PREFIX, "CleanupResources called.\n");
-    
-    OSSafeReleaseNULL(ivars->m_txOSData);
-    OSSafeReleaseNULL(ivars->m_rxOSData);
-    
-    OSSafeReleaseNULL(ivars->m_serverAddress);
     
     // Disconnect all queues. This deallocates
     // the INT/RX/TX MDs resources too

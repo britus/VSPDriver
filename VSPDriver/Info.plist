@@ -28,7 +28,7 @@
 			<string>VSPDriver</string>
 			<key>IOUserServerName</key>
 			<string>org.eof.tools.VSPDriver</string>
-			<key>UserClientProperties</key>
+			<key>SerialPortProperties</key>
 			<dict>
 				<key>CFBundleIdentifierKernel</key>
 				<string>com.apple.driver.driverkit.serial</string>
