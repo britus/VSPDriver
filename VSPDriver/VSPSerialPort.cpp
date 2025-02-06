@@ -91,6 +91,9 @@ struct VSPSerialPort_IVars {
     IOBufferMemoryDescriptor *m_txqmd = nullptr;    // OS -> HW Transmit
     IOBufferMemoryDescriptor *m_rxqmd = nullptr;    // HW -> OS Receive
     
+    /* Response buffer created by TxAvailable() */
+    OSData* m_rxData = nullptr;
+    
     // Serial interface
     TErrorState m_errorState = {};
     TUartParameters m_uartParams = {};
@@ -274,10 +277,52 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
 //
 void IMPL(VSPSerialPort, RxDataAvailable)
 {
+    IOAddressSegment seg;
+    const void* rxbuff;
+    char* buffer;
+    uint64_t size;
+    IOReturn ret;
+
     VSPLog(LOG_PREFIX, "RxDataAvailable called.\n");
     
+    if (!ivars->m_rxData)
+        return;
+    // Lock to ensure thread safety
+    IOLockLock(ivars->m_lock);
     
+    // get the address of the TX ring buffer
+    if ((ret = ivars->m_rxqmd->GetAddressRange(&seg)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "RxDataAvailable: RX GetAddressRange failed. code=%d\n", ret);
+        goto finished;
+    }
+    
+    buffer = (char*) seg.address;
+    size   = seg.length;
+    
+    VSPLog(LOG_PREFIX, "RxDataAvailable: get m_rxData buffer\n");
+    
+    /* get rx buffer pointer */
+    rxbuff = ivars->m_rxData->getBytesNoCopy(0, size);
+
+    VSPLog(LOG_PREFIX, "RxDataAvailable: copy m_rxData to rxqmd buffer\n");
+
+    /* copy data to rxqmd memory descriptor */
+    memcpy(buffer, rxbuff, size);
+    
+    VSPLog(LOG_PREFIX, "RxDataAvailable: Dump m_rxqmd -------------\n");
+    VSPLog(LOG_PREFIX, "RxDataAvailable> buffer=0x%llx size=%llu\n",
+           (uint64_t) buffer, size);
+    
+    // !! Debug ....
+    for (uint64_t i = 0; i < size && i < 16; i++) {
+        VSPLog(LOG_PREFIX, "TxDataAvailable> buffer[%02lld]=0x%02x %c\n", i, buffer[i], buffer[i]);
+    }
+
     RxDataAvailable(SUPERDISPATCH);
+
+finished:
+    OSSafeReleaseNULL(ivars->m_rxData);
+    IOLockUnlock(ivars->m_lock);
 }
 
 // --------------------------------------------------------------------
@@ -316,7 +361,15 @@ void IMPL(VSPSerialPort, TxDataAvailable)
         VSPLog(LOG_PREFIX, "TxDataAvailable> buffer[%02lld]=0x%02x %c\n", i, buffer[i], buffer[i]);
     }
 
-    // ....
+    if (!ivars->m_rxData) {
+        ivars->m_rxData = OSData::withBytes(buffer, size);
+    }
+    
+    // response incomming to RX
+    RxDataAvailable();
+    
+    // notify completion
+    TxFreeSpaceAvailable();
 
 finished:
     IOLockUnlock(ivars->m_lock);
@@ -449,6 +502,10 @@ kern_return_t IMPL(VSPSerialPort, HwResetFIFO)
 {
     VSPLog(LOG_PREFIX, "HwResetFIFO called.\n");
     VSPLog(LOG_PREFIX, "HwResetFIFO: tx=%d rx=%d\n", tx, rx);
+    
+    if (rx && ivars->m_rxData) {
+        OSSafeReleaseNULL(ivars->m_rxData);
+    }
     
     // TODO: FIFO implement reset
     /*if (rx) fifoResetRx(); */
