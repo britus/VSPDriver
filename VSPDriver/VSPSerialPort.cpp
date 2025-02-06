@@ -7,8 +7,9 @@
 // ********************************************************************
 
 // -- OS
-#include <stdio.h>
 #include <os/log.h>
+#include <stdio.h>
+#include <time.h>
 
 #include <DriverKit/OSDictionary.h>
 #include <DriverKit/OSData.h>
@@ -98,10 +99,16 @@ struct VSPSerialPort_IVars {
     IOBufferMemoryDescriptor *m_txqmd = nullptr;    // OS -> HW Transmit
     IOBufferMemoryDescriptor *m_rxqmd = nullptr;    // HW -> OS Receive
     
+    // Timed events
+    IODispatchQueue* m_tiQueue = nullptr;
+    IOTimerDispatchSource* m_tiSource = nullptr;
+    OSAction* m_tiAction = nullptr;
+    OSData* m_tiData = nullptr;
+
     // Response buffer created by TxAvailable()
     IODispatchQueue* m_rxQueue = nullptr;
     IODataQueueDispatchSource* m_rxSource = nullptr;
-    OSAction* m_rxAction = nullptr;                 // Async RX action
+    OSAction* m_rxAction = nullptr;
 
     // Serial interface
     TErrorState m_errorState = {};
@@ -201,6 +208,32 @@ kern_return_t IMPL(VSPSerialPort, Start)
     ivars->m_uartParams.nDataBits = 8;
     ivars->m_uartParams.parity = 0;
 
+    VSPLog(LOG_PREFIX, "Start: Allocate timer queue and resources.\n");
+
+    ret = IODispatchQueue::Create("kVSPTimerQueue", 0, 0, &ivars->m_tiQueue);
+    if (ret != kIOReturnSuccess || !ivars->m_tiQueue) {
+        VSPLog(LOG_PREFIX, "Start: Unable to create timer queue. code=%d\n", ret);
+        goto error_exit;
+    }
+
+    ret = IOTimerDispatchSource::Create(ivars->m_tiQueue, &ivars->m_tiSource);
+    if (ret != kIOReturnSuccess || !ivars->m_tiSource) {
+        VSPLog(LOG_PREFIX, "Start: Unable to create timer queue. code=%d\n", ret);
+        goto error_exit;
+    }
+
+    ret = CreateActionNotifyRXReady(sizeof(ivars->m_tiData), &ivars->m_tiAction);
+    if (ret != kIOReturnSuccess || !ivars->m_tiAction) {
+        VSPLog(LOG_PREFIX, "Start: Unable to timer callback action. code=%d\n", ret);
+        goto error_exit;
+    }
+
+    ret = ivars->m_tiSource->SetHandler(ivars->m_tiAction);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "Start: Unable to assign timer action. code=%d\n", ret);
+        goto error_exit;
+    }
+
     VSPLog(LOG_PREFIX, "Start: register service.\n");
 
     // Register driver instance to IOReg
@@ -262,7 +295,7 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
         return ret;
     }
     
-    //-- sane check --//
+    //-- Sane check --//
     
     ivars->m_ifmd = OSDynamicCast(IOBufferMemoryDescriptor, (*ifmd));
     if (ivars->m_ifmd == nullptr) {
@@ -350,6 +383,29 @@ kern_return_t IMPL(VSPSerialPort, DisconnectQueues)
 }
 
 // --------------------------------------------------------------------
+// NotifyRXReady_Impl(OSAction* action)
+//
+void IMPL(VSPSerialPort, NotifyRXReady)
+{
+    VSPLog(LOG_PREFIX, "NotifyRXReady called.\n");
+    
+    // Make sure action object is valid
+    if (!action) {
+        VSPLog(LOG_PREFIX, "NotifyRXReady bad argument. action=0%llx\n", (uint64_t) action);
+        return;
+    }
+    
+    // Notify IOSerial rx has data
+    RxDataAvailable(SUPERDISPATCH);
+    
+    // notify tx completion
+    if (ivars->m_txIsComplete) {
+        ivars->m_txIsComplete = false;
+        TxFreeSpaceAvailable(SUPERDISPATCH);
+    }
+}
+
+// --------------------------------------------------------------------
 // EchoAsyncEvent_Impl(OSAction* action)
 //
 void IMPL(VSPSerialPort, EchoAsyncEvent)
@@ -358,6 +414,7 @@ void IMPL(VSPSerialPort, EchoAsyncEvent)
     IOAddressSegment ifseg;
     IOAddressSegment rxseg;
     IOReturn ret;
+    uint64_t deadtime, leeway;
     char* buf;
 
     VSPLog(LOG_PREFIX, "EchoAsyncEvent called.\n");
@@ -417,9 +474,8 @@ void IMPL(VSPSerialPort, EchoAsyncEvent)
                 break;
             case kIOReturnError:
                 VSPLog(LOG_PREFIX, "EchoAsyncEvent: ^^-> corrupt\n");
-                break;
+                return;
         }
-        return;
     }
 
     // !! Debug ....
@@ -430,6 +486,9 @@ void IMPL(VSPSerialPort, EchoAsyncEvent)
         VSPLog(LOG_PREFIX, "EchoAsyncEvent> buffer[%02lld]=0x%02x %c\n",
                i, buf[i], buf[i]);
     }
+    
+    // Notify queue entry has been removed
+    ivars->m_rxSource->SendDataServiced();
 
     // Unlock RX queue source
     if ((ret = ivars->m_rxSource->SetEnable(true)) != kIOReturnSuccess) {
@@ -437,17 +496,11 @@ void IMPL(VSPSerialPort, EchoAsyncEvent)
        goto finished;
     }
     
-    // Notify queue entry has been removed
-    ivars->m_rxSource->SendDataServiced();
-
-    // Notify IOSerial rx has data
-    RxDataAvailable(SUPERDISPATCH);
-    
-    // notify tx completion
-    if (ivars->m_txIsComplete) {
-        ivars->m_txIsComplete = false;
-        TxFreeSpaceAvailable(SUPERDISPATCH);
-    }
+    // Notify OS interrest parties
+    leeway = 1000000000;
+    deadtime = clock_gettime_nsec_np(CLOCK_MONOTONIC_RAW);
+    deadtime += ivars->m_hwLatency;
+    ivars->m_tiSource->WakeAtTime(kIOTimerClockMonotonicRaw, deadtime, leeway);
 
 finished:
     IOLockUnlock(ivars->m_lock);
@@ -773,6 +826,11 @@ void VSPSerialPort::cleanupResources()
 {
     VSPLog(LOG_PREFIX, "cleanupResources called.\n");
     
+    OSSafeReleaseNULL(ivars->m_tiQueue);
+    OSSafeReleaseNULL(ivars->m_tiSource);
+    OSSafeReleaseNULL(ivars->m_tiAction);
+    OSSafeReleaseNULL(ivars->m_tiData);
+
     OSSafeReleaseNULL(ivars->m_rxSource);
     OSSafeReleaseNULL(ivars->m_rxAction);
     OSSafeReleaseNULL(ivars->m_rxQueue);
