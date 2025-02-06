@@ -13,8 +13,9 @@
 #include <DriverKit/IOLib.h>
 #include <DriverKit/IOTypes.h>
 #include <DriverKit/IOService.h>
-
+#include <DriverKit/IOUserClient.h>
 #include <DriverKit/OSDictionary.h>
+#include <DriverKit/OSData.h>
 
 // -- My
 #include "VSPLogger.h"
@@ -42,7 +43,7 @@
          <string>VSPDriver</string>
          <key>IOUserServerName</key>
          <string>org.eof.tools.VSPDriver</string>
-         <key>UserClientProperties</key>
+         <key>SerialPortProperties</key>
          <dict>
              <key>CFBundleIdentifierKernel</key>
              <string>com.apple.driver.driverkit.serial</string>
@@ -63,9 +64,14 @@
  </dict>
  * ============================================================ */
 
+#define kVSPSerialPortProperties "SerialPortProperties"
+#define kVSPContollerProperties "VSPController"
+#define kVSPDefaultPortCount 4
+
 // Driver instance state resource
 struct VSPDriver_IVars {
-    VSPSerialPort* m_serialPort;
+    IOUserClient* m_controller;
+    VSPSerialPort** m_serialPorts;
 };
 
 // --------------------------------------------------------------------
@@ -130,20 +136,8 @@ kern_return_t IMPL(VSPDriver, Start)
         return ret;
     }
     
-#if 0
-    /* requires IUserClient class in Info.plist property
-     * "UserClientProperties.IOClass" */
-    IOUserClient* userClient;
-    
-    ret = NewUserClient(1, &userClient);
-    if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Start: NewUserClient failed. code=%d\n", ret);
-
-    }
-#endif
-    
-    // Create 4 serial port interfaces
-    if ((ret = CreateSerialPort(provider, 4)) != kIOReturnSuccess) {
+    // Create 4 serial port instances with each IOSerialBSDClient sub instance
+    if ((ret = CreateSerialPort(provider, kVSPDefaultPortCount)) != kIOReturnSuccess) {
         goto error_exit;
     }
 
@@ -181,21 +175,23 @@ kern_return_t IMPL(VSPDriver, Stop)
 }
 
 // --------------------------------------------------------------------
-// LoadSerialPort(IOService* provider)
-// Load VSPSerialPort instance
+// Create given number of VSPSerialPort instances
+//
 kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count)
 {
     kern_return_t ret;
     IOService* service;
+    VSPSerialPort* port;
 
     VSPLog(LOG_PREFIX, "CreateSerialPort: create #%d VSPSerialPort from Info.plist.\n", count);
+    
+    ivars->m_serialPorts = IONewZero(VSPSerialPort*, count);
     
     for (uint8_t i = 0; i < count; i++) {
         VSPLog(LOG_PREFIX, "CreateSerialPort: Create serial port %d.\n", i);
 
         // Create sub service object from UserClientProperties in Info.plist
-        // ret= Create(this, "UserClientProperties", &service);
-        ret= Create(this, "SerialPortProperties", &service);
+        ret= Create(this, kVSPSerialPortProperties, &service);
         if (ret != kIOReturnSuccess || service == nullptr) {
             VSPLog(LOG_PREFIX, "CreateSerialPort: create [%d] failed. code=%d\n", count, ret);
             return ret;
@@ -203,13 +199,63 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count)
         
         VSPLog(LOG_PREFIX, "CreateSerialPort: check VSPSerialPort type.\n");
         
-        // Check object type
-        ivars->m_serialPort = OSDynamicCast(VSPSerialPort, service);
-        if (ivars->m_serialPort == nullptr) {
+        // Sane check object type
+        port = OSDynamicCast(VSPSerialPort, service);
+        if (port == nullptr) {
             VSPLog(LOG_PREFIX, "CreateSerialPort: Cast to VSPSerialPort failed.\n");
             service->release();
             return kIOReturnInvalid;
         }
+        
+        // set this as parent
+        port->SetParent(this);
+
+        // save instance for controller
+        ivars->m_serialPorts[i] = port;
+    }
+    
+    return kIOReturnSuccess;
+}
+
+// --------------------------------------------------------------------
+// Create the 'VSP Controller' user client instances
+//
+kern_return_t VSPDriver::CreateUserClient(IOService* provider)
+{
+    kern_return_t ret;
+    IOService* service;
+
+    VSPLog(LOG_PREFIX, "CreateUserClient: create VSP controller from Info.plist.\n");
+
+/*
+#if 0
+    // ???? requires IUserClient class in Info.plist property
+    // ???? "UserClientProperties.IOClass"
+    IOUserClient* userClient;
+    
+    ret = NewUserClient(1, &userClient);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "Start: NewUserClient failed. code=%d\n", ret);
+
+    }
+#endif
+*/
+    
+    // Create sub service object from UserClientProperties in Info.plist
+    ret= Create(this, kVSPContollerProperties, &service);
+    if (ret != kIOReturnSuccess || service == nullptr) {
+        VSPLog(LOG_PREFIX, "CreateUserClient: create failed. code=%d\n", ret);
+        return ret;
+    }
+    
+    VSPLog(LOG_PREFIX, "CreateUserClient: check IOUserClient type.\n");
+    
+    // Sane check object type
+    ivars->m_controller = OSDynamicCast(IOUserClient, service);
+    if (ivars->m_controller == nullptr) {
+        VSPLog(LOG_PREFIX, "CreateUserClient: Cast to IOUserClient failed.\n");
+        service->release();
+        return kIOReturnInvalid;
     }
     
     return kIOReturnSuccess;

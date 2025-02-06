@@ -207,10 +207,13 @@ error_exit:
 kern_return_t IMPL(VSPSerialPort, Stop)
 {
     kern_return_t ret;
-    
+
     VSPLog(LOG_PREFIX, "Stop called.\n");
     
-    /* remove all IVars resources */
+    // unlink VSP parent
+    ivars->m_parent = nullptr;
+    
+    // remove all IVars resources
     CleanupResources();
     
     /* shutdown */
@@ -577,6 +580,16 @@ void VSPSerialPort::CleanupResources()
     this->DisconnectQueues();
     
     IOLockFreeNULL(ivars->m_lock);
+}
+
+// --------------------------------------------------------------------
+//
+//
+void VSPSerialPort::SetParent(VSPDriver* parent)
+{
+    if (ivars != nullptr) {
+        ivars->m_parent = parent;
+    }
 }
 
 // --------------------------------------------------------------------

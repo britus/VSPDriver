@@ -20,7 +20,8 @@ public:
     virtual kern_return_t Start(IOService* provider) override;
     virtual kern_return_t Stop(IOService* provider) override;
     
-    kern_return_t CreateSerialPort(IOService* provider, uint8_t count) LOCALONLY;
+    kern_return_t CreateSerialPort(IOService* provider, uint8_t count = 1) LOCALONLY;
+    kern_return_t CreateUserClient(IOService* provider) LOCALONLY;
 };
 
 #endif /* VSPDriver_h */

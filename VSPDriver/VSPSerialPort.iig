@@ -15,9 +15,12 @@
 #include <DriverKit/IODataQueueDispatchSource.iig>
 #include <SerialDriverKit/IOUserSerial.iig>
 
+class VSPDriver;
 class VSPSerialPort: public IOUserSerial
 {
 public:
+    friend class VSPDriver;
+    
     // OSObject life cycle
     virtual bool init() override;
     virtual void free() override;
@@ -67,6 +70,8 @@ public:
     
     // Release all resource in IVars
     void CleanupResources() LOCALONLY;
+    
+    void SetParent(VSPDriver* parent) LOCALONLY;
     
     // Set our TTY name
     kern_return_t SetupTTYBaseName() LOCALONLY;
