@@ -137,7 +137,7 @@ kern_return_t IMPL(VSPDriver, Start)
         return ret;
     }
     
-    // Create 4 serial port instances with each IOSerialBSDClient sub instance
+    // Create 4 serial port instances with each IOSerialBSDClient as a child instance
     if ((ret = CreateSerialPort(provider, kVSPDefaultPortCount)) != kIOReturnSuccess) {
         goto error_exit;
     }
