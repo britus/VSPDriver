@@ -382,6 +382,11 @@ kern_return_t IMPL(VSPSerialPort, DisconnectQueues)
     IOReturn ret;
 
     VSPLog(LOG_PREFIX, "DisconnectQueues called\n");
+    
+    // stop RX dispatch queue
+    OSSafeReleaseNULL(ivars->m_rxSource);
+    OSSafeReleaseNULL(ivars->m_rxAction);
+    OSSafeReleaseNULL(ivars->m_rxQueue);
 
     // reset obtained MD pointers
     ivars->m_txqmd = nullptr;
@@ -429,7 +434,6 @@ void IMPL(VSPSerialPort, EchoAsyncEvent)
     IOAddressSegment ifseg;
     IOAddressSegment rxseg;
     IOReturn ret;
-    uint64_t deadtime, leeway;
     char* buf;
 
     VSPLog(LOG_PREFIX, "EchoAsyncEvent called.\n");
@@ -514,15 +518,16 @@ void IMPL(VSPSerialPort, EchoAsyncEvent)
     ivars->m_rxSource->SendDataServiced();
 
     // Notify OS interrest parties
-    leeway = 1000000000;
-    deadtime = clock_gettime_nsec_np(CLOCK_MONOTONIC_RAW);
-    deadtime += ivars->m_hwLatency;
-    ret = ivars->m_tiSource->WakeAtTime(kIOTimerClockMonotonicRaw, deadtime, leeway);
+    ret = ivars->m_tiSource->WakeAtTime(
+                kIOTimerClockMonotonicRaw,
+                clock_gettime_nsec_np(CLOCK_MONOTONIC_RAW) + ivars->m_hwLatency,
+                1000000000);
     if (ret != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "EchoAsyncEvent> tiSource WakeAtTime failed. code=%d\n", ret);
         goto finished;
     }
-
+    
+#if 0
     ret = ivars->m_rxSource->Cancel(^{
         VSPLog(LOG_PREFIX, "EchoAsyncEvent> canceled\n");
     });
@@ -530,7 +535,8 @@ void IMPL(VSPSerialPort, EchoAsyncEvent)
         VSPLog(LOG_PREFIX, "EchoAsyncEvent> rxSource Cancel failed. code=%d\n", ret);
         goto finished;
     }
-
+#endif
+    
 finished:
     VSPUnlock(ivars);
 }
@@ -887,10 +893,6 @@ void VSPSerialPort::cleanupResources()
     OSSafeReleaseNULL(ivars->m_tiSource);
     OSSafeReleaseNULL(ivars->m_tiAction);
     OSSafeReleaseNULL(ivars->m_tiData);
-
-    OSSafeReleaseNULL(ivars->m_rxSource);
-    OSSafeReleaseNULL(ivars->m_rxAction);
-    OSSafeReleaseNULL(ivars->m_rxQueue);
     IOLockFreeNULL(ivars->m_lock);
 }
 
