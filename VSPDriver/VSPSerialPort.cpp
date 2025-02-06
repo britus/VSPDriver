@@ -314,6 +314,7 @@ void IMPL(VSPSerialPort, RxDataAvailable)
 void VSPSerialPort::TxDataAvailable_Impl() //
 //void IMPL(VSPSerialPort, TxDataAvailable)
 {
+    driverkit::serial::SerialPortInterface* spi;
     IOAddressSegment seg;
     IOReturn ret;
     
@@ -333,6 +334,11 @@ void VSPSerialPort::TxDataAvailable_Impl() //
         goto finished;
     }
     
+    spi = (driverkit::serial::SerialPortInterface*) seg.address;
+
+    VSPLog(LOG_PREFIX, "TxDataAvailable: txCI=%d txPI=%d txqoffset=%d\n",
+           spi->txCI, spi->txPI, spi->txqoffset);
+
     // copy content for later use
     ret = CopyMemory(NULL, (char*) seg.address, seg.length);
     if (ret != kIOReturnSuccess) {
