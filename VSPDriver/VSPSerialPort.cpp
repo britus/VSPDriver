@@ -443,6 +443,7 @@ void IMPL(VSPSerialPort, EchoAsyncEvent)
     // Lock to ensure thread safety
     VSPAquireLock(ivars);
 
+    // skip if complete...
     if (!ivars->m_rxSource->IsDataAvailable()) {
         goto finished;
     }
@@ -497,8 +498,7 @@ void IMPL(VSPSerialPort, EchoAsyncEvent)
     }
 
 #ifdef DEBUG // !! Debug ....
-    VSPLog(LOG_PREFIX, "EchoAsyncEvent: Dump m_rxqmd -------------\n");
-    VSPLog(LOG_PREFIX, "EchoAsyncEvent> buffer=0x%llx size=%u\n", (uint64_t) buf, spi->rxPI);
+    VSPLog(LOG_PREFIX, "EchoAsyncEvent: Dump m_rxqmd buffer=0x%llx size=%u\n", (uint64_t) buf, spi->rxPI);
     for (uint64_t i = 0; i < spi->rxPI; i++) {
         VSPLog(LOG_PREFIX, "EchoAsyncEvent> buffer[%02lld]=0x%02x %c\n", i, buf[i], buf[i]);
     }
@@ -585,8 +585,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     buf = (char*) txseg.address;
 
 #ifdef DEBUG // !! Debug ....
-    VSPLog(LOG_PREFIX, "TxDataAvailable: Dump m_txqmd -------------\n");
-    VSPLog(LOG_PREFIX, "TxDataAvailable> buf=0x%llx len=%llu\n", (uint64_t) buf, len);
+    VSPLog(LOG_PREFIX, "TxDataAvailable> Dump m_txqmd buf=0x%llx len=%llu\n", (uint64_t) buf, len);
     for (uint64_t i = 0; i < len; i++) {
         VSPLog(LOG_PREFIX, "TxDataAvailable> buffer[%02lld]=0x%02x %c\n", i, buf[i], buf[i]);
     }
@@ -594,7 +593,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     
     // Enqueue TX as response (echo)
     if ((ret = enqueueResponse(buf, len, spi)) != kIOReturnSuccess) {
-       VSPLog(LOG_PREFIX, "TxDataAvailable: enqueueResponse failed. code=%d\n", ret);
+       VSPLog(LOG_PREFIX, "TxDataAvailable: Enqueue response failed. code=%d\n", ret);
        goto finished;
     }
 
