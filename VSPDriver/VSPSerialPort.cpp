@@ -428,6 +428,10 @@ void IMPL(VSPSerialPort, EchoAsyncEvent)
     // Lock to ensure thread safety
     IOLockLock(ivars->m_lock);
 
+    if (!ivars->m_rxSource->IsDataAvailable()) {
+        goto finished;
+    }
+
     // Lock RX dispatch queue source
     if ((ret = ivars->m_rxSource->SetEnable(false)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "EchoAsyncEvent: RX source SetEnable false failed. code=%d\n", ret);
@@ -484,9 +488,6 @@ void IMPL(VSPSerialPort, EchoAsyncEvent)
         VSPLog(LOG_PREFIX, "EchoAsyncEvent> buffer[%02lld]=0x%02x %c\n", i, buf[i], buf[i]);
     }
 #endif
-    
-    // Notify queue entry has been removed
-    ivars->m_rxSource->SendDataServiced();
 
     // Unlock RX queue source
     if ((ret = ivars->m_rxSource->SetEnable(true)) != kIOReturnSuccess) {
@@ -494,11 +495,26 @@ void IMPL(VSPSerialPort, EchoAsyncEvent)
        goto finished;
     }
     
+    // Notify queue entry has been removed
+    ivars->m_rxSource->SendDataServiced();
+
     // Notify OS interrest parties
     leeway = 1000000000;
     deadtime = clock_gettime_nsec_np(CLOCK_MONOTONIC_RAW);
     deadtime += ivars->m_hwLatency;
-    ivars->m_tiSource->WakeAtTime(kIOTimerClockMonotonicRaw, deadtime, leeway);
+    ret = ivars->m_tiSource->WakeAtTime(kIOTimerClockMonotonicRaw, deadtime, leeway);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "EchoAsyncEvent> tiSource WakeAtTime failed. code=%d\n", ret);
+        goto finished;
+    }
+
+    ret = ivars->m_rxSource->Cancel(^{
+        VSPLog(LOG_PREFIX, "EchoAsyncEvent> canceled\n");
+    });
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "EchoAsyncEvent> rxSource Cancel failed. code=%d\n", ret);
+        goto finished;
+    }
 
 finished:
     IOLockUnlock(ivars->m_lock);
@@ -542,6 +558,11 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     VSPLog(LOG_PREFIX, "TxDataAvailable> IOSPI txPI=%d txCI=%d txqoffset=%d txqlogsz=%d\n",
            spi->txPI, spi->txCI, spi->txqoffset, spi->txqlogsz);
 
+    // skip if nothing to do
+    if (!spi->txPI) {
+        goto finished;
+    }
+    
     /* txProducer: number bytes comming in */
     len = spi->txPI;
     
