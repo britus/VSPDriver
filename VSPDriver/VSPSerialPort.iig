@@ -49,9 +49,11 @@ public:
             uint8_t                    in_txqlogsz) override;
     virtual kern_return_t DisconnectQueues() override;
 
+    virtual void RxDataAvailable() override;
     virtual void TxDataAvailable() override;
     virtual void RxFreeSpaceAvailable() override;
-    
+    virtual void TxFreeSpaceAvailable() override;
+
     virtual kern_return_t SetModemStatus(bool cts, bool dsr, bool ri, bool dcd) override;
     virtual kern_return_t RxError(bool overrun, bool gotBreak, bool framingError, bool parityError) override;
     

@@ -292,8 +292,26 @@ kern_return_t IMPL(VSPSerialPort, Stop)
 }
 
 // --------------------------------------------------------------------
-// ConnectQueues_Impl( ... )
+// Remove all resources in IVars
 //
+void VSPSerialPort::cleanupResources()
+{
+    VSPLog(LOG_PREFIX, "cleanupResources called.\n");
+    
+    OSSafeReleaseNULL(ivars->m_tiQueue);
+    OSSafeReleaseNULL(ivars->m_tiSource);
+    OSSafeReleaseNULL(ivars->m_tiAction);
+    OSSafeReleaseNULL(ivars->m_tiData);
+    IOLockFreeNULL(ivars->m_lock);
+}
+
+// ====================================================================
+// ** ----------------[ Connection live cycle ]--------------------- **
+// ====================================================================
+
+// --------------------------------------------------------------------
+// ConnectQueues_Impl( ... )
+// First call
 kern_return_t IMPL(VSPSerialPort, ConnectQueues)
 {
     VSPLog(LOG_PREFIX, "ConnectQueues called\n");
@@ -311,22 +329,23 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
     }
     
     //-- Sane check --//
-    
+    if (!ifmd || !(*ifmd) || !txqmd || !(*txqmd) || !rxqmd || !(*rxqmd)) {
+        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid memory descriptors detected. (NULL)\n");
+        return kIOReturnBadArgument;
+    }
     ivars->m_ifmd = OSDynamicCast(IOBufferMemoryDescriptor, (*ifmd));
     if (ivars->m_ifmd == nullptr) {
-        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid interrupt memory descriptor detected.\n");
+        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid 'ifmd' memory descriptor detected.\n");
         return kIOReturnInvalid;
     }
-    
     ivars->m_txqmd = OSDynamicCast(IOBufferMemoryDescriptor, (*txqmd));
     if (ivars->m_txqmd == nullptr) {
-        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid TX memory descriptor detected.\n");
+        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid 'txqmd' memory descriptor detected.\n");
         return kIOReturnInvalid;
     }
-
     ivars->m_rxqmd = OSDynamicCast(IOBufferMemoryDescriptor, (*rxqmd));
     if (ivars->m_rxqmd == nullptr) {
-        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid RX memory descriptor detected.\n");
+        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid 'rxqmd' memory descriptor detected.\n");
         return kIOReturnInvalid;
     }
     
@@ -372,11 +391,12 @@ error_exit:
     OSSafeReleaseNULL(ivars->m_rxAction);
     OSSafeReleaseNULL(ivars->m_rxSource);
     OSSafeReleaseNULL(ivars->m_rxQueue);
-    return ret;}
+    return ret;
+}
 
 // --------------------------------------------------------------------
-// DisconnectQueues( ... )
-//
+// DisconnectQueues_Impl()
+// Last call
 kern_return_t IMPL(VSPSerialPort, DisconnectQueues)
 {
     IOReturn ret;
@@ -404,7 +424,7 @@ kern_return_t IMPL(VSPSerialPort, DisconnectQueues)
 
 // --------------------------------------------------------------------
 // NotifyRXReady_Impl(OSAction* action)
-//
+// Called by timer dispatch queue source
 void IMPL(VSPSerialPort, NotifyRXReady)
 {
     VSPLog(LOG_PREFIX, "NotifyRXReady called.\n");
@@ -415,19 +435,13 @@ void IMPL(VSPSerialPort, NotifyRXReady)
         return;
     }
     
-    // Notify IOSerial rx has data
-    RxDataAvailable(SUPERDISPATCH);
-    
-    // notify tx completion
-    if (ivars->m_txIsComplete) {
-        ivars->m_txIsComplete = false;
-        TxFreeSpaceAvailable(SUPERDISPATCH);
-    }
+    // Notify IOUserSerial rx data ready to dispatch
+    RxDataAvailable();
 }
 
 // --------------------------------------------------------------------
 // EchoAsyncEvent_Impl(OSAction* action)
-//
+// Called by RX data available dispatch queue source
 void IMPL(VSPSerialPort, EchoAsyncEvent)
 {
     SerialPortInterface* spi;
@@ -435,10 +449,8 @@ void IMPL(VSPSerialPort, EchoAsyncEvent)
     IOAddressSegment rxseg;
     IOReturn ret;
     char* buf;
-
-    VSPLog(LOG_PREFIX, "EchoAsyncEvent called.\n");
     
-    // Make sure action object is valid
+   // Make sure action object is valid
     if (!action) {
         VSPLog(LOG_PREFIX, "EchoAsyncEvent bad argument. action=0%llx\n", (uint64_t) action);
         return;
@@ -449,6 +461,7 @@ void IMPL(VSPSerialPort, EchoAsyncEvent)
 
     // skip if complete...
     if (!ivars->m_rxSource->IsDataAvailable()) {
+        VSPLog(LOG_PREFIX, "EchoAsyncEvent RX source is empty, done.\n");
         goto finished;
     }
 
@@ -470,13 +483,13 @@ void IMPL(VSPSerialPort, EchoAsyncEvent)
         goto finished;
     }
     
-    // Pointer to the serial port interface
+    // IF address to the serial port interface
     spi = (SerialPortInterface*) ifseg.address;
     
     VSPLog(LOG_PREFIX, "EchoAsyncEvent> IOSPI rxPI=%d rxCI=%d rxqoffset=%d rxqlogsz=%d\n",
            spi->rxPI, spi->rxCI, spi->rxqoffset, spi->rxqlogsz);
 
-    // Pointer to the RX ring buffer
+    // RX address to the RX ring buffer
     buf = (char*) rxseg.address;
 
     VSPLog(LOG_PREFIX, "EchoAsyncEvent: dequeue RX source\n");
@@ -497,9 +510,16 @@ void IMPL(VSPSerialPort, EchoAsyncEvent)
                 break;
             case kIOReturnError:
                 VSPLog(LOG_PREFIX, "EchoAsyncEvent: ^^-> corrupt\n");
-                return;
+                break;
         }
+        goto finished;
     }
+    
+    buf[spi->rxPI++] = 'O';
+    buf[spi->rxPI++] = 'K';
+    buf[spi->rxPI++] = '\r';
+    buf[spi->rxPI++] = '\n';
+
 
 #ifdef DEBUG // !! Debug ....
     VSPLog(LOG_PREFIX, "EchoAsyncEvent: Dump m_rxqmd buffer=0x%llx size=%u\n", (uint64_t) buf, spi->rxPI);
@@ -516,34 +536,33 @@ void IMPL(VSPSerialPort, EchoAsyncEvent)
     
     // Notify queue entry has been removed
     ivars->m_rxSource->SendDataServiced();
+   
+    // ???
+    ivars->m_hwStatus.cts = false;
+    
+    // Notifies TX is ready for mode data
+    // from client instance
+    TxFreeSpaceAvailable();
 
-    // Notify OS interrest parties
+    // Notify RX completion to OS interrest parties
+    // using client defined latency time
     ret = ivars->m_tiSource->WakeAtTime(
                 kIOTimerClockMonotonicRaw,
-                clock_gettime_nsec_np(CLOCK_MONOTONIC_RAW) + ivars->m_hwLatency,
+                clock_gettime_nsec_np(CLOCK_MONOTONIC_RAW)
+                                        + (ivars->m_hwLatency * 1000),
                 1000000000);
     if (ret != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "EchoAsyncEvent> tiSource WakeAtTime failed. code=%d\n", ret);
         goto finished;
     }
-    
-#if 0
-    ret = ivars->m_rxSource->Cancel(^{
-        VSPLog(LOG_PREFIX, "EchoAsyncEvent> canceled\n");
-    });
-    if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "EchoAsyncEvent> rxSource Cancel failed. code=%d\n", ret);
-        goto finished;
-    }
-#endif
-    
+
 finished:
     VSPUnlock(ivars);
 }
 
 // --------------------------------------------------------------------
 // TxDataAvailable_Impl()
-//
+// Called on TX data income
 void IMPL(VSPSerialPort, TxDataAvailable)
 {
     SerialPortInterface* spi;
@@ -612,336 +631,8 @@ finished:
 }
 
 // --------------------------------------------------------------------
-// RxFreeSpaceAvailable_Impl()
-//
-void IMPL(VSPSerialPort, RxFreeSpaceAvailable)
-{
-    VSPLog(LOG_PREFIX, "RxFreeSpaceAvailable called.\n");
-    
-    RxFreeSpaceAvailable(SUPERDISPATCH);
-}
-
-// --------------------------------------------------------------------
-// SetModemStatus_Impl(bool cts, bool dsr, bool ri, bool dcd)
-//
-kern_return_t IMPL(VSPSerialPort, SetModemStatus)
-{
-    IOReturn ret;
-    
-    VSPLog(LOG_PREFIX, "SetModemStatus called [in] CTS=%d DSR=%d RI=%d DCD=%d\n",
-               cts, dsr, ri, dcd);
-    
-    VSPAquireLock(ivars);
-    ivars->m_hwStatus.cts = cts;
-    ivars->m_hwStatus.dsr = dsr;
-    ivars->m_hwStatus.ri  = ri;
-    ivars->m_hwStatus.dcd = dcd;
-    VSPUnlock(ivars);
-    
-    ret = SetModemStatus(cts, dsr, ri, dcd, SUPERDISPATCH);
-    if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "super::SetModemStatus failed. code=%d\n", ret);
-        return ret;
-    }
-
-    return kIOReturnSuccess;
-}
-
-// --------------------------------------------------------------------
-// RxError_Impl(bool overrun, bool break, bool framing, bool parity)
-//
-kern_return_t IMPL(VSPSerialPort, RxError)
-{
-    kern_return_t ret;
-    
-    VSPLog(LOG_PREFIX, "RxError called.\n");
-    
-    if (overrun) {
-        VSPLog(LOG_PREFIX, "RX overrun.\n");
-    }
-    
-    if (gotBreak) {
-        VSPLog(LOG_PREFIX, "RX got break.\n");
-    }
-    
-    if (framingError) {
-        VSPLog(LOG_PREFIX, "RX framing error.\n");
-    }
-    
-    if (parityError) {
-        VSPLog(LOG_PREFIX, "RX parity error.\n");
-    }
-    
-    VSPAquireLock(ivars);
-    ivars->m_errorState.overrun = overrun;
-    ivars->m_errorState.framingError = framingError;
-    ivars->m_errorState.gotBreak = gotBreak;
-    ivars->m_errorState.parityError = parityError;
-    VSPUnlock(ivars);
-    
-    ret = RxError(overrun, gotBreak, framingError, parityError, SUPERDISPATCH);
-    if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "super::RxError: failed. code=%d\n", ret);
-        return ret;
-    }
-
-    return kIOReturnSuccess;
-}
-
-// --------------------------------------------------------------------
-// HwActivate_Impl()
-//
-kern_return_t IMPL(VSPSerialPort, HwActivate)
-{
-    kern_return_t ret = kIOReturnIOError;
-    
-    VSPLog(LOG_PREFIX, "HwActivate called.\n");
-    
-    VSPAquireLock(ivars);
-    ivars->m_hwActivated = true;
-    VSPUnlock(ivars);
-    
-    ret = HwActivate(SUPERDISPATCH);
-    if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "super::HwActivate failed. code=%d\n", ret);
-        return ret;
-    }
-    
-    return ret;
-}
-
-// --------------------------------------------------------------------
-// HwActivate_Impl()
-//
-kern_return_t IMPL(VSPSerialPort, HwDeactivate)
-{
-    kern_return_t ret = kIOReturnIOError;
-    
-    VSPLog(LOG_PREFIX, "HwDeactivate called.\n");
-    
-    VSPAquireLock(ivars);
-    ivars->m_hwActivated = false;
-    VSPUnlock(ivars);
-    
-    ret = HwDeactivate(SUPERDISPATCH);
-    if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "super::HwDeactivate failed. code=%d\n", ret);
-        return ret;
-    }
-    
-    return ret;
-}
-
-// --------------------------------------------------------------------
-// HwResetFIFO_Impl()
-//
-kern_return_t IMPL(VSPSerialPort, HwResetFIFO)
-{
-    VSPLog(LOG_PREFIX, "HwResetFIFO called -> tx=%d rx=%d\n",
-               tx, rx);
-    
-    VSPAquireLock(ivars);
-    // ?? notify caller (IOUserSerial)
-    if (rx) {
-        ivars->m_hwStatus.cts = true;
-        ivars->m_hwStatus.dsr = true;
-    }
-    
-    // ?? notify caller (IOUserSerial)
-    if (tx) {
-        ivars->m_hwStatus.cts = true;
-        ivars->m_hwStatus.dsr = true;
-    }
-    VSPUnlock(ivars);
-    
-    return kIOReturnSuccess;
-}
-
-// --------------------------------------------------------------------
-// HwSendBreak_Impl()
-//
-kern_return_t IMPL(VSPSerialPort, HwSendBreak)
-{
-    VSPLog(LOG_PREFIX, "HwSendBreak called -> sendBreak=%d\n", sendBreak);
-    
-    VSPAquireLock(ivars);
-    ivars->m_errorState.gotBreak = sendBreak;
-    VSPUnlock(ivars);
-    
-    return kIOReturnSuccess;
-}
-
-// --------------------------------------------------------------------
-// HwGetModemStatus_Impl()
-//
-kern_return_t IMPL(VSPSerialPort, HwGetModemStatus)
-{
-    VSPLog(LOG_PREFIX, "HwGetModemStatus called [out] CTS=%d DSR=%d RI=%d DCD=%d\n", //
-               ivars->m_hwStatus.cts, ivars->m_hwStatus.dsr, //
-               ivars->m_hwStatus.ri, ivars->m_hwStatus.dcd);
-    
-    VSPAquireLock(ivars);
-    if (cts != nullptr) {
-        (*cts) = ivars->m_hwStatus.cts;
-    }
-    
-    if (dsr != nullptr) {
-        (*dsr) = ivars->m_hwStatus.dsr;
-    }
-    
-    if (ri != nullptr) {
-        (*ri) = ivars->m_hwStatus.ri;
-    }
-    
-    if (dcd != nullptr) {
-        (*dcd) = ivars->m_hwStatus.dcd;
-    }
-    VSPUnlock(ivars);
-    
-    return kIOReturnSuccess;
-}
-
-// --------------------------------------------------------------------
-// HwProgramUART_Impl()
-//
-kern_return_t IMPL(VSPSerialPort, HwProgramUART)
-{
-    VSPLog(LOG_PREFIX, "HwProgramUART called -> baudRate=%d "
-                        "nDataBits=%d nHalfStopBits=%d parity=%d\n",
-            baudRate, nDataBits, nHalfStopBits, parity);
-    
-    VSPAquireLock(ivars);
-    ivars->m_uartParams.baudRate = baudRate;
-    ivars->m_uartParams.nDataBits = nDataBits;
-    ivars->m_uartParams.nHalfStopBits = nHalfStopBits;
-    ivars->m_uartParams.parity = parity;
-    VSPUnlock(ivars);
-    
-    return kIOReturnSuccess;
-}
-
-// --------------------------------------------------------------------
-// HwProgramBaudRate_Impl()
-//
-kern_return_t IMPL(VSPSerialPort, HwProgramBaudRate)
-{
-    VSPLog(LOG_PREFIX, "HwProgramBaudRate called -> baudRate=%d\n", baudRate);
-    
-    VSPAquireLock(ivars);
-    ivars->m_uartParams.baudRate = baudRate;
-    VSPUnlock(ivars);
-    
-    return kIOReturnSuccess;
-}
-
-// --------------------------------------------------------------------
-// HwProgramMCR_Impl()
-//
-kern_return_t IMPL(VSPSerialPort, HwProgramMCR)
-{
-    VSPLog(LOG_PREFIX, "HwProgramMCR called -> DTR=%d RTS=%d\n",
-               dtr, rts);
-    
-    VSPAquireLock(ivars);
-    ivars->m_hwMCR.dtr = dtr;
-    ivars->m_hwMCR.rts = rts;
-    VSPUnlock(ivars);
-    
-    return kIOReturnSuccess;
-}
-
-// --------------------------------------------------------------------
-// HwProgramLatencyTimer_Impl()
-//
-kern_return_t IMPL(VSPSerialPort, HwProgramLatencyTimer)
-{
-    VSPLog(LOG_PREFIX, "HwProgramLatencyTimer called -> latency=%d\n",
-               latency);
-    
-    VSPAquireLock(ivars);
-    ivars->m_hwLatency = latency;
-    VSPUnlock(ivars);
-    
-    return kIOReturnSuccess;
-}
-
-// --------------------------------------------------------------------
-// HwProgramLatencyTimer_Impl()
-//
-kern_return_t IMPL(VSPSerialPort, HwProgramFlowControl)
-{
-    VSPLog(LOG_PREFIX, "HwProgramFlowControl called -> arg=%02x xon=%02x xoff=%02x\n",
-               arg, xon, xoff);
-    
-    VSPAquireLock(ivars);
-    ivars->m_hwFlowControl.arg = arg;
-    ivars->m_hwFlowControl.xon = xon;
-    ivars->m_hwFlowControl.xoff = xoff;
-    VSPUnlock(ivars);
-    
-    return kIOReturnSuccess;
-}
-
-// --------------------------------------------------------------------
-// Remove all resources in IVars
-//
-void VSPSerialPort::cleanupResources()
-{
-    VSPLog(LOG_PREFIX, "cleanupResources called.\n");
-    
-    OSSafeReleaseNULL(ivars->m_tiQueue);
-    OSSafeReleaseNULL(ivars->m_tiSource);
-    OSSafeReleaseNULL(ivars->m_tiAction);
-    OSSafeReleaseNULL(ivars->m_tiData);
-    IOLockFreeNULL(ivars->m_lock);
-}
-
-// --------------------------------------------------------------------
-//
-//
-void VSPSerialPort::setParent(VSPDriver* parent)
-{
-    VSPLog(LOG_PREFIX, "setParent called.\n");
-
-    if (ivars != nullptr && !ivars->m_parent) {
-        ivars->m_parent = parent;
-    }
-}
-
-// --------------------------------------------------------------------
-//
-//
-kern_return_t VSPSerialPort::setupTTYBaseName()
-{
-    IOReturn ret;
-    OSDictionary* properties = nullptr;
-    OSString* baseName = nullptr;
- 
-    VSPLog(LOG_PREFIX, "setupTTYBaseName called.\n");
-
-    // setup custom TTY name
-    if ((ret = CopyProperties(&properties)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "setupTTYBaseName: Unable to get properties. code=%d\n", ret);
-        return ret;
-    }
-    
-    baseName = OSString::withCString(kVSPTTYBaseName);
-    properties->setObject(kIOTTYBaseNameKey, baseName);
-    
-    // write back to driver instance
-    if ((ret = SetProperties(properties)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "setupTTYBaseName: Unable to set TTY base name. code=%d\n", ret);
-        //return ret; // ??? an error - why???
-    }
-    
-    OSSafeReleaseNULL(baseName);
-    OSSafeReleaseNULL(properties);
-    return kIOReturnSuccess;
-}
-
-// --------------------------------------------------------------------
 // Enque given buffer in RX dispatch source and raise async event
-//
+// Enqueue given buffer into RX dispatch queue source
 kern_return_t VSPSerialPort::enqueueResponse(void* buffer, uint64_t size, void* spif)
 {
     IOReturn ret = 0;
@@ -985,5 +676,338 @@ kern_return_t VSPSerialPort::enqueueResponse(void* buffer, uint64_t size, void* 
         return ret;
     }
     
+    return kIOReturnSuccess;
+}
+
+// --------------------------------------------------------------------
+// RxFreeSpaceAvailable_Impl()
+// Notification to this instance that RX buffer space is available for
+// your device’s data
+void IMPL(VSPSerialPort, RxFreeSpaceAvailable)
+{
+    VSPLog(LOG_PREFIX, "RxFreeSpaceAvailable called.\n");
+    RxFreeSpaceAvailable(SUPERDISPATCH);
+}
+
+// --------------------------------------------------------------------
+// TxFreeSpaceAvailable_Impl()
+// Notify OS ready for more client data
+void IMPL(VSPSerialPort, TxFreeSpaceAvailable)
+{
+    VSPLog(LOG_PREFIX, "TxFreeSpaceAvailable called.\n");
+    TxFreeSpaceAvailable(SUPERDISPATCH);
+}
+
+// --------------------------------------------------------------------
+// RxDataAvailable_Impl()
+// Notify OS response RX data ready for client
+void IMPL(VSPSerialPort, RxDataAvailable)
+{
+    VSPLog(LOG_PREFIX, "RxDataAvailable called.\n");
+    RxDataAvailable(SUPERDISPATCH);
+}
+
+// --------------------------------------------------------------------
+// SetModemStatus_Impl(bool cts, bool dsr, bool ri, bool dcd)
+// Called during serial port setup or communication
+kern_return_t IMPL(VSPSerialPort, SetModemStatus)
+{
+    IOReturn ret;
+    
+    VSPLog(LOG_PREFIX, "SetModemStatus called [in] CTS=%d DSR=%d RI=%d DCD=%d\n",
+               cts, dsr, ri, dcd);
+    
+    VSPAquireLock(ivars);
+    ivars->m_hwStatus.cts = cts;
+    ivars->m_hwStatus.dsr = dsr;
+    ivars->m_hwStatus.ri  = ri;
+    ivars->m_hwStatus.dcd = dcd;
+    VSPUnlock(ivars);
+    
+    ret = SetModemStatus(cts, dsr, ri, dcd, SUPERDISPATCH);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "super::SetModemStatus failed. code=%d\n", ret);
+        return ret;
+    }
+
+    return kIOReturnSuccess;
+}
+
+// --------------------------------------------------------------------
+// RxError_Impl(bool overrun, bool break, bool framing, bool parity)
+// Called on given error states
+kern_return_t IMPL(VSPSerialPort, RxError)
+{
+    kern_return_t ret;
+    
+    VSPLog(LOG_PREFIX, "RxError called.\n");
+    
+    if (overrun) {
+        VSPLog(LOG_PREFIX, "RX overrun.\n");
+    }
+    
+    if (gotBreak) {
+        VSPLog(LOG_PREFIX, "RX got break.\n");
+    }
+    
+    if (framingError) {
+        VSPLog(LOG_PREFIX, "RX framing error.\n");
+    }
+    
+    if (parityError) {
+        VSPLog(LOG_PREFIX, "RX parity error.\n");
+    }
+    
+    VSPAquireLock(ivars);
+    ivars->m_errorState.overrun = overrun;
+    ivars->m_errorState.framingError = framingError;
+    ivars->m_errorState.gotBreak = gotBreak;
+    ivars->m_errorState.parityError = parityError;
+    VSPUnlock(ivars);
+    
+    ret = RxError(overrun, gotBreak, framingError, parityError, SUPERDISPATCH);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "super::RxError: failed. code=%d\n", ret);
+        return ret;
+    }
+
+    return kIOReturnSuccess;
+}
+
+// --------------------------------------------------------------------
+// HwActivate_Impl()
+// Called after ConnectQueues() or other reasons
+kern_return_t IMPL(VSPSerialPort, HwActivate)
+{
+    kern_return_t ret = kIOReturnIOError;
+    
+    VSPLog(LOG_PREFIX, "HwActivate called.\n");
+    
+    VSPAquireLock(ivars);
+    ivars->m_hwActivated = true;
+    VSPUnlock(ivars);
+    
+    ret = HwActivate(SUPERDISPATCH);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "super::HwActivate failed. code=%d\n", ret);
+        return ret;
+    }
+    
+    return ret;
+}
+
+// --------------------------------------------------------------------
+// HwDeactivate_Impl()
+// Called before DisconnectQueues() or other reasons
+kern_return_t IMPL(VSPSerialPort, HwDeactivate)
+{
+    kern_return_t ret = kIOReturnIOError;
+    
+    VSPLog(LOG_PREFIX, "HwDeactivate called.\n");
+    
+    VSPAquireLock(ivars);
+    ivars->m_hwActivated = false;
+    VSPUnlock(ivars);
+    
+    ret = HwDeactivate(SUPERDISPATCH);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "super::HwDeactivate failed. code=%d\n", ret);
+        return ret;
+    }
+    
+    return ret;
+}
+
+// --------------------------------------------------------------------
+// HwResetFIFO_Impl()
+// Called by client to TxFreeSpaceAvailable or RxFreeSpaceAvailable
+// or other reasons.
+kern_return_t IMPL(VSPSerialPort, HwResetFIFO)
+{
+    VSPLog(LOG_PREFIX, "HwResetFIFO called -> tx=%d rx=%d\n",
+               tx, rx);
+    
+    VSPAquireLock(ivars);
+    // ?? notify caller (IOUserSerial)
+    if (rx) {
+        ivars->m_hwStatus.cts = true;
+        ivars->m_hwStatus.dsr = true;
+    }
+    
+    // ?? notify caller (IOUserSerial)
+    if (tx) {
+        ivars->m_hwStatus.cts = true;
+        ivars->m_hwStatus.dsr = true;
+    }
+    VSPUnlock(ivars);
+    
+    return kIOReturnSuccess;
+}
+
+// --------------------------------------------------------------------
+// HwSendBreak_Impl()
+// Called during client communication life cycle
+kern_return_t IMPL(VSPSerialPort, HwSendBreak)
+{
+    VSPLog(LOG_PREFIX, "HwSendBreak called -> sendBreak=%d\n", sendBreak);
+    
+    VSPAquireLock(ivars);
+    ivars->m_errorState.gotBreak = sendBreak;
+    VSPUnlock(ivars);
+    
+    return kIOReturnSuccess;
+}
+
+// --------------------------------------------------------------------
+// HwGetModemStatus_Impl()
+// Called during client communication life cycle
+kern_return_t IMPL(VSPSerialPort, HwGetModemStatus)
+{
+    VSPLog(LOG_PREFIX, "HwGetModemStatus called [out] CTS=%d DSR=%d RI=%d DCD=%d\n", //
+               ivars->m_hwStatus.cts, ivars->m_hwStatus.dsr, //
+               ivars->m_hwStatus.ri, ivars->m_hwStatus.dcd);
+    
+    VSPAquireLock(ivars);
+    if (cts != nullptr) {
+        (*cts) = ivars->m_hwStatus.cts;
+    }
+    
+    if (dsr != nullptr) {
+        (*dsr) = ivars->m_hwStatus.dsr;
+    }
+    
+    if (ri != nullptr) {
+        (*ri) = ivars->m_hwStatus.ri;
+    }
+    
+    if (dcd != nullptr) {
+        (*dcd) = ivars->m_hwStatus.dcd;
+    }
+    VSPUnlock(ivars);
+    
+    return kIOReturnSuccess;
+}
+
+// --------------------------------------------------------------------
+// HwProgramUART_Impl()
+// Called during serial port setup or other reason
+kern_return_t IMPL(VSPSerialPort, HwProgramUART)
+{
+    VSPLog(LOG_PREFIX, "HwProgramUART called -> baudRate=%d "
+                        "nDataBits=%d nHalfStopBits=%d parity=%d\n",
+            baudRate, nDataBits, nHalfStopBits, parity);
+    
+    VSPAquireLock(ivars);
+    ivars->m_uartParams.baudRate = baudRate;
+    ivars->m_uartParams.nDataBits = nDataBits;
+    ivars->m_uartParams.nHalfStopBits = nHalfStopBits;
+    ivars->m_uartParams.parity = parity;
+    VSPUnlock(ivars);
+    
+    return kIOReturnSuccess;
+}
+
+// --------------------------------------------------------------------
+// HwProgramBaudRate_Impl()
+// Called during serial port setup or other reason
+kern_return_t IMPL(VSPSerialPort, HwProgramBaudRate)
+{
+    VSPLog(LOG_PREFIX, "HwProgramBaudRate called -> baudRate=%d\n", baudRate);
+    
+    VSPAquireLock(ivars);
+    ivars->m_uartParams.baudRate = baudRate;
+    VSPUnlock(ivars);
+    
+    return kIOReturnSuccess;
+}
+
+// --------------------------------------------------------------------
+// HwProgramMCR_Impl()
+// Called during serial port setup or other reason
+kern_return_t IMPL(VSPSerialPort, HwProgramMCR)
+{
+    VSPLog(LOG_PREFIX, "HwProgramMCR called -> DTR=%d RTS=%d\n",
+               dtr, rts);
+    
+    VSPAquireLock(ivars);
+    ivars->m_hwMCR.dtr = dtr;
+    ivars->m_hwMCR.rts = rts;
+    VSPUnlock(ivars);
+    
+    return kIOReturnSuccess;
+}
+
+// --------------------------------------------------------------------
+// HwProgramLatencyTimer_Impl()
+// Called during serial port setup or other reason
+kern_return_t IMPL(VSPSerialPort, HwProgramLatencyTimer)
+{
+    VSPLog(LOG_PREFIX, "HwProgramLatencyTimer called -> latency=%d\n",
+               latency);
+    
+    VSPAquireLock(ivars);
+    ivars->m_hwLatency = latency;
+    VSPUnlock(ivars);
+    
+    return kIOReturnSuccess;
+}
+
+// --------------------------------------------------------------------
+// HwProgramLatencyTimer_Impl()
+// Called during serial port setup or other reason
+kern_return_t IMPL(VSPSerialPort, HwProgramFlowControl)
+{
+    VSPLog(LOG_PREFIX, "HwProgramFlowControl called -> arg=%02x xon=%02x xoff=%02x\n",
+               arg, xon, xoff);
+    
+    VSPAquireLock(ivars);
+    ivars->m_hwFlowControl.arg = arg;
+    ivars->m_hwFlowControl.xon = xon;
+    ivars->m_hwFlowControl.xoff = xoff;
+    VSPUnlock(ivars);
+    
+    return kIOReturnSuccess;
+}
+
+// --------------------------------------------------------------------
+// Called by VSPDriver instance to link to parent level
+//
+void VSPSerialPort::setParent(VSPDriver* parent)
+{
+    VSPLog(LOG_PREFIX, "setParent called.\n");
+
+    if (ivars != nullptr && !ivars->m_parent) {
+        ivars->m_parent = parent;
+    }
+}
+
+// --------------------------------------------------------------------
+// Called by VSPDriver instance to set TTY base and number based on
+// managed instance of this object instance
+kern_return_t VSPSerialPort::setupTTYBaseName()
+{
+    IOReturn ret;
+    OSDictionary* properties = nullptr;
+    OSString* baseName = nullptr;
+ 
+    VSPLog(LOG_PREFIX, "setupTTYBaseName called.\n");
+
+    // setup custom TTY name
+    if ((ret = CopyProperties(&properties)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "setupTTYBaseName: Unable to get properties. code=%d\n", ret);
+        return ret;
+    }
+    
+    baseName = OSString::withCString(kVSPTTYBaseName);
+    properties->setObject(kIOTTYBaseNameKey, baseName);
+    
+    // write back to driver instance
+    if ((ret = SetProperties(properties)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "setupTTYBaseName: Unable to set TTY base name. code=%d\n", ret);
+        //return ret; // ??? an error - why???
+    }
+    
+    OSSafeReleaseNULL(baseName);
+    OSSafeReleaseNULL(properties);
     return kIOReturnSuccess;
 }
