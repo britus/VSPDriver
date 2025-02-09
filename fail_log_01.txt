@@ -1,0 +1,218 @@
+
+ kernel[0:79b9] () [VSPSerialPort]: ConnectQueues called
+ kernel[0:79b9] () IOUserSerial::<private>: 59 0x600001620058
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::allocResources: 904 ==>0
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramMCR: 1115 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramMCR: 1115 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwProgramMCR called -> DTR=1 RTS=1
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramMCR: 1115 ==>0
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwActivate: 1069 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwActivate: 1069 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwActivate called.
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:79b9] () IOUserSerial::<private>: 130 0x600001620058
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwActivate: 1069 ==>0
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwResetFIFO called -> tx=1 rx=0
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 ==>0
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwResetFIFO called -> tx=0 rx=1
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwResetFIFO: 1076 ==>0
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwGetModemStatus called [out] CTS=1 DSR=1 RI=0 DCD=0
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 ==>0
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwProgramFlowControl called -> arg=00 xon=11 xoff=13
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 ==>0
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramBaudRate: 1107 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramBaudRate: 1107 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwProgramBaudRate called -> baudRate=9600
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramBaudRate: 1107 ==>0
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwProgramUART called -> baudRate=9600 nDataBits=8 nHalfStopBits=2 parity=1
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 ==>0
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwProgramUART called -> baudRate=9600 nDataBits=8 nHalfStopBits=2 parity=1
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 ==>0
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwProgramUART called -> baudRate=9600 nDataBits=8 nHalfStopBits=2 parity=1
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 ==>0
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwProgramFlowControl called -> arg=00 xon=11 xoff=13
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 ==>0
+ kernel[0:79d8] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 <==
+ kernel[0:79d8] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwGetModemStatus called [out] CTS=1 DSR=1 RI=0 DCD=0
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramBaudRate: 1107 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramBaudRate: 1107 locklevel = 1
+ kernel[0:79d8] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 ==>0
+ kernel[0:79b9] () [VSPSerialPort]: HwProgramBaudRate called -> baudRate=9600
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramBaudRate: 1107 ==>0
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwProgramUART called -> baudRate=9600 nDataBits=8 nHalfStopBits=2 parity=1
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 ==>0
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwProgramUART called -> baudRate=9600 nDataBits=8 nHalfStopBits=2 parity=1
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 ==>0
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwProgramUART called -> baudRate=9600 nDataBits=8 nHalfStopBits=2 parity=1
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 ==>0
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwProgramFlowControl called -> arg=00 xon=11 xoff=13
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 ==>0
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramBaudRate: 1107 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramBaudRate: 1107 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwProgramBaudRate called -> baudRate=115200
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramBaudRate: 1107 ==>0
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwProgramUART called -> baudRate=115200 nDataBits=8 nHalfStopBits=2 parity=1
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 ==>0
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwProgramUART called -> baudRate=115200 nDataBits=8 nHalfStopBits=2 parity=1
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 ==>0
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwProgramUART called -> baudRate=115200 nDataBits=8 nHalfStopBits=2 parity=1
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwProgramUART: 1100 ==>0
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwProgramFlowControl called -> arg=00 xon=11 xoff=13
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::handleEventFlowControl: 1042 ==>0
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwGetModemStatus called [out] CTS=1 DSR=1 RI=0 DCD=0
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 ==>0
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwGetModemStatus called [out] CTS=1 DSR=1 RI=0 DCD=0
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 ==>0
+ 
+ >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+ INTERREST - START
+ >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+ 
+ kernel[0:79b9] () [VSPSerialPort]: TxDataAvailable called.
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: TxDataAvailable> IOSPI txPI=4 txCI=0 txqoffset=0 txqlogsz=14
+ kernel[0:79b9] () [VSPSerialPort]: TxDataAvailable> Dump m_txqmd buf=0x10b36c000 len=4
+ kernel[0:79b9] () [VSPSerialPort]: TxDataAvailable> buffer[00]=0x41 A
+ kernel[0:79b9] () [VSPSerialPort]: TxDataAvailable> buffer[01]=0x54 T
+ kernel[0:79b9] () [VSPSerialPort]: TxDataAvailable> buffer[02]=0x0d
+ kernel[0:79b9] () [VSPSerialPort]: TxDataAvailable> buffer[03]=0x0a
+ kernel[0:79b9] () [VSPSerialPort]: enqueueResponse called.
+ kernel[0:79b9] () [VSPSerialPort]: enqueueResponse: RX enqueue data=0x10b37202c size=4
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: EchoAsyncEvent> IOSPI rxPI=0 rxCI=0 rxqoffset=0 rxqlogsz=14
+ kernel[0:79b9] () [VSPSerialPort]: EchoAsyncEvent: dequeue RX source
+ kernel[0:79b9] () [VSPSerialPort]: EchoAsyncEvent: RX dequeue: data=0x10b37202c size=4
+ kernel[0:79b9] () [VSPSerialPort]: EchoAsyncEvent: Dump m_rxqmd buffer=0x10b366000 size=8
+ kernel[0:79b9] () [VSPSerialPort]: EchoAsyncEvent> buffer[00]=0x41 A    <<<<<<<<< copied
+ kernel[0:79b9] () [VSPSerialPort]: EchoAsyncEvent> buffer[01]=0x54 T    <<<<<<<<< copied
+ kernel[0:79b9] () [VSPSerialPort]: EchoAsyncEvent> buffer[02]=0x0d      <<<<<<<<< copied
+ kernel[0:79b9] () [VSPSerialPort]: EchoAsyncEvent> buffer[03]=0x0a      <<<<<<<<< copied
+ kernel[0:79b9] () [VSPSerialPort]: EchoAsyncEvent> buffer[04]=0x4f O    <<<<<<<<< added
+ kernel[0:79b9] () [VSPSerialPort]: EchoAsyncEvent> buffer[05]=0x4b K    <<<<<<<<< added
+ kernel[0:79b9] () [VSPSerialPort]: EchoAsyncEvent> buffer[06]=0x0d      <<<<<<<<< added
+ kernel[0:79b9] () [VSPSerialPort]: EchoAsyncEvent> buffer[07]=0x0a      <<<<<<<<< added
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: EchoAsyncEvent RX source is empty, done.
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: TxFreeSpaceAvailable called.    <<<<<<<<<<<<<< _!!_
+ kernel[0:79da] () [VSPSerialPort]: NotifyRXReady called.
+ kernel[0:79b9] () [VSPSerialPort]: RxDataAvailable called.         <<<<<<<<<<<<<< _!!_
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwGetModemStatus called [out] CTS=0 DSR=1 RI=0 DCD=0
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 ==>0
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 <==
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 locklevel = 1
+ kernel[0:79b9] () [VSPSerialPort]: HwGetModemStatus called [out] CTS=0 DSR=1 RI=0 DCD=0
+ kernel[0:79b9] () [VSPSerialPort]: => lock level=1
+ kernel[0:79b9] () [VSPSerialPort]: <= lock level=1
+ kernel[0:75fd] (IOUserSerial) IOUserSerial::hwGetModemStatus: 1122 ==>0
+
+ ?????? why hold here ??????
+
+
+:::::::::: Client protokoll : that is happen ....
+
+ [I:00010e5ae600] MOBILE:-----------------------------------------------
+ [I:00010e5ae600] MOBILE:Switch to CSMobileNet::Startup flags: 2
+ [I:00010e5ae600] QCTGEN: Prepare APN profile setup.
+ [I:00010e5ae600] QCTGEN: Using APN profile..: 3 "IP" "web.vodafone.de" "0.0.0.0"
+ [I:70000819c000] MOBWRK: Command thread started.
+ [D:00010e5ae600] QCTGEN:SEND> AT
+ [D:700008843000] QCTGEN:RESP> AT   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< TX -> RX
+ [D:700008843000] QCTGEN:RESP> OK   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< added OK\r\n
+ [D:00010e5ae600] QCTGEN:SEND> ATX4 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< next this stops !!
+ [W:00010e5ae600] WRELAY: In progress, skip.
+ [W:00010e5ae600] WRELAY: In progress, skip.
+ [W:00010e5ae600] WRELAY: In progress, skip.
+ [W:70000819c000] MOBWRK: Command timed out. Command: ATX4
+ [I:00010e5ae600] MOBILE: Got module soft reset.  <<<<<<<<<<<<<<<<< grrr
+
