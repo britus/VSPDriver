@@ -356,7 +356,7 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
         VSPLog(LOG_PREFIX, "Start: Unable to create RX memory descriptor. code=%d\n", ret);
         goto error_exit;
     }
-    
+
     // make sure the parameters are zero
     in_rxqoffset = 0;
     in_txqoffset = 0;
@@ -397,7 +397,7 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
         VSPLog(LOG_PREFIX, "Start: Unable to get TX-MD segment. code=%d\n", ret);
         goto error_exit;
     }
-
+    
     // Get the address of the RX memory descriptor
     ret = ivars->m_rxqbmd->GetAddressRange(&ivars->m_rxseg);
     if (ret != kIOReturnSuccess || !ivars->m_rxseg.address || ivars->m_rxseg.length != rxsize) {
@@ -639,14 +639,15 @@ finish:
 
 // --------------------------------------------------------------------
 // TxDataAvailable_Impl()
-// Called on TX data income
+// TX data ready to read from m_txqbmd segment
 void IMPL(VSPSerialPort, TxDataAvailable)
 {
     IOReturn ret;
     uint8_t* buffer;
     uint64_t address;
     uint32_t size;
-    
+    bool needReset = false;
+
     VSPLog(LOG_PREFIX, "--------------------------------------------------\n");
     VSPLog(LOG_PREFIX, "TxDataAvailable called.\n");
     
@@ -669,13 +670,25 @@ void IMPL(VSPSerialPort, TxDataAvailable)
         VSPLog(LOG_PREFIX, "TxDataAvailable: spi->txPI is zero, skip\n");
         goto finish;
     }
+ 
+    // simulate buffer end
+    if ((ivars->m_spi->txCI+ivars->m_spi->txPI) > 256) {
+        needReset = true;
+    }
+
+    // Get address of new TX data position
+    address = ivars->m_txseg.address + ivars->m_spi->txCI;
+    buffer  = reinterpret_cast<uint8_t*>(address);
 
     // Calculate available data in TX buffer
     size = ivars->m_spi->txPI - ivars->m_spi->txCI;
-    
-    // Get address of new TX data position
-    address = ivars->m_txseg.address + ivars->m_spi->txCI;
-    buffer = reinterpret_cast<uint8_t*>(address);
+
+    // Reset TX consumer index to end of received block
+    // This increases the offset for the m_txqbmd buffer.
+    // Finally the DEXT crash if to protect. Reset values
+    // like txPI = 0 and txCI = 0 after some transmissions.
+    // But you loose one block due current kernel mechanism.
+    ivars->m_spi->txCI = ivars->m_spi->txPI;
     
 #ifdef DEBUG // !! Debug ....
     VSPLog(LOG_PREFIX, "TxDataAvailable: dump buffer=0x%llx len=%u\n", (uint64_t) buffer, size);
@@ -694,16 +707,19 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     // TX -> RX echo done
     ivars->m_txIsComplete = true;
 
-    // Reset TX consumer index to end of received block
-    ivars->m_spi->txCI = ivars->m_spi->txPI;
-
     // Show me indexes be fore manipulation
     VSPLog(LOG_PREFIX, "TxDataAvailable: [IOSPI-TX 2] txPI: %d, txCI: %d, txqoffset: %d, txqlogsz: %d",
            ivars->m_spi->txPI, ivars->m_spi->txCI, ivars->m_spi->txqoffset, ivars->m_spi->txqlogsz);
 
     // reset memory
     memset(buffer, 0, size);
-    
+
+    // simulate buffer end
+    if (needReset) {
+        ivars->m_spi->txPI = 0;
+        ivars->m_spi->txCI = 0;
+    }
+
     VSPLog(LOG_PREFIX, "TxDataAvailable complete.\n");
     
 finish:
