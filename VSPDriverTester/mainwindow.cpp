@@ -445,7 +445,7 @@ void MainWindow::looperLooper()
     }
 
     QString dummy;
-    for (int i = 0; i < 1024; i++) {
+    for (int i = 0; i < ui->edGenLength->value(); i++) {
         dummy += chars.at(m_looperCount);
     }
 
