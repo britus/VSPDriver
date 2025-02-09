@@ -267,7 +267,7 @@ kern_return_t IMPL(VSPSerialPort, Start)
         VSPLog(LOG_PREFIX, "Start: RegisterService failed. code=%d\n", ret);
         goto error_exit;
     }
-    
+
     VSPLog(LOG_PREFIX, "Start: driver started successfully.\n");
     return kIOReturnSuccess;
     
@@ -695,7 +695,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     ivars->m_txIsComplete = true;
 
     // Reset TX consumer index to end of received block
-    ivars->m_spi->txCI    = ivars->m_spi->txPI;
+    ivars->m_spi->txCI = ivars->m_spi->txPI;
 
     // Show me indexes be fore manipulation
     VSPLog(LOG_PREFIX, "TxDataAvailable: [IOSPI-TX 2] txPI: %d, txCI: %d, txqoffset: %d, txqlogsz: %d",
@@ -780,12 +780,6 @@ void IMPL(VSPSerialPort, RxDataAvailable)
 void IMPL(VSPSerialPort, RxFreeSpaceAvailable)
 {
     VSPLog(LOG_PREFIX, "RxFreeSpaceAvailable called.\n");
-
-    VSPAquireLock(ivars);
-    VSPLog(LOG_PREFIX, "RxFreeSpaceAvailable> IOSPI rxPI=%d rxCI=%d rxqoffset=%d rxqlogsz=%d\n",
-           ivars->m_spi->rxPI, ivars->m_spi->rxCI, ivars->m_spi->rxqoffset, ivars->m_spi->rxqlogsz);
-    VSPUnlock(ivars);
-
     RxFreeSpaceAvailable(SUPERDISPATCH);
 }
 
@@ -795,12 +789,6 @@ void IMPL(VSPSerialPort, RxFreeSpaceAvailable)
 void IMPL(VSPSerialPort, TxFreeSpaceAvailable)
 {
     VSPLog(LOG_PREFIX, "TxFreeSpaceAvailable called.\n");
-
-    VSPAquireLock(ivars);
-    VSPLog(LOG_PREFIX, "RxFreeSpaceAvailable> IOSPI txPI=%d txCI=%d txqoffset=%d txqlogsz=%d\n",
-           ivars->m_spi->txPI, ivars->m_spi->txCI, ivars->m_spi->txqoffset, ivars->m_spi->txqlogsz);
-    VSPUnlock(ivars);
-
     TxFreeSpaceAvailable(SUPERDISPATCH);
 }
 
