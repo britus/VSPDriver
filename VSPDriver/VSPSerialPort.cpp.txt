@@ -697,7 +697,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
 
     // We reserve 1K size from the capacity from t_txqbmd. This protects
     // against a buffer overflow.
-    if ((ivars->m_spi->txPI + 1024) >= (ivars->m_txseg.length - 1024)) {
+    if (((uint32_t) ivars->m_txseg.length - ivars->m_spi->txPI) < 1024) {
         ivars->m_spi->txPI = 0;
         ivars->m_spi->txCI = 0;
     }
