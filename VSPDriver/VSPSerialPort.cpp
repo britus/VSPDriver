@@ -696,7 +696,6 @@ void IMPL(VSPSerialPort, TxDataAvailable)
 
     // Reset TX consumer index to end of received block
     ivars->m_spi->txCI    = ivars->m_spi->txPI;
-    ivars->m_txNextOffset = size;
 
     // Show me indexes be fore manipulation
     VSPLog(LOG_PREFIX, "TxDataAvailable: [IOSPI-TX 2] txPI: %d, txCI: %d, txqoffset: %d, txqlogsz: %d",
