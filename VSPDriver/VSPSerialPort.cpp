@@ -593,12 +593,12 @@ finish:
 // Called on TX data income
 void IMPL(VSPSerialPort, TxDataAvailable)
 {
-    uint8_t* buf;
-    uint64_t len;
-    IOReturn ret;
+    size_t tx_buf_sz;
+    void* src;
+    void* dest;
     
     VSPLog(LOG_PREFIX, "---------------------------------------------\n");
-    VSPLog(LOG_PREFIX, "TxDataAvailable called. ---------------------\n");
+    VSPLog(LOG_PREFIX, "TxDataAvailable called.\n");
     
     // Lock to ensure thread safety
     VSPAquireLock(ivars);
@@ -608,57 +608,59 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     
     // We working...
     ivars->m_hwStatus.cts = false;
+    ivars->m_hwStatus.dsr = false;
 
-    VSPLog(LOG_PREFIX, "TxDataAvailable> IOSPI txPI=%d txCI=%d txqoffset=%d txqlogsz=%d\n",
-           ivars->m_spi->txPI, ivars->m_spi->txCI, ivars->m_spi->txqoffset, ivars->m_spi->txqlogsz);
+    // Show me indexes be fore manipulate
+    VSPLog(LOG_PREFIX, "TxDataAvailable: [IOSPI-TX 1] txPI: %d, txCI: %d, rxPI: %d, rxCI: %d",
+           ivars->m_spi->txPI, ivars->m_spi->txCI,
+           ivars->m_spi->rxPI, ivars->m_spi->rxCI);
 
     // skip if nothing to do
     if (!ivars->m_spi->txPI) {
         VSPLog(LOG_PREFIX, "TxDataAvailable: spi->txPI is zero, skip\n");
         goto finish;
     }
+
+    // Berechnung der verfügbaren Daten im TX-Puffer
+    tx_buf_sz = ivars->m_spi->txPI - ivars->m_spi->txCI;
     
-    //spi->txPI is number bytes comming in.
-    len = ivars->m_spi->txPI;
+    src = reinterpret_cast<void*>(ivars->m_txseg.address + ivars->m_spi->txCI);
+    dest = reinterpret_cast<void*>(ivars->m_rxseg.address + ivars->m_spi->rxPI);
+
+    VSPLog(LOG_PREFIX, "TxDataAvailable: copy TX->RX src=0x%llx dst=%llx len=%ld\n",
+           (uint64_t) src, (uint64_t) dest, tx_buf_sz);
+
+    // Kopieren der Daten vom TX- zum RX-Puffer (Loopback-Beispiel)
+    memcpy(dest, src, tx_buf_sz);
     
-    /* Address to the TX ring buffer */
-    buf = (uint8_t*) ivars->m_txseg.address;
+    // Zurücksetzen des TX-Consumer-Index
+    ivars->m_spi->txCI = ivars->m_spi->txPI;
+    
+    // Aktualisierung des Producer-Index für RX
+    ivars->m_spi->rxPI += tx_buf_sz;
+
+    // Show me indexes be fore manipulation
+    VSPLog(LOG_PREFIX, "TxDataAvailable: [IOSPI-TX 2] txPI: %d, txCI: %d, rxPI: %d, rxCI: %d",
+           ivars->m_spi->txPI, ivars->m_spi->txCI,
+           ivars->m_spi->rxPI, ivars->m_spi->rxCI);
 
 #ifdef DEBUG // !! Debug ....
-    VSPLog(LOG_PREFIX, "TxDataAvailable> Dump m_txqmd buf=0x%llx len=%llu\n", (uint64_t) buf, len);
-    for (uint64_t i = 0; i < len; i++) {
-        VSPLog(LOG_PREFIX, "TxDataAvailable> buffer[%02lld]=0x%02x %c\n", i, buf[i], buf[i]);
+    for (uint64_t i = 0; i < tx_buf_sz; i++) {
+        VSPLog(LOG_PREFIX, "TxDataAvailable: dest[%02lld]=0x%02x %c\n",
+               i, ((char*)dest)[i], ((char*)dest)[i]);
     }
 #endif
-    
-    //!- ALWAYS BOTH BEGIN
-    // set TX consumer index to TX data length
-    // +1 byte for correct next block!
-    //ivars->m_spi->txCI = ivars->m_spi->txPI + 1;
-    ivars->m_spi->txCI = ivars->m_spi->txPI;
- 
-    // reset TX producer index to zero. This notifies the
-    // caller that we complete TX data processing.
-    ivars->m_spi->txPI = 0;
-    //!- ALWAYS BOTH END
-    
-    // Enqueue TX as response (echo)
-    if ((ret = enqueueResponse(buf, len)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "TxDataAvailable: Enqueue response failed. code=%d\n", ret);
-        goto finish;
-    }
-    
-    // Raise response event
-    ivars->m_rxSource->SendDataAvailable();
-    
+
     // TX -> RX echo done
     ivars->m_txIsComplete = true;
 
-    // reset buffer content
-    memset(buf, 0, len);
-
-    VSPLog(LOG_PREFIX, "TxDataAvailable complete, wait echo event.\n");
+    VSPLog(LOG_PREFIX, "TxDataAvailable complete.\n");
     VSPLog(LOG_PREFIX, "---------------------------------------------\n");
+    
+    // Notify about
+    ivars->m_hwStatus.cts = true;
+    ivars->m_hwStatus.dsr = true;
+    this->RxDataAvailable_Impl();
 finish:
     VSPUnlock(ivars);
 }
