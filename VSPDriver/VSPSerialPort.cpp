@@ -111,13 +111,9 @@ struct VSPSerialPort_IVars {
 
     /* OS provided memory descriptors by overridden
      * method ConnectQueues(...) */
-    SerialPortInterface* m_spi;
-    
-    IOBufferMemoryDescriptor *m_txqmd = nullptr;    // OS -> HW Transmit
-    IOAddressSegment m_txseg = {};
-    
-    IOBufferMemoryDescriptor *m_rxqmd = nullptr;    // HW -> OS Receive
-    IOAddressSegment m_rxseg = {};
+    SerialPortInterface* m_spi;                     // OS serial port interface
+    IOAddressSegment m_txseg = {};                  // OS TX buffer segment
+    IOAddressSegment m_rxseg = {};                  // OS RX buffer segment
     
     // Timed events
     IODispatchQueue* m_tiQueue = nullptr;
@@ -319,6 +315,9 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
 {
     // SerialPortInterface related
     IOBufferMemoryDescriptor* ifbmd = nullptr;
+    IOBufferMemoryDescriptor* txqbmd = nullptr;
+    IOBufferMemoryDescriptor* rxqbmd = nullptr;
+
     IOAddressSegment ifseg = {};
 
     VSPLog(LOG_PREFIX, "ConnectQueues called\n");
@@ -346,13 +345,15 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
         VSPLog(LOG_PREFIX, "ConnectQueues: Invalid 'ifmd' memory descriptor detected.\n");
         return kIOReturnInvalid;
     }
-    ivars->m_txqmd = OSDynamicCast(IOBufferMemoryDescriptor, (*txqmd));
-    if (ivars->m_txqmd == nullptr) {
+    
+    txqbmd = OSDynamicCast(IOBufferMemoryDescriptor, (*txqmd));
+    if (txqbmd == nullptr) {
         VSPLog(LOG_PREFIX, "ConnectQueues: Invalid 'txqmd' memory descriptor detected.\n");
         return kIOReturnInvalid;
     }
-    ivars->m_rxqmd = OSDynamicCast(IOBufferMemoryDescriptor, (*rxqmd));
-    if (ivars->m_rxqmd == nullptr) {
+    
+    rxqbmd = OSDynamicCast(IOBufferMemoryDescriptor, (*rxqmd));
+    if (rxqbmd == nullptr) {
         VSPLog(LOG_PREFIX, "ConnectQueues: Invalid 'rxqmd' memory descriptor detected.\n");
         return kIOReturnInvalid;
     }
@@ -367,11 +368,23 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
     // Initialize the indexes
     ivars->m_spi->txCI = 0;
     ivars->m_spi->txPI = 0;
+    
+    // Get the address of the TX ring buffer segment (mapped space)
+    if ((ret = txqbmd->GetAddressRange(&ivars->m_txseg)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "ConnectQueues: TX GetAddressRange failed. code=%d\n", ret);
+        return ret;
+    }
+
+    // Get the address of the RX ring buffer segment (mapped space)
+    if ((ret = rxqbmd->GetAddressRange(&ivars->m_rxseg)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "ConnectQueues: TX GetAddressRange failed. code=%d\n", ret);
+        return ret;
+    }
 
     // -- Setup RX response queue and dispatch source --
     
     uint64_t size;
-    if ((ret = ivars->m_rxqmd->GetLength(&size)) != kIOReturnSuccess || size == 0) {
+    if ((ret = rxqbmd->GetLength(&size)) != kIOReturnSuccess || size == 0) {
         VSPLog(LOG_PREFIX, "ConnectQueues: Unable to descriptor size.\n");
         return ret;
     }
@@ -439,10 +452,10 @@ kern_return_t IMPL(VSPSerialPort, DisconnectQueues)
     ivars->m_hwStatus.dcd = false;
     ivars->m_hwStatus.cts = false;
 
-    // reset obtained MD pointers which owned by parent
-    ivars->m_txqmd = nullptr;
-    ivars->m_rxqmd = nullptr;
+    // reset spi pointer and RX/TX buffer segments
     ivars->m_spi   = nullptr;
+    ivars->m_rxseg = {};
+    ivars->m_txseg = {};
 
     // Unlock thread
     VSPUnlock(ivars);
@@ -505,12 +518,6 @@ void IMPL(VSPSerialPort, RxEchoAsyncEvent)
     // Make sure action object is valid
     if (!action) {
         VSPLog(LOG_PREFIX, "RxEchoAsyncEvent bad argument. action=0%llx\n", (uint64_t) action);
-        goto finish;
-    }
-    
-    // Get the address of the RX ring buffer segment (mapped space)
-    if ((ret = ivars->m_rxqmd->GetAddressRange(&ivars->m_rxseg)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "RxEchoAsyncEvent: RX GetAddressRange failed. code=%d\n", ret);
         goto finish;
     }
 
@@ -601,18 +608,6 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     
     // We working...
     ivars->m_hwStatus.cts = false;
-    
-    // Get the address of the TX ring buffer segment (mapped space)
-    if ((ret = ivars->m_txqmd->GetAddressRange(&ivars->m_txseg)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "ConnectQueues: TX GetAddressRange failed. code=%d\n", ret);
-        goto finish;
-    }
-
-    // Get the address of the RX ring buffer segment (mapped space)
-    if ((ret = ivars->m_txqmd->GetAddressRange(&ivars->m_rxseg)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "ConnectQueues: TX GetAddressRange failed. code=%d\n", ret);
-        goto finish;
-    }
 
     VSPLog(LOG_PREFIX, "TxDataAvailable> IOSPI txPI=%d txCI=%d txqoffset=%d txqlogsz=%d\n",
            ivars->m_spi->txPI, ivars->m_spi->txCI, ivars->m_spi->txqoffset, ivars->m_spi->txqlogsz);
