@@ -145,7 +145,7 @@ struct VSPSerialPort_IVars {
     THwFlowControl m_hwFlowControl = {};
     THwMCR m_hwMCR = {};
     uint32_t m_hwLatency = 25;
-    
+    bool m_txNextOffset = 0;
     bool m_txIsComplete = false;
     bool m_rxIsComplete = false;
     bool m_hwActivated = false;
@@ -645,7 +645,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     IOReturn ret;
     uint8_t* buffer;
     uint64_t address;
-    size_t size;
+    uint32_t size;
     
     VSPLog(LOG_PREFIX, "--------------------------------------------------\n");
     VSPLog(LOG_PREFIX, "TxDataAvailable called.\n");
@@ -669,16 +669,16 @@ void IMPL(VSPSerialPort, TxDataAvailable)
         VSPLog(LOG_PREFIX, "TxDataAvailable: spi->txPI is zero, skip\n");
         goto finish;
     }
-   
+
     // Calculate available data in TX buffer
     size = ivars->m_spi->txPI - ivars->m_spi->txCI;
     
     // Get address of new TX data position
     address = ivars->m_txseg.address + ivars->m_spi->txCI;
     buffer = reinterpret_cast<uint8_t*>(address);
-
+    
 #ifdef DEBUG // !! Debug ....
-    VSPLog(LOG_PREFIX, "TxDataAvailable: dump buffer=0x%llx len=%ld\n", (uint64_t) buffer, size);
+    VSPLog(LOG_PREFIX, "TxDataAvailable: dump buffer=0x%llx len=%u\n", (uint64_t) buffer, size);
 
     for (uint64_t i = 0; i < size; i++) {
         VSPLog(LOG_PREFIX, "TxDataAvailable: buffer[%02lld]=0x%02x %c\n", i, buffer[i], buffer[i]);
@@ -695,12 +695,16 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     ivars->m_txIsComplete = true;
 
     // Reset TX consumer index to end of received block
-    ivars->m_spi->txCI = ivars->m_spi->txPI;
+    ivars->m_spi->txCI    = ivars->m_spi->txPI;
+    ivars->m_txNextOffset = size;
 
     // Show me indexes be fore manipulation
     VSPLog(LOG_PREFIX, "TxDataAvailable: [IOSPI-TX 2] txPI: %d, txCI: %d, txqoffset: %d, txqlogsz: %d",
            ivars->m_spi->txPI, ivars->m_spi->txCI, ivars->m_spi->txqoffset, ivars->m_spi->txqlogsz);
 
+    // reset memory
+    memset(buffer, 0, size);
+    
     VSPLog(LOG_PREFIX, "TxDataAvailable complete.\n");
     
 finish:
@@ -781,8 +785,6 @@ void IMPL(VSPSerialPort, RxFreeSpaceAvailable)
     VSPAquireLock(ivars);
     VSPLog(LOG_PREFIX, "RxFreeSpaceAvailable> IOSPI rxPI=%d rxCI=%d rxqoffset=%d rxqlogsz=%d\n",
            ivars->m_spi->rxPI, ivars->m_spi->rxCI, ivars->m_spi->rxqoffset, ivars->m_spi->rxqlogsz);
-    ivars->m_spi->rxPI = 0;
-    ivars->m_spi->rxCI = 0;
     VSPUnlock(ivars);
 
     RxFreeSpaceAvailable(SUPERDISPATCH);
@@ -798,8 +800,6 @@ void IMPL(VSPSerialPort, TxFreeSpaceAvailable)
     VSPAquireLock(ivars);
     VSPLog(LOG_PREFIX, "RxFreeSpaceAvailable> IOSPI txPI=%d txCI=%d txqoffset=%d txqlogsz=%d\n",
            ivars->m_spi->txPI, ivars->m_spi->txCI, ivars->m_spi->txqoffset, ivars->m_spi->txqlogsz);
-    ivars->m_spi->txPI = 0;
-    ivars->m_spi->txCI = 0;
     VSPUnlock(ivars);
 
     TxFreeSpaceAvailable(SUPERDISPATCH);
