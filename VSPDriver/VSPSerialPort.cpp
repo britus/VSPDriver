@@ -685,21 +685,21 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     }
 #endif
 
-    // Show me indexes be fore manipulation
-    VSPLog(LOG_PREFIX, "TxDataAvailable: [IOSPI-TX 2] txPI: %d, txCI: %d, txqoffset: %d, txqlogsz: %d",
-           ivars->m_spi->txPI, ivars->m_spi->txCI, ivars->m_spi->txqoffset, ivars->m_spi->txqlogsz);
-
     // Loopback TX data by async response event
     if ((ret = this->enqueueResponse(buffer, size)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "TxDataAvailable: Unable to enqueue response. code=%d\n", ret);
         goto finish;
     }
 
-    // Reset TX consumer index to end of received block
-    ivars->m_spi->txCI = ivars->m_spi->txPI;
-    
     // TX -> RX echo done
     ivars->m_txIsComplete = true;
+
+    // Reset TX consumer index to end of received block
+    ivars->m_spi->txCI = ivars->m_spi->txPI;
+
+    // Show me indexes be fore manipulation
+    VSPLog(LOG_PREFIX, "TxDataAvailable: [IOSPI-TX 2] txPI: %d, txCI: %d, txqoffset: %d, txqlogsz: %d",
+           ivars->m_spi->txPI, ivars->m_spi->txCI, ivars->m_spi->txqoffset, ivars->m_spi->txqlogsz);
 
     VSPLog(LOG_PREFIX, "TxDataAvailable complete.\n");
     
