@@ -671,8 +671,9 @@ void IMPL(VSPSerialPort, TxDataAvailable)
         goto finish;
     }
  
-    // simulate buffer end
-    if ((ivars->m_spi->txCI+ivars->m_spi->txPI) > 256) {
+    // We reserve 4K size from the capacity from t_txqbmd.
+    // This protects against a buffer overflow.
+    if ((ivars->m_spi->txCI+ivars->m_spi->txPI) > ivars->m_txseg.length - 4096) {
         needReset = true;
     }
 
