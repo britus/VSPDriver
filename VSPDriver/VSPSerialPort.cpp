@@ -695,7 +695,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     // TX -> RX echo done
     ivars->m_txIsComplete = true;
 
-    // We reserve 4K size from the capacity from t_txqbmd. This protects
+    // We reserve 1K size from the capacity from t_txqbmd. This protects
     // against a buffer overflow.
     if ((ivars->m_spi->txPI + 1024) >= (ivars->m_txseg.length - 1024)) {
         ivars->m_spi->txPI = 0;
