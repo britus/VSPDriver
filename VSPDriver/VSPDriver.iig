@@ -1,6 +1,9 @@
 // ********************************************************************
 // VSPDriver - VSPDriver.iig
 //
+// The IOKit Interface Generator file that declares
+// the driver's methods.
+//
 // Copyright © 2025 by EoF Software Labs
 // Copyright © 2024 Apple Inc. (some copied parts)
 // SPDX-License-Identifier: MIT
@@ -14,9 +17,9 @@
 class VSPDriver: public IOService
 {
 public:
-    virtual bool init() override;
-    virtual void free() override;
-    
+    virtual bool init(void) override;
+    virtual void free(void) override;
+
     virtual kern_return_t Start(IOService* provider) override;
     virtual kern_return_t Stop(IOService* provider) override;
     

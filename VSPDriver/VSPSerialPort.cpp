@@ -38,8 +38,8 @@
 using namespace driverkit::serial;
 
 // -- My
-#include "VSPLogger.h"
 #include "VSPSerialPort.h"
+#include "VSPLogger.h"
 #include "VSPDriver.h"
 
 #define LOG_PREFIX "VSPSerialPort"
@@ -646,7 +646,6 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     uint8_t* buffer;
     uint64_t address;
     uint32_t size;
-    bool needReset = false;
 
     VSPLog(LOG_PREFIX, "--------------------------------------------------\n");
     VSPLog(LOG_PREFIX, "TxDataAvailable called.\n");
@@ -695,8 +694,8 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     // TX -> RX echo done
     ivars->m_txIsComplete = true;
 
-    // We reserve 1K size from the capacity from t_txqbmd. This protects
-    // against a buffer overflow.
+    // We reserve 1K size from the capacity from t_txqbmd.
+    // This protects against a buffer overflow.
     if (((uint32_t) ivars->m_txseg.length - ivars->m_spi->txPI) < 1024) {
         ivars->m_spi->txPI = 0;
         ivars->m_spi->txCI = 0;

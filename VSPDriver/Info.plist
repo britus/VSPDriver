@@ -45,11 +45,22 @@
 				<key>IOTTYSuffix</key>
 				<string>0</string>
 			</dict>
+            <key>UserClientProperties</key>
+            <dict>
+                <key>CFBundleIdentifierKernel</key>
+                <string>com.apple.driver.driverkit.serial</string>
+                <key>IOProviderClass</key>
+                <string>IOUserResources</string>
+                <key>IOClass</key>
+                <string>IOUserUserClient</string>
+                <key>IOUserClass</key>
+                <string>VSPUserClient</string>
+            </dict>
 		</dict>
 	</dict>
     <key>OSBundleLibraries</key>
     <dict>
-        <key>com.apple.iokit.IONetworkFamily</key>
+        <key>com.apple.iokit.IOSerialFamily</key>
         <string>1.0</string>
     </dict>
 </dict>

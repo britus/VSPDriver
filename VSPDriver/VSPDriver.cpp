@@ -18,9 +18,10 @@
 #include <DriverKit/OSData.h>
 
 // -- My
-#include "VSPLogger.h"
 #include "VSPDriver.h"
+#include "VSPLogger.h"
 #include "VSPSerialPort.h"
+#include "VSPController.h"
 
 #define LOG_PREFIX "VSPDriver"
 
@@ -86,7 +87,7 @@ bool VSPDriver::init(void)
     
     if (!(result = super::init())) {
         VSPLog(LOG_PREFIX, "free (super) falsed. result=%d\n", result);
-        goto error_exit;
+        goto finish;
     }
 
     // Create instance state resource
@@ -94,12 +95,12 @@ bool VSPDriver::init(void)
     if (!ivars) {
         VSPLog(LOG_PREFIX, "Unable to allocate driver data.\n");
         result = false;
-        goto error_exit;
+        goto finish;
     }
     
     return true;
     
-error_exit:
+finish:
     return result;
 }
 
@@ -139,19 +140,19 @@ kern_return_t IMPL(VSPDriver, Start)
     
     // Create 4 serial port instances with each IOSerialBSDClient as a child instance
     if ((ret = CreateSerialPort(provider, kVSPDefaultPortCount)) != kIOReturnSuccess) {
-        goto error_exit;
+        goto finish;
     }
 
     // Register driver instance to IOReg
     if ((ret = RegisterService()) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "Start: RegisterService failed. code=%d\n", ret);
-        goto error_exit;
+        goto finish;
     }
 
     VSPLog(LOG_PREFIX, "Start: driver started successfully.\n");
     return kIOReturnSuccess;
 
-error_exit:
+finish:
     Stop(provider, SUPERDISPATCH);
     return ret;
 }
