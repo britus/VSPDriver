@@ -13,6 +13,7 @@
 
 #include <Availability.h>
 #include <DriverKit/IOService.iig>
+#include <DriverKit/IOUserClient.iig>
 
 class VSPDriver: public IOService
 {
@@ -22,7 +23,9 @@ public:
 
     virtual kern_return_t Start(IOService* provider) override;
     virtual kern_return_t Stop(IOService* provider) override;
+    virtual kern_return_t NewUserClient(uint32_t type, IOUserClient ** userClient) override;
     
+    // --
     kern_return_t CreateSerialPort(IOService* provider, uint8_t count = 1) LOCALONLY;
     kern_return_t CreateUserClient(IOService* provider) LOCALONLY;
 };

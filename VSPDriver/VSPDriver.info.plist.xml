@@ -36,7 +36,7 @@
         <key>UserClientProperties</key>
         <dict>
             <key>CFBundleIdentifierKernel</key>
-            <string>com.apple.driver.driverkit.serial</string>
+            <string>com.apple.kpi.iokit</string>
             <key>IOProviderClass</key>
             <string>IOUserResources</string>
             <key>IOClass</key>

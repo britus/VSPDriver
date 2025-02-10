@@ -6,8 +6,10 @@
 	<true/>
 	<key>com.apple.developer.driverkit.install</key>
 	<true/>
-    <key>com.apple.developer.system-extension.install</key>
-    <true/>
+	<key>com.apple.developer.system-extension.install</key>
+	<true/>
+	<key>com.apple.developer.system-extension.uninstall</key>
+	<true/>
 	<key>com.apple.developer.driverkit.userclient-access</key>
 	<array>
 		<string>VSPDriver</string>

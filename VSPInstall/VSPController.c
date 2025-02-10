@@ -11,9 +11,16 @@ Implementations of C functions to perform calls to the driver and implement driv
 #include <CoreFoundation/CoreFoundation.h>
 #include <IOKit/IOKitLib.h>
 
-// If you don't know what value to use here, it should be identical to the IOUserClass value in your IOKitPersonalities.
-// You can double check by searching with the `ioreg` command in your terminal.
-// It will be of type "IOUserService" not "IOUserServer"
+// If you don't know what value to use here, it should be identical to the
+// IOUserClass value in your IOKitPersonalities. You can double check
+// by searching with the `ioreg` command in your terminal. It will be of
+// type "IOUserService" not "IOUserServer". The client Info.plist must
+// contain:
+// <key>com.apple.developer.driverkit.userclient-access</key>
+// <array>
+//     <string>VSPDriver</string>
+// </array>
+//
 static const char* dextIdentifier = "VSPDriver";
 
 static IONotificationPortRef globalNotificationPort = NULL;
@@ -129,7 +136,11 @@ bool UserClientSetup(void* refcon)
     matchingDictionary = (CFMutableDictionaryRef)CFRetain(matchingDictionary);
     matchingDictionary = (CFMutableDictionaryRef)CFRetain(matchingDictionary);
 
-    ret = IOServiceAddMatchingNotification(globalNotificationPort, kIOFirstMatchNotification, matchingDictionary, DeviceAdded, refcon, &globalDeviceAddedIter);
+    ret = IOServiceAddMatchingNotification(globalNotificationPort,
+                                           kIOFirstMatchNotification,
+                                           matchingDictionary,
+                                           DeviceAdded, refcon,
+                                           &globalDeviceAddedIter);
     if (ret != kIOReturnSuccess)
     {
         fprintf(stderr, "Add matching notification failed with error: 0x%08x.\n", ret);
@@ -138,7 +149,11 @@ bool UserClientSetup(void* refcon)
     }
     DeviceAdded(refcon, globalDeviceAddedIter);
 
-    ret = IOServiceAddMatchingNotification(globalNotificationPort, kIOTerminatedNotification, matchingDictionary, DeviceRemoved, refcon, &globalDeviceRemovedIter);
+    ret = IOServiceAddMatchingNotification(globalNotificationPort,
+                                           kIOTerminatedNotification,
+                                           matchingDictionary,
+                                           DeviceRemoved, refcon,
+                                           &globalDeviceRemovedIter);
     if (ret != kIOReturnSuccess)
     {
         fprintf(stderr, "Add termination notification failed with error: 0x%08x.\n", ret);
@@ -183,29 +198,37 @@ void DeviceAdded(void* refcon, io_iterator_t iterator)
     kern_return_t ret = kIOReturnSuccess;
     io_connect_t connection = IO_OBJECT_NULL;
     io_service_t device = IO_OBJECT_NULL;
-    bool attemptedToMatchDevice = false;
-
+    //bool attemptedToMatchDevice = false;
+    bool clientFound = false;
+    
     while ((device = IOIteratorNext(iterator)) != IO_OBJECT_NULL)
     {
-        attemptedToMatchDevice = true;
-
-        // Open a connection to this user client as a server to that client, and store the instance in "service"
-        ret = IOServiceOpen(device, mach_task_self_, 0, &connection);
-
-        if (ret == kIOReturnSuccess)
-        {
-            fprintf(stdout, "Opened connection to dext.\n");
+        //attemptedToMatchDevice = true;
+        io_name_t deviceName;
+        if (IORegistryEntryGetName(device, deviceName) == KERN_SUCCESS) {
+            printf("DeviceAdded() name: %s\n", deviceName);
         }
-        else
-        {
-            fprintf(stderr, "Failed opening connection to dext with error: 0x%08x.\n", ret);
+        
+        // Open a connection to this user client as a server
+        // to that client, and store the instance in "service"
+        if ((ret = IOServiceOpen(device, mach_task_self_, 0, &connection)) == kIOReturnSuccess) {
+            fprintf(stdout, "DeviceAdded() Opened connection to dext.\n");
+        }
+        else {
+            if (ret == kIOReturnNotPermitted) {
+                fprintf(stdout, "DeviceAdded() Operation 'open' not permitted.\n");
+            }
             IOObjectRelease(device);
-            return;
+            continue;
         }
 
+        clientFound= true;
         SwiftDeviceAdded(refcon, connection);
-
         IOObjectRelease(device);
+    }
+
+    if (!clientFound) {
+        fprintf(stderr, "DeviceAdded() Failed opening connection to dext with error: 0x%08x.\n", ret);
     }
 }
 

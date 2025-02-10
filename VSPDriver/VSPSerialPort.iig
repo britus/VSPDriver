@@ -86,6 +86,7 @@ public:
     
     // Called by VSPDriver to link owner
     void setParent(VSPDriver* parent) LOCALONLY;
+    void unlinkParent() LOCALONLY;
 
     // Set our TTY name
     kern_return_t setupTTYBaseName() LOCALONLY;

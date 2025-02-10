@@ -3,9 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>com.apple.developer.driverkit.communicates-with-drivers</key>
-	<array>
-		<string>org.eof.tools.VSPDriver</string>
-	</array>
+    <true/>
 	<key>com.apple.developer.shared-with-you</key>
 	<true/>
 	<key>com.apple.developer.system-extension.install</key>

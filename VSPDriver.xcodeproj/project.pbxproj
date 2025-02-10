@@ -137,10 +137,10 @@
 		880539E92D4BAFBD00E55104 /* VSPInstall */ = {
 			isa = PBXGroup;
 			children = (
+				880539F12D4BAFBF00E55104 /* VSPInstall.entitlements */,
 				880539F52D4BB0F900E55104 /* Info.plist */,
 				880539EC2D4BAFBF00E55104 /* Assets.xcassets */,
 				880539EE2D4BAFBF00E55104 /* MainMenu.xib */,
-				880539F12D4BAFBF00E55104 /* VSPInstall.entitlements */,
 				88906F462D4CCA9400E500BB /* VSPIOHelper.cpp */,
 				88906F472D4CCA9400E500BB /* VSPIOHelper.hpp */,
 				88906F452D4CCA9400E500BB /* VSPInstall-Bridging-Header.h */,
@@ -207,8 +207,8 @@
 				884F6EC62D59A5C90066353A /* VSPUserClient.cpp */,
 				88B47EC92D59B43800868CA5 /* VSPController.h */,
 				889E8EBB2D4DF4BF002F387A /* VSPLogger.h */,
-				88B40D702D4B85ED00DFE7C5 /* VSPDriver.entitlements */,
 				88F5D9412D5A10C2007A6E1F /* VSPDriver.info.plist.xml */,
+				88B40D702D4B85ED00DFE7C5 /* VSPDriver.entitlements */,
 				88B40D612D4B666700DFE7C5 /* Info.plist */,
 			);
 			path = VSPDriver;

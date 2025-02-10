@@ -113,6 +113,7 @@ bool VSPUserClient::init()
         goto finish;
     }
     
+    VSPLog(LOG_PREFIX, "init finished.\n");
     return true;
     
 finish:

@@ -173,6 +173,7 @@ bool VSPSerialPort::init(void)
         goto error_exit;
     }
     
+    VSPLog(LOG_PREFIX, "init finished.\n");
     return true;
     
 error_exit:
@@ -1082,6 +1083,15 @@ void VSPSerialPort::setParent(VSPDriver* parent)
     }
 }
 
+// --------------------------------------------------------------------
+// Remove link to VSPDriver instance
+//
+void VSPSerialPort::unlinkParent()
+{
+    VSPLog(LOG_PREFIX, "unlinkParent called.\n");
+    
+    ivars->m_parent = nullptr;
+}
 // --------------------------------------------------------------------
 // Called by VSPDriver instance to set TTY base and number based on
 // managed instance of this object instance
