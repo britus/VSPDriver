@@ -10,11 +10,15 @@
 	<true/>
 	<key>com.apple.developer.system-extension.uninstall</key>
 	<true/>
+	<key>com.apple.security.temporary-exception.iokit-user-client-class</key>
+	<array>
+		<string>IOUserUserClient</string>
+		<string>VSPUserClient</string>
+		<string>VSPDriver</string>
+	</array>
 	<key>com.apple.developer.driverkit.userclient-access</key>
 	<array>
 		<string>VSPDriver</string>
-		<string>org.eof.tools.VSPDriver</string>
-		<string>org.eof.tools.VSPInstall.client</string>
 	</array>
 </dict>
 </plist>

@@ -9,124 +9,18 @@ import Foundation
 import SystemExtensions
 import os.log
 
-class VSPSmLoader {
-    
-    enum State {
-        case unknown
-        case unloaded
-        case activating
-        case needsApproval
-        case activated
-        case activationError
-        case removal
-    }
-    
-    enum Event {
-        case discoveredUnloaded
-        case discoveredLoaded
-        case activationStarted
-        case uninstallStarted
-        case promptForApproval
-        case activationFinished
-        case activationFailed
-        case uninstallFinished
-    }
-    
-    static func process(_ state: State, _ event: Event) -> State {
-        
-        switch state {
-        case .unknown, .unloaded:
-            switch event {
-                case .discoveredUnloaded:
-                    return .unloaded
-                case .discoveredLoaded:
-                    return .activated
-                case .activationStarted:
-                    return .activating
-                case .promptForApproval, .activationFinished, .activationFailed:
-                    return .activationError
-                case .uninstallStarted:
-                    return .removal
-                case .uninstallFinished:
-                    return .removal
-            }
-            
-        case .activating, .needsApproval:
-            switch event {
-                case .activationStarted:
-                    return .activating
-                case .promptForApproval:
-                    return .needsApproval
-                case .activationFinished:
-                    return .activated
-                case .activationFailed, .discoveredUnloaded, .discoveredLoaded:
-                    return .activationError
-                case .uninstallStarted:
-                    return .removal
-                case .uninstallFinished:
-                    return .removal
-            }
-            
-        case .activated:
-            switch event {
-                case .activationStarted:
-                    return .activating
-                case .promptForApproval,
-                        .activationFailed,
-                        .discoveredUnloaded,
-                        .discoveredLoaded:
-                    return .activationError
-                case .activationFinished:
-                    return .activated
-                case .uninstallStarted:
-                    return .removal
-                case .uninstallFinished:
-                    return .removal
-            }
-            
-        case .activationError:
-            switch event {
-                case .activationStarted:
-                    return .activating
-                case .promptForApproval,
-                        .activationFinished,
-                        .activationFailed,
-                        .uninstallStarted,
-                        .uninstallFinished,
-                        .discoveredUnloaded,
-                        .discoveredLoaded:
-                    return .activationError
-            }
-        case .removal:
-            switch event {
-                case .uninstallStarted:
-                    return .removal
-                case .promptForApproval,
-                        .activationStarted,
-                        .activationFinished,
-                        .activationFailed,
-                        .uninstallFinished,
-                        .discoveredUnloaded,
-                        .discoveredLoaded:
-                    return .activationError
-            }
-        }
-    }
-}
-
 class VSPLoaderModel: NSObject {
-    
-    // Your dext may not start in unloaded state every time. Add logic or states to check this.
-    @Published private var state: VSPSmLoader.State = .unknown
-    
-    private var installedDextProperties: OSSystemExtensionProperties? = nil
-    
     // iOS dexts must have the same initial path as their app,
     // so you can use the app's bundle identifier to build the
     // reference to your dext's bundle identifier. The same
     // convention is used for the macOS app for convenience.
     //private let dextIdentifier: String = Bundle.main.bundleIdentifier! + ".driver"
     private let dextIdentifier: String = "org.eof.tools.VSPDriver"
+
+    // Your dext may not start in unloaded state every time. Add logic or states to check this.
+    @Published private var state: VSPSmLoader.State = .unknown
+    
+    private var installedDextProperties: OSSystemExtensionProperties? = nil
     
     public var dextLoadingState: String {
         switch state {
@@ -294,4 +188,109 @@ extension VSPLoaderModel: OSSystemExtensionRequestDelegate {
             }
         }}
 #endif
+}
+
+class VSPSmLoader {
+    
+    enum State {
+        case unknown
+        case unloaded
+        case activating
+        case needsApproval
+        case activated
+        case activationError
+        case removal
+    }
+    
+    enum Event {
+        case discoveredUnloaded
+        case discoveredLoaded
+        case activationStarted
+        case uninstallStarted
+        case promptForApproval
+        case activationFinished
+        case activationFailed
+        case uninstallFinished
+    }
+    
+    static func process(_ state: State, _ event: Event) -> State {
+        
+        switch state {
+        case .unknown, .unloaded:
+            switch event {
+                case .discoveredUnloaded:
+                    return .unloaded
+                case .discoveredLoaded:
+                    return .activated
+                case .activationStarted:
+                    return .activating
+                case .promptForApproval, .activationFinished, .activationFailed:
+                    return .activationError
+                case .uninstallStarted:
+                    return .removal
+                case .uninstallFinished:
+                    return .removal
+            }
+            
+        case .activating, .needsApproval:
+            switch event {
+                case .activationStarted:
+                    return .activating
+                case .promptForApproval:
+                    return .needsApproval
+                case .activationFinished:
+                    return .activated
+                case .activationFailed, .discoveredUnloaded, .discoveredLoaded:
+                    return .activationError
+                case .uninstallStarted:
+                    return .removal
+                case .uninstallFinished:
+                    return .removal
+            }
+            
+        case .activated:
+            switch event {
+                case .activationStarted:
+                    return .activating
+                case .promptForApproval,
+                        .activationFailed,
+                        .discoveredUnloaded,
+                        .discoveredLoaded:
+                    return .activationError
+                case .activationFinished:
+                    return .activated
+                case .uninstallStarted:
+                    return .removal
+                case .uninstallFinished:
+                    return .removal
+            }
+            
+        case .activationError:
+            switch event {
+                case .activationStarted:
+                    return .activating
+                case .promptForApproval,
+                        .activationFinished,
+                        .activationFailed,
+                        .uninstallStarted,
+                        .uninstallFinished,
+                        .discoveredUnloaded,
+                        .discoveredLoaded:
+                    return .activationError
+            }
+        case .removal:
+            switch event {
+                case .uninstallStarted:
+                    return .removal
+                case .promptForApproval,
+                        .activationStarted,
+                        .activationFinished,
+                        .activationFailed,
+                        .uninstallFinished,
+                        .discoveredUnloaded,
+                        .discoveredLoaded:
+                    return .activationError
+            }
+        }
+    }
 }

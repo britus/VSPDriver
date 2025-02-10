@@ -14,8 +14,6 @@
 	<true/>
 	<key>com.apple.developer.system-extension.redistributable</key>
 	<true/>
-	<key>com.apple.developer.driverkit.userclient-access</key>
-	<true/>
 	<key>OSBundleLibraries</key>
 	<dict>
 		<key>com.apple.iokit.IOSerialFamily</key>

@@ -105,20 +105,28 @@ kern_return_t IMPL(VSPDriver, Start)
     if ((ret = CreateSerialPort(provider, kVSPDefaultPortCount)) != kIOReturnSuccess) {
         goto finish;
     }
-        
-    // -- called by client Create user client controller instance
-    //if ((ret = CreateUserClient(provider)) != kIOReturnSuccess) {
-    //    goto finish;
-    //}
-    //if ((ret = NewUserClient(0, &ivars->m_controller)) != kIOReturnSuccess) {
-    //    goto finish;
-    //}
-
+    
     // Register driver instance to IOReg
     if ((ret = RegisterService()) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "Start: RegisterService failed. code=%d\n", ret);
         goto finish;
     }
+    
+#if 0
+    VSPLog(LOG_PREFIX, "Start: ++ Run user client. ++ \n");
+    
+    // -- called by client Create user client controller instance
+    if ((ret = CreateUserClient(provider)) != kIOReturnSuccess) {
+        goto finish;
+    }
+    
+    //ivars->m_controller->retain();
+
+    if ((ret = ivars->m_controller->Start(provider)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "Start: User client start failed. code=%d\n", ret);
+        goto finish;
+    }
+#endif
     
     VSPLog(LOG_PREFIX, "Start: driver started successfully.\n");
     return kIOReturnSuccess;
@@ -175,9 +183,11 @@ kern_return_t IMPL(VSPDriver, NewUserClient)
         return kIOReturnBadArgument;
     }
     
-    if ((ret = CreateUserClient(GetProvider())) != kIOReturnSuccess) {
-        return ret;
-    }
+    if (ivars->m_controller == nullptr) {
+        if ((ret = CreateUserClient(GetProvider())) != kIOReturnSuccess) {
+            return ret;
+        }
+    } 
     
     (*userClient) = ivars->m_controller;
     

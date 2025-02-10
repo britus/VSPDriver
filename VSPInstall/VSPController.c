@@ -195,7 +195,7 @@ void UserClientTeardown(void)
 /// - Tag: DeviceAdded
 void DeviceAdded(void* refcon, io_iterator_t iterator)
 {
-    kern_return_t ret = kIOReturnSuccess;
+    kern_return_t ret = kIOReturnNotFound;
     io_connect_t connection = IO_OBJECT_NULL;
     io_service_t device = IO_OBJECT_NULL;
     //bool attemptedToMatchDevice = false;
@@ -204,11 +204,18 @@ void DeviceAdded(void* refcon, io_iterator_t iterator)
     while ((device = IOIteratorNext(iterator)) != IO_OBJECT_NULL)
     {
         //attemptedToMatchDevice = true;
+        io_name_t path;
         io_name_t deviceName;
-        if (IORegistryEntryGetName(device, deviceName) == KERN_SUCCESS) {
+        if (IORegistryEntryGetName(device, deviceName) == kIOReturnSuccess) {
             printf("DeviceAdded() name: %s\n", deviceName);
         }
-        
+        if (IORegistryEntryGetPath(device, kIOServicePlane, path)== kIOReturnSuccess) {
+            printf("DeviceAdded() plane: %s path: %s\n", kIOServicePlane, path);
+        }
+        if (IORegistryEntryGetNameInPlane(device, kIOServicePlane, deviceName) == kIOReturnSuccess) {
+            printf("DeviceAdded() name in plane: %s\n", deviceName);
+        }
+
         // Open a connection to this user client as a server
         // to that client, and store the instance in "service"
         if ((ret = IOServiceOpen(device, mach_task_self_, 0, &connection)) == kIOReturnSuccess) {
@@ -222,9 +229,10 @@ void DeviceAdded(void* refcon, io_iterator_t iterator)
             continue;
         }
 
-        clientFound= true;
         SwiftDeviceAdded(refcon, connection);
         IOObjectRelease(device);
+        clientFound = true;
+        ret = kIOReturnSuccess;
     }
 
     if (!clientFound) {
