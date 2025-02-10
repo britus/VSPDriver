@@ -1,0 +1,51 @@
+// Property specifying the entitlement to check against an IOUserClient's opening process
+// kOSBooleanFalse - Allow access (no entitlements required)
+// string - If the opening process has the named entitlement with value == boolean true, allow access
+#define kIOUserClientEntitlementsKey   "IOUserClientEntitlements"
+
+// Entitlements to check against dext process
+// Property is an array, one or more of which may match, of:
+//   an array of entitlement strings, all must be present
+// Any array can be a single string.
+#define kIOServiceDEXTEntitlementsKey   "IOServiceDEXTEntitlements"
+
+// Entitlement required to open dext connection
+#define kIODriverKitEntitlementKey      "com.apple.developer.driverkit"
+
+// Entitlements required to open dext IOUserClient
+// Property is an array of strings containing CFBundleIdentifiers of service being opened
+#define kIODriverKitUserClientEntitlementsKey "com.apple.developer.driverkit.userclient-access"
+
+// Allows the entitled process to open a user client connection to any dext that has specific entitlements
+// Property is an array of strings containing entitlements, one of which needs to be present
+// in the dext providing the user client being opened
+#define kIODriverKitRequiredEntitlementsKey "com.apple.private.driverkit.driver-access"
+
+// Specifies that this driver is used for internal tests. This opts the driver out of our policy to
+// reboot the device if a driver crashes too often.
+#define kIODriverKitTestDriverEntitlementKey "com.apple.private.driverkit.test-driver"
+
+// Entitlement of a dext that allows any task to open one of its IOUserClients
+#define kIODriverKitUserClientEntitlementAllowAnyKey "com.apple.developer.driverkit.allow-any-userclient-access"
+
+#define kIODriverKitUserClientEntitlementAdministratorKey "com.apple.developer.driverkit.administrator"
+
+// Entitlements for third party drivers on iOS
+#define kIODriverKitUserClientEntitlementCommunicatesWithDriversKey "com.apple.developer.driverkit.communicates-with-drivers"
+#define kIODriverKitUserClientEntitlementAllowThirdPartyUserClientsKey "com.apple.developer.driverkit.allow-third-party-userclients"
+
+// Other DriverKit entitlements
+#define kIODriverKitUSBTransportEntitlementKey "com.apple.developer.driverkit.transport.usb"
+#define kIODriverKitHIDTransportEntitlementKey "com.apple.developer.driverkit.transport.hid"
+#define kIODriverKitHIDFamilyDeviceEntitlementKey "com.apple.developer.driverkit.family.hid.device"
+#define kIODriverKitHIDFamilyEventServiceEntitlementKey "com.apple.developer.driverkit.family.hid.eventservice"
+#define kIODriverKitTransportBuiltinEntitlementKey "com.apple.developer.driverkit.builtin"
+
+// Entitlement required to read nvram root-only properties as non-root user
+#define kIONVRAMReadAccessKey           "com.apple.private.iokit.nvram-read-access"
+// Entitlement required to write nvram properties as non-root user
+#define kIONVRAMWriteAccessKey           "com.apple.private.iokit.nvram-write-access"
+// Entitlement required to set properties on the IOResources object as non-root user
+#define kIOResourcesSetPropertyKey       "com.apple.private.iokit.ioresources.setproperty"
+// Entitlement required to read/write to the system nvram region
+#define kIONVRAMSystemAllowKey           "com.apple.private.iokit.system-nvram-allow"
