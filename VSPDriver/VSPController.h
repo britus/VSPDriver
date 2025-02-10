@@ -20,7 +20,7 @@ enum VSPControlCommand {
     vspControlGetPortList = 2,
     vspControlLinkPorts = 3,
     vspControlUnlinkPorts = 4,
-
+    
     // Has to be last
     vspLastCommand,
 };

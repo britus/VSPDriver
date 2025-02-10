@@ -25,46 +25,7 @@
 
 #define LOG_PREFIX "VSPDriver"
 
-/* ============================================================
- <key>IOKitPersonalities</key>
- <dict>
-     <key>VSPDriver</key>
-     <dict>
-         <key>CFBundleIdentifierKernel</key>
-         <string>com.apple.kpi.iokit</string>
-         <key>IOClass</key>
-         <string>IOUserService</string>
-         <key>IOMatchCategory</key>
-         <string>org.eof.tools.VSPDriver</string>
-         <key>IOProviderClass</key>
-         <string>IOUserResources</string>
-         <key>IOResourceMatch</key>
-         <string>IOKit</string>
-         <key>IOUserClass</key>
-         <string>VSPDriver</string>
-         <key>IOUserServerName</key>
-         <string>org.eof.tools.VSPDriver</string>
-         <key>SerialPortProperties</key>
-         <dict>
-             <key>CFBundleIdentifierKernel</key>
-             <string>com.apple.driver.driverkit.serial</string>
-             <key>IOProviderClass</key>
-             <string>IOSerialStreamSync</string>
-             <key>IOClass</key>
-             <string>IOUserSerial</string>
-             <key>IOUserClass</key>
-             <string>VSPSerialPort</string>
-             <key>HiddenPort</key>
-             <false/>
-             <key>IOTTYBaseName</key>
-             <string>vsp</string>
-             <key>IOTTYSuffix</key>
-             <string>0</string>
-         </dict>
-     </dict>
- </dict>
- * ============================================================ */
-
+#define kVSPUserClientProperties "UserClientProperties"
 #define kVSPSerialPortProperties "SerialPortProperties"
 #define kVSPContollerProperties "VSPController"
 #define kVSPDefaultPortCount 4
@@ -89,7 +50,7 @@ bool VSPDriver::init(void)
         VSPLog(LOG_PREFIX, "free (super) falsed. result=%d\n", result);
         goto finish;
     }
-
+    
     // Create instance state resource
     ivars = IONewZero(VSPDriver_IVars, 1);
     if (!ivars) {
@@ -124,13 +85,13 @@ kern_return_t IMPL(VSPDriver, Start)
     kern_return_t ret;
     
     VSPLog(LOG_PREFIX, "Start: called.\n");
-   
+    
     // sane check our driver instance vars
     if (!ivars) {
         VSPLog(LOG_PREFIX, "Start: Private driver instance is NULL\n");
         return kIOReturnInvalid;
     }
-
+    
     // Start service instance (Apple style super call)
     ret = Start(provider, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
@@ -142,16 +103,16 @@ kern_return_t IMPL(VSPDriver, Start)
     if ((ret = CreateSerialPort(provider, kVSPDefaultPortCount)) != kIOReturnSuccess) {
         goto finish;
     }
-
+    
     // Register driver instance to IOReg
     if ((ret = RegisterService()) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "Start: RegisterService failed. code=%d\n", ret);
         goto finish;
     }
-
+    
     VSPLog(LOG_PREFIX, "Start: driver started successfully.\n");
     return kIOReturnSuccess;
-
+    
 finish:
     Stop(provider, SUPERDISPATCH);
     return ret;
@@ -190,7 +151,7 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count)
     kern_return_t ret;
     IOService* service;
     VSPSerialPort* port;
-
+    
     VSPLog(LOG_PREFIX, "CreateSerialPort: create #%d VSPSerialPort from Info.plist.\n", count);
     
     // Allocate serial port list. Holds each allocated
@@ -203,11 +164,11 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count)
     
     // remember count for IOSafeDeleteNULL call
     ivars->m_portCount = count;
-
+    
     // do it
     for (uint8_t i = 0; i < count; i++) {
         VSPLog(LOG_PREFIX, "CreateSerialPort: Create serial port %d.\n", i);
-
+        
         // Create sub service object from UserClientProperties in Info.plist
         ret= Create(this, kVSPSerialPortProperties, &service);
         if (ret != kIOReturnSuccess || service == nullptr) {
@@ -227,7 +188,7 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count)
         
         // set this as parent
         port->setParent(this);
-
+        
         // save instance for controller
         ivars->m_serialPorts[i] = port;
     }
@@ -242,22 +203,22 @@ kern_return_t VSPDriver::CreateUserClient(IOService* provider)
 {
     kern_return_t ret;
     IOService* service;
-
-    VSPLog(LOG_PREFIX, "CreateUserClient: create VSP controller from Info.plist.\n");
-
-/*
-#if 0
-    // ???? requires IUserClient class in Info.plist property
-    // ???? "UserClientProperties.IOClass"
-    IOUserClient* userClient;
     
-    ret = NewUserClient(1, &userClient);
-    if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Start: NewUserClient failed. code=%d\n", ret);
-
-    }
-#endif
-*/
+    VSPLog(LOG_PREFIX, "CreateUserClient: create VSP controller from Info.plist.\n");
+    
+    /*
+     #if 0
+     // ???? requires IUserClient class in Info.plist property
+     // ???? "UserClientProperties.IOClass"
+     IOUserClient* userClient;
+     
+     ret = NewUserClient(1, &userClient);
+     if (ret != kIOReturnSuccess) {
+     VSPLog(LOG_PREFIX, "Start: NewUserClient failed. code=%d\n", ret);
+     
+     }
+     #endif
+     */
     
     // Create sub service object from UserClientProperties in Info.plist
     ret= Create(this, kVSPContollerProperties, &service);

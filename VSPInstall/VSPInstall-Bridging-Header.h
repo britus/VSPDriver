@@ -5,3 +5,4 @@
 #import <IOKit/serial/IOSerialKeys.h>
 #import <IOKit/serial/ioss.h>
 #import "VSPIOHelper.hpp"
+#import "VSPController.h"

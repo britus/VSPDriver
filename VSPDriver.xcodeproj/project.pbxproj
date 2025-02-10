@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		880539EB2D4BAFBD00E55104 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880539EA2D4BAFBD00E55104 /* AppDelegate.swift */; };
 		880539ED2D4BAFBF00E55104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 880539EC2D4BAFBF00E55104 /* Assets.xcassets */; };
 		880539F02D4BAFBF00E55104 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 880539EE2D4BAFBF00E55104 /* MainMenu.xib */; };
 		880539F82D4BB59900E55104 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880539F72D4BB59800E55104 /* AppKit.framework */; };
@@ -32,6 +31,14 @@
 		88D938132D53655E009AA45C /* ORSSerial in Frameworks */ = {isa = PBXBuildFile; productRef = 88D938122D53655E009AA45C /* ORSSerial */; };
 		88DA7BA82D532C6800C8F759 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 88DA7BA62D532C6700C8F759 /* README.md */; };
 		88DA7BA92D532C6800C8F759 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 88DA7BA72D532C6700C8F759 /* LICENSE */; };
+		88F5D9332D59E3E5007A6E1F /* VSPLoaderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F5D9322D59E3E5007A6E1F /* VSPLoaderModel.swift */; };
+		88F5D9352D59E50D007A6E1F /* VSPLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F5D9342D59E50D007A6E1F /* VSPLoaderView.swift */; };
+		88F5D9372D59E55D007A6E1F /* VSPDriverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F5D9362D59E55D007A6E1F /* VSPDriverView.swift */; };
+		88F5D9392D59E5DC007A6E1F /* VSPTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F5D9382D59E5DC007A6E1F /* VSPTestView.swift */; };
+		88F5D93B2D59E608007A6E1F /* VSPTestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F5D93A2D59E608007A6E1F /* VSPTestModel.swift */; };
+		88F5D93D2D59E85B007A6E1F /* VSPInstallApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F5D93C2D59E85B007A6E1F /* VSPInstallApp.swift */; };
+		88F5D9402D59E933007A6E1F /* VSPController.c in Sources */ = {isa = PBXBuildFile; fileRef = 88F5D93F2D59E933007A6E1F /* VSPController.c */; };
+		88F5D9422D5A10C2007A6E1F /* VSPDriver.info.plist.xml in Resources */ = {isa = PBXBuildFile; fileRef = 88F5D9412D5A10C2007A6E1F /* VSPDriver.info.plist.xml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,7 +67,6 @@
 
 /* Begin PBXFileReference section */
 		880539E82D4BAFBD00E55104 /* VSPInstall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VSPInstall.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		880539EA2D4BAFBD00E55104 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		880539EC2D4BAFBF00E55104 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		880539EF2D4BAFBF00E55104 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		880539F12D4BAFBF00E55104 /* VSPInstall.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VSPInstall.entitlements; sourceTree = "<group>"; };
@@ -93,6 +99,15 @@
 		88BEFD702D4BC84A00CD40E6 /* libEndpointSecurity.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libEndpointSecurity.tbd; path = usr/lib/libEndpointSecurity.tbd; sourceTree = SDKROOT; };
 		88DA7BA62D532C6700C8F759 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		88DA7BA72D532C6700C8F759 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		88F5D9322D59E3E5007A6E1F /* VSPLoaderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSPLoaderModel.swift; sourceTree = "<group>"; };
+		88F5D9342D59E50D007A6E1F /* VSPLoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSPLoaderView.swift; sourceTree = "<group>"; };
+		88F5D9362D59E55D007A6E1F /* VSPDriverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSPDriverView.swift; sourceTree = "<group>"; };
+		88F5D9382D59E5DC007A6E1F /* VSPTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSPTestView.swift; sourceTree = "<group>"; };
+		88F5D93A2D59E608007A6E1F /* VSPTestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSPTestModel.swift; sourceTree = "<group>"; };
+		88F5D93C2D59E85B007A6E1F /* VSPInstallApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSPInstallApp.swift; sourceTree = "<group>"; };
+		88F5D93E2D59E933007A6E1F /* VSPController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VSPController.h; sourceTree = "<group>"; };
+		88F5D93F2D59E933007A6E1F /* VSPController.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = VSPController.c; sourceTree = "<group>"; };
+		88F5D9412D5A10C2007A6E1F /* VSPDriver.info.plist.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = VSPDriver.info.plist.xml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,13 +138,20 @@
 			isa = PBXGroup;
 			children = (
 				880539F52D4BB0F900E55104 /* Info.plist */,
-				880539EA2D4BAFBD00E55104 /* AppDelegate.swift */,
 				880539EC2D4BAFBF00E55104 /* Assets.xcassets */,
 				880539EE2D4BAFBF00E55104 /* MainMenu.xib */,
 				880539F12D4BAFBF00E55104 /* VSPInstall.entitlements */,
 				88906F462D4CCA9400E500BB /* VSPIOHelper.cpp */,
 				88906F472D4CCA9400E500BB /* VSPIOHelper.hpp */,
 				88906F452D4CCA9400E500BB /* VSPInstall-Bridging-Header.h */,
+				88F5D93C2D59E85B007A6E1F /* VSPInstallApp.swift */,
+				88F5D9362D59E55D007A6E1F /* VSPDriverView.swift */,
+				88F5D9322D59E3E5007A6E1F /* VSPLoaderModel.swift */,
+				88F5D9342D59E50D007A6E1F /* VSPLoaderView.swift */,
+				88F5D93A2D59E608007A6E1F /* VSPTestModel.swift */,
+				88F5D9382D59E5DC007A6E1F /* VSPTestView.swift */,
+				88F5D93E2D59E933007A6E1F /* VSPController.h */,
+				88F5D93F2D59E933007A6E1F /* VSPController.c */,
 			);
 			path = VSPInstall;
 			sourceTree = "<group>";
@@ -186,6 +208,7 @@
 				88B47EC92D59B43800868CA5 /* VSPController.h */,
 				889E8EBB2D4DF4BF002F387A /* VSPLogger.h */,
 				88B40D702D4B85ED00DFE7C5 /* VSPDriver.entitlements */,
+				88F5D9412D5A10C2007A6E1F /* VSPDriver.info.plist.xml */,
 				88B40D612D4B666700DFE7C5 /* Info.plist */,
 			);
 			path = VSPDriver;
@@ -307,6 +330,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88F5D9422D5A10C2007A6E1F /* VSPDriver.info.plist.xml in Resources */,
 				88AEEFF72D5233D4007F2A4C /* IOReg-Outline.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,8 +342,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				880539EB2D4BAFBD00E55104 /* AppDelegate.swift in Sources */,
+				88F5D9402D59E933007A6E1F /* VSPController.c in Sources */,
 				88906F482D4CCA9400E500BB /* VSPIOHelper.cpp in Sources */,
+				88F5D9332D59E3E5007A6E1F /* VSPLoaderModel.swift in Sources */,
+				88F5D93B2D59E608007A6E1F /* VSPTestModel.swift in Sources */,
+				88F5D9392D59E5DC007A6E1F /* VSPTestView.swift in Sources */,
+				88F5D9352D59E50D007A6E1F /* VSPLoaderView.swift in Sources */,
+				88F5D9372D59E55D007A6E1F /* VSPDriverView.swift in Sources */,
+				88F5D93D2D59E85B007A6E1F /* VSPInstallApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -56,7 +56,7 @@ const IOUserClientMethodDispatch uc_methods[vspLastCommand] = {
         .checkScalarOutputCount = 0,
         .checkStructureOutputSize = sizeof(TVSPControllerData),
     },
-    // Async request to link two ports together
+    // Async request to get port active ports
     [vspControlGetPortList] =
     {
         .function = VSP_METHOD(exLinkPorts),
@@ -78,7 +78,7 @@ const IOUserClientMethodDispatch uc_methods[vspLastCommand] = {
         .checkScalarOutputCount = 0,
         .checkStructureOutputSize = 0,
     },
-    // Async request to link two ports together
+    // Async request to remove a port link
     [vspControlUnlinkPorts] =
     {
         .function = VSP_METHOD(exLinkPorts),
@@ -104,7 +104,7 @@ bool VSPUserClient::init()
         VSPLog(LOG_PREFIX, "free (super) falsed. result=%d\n", result);
         goto finish;
     }
-
+    
     // Create instance state resource
     ivars = IONewZero(VSPUserClient_IVars, 1);
     if (!ivars) {
@@ -139,13 +139,13 @@ kern_return_t IMPL(VSPUserClient, Start)
     kern_return_t ret;
     
     VSPLog(LOG_PREFIX, "Start: called.\n");
-   
+    
     // sane check our driver instance vars
     if (!ivars) {
         VSPLog(LOG_PREFIX, "Start: Private driver instance is NULL\n");
         return kIOReturnInvalid;
     }
-
+    
     // Start service instance (Apple style super call)
     ret = Start(provider, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
@@ -162,7 +162,7 @@ kern_return_t IMPL(VSPUserClient, Start)
         }
         return ret;
     }
-
+    
     ret = IOTimerDispatchSource::Create(ivars->m_eventQueue, &ivars->m_eventSource);
     if (ret != kIOReturnSuccess || !ivars->m_eventSource)
     {
@@ -172,7 +172,7 @@ kern_return_t IMPL(VSPUserClient, Start)
         }
         return ret;
     }
-
+    
     ret = CreateActionAsyncCallback(sizeof(TVSPControllerData), &ivars->m_eventAction);
     if (ret != kIOReturnSuccess || !ivars->m_eventAction)
     {
@@ -182,21 +182,21 @@ kern_return_t IMPL(VSPUserClient, Start)
         }
         return ret;
     }
-
+    
     ret = ivars->m_eventSource->SetHandler(ivars->m_eventAction);
     if (ret != kIOReturnSuccess)
     {
         VSPLog(LOG_PREFIX, "Start() - Failed to assign simulated action to handler with error: 0x%08x.", ret);
         return ret;
     }
-
+    
     ret = RegisterService();
     if (ret != kIOReturnSuccess)
     {
         VSPLog(LOG_PREFIX, "Start() - Failed to register service with error: 0x%08x.", ret);
         return ret;
     }
-
+    
     VSPLog(LOG_PREFIX, "User client successfully started.\n");
     return ret;
 }
@@ -214,7 +214,7 @@ kern_return_t IMPL(VSPUserClient, Stop)
     OSSafeReleaseNULL(ivars->m_eventSource);
     OSSafeReleaseNULL(ivars->m_eventQueue);
     OSSafeReleaseNULL(ivars->m_cbAction);
-
+    
     // service instance (Apple style super call)
     if ((ret= Stop(provider, SUPERDISPATCH)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "Stop (suprt) failed. code=%d\n", ret);
@@ -231,14 +231,14 @@ kern_return_t IMPL(VSPUserClient, Stop)
 void IMPL(VSPUserClient, AsyncCallback)
 {
     //kern_return_t ret = kIOReturnSuccess;
-
+    
     VSPLog(LOG_PREFIX, "AsyncCallback called.\n");
-
+    
     if (!action) {
         VSPLog(LOG_PREFIX, "AsyncCallback: action null pointer");
         return;
     }
-        
+    
     // Get back our data previously stored in OSAction.
     TVSPControllerData* request = (TVSPControllerData*) action->GetReference();
     TVSPControllerData response = {};
@@ -249,13 +249,13 @@ void IMPL(VSPUserClient, AsyncCallback)
     // create client response
     uint64_t asyncData[VSP_UCD_SIZE * 3] = {};
     memcpy(asyncData + 1, &response, VSP_UCD_SIZE);
-
+    
     if (ivars->m_cbAction != nullptr) {
         // 3 is the 1 leading "type" message plus the two elements
         // of the TVSPControllerData.
         AsyncCompletion(ivars->m_cbAction, kIOReturnSuccess, asyncData, 3);
     }
-
+    
     return;
 }
 
@@ -263,16 +263,16 @@ void IMPL(VSPUserClient, AsyncCallback)
 // ExternalMethod(...)
 //
 kern_return_t VSPUserClient::ExternalMethod(
-                uint64_t selector,
-                IOUserClientMethodArguments* arguments,
-                const IOUserClientMethodDispatch* dispatch,
-                OSObject* target,
-                void* reference)
+                                            uint64_t selector,
+                                            IOUserClientMethodArguments* arguments,
+                                            const IOUserClientMethodDispatch* dispatch,
+                                            OSObject* target,
+                                            void* reference)
 {
     kern_return_t ret = kIOReturnSuccess;
     
     VSPLog(LOG_PREFIX, "ExternalMethod called.\n");
-
+    
     if (selector < 1 || selector > vspLastCommand) {
         VSPLog(LOG_PREFIX, "Invalid method selector detected, skip.");
         return kIOReturnBadArgument;
@@ -287,7 +287,7 @@ kern_return_t VSPUserClient::ExternalMethod(
         VSPLog(LOG_PREFIX, "ExternalMethod dispatch failed. code=%d", ret);
         return kIOReturnBadArgument;
     }
-
+    
     return ret;
 }
 
@@ -319,7 +319,7 @@ kern_return_t VSPUserClient::scheduleEvent()
 void VSPUserClient::setClientStatus(void* data, uint32_t code, const char* message)
 {
     VSPLog(LOG_PREFIX, "setClientStatus called.\n");
-
+    
     TVSPControllerData* cd = (TVSPControllerData*) data;
     strncpy(cd->status.message, message, VSP_UCD_MESSAGE_SIZE);
     cd->status.code = kIOReturnSuccess;
@@ -342,17 +342,17 @@ void VSPUserClient::setClientStatus(void* data, uint32_t code, const char* messa
 kern_return_t VSPUserClient::exSetCallback(OSObject* target, void* reference, IOUserClientMethodArguments* arguments)
 {
     VSPLog(LOG_PREFIX, "exSetCallback called.\n");
-
+    
     VSP_CHECK_PARAM_RETURN("exSetCallback", target);
     VSP_CHECK_PARAM_RETURN("exSetCallback", reference);
     VSP_CHECK_PARAM_RETURN("exSetCallback", arguments);
-
+    
     /// - Tag: RegisterAsyncCallback_StoreCompletion
     if (arguments->completion == nullptr) {
         VSPLog(LOG_PREFIX, "exSetCallback: Got a null completion.");
         return kIOReturnBadArgument;
     }
-
+    
     VSPUserClient* self = (VSPUserClient*) target;
     return self->setCallback(reference, arguments);
 }
@@ -360,7 +360,7 @@ kern_return_t VSPUserClient::exSetCallback(OSObject* target, void* reference, IO
 kern_return_t VSPUserClient::setCallback(void* reference, IOUserClientMethodArguments* arguments)
 {
     VSPLog(LOG_PREFIX, "setCallback called.\n");
-
+    
     // IOReturn ret = kIOReturnSuccess;
     TVSPControllerData* request = nullptr;
     TVSPControllerData response = {};
@@ -369,22 +369,22 @@ kern_return_t VSPUserClient::setCallback(void* reference, IOUserClientMethodArgu
     // might be freed before the asychronous return.
     ivars->m_cbAction = arguments->completion;
     ivars->m_cbAction->retain();
-
+    
     // All of this is returned synchronously. This is provided for the sake
     // of example. Generally a dext would want to return from an async method
     // as fast as possible.
     request = (TVSPControllerData*) arguments->structureInput->getBytesNoCopy();
-
+    
     // Retain action memory for later work.
     void* evData = ivars->m_eventAction->GetReference();
     memcpy(evData, request, VSP_UCD_SIZE);
-
+    
     response.context = VSPUserContext::vspContextPing;
     setClientStatus(&response.status, kIOReturnSuccess, "setCallback=OK");
-
+    
     arguments->structureOutput = OSData::withBytes(&response, VSP_UCD_SIZE);
     
-
+    
     return scheduleEvent();
 }
 
@@ -394,7 +394,7 @@ kern_return_t VSPUserClient::setCallback(void* reference, IOUserClientMethodArgu
 kern_return_t VSPUserClient::exLinkPorts(OSObject* target, void* reference, IOUserClientMethodArguments* arguments)
 {
     VSPLog(LOG_PREFIX, "exLinkPorts called.\n");
-
+    
     VSP_CHECK_PARAM_RETURN("exLinkPorts", target);
     VSP_CHECK_PARAM_RETURN("exLinkPorts", reference);
     VSP_CHECK_PARAM_RETURN("exLinkPorts", arguments);
@@ -404,7 +404,7 @@ kern_return_t VSPUserClient::exLinkPorts(OSObject* target, void* reference, IOUs
         VSPLog(LOG_PREFIX, "exSetCallback: Got a null completion.");
         return kIOReturnBadArgument;
     }
-
+    
     VSPUserClient* self = (VSPUserClient*) target;
     return self->linkPorts(reference, arguments);
 }
@@ -412,7 +412,7 @@ kern_return_t VSPUserClient::exLinkPorts(OSObject* target, void* reference, IOUs
 kern_return_t VSPUserClient::linkPorts(void* reference, IOUserClientMethodArguments* arguments)
 {
     VSPLog(LOG_PREFIX, "linkPorts called.\n");
-
+    
     // IOReturn ret = kIOReturnSuccess;
     TVSPControllerData* request = nullptr;
     TVSPControllerData response = {};
@@ -421,7 +421,7 @@ kern_return_t VSPUserClient::linkPorts(void* reference, IOUserClientMethodArgume
     // might be freed before the asychronous return.
     ivars->m_cbAction = arguments->completion;
     ivars->m_cbAction->retain();
-
+    
     // All of this is returned synchronously. This is provided for the sake
     // of example. Generally a dext would want to return from an async method
     // as fast as possible.
@@ -430,11 +430,11 @@ kern_return_t VSPUserClient::linkPorts(void* reference, IOUserClientMethodArgume
     // Retain action memory for later work.
     void* evData = ivars->m_eventAction->GetReference();
     memcpy(evData, request, VSP_UCD_SIZE);
-
+    
     VSPLog(LOG_PREFIX, "linkPorts: srcPort=%d tgtPort=%d.\n",
            request->parameter.portLink.sourceId,
            request->parameter.portLink.targetId);
-
+    
     response.context = VSPUserContext::vspContextPort;
     setClientStatus(&response.status, kIOReturnSuccess, "linkPorts=OK");
     arguments->structureOutput = OSData::withBytes(&response, VSP_UCD_SIZE);
