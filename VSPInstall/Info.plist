@@ -13,6 +13,8 @@
 	<key>com.apple.developer.driverkit.userclient-access</key>
 	<array>
 		<string>VSPDriver</string>
+		<string>org.eof.tools.VSPDriver</string>
+		<string>org.eof.tools.VSPInstall.client</string>
 	</array>
 </dict>
 </plist>
