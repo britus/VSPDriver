@@ -196,7 +196,7 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count)
     // instance of the VSPSerialPort object
     ivars->m_serialPorts = IONewZero(TVSPSerialPortItem*, count);
     if (!ivars->m_serialPorts) {
-        VSPLog(LOG_PREFIX, "CreateSerialPort: Ouch out of memory.\n");
+        VSPLog(LOG_PREFIX, "CreateSerialPort: Out of memory.\n");
         return kIOReturnNoMemory;
     }
     
@@ -337,7 +337,7 @@ kern_return_t VSPDriver::createPortLink(uint8_t sourceId, uint8_t targetId, void
             if ((linkId = port->port->getPortLinkIdentifier()) == 0) {
                 src = ivars->m_serialPorts[i];
             } else {
-                VSPLog(LOG_PREFIX, "createPortLink: Serial port %d already assigned to link %d.",
+                VSPLog(LOG_PREFIX, "createPortLink: Source port %d already assigned to link %d.",
                        port->id, linkId);
                 return kIOReturnBadArgument;
             }
@@ -347,7 +347,7 @@ kern_return_t VSPDriver::createPortLink(uint8_t sourceId, uint8_t targetId, void
             if ((linkId = port->port->getPortLinkIdentifier()) == 0) {
                 tgt = ivars->m_serialPorts[i];
             } else {
-                VSPLog(LOG_PREFIX, "createPortLink: Serial port %d already assigned to link %d.",
+                VSPLog(LOG_PREFIX, "createPortLink: Target port %d already assigned to link %d.",
                        port->id, linkId);
                 return kIOReturnBadArgument;
             }
@@ -373,13 +373,13 @@ kern_return_t VSPDriver::createPortLink(uint8_t sourceId, uint8_t targetId, void
             TVSPPortLinkItem* link = ivars->m_portLinks[i];
             
             if (link->sourcePort.id == src->id) {
-                VSPLog(LOG_PREFIX, "createPortLink: Source port=%d already linked in %d arguments\n",
+                VSPLog(LOG_PREFIX, "createPortLink: Source port %d already assigned to link %d\n",
                        src->id, link->id);
                 return kIOReturnBadArgument;
             }
             
             if (link->targetPort.id == tgt->id) {
-                VSPLog(LOG_PREFIX, "createPortLink: Target port=%d already linked in %d arguments\n",
+                VSPLog(LOG_PREFIX, "createPortLink: Target port %d already assigned to link %d\n",
                        tgt->id, link->id);
                 return kIOReturnBadArgument;
             }
