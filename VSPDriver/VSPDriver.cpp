@@ -31,10 +31,24 @@
 #define kVSPDefaultPortCount 4
 #define kVSPMaxumumPorts 16
 
+typedef struct {
+    VSPSerialPort* port;                    // object instance
+    uint8_t        id;                      // unique identifier
+    uint64_t       flags;                   // Trace and checks
+} TSerialPortItem;
+
+typedef struct {
+    TSerialPortItem sourcePort;             // first port
+    TSerialPortItem targetPort;             // second port
+    uint8_t         id;                     // routing item id
+} TVSPortLinkItem;
+
 // Driver instance state resource
 struct VSPDriver_IVars {
-    VSPSerialPort** m_serialPorts;
-    uint8_t         m_portCount;
+    uint8_t             m_portCount;       // number of allocated serial ports
+    TSerialPortItem**   m_serialPorts;     // list of allocated serial ports
+    uint8_t             m_portLinkCount;   // number of serial port links
+    TVSPortLinkItem**   m_portLinkList;    // list of serial port links
 };
 
 // --------------------------------------------------------------------
@@ -128,12 +142,19 @@ kern_return_t IMPL(VSPDriver, Stop)
     
     VSPLog(LOG_PREFIX, "Stop called.\n");
         
-    // release allocated port list only.
-    // (not each instance itself!)
-    if (ivars && ivars->m_serialPorts && ivars->m_portCount) {
-        for (uint8_t i = 0; i < ivars->m_portCount; i++) {
-            ivars->m_serialPorts[i]->unlinkParent();
-            // OSSafeReleaseNULL(ivars->m_serialPorts[i]);
+    // release allocated port links and port items.
+    // Do not release VSPSerialPort instance itself!
+    if (ivars) {
+        if (ivars->m_serialPorts && ivars->m_portCount) {
+            for (uint8_t i = 0; i < ivars->m_portCount; i++) {
+                ivars->m_serialPorts[i]->port->unlinkParent();
+                IOSafeDeleteNULL(ivars->m_serialPorts[i], TSerialPortItem, 1);
+            }
+        }
+        if (ivars->m_portLinkList && ivars->m_portLinkCount) {
+            for (uint8_t i = 0; i < ivars->m_portLinkCount; i++) {
+                IOSafeDeleteNULL(ivars->m_portLinkList[i], TVSPortLinkItem, 1);
+            }
         }
         IOSafeDeleteNULL(ivars->m_serialPorts, VSPSerialPort*, ivars->m_portCount);
     }
@@ -177,7 +198,6 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count)
 {
     kern_return_t ret;
     IOService* service;
-    VSPSerialPort* port;
     
     VSPLog(LOG_PREFIX, "CreateSerialPort: create #%d VSPSerialPort from Info.plist.\n", count);
     
@@ -186,7 +206,7 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count)
 
     // Allocate serial port list. Holds each allocated
     // instance of the VSPSerialPort object
-    ivars->m_serialPorts = IONewZero(VSPSerialPort*, count);
+    ivars->m_serialPorts = IONewZero(TSerialPortItem*, count);
     if (!ivars->m_serialPorts) {
         VSPLog(LOG_PREFIX, "CreateSerialPort: Ouch out of memory.\n");
         return kIOReturnNoMemory;
@@ -196,29 +216,41 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count)
     for (uint8_t i = 0; i < count && i < kVSPMaxumumPorts; i++) {
         VSPLog(LOG_PREFIX, "CreateSerialPort: Create serial port %d.\n", i);
         
+        TSerialPortItem* item = IONewZero(TSerialPortItem, 1);
+        if (!item) {
+            VSPLog(LOG_PREFIX, "CreateSerialPort: Ouch out of memory.\n");
+            IOSafeDeleteNULL(ivars->m_serialPorts, TSerialPortItem*, count);
+            return kIOReturnNoMemory;
+        }
+
         // Create sub service object from UserClientProperties in Info.plist
         ret= Create(this, kVSPSerialPortProperties, &service);
         if (ret != kIOReturnSuccess || service == nullptr) {
             VSPLog(LOG_PREFIX, "CreateSerialPort: create [%d] failed. code=%d\n", count, ret);
+            IOSafeDeleteNULL(ivars->m_serialPorts, TSerialPortItem*, count);
+            IOSafeDeleteNULL(item, TSerialPortItem, 1);
             return ret;
         }
         
         VSPLog(LOG_PREFIX, "CreateSerialPort: check VSPSerialPort type.\n");
         
         // Sane check object type
-        port = OSDynamicCast(VSPSerialPort, service);
-        if (port == nullptr) {
+        item->port = OSDynamicCast(VSPSerialPort, service);
+        if (item->port == nullptr) {
             VSPLog(LOG_PREFIX, "CreateSerialPort: Cast to VSPSerialPort failed.\n");
+            IOSafeDeleteNULL(ivars->m_serialPorts, TSerialPortItem*, count);
+            IOSafeDeleteNULL(item, TSerialPortItem, 1);
             service->release();
             return kIOReturnInvalid;
         }
         
-        // set this as parent
-        port->setParent(this);
-        port->setPortIdentifier(i + 1);
+        item->id = i + 1;
+        item->flags = 0x00;
+        item->port->setParent(this);                // set this as parent
+        item->port->setPortIdentifier(item->id);    // set unique identifier
         
         // save instance for controller
-        ivars->m_serialPorts[i] = port;
+        ivars->m_serialPorts[i] = item;
         ivars->m_portCount++;
     }
     
@@ -281,12 +313,177 @@ kern_return_t VSPDriver::getPortList(uint8_t* list, uint8_t count)
         return kIOReturnBadArgument;
     }
     
-    for(uint8_t i = 0, n = 1; i < count && i < ivars->m_portCount; i++, n++) {
-        if (!ivars->m_serialPorts[i]) {
-            break;
-        }
-        list[i] = n;
+    if (ivars->m_portCount == 0 || !ivars->m_serialPorts) {
+        return kIOReturnNotFound;
+    }
+    
+    for(uint8_t i = 0; i < count && i < ivars->m_portCount; i++) {
+        list[i] = ivars->m_serialPorts[i]->id;
     }
     
     return kIOReturnSuccess;
+}
+
+kern_return_t VSPDriver::createPortLink(uint8_t sourceId, uint8_t targetId, void** link)
+{
+    if (!link || !sourceId || !targetId) {
+        VSPLog(LOG_PREFIX, "createPortLink: Invalid arguments\n");
+        return kIOReturnBadArgument;
+    }
+  
+    TSerialPortItem* src = nullptr;
+    TSerialPortItem* tgt = nullptr;
+    
+    for (uint8_t i = 0; i < ivars->m_portCount; i++) {
+        if (ivars->m_serialPorts[i]->id == sourceId) {
+            src = ivars->m_serialPorts[i];
+        }
+        if (ivars->m_serialPorts[i]->id == targetId) {
+            tgt = ivars->m_serialPorts[i];
+        }
+    }
+    
+    if (src == nullptr || tgt == nullptr) {
+        VSPLog(LOG_PREFIX, "createPortLink: Can't find sourceId=%d or targetId=%d\n",
+               sourceId, targetId);
+        return kIOReturnNotFound;
+    }
+
+    uint8_t count = ivars->m_portLinkCount;
+ 
+    // check existing links
+    if (count && ivars->m_portLinkList) {
+        for (uint8_t i = 0; i < count; i++) {
+            if (ivars->m_portLinkList[i]->sourcePort.id == src->id) {
+                VSPLog(LOG_PREFIX, "createPortLink: Source port=%d already linked in %d arguments\n",
+                       src->id, ivars->m_portLinkList[i]->id);
+                return kIOReturnBadArgument;
+            }
+            if (ivars->m_portLinkList[i]->targetPort.id == tgt->id) {
+                VSPLog(LOG_PREFIX, "createPortLink: Target port=%d already linked in %d arguments\n",
+                       tgt->id, ivars->m_portLinkList[i]->id);
+                return kIOReturnBadArgument;
+            }
+        }
+    }
+
+    // create new link item
+    TVSPortLinkItem* item;
+    if (!(item = IONewZero(TVSPortLinkItem, 1))) {
+        VSPLog(LOG_PREFIX, "createPortLink: Out of memory!\n");
+        return kIOReturnNoMemory;
+    }
+    
+    // new list with additional space
+    TVSPortLinkItem** list;
+    if (!(list = IONewZero(TVSPortLinkItem*, count + 1))) {
+        VSPLog(LOG_PREFIX, "createPortLink: Out of memory!\n");
+        return kIOReturnNoMemory;
+    }
+    
+    /* copy existing links */
+    for (uint8_t i = 0; i < count; i++) {
+        list[i] = ivars->m_portLinkList[i];
+    }
+
+    // old list to remove
+    TVSPortLinkItem** oldl = ivars->m_portLinkList;
+
+    // setup new port link item
+    item->id = count + 1;
+    item->sourcePort.id = src->id;
+    item->sourcePort.port = src->port;
+    item->sourcePort.flags = 0x01;
+    
+    item->targetPort.id = tgt->id;
+    item->targetPort.port = tgt->port;
+    item->targetPort.flags = 0x01;
+    
+    ivars->m_portLinkList = list;
+    ivars->m_portLinkCount++;
+
+    IOSafeDeleteNULL(oldl, TVSPortLinkItem*, count);
+    return kIOReturnSuccess; // done!
+}
+
+kern_return_t VSPDriver::removePortLink(void *link)
+{
+    if (!link) {
+        VSPLog(LOG_PREFIX, "removePortLink: Invalid argument.");
+        return kIOReturnBadArgument;
+    }
+    
+    if (ivars->m_portLinkCount == 0 || !ivars->m_portLinkList) {
+        VSPLog(LOG_PREFIX, "removePortLink: No serial port links available.");
+        return kIOReturnSuccess;
+    }
+            
+    TVSPortLinkItem* item = reinterpret_cast<TVSPortLinkItem*>(link);
+    uint8_t count = ivars->m_portLinkCount;
+    uint8_t found = 0;
+    
+    // old port list to remove
+    TVSPortLinkItem** oldl = ivars->m_portLinkList;
+
+    // new port link list
+    TVSPortLinkItem** list;
+    if (!(list= IONewZero(TVSPortLinkItem*, count - 1))) {
+        VSPLog(LOG_PREFIX, "removePortLink: Out of memory.\n");
+        return kIOReturnNoMemory;
+    }
+
+    /* find given link item and exclude this from new new list */
+    for (uint8_t i = 0, j = 0; i < count; i++) {
+        if (ivars->m_portLinkList[i]->id == item->id) {
+            found = 1;
+        } else {
+            list[j++] = ivars->m_portLinkList[i];
+        }
+    }
+
+    // remove port link
+    if (found) {
+        ivars->m_portLinkList = list;
+        ivars->m_portLinkCount--;
+
+        IOSafeDeleteNULL(item, TVSPortLinkItem, 1);
+        IOSafeDeleteNULL(oldl, TVSPortLinkItem*, count);
+        return kIOReturnSuccess; // done!
+    }
+
+    IOSafeDeleteNULL(list, TVSPortLinkItem*, count - 1);
+    return kIOReturnNotFound;
+}
+
+kern_return_t VSPDriver::getPortLinkCount(uint8_t* count)
+{
+    if (!count) {
+        VSPLog(LOG_PREFIX, "getPortLinkCount: Invalid argument.");
+        return kIOReturnBadArgument;
+    }
+    
+    (*count) = ivars->m_portLinkCount;
+    return kIOReturnSuccess;
+}
+
+kern_return_t VSPDriver::getPortLinkById(uint8_t id, void** result)
+{
+    if (!id || !result) {
+        VSPLog(LOG_PREFIX, "getPortLinkById: Invalid argument.");
+        return kIOReturnBadArgument;
+    }
+    
+    if (ivars->m_portLinkCount == 0 || !ivars->m_portLinkList) {
+        VSPLog(LOG_PREFIX, "removePortLink: No serial port links available.");
+        return kIOReturnNotFound;
+    }
+
+    for (uint8_t i = 0; i < ivars->m_portLinkCount; i++) {
+        if (ivars->m_portLinkList[i]->id == id) {
+            (*result) = ivars->m_portLinkList[i];
+            return kIOReturnSuccess;
+        }
+    }
+
+    return kIOReturnNotFound;
 }
