@@ -49,8 +49,6 @@ struct VSPUserClient_IVars {
     IOTimerDispatchSource* m_eventSource = nullptr;
     OSAction* m_eventAction = nullptr;
     OSAction* m_cbAction = nullptr;
-    // --- debug --
-    TVSPPortLinkItem* dbg_link = nullptr;
 };
 
 // Define all possible commands with its parameters and callback entry points.
@@ -130,7 +128,7 @@ static inline const TVSPControllerData* toVspData(const OSData* p)
 
 void set_ctlr_status(TVSPControllerData* data, uint32_t code, uint64_t flags)
 {
-    data->context = vspContextResult;
+    data->context = (code == kIOReturnSuccess ? vspContextResult : vspContextError);
     data->status.code = code;
     data->status.flags = flags;
 }
@@ -485,17 +483,17 @@ kern_return_t VSPUserClient::getPortList(void* reference, IOUserClientMethodArgu
     uint8_t count = 0;
     
     if ((ret = ivars->m_parent->getPortCount(&count)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "getPortList parent getPortCount failed. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "getPortList: parent getPortCount failed. code=%d\n", ret);
         set_ctlr_status(&response, ret, 0xfa000001);
     }
 
     if (count > 0) {
         if (!(list = IONewZero(uint8_t, count))) {
-            VSPLog(LOG_PREFIX, "getPortList Out of memory.\n");
+            VSPLog(LOG_PREFIX, "getPortList: Out of memory.\n");
             set_ctlr_status(&response, ret, 0xfa0000ff);
         }
         if ((ret = ivars->m_parent->getPortList(list, count)) != kIOReturnSuccess) {
-            VSPLog(LOG_PREFIX, "getPortList parent getPortCount failed. code=%d\n", ret);
+            VSPLog(LOG_PREFIX, "getPortList: parent getPortCount failed. code=%d\n", ret);
             set_ctlr_status(&response, ret, 0xfa000002);
         }
         else {
@@ -546,21 +544,21 @@ kern_return_t VSPUserClient::linkPorts(void* reference, IOUserClientMethodArgume
     set_ctlr_status(&response, kIOReturnSuccess, 0xff00be01);
 
     void* link = nullptr;
-    ret = ivars->m_parent->createPortLink( //
-                request->parameter.portLink.sourceId, //
-                request->parameter.portLink.targetId, &link);
+    uint8_t sid = request->parameter.portLink.sourceId;
+    uint8_t tid = request->parameter.portLink.targetId;
+    
+    ret = ivars->m_parent->createPortLink(sid, tid, &link);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "linkPorts parent createPortLink failed. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "linkPorts: parent createPortLink failed. code=%d\n", ret);
         set_ctlr_status(&response, ret, 0xfb000001);
     }
     else if (link) {
-        // hold for unlink test
-        ivars->dbg_link = reinterpret_cast<TVSPPortLinkItem*>(link);
-        VSPLog(LOG_PREFIX, "linkPorts got link ID: %d\n", ivars->dbg_link->id);
+        TVSPPortLinkItem* pli = reinterpret_cast<TVSPPortLinkItem*>(link);
+        VSPLog(LOG_PREFIX, "linkPorts: got link ID: %d\n", pli->id);
     }
     
     if ((ret = prepareResponse(&response, arguments)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "linkPorts preprare response failed. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "linkPorts: preprare response failed. code=%d\n", ret);
         return ret;
     }
 
@@ -606,18 +604,18 @@ kern_return_t VSPUserClient::unlinkPorts(void* reference, IOUserClientMethodArgu
         set_ctlr_status(&response, ret, 0xfb000001);
     }
     else {
-        ret = ivars->m_parent->removePortLink(link);
-        if (ret == kIOReturnSuccess) {
-            ivars->dbg_link = nullptr;
-        }
-        else {
-            VSPLog(LOG_PREFIX, "unlinkPorts parent removePortLink failed. code=%d\n", ret);
+        TVSPPortLinkItem* item = reinterpret_cast<TVSPPortLinkItem*>(link);
+        VSPLog(LOG_PREFIX, "unlinkPorts: remove src=%d tgt=%d in %d\n", sid, tid, item->id);
+      
+        ret = ivars->m_parent->removePortLink(item);
+        if (ret != kIOReturnSuccess) {
+            VSPLog(LOG_PREFIX, "unlinkPorts: parent removePortLink failed. code=%d\n", ret);
             set_ctlr_status(&response, ret, 0xfb000002);
         }
     }
     
     if ((ret = prepareResponse(&response, arguments)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "unlinkPorts preprare response failed. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "unlinkPorts: preprare response failed. code=%d\n", ret);
         return ret;
     }
 

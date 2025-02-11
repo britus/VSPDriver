@@ -447,7 +447,7 @@ kern_return_t VSPDriver::removePortLink(void *link)
     
     if (ivars->m_portLinkCount == 0 || !ivars->m_portLinks) {
         VSPLog(LOG_PREFIX, "removePortLink: No serial port links available.");
-        return kIOReturnSuccess;
+        return kIOReturnNotFound;
     }
             
     TVSPPortLinkItem* item = reinterpret_cast<TVSPPortLinkItem*>(link);
@@ -458,15 +458,16 @@ kern_return_t VSPDriver::removePortLink(void *link)
     TVSPPortLinkItem** oldl = ivars->m_portLinks;
 
     // new port link list
-    TVSPPortLinkItem** list;
-    if (!(list= IONewZero(TVSPPortLinkItem*, count - 1))) {
+    TVSPPortLinkItem** newl;
+    if (!(newl= IONewZero(TVSPPortLinkItem*, count - 1))) {
         VSPLog(LOG_PREFIX, "removePortLink: Out of memory.\n");
         return kIOReturnNoMemory;
     }
 
     /* find given link item and exclude this from new new list */
     for (uint8_t i = 0, j = 0; i < count; i++) {
-        if (ivars->m_portLinks[i]->id == item->id) {
+        if (item->id == ivars->m_portLinks[i]->id) {
+            VSPLog(LOG_PREFIX, "removePortLink: Link Id=%d found :)\n", item->id);
             if (item->sourcePort.port) {
                 item->sourcePort.port->setPortLinkIdentifier(0);
             }
@@ -475,21 +476,20 @@ kern_return_t VSPDriver::removePortLink(void *link)
             }
             found = 1;
         } else {
-            list[j++] = ivars->m_portLinks[i];
+            newl[j++] = ivars->m_portLinks[i];
         }
     }
 
     // remove port link
     if (found) {
-        ivars->m_portLinks = list;
+        ivars->m_portLinks = newl;
         ivars->m_portLinkCount--;
-
         IOSafeDeleteNULL(item, TVSPPortLinkItem, 1);
         IOSafeDeleteNULL(oldl, TVSPPortLinkItem*, count);
         return kIOReturnSuccess; // done!
     }
 
-    IOSafeDeleteNULL(list, TVSPPortLinkItem*, count - 1);
+    IOSafeDeleteNULL(newl, TVSPPortLinkItem*, count - 1);
     return kIOReturnNotFound;
 }
 

@@ -101,6 +101,12 @@ public:
 
     // enque response (RX) buffer and raise async event
     kern_return_t enqueueResponse(void* buffer, uint64_t size) LOCALONLY;
+    
+    // routing through port link
+    kern_return_t sendToPortLink(IODataQueueDispatchSource* source) LOCALONLY;
+    
+    // send response data
+    kern_return_t sendResponse(IODataQueueDispatchSource* source) LOCALONLY;
 };
 
 
