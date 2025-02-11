@@ -282,6 +282,7 @@ static inline bool doAsyncCall(void* refcon, io_connect_t connection, const TVSP
     // talk back to the view model.
     asyncRef[kIOAsyncCalloutRefconIndex] = (io_user_reference_t) refcon;
 
+    // Instant response of the DEXT user client instance
     size_t resultSize = VSP_UCD_SIZE;
     TVSPControllerData result = { };
 
@@ -294,18 +295,17 @@ static inline bool doAsyncCall(void* refcon, io_connect_t connection, const TVSP
     if (ret != kIOReturnSuccess) {
         printf("IOConnectCallStructMethod failed with error: 0x%08x.\n", ret);
         PrintErrorDetails(ret);
+        return false;
     }
 
     printf("doAsyncCall-Request: -------------------------- \n");
     PrintStruct(input);
     
-    printf("doAsyncCall-Return.: ------------------------- \n");
+    printf("doAsyncCall-Return.: -------------------------- \n");
     PrintStruct(&result);
 
-    printf("Async actions can now be executed.\n");
-    printf("Please wait for the callback...\n");
-
-    return (ret == kIOReturnSuccess);
+    printf("\nPlease wait for the callback...\n\n");
+    return true;
 }
 
 // ----------------------------------------------------------------

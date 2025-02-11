@@ -43,7 +43,7 @@ typedef struct {
     /* Command status response */
     struct UCStatus {
         uint32_t code;
-        char     message[VSP_UCD_MESSAGE_SIZE + 1];
+        uint8_t  message[VSP_UCD_MESSAGE_SIZE + 1];
     } status;
     /* User client command */
     VSPControlCommand command;
