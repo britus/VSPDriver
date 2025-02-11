@@ -115,7 +115,7 @@ static inline void dump_ctrl_data(const TVSPControllerData* request)
     VSPLog(LOG_PREFIX, "Data.context..........: %d\n", request->context);
     VSPLog(LOG_PREFIX, "Data.command..........: %d\n", request->command);
     VSPLog(LOG_PREFIX, "Data.status.code......: %d\n", request->status.code);
-    VSPLog(LOG_PREFIX, "Data.status.message...: %s\n", request->status.message);
+    VSPLog(LOG_PREFIX, "Data.status.flags.....: 0x%llx\n", request->status.flags);
     VSPLog(LOG_PREFIX, "Data.parameter.flags..: 0x%llx\n", request->parameter.flags);
     VSPLog(LOG_PREFIX, "Data.p.portlink.source: %d\n", request->parameter.portLink.sourceId);
     VSPLog(LOG_PREFIX, "Data.p.portlink.target: %d\n", request->parameter.portLink.targetId);
@@ -126,11 +126,11 @@ static inline const TVSPControllerData* toVspData(const OSData* p)
     return reinterpret_cast<const TVSPControllerData*>(p->getBytesNoCopy());
 }
 
-void set_ctlr_status(void* data, uint32_t code, const char* message)
+void set_ctlr_status(TVSPControllerData* data, uint32_t code, uint64_t flags)
 {
-    TVSPControllerData* cd = (TVSPControllerData*) data;
-    memcpy(cd->status.message, message, VSP_UCD_MESSAGE_SIZE);
-           cd->status.code   = code;
+    data->context = vspContextResult;
+    data->status.code = code;
+    data->status.flags = flags;
 }
 
 // --------------------------------------------------------------------
@@ -295,18 +295,28 @@ void IMPL(VSPUserClient, AsyncCallback)
     dump_ctrl_data(&response);
     
     // Create async message array
-    uint64_t message[7] = {
-        response.context,
-        response.command,
-        response.parameter.flags,
-        response.parameter.portLink.sourceId,
-        response.parameter.portLink.targetId,
-        response.status.code,
-        0xbe00ff00ff,
-    };
+    uint32_t  count   = 8 + response.ports.count;
+    uint64_t* message = IONewZero(uint64_t, count);
+    
+    // Setup message header
+    message[0] = response.context;
+    message[1] = response.command;
+    message[2] = response.parameter.flags;
+    message[3] = response.parameter.portLink.sourceId;
+    message[4] = response.parameter.portLink.targetId;
+    message[5] = response.status.code;
+    message[6] = response.status.flags;
+    message[7] = response.ports.count;
+    
+    // Append port list
+    for (int i = 8, j = 0; i < count && j < response.ports.count; i++, j++) {
+        message[i] = response.ports.list[j];
+    }
     
     // dispatch message back to user client
-    AsyncCompletion(ivars->m_cbAction, kIOReturnSuccess, message, 7);
+    AsyncCompletion(ivars->m_cbAction, kIOReturnSuccess, message, count);
+    
+    IOSafeDeleteNULL(message, uint64_t, count);
     return;
 }
 
@@ -429,8 +439,7 @@ kern_return_t VSPUserClient::getStatus(void* reference, IOUserClientMethodArgume
     
     memcpy(&response, request, VSP_UCD_SIZE);
     
-    set_ctlr_status(&response.status, kIOReturnSuccess, "getStatus:OK");
-    response.context = vspContextResult;
+    set_ctlr_status(&response, kIOReturnSuccess, 0xff00be01);
 
     if ((ret = prepareResponse(&response, arguments)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "getStatus preprare response failed. code=%d\n", ret);
@@ -467,9 +476,34 @@ kern_return_t VSPUserClient::getPortList(void* reference, IOUserClientMethodArgu
     dump_ctrl_data(request);
 
     memcpy(&response, request, VSP_UCD_SIZE);
+
+    set_ctlr_status(&response, kIOReturnSuccess, 0xff00be01);
+
+    uint8_t* list = nullptr;
+    uint8_t count = 0;
     
-    set_ctlr_status(&response.status, kIOReturnSuccess, "getPortList:OK");
-    response.context = vspContextResult;
+    if ((ret = ivars->m_parent->getPortCount(&count)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "getPortList parent getPortCount failed. code=%d\n", ret);
+        set_ctlr_status(&response, ret, 0xfa000001);
+    }
+
+    if (count > 0) {
+        if (!(list = IONewZero(uint8_t, count))) {
+            VSPLog(LOG_PREFIX, "getPortList Out of memory.\n");
+            set_ctlr_status(&response, ret, 0xfa0000ff);
+        }
+        if ((ret = ivars->m_parent->getPortList(list, count)) != kIOReturnSuccess) {
+            VSPLog(LOG_PREFIX, "getPortList parent getPortCount failed. code=%d\n", ret);
+            set_ctlr_status(&response, ret, 0xfa000002);
+        }
+        else {
+            for (uint8_t i = 0; i < count; i++) {
+                response.ports.list[i] = list[i];
+            }
+            response.ports.count = count;
+        }
+        IOSafeDeleteNULL(list, uint8_t, count);
+    }
 
     if ((ret = prepareResponse(&response, arguments)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "getStatus preprare response failed. code=%d\n", ret);
@@ -507,8 +541,7 @@ kern_return_t VSPUserClient::linkPorts(void* reference, IOUserClientMethodArgume
 
     memcpy(&response, request, VSP_UCD_SIZE);
 
-    set_ctlr_status(&response.status, kIOReturnSuccess, "linkPorts:OK");
-    response.context = vspContextResult;
+    set_ctlr_status(&response, kIOReturnSuccess, 0xff00be01);
 
     if ((ret = prepareResponse(&response, arguments)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "getStatus preprare response failed. code=%d\n", ret);
@@ -546,8 +579,7 @@ kern_return_t VSPUserClient::unlinkPorts(void* reference, IOUserClientMethodArgu
 
     memcpy(&response, request, VSP_UCD_SIZE);
 
-    set_ctlr_status(&response.status, kIOReturnSuccess, "unlinkPorts:OK");
-    response.context = vspContextResult;
+    set_ctlr_status(&response, kIOReturnSuccess, 0xff00be01);
 
     if ((ret = prepareResponse(&response, arguments)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "getStatus preprare response failed. code=%d\n", ret);
@@ -585,8 +617,7 @@ kern_return_t VSPUserClient::enableChecks(void* reference, IOUserClientMethodArg
     
     memcpy(&response, request, VSP_UCD_SIZE);
 
-    set_ctlr_status(&response.status, kIOReturnSuccess, "enableChecks:OK");
-    response.context = vspContextResult;
+    set_ctlr_status(&response, kIOReturnSuccess, 0xff00be01);
 
     if ((ret = prepareResponse(&response, arguments)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "getStatus preprare response failed. code=%d\n", ret);
@@ -624,8 +655,7 @@ kern_return_t VSPUserClient::enableTrace(void* reference, IOUserClientMethodArgu
 
     memcpy(&response, request, VSP_UCD_SIZE);
 
-    set_ctlr_status(&response.status, kIOReturnSuccess, "enableTrace:OK");
-    response.context = vspContextResult;
+    set_ctlr_status(&response, kIOReturnSuccess, 0xff00be01);
 
     if ((ret = prepareResponse(&response, arguments)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "getStatus preprare response failed. code=%d\n", ret);

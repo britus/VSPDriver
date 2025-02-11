@@ -10,14 +10,14 @@
 
 namespace VSPController {
 
-enum VSPUserContext {
+typedef enum {
     vspContextPing = 1,
     vspContextPort = 2,
     vspContextResult = 3,
     vspContextError = 4,
-};
+} TVSPUserContext;
 
-enum VSPControlCommand {
+typedef enum {
     vspControlGetStatus,
     vspControlGetPortList,
     vspControlLinkPorts,
@@ -26,7 +26,7 @@ enum VSPControlCommand {
     vspControlEnableTrace,
     // Has to be last
     vspLastCommand,
-};
+} TVSPControlCommand;
 
 typedef struct {
     uint8_t sourceId;
@@ -39,9 +39,9 @@ typedef struct {
 
 typedef struct {
     /* In whitch context calld */
-    enum VSPUserContext context;
+    TVSPUserContext context;
     /* User client command */
-    enum VSPControlCommand command;
+    TVSPControlCommand command;
     /* Command parameters */
     struct Parameter {
         /* command flags */
@@ -49,10 +49,15 @@ typedef struct {
         /* port parameters */
         TPortLink portLink;
     } parameter;
+    /* Available serial ports */
+    struct PortList {
+        uint8_t count;
+        uint8_t list[16];
+    } ports;
     /* Command status response */
     struct Status {
         uint32_t code;
-        uint8_t  message[VSP_UCD_MESSAGE_SIZE + 1];
+        uint64_t flags;
     } status;
 } TVSPControllerData;
 

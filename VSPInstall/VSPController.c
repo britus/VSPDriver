@@ -51,7 +51,7 @@ static inline void PrintStruct(const TVSPControllerData* ptr)
     printf("\t.ppl.sourceId = %u,\n", ptr->parameter.portLink.sourceId);
     printf("\t.ppl.targetId = %u,\n", ptr->parameter.portLink.targetId);
     printf("\t.status.code = %u,\n", ptr->status.code);
-    printf("\t.status.message = %s,\n", ptr->status.message);
+    printf("\t.status.flags = 0x%llx,\n", ptr->status.flags);
     printf("}\n");
 }
 

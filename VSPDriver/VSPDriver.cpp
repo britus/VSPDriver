@@ -29,6 +29,7 @@
 #define kVSPSerialPortProperties "SerialPortProperties"
 #define kVSPContollerProperties  "UserClientProperties"
 #define kVSPDefaultPortCount 4
+#define kVSPMaxumumPorts 16
 
 // Driver instance state resource
 struct VSPDriver_IVars {
@@ -180,6 +181,9 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count)
     
     VSPLog(LOG_PREFIX, "CreateSerialPort: create #%d VSPSerialPort from Info.plist.\n", count);
     
+    // reset first
+    ivars->m_portCount = 0;
+
     // Allocate serial port list. Holds each allocated
     // instance of the VSPSerialPort object
     ivars->m_serialPorts = IONewZero(VSPSerialPort*, count);
@@ -188,11 +192,8 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count)
         return kIOReturnNoMemory;
     }
     
-    // remember count for IOSafeDeleteNULL call
-    ivars->m_portCount = count;
-    
     // do it
-    for (uint8_t i = 0; i < count; i++) {
+    for (uint8_t i = 0; i < count && i < kVSPMaxumumPorts; i++) {
         VSPLog(LOG_PREFIX, "CreateSerialPort: Create serial port %d.\n", i);
         
         // Create sub service object from UserClientProperties in Info.plist
@@ -214,9 +215,11 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count)
         
         // set this as parent
         port->setParent(this);
+        port->setPortIdentifier(i + 1);
         
         // save instance for controller
         ivars->m_serialPorts[i] = port;
+        ivars->m_portCount++;
     }
     
     return kIOReturnSuccess;
@@ -247,13 +250,43 @@ kern_return_t VSPDriver::CreateUserClient(IOService* provider, IOUserClient** us
     VSPLog(LOG_PREFIX, "CreateUserClient: check VSPUserClient type.\n");
     
     // Sane check object type
-    (*userClient) = OSDynamicCast(VSPUserClient, service);
-    if ((*userClient) == nullptr) {
+    VSPUserClient* client;
+    client = OSDynamicCast(VSPUserClient, service);
+    if (client == nullptr) {
         VSPLog(LOG_PREFIX, "CreateUserClient: Cast to VSPUserClient failed.\n");
         service->release();
         return kIOReturnInvalid;
     }
     
+    client->setParent(this);
+    (*userClient) = client;
+    
     VSPLog(LOG_PREFIX, "CreateUserClient: success.");
+    return kIOReturnSuccess;
+}
+
+kern_return_t VSPDriver::getPortCount(uint8_t* count)
+{
+    if (!count) {
+        return kIOReturnBadArgument;
+    }
+    
+    (*count) = ivars->m_portCount;
+    return kIOReturnSuccess;
+}
+
+kern_return_t VSPDriver::getPortList(uint8_t* list, uint8_t count)
+{
+    if (!list) {
+        return kIOReturnBadArgument;
+    }
+    
+    for(uint8_t i = 0, n = 1; i < count && i < ivars->m_portCount; i++, n++) {
+        if (!ivars->m_serialPorts[i]) {
+            break;
+        }
+        list[i] = n;
+    }
+    
     return kIOReturnSuccess;
 }

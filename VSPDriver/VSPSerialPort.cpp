@@ -111,6 +111,7 @@ typedef struct {
 struct VSPSerialPort_IVars {
     IOService* m_provider = nullptr;
     VSPDriver* m_parent = nullptr;
+    uint8_t m_portId = 0;                           // port id given by VSPDriver
     
     IOLock* m_lock = nullptr;                       // for resource locking
     volatile atomic_int m_lockLevel = 0;
@@ -1092,6 +1093,15 @@ void VSPSerialPort::unlinkParent()
     
     ivars->m_parent = nullptr;
 }
+
+// --------------------------------------------------------------------
+// Set serial port identifier
+//
+void VSPSerialPort::setPortIdentifier(uint8_t id)
+{
+    ivars->m_portId = id;
+}
+
 // --------------------------------------------------------------------
 // Called by VSPDriver instance to set TTY base and number based on
 // managed instance of this object instance

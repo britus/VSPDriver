@@ -87,7 +87,10 @@ public:
     // Called by VSPDriver to link owner
     void setParent(VSPDriver* parent) LOCALONLY;
     void unlinkParent() LOCALONLY;
-
+    
+    // Called by VSPDriver to set managed port id
+    void setPortIdentifier(uint8_t id) LOCALONLY;
+    
     // Set our TTY name
     kern_return_t setupTTYBaseName() LOCALONLY;
 
