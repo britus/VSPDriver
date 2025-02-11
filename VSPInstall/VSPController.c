@@ -46,12 +46,12 @@ static inline void PrintStruct(const TVSPControllerData* ptr)
 {
     printf("{\n");
     printf("\t.context = %u,\n", ptr->context);
-    printf("\t.status.code = %u,\n", ptr->status.code);
-    printf("\t.status.message = %s,\n", ptr->status.message);
     printf("\t.command = %u,\n", ptr->command);
     printf("\t.parameter.flags = 0x%llx,\n", ptr->parameter.flags);
     printf("\t.ppl.sourceId = %u,\n", ptr->parameter.portLink.sourceId);
     printf("\t.ppl.targetId = %u,\n", ptr->parameter.portLink.targetId);
+    printf("\t.status.code = %u,\n", ptr->status.code);
+    printf("\t.status.message = %s,\n", ptr->status.message);
     printf("}\n");
 }
 
@@ -64,6 +64,9 @@ static inline void PrintErrorDetails(kern_return_t ret)
 
 // MARK: C Constructors/Destructors
 
+// ----------------------------------------------------------------
+//
+//
 bool UserClientSetup(void* refcon)
 {
     kern_return_t ret = kIOReturnSuccess;
@@ -142,6 +145,9 @@ bool UserClientSetup(void* refcon)
     return true;
 }
 
+// ----------------------------------------------------------------
+//
+//
 void UserClientTeardown(void)
 {
     if (globalRunLoopSource)
@@ -238,22 +244,22 @@ void DeviceRemoved(void* refcon, io_iterator_t iterator)
 // IOAsyncCallback, IOAsyncCallback0, IOAsyncCallback1, IOAsyncCallback2
 // Note that the variant of IOAsyncCallback called is based on the
 // number of arguments being returned
-// 0 - IOAsyncCallback0
-// 1 - IOAsyncCallback1
-// 2 - IOAsyncCallback2
+// 0  - IOAsyncCallback0
+// 1  - IOAsyncCallback1
+// 2  - IOAsyncCallback2
 // 3+ - IOAsyncCallback
 // This is an example of the "IOAsyncCallback" format.
 // refcon will be the value you placed in asyncRef[kIOAsyncCalloutRefconIndex]
 void AsyncCallback(void* refcon, IOReturn result, void** args, UInt32 numArgs)
 {
-    uint64_t* arrArgs = (uint64_t*)args;
-    
-    for (uint8_t index = 0; index < 3; index++) {
-        printf("AsyncCallback #%d: ------------------------- \n", index);
-        TVSPControllerData* response = (TVSPControllerData*)(arrArgs + index);
-        PrintStruct(response);
+    uint64_t* arrayArgs = (uint64_t*) args;
+
+    printf("AsyncCallback numArgs=%d arrArgs=0x%llx\n", numArgs, (uint64_t)arrayArgs);
+
+    for (uint8_t i = 0; i < numArgs; i++) {
+        printf("AsyncCallback arg[%d] = %llu\n", i, (*(arrayArgs + i)));
     }
- 
+    
     SwiftAsyncCallback(refcon, result, args, numArgs);
 }
 
@@ -262,6 +268,7 @@ void AsyncCallback(void* refcon, IOReturn result, void** args, UInt32 numArgs)
 //
 static inline bool doAsyncCall(void* refcon, io_connect_t connection, const TVSPControllerData* input)
 {
+    kern_return_t ret = kIOReturnSuccess;
     io_async_ref64_t asyncRef = {};
 
     // Establish our "AsyncCallback" function as the function that will be called
@@ -274,8 +281,6 @@ static inline bool doAsyncCall(void* refcon, io_connect_t connection, const TVSP
     // Use this for context on the return. We'll pass the refcon so we can
     // talk back to the view model.
     asyncRef[kIOAsyncCalloutRefconIndex] = (io_user_reference_t) refcon;
-
-    kern_return_t ret = kIOReturnSuccess;
 
     size_t resultSize = VSP_UCD_SIZE;
     TVSPControllerData result = { };
@@ -311,6 +316,7 @@ bool GetPortList(void* refcon, io_connect_t connection)
     TVSPControllerData input = {};
     input.context = vspContextPort;
     input.command = vspControlGetPortList;
+    input.parameter.flags = 0x10;
 
     return doAsyncCall(refcon, connection, &input);
 }
@@ -325,6 +331,7 @@ bool LinkPorts(void* refcon, io_connect_t connection, const uint8_t source, cons
     input.command = vspControlLinkPorts;
     input.parameter.portLink.sourceId = source;
     input.parameter.portLink.targetId = target;
+    input.parameter.flags = 0x08;
 
     return doAsyncCall(refcon, connection, &input);
 }
@@ -339,6 +346,7 @@ bool UnlinkPorts(void* refcon, io_connect_t connection, const uint8_t source, co
     input.command = vspControlUnlinkPorts;
     input.parameter.portLink.sourceId = source;
     input.parameter.portLink.targetId = target;
+    input.parameter.flags = 0x04;
 
     return doAsyncCall(refcon, connection, &input);
 }
@@ -368,7 +376,7 @@ bool EnableTrace(void* refcon, io_connect_t connection, const uint8_t port)
     input.command = vspControlEnableTrace;
     input.parameter.portLink.sourceId = port;
     input.parameter.portLink.targetId = port;
-    input.parameter.flags = 0x01;
+    input.parameter.flags = 0x02;
 
     return doAsyncCall(refcon, connection, &input);
 }

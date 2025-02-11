@@ -32,6 +32,16 @@ using namespace VSPController;
 
 #define LOG_PREFIX "VSPUserClient"
 
+#define VSP_METHOD(x) ((IOUserClientMethodFunction) &VSPUserClient::x)
+
+#define VSP_CHECK_PARAM_RETURN(f, p) \
+{ \
+    if (p == nullptr) { \
+        VSPLog(LOG_PREFIX, "%s: Invalid argument '" f "' detected", __func__); \
+        return kIOReturnBadArgument; \
+    } \
+}
+
 struct VSPUserClient_IVars {
     IOService* m_provider = nullptr;
     VSPDriver* m_parent = nullptr;
@@ -40,8 +50,6 @@ struct VSPUserClient_IVars {
     OSAction* m_eventAction = nullptr;
     OSAction* m_cbAction = nullptr;
 };
-
-#define VSP_METHOD(x) ((IOUserClientMethodFunction) &VSPUserClient::x)
 
 // Define all possible commands with its parameters and callback entry points.
 const IOUserClientMethodDispatch uc_methods[vspLastCommand] = {
@@ -100,6 +108,30 @@ const IOUserClientMethodDispatch uc_methods[vspLastCommand] = {
         .checkStructureOutputSize = VSP_UCD_SIZE,
     },
 };
+
+static inline void dump_ctrl_data(const TVSPControllerData* request)
+{
+    VSPLog(LOG_PREFIX, "Data ------------------------------------------\n");
+    VSPLog(LOG_PREFIX, "Data.context..........: %d\n", request->context);
+    VSPLog(LOG_PREFIX, "Data.command..........: %d\n", request->command);
+    VSPLog(LOG_PREFIX, "Data.status.code......: %d\n", request->status.code);
+    VSPLog(LOG_PREFIX, "Data.status.message...: %s\n", request->status.message);
+    VSPLog(LOG_PREFIX, "Data.parameter.flags..: 0x%llx\n", request->parameter.flags);
+    VSPLog(LOG_PREFIX, "Data.p.portlink.source: %d\n", request->parameter.portLink.sourceId);
+    VSPLog(LOG_PREFIX, "Data.p.portlink.target: %d\n", request->parameter.portLink.targetId);
+}
+
+static inline const TVSPControllerData* toVspData(const OSData* p)
+{
+    return reinterpret_cast<const TVSPControllerData*>(p->getBytesNoCopy());
+}
+
+void set_ctlr_status(void* data, uint32_t code, const char* message)
+{
+    TVSPControllerData* cd = (TVSPControllerData*) data;
+    strncpy(cd->status.message, message, VSP_UCD_MESSAGE_SIZE);
+            cd->status.code   = code;
+}
 
 // --------------------------------------------------------------------
 // Allocate internal resources
@@ -241,31 +273,40 @@ kern_return_t IMPL(VSPUserClient, Stop)
 //
 void IMPL(VSPUserClient, AsyncCallback)
 {
-    //kern_return_t ret = kIOReturnSuccess;
-    
     VSPLog(LOG_PREFIX, "AsyncCallback called.\n");
     
     if (!action) {
-        VSPLog(LOG_PREFIX, "AsyncCallback: action null pointer");
+        VSPLog(LOG_PREFIX, "AsyncCallback: Event action NULL pointer!");
         return;
     }
-    
-    // Get back our data previously stored in OSAction.
-    TVSPControllerData* request = (TVSPControllerData*) action->GetReference();
-    TVSPControllerData response = {};
-    
-    // copy from request (event action) object
-    memcpy(&response, request, VSP_UCD_SIZE);
-    
-    // create client response
-    uint64_t asyncData[VSP_UCD_SIZE * 3] = {};
-    memcpy(asyncData + 1, &response, VSP_UCD_SIZE);
-    
-    if (ivars->m_cbAction != nullptr) {
-        // 3 is the 1 leading "type" message plus the two elements of the TVSPControllerData.
-        AsyncCompletion(ivars->m_cbAction, kIOReturnSuccess, asyncData, 3);
+    if (!ivars->m_cbAction) {
+        VSPLog(LOG_PREFIX, "AsyncCallback: Client callback action NULL pointer!");
+        return;
     }
+
+    // Get back our data previously stored in OSAction.
+    TVSPControllerData* eventData = (TVSPControllerData*) action->GetReference();
     
+    // Get function response data
+    TVSPControllerData response = {};
+    memcpy(&response, eventData, VSP_UCD_SIZE);
+   
+    // Debug !!
+    dump_ctrl_data(&response);
+    
+    // Create async message array
+    uint64_t message[7] = {
+        response.context,
+        response.command,
+        response.parameter.flags,
+        response.parameter.portLink.sourceId,
+        response.parameter.portLink.targetId,
+        response.status.code,
+        0xbe00ff00ff,
+    };
+    
+    // dispatch message back to user client
+    AsyncCompletion(ivars->m_cbAction, kIOReturnSuccess, message, 7);
     return;
 }
 
@@ -324,25 +365,11 @@ kern_return_t VSPUserClient::scheduleEvent()
 }
 
 // --------------------------------------------------------------------
-// Set status response as result of a client request
-//
-void VSPUserClient::setClientStatus(void* data, uint32_t code, const char* message)
-{
-    VSPLog(LOG_PREFIX, "setClientStatus called. code=%d msg=%s\n", code, message);
-    
-    TVSPControllerData* cd = (TVSPControllerData*) data;
-    strncpy(cd->status.message, message, VSP_UCD_MESSAGE_SIZE);
-            cd->status.code   = kIOReturnSuccess;
-
-    VSPLog(LOG_PREFIX, "setClientStatus finish.\n");
-}
-
-// --------------------------------------------------------------------
 // Prepares async response
 //
 kern_return_t VSPUserClient::prepareResponse(void* reference, IOUserClientMethodArguments* arguments)
 {
-    TVSPControllerData* response = (TVSPControllerData*) reference;
+    const TVSPControllerData* response = reinterpret_cast<TVSPControllerData*>(reference);
     
     VSPLog(LOG_PREFIX, "prepareResponse called.\n");
 
@@ -376,16 +403,8 @@ kern_return_t VSPUserClient::prepareResponse(void* reference, IOUserClientMethod
 // MARK: Static External Handlers
 // --------------------------------------------------------------------
 
-#define VSP_CHECK_PARAM_RETURN(f, p) \
-{ \
-    if (p == nullptr) { \
-        VSPLog(LOG_PREFIX, "%s: Invalid argument '" f "' detected", __func__); \
-        return kIOReturnBadArgument; \
-    } \
-}
-
 // --------------------------------------------------------------------
-// Called by ExternalMethod(...)
+// Return status of VSPDriver instance
 //
 kern_return_t VSPUserClient::exGetStatus(OSObject* target, void* reference, IOUserClientMethodArguments* arguments)
 {
@@ -401,20 +420,17 @@ kern_return_t VSPUserClient::exGetStatus(OSObject* target, void* reference, IOUs
 
 kern_return_t VSPUserClient::getStatus(void* reference, IOUserClientMethodArguments* arguments)
 {
-    TVSPControllerData* request = nullptr;
+    const TVSPControllerData* request = toVspData(arguments->structureInput);
     TVSPControllerData response = {};
     kern_return_t ret;
 
     VSPLog(LOG_PREFIX, "getStatus called.\n");
-
-    // Generally a dext would want to return from an async method as fast as possible.
-    request = (TVSPControllerData*) arguments->structureInput->getBytesNoCopy();
+    dump_ctrl_data(request);
     
-    setClientStatus(&response.status, kIOReturnSuccess, "getStatus:OK");
-
-    response.context   = VSPUserContext::vspContextPing;
-    response.command   = request->command;
-    response.parameter = request->parameter;
+    memcpy(&response, request, VSP_UCD_SIZE);
+    
+    set_ctlr_status(&response.status, kIOReturnSuccess, "getStatus:OK");
+    response.context = vspContextResult;
 
     if ((ret = prepareResponse(&response, arguments)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "getStatus preprare response failed. code=%d\n", ret);
@@ -427,49 +443,7 @@ kern_return_t VSPUserClient::getStatus(void* reference, IOUserClientMethodArgume
 }
 
 // --------------------------------------------------------------------
-// Called by ExternalMethod(...)
-//
-kern_return_t VSPUserClient::exLinkPorts(OSObject* target, void* reference, IOUserClientMethodArguments* arguments)
-{
-    VSPLog(LOG_PREFIX, "exLinkPorts called.\n");
-    
-    VSP_CHECK_PARAM_RETURN("target", target);
-    VSP_CHECK_PARAM_RETURN("arguments", arguments);
-    VSP_CHECK_PARAM_RETURN("completion", arguments->completion);
-
-    VSPUserClient* self = (VSPUserClient*) target;
-    return self->linkPorts(reference, arguments);
-}
-
-kern_return_t VSPUserClient::linkPorts(void* reference, IOUserClientMethodArguments* arguments)
-{
-    TVSPControllerData* request = nullptr;
-    TVSPControllerData response = {};
-    kern_return_t ret;
-
-    VSPLog(LOG_PREFIX, "linkPorts called.\n");
-    
-    // Generally a dext would want to return from an async method as fast as possible.
-    request = (TVSPControllerData*) arguments->structureInput->getBytesNoCopy();
-    
-    setClientStatus(&response.status, kIOReturnSuccess, "getStatus:OK");
-
-    response.context   = VSPUserContext::vspContextPing;
-    response.command   = request->command;
-    response.parameter = request->parameter;
-
-    if ((ret = prepareResponse(&response, arguments)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "getStatus preprare response failed. code=%d\n", ret);
-        return ret;
-    }
-
-    VSPLog(LOG_PREFIX, "linkPorts finish.\n");
-
-    return scheduleEvent();
-}
-
-// --------------------------------------------------------------------
-// Called by ExternalMethod(...)
+// Return active port list
 //
 kern_return_t VSPUserClient::exGetPortList(OSObject* target, void* reference, IOUserClientMethodArguments* arguments)
 {
@@ -485,20 +459,17 @@ kern_return_t VSPUserClient::exGetPortList(OSObject* target, void* reference, IO
 
 kern_return_t VSPUserClient::getPortList(void* reference, IOUserClientMethodArguments* arguments)
 {
-    TVSPControllerData* request = nullptr;
+    const TVSPControllerData* request = toVspData(arguments->structureInput);
     TVSPControllerData response = {};
     kern_return_t ret;
 
     VSPLog(LOG_PREFIX, "getPortList called.\n");
-    
-    // Generally a dext would want to return from an async method as fast as possible.
-    request = (TVSPControllerData*) arguments->structureInput->getBytesNoCopy();
-    
-    setClientStatus(&response.status, kIOReturnSuccess, "getStatus:OK");
+    dump_ctrl_data(request);
 
-    response.context   = VSPUserContext::vspContextPort;
-    response.command   = request->command;
-    response.parameter = request->parameter;
+    memcpy(&response, request, VSP_UCD_SIZE);
+    
+    set_ctlr_status(&response.status, kIOReturnSuccess, "getPortList:OK");
+    response.context = vspContextResult;
 
     if ((ret = prepareResponse(&response, arguments)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "getStatus preprare response failed. code=%d\n", ret);
@@ -511,7 +482,46 @@ kern_return_t VSPUserClient::getPortList(void* reference, IOUserClientMethodArgu
 }
 
 // --------------------------------------------------------------------
-// Called by ExternalMethod(...)
+// Link two serial ports together
+//
+kern_return_t VSPUserClient::exLinkPorts(OSObject* target, void* reference, IOUserClientMethodArguments* arguments)
+{
+    VSPLog(LOG_PREFIX, "exLinkPorts called.\n");
+    
+    VSP_CHECK_PARAM_RETURN("target", target);
+    VSP_CHECK_PARAM_RETURN("arguments", arguments);
+    VSP_CHECK_PARAM_RETURN("completion", arguments->completion);
+
+    VSPUserClient* self = (VSPUserClient*) target;
+    return self->linkPorts(reference, arguments);
+}
+
+kern_return_t VSPUserClient::linkPorts(void* reference, IOUserClientMethodArguments* arguments)
+{
+    const TVSPControllerData* request = toVspData(arguments->structureInput);
+    TVSPControllerData response = {};
+    kern_return_t ret;
+
+    VSPLog(LOG_PREFIX, "linkPorts called.\n");
+    dump_ctrl_data(request);
+
+    memcpy(&response, request, VSP_UCD_SIZE);
+
+    set_ctlr_status(&response.status, kIOReturnSuccess, "linkPorts:OK");
+    response.context = vspContextResult;
+
+    if ((ret = prepareResponse(&response, arguments)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "getStatus preprare response failed. code=%d\n", ret);
+        return ret;
+    }
+
+    VSPLog(LOG_PREFIX, "linkPorts finish.\n");
+
+    return scheduleEvent();
+}
+
+// --------------------------------------------------------------------
+// Unlink prior linked ports
 //
 kern_return_t VSPUserClient::exUnlinkPorts(OSObject* target, void* reference, IOUserClientMethodArguments* arguments)
 {
@@ -527,20 +537,17 @@ kern_return_t VSPUserClient::exUnlinkPorts(OSObject* target, void* reference, IO
 
 kern_return_t VSPUserClient::unlinkPorts(void* reference, IOUserClientMethodArguments* arguments)
 {
-    TVSPControllerData* request = nullptr;
+    const TVSPControllerData* request = toVspData(arguments->structureInput);
     TVSPControllerData response = {};
     kern_return_t ret;
 
     VSPLog(LOG_PREFIX, "unlinkPorts called.\n");
-    
-    // Generally a dext would want to return from an async method as fast as possible.
-    request = (TVSPControllerData*) arguments->structureInput->getBytesNoCopy();
-    
-    setClientStatus(&response.status, kIOReturnSuccess, "getStatus:OK");
+    dump_ctrl_data(request);
 
-    response.context   = VSPUserContext::vspContextPort;
-    response.command   = request->command;
-    response.parameter = request->parameter;
+    memcpy(&response, request, VSP_UCD_SIZE);
+
+    set_ctlr_status(&response.status, kIOReturnSuccess, "unlinkPorts:OK");
+    response.context = vspContextResult;
 
     if ((ret = prepareResponse(&response, arguments)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "getStatus preprare response failed. code=%d\n", ret);
@@ -553,7 +560,7 @@ kern_return_t VSPUserClient::unlinkPorts(void* reference, IOUserClientMethodArgu
 }
 
 // --------------------------------------------------------------------
-// Called by ExternalMethod(...)
+// Enable serial port parameter check on linkPorts()
 //
 kern_return_t VSPUserClient::exEnableChecks(OSObject* target, void* reference, IOUserClientMethodArguments* arguments)
 {
@@ -569,20 +576,17 @@ kern_return_t VSPUserClient::exEnableChecks(OSObject* target, void* reference, I
 
 kern_return_t VSPUserClient::enableChecks(void* reference, IOUserClientMethodArguments* arguments)
 {
-    TVSPControllerData* request = nullptr;
+    const TVSPControllerData* request = toVspData(arguments->structureInput);
     TVSPControllerData response = {};
     kern_return_t ret;
 
     VSPLog(LOG_PREFIX, "enableChecks called.\n");
+    dump_ctrl_data(request);
     
-    // Generally a dext would want to return from an async method as fast as possible.
-    request = (TVSPControllerData*) arguments->structureInput->getBytesNoCopy();
-    
-    setClientStatus(&response.status, kIOReturnSuccess, "getStatus:OK");
+    memcpy(&response, request, VSP_UCD_SIZE);
 
-    response.context   = VSPUserContext::vspContextPort;
-    response.command   = request->command;
-    response.parameter = request->parameter;
+    set_ctlr_status(&response.status, kIOReturnSuccess, "enableChecks:OK");
+    response.context = vspContextResult;
 
     if ((ret = prepareResponse(&response, arguments)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "getStatus preprare response failed. code=%d\n", ret);
@@ -595,7 +599,7 @@ kern_return_t VSPUserClient::enableChecks(void* reference, IOUserClientMethodArg
 }
 
 // --------------------------------------------------------------------
-// Called by ExternalMethod(...)
+// Enable serial port protocol trace
 //
 kern_return_t VSPUserClient::exEnableTrace(OSObject* target, void* reference, IOUserClientMethodArguments* arguments)
 {
@@ -611,20 +615,17 @@ kern_return_t VSPUserClient::exEnableTrace(OSObject* target, void* reference, IO
 
 kern_return_t VSPUserClient::enableTrace(void* reference, IOUserClientMethodArguments* arguments)
 {
-    TVSPControllerData* request = nullptr;
+    const TVSPControllerData* request = toVspData(arguments->structureInput);
     TVSPControllerData response = {};
     kern_return_t ret;
 
     VSPLog(LOG_PREFIX, "enableTrace called.\n");
-    
-    // Generally a dext would want to return from an async method as fast as possible.
-    request = (TVSPControllerData*) arguments->structureInput->getBytesNoCopy();
-    
-    setClientStatus(&response.status, kIOReturnSuccess, "getStatus:OK");
+    dump_ctrl_data(request);
 
-    response.context   = VSPUserContext::vspContextPort;
-    response.command   = request->command;
-    response.parameter = request->parameter;
+    memcpy(&response, request, VSP_UCD_SIZE);
+
+    set_ctlr_status(&response.status, kIOReturnSuccess, "enableTrace:OK");
+    response.context = vspContextResult;
 
     if ((ret = prepareResponse(&response, arguments)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "getStatus preprare response failed. code=%d\n", ret);

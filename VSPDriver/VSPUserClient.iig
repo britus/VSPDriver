@@ -42,9 +42,6 @@ public:
     // called by VSPDriver instance
     void setParent(VSPDriver* parent) LOCALONLY;
     
-    // Set status response for user client
-    void setClientStatus(void* ucd, uint32_t code, const char* message) LOCALONLY;
-    
     // Schedule timed event -> IOTimerDispatchSource::TimerOccurred
     kern_return_t scheduleEvent(void) LOCALONLY;
     

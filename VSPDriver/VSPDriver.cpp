@@ -28,7 +28,6 @@
 
 #define kVSPSerialPortProperties "SerialPortProperties"
 #define kVSPContollerProperties  "UserClientProperties"
-#define kVSPUserClientProperties "UserClientProperties"
 #define kVSPDefaultPortCount 4
 
 // Driver instance state resource
