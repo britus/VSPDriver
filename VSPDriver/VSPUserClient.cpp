@@ -545,7 +545,7 @@ kern_return_t VSPUserClient::linkPorts(void* reference, IOUserClientMethodArgume
 
     set_ctlr_status(&response, kIOReturnSuccess, 0xff00be01);
 
-    void* link;
+    void* link = nullptr;
     ret = ivars->m_parent->createPortLink( //
                 request->parameter.portLink.sourceId, //
                 request->parameter.portLink.targetId, &link);
@@ -556,11 +556,11 @@ kern_return_t VSPUserClient::linkPorts(void* reference, IOUserClientMethodArgume
     else if (link) {
         // hold for unlink test
         ivars->dbg_link = reinterpret_cast<TVSPPortLinkItem*>(link);
-        VSPLog(LOG_PREFIX, "linkPorts got link Id=%d\n", ivars->dbg_link->id);
+        VSPLog(LOG_PREFIX, "linkPorts got link ID: %d\n", ivars->dbg_link->id);
     }
     
     if ((ret = prepareResponse(&response, arguments)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "getStatus preprare response failed. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "linkPorts preprare response failed. code=%d\n", ret);
         return ret;
     }
 
@@ -597,14 +597,27 @@ kern_return_t VSPUserClient::unlinkPorts(void* reference, IOUserClientMethodArgu
 
     set_ctlr_status(&response, kIOReturnSuccess, 0xff00be01);
 
-    ret = ivars->m_parent->removePortLink(ivars->dbg_link);
+    void* link = nullptr;
+    uint8_t sid = request->parameter.portLink.sourceId;
+    uint8_t tid = request->parameter.portLink.targetId;
+    
+    ret = ivars->m_parent->getPortLinkByPorts(sid, tid, &link);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "linkPorts parent createPortLink failed. code=%d\n", ret);
         set_ctlr_status(&response, ret, 0xfb000001);
     }
-
+    else {
+        ret = ivars->m_parent->removePortLink(link);
+        if (ret == kIOReturnSuccess) {
+            ivars->dbg_link = nullptr;
+        }
+        else {
+            VSPLog(LOG_PREFIX, "unlinkPorts parent removePortLink failed. code=%d\n", ret);
+            set_ctlr_status(&response, ret, 0xfb000002);
+        }
+    }
+    
     if ((ret = prepareResponse(&response, arguments)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "getStatus preprare response failed. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "unlinkPorts preprare response failed. code=%d\n", ret);
         return ret;
     }
 
@@ -642,7 +655,7 @@ kern_return_t VSPUserClient::enableChecks(void* reference, IOUserClientMethodArg
     set_ctlr_status(&response, kIOReturnSuccess, 0xff00be01);
 
     if ((ret = prepareResponse(&response, arguments)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "getStatus preprare response failed. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "enableChecks preprare response failed. code=%d\n", ret);
         return ret;
     }
 
@@ -680,7 +693,7 @@ kern_return_t VSPUserClient::enableTrace(void* reference, IOUserClientMethodArgu
     set_ctlr_status(&response, kIOReturnSuccess, 0xff00be01);
 
     if ((ret = prepareResponse(&response, arguments)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "getStatus preprare response failed. code=%d\n", ret);
+        VSPLog(LOG_PREFIX, "enableTrace preprare response failed. code=%d\n", ret);
         return ret;
     }
 

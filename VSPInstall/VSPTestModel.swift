@@ -141,7 +141,7 @@ extension VSPTestModel {
     func doUnLinkPorts() {
         state = VSPSmController.process(state, .sentRequest)
  
-        if !LinkPorts(opaqueSelf, connection, 1, 2) {
+        if !UnlinkPorts(opaqueSelf, connection, 1, 2) {
             state = VSPSmController.process(state, .failed)
         }
     }
