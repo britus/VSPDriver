@@ -8,6 +8,28 @@
 #ifndef VSPController_h
 #define VSPController_h
 
+// --------------------------------------------------------
+// used by VSPDriver
+// --------------------------------------------------------
+
+// forward
+class VSPSerialPort;
+
+typedef struct {
+    VSPSerialPort* port;                    // object instance
+    uint8_t        id;                      // port item id
+    uint64_t       flags;                   // Trace and check flags
+} TVSPSerialPortItem;
+
+typedef struct {
+    TVSPSerialPortItem sourcePort;          // first port
+    TVSPSerialPortItem targetPort;          // second port
+    uint8_t         id;                     // link item id
+} TVSPPortLinkItem;
+
+// --------------------------------------------------------
+// used by VSPUserClient
+// --------------------------------------------------------
 namespace VSPController {
 
 typedef enum {
@@ -31,11 +53,7 @@ typedef enum {
 typedef struct {
     uint8_t sourceId;
     uint8_t targetId;
-} TPortLink;
-
-#ifndef VSP_UCD_MESSAGE_SIZE
-#define VSP_UCD_MESSAGE_SIZE 127
-#endif
+} TVSPPortLink;
 
 typedef struct {
     /* In whitch context calld */
@@ -47,7 +65,7 @@ typedef struct {
         /* command flags */
         uint64_t flags;
         /* port parameters */
-        TPortLink portLink;
+        TVSPPortLink portLink;
     } parameter;
     /* Available serial ports */
     struct PortList {

@@ -32,11 +32,7 @@ typedef enum {
 typedef struct {
     uint8_t sourceId;
     uint8_t targetId;
-} TPortLink;
-
-#ifndef VSP_UCD_MESSAGE_SIZE
-#define VSP_UCD_MESSAGE_SIZE 127
-#endif
+} TVSPPortLink;
 
 typedef struct {
     /* In whitch context calld */
@@ -48,7 +44,7 @@ typedef struct {
         /* command flags */
         uint64_t flags;
         /* port parameters */
-        TPortLink portLink;
+        TVSPPortLink portLink;
     } parameter;
     /* Available serial ports */
     struct PortList {

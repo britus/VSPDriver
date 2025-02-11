@@ -90,6 +90,11 @@ public:
     
     // Called by VSPDriver to set managed port id
     void setPortIdentifier(uint8_t id) LOCALONLY;
+    uint8_t getPortIdentifier() LOCALONLY;
+    
+    // Called by VSPDriver to set port link id
+    void setPortLinkIdentifier(uint8_t id) LOCALONLY;
+    uint8_t getPortLinkIdentifier() LOCALONLY;
     
     // Set our TTY name
     kern_return_t setupTTYBaseName() LOCALONLY;
