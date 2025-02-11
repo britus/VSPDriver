@@ -427,7 +427,10 @@ kern_return_t VSPDriver::createPortLink(uint8_t sourceId, uint8_t targetId, void
     // set new link item
     list[count] = item;
     
-    // set global list
+    // return new item
+    (*link) = item;
+    
+    // update global members
     ivars->m_portLinks = list;
     ivars->m_portLinkCount++;
 
@@ -517,6 +520,31 @@ kern_return_t VSPDriver::getPortLinkById(uint8_t id, void** result)
         if (ivars->m_portLinks[i]->id == id) {
             (*result) = ivars->m_portLinks[i];
             return kIOReturnSuccess;
+        }
+    }
+
+    return kIOReturnNotFound;
+}
+
+kern_return_t VSPDriver::getPortLinkByPorts(uint8_t sourceId, uint8_t targetId, void** link)
+{
+    if (!sourceId || !targetId || !link) {
+        VSPLog(LOG_PREFIX, "getPortLinkByPorts: Invalid argument.");
+        return kIOReturnBadArgument;
+    }
+    
+    uint8_t count = ivars->m_portLinkCount; 
+    if (count && ivars->m_portLinks) {
+        for (uint8_t i = 0; i < count; i++) {
+            // skip invalid entry
+            if (!ivars->m_portLinks[i]) {
+                continue;;
+            }
+            TVSPPortLinkItem* item = ivars->m_portLinks[i];
+            if (item->sourcePort.id == sourceId && item->targetPort.id == targetId) {
+                (*link) = item;
+                return kIOReturnSuccess;
+            }
         }
     }
 
