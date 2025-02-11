@@ -129,8 +129,8 @@ static inline const TVSPControllerData* toVspData(const OSData* p)
 void set_ctlr_status(void* data, uint32_t code, const char* message)
 {
     TVSPControllerData* cd = (TVSPControllerData*) data;
-    strncpy((char*)cd->status.message, message, VSP_UCD_MESSAGE_SIZE);
-            cd->status.code   = code;
+    memcpy(cd->status.message, message, VSP_UCD_MESSAGE_SIZE);
+           cd->status.code   = code;
 }
 
 // --------------------------------------------------------------------

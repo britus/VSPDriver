@@ -41,11 +41,6 @@ typedef struct {
 typedef struct {
     /* In whitch context calld */
     enum VSPUserContext context;
-    /* Command status response */
-    struct UCStatus {
-        uint32_t code;
-        uint8_t  message[VSP_UCD_MESSAGE_SIZE + 1];
-    } status;
     /* User client command */
     enum VSPControlCommand command;
     /* Command parameters */
@@ -55,6 +50,11 @@ typedef struct {
         /* port parameters */
         TPortLink portLink;
     } parameter;
+    /* Command status response */
+    struct Status {
+        uint32_t code;
+        uint8_t  message[VSP_UCD_MESSAGE_SIZE + 1];
+    } status;
 } TVSPControllerData;
 
 #ifndef VSP_UCD_SIZE
