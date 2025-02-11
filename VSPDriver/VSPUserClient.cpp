@@ -49,6 +49,8 @@ struct VSPUserClient_IVars {
     IOTimerDispatchSource* m_eventSource = nullptr;
     OSAction* m_eventAction = nullptr;
     OSAction* m_cbAction = nullptr;
+    // --- debug --
+    TVSPPortLinkItem* dbg_link = nullptr;
 };
 
 // Define all possible commands with its parameters and callback entry points.
@@ -543,6 +545,20 @@ kern_return_t VSPUserClient::linkPorts(void* reference, IOUserClientMethodArgume
 
     set_ctlr_status(&response, kIOReturnSuccess, 0xff00be01);
 
+    void* link;
+    ret = ivars->m_parent->createPortLink( //
+                request->parameter.portLink.sourceId, //
+                request->parameter.portLink.targetId, &link);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "linkPorts parent createPortLink failed. code=%d\n", ret);
+        set_ctlr_status(&response, ret, 0xfb000001);
+    }
+    else if (link) {
+        // hold for unlink test
+        ivars->dbg_link = reinterpret_cast<TVSPPortLinkItem*>(link);
+        VSPLog(LOG_PREFIX, "linkPorts got link Id=%d\n", ivars->dbg_link->id);
+    }
+    
     if ((ret = prepareResponse(&response, arguments)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "getStatus preprare response failed. code=%d\n", ret);
         return ret;
@@ -580,6 +596,12 @@ kern_return_t VSPUserClient::unlinkPorts(void* reference, IOUserClientMethodArgu
     memcpy(&response, request, VSP_UCD_SIZE);
 
     set_ctlr_status(&response, kIOReturnSuccess, 0xff00be01);
+
+    ret = ivars->m_parent->removePortLink(ivars->dbg_link);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "linkPorts parent createPortLink failed. code=%d\n", ret);
+        set_ctlr_status(&response, ret, 0xfb000001);
+    }
 
     if ((ret = prepareResponse(&response, arguments)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "getStatus preprare response failed. code=%d\n", ret);

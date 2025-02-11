@@ -110,8 +110,10 @@ typedef struct {
 // Driver instance state resource
 struct VSPSerialPort_IVars {
     IOService* m_provider = nullptr;
-    VSPDriver* m_parent = nullptr;
+    VSPDriver* m_parent = nullptr;                  // VSPDriver instance
+    
     uint8_t m_portId = 0;                           // port id given by VSPDriver
+    uint8_t m_portLinkId = 0;                       // port link id given by VSPDriver
     
     IOLock* m_lock = nullptr;                       // for resource locking
     volatile atomic_int m_lockLevel = 0;
@@ -120,10 +122,10 @@ struct VSPSerialPort_IVars {
      * method ConnectQueues(...) */
     SerialPortInterface* m_spi;                     // OS serial port interface
     
-    IOBufferMemoryDescriptor* m_txqbmd;              // VSP TX queue memory descriptor
+    IOBufferMemoryDescriptor* m_txqbmd;             // VSP TX queue memory descriptor
     IOAddressSegment m_txseg = {};                  // VSP TX buffer segment
     
-    IOBufferMemoryDescriptor* m_rxqbmd;              // VSP RX queue memory descriptor
+    IOBufferMemoryDescriptor* m_rxqbmd;             // VSP RX queue memory descriptor
     IOAddressSegment m_rxseg = {};                  // VSP RX buffer segment
     
     TRXBufferState m_rxstate = {};                  // RX dequeue data
@@ -1095,11 +1097,35 @@ void VSPSerialPort::unlinkParent()
 }
 
 // --------------------------------------------------------------------
-// Set serial port identifier
+// Set the serial port identifier
 //
 void VSPSerialPort::setPortIdentifier(uint8_t id)
 {
     ivars->m_portId = id;
+}
+
+// --------------------------------------------------------------------
+// Get the serial port identifier
+//
+uint8_t VSPSerialPort::getPortIdentifier()
+{
+    return ivars->m_portId;
+}
+
+// --------------------------------------------------------------------
+// Set the serial port link identifier
+//
+void VSPSerialPort::setPortLinkIdentifier(uint8_t id)
+{
+    ivars->m_portLinkId = id;
+}
+
+// --------------------------------------------------------------------
+// Get the serial port link identifier
+//
+uint8_t VSPSerialPort::getPortLinkIdentifier()
+{
+    return ivars->m_portLinkId;
 }
 
 // --------------------------------------------------------------------

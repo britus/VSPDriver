@@ -31,6 +31,11 @@ public:
     
     kern_return_t getPortCount(uint8_t* count) LOCALONLY;
     kern_return_t getPortList(uint8_t* list, uint8_t count) LOCALONLY;
+    
+    kern_return_t createPortLink(uint8_t sourceId, uint8_t targetId, void** link) LOCALONLY;
+    kern_return_t removePortLink(void* link) LOCALONLY;
+    kern_return_t getPortLinkCount(uint8_t* count) LOCALONLY;
+    kern_return_t getPortLinkById(uint8_t id, void** result) LOCALONLY;
 };
 
 #endif /* VSPDriver_h */
