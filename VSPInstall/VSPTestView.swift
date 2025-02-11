@@ -21,8 +21,7 @@ struct VSPTestView: View {
                 VStack(alignment: .leading) {
                     uncheckedView
                     checkedView
-                    asyncView
-                }
+                 }
             } else {
                 VStack(alignment: .center) {
                     Text("Driver is not connected")
@@ -54,34 +53,36 @@ struct VSPTestView: View {
 
     private var uncheckedView: some View {
         VStack(alignment: .leading) {
-            Text("Unchecked").font(.title2)
+            Text("Port Controller").font(.title2)
 
             HStack(alignment: .center) {
                 Button(
                     action: {
-                        viewModel.SwiftUncheckedScalar()
+                        viewModel.doGetPortList()
                     }, label: {
-                        Text("Scalar")
+                        Text("Get Port List")
                     }
-                ).padding([.trailing])
+                ).fixedSize(horizontal: true, vertical: false).frame(width: 120, height: 32).padding([.trailing])
 
                 Button(
                     action: {
-                        viewModel.SwiftUncheckedStruct()
-                    }, label: {
-                        Text("Struct")
+                        viewModel.doLinkPorts()
+                    },
+                    label: {
+                        Text("Link Ports")
                     }
-                ).padding([.trailing])
+                ).fixedSize(horizontal: true, vertical: false).frame(width: 120, height: 32).padding([.trailing])
 
                 Button(
                     action: {
-                        viewModel.SwiftUncheckedLargeStruct()
-                    }, label: {
-                        Text("Large Struct")
+                        viewModel.doUnLinkPorts()
+                    },
+                    label: {
+                        Text("Unlink Ports")
                     }
-                ).padding([.trailing])
+                ).fixedSize(horizontal: true, vertical: false).frame(width: 120, height: 32).padding([.trailing])
             }
-        }.padding([.bottom])
+        }.fixedSize(horizontal: true, vertical: true).frame(width: 400, height: 70, alignment: .leading).padding([.bottom,.leading])
     }
 
     private var checkedView: some View {
@@ -91,49 +92,27 @@ struct VSPTestView: View {
             HStack(alignment: .center) {
                 Button(
                     action: {
-                        viewModel.SwiftCheckedScalar()
-                    }, label: {
-                        Text("Scalar")
+                        viewModel.doEnablePortChecks()
+                    },
+                    label: {
+                        Text("Enable Checks")
                     }
-                ).padding([.trailing])
+                ).fixedSize(horizontal: true, vertical: false).frame(width: 120, height: 32).padding([.trailing])
 
                 Button(
                     action: {
-                        viewModel.SwiftCheckedStruct()
-                    }, label: {
-                        Text("Struct")
+                        viewModel.doEnablePortTrace()
+                    },
+                    label: {
+                        Text("Enable Traces")
                     }
-                ).padding([.trailing])
+                ).fixedSize(horizontal: true, vertical: false).frame(width: 120, height: 32).padding([.trailing])
             }
-        }.padding([.bottom])
-    }
-
-    private var asyncView: some View {
-        VStack(alignment: .leading) {
-            Text("Async").font(.title2)
-
-            HStack(alignment: .center) {
-                Button(
-                    action: {
-                        viewModel.SwiftAssignAsyncCallback()
-                    }, label: {
-                        Text("Assign Callback")
-                    }
-                ).padding([.trailing])
-
-                Button(
-                    action: {
-                        viewModel.SwiftSubmitAsyncRequest()
-                    }, label: {
-                        Text("Async Action")
-                    }
-                ).padding([.trailing])
-            }
-        }.padding([.bottom])
+        }.fixedSize(horizontal: true, vertical: true).frame(width: 400, height: 70, alignment: .leading).padding([.bottom,.leading])
     }
 }
 
-struct DriverCommunicationView_Previews: PreviewProvider {
+struct VSPTestView_Previews: PreviewProvider {
 
     let displayedView: VSPDriverView.DisplayedView = .communication
 

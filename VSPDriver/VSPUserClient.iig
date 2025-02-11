@@ -25,7 +25,7 @@ public:
     
     virtual kern_return_t Start(IOService* provider) override;
     virtual kern_return_t Stop(IOService* provider) override;
-
+    
     virtual kern_return_t ExternalMethod(uint64_t selector,
                                          IOUserClientMethodArguments* arguments,
                                          const IOUserClientMethodDispatch* dispatch,
@@ -34,7 +34,7 @@ public:
     
     // Timed async callback to user client
     virtual void AsyncCallback(OSAction* action, uint64_t time) TYPE(IOTimerDispatchSource::TimerOccurred);
-
+    
     // -----------------------------------------
     // VSPDriver related
     // -----------------------------------------
@@ -48,18 +48,37 @@ public:
     // Schedule timed event -> IOTimerDispatchSource::TimerOccurred
     kern_return_t scheduleEvent(void) LOCALONLY;
     
+    // Prepares async response
+    kern_return_t prepareResponse(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    
     // -----------------------------------------
     // User client external interface method
     // entry points and its instance methods
     // -----------------------------------------
-
+    
     static
-    kern_return_t exSetCallback(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
-    kern_return_t setCallback(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
-
+    kern_return_t exGetStatus(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    kern_return_t getStatus(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    
+    static
+    kern_return_t exGetPortList(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    kern_return_t getPortList(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    
     static
     kern_return_t exLinkPorts(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
     kern_return_t linkPorts(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    
+    static
+    kern_return_t exUnlinkPorts(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    kern_return_t unlinkPorts(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    
+    static
+    kern_return_t exEnableChecks(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    kern_return_t enableChecks(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    
+    static
+    kern_return_t exEnableTrace(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    kern_return_t enableTrace(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
 };
 
 #endif /* VSPUserClient_h */

@@ -32,24 +32,6 @@ static io_iterator_t globalDeviceRemovedIter = IO_OBJECT_NULL;
 
 // MARK: Helpers
 
-const uint32_t MessageType_Scalar = 0;
-const uint32_t MessageType_Struct = 1;
-const uint32_t MessageType_CheckedScalar = 2;
-const uint32_t MessageType_CheckedStruct = 3;
-const uint32_t MessageType_RegisterAsyncCallback = 4;
-const uint32_t MessageType_AsyncRequest = 5;
-
-typedef struct {
-    uint64_t foo;
-    uint64_t bar;
-} DataStruct;
-
-typedef struct {
-    uint64_t foo;
-    uint64_t bar;
-    uint64_t largeArray[511];
-} OversizedDataStruct;
-
 static inline void PrintArray(const uint64_t* ptr, const uint32_t length)
 {
     printf("{ ");
@@ -60,20 +42,16 @@ static inline void PrintArray(const uint64_t* ptr, const uint32_t length)
     printf("} \n");
 }
 
-static inline void PrintStruct(const DataStruct* ptr)
+static inline void PrintStruct(const TVSPControllerData* ptr)
 {
     printf("{\n");
-    printf("\t.foo = %llu,\n", ptr->foo);
-    printf("\t.bar = %llu,\n", ptr->bar);
-    printf("}\n");
-}
-
-static inline void PrintOversizedStruct(const OversizedDataStruct* ptr)
-{
-    printf("{\n");
-    printf("\t.foo = %llu,\n", ptr->foo);
-    printf("\t.bar = %llu,\n", ptr->bar);
-    printf("\t.largeArray[0] = %llu,\n", ptr->largeArray[0]);
+    printf("\t.context = %u,\n", ptr->context);
+    printf("\t.status.code = %u,\n", ptr->status.code);
+    printf("\t.status.message = %s,\n", ptr->status.message);
+    printf("\t.command = %u,\n", ptr->command);
+    printf("\t.parameter.flags = 0x%llx,\n", ptr->parameter.flags);
+    printf("\t.ppl.sourceId = %u,\n", ptr->parameter.portLink.sourceId);
+    printf("\t.ppl.targetId = %u,\n", ptr->parameter.portLink.targetId);
     printf("}\n");
 }
 
@@ -83,7 +61,6 @@ static inline void PrintErrorDetails(kern_return_t ret)
     printf("\tSubsystem: 0x%03x\n", err_get_sub(ret));
     printf("\tCode: 0x%04x\n", err_get_code(ret));
 }
-
 
 // MARK: C Constructors/Destructors
 
@@ -192,7 +169,9 @@ void UserClientTeardown(void)
 
 // MARK: Asynchronous Events
 
-/// - Tag: DeviceAdded
+// ----------------------------------------------------------------
+//
+//
 void DeviceAdded(void* refcon, io_iterator_t iterator)
 {
     kern_return_t ret = kIOReturnNotFound;
@@ -218,16 +197,15 @@ void DeviceAdded(void* refcon, io_iterator_t iterator)
 
         // Open a connection to this user client as a server
         // to that client, and store the instance in "service"
-        if ((ret = IOServiceOpen(device, mach_task_self_, 0, &connection)) == kIOReturnSuccess) {
-            fprintf(stdout, "DeviceAdded() Opened connection to dext.\n");
-        }
-        else {
+        if ((ret = IOServiceOpen(device, mach_task_self_, 0, &connection)) != kIOReturnSuccess) {
             if (ret == kIOReturnNotPermitted) {
-                fprintf(stdout, "DeviceAdded() Operation 'open' not permitted.\n");
+                fprintf(stdout, "DeviceAdded() Operation 'IOServiceOpen' not permitted.\n");
             }
             IOObjectRelease(device);
             continue;
         }
+
+        fprintf(stdout, "DeviceAdded() Opened connection to dext.\n");
 
         SwiftDeviceAdded(refcon, connection);
         IOObjectRelease(device);
@@ -240,6 +218,9 @@ void DeviceAdded(void* refcon, io_iterator_t iterator)
     }
 }
 
+// ----------------------------------------------------------------
+//
+//
 void DeviceRemoved(void* refcon, io_iterator_t iterator)
 {
     io_service_t device = IO_OBJECT_NULL;
@@ -252,9 +233,11 @@ void DeviceRemoved(void* refcon, io_iterator_t iterator)
     }
 }
 
+// ----------------------------------------------------------------
 // For more detail on this callback format, view the format of:
 // IOAsyncCallback, IOAsyncCallback0, IOAsyncCallback1, IOAsyncCallback2
-// Note that the variant of IOAsyncCallback called is based on the number of arguments being returned
+// Note that the variant of IOAsyncCallback called is based on the
+// number of arguments being returned
 // 0 - IOAsyncCallback0
 // 1 - IOAsyncCallback1
 // 2 - IOAsyncCallback2
@@ -264,201 +247,128 @@ void DeviceRemoved(void* refcon, io_iterator_t iterator)
 void AsyncCallback(void* refcon, IOReturn result, void** args, UInt32 numArgs)
 {
     uint64_t* arrArgs = (uint64_t*)args;
-    DataStruct* output = (DataStruct*)(arrArgs + 1);
-
-    PrintStruct(output);
+    
+    for (uint8_t index = 0; index < 3; index++) {
+        printf("AsyncCallback #%d: ------------------------- \n", index);
+        TVSPControllerData* response = (TVSPControllerData*)(arrArgs + index);
+        PrintStruct(response);
+    }
+ 
     SwiftAsyncCallback(refcon, result, args, numArgs);
 }
 
-// MARK: Unchecked Actions Sent to Dext
-
-bool UncheckedScalar(io_connect_t connection)
-{
-    /// - Tag: ClientApp_CallUncheckedScalar
-    kern_return_t ret = kIOReturnSuccess;
-
-    // IOConnectCallScalarMethod will fail intentionally for any inputCount or outputCount greater than 16.
-    const uint32_t arraySize = 16;
-    const uint64_t input[arraySize] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
-
-    uint32_t outputArraySize = arraySize;
-    uint64_t output[arraySize] = {};
-
-    ret = IOConnectCallScalarMethod(connection, MessageType_Scalar, input, arraySize, output, &outputArraySize);
-    if (ret != kIOReturnSuccess)
-    {
-        printf("IOConnectCallScalarMethod failed with error: 0x%08x.\n", ret);
-        PrintErrorDetails(ret);
-    }
-
-    fprintf(stdout, "Input of size %u: ", arraySize);
-    PrintArray(input, arraySize);
-    fprintf(stdout, "Output of size %u: ", outputArraySize);
-    PrintArray(output, outputArraySize);
-
-    return (ret == kIOReturnSuccess);
-}
-
-bool UncheckedStruct(io_connect_t connection)
-{
-    kern_return_t ret = kIOReturnSuccess;
-
-    const size_t inputSize = sizeof(DataStruct);
-    const DataStruct input = { .foo = 300, .bar = 70000 };
-
-    size_t outputSize = sizeof(DataStruct);
-    DataStruct output = { .foo = 0, .bar = 0 };
-
-    ret = IOConnectCallStructMethod(connection, MessageType_Struct, &input, inputSize, &output, &outputSize);
-    if (ret != kIOReturnSuccess)
-    {
-        printf("IOConnectCallStructMethod failed with error: 0x%08x.\n", ret);
-        PrintErrorDetails(ret);
-    }
-
-    printf("Input: \n");
-    PrintStruct(&input);
-    printf("Output: \n");
-    PrintStruct(&output);
-
-    return (ret == kIOReturnSuccess);
-}
-
-bool UncheckedLargeStruct(io_connect_t connection)
-{
-    kern_return_t ret = kIOReturnSuccess;
-
-    const size_t inputSize = sizeof(OversizedDataStruct);
-    const OversizedDataStruct input = { };
-
-    size_t outputSize = sizeof(OversizedDataStruct);
-    OversizedDataStruct output = { };
-
-    ret = IOConnectCallStructMethod(connection, MessageType_Struct, &input, inputSize, &output, &outputSize);
-    if (ret != kIOReturnSuccess)
-    {
-        printf("IOConnectCallStructMethod failed with error: 0x%08x.\n", ret);
-        PrintErrorDetails(ret);
-    }
-
-    printf("Input: \n");
-    PrintOversizedStruct(&input);
-    printf("Output: \n");
-    PrintOversizedStruct(&output);
-
-    return (ret == kIOReturnSuccess);
-}
-
-// MARK: Checked Actions Sent to Dext
-
-bool CheckedScalar(io_connect_t connection)
-{
-    /// - Tag: ClientApp_CallCheckedScalar
-    kern_return_t ret = kIOReturnSuccess;
-
-    // IOConnectCallScalarMethod will fail intentionally for any inputCount or outputCount other than 16, due to our strict checking in the dext
-    const uint32_t arraySize = 16;
-    const uint64_t input[arraySize] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
-
-    uint32_t outputArraySize = arraySize;
-    uint64_t output[arraySize] = {};
-
-    ret = IOConnectCallScalarMethod(connection, MessageType_CheckedScalar, input, arraySize, output, &outputArraySize);
-    if (ret != kIOReturnSuccess)
-    {
-        printf("IOConnectCallScalarMethod failed with error: 0x%08x.\n", ret);
-        PrintErrorDetails(ret);
-    }
-
-    printf("Input of size %u: ", arraySize);
-    PrintArray(input, arraySize);
-    printf("Output of size %u: ", outputArraySize);
-    PrintArray(output, outputArraySize);
-
-    return (ret == kIOReturnSuccess);
-}
-
-bool CheckedStruct(io_connect_t connection)
-{
-    kern_return_t ret = kIOReturnSuccess;
-
-    const size_t inputSize = sizeof(DataStruct);
-    const DataStruct input = { .foo = 300, .bar = 70000 };
-
-    size_t outputSize = sizeof(DataStruct);
-    DataStruct output = { .foo = 0, .bar = 0 };
-
-    ret = IOConnectCallStructMethod(connection, MessageType_CheckedStruct, &input, inputSize, &output, &outputSize);
-    if (ret != kIOReturnSuccess)
-    {
-        printf("IOConnectCallStructMethod failed with error: 0x%08x.\n", ret);
-        PrintErrorDetails(ret);
-    }
-
-    printf("Input: \n");
-    PrintStruct(&input);
-    printf("Output: \n");
-    PrintStruct(&output);
-
-    return (ret == kIOReturnSuccess);
-}
-
-bool AssignAsyncCallback(void* refcon, io_connect_t connection)
+// ----------------------------------------------------------------
+//
+//
+static inline bool doAsyncCall(void* refcon, io_connect_t connection, const TVSPControllerData* input)
 {
     io_async_ref64_t asyncRef = {};
 
-    // Establish our "AsyncCallback" function as the function that will be called by our Dext when it calls its "AsyncCompletion" function.
-    // We'll use kIOAsyncCalloutFuncIndex and kIOAsyncCalloutRefconIndex to define the parameters for our async callback
-    // This is your callback function. Check the definition for more details.
-    asyncRef[kIOAsyncCalloutFuncIndex] = (io_user_reference_t)AsyncCallback;
-    // Use this for context on the return. We'll pass the refcon so we can talk back to the view model.
-    asyncRef[kIOAsyncCalloutRefconIndex] = (io_user_reference_t)refcon;
+    // Establish our "AsyncCallback" function as the function that will be called
+    // by our Dext when it calls its "AsyncCompletion" function.
+    // We'll use kIOAsyncCalloutFuncIndex and kIOAsyncCalloutRefconIndex
+    // to define the parameters for our async callback. This is your callback
+    // function. Check the definition for more details.
+    asyncRef[kIOAsyncCalloutFuncIndex]   = (io_user_reference_t) AsyncCallback;
+    
+    // Use this for context on the return. We'll pass the refcon so we can
+    // talk back to the view model.
+    asyncRef[kIOAsyncCalloutRefconIndex] = (io_user_reference_t) refcon;
 
     kern_return_t ret = kIOReturnSuccess;
 
-    const size_t inputSize = sizeof(DataStruct);
-    const DataStruct input = { .foo = 300, .bar = 70000 };
+    size_t resultSize = VSP_UCD_SIZE;
+    TVSPControllerData result = { };
 
-    size_t outputSize = sizeof(DataStruct);
-    DataStruct output = { .foo = 0, .bar = 0 };
-
-    ret = IOConnectCallAsyncStructMethod(connection, MessageType_RegisterAsyncCallback, globalMachNotificationPort, asyncRef, kIOAsyncCalloutCount, &input, inputSize, &output, &outputSize);
-    if (ret != kIOReturnSuccess)
-    {
+    ret = IOConnectCallAsyncStructMethod(connection,
+                                         input->command,
+                                         globalMachNotificationPort,
+                                         asyncRef,
+                                         kIOAsyncCalloutCount,
+                                         input, VSP_UCD_SIZE, &result, &resultSize);
+    if (ret != kIOReturnSuccess) {
         printf("IOConnectCallStructMethod failed with error: 0x%08x.\n", ret);
         PrintErrorDetails(ret);
     }
 
-    printf("Input: \n");
-    PrintStruct(&input);
-    printf("Output: \n");
-    PrintStruct(&output);
+    printf("doAsyncCall-Request: -------------------------- \n");
+    PrintStruct(input);
+    
+    printf("doAsyncCall-Return.: ------------------------- \n");
+    PrintStruct(&result);
 
-    printf("Async result should match output result.\n");
-    printf("Assigned callback to dext. Async actions can now be executed.\n");
+    printf("Async actions can now be executed.\n");
     printf("Please wait for the callback...\n");
 
     return (ret == kIOReturnSuccess);
 }
 
-bool SubmitAsyncRequest(io_connect_t connection)
+// ----------------------------------------------------------------
+//
+//
+bool GetPortList(void* refcon, io_connect_t connection)
 {
-    kern_return_t ret = kIOReturnSuccess;
+    TVSPControllerData input = {};
+    input.context = vspContextPort;
+    input.command = vspControlGetPortList;
 
-    const size_t inputSize = sizeof(DataStruct);
-    const DataStruct input = { .foo = 300, .bar = 70000 };
+    return doAsyncCall(refcon, connection, &input);
+}
 
-    ret = IOConnectCallAsyncStructMethod(connection, MessageType_AsyncRequest, globalMachNotificationPort, NULL, 0, &input, inputSize, NULL, NULL);
-    if (ret == kIOReturnNotReady)
-    {
-        printf("No callback has been assigned to the dext, so it cannot respond to the async action.\n");
-        printf("Execute the action to assign a callback to the dext before calling this action.\n");
-    }
-    if (ret != kIOReturnSuccess)
-    {
-        printf("IOConnectCallStructMethod failed with error: 0x%08x.\n", ret);
-        PrintErrorDetails(ret);
-    }
+// ----------------------------------------------------------------
+//
+//
+bool LinkPorts(void* refcon, io_connect_t connection, const uint8_t source, const uint8_t target)
+{
+    TVSPControllerData input = {};
+    input.context = vspContextPort;
+    input.command = vspControlLinkPorts;
+    input.parameter.portLink.sourceId = source;
+    input.parameter.portLink.targetId = target;
 
-    return (ret == kIOReturnSuccess);
+    return doAsyncCall(refcon, connection, &input);
+}
+
+// ----------------------------------------------------------------
+//
+//
+bool UnlinkPorts(void* refcon, io_connect_t connection, const uint8_t source, const uint8_t target)
+{
+    TVSPControllerData input = {};
+    input.context = vspContextPort;
+    input.command = vspControlUnlinkPorts;
+    input.parameter.portLink.sourceId = source;
+    input.parameter.portLink.targetId = target;
+
+    return doAsyncCall(refcon, connection, &input);
+}
+
+// ----------------------------------------------------------------
+//
+//
+bool EnableChecks(void* refcon, io_connect_t connection, const uint8_t port)
+{
+    TVSPControllerData input = {};
+    input.context = vspContextPort;
+    input.command = vspControlEnableChecks;
+    input.parameter.portLink.sourceId = port;
+    input.parameter.portLink.targetId = port;
+    input.parameter.flags = 0x01;
+
+    return doAsyncCall(refcon, connection, &input);
+}
+
+// ----------------------------------------------------------------
+//
+//
+bool EnableTrace(void* refcon, io_connect_t connection, const uint8_t port)
+{
+    TVSPControllerData input = {};
+    input.context = vspContextPort;
+    input.command = vspControlEnableTrace;
+    input.parameter.portLink.sourceId = port;
+    input.parameter.portLink.targetId = port;
+    input.parameter.flags = 0x01;
+
+    return doAsyncCall(refcon, connection, &input);
 }

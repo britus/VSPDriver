@@ -33,7 +33,6 @@
 
 // Driver instance state resource
 struct VSPDriver_IVars {
-    IOUserClient*   m_controller;
     VSPSerialPort** m_serialPorts;
     uint8_t         m_portCount;
 };
@@ -112,22 +111,6 @@ kern_return_t IMPL(VSPDriver, Start)
         goto finish;
     }
     
-#if 0
-    VSPLog(LOG_PREFIX, "Start: ++ Run user client. ++ \n");
-    
-    // -- called by client Create user client controller instance
-    if ((ret = CreateUserClient(provider)) != kIOReturnSuccess) {
-        goto finish;
-    }
-    
-    //ivars->m_controller->retain();
-
-    if ((ret = ivars->m_controller->Start(provider)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Start: User client start failed. code=%d\n", ret);
-        goto finish;
-    }
-#endif
-    
     VSPLog(LOG_PREFIX, "Start: driver started successfully.\n");
     return kIOReturnSuccess;
     
@@ -144,11 +127,7 @@ kern_return_t IMPL(VSPDriver, Stop)
     kern_return_t ret;
     
     VSPLog(LOG_PREFIX, "Stop called.\n");
-    
-    if (ivars && ivars->m_controller) {
-        OSSafeReleaseNULL(ivars->m_controller);
-    }
-    
+        
     // release allocated port list only.
     // (not each instance itself!)
     if (ivars && ivars->m_serialPorts && ivars->m_portCount) {
@@ -183,13 +162,9 @@ kern_return_t IMPL(VSPDriver, NewUserClient)
         return kIOReturnBadArgument;
     }
     
-    if (ivars->m_controller == nullptr) {
-        if ((ret = CreateUserClient(GetProvider())) != kIOReturnSuccess) {
-            return ret;
-        }
-    } 
-    
-    (*userClient) = ivars->m_controller;
+    if ((ret = CreateUserClient(GetProvider(), userClient)) != kIOReturnSuccess) {
+        return ret;
+    }
     
     VSPLog(LOG_PREFIX, "NewUserClient finished.\n");
     return kIOReturnSuccess;
@@ -251,12 +226,17 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count)
 // --------------------------------------------------------------------
 // Create the 'VSP Controller' user client instances
 //
-kern_return_t VSPDriver::CreateUserClient(IOService* provider)
+kern_return_t VSPDriver::CreateUserClient(IOService* provider, IOUserClient** userClient)
 {
     kern_return_t ret;
     IOService* service;
     
-    VSPLog(LOG_PREFIX, "CreateUserClient: create VSP controller from Info.plist.\n");
+    VSPLog(LOG_PREFIX, "CreateUserClient: create VSP user client from Info.plist.\n");
+    
+    if (!userClient) {
+        VSPLog(LOG_PREFIX, "CreateUserClient: Bad argument 'userClient' detected.\n");
+        return kIOReturnBadArgument;
+    }
     
     // Create sub service object from UserClientProperties in Info.plist
     ret= Create(this, kVSPContollerProperties, &service);
@@ -268,14 +248,12 @@ kern_return_t VSPDriver::CreateUserClient(IOService* provider)
     VSPLog(LOG_PREFIX, "CreateUserClient: check VSPUserClient type.\n");
     
     // Sane check object type
-    ivars->m_controller = OSDynamicCast(VSPUserClient, service);
-    if (ivars->m_controller == nullptr) {
+    (*userClient) = OSDynamicCast(VSPUserClient, service);
+    if ((*userClient) == nullptr) {
         VSPLog(LOG_PREFIX, "CreateUserClient: Cast to VSPUserClient failed.\n");
         service->release();
         return kIOReturnInvalid;
     }
-    
-    //ivars->m_controller->Start(provider);
     
     VSPLog(LOG_PREFIX, "CreateUserClient: success.");
     return kIOReturnSuccess;

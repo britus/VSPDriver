@@ -27,7 +27,7 @@ public:
     
     // --
     kern_return_t CreateSerialPort(IOService* provider, uint8_t count = 1) LOCALONLY;
-    kern_return_t CreateUserClient(IOService* provider) LOCALONLY;
+    kern_return_t CreateUserClient(IOService* provider, IOUserClient ** userClient) LOCALONLY;
 };
 
 #endif /* VSPDriver_h */

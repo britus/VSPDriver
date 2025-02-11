@@ -20,13 +20,14 @@ func SwiftAsyncCallback(refcon: UnsafeMutableRawPointer, result: IOReturn, args:
 @_silgen_name("SwiftDeviceAdded")
 func SwiftDeviceAdded(refcon: UnsafeMutableRawPointer, connection: io_connect_t) {
     let viewModel: VSPTestModel = Unmanaged<VSPTestModel>.fromOpaque(refcon).takeUnretainedValue()
-    viewModel.isConnected = true
     viewModel.connection = connection
+    viewModel.isConnected = true
 }
 
 @_silgen_name("SwiftDeviceRemoved")
 func SwiftDeviceRemoved(refcon: UnsafeMutableRawPointer) {
     let viewModel: VSPTestModel = Unmanaged<VSPTestModel>.fromOpaque(refcon).takeUnretainedValue()
+    viewModel.connection = 0
     viewModel.isConnected = false
 }
 
@@ -61,13 +62,18 @@ class VSPSmController {
     }
 }
 
+// --------------------------------------------------------
+// VSPController async handling
+// --------------------------------------------------------
 class VSPTestModel: NSObject, ObservableObject {
-
+    
     @Published public var isConnected: Bool = false
     public var connection: io_connect_t = 0
-
-    var opaqueSelf: UnsafeMutableRawPointer? = UnsafeMutableRawPointer(bitPattern: 0)
-
+    
+    // Used by async request/response
+    var opaqueSelf: UnsafeMutableRawPointer? = //
+    UnsafeMutableRawPointer(bitPattern: 0)
+    
     @Published private var state: VSPSmController.State = .unknown
     public var stateDescription: String {
         switch state {
@@ -83,80 +89,75 @@ class VSPTestModel: NSObject, ObservableObject {
             return "Request returned an error, check the logs for details"
         }
     }
-
+    
     override init() {
         super.init()
-
+        
         // Create a reference to this view model so the C code can call back to it.
         self.opaqueSelf = Unmanaged.passRetained(self).toOpaque()
-
+        
         // Let the C code set up the IOKit calls.
         UserClientSetup(opaqueSelf)
     }
-
+    
     convenience init(isConnected: Bool) {
         self.init()
-
         self.isConnected = isConnected
     }
-
+    
     deinit {
         // Take the last reference of the pointer so it can be freed.
         _ = Unmanaged<VSPTestModel>.fromOpaque(self.opaqueSelf!).takeRetainedValue()
-
+        
         // Let the C code clean up after itself.
         UserClientTeardown()
     }
-
+    
     func LocalAsyncCallback(result: IOReturn, data: [UInt8]) {
         state = VSPSmController.process(state, .returned)
     }
+}
 
-    private func ProcessResult(_ didWork: Bool) {
-        if didWork {
-            state = VSPSmController.process(state, .returned)
-        } else {
+// --------------------------------------------------------
+// VSPController interface commands
+// --------------------------------------------------------
+extension VSPTestModel {
+    func doGetPortList() {
+        state = VSPSmController.process(state, .sentRequest)
+        
+        if !GetPortList(opaqueSelf, connection) {
             state = VSPSmController.process(state, .failed)
         }
     }
-
-    func SwiftUncheckedScalar() {
+    
+    func doLinkPorts() {
         state = VSPSmController.process(state, .sentRequest)
-        ProcessResult(UncheckedScalar(connection))
-    }
-
-    func SwiftUncheckedStruct() {
-        state = VSPSmController.process(state, .sentRequest)
-        ProcessResult(UncheckedStruct(connection))
-    }
-
-    func SwiftUncheckedLargeStruct() {
-        state = VSPSmController.process(state, .sentRequest)
-        ProcessResult(UncheckedLargeStruct(connection))
-    }
-
-    func SwiftCheckedScalar() {
-        state = VSPSmController.process(state, .sentRequest)
-        ProcessResult(CheckedScalar(connection))
-    }
-
-    func SwiftCheckedStruct() {
-        state = VSPSmController.process(state, .sentRequest)
-        ProcessResult(CheckedStruct(connection))
-    }
-
-    func SwiftAssignAsyncCallback() {
-        state = VSPSmController.process(state, .sentRequest)
-        let didSubmit = AssignAsyncCallback(opaqueSelf, connection)
-        if !didSubmit {
+         
+        if !LinkPorts(opaqueSelf, connection, 1, 2) {
             state = VSPSmController.process(state, .failed)
         }
     }
-
-    func SwiftSubmitAsyncRequest() {
+    
+    func doUnLinkPorts() {
         state = VSPSmController.process(state, .sentRequest)
-        let didSubmit = SubmitAsyncRequest(connection)
-        if !didSubmit {
+ 
+        if !LinkPorts(opaqueSelf, connection, 1, 2) {
+            state = VSPSmController.process(state, .failed)
+        }
+    }
+    
+    func doEnablePortChecks() {
+        state = VSPSmController.process(state, .sentRequest)
+        
+        if !EnableChecks(opaqueSelf, connection, 2) {
+            state = VSPSmController.process(state, .failed)
+        }
+    }
+    
+    func doEnablePortTrace() {
+        state = VSPSmController.process(state, .sentRequest)
+        
+        if !EnableTrace(opaqueSelf, connection, 3) {
             state = VSPSmController.process(state, .failed)
         }
     }

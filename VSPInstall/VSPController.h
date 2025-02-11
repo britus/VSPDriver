@@ -11,6 +11,56 @@
 #include <stdio.h>
 #include <IOKit/IOTypes.h>
 
+enum VSPUserContext {
+    vspContextPing = 1,
+    vspContextPort = 2,
+    vspContextResult = 3,
+    vspContextError = 4,
+};
+
+enum VSPControlCommand {
+    vspControlGetStatus,
+    vspControlGetPortList,
+    vspControlLinkPorts,
+    vspControlUnlinkPorts,
+    vspControlEnableChecks,
+    vspControlEnableTrace,
+    // Has to be last
+    vspLastCommand,
+};
+
+typedef struct {
+    uint8_t sourceId;
+    uint8_t targetId;
+} TPortLink;
+
+#ifndef VSP_UCD_MESSAGE_SIZE
+#define VSP_UCD_MESSAGE_SIZE 127
+#endif
+
+typedef struct {
+    /* In whitch context calld */
+    enum VSPUserContext context;
+    /* Command status response */
+    struct UCStatus {
+        uint32_t code;
+        char     message[VSP_UCD_MESSAGE_SIZE + 1];
+    } status;
+    /* User client command */
+    enum VSPControlCommand command;
+    /* Command parameters */
+    struct Parameter {
+        /* command flags */
+        uint64_t flags;
+        /* port parameters */
+        TPortLink portLink;
+    } parameter;
+} TVSPControllerData;
+
+#ifndef VSP_UCD_SIZE
+#define VSP_UCD_SIZE sizeof(TVSPControllerData)
+#endif
+
 extern void SwiftAsyncCallback(void* refcon, IOReturn result, void** args, UInt32 numArgs);
 extern void SwiftDeviceAdded(void* refcon, io_connect_t connection);
 extern void SwiftDeviceRemoved(void* refcon);
@@ -23,12 +73,10 @@ void DeviceRemoved(void* refcon, io_iterator_t iterator);
 bool UserClientSetup(void* refcon);
 void UserClientTeardown(void);
 
-bool UncheckedScalar(io_connect_t connection);
-bool UncheckedStruct(io_connect_t connection);
-bool UncheckedLargeStruct(io_connect_t connection);
-bool CheckedScalar(io_connect_t connection);
-bool CheckedStruct(io_connect_t connection);
-bool AssignAsyncCallback(void* refcon, io_connect_t connection);
-bool SubmitAsyncRequest(io_connect_t connection);
+bool GetPortList(void* refcon, io_connect_t connection);
+bool LinkPorts(void* refcon, io_connect_t connection, const uint8_t source, const uint8_t target);
+bool UnlinkPorts(void* refcon, io_connect_t connection, const uint8_t source, const uint8_t target);
+bool EnableChecks(void* refcon, io_connect_t connection, const uint8_t port);
+bool EnableTrace(void* refcon, io_connect_t connection, const uint8_t port);
 
 #endif /* VSPController_h */

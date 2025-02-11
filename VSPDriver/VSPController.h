@@ -13,14 +13,17 @@ namespace VSPController {
 enum VSPUserContext {
     vspContextPing = 1,
     vspContextPort = 2,
+    vspContextResult = 3,
+    vspContextError = 4,
 };
 
 enum VSPControlCommand {
-    vspControlSetCallback = 1,
-    vspControlGetPortList = 2,
-    vspControlLinkPorts = 3,
-    vspControlUnlinkPorts = 4,
-    
+    vspControlGetStatus,
+    vspControlGetPortList,
+    vspControlLinkPorts,
+    vspControlUnlinkPorts,
+    vspControlEnableChecks,
+    vspControlEnableTrace,
     // Has to be last
     vspLastCommand,
 };
@@ -45,8 +48,10 @@ typedef struct {
     /* User client command */
     VSPControlCommand command;
     /* Command parameters */
-    union Parameter {
-        /* Command parameters */
+    struct Parameter {
+        /* command flags */
+        uint64_t flags;
+        /* port parameters */
         TPortLink portLink;
     } parameter;
 } TVSPControllerData;
