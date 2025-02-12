@@ -55,13 +55,13 @@ using namespace driverkit::serial;
 #define VSPAquireLock(ivars) \
 { \
 ++ivars->m_lockLevel; \
-VSPLog(LOG_PREFIX, "=> lock level=%d", ivars->m_lockLevel); \
+VSPLog(LOG_PREFIX, "=> lock level=%d this=0x%llx", ivars->m_lockLevel, (uint64_t) this); \
 IOLockLock(ivars->m_lock); \
 }
 
 #define VSPUnlock(ivars) \
 { \
-VSPLog(LOG_PREFIX, "<= lock level=%d", ivars->m_lockLevel); \
+VSPLog(LOG_PREFIX, "<= lock level=%d this=0x%llx", ivars->m_lockLevel, (uint64_t) this); \
 --ivars->m_lockLevel; \
 IOLockUnlock(ivars->m_lock); \
 }
@@ -731,7 +731,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
 #endif
     
     // Loopback TX data by async response event
-    if ((ret = this->enqueueResponse(buffer, size)) != kIOReturnSuccess) {
+    if ((ret = this->enqueueResponse(this, buffer, size)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "TxDataAvailable: Unable to enqueue response. code=%d\n", ret);
         goto finish;
     }
@@ -759,33 +759,44 @@ finish:
 // --------------------------------------------------------------------
 // Enqueue given buffer in RX dispatch source and raise async event
 //
-kern_return_t VSPSerialPort::enqueueResponse(void* buffer, uint64_t size)
+kern_return_t VSPSerialPort::enqueueResponse(void* sender, void* buffer, uint64_t size)
 {
-    IOReturn ret = 0;
+    IOReturn ret = kIOReturnSuccess;
+    bool needUnlock = false;
     
     VSPLog(LOG_PREFIX, "enqueueResponse called.\n");
+    
+    if (((uint64_t)this) != ((uint64_t)sender)) {
+        VSPAquireLock(ivars);
+        needUnlock = true;
+    }
     
     // Make sure everything is fine
     if (!ivars || !ivars->m_rxSource || !buffer || !size) {
         VSPLog(LOG_PREFIX, "enqueueResponse: Invalid arguments\n");
-        return kIOReturnBadArgument;
+        ret = kIOReturnBadArgument;
+        goto finish;
     }
     
     // Disable dispatching on RX queue source
     if ((ret = ivars->m_rxSource->SetEnable(false)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "enqueueResponse: RX source disable failed. code=%d\n", ret);
-        return ret;
+        goto finish;
     }
+    
+    /* !!!!!!!!!!!!!! CRASH ON MacOS Monterey !!!!!!!!!!!!!!!!!!!
+     *         May be symbol CanEnqueueData() is unknown
+    // check enougth space
+    if ((ret = ivars->m_rxSource->CanEnqueueData((uint32_t)size)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "enqueueResponse: RX source CanEnqueueData failed. code=%d\n", ret);
+        goto finish;
+    }
+    */
     
     // Response by adding queue entry to RX queue source
     ret = ivars->m_rxSource->Enqueue((uint32_t) size, ^(void *data, size_t dataSize) {
         VSPLog(LOG_PREFIX, "enqueueResponse: enqueue data=0x%llx size=%lld\n", (uint64_t) data, size);
-        if (dataSize < size) {
-            memset(data, 0xff, dataSize);
-            return;
-        }
-        memset(data, 0,      size);
-        memcpy(data, buffer, size);
+        memcpy(data, buffer, (size > dataSize ? dataSize : size));
     });
     if (ret != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "enqueueResponse: RX enqueue failed. code=%d\n", ret);
@@ -798,16 +809,20 @@ kern_return_t VSPSerialPort::enqueueResponse(void* buffer, uint64_t size)
                 break;
         }
         // Leave dispatch disabled (??)
-        return ret;
+        goto finish;
     }
     
     // Enable dispatching on RX queue source
     if ((ret = ivars->m_rxSource->SetEnable(true)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "enqueueResponse: RX source enable failed. code=%d\n", ret);
-        return ret;
+        goto finish;
     }
     
-    return kIOReturnSuccess;
+finish:
+    if (needUnlock) {
+        VSPUnlock(ivars);
+    }
+    return ret;
 }
 
 // --------------------------------------------------------------------
@@ -1197,7 +1212,7 @@ kern_return_t VSPSerialPort::setupTTYBaseName()
 // --------------------------------------------------------------------
 // Called by TxDataAvailable in case of 'port is linked' state
 //
-kern_return_t VSPSerialPort::sendToPortLink(uint8_t* buffer, uint64_t size)
+kern_return_t VSPSerialPort::sendToPortLink(void* buffer, uint64_t size)
 {
     IOReturn ret;
     VSPSerialPort* port = nullptr;
@@ -1234,7 +1249,7 @@ kern_return_t VSPSerialPort::sendToPortLink(uint8_t* buffer, uint64_t size)
     VSPLog(LOG_PREFIX, "sendToPortLink: got portId=%d -> enqueue on target\n",
            port->getPortIdentifier());
 
-    return port->enqueueResponse(buffer, size);
+    return port->enqueueResponse(this, buffer, size);
 }
 
 // Notify RX complete to OS interrest parties
