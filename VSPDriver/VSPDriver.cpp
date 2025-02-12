@@ -285,6 +285,31 @@ kern_return_t VSPDriver::CreateUserClient(IOService* provider, IOUserClient** us
     return kIOReturnSuccess;
 }
 
+// --------------------------------------------------------------------
+// Check serial port id
+//
+kern_return_t VSPDriver::checkPortId(uint8_t id)
+{
+    if (id && id < ivars->m_portCount) {
+        return kIOReturnSuccess;
+    }
+    return kIOReturnInvalid;
+}
+
+// --------------------------------------------------------------------
+// Check serial port link id
+//
+kern_return_t VSPDriver::checkPortLinkId(uint8_t id)
+{
+    if (id && id < ivars->m_portLinkCount) {
+        return kIOReturnSuccess;
+    }
+    return kIOReturnInvalid;
+}
+
+// --------------------------------------------------------------------
+// Return nummer of allocated serial ports
+//
 kern_return_t VSPDriver::getPortCount(uint8_t* count)
 {
     if (!count) {
@@ -295,9 +320,12 @@ kern_return_t VSPDriver::getPortCount(uint8_t* count)
     return kIOReturnSuccess;
 }
 
+// --------------------------------------------------------------------
+// Return all IDs of all allocated serial ports
+//
 kern_return_t VSPDriver::getPortList(uint8_t* list, uint8_t count)
 {
-    if (!list) {
+    if (!list || count >= ivars->m_portCount) {
         return kIOReturnBadArgument;
     }
     
@@ -312,9 +340,12 @@ kern_return_t VSPDriver::getPortList(uint8_t* list, uint8_t count)
     return kIOReturnSuccess;
 }
 
+// --------------------------------------------------------------------
+// Create a link between two serial ports
+//
 kern_return_t VSPDriver::createPortLink(uint8_t sourceId, uint8_t targetId, void** link)
 {
-    if (!link || !sourceId || !targetId) {
+    if (!link || checkPortId(sourceId) || checkPortId(targetId)) {
         VSPLog(LOG_PREFIX, "createPortLink: Invalid arguments\n");
         return kIOReturnBadArgument;
     }
@@ -394,9 +425,10 @@ kern_return_t VSPDriver::createPortLink(uint8_t sourceId, uint8_t targetId, void
     }
     
     // new list with additional space
-    TVSPPortLinkItem** list = nullptr;
-    if (!(list = IONewZero(TVSPPortLinkItem*, count + 1))) {
+    TVSPPortLinkItem** newl = nullptr;
+    if (!(newl = IONewZero(TVSPPortLinkItem*, count + 1))) {
         VSPLog(LOG_PREFIX, "createPortLink: Out of memory!\n");
+        IOSafeDeleteNULL(item, TVSPPortLinkItem, 1);
         return kIOReturnNoMemory;
     }
     
@@ -404,7 +436,7 @@ kern_return_t VSPDriver::createPortLink(uint8_t sourceId, uint8_t targetId, void
     if (count && ivars->m_portLinks) {
         for (uint8_t i = 0; i < count; i++) {
             if (ivars->m_portLinks[i] != nullptr) {
-                list[i] = ivars->m_portLinks[i];
+                newl[i] = ivars->m_portLinks[i];
             }
         }
     }
@@ -425,19 +457,22 @@ kern_return_t VSPDriver::createPortLink(uint8_t sourceId, uint8_t targetId, void
     tgt->port->setPortLinkIdentifier(item->id);
    
     // set new link item
-    list[count] = item;
+    newl[count] = item;
     
     // return new item
     (*link) = item;
     
     // update global members
-    ivars->m_portLinks = list;
+    ivars->m_portLinks = newl;
     ivars->m_portLinkCount++;
 
     IOSafeDeleteNULL(oldl, TVSPPortLinkItem*, count);
     return kIOReturnSuccess; // done!
 }
 
+// --------------------------------------------------------------------
+// Removes prior created serial port link
+//
 kern_return_t VSPDriver::removePortLink(void *link)
 {
     if (!link) {
@@ -493,6 +528,9 @@ kern_return_t VSPDriver::removePortLink(void *link)
     return kIOReturnNotFound;
 }
 
+// --------------------------------------------------------------------
+// Return number of created serial port links
+//
 kern_return_t VSPDriver::getPortLinkCount(uint8_t* count)
 {
     if (!count) {
@@ -504,9 +542,12 @@ kern_return_t VSPDriver::getPortLinkCount(uint8_t* count)
     return kIOReturnSuccess;
 }
 
+// --------------------------------------------------------------------
+// Return a serial port link item specified by id
+//
 kern_return_t VSPDriver::getPortLinkById(uint8_t id, void** result)
 {
-    if (!id || !result) {
+    if (checkPortLinkId(id) || !result) {
         VSPLog(LOG_PREFIX, "getPortLinkById: Invalid argument.");
         return kIOReturnBadArgument;
     }
@@ -526,9 +567,13 @@ kern_return_t VSPDriver::getPortLinkById(uint8_t id, void** result)
     return kIOReturnNotFound;
 }
 
+// --------------------------------------------------------------------
+// Return a serial port link item specified by source and target ID of
+// a serial port instance
+//
 kern_return_t VSPDriver::getPortLinkByPorts(uint8_t sourceId, uint8_t targetId, void** link)
 {
-    if (!sourceId || !targetId || !link) {
+    if (checkPortId(sourceId) || checkPortId(targetId) || !link) {
         VSPLog(LOG_PREFIX, "getPortLinkByPorts: Invalid argument.");
         return kIOReturnBadArgument;
     }
