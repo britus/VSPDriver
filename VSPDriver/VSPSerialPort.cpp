@@ -396,21 +396,21 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
         goto error_exit;
     }
     
-    // Get the address of the TX memory descriptor
+    // Get the address segment of the TX memory descriptor
     ret = ivars->m_txqbmd->GetAddressRange(&ivars->m_txseg);
     if (ret != kIOReturnSuccess || !ivars->m_txseg.address || ivars->m_txseg.length != txcapacity) {
         VSPLog(LOG_PREFIX, "ConnectQueues: Unable to get TX-MD segment. code=%d\n", ret);
         goto error_exit;
     }
     
-    // Get the address of the RX memory descriptor
+    // Get the address segment of the RX memory descriptor
     ret = ivars->m_rxqbmd->GetAddressRange(&ivars->m_rxseg);
     if (ret != kIOReturnSuccess || !ivars->m_rxseg.address || ivars->m_rxseg.length != rxcapacity) {
         VSPLog(LOG_PREFIX, "ConnectQueues: Unable to get TX-MD segment. code=%d\n", ret);
         goto error_exit;
     }
     
-    // Get the address of the IOSerialPortInterface segment (mapped space)
+    // Get the address segment of the SerialPortInterface (mapped space)
     if ((ret = (*ifmd)->GetAddressRange(&ifseg)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "ConnectQueues: IF GetAddressRange failed. code=%d\n", ret);
         goto error_exit;
@@ -561,12 +561,6 @@ void IMPL(VSPSerialPort, RxEchoAsyncEvent)
         VSPLog(LOG_PREFIX, "RxEchoAsyncEvent: Device closed.\n");
         goto finish;
     }
-
-    // Lock RX dispatch queue source
-    if ((ret = ivars->m_rxSource->SetEnable(false)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "RxEchoAsyncEvent: RX source SetEnable false failed. code=%d\n", ret);
-        goto finish;
-    }
     
     // Update modem status
     ivars->m_hwStatus.dsr = false;
@@ -607,9 +601,6 @@ void IMPL(VSPSerialPort, RxEchoAsyncEvent)
         }
         goto finish;
     }
-    
-    // Notify queue entry has been removed
-    ivars->m_rxSource->SendDataServiced();
 
 #ifdef DEBUG // !! Debug ....
     VSPLog(LOG_PREFIX, "RxEchoAsyncEvent: Dump m_rxqmd buffer=0x%llx size=%u\n",
@@ -626,11 +617,6 @@ void IMPL(VSPSerialPort, RxEchoAsyncEvent)
     
     VSPLog(LOG_PREFIX, "RxEchoAsyncEvent: [IOSPI-RX 2] rxPI=%d rxCI=%d rxqoffset=%d rxqlogsz=%d\n",
            ivars->m_spi->rxPI, ivars->m_spi->rxCI, ivars->m_spi->rxqoffset, ivars->m_spi->rxqlogsz);
-
-    // Unlock RX queue source
-    if ((ret = ivars->m_rxSource->SetEnable(true)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "RxEchoAsyncEvent: RX source SetEnable true failed. code=%d\n", ret);
-    }
     
     // Update modem status
     ivars->m_hwStatus.dsr = true;
@@ -759,22 +745,16 @@ finish:
 // --------------------------------------------------------------------
 // Enqueue given buffer in RX dispatch source and raise async event
 //
-kern_return_t VSPSerialPort::enqueueResponse(void* sender, void* buffer, uint64_t size)
+kern_return_t VSPSerialPort::enqueueResponse(void* sender, const void* buffer, const uint64_t size)
 {
     IOReturn ret = kIOReturnSuccess;
     
-    VSPLog(LOG_PREFIX, "enqueueResponse called.\n");
+    VSPLog(LOG_PREFIX, "enqueueResponse called. sender=0x%llx\n", (uint64_t)sender);
     
     // Make sure everything is fine
     if (!ivars || !ivars->m_rxSource || !buffer || !size) {
         VSPLog(LOG_PREFIX, "enqueueResponse: Invalid arguments\n");
         ret = kIOReturnBadArgument;
-        goto finish;
-    }
-    
-    // Disable dispatching on RX queue source
-    if ((ret = ivars->m_rxSource->SetEnable(false)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "enqueueResponse: RX source disable failed. code=%d\n", ret);
         goto finish;
     }
     
@@ -787,10 +767,11 @@ kern_return_t VSPSerialPort::enqueueResponse(void* sender, void* buffer, uint64_
         goto finish;
     }
     */
-    
+     
     // Response by adding queue entry to RX queue source
     ret = ivars->m_rxSource->Enqueue((uint32_t) size, ^(void *data, size_t dataSize) {
         VSPLog(LOG_PREFIX, "enqueueResponse: enqueue data=0x%llx size=%lld\n", (uint64_t) data, size);
+        // !!!!!!! HERE TOO CRASHES AFTER SOME TIME !!!!!!!!!!!!
         memcpy(data, buffer, (size > dataSize ? dataSize : size));
     });
     if (ret != kIOReturnSuccess) {
@@ -806,12 +787,8 @@ kern_return_t VSPSerialPort::enqueueResponse(void* sender, void* buffer, uint64_
         // Leave dispatch disabled (??)
         goto finish;
     }
-    
-    // Enable dispatching on RX queue source
-    if ((ret = ivars->m_rxSource->SetEnable(true)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "enqueueResponse: RX source enable failed. code=%d\n", ret);
-        goto finish;
-    }
+     
+    VSPLog(LOG_PREFIX, "enqueueResponse complete.\n");
     
 finish:
     return ret;
@@ -1204,7 +1181,7 @@ kern_return_t VSPSerialPort::setupTTYBaseName()
 // --------------------------------------------------------------------
 // Called by TxDataAvailable in case of 'port is linked' state
 //
-kern_return_t VSPSerialPort::sendToPortLink(void* buffer, uint64_t size)
+kern_return_t VSPSerialPort::sendToPortLink(const void* buffer, const uint64_t size)
 {
     IOReturn ret;
     VSPSerialPort* port = nullptr;
@@ -1214,7 +1191,7 @@ kern_return_t VSPSerialPort::sendToPortLink(void* buffer, uint64_t size)
 
     VSPLog(LOG_PREFIX, "sendToPortLink called. using linkId=%d\n", id);
 
-    if ((ret = ivars->m_parent->getPortLinkById(id, &link)) || !link) {
+    if ((ret = ivars->m_parent->getPortLinkById(id, &link)) != kIOReturnSuccess || !link) {
         VSPLog(LOG_PREFIX, "sendToPortLink: Parent getPortLinkById failed. code=%d\n", ret);
         return ret;
     }
@@ -1241,7 +1218,14 @@ kern_return_t VSPSerialPort::sendToPortLink(void* buffer, uint64_t size)
     VSPLog(LOG_PREFIX, "sendToPortLink: got portId=%d -> enqueue on target\n",
            port->getPortIdentifier());
 
-    return port->enqueueResponse(this, buffer, size);
+    if ((ret = port->enqueueResponse(this, buffer, size)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "sendToPortLink: Port %d enqueueResponse failed. code=%d\n",
+               ivars->m_portId, ret);
+    }
+    
+    VSPLog(LOG_PREFIX, "sendToPortLink complete.\n");
+    
+    return ret;
 }
 
 // Notify RX complete to OS interrest parties

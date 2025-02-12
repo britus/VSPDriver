@@ -100,10 +100,10 @@ public:
     kern_return_t setupTTYBaseName() LOCALONLY;
 
     // enque response (RX) buffer and raise async event
-    kern_return_t enqueueResponse(void* sender, void* buffer, uint64_t size) LOCALONLY;
+    kern_return_t enqueueResponse(void* sender, const void* buffer, const uint64_t size) LOCALONLY;
     
     // routing through port link
-    kern_return_t sendToPortLink(void* buffer, uint64_t size) LOCALONLY;
+    kern_return_t sendToPortLink(const void* buffer, const uint64_t size) LOCALONLY;
 };
 
 
