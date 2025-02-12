@@ -72,13 +72,7 @@ public:
     virtual kern_return_t HwProgramMCR(bool dtr, bool rts) override;
     virtual kern_return_t HwProgramLatencyTimer(uint32_t latency) override;
     virtual kern_return_t HwProgramFlowControl(uint32_t arg, uint8_t xon, uint8_t xoff) override;
-
-    // Async callback if RX data ready
-    virtual void RxEchoAsyncEvent(OSAction* action) TYPE(IODataQueueDispatchSource::DataAvailable);
-    
-    // Timed async callback to raise RX ready event using OS latency time
-    virtual void NotifyRXReady(OSAction* action, uint64_t time) TYPE(IOTimerDispatchSource::TimerOccurred);
-    
+     
     // ------ [VSPSerialPort inrernals] -------------------------
 
     // Release all resource in IVars
@@ -99,11 +93,11 @@ public:
     // Set our TTY name
     kern_return_t setupTTYBaseName() LOCALONLY;
 
-    // enque response (RX) buffer and raise async event
-    kern_return_t enqueueResponse(void* sender, const void* buffer, const uint64_t size) LOCALONLY;
-    
     // routing through port link
-    kern_return_t sendToPortLink(const void* buffer, const uint64_t size) LOCALONLY;
+    kern_return_t sendToPortLink(const void* buffer, const uint32_t size) LOCALONLY;
+
+    // update rxqbmd
+    kern_return_t sendResponse(void* sender, const void* buffer, const uint32_t size) LOCALONLY;
 };
 
 
