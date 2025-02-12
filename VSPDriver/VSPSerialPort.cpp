@@ -762,14 +762,8 @@ finish:
 kern_return_t VSPSerialPort::enqueueResponse(void* sender, void* buffer, uint64_t size)
 {
     IOReturn ret = kIOReturnSuccess;
-    bool needUnlock = false;
     
     VSPLog(LOG_PREFIX, "enqueueResponse called.\n");
-    
-    if (((uint64_t)this) != ((uint64_t)sender)) {
-        VSPAquireLock(ivars);
-        needUnlock = true;
-    }
     
     // Make sure everything is fine
     if (!ivars || !ivars->m_rxSource || !buffer || !size) {
@@ -786,6 +780,7 @@ kern_return_t VSPSerialPort::enqueueResponse(void* sender, void* buffer, uint64_
     
     /* !!!!!!!!!!!!!! CRASH ON MacOS Monterey !!!!!!!!!!!!!!!!!!!
      *         May be symbol CanEnqueueData() is unknown
+     *         The DEXT loading mechanism crashes
     // check enougth space
     if ((ret = ivars->m_rxSource->CanEnqueueData((uint32_t)size)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "enqueueResponse: RX source CanEnqueueData failed. code=%d\n", ret);
@@ -819,9 +814,6 @@ kern_return_t VSPSerialPort::enqueueResponse(void* sender, void* buffer, uint64_
     }
     
 finish:
-    if (needUnlock) {
-        VSPUnlock(ivars);
-    }
     return ret;
 }
 
