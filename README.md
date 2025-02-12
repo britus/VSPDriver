@@ -8,8 +8,8 @@ a installation App suggested by Apple.
  
 ### Current development status
 
-- Without a port connection, the data is sent back to the sender
-- With a port connection, the data is written from sender 1 to receiver 2 and vice versa
+- Without a port link, the data is sent back to the sender
+- With a port link, the data is written from sender 1 to receiver 2 and vice versa
 - The installation app has a simple and generic function test for the IOUserClient (controller)
 - The project includes a test app to test the serial interfaces. The app is written using the QT framework. Runs with QT 5 and 6..
 
