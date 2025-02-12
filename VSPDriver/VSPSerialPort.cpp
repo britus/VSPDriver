@@ -1117,7 +1117,7 @@ kern_return_t VSPSerialPort::sendToPortLink(IODataQueueDispatchSource* source)
 
     VSPAquireLock(ivars);
 
-    void* link;
+    void* link = nullptr;
     uint8_t id = ivars->m_portLinkId;
     if ((ret = ivars->m_parent->getPortLinkById(id, &link)) || !link) {
         VSPLog(LOG_PREFIX, "sendToPortLink: Parent getPortLinkById failed. code=%d\n", ret);
@@ -1169,15 +1169,16 @@ kern_return_t VSPSerialPort::sendResponse(IODataQueueDispatchSource* source)
         return kIOReturnBadArgument;
     }
     
-    if (!ivars->m_spi || !ivars->m_rxqbmd) {
-        VSPLog(LOG_PREFIX, "sendResponse: Device closed.\n");
-        return kIOReturnNotOpen;
-    }
-    
     VSPAquireLock(ivars);
 
+    if (!ivars->m_spi || !ivars->m_rxqbmd) {
+        VSPLog(LOG_PREFIX, "sendResponse: Device closed.\n");
+        ret = kIOReturnNotOpen;
+        goto finish;
+    }
+
     // Lock RX dispatch queue source
-    if ((ret = ivars->m_rxSource->SetEnable(false)) != kIOReturnSuccess) {
+    if ((ret = source->SetEnable(false)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "sendResponse: RX source SetEnable false failed. code=%d\n", ret);
         goto finish;
     }
@@ -1203,7 +1204,7 @@ kern_return_t VSPSerialPort::sendResponse(IODataQueueDispatchSource* source)
     VSPLog(LOG_PREFIX, "sendResponse: dequeue RX source\n");
     
     // Remove queue entry from RX queue source
-    ret = ivars->m_rxSource->Dequeue(^(const void *data, size_t dataSize) {
+    ret = source->Dequeue(^(const void *data, size_t dataSize) {
         VSPLog(LOG_PREFIX, "sendResponse: dequeue data=0x%llx size=%ld\n", (uint64_t) data, dataSize);
         // Copy data from RX queue source to RX-MD buffer
         memcpy(ivars->m_rxstate.buffer, data, dataSize);
@@ -1224,7 +1225,7 @@ kern_return_t VSPSerialPort::sendResponse(IODataQueueDispatchSource* source)
     }
     
     // Notify queue entry has been removed
-    ivars->m_rxSource->SendDataServiced();
+    source->SendDataServiced();
     
 #ifdef DEBUG // !! Debug ....
     VSPLog(LOG_PREFIX, "sendResponse: Dump m_rxqmd buffer=0x%llx size=%u\n",
@@ -1250,7 +1251,7 @@ kern_return_t VSPSerialPort::sendResponse(IODataQueueDispatchSource* source)
     ivars->m_hwStatus.dsr = true;
 
     // Unlock RX queue source
-    if ((ret = ivars->m_rxSource->SetEnable(true)) != kIOReturnSuccess) {
+    if ((ret = source->SetEnable(true)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "sendResponse: RX source SetEnable true failed. code=%d\n", ret);
     }
     

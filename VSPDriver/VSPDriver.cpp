@@ -292,23 +292,17 @@ kern_return_t VSPDriver::CreateUserClient(IOService* provider, IOUserClient** us
 // --------------------------------------------------------------------
 // Check serial port id
 //
-kern_return_t VSPDriver::checkPortId(uint8_t id)
+bool VSPDriver::checkPortId(uint8_t id)
 {
-    if (id && id < ivars->m_portCount) {
-        return kIOReturnSuccess;
-    }
-    return kIOReturnInvalid;
+    return (id && (id-1) < ivars->m_portCount);
 }
 
 // --------------------------------------------------------------------
 // Check serial port link id
 //
-kern_return_t VSPDriver::checkPortLinkId(uint8_t id)
+bool VSPDriver::checkPortLinkId(uint8_t id)
 {
-    if (id && id < ivars->m_portLinkCount) {
-        return kIOReturnSuccess;
-    }
-    return kIOReturnInvalid;
+    return (id && (id-1) < ivars->m_portLinkCount);
 }
 
 // --------------------------------------------------------------------
@@ -349,8 +343,9 @@ kern_return_t VSPDriver::getPortList(uint8_t* list, uint8_t count)
 //
 kern_return_t VSPDriver::createPortLink(uint8_t sourceId, uint8_t targetId, void** link)
 {
-    if (!link || checkPortId(sourceId) || checkPortId(targetId)) {
-        VSPLog(LOG_PREFIX, "createPortLink: Invalid arguments\n");
+    if (!link || !checkPortId(sourceId) || !checkPortId(targetId)) {
+        VSPLog(LOG_PREFIX, "createPortLink: Invalid arguments. srcId=%d tgtId=%d\n",
+               sourceId, targetId);
         return kIOReturnBadArgument;
     }
   
@@ -551,8 +546,8 @@ kern_return_t VSPDriver::getPortLinkCount(uint8_t* count)
 //
 kern_return_t VSPDriver::getPortLinkById(uint8_t id, void** result)
 {
-    if (checkPortLinkId(id) || !result) {
-        VSPLog(LOG_PREFIX, "getPortLinkById: Invalid argument.");
+    if (!checkPortLinkId(id) || !result) {
+        VSPLog(LOG_PREFIX, "getPortLinkById: Invalid argument. linkId=%d", id);
         return kIOReturnBadArgument;
     }
     
@@ -577,8 +572,9 @@ kern_return_t VSPDriver::getPortLinkById(uint8_t id, void** result)
 //
 kern_return_t VSPDriver::getPortLinkByPorts(uint8_t sourceId, uint8_t targetId, void** link)
 {
-    if (checkPortId(sourceId) || checkPortId(targetId) || !link) {
-        VSPLog(LOG_PREFIX, "getPortLinkByPorts: Invalid argument.");
+    if (!checkPortId(sourceId) || !checkPortId(targetId) || !link) {
+        VSPLog(LOG_PREFIX, "getPortLinkByPorts: Invalid argument. srcId=%d tgtId=%d",
+               sourceId, targetId);
         return kIOReturnBadArgument;
     }
     
