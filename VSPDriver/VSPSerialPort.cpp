@@ -137,8 +137,6 @@ struct VSPSerialPort_IVars {
     THwMCR m_hwMCR = {};
     uint32_t m_hwLatency = 25;
     bool m_txNextOffset = 0;
-    bool m_txIsComplete = false;
-    bool m_rxIsComplete = false;
     bool m_hwActivated = false;
 };
 
@@ -464,9 +462,6 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     // Lock to ensure thread safety
     VSPAquireLock(ivars);
     
-    // Reset first
-    ivars->m_txIsComplete = false;
-    
     // We working...
     ivars->m_hwStatus.cts = false;
     ivars->m_hwStatus.dsr = false;
@@ -519,10 +514,9 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     VSPLog(LOG_PREFIX, "TxDataAvailable: [IOSPI-TX 2] txPI: %d, txCI: %d, txqoffset: %d, txqlogsz: %d",
            ivars->m_spi->txPI, ivars->m_spi->txCI, ivars->m_spi->txqoffset, ivars->m_spi->txqlogsz);
 
-    // TX -> RX done
-    ivars->m_txIsComplete = true;
     // Update modem status
     ivars->m_hwStatus.cts = true;
+
     // reset memory
     memset(buffer, 0, size);
     
@@ -975,7 +969,7 @@ kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, cons
     uint64_t address;
     uint8_t* mdbuffer;
     
-    if (!ivars->m_spi || !ivars->m_rxqbmd || !ivars->m_txqbmd) {
+    if (!ivars->m_spi || !ivars->m_rxqbmd || !ivars->m_txqbmd || !ivars->m_hwActivated) {
         VSPLog(LOG_PREFIX, "sendResponse: Device is closed.\n");
         return kIOReturnNotOpen;
     }
