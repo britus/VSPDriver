@@ -133,15 +133,19 @@ kern_return_t IMPL(VSPDriver, Stop)
     // release allocated port links and port items.
     // Do not release VSPSerialPort instance itself!
     if (ivars) {
+        // release all link items and the list
+        if (ivars->m_portLinks && ivars->m_portLinkCount) {
+            for (uint8_t i = 0; i < ivars->m_portLinkCount; i++) {
+                IOSafeDeleteNULL(ivars->m_portLinks[i], TVSPPortLinkItem, 1);
+            }
+        }
+        IOSafeDeleteNULL(ivars->m_portLinks, TVSPPortLinkItem*, ivars->m_portLinkCount);
+
+        // release all port items and the list
         if (ivars->m_serialPorts && ivars->m_portCount) {
             for (uint8_t i = 0; i < ivars->m_portCount; i++) {
                 ivars->m_serialPorts[i]->port->unlinkParent();
                 IOSafeDeleteNULL(ivars->m_serialPorts[i], TVSPSerialPortItem, 1);
-            }
-        }
-        if (ivars->m_portLinks && ivars->m_portLinkCount) {
-            for (uint8_t i = 0; i < ivars->m_portLinkCount; i++) {
-                IOSafeDeleteNULL(ivars->m_portLinks[i], TVSPPortLinkItem, 1);
             }
         }
         IOSafeDeleteNULL(ivars->m_serialPorts, VSPSerialPort*, ivars->m_portCount);
