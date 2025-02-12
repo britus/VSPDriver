@@ -22,4 +22,4 @@ If you want to [donate my hard work](https://www.paypal.com/donate/?hosted_butto
 
 You can use the [QR-Code](https://github.com/britus/VSPDriver/blob/master/VSPDriver-Donate_Please.png) too.
 
-Thanke you very much.
+Thank you very much.
