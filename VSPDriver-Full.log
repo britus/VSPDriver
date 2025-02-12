@@ -2208,4 +2208,3 @@
 2025-02-09 17:23:46.164 Df kernel[0:573f] () [VSPSerialPort]: DisconnectQueues called
 2025-02-09 17:23:46.164 Df kernel[0:573f] () [VSPSerialPort]: => lock level=1
 2025-02-09 17:23:46.164 Df kernel[0:573f] () [VSPSerialPort]: <= lock level=1
-beschric@NWHM0091:~ ()$ 
