@@ -1,0 +1,70 @@
+[  531.949129]: [VSPSerialPort]: --------------------------------------------------
+[  531.949155]: [VSPSerialPort]: TxDataAvailable called.
+[  531.949171]: [VSPSerialPort]: => lock level=1
+[  531.949181]: [VSPSerialPort]: TxDataAvailable: [IOSPI-TX 1] txPI: 720, txCI: 702, txqoffset: 0, txqlogsz: 14
+[  531.949193]: [VSPSerialPort]: sendToPortLink called. using linkId=1
+[  531.949201]: [VSPSerialPort]: sendToPortLink: got port link.
+[  531.949210]: [VSPSerialPort]: sendToPortLink: got portId=1 -> enqueue on target
+[  531.949218]: [VSPSerialPort]: enqueueResponse called.
+[  531.949233]: [VSPSerialPort]: enqueueResponse: enqueue data=0x1009582f4 size=18
+[  531.949264]: [VSPSerialPort]: <= lock level=1
+[  531.949292]: [VSPSerialPort]: => lock level=1
+[  531.949302]: [VSPSerialPort]: ++++++++++++++++++++++++++++++++++++++++
+[  531.949308]: [VSPSerialPort]: RxEchoAsyncEvent: called.
+[  531.949317]: [VSPSerialPort]: RxEchoAsyncEvent: [IOSPI-RX 1] rxPI=18 rxCI=18 rxqoffset=0 rxqlogsz=14
+[  531.949324]: [VSPSerialPort]: RxEchoAsyncEvent: dequeue RX source
+[  531.949331]: [VSPSerialPort]: RxEchoAsyncEvent: dequeue data=0x1009582f4 size=18
+[  531.949354]: [VSPSerialPort]: RxEchoAsyncEvent: Dump m_rxqmd buffer=0x10094c000 size=18
+[  531.949363]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[00]=0x44 D
+[  531.949369]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[01]=0x44 D
+[  531.949375]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[02]=0x44 D
+[  531.949381]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[03]=0x44 D
+[  531.949387]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[04]=0x44 D
+[  531.949393]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[05]=0x44 D
+[  531.949398]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[06]=0x44 D
+[  531.949404]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[07]=0x44 D
+[  531.949410]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[08]=0x44 D
+[  531.949415]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[09]=0x44 D
+[  531.949421]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[10]=0x44 D
+[  531.949427]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[11]=0x44 D
+[  531.949432]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[12]=0x44 D
+[  531.949438]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[13]=0x44 D
+[  531.949444]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[14]=0x44 D
+[  531.949458]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[15]=0x44 D
+[  531.949465]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[16]=0x0d
+[  531.949471]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[17]=0x0a
+[  531.949477]: [VSPSerialPort]: RxEchoAsyncEvent: [IOSPI-RX 2] rxPI=18 rxCI=0 rxqoffset=0 rxqlogsz=14
+[  531.949485]: [VSPSerialPort]: RxDataAvailable called.
+[  531.949498]: [VSPSerialPort]: RxEchoAsyncEvent: complete.
+[  531.949504]: [VSPSerialPort]: <= lock level=1
+[  532.214979]: [VSPSerialPort]: --------------------------------------------------
+[  532.215000]: [VSPSerialPort]: TxDataAvailable called.
+[  532.215013]: [VSPSerialPort]: => lock level=1
+[  532.215021]: [VSPSerialPort]: TxDataAvailable: [IOSPI-TX 1] txPI: 340, txCI: 330, txqoffset: 0, txqlogsz: 14
+[  532.215031]: [VSPSerialPort]: sendToPortLink called. using linkId=1
+[  532.215038]: [VSPSerialPort]: sendToPortLink: got port link.
+[  532.215044]: [VSPSerialPort]: sendToPortLink: got portId=2 -> enqueue on target
+[  532.215051]: [VSPSerialPort]: enqueueResponse called.
+[  532.215087]: [VSPSerialPort]: enqueueResponse: enqueue data=0x10096a31c size=10
+[  532.215115]: [VSPSerialPort]: <= lock level=1
+[  532.215137]: [VSPSerialPort]: => lock level=1
+[  532.215141]: [VSPSerialPort]: ++++++++++++++++++++++++++++++++++++++++
+[  532.215145]: [VSPSerialPort]: RxEchoAsyncEvent: called.
+[  532.215151]: [VSPSerialPort]: RxEchoAsyncEvent: [IOSPI-RX 1] rxPI=10 rxCI=10 rxqoffset=0 rxqlogsz=14
+[  532.215156]: [VSPSerialPort]: RxEchoAsyncEvent: dequeue RX source
+[  532.215162]: [VSPSerialPort]: RxEchoAsyncEvent: dequeue data=0x10096a31c size=10
+[  532.215180]: [VSPSerialPort]: RxEchoAsyncEvent: Dump m_rxqmd buffer=0x10095e000 size=10
+[  532.215186]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[00]=0x38 8
+[  532.215191]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[01]=0x38 8
+[  532.215196]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[02]=0x38 8
+[  532.215200]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[03]=0x38 8
+[  532.215205]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[04]=0x38 8
+[  532.215209]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[05]=0x38 8
+[  532.215214]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[06]=0x38 8
+[  532.215218]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[07]=0x38 8
+[  532.215223]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[08]=0x0d
+[  532.215227]: [VSPSerialPort]: RxEchoAsyncEvent: buffer[09]=0x0a
+[  532.215232]: [VSPSerialPort]: RxEchoAsyncEvent: [IOSPI-RX 2] rxPI=10 rxCI=0 rxqoffset=0 rxqlogsz=14
+[  532.215238]: [VSPSerialPort]: RxDataAvailable called.
+[  532.215249]: [VSPSerialPort]: RxEchoAsyncEvent: complete.
+[  532.215253]: [VSPSerialPort]: <= lock level=1

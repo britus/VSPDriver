@@ -535,8 +535,8 @@ void IMPL(VSPSerialPort, NotifyRXReady)
 // Called by RX data available dispatch queue source
 void IMPL(VSPSerialPort, RxEchoAsyncEvent)
 {
-    IODataQueueDispatchSource* source;
     IOReturn ret;
+    uint64_t address;
     
     // Lock to ensure thread safety
     VSPAquireLock(ivars);
@@ -547,7 +547,7 @@ void IMPL(VSPSerialPort, RxEchoAsyncEvent)
         //VSPLog(LOG_PREFIX, "RxEchoAsyncEvent RX source is empty, done.\n");
         goto finish;
     }
-    
+
     VSPLog(LOG_PREFIX, "++++++++++++++++++++++++++++++++++++++++\n");
     VSPLog(LOG_PREFIX, "RxEchoAsyncEvent: called.\n");
     
@@ -556,29 +556,90 @@ void IMPL(VSPSerialPort, RxEchoAsyncEvent)
         VSPLog(LOG_PREFIX, "RxEchoAsyncEvent bad argument. action=0%llx\n", (uint64_t) action);
         goto finish;
     }
-  
-    // This port is assigned to a port link?
-    if (ivars->m_portLinkId) {
-        // source for other port instance
-        source = ivars->m_rxSource;
-        // sendToPortLink lock also
-        VSPUnlock(ivars);
-        // send to other port instance
-        if ((ret = sendToPortLink(source)) != kIOReturnSuccess) {
-            VSPLog(LOG_PREFIX, "RxEchoAsyncEvent: Data routing failed. code=%d\n", ret);
-        }
-        return;
-     }
 
-    // set my own RX source
-    source = ivars->m_rxSource;
-    // sendResponse lock also
-    VSPUnlock(ivars);
-    // echo to my self...
-    sendResponse(source);
-    // no double unlock :)
-    return;
+    if (!ivars->m_spi || !ivars->m_rxqbmd || !ivars->m_rxSource) {
+        VSPLog(LOG_PREFIX, "RxEchoAsyncEvent: Device closed.\n");
+        goto finish;
+    }
+
+    // Lock RX dispatch queue source
+    if ((ret = ivars->m_rxSource->SetEnable(false)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "RxEchoAsyncEvent: RX source SetEnable false failed. code=%d\n", ret);
+        goto finish;
+    }
     
+    // Update modem status
+    ivars->m_hwStatus.dsr = false;
+
+    VSPLog(LOG_PREFIX, "RxEchoAsyncEvent: [IOSPI-RX 1] rxPI=%d rxCI=%d rxqoffset=%d rxqlogsz=%d\n",
+           ivars->m_spi->rxPI, ivars->m_spi->rxCI, ivars->m_spi->rxqoffset, ivars->m_spi->rxqlogsz);
+    
+    // reset [!! 1 !!]
+    // We start always our response from beginning
+    // of the memory descriptor buffer
+    ivars->m_spi->rxPI = 0;
+    ivars->m_spi->rxCI = 0;
+    
+    // Get address to the RX ring buffer
+    address = ivars->m_rxseg.address + ivars->m_spi->rxPI;
+    ivars->m_rxstate.buffer = reinterpret_cast<uint8_t*>(address);
+    ivars->m_rxstate.length = 0;
+    
+    VSPLog(LOG_PREFIX, "RxEchoAsyncEvent: dequeue RX source\n");
+    
+    // Remove queue entry from RX queue source
+    ret = ivars->m_rxSource->Dequeue(^(const void *data, size_t dataSize) {
+        VSPLog(LOG_PREFIX, "RxEchoAsyncEvent: dequeue data=0x%llx size=%ld\n", (uint64_t) data, dataSize);
+        // Copy data from RX queue source to RX-MD buffer
+        memcpy(ivars->m_rxstate.buffer, data, dataSize);
+        // Save transfered data size
+        ivars->m_rxstate.length = (uint32_t) dataSize;
+    });
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "RxEchoAsyncEvent: RX dequeue failed. code=%d\n", ret);
+        switch (ret) {
+            case kIOReturnUnderrun:
+                VSPLog(LOG_PREFIX, "RxEchoAsyncEvent: ^^-> underrun\n");
+                break;
+            case kIOReturnError:
+                VSPLog(LOG_PREFIX, "RxEchoAsyncEvent: ^^-> corrupt\n");
+                break;
+        }
+        goto finish;
+    }
+    
+    // Notify queue entry has been removed
+    ivars->m_rxSource->SendDataServiced();
+
+#ifdef DEBUG // !! Debug ....
+    VSPLog(LOG_PREFIX, "RxEchoAsyncEvent: Dump m_rxqmd buffer=0x%llx size=%u\n",
+           (uint64_t) ivars->m_rxstate.buffer, ivars->m_rxstate.length);
+    
+    for (uint64_t i = 0; i < ivars->m_rxstate.length; i++) {
+        VSPLog(LOG_PREFIX, "RxEchoAsyncEvent: buffer[%02lld]=0x%02x %c\n", i,
+               ivars->m_rxstate.buffer[i], ivars->m_rxstate.buffer[i]);
+    }
+#endif
+    
+    // Update RX producer index
+    ivars->m_spi->rxPI = ivars->m_rxstate.length;
+    
+    VSPLog(LOG_PREFIX, "RxEchoAsyncEvent: [IOSPI-RX 2] rxPI=%d rxCI=%d rxqoffset=%d rxqlogsz=%d\n",
+           ivars->m_spi->rxPI, ivars->m_spi->rxCI, ivars->m_spi->rxqoffset, ivars->m_spi->rxqlogsz);
+
+    // Unlock RX queue source
+    if ((ret = ivars->m_rxSource->SetEnable(true)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "RxEchoAsyncEvent: RX source SetEnable true failed. code=%d\n", ret);
+    }
+    
+    // Update modem status
+    ivars->m_hwStatus.dsr = true;
+
+    // Notify OS interrest parties
+    this->RxDataAvailable_Impl();
+
+    VSPLog(LOG_PREFIX, "RxEchoAsyncEvent: complete.\n");
+
 finish:
     VSPUnlock(ivars);
 }
@@ -586,6 +647,23 @@ finish:
 // --------------------------------------------------------------------
 // TxDataAvailable_Impl()
 // TX data ready to read from m_txqbmd segment
+
+static inline void update_txqbmd(struct VSPSerialPort_IVars* ivars)
+{
+    // We reserve 1K size from the capacity from t_txqbmd.
+    // This protects against a buffer overflow.
+    if (((uint32_t) ivars->m_txseg.length - ivars->m_spi->txPI) < 1024) {
+        ivars->m_spi->txPI = 0;
+        ivars->m_spi->txCI = 0;
+    }
+    // Reset TX consumer index to end of received block. This increases the
+    // offset for the m_txqbmd buffer. Finally the DEXT crash if to protection.
+    // Reset values like txPI = 0 and txCI = 0 after some transmissions.
+    else {
+        ivars->m_spi->txCI = ivars->m_spi->txPI;
+    }
+}
+
 void IMPL(VSPSerialPort, TxDataAvailable)
 {
     IOReturn ret;
@@ -615,7 +693,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
         VSPLog(LOG_PREFIX, "TxDataAvailable: spi->txPI is zero, skip\n");
         goto finish;
     }
-    
+
     // Get address of new TX data position
     address = ivars->m_txseg.address + ivars->m_spi->txCI;
     buffer  = reinterpret_cast<uint8_t*>(address);
@@ -623,6 +701,27 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     // Calculate available data in TX buffer
     size = ivars->m_spi->txPI - ivars->m_spi->txCI;
     
+    // This port is assigned to a port link?
+    if (ivars->m_portLinkId) {
+        // send to other port instance -
+        // may be we have to copy the buffer instead to use
+        // IOMemoryDescriptor of this instance directly
+        if ((ret = sendToPortLink(buffer, size)) != kIOReturnSuccess) {
+            VSPLog(LOG_PREFIX, "TxDataAvailable: Data routing failed. code=%d\n", ret);
+        } 
+        else {
+            // update TX in serial port interface
+            update_txqbmd(ivars);
+            // TX -> RX done
+            ivars->m_txIsComplete = true;
+            // Update modem status
+            ivars->m_hwStatus.cts = true;
+            // reset memory
+            memset(buffer, 0, size);
+        }
+        goto finish;
+    }
+
 #ifdef DEBUG // !! Debug ....
     VSPLog(LOG_PREFIX, "TxDataAvailable: dump buffer=0x%llx len=%u\n", (uint64_t) buffer, size);
     
@@ -637,26 +736,17 @@ void IMPL(VSPSerialPort, TxDataAvailable)
         goto finish;
     }
     
-    // TX -> RX echo done
-    ivars->m_txIsComplete = true;
-    
-    // We reserve 1K size from the capacity from t_txqbmd.
-    // This protects against a buffer overflow.
-    if (((uint32_t) ivars->m_txseg.length - ivars->m_spi->txPI) < 1024) {
-        ivars->m_spi->txPI = 0;
-        ivars->m_spi->txCI = 0;
-    }
-    // Reset TX consumer index to end of received block. This increases the
-    // offset for the m_txqbmd buffer. Finally the DEXT crash if to protection.
-    // Reset values like txPI = 0 and txCI = 0 after some transmissions.
-    else {
-        ivars->m_spi->txCI = ivars->m_spi->txPI;
-    }
-    
+    // update TX in serial port interface
+    update_txqbmd(ivars);
+
     // Show me indexes be fore manipulation
     VSPLog(LOG_PREFIX, "TxDataAvailable: [IOSPI-TX 2] txPI: %d, txCI: %d, txqoffset: %d, txqlogsz: %d",
            ivars->m_spi->txPI, ivars->m_spi->txCI, ivars->m_spi->txqoffset, ivars->m_spi->txqlogsz);
-    
+
+    // TX -> RX done
+    ivars->m_txIsComplete = true;
+    // Update modem status
+    ivars->m_hwStatus.cts = true;
     // reset memory
     memset(buffer, 0, size);
     
@@ -667,8 +757,8 @@ finish:
 }
 
 // --------------------------------------------------------------------
-// Enque given buffer in RX dispatch source and raise async event
-// Enqueue given buffer into RX dispatch queue source
+// Enqueue given buffer in RX dispatch source and raise async event
+//
 kern_return_t VSPSerialPort::enqueueResponse(void* buffer, uint64_t size)
 {
     IOReturn ret = 0;
@@ -1105,29 +1195,26 @@ kern_return_t VSPSerialPort::setupTTYBaseName()
 }
 
 // --------------------------------------------------------------------
-// Called by RxEchoAsyncEvent in case of 'port is linked' state
+// Called by TxDataAvailable in case of 'port is linked' state
 //
-kern_return_t VSPSerialPort::sendToPortLink(IODataQueueDispatchSource* source)
+kern_return_t VSPSerialPort::sendToPortLink(uint8_t* buffer, uint64_t size)
 {
     IOReturn ret;
     VSPSerialPort* port = nullptr;
     TVSPPortLinkItem* item = nullptr;
-    
-    VSPLog(LOG_PREFIX, "sendToPortLink called.\n");
-
-    VSPAquireLock(ivars);
-
-    void* link = nullptr;
     uint8_t id = ivars->m_portLinkId;
+    void* link = nullptr;
+
+    VSPLog(LOG_PREFIX, "sendToPortLink called. using linkId=%d\n", id);
+
     if ((ret = ivars->m_parent->getPortLinkById(id, &link)) || !link) {
         VSPLog(LOG_PREFIX, "sendToPortLink: Parent getPortLinkById failed. code=%d\n", ret);
-        goto finish;
+        return ret;
     }
- 
+
+    VSPLog(LOG_PREFIX, "sendToPortLink: got port link.\n");
+
     item = reinterpret_cast<TVSPPortLinkItem*>(link);
-    
-    VSPLog(LOG_PREFIX, "sendToPortLink: got linkId=%d\n", item->id);
-    
     if (item->sourcePort.id != ivars->m_portId) {
         port = item->sourcePort.port;
     }
@@ -1136,130 +1223,18 @@ kern_return_t VSPSerialPort::sendToPortLink(IODataQueueDispatchSource* source)
     } else {
         VSPLog(LOG_PREFIX, "sendToPortLink: Double port IDs detectd! myLinkId=%d myPortId=%d\n",
                id, ivars->m_portId);
-        ret = kIOReturnInvalid;
-        goto finish;
+        return kIOReturnInvalid;
     }
     if (!port) {
         VSPLog(LOG_PREFIX, "sendToPortLink: Linked port NULL pointer! myLinkId=%d myPortId=%d\n",
                id, ivars->m_portId);
-        ret = kIOReturnInvalid;
-        goto finish;
+        return kIOReturnInvalid;
     }
    
-    VSPLog(LOG_PREFIX, "sendToPortLink: got portId=%d\n", port->getPortIdentifier());
+    VSPLog(LOG_PREFIX, "sendToPortLink: got portId=%d -> enqueue on target\n",
+           port->getPortIdentifier());
 
-    VSPUnlock(ivars);
-    return port->sendResponse(source);
-    
-finish:
-    VSPUnlock(ivars);
-    return ret;
-}
-
-// --------------------------------------------------------------------
-// Called by other port instance or RxEchoAsyncEvent
-//
-kern_return_t VSPSerialPort::sendResponse(IODataQueueDispatchSource* source)
-{
-    IOReturn ret;
-    uint64_t address;
-
-    if (!source) {
-        VSPLog(LOG_PREFIX, "sendResponse: Invalid argument.\n");
-        return kIOReturnBadArgument;
-    }
-    
-    VSPAquireLock(ivars);
-
-    if (!ivars->m_spi || !ivars->m_rxqbmd) {
-        VSPLog(LOG_PREFIX, "sendResponse: Device closed.\n");
-        ret = kIOReturnNotOpen;
-        goto finish;
-    }
-
-    // Lock RX dispatch queue source
-    if ((ret = source->SetEnable(false)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "sendResponse: RX source SetEnable false failed. code=%d\n", ret);
-        goto finish;
-    }
-    
-    // Update modem status
-    ivars->m_hwStatus.cts = false;
-    ivars->m_hwStatus.dsr = false;
-
-    VSPLog(LOG_PREFIX, "sendResponse: [IOSPI-RX 1] rxPI=%d rxCI=%d rxqoffset=%d rxqlogsz=%d\n",
-           ivars->m_spi->rxPI, ivars->m_spi->rxCI, ivars->m_spi->rxqoffset, ivars->m_spi->rxqlogsz);
-    
-    // reset [!! 1 !!]
-    // We start always our response from beginning
-    // of the memory descriptor buffer
-    ivars->m_spi->rxPI = 0;
-    ivars->m_spi->rxCI = 0;
-    
-    // Get address to the RX ring buffer
-    address = ivars->m_rxseg.address + ivars->m_spi->rxPI;
-    ivars->m_rxstate.buffer = reinterpret_cast<uint8_t*>(address);
-    ivars->m_rxstate.length = 0;
-    
-    VSPLog(LOG_PREFIX, "sendResponse: dequeue RX source\n");
-    
-    // Remove queue entry from RX queue source
-    ret = source->Dequeue(^(const void *data, size_t dataSize) {
-        VSPLog(LOG_PREFIX, "sendResponse: dequeue data=0x%llx size=%ld\n", (uint64_t) data, dataSize);
-        // Copy data from RX queue source to RX-MD buffer
-        memcpy(ivars->m_rxstate.buffer, data, dataSize);
-        // Save transfered data size
-        ivars->m_rxstate.length = (uint32_t) dataSize;
-    });
-    if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "sendResponse: RX dequeue failed. code=%d\n", ret);
-        switch (ret) {
-            case kIOReturnUnderrun:
-                VSPLog(LOG_PREFIX, "sendResponse: ^^-> underrun\n");
-                break;
-            case kIOReturnError:
-                VSPLog(LOG_PREFIX, "sendResponse: ^^-> corrupt\n");
-                break;
-        }
-        goto finish;
-    }
-    
-    // Notify queue entry has been removed
-    source->SendDataServiced();
-    
-#ifdef DEBUG // !! Debug ....
-    VSPLog(LOG_PREFIX, "sendResponse: Dump m_rxqmd buffer=0x%llx size=%u\n",
-           (uint64_t) ivars->m_rxstate.buffer, ivars->m_rxstate.length);
-    
-    for (uint64_t i = 0; i < ivars->m_rxstate.length; i++) {
-        VSPLog(LOG_PREFIX, "sendResponse: buffer[%02lld]=0x%02x %c\n", i,
-               ivars->m_rxstate.buffer[i], ivars->m_rxstate.buffer[i]);
-    }
-#endif
-    
-    // Update RX producer index
-    ivars->m_spi->rxPI = ivars->m_rxstate.length;
-    
-    VSPLog(LOG_PREFIX, "sendResponse: [IOSPI-RX 2] rxPI=%d rxCI=%d rxqoffset=%d rxqlogsz=%d\n",
-           ivars->m_spi->rxPI, ivars->m_spi->rxCI, ivars->m_spi->rxqoffset, ivars->m_spi->rxqlogsz);
-        
-    // Notify OS interrest parties
-    this->RxDataAvailable_Impl();
-
-    // Update modem status
-    ivars->m_hwStatus.cts = true;
-    ivars->m_hwStatus.dsr = true;
-
-    // Unlock RX queue source
-    if ((ret = source->SetEnable(true)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "sendResponse: RX source SetEnable true failed. code=%d\n", ret);
-    }
-    
-    VSPLog(LOG_PREFIX, "sendResponse: complete.\n");
-    
-finish:
-    VSPUnlock(ivars);
-    return ret;
+    return port->enqueueResponse(buffer, size);
 }
 
 // Notify RX complete to OS interrest parties

@@ -103,10 +103,7 @@ public:
     kern_return_t enqueueResponse(void* buffer, uint64_t size) LOCALONLY;
     
     // routing through port link
-    kern_return_t sendToPortLink(IODataQueueDispatchSource* source) LOCALONLY;
-    
-    // send response data
-    kern_return_t sendResponse(IODataQueueDispatchSource* source) LOCALONLY;
+    kern_return_t sendToPortLink(uint8_t* buffer, uint64_t size) LOCALONLY;
 };
 
 
