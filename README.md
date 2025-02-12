@@ -18,5 +18,7 @@ a installation App suggested by Apple.
 - Write a controller app that handles the complete management of the port links and provides a TCP server to redirect the data from the serial interface to TCP/IP.
 
 ### Donation
-If you want to [donate my hard work](<link https://www.paypal.com/donate/?hosted_button_id=4QZT5YLGGW7S4>), please feel free and do it :-)
+If you want to [donate my hard work](link https://www.paypal.com/donate/?hosted_button_id=4QZT5YLGGW7S4), please feel free and do it :-)
+You can use the [QR-Code](https://github.com/britus/VSPDriver/blob/master/VSPDriver-Donate_Please.png) too.
+
 Thanke you very much.
