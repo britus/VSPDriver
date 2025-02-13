@@ -41,9 +41,10 @@ public:
     
     // called by VSPDriver instance
     void setParent(VSPDriver* parent) LOCALONLY;
-    
+    void unlinkParent() LOCALONLY;
+
     // Schedule timed event -> IOTimerDispatchSource::TimerOccurred
-    kern_return_t scheduleEvent(void) LOCALONLY;
+    kern_return_t scheduleEvent(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
     
     // Prepares async response
     kern_return_t prepareResponse(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
@@ -56,7 +57,15 @@ public:
     static
     kern_return_t exGetStatus(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
     kern_return_t getStatus(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
-    
+
+    static
+    kern_return_t exCreatePort(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    kern_return_t createPort(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+
+    static
+    kern_return_t exRemovePort(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    kern_return_t removePort(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+
     static
     kern_return_t exGetPortList(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
     kern_return_t getPortList(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;

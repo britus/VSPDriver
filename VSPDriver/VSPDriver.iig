@@ -31,9 +31,12 @@ public:
     
     bool checkPortId(uint8_t id) LOCALONLY;
     bool checkPortLinkId(uint8_t id) LOCALONLY;
+    
+    kern_return_t createPort() LOCALONLY;
+    kern_return_t removePort(uint8_t portId) LOCALONLY;
     kern_return_t getPortCount(uint8_t* count) LOCALONLY;
     kern_return_t getPortList(uint8_t* list, uint8_t count) LOCALONLY;
-    
+    kern_return_t getPortLinkList(uint8_t* list, uint8_t count) LOCALONLY;
     kern_return_t createPortLink(uint8_t sourceId, uint8_t targetId, void** link) LOCALONLY;
     kern_return_t removePortLink(void* link) LOCALONLY;
     kern_return_t getPortLinkCount(uint8_t* count) LOCALONLY;

@@ -12,6 +12,10 @@
 // used by VSPDriver
 // --------------------------------------------------------
 
+#ifndef BIT
+#define BIT(x) (1 << x)
+#endif
+
 // forward
 class VSPSerialPort;
 
@@ -33,14 +37,16 @@ typedef struct {
 namespace VSPController {
 
 typedef enum {
-    vspContextPing = 1,
-    vspContextPort = 2,
-    vspContextResult = 3,
-    vspContextError = 4,
+    vspContextPing   = 0x01,
+    vspContextPort   = 0x02,
+    vspContextResult = 0x03,
+    vspContextError  = 0x04,
 } TVSPUserContext;
 
 typedef enum {
     vspControlGetStatus,
+    vspControlCreatePort,
+    vspControlRemovePort,
     vspControlGetPortList,
     vspControlLinkPorts,
     vspControlUnlinkPorts,
@@ -54,6 +60,10 @@ typedef struct {
     uint8_t sourceId;
     uint8_t targetId;
 } TVSPPortLink;
+
+#define CONTROL_MAGIC 0xBE6605250000L
+#define MAX_SERIAL_PORTS 16
+#define MAX_PORT_LINKS 8
 
 typedef struct {
     /* In whitch context calld */
@@ -70,8 +80,13 @@ typedef struct {
     /* Available serial ports */
     struct PortList {
         uint8_t count;
-        uint8_t list[16];
+        uint8_t list[MAX_SERIAL_PORTS];
     } ports;
+    /* Available serial port links */
+    struct LinkList {
+        uint8_t count;
+        uint8_t list[MAX_PORT_LINKS];
+    } links;
     /* Command status response */
     struct Status {
         uint32_t code;

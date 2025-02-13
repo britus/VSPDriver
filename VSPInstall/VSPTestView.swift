@@ -33,7 +33,7 @@ struct VSPTestView: View {
 
     private var headerView: some View {
         VStack(alignment: .center) {
-            Text("Driver Communication").font(.title)
+            Text("Driver Communication").font(.title).padding(.top)
 
             HStack(alignment: .center) {
                 Button(
@@ -87,7 +87,7 @@ struct VSPTestView: View {
 
     private var checkedView: some View {
         VStack(alignment: .leading) {
-            Text("Checked").font(.title2)
+            Text("Checked").font(.title2).padding(.top)
 
             HStack(alignment: .center) {
                 Button(

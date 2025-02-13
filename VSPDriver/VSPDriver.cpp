@@ -20,8 +20,8 @@
 // -- My
 #include "VSPDriver.h"
 #include "VSPLogger.h"
-#include "VSPSerialPort.h"
 #include "VSPController.h"
+#include "VSPSerialPort.h"
 #include "VSPUserClient.h"
 
 #define LOG_PREFIX "VSPDriver"
@@ -203,7 +203,7 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count)
         VSPLog(LOG_PREFIX, "CreateSerialPort: Out of memory.\n");
         return kIOReturnNoMemory;
     }
-    
+
     // do it
     for (uint8_t i = 0; i < count && i < kVSPMaxumumPorts; i++) {
         VSPLog(LOG_PREFIX, "CreateSerialPort: Create serial port %d.\n", i);
@@ -290,6 +290,92 @@ kern_return_t VSPDriver::CreateUserClient(IOService* provider, IOUserClient** us
 }
 
 // --------------------------------------------------------------------
+// Create new VSPSerialPort incstance (called by VSPUserClient)
+//
+kern_return_t VSPDriver::createPort()
+{
+    if (ivars->m_portCount >= MAX_SERIAL_PORTS) {
+        VSPLog(LOG_PREFIX, "createPort: Maximum of %d serial ports reaced.\n",
+               ivars->m_portCount);
+        return kIOReturnNoSpace;
+    }
+    return CreateSerialPort(GetProvider(), 1);
+}
+
+// --------------------------------------------------------------------
+// Remove VSPSerialPort incstance by given portId
+// (called by VSPUserClient)
+//
+kern_return_t VSPDriver::removePort(uint8_t portId)
+{
+    uint8_t count = ivars->m_portCount;
+    uint8_t found = 0;
+    
+    if (count == 0) {
+        return kIOReturnNotFound;
+    }
+
+    if (!checkPortId(portId)) {
+        return kIOReturnBadArgument;
+    }
+    
+    // old port list to remove
+    TVSPSerialPortItem** oldl = ivars->m_serialPorts;
+
+    // new port link list
+    TVSPSerialPortItem** newl;
+    if (!(newl= IONewZero(TVSPSerialPortItem*, count - 1))) {
+        VSPLog(LOG_PREFIX, "removePort: Out of memory.\n");
+        return kIOReturnNoMemory;
+    }
+
+    /* find serial port in port link table and remove this link item */
+    if (ivars->m_portLinkCount) {
+        for (uint8_t i = 0; i < ivars->m_portLinkCount; i++) {
+            TVSPPortLinkItem* pli;
+            if (!(pli = ivars->m_portLinks[i])) {
+                continue;
+            }
+            if (pli->sourcePort.id == portId) {
+                removePortLink(pli);
+                break;
+            }
+            else if (pli->targetPort.id == portId) {
+                removePortLink(pli);
+                break;
+            }
+        }
+    }
+    
+    /* find given serial port item and exclude this from new new list */
+    for (uint8_t i = 0, j = 0; i < count; i++) {
+        TVSPSerialPortItem* item;
+        if (!(item = ivars->m_serialPorts[i])) {
+            continue;
+        }
+        if (item->id == portId) {
+            VSPLog(LOG_PREFIX, "removePort: Port id=%d found. Release VSPSerialPort\n", item->id);
+            OSSafeReleaseNULL(item->port);
+            IOSafeDeleteNULL(item, TVSPSerialPortItem, 1);
+            found = 1;
+        } else {
+            newl[j++] = item;
+        }
+    }
+
+    // remove serial port
+    if (found) {
+        ivars->m_serialPorts = newl;
+        ivars->m_portCount--;
+        IOSafeDeleteNULL(oldl, TVSPPortLinkItem*, count);
+        return kIOReturnSuccess; // done!
+    }
+
+    IOSafeDeleteNULL(newl, TVSPPortLinkItem*, count - 1);
+    return kIOReturnNotFound;
+}
+
+// --------------------------------------------------------------------
 // Check serial port id
 //
 bool VSPDriver::checkPortId(uint8_t id)
@@ -310,11 +396,12 @@ bool VSPDriver::checkPortLinkId(uint8_t id)
 //
 kern_return_t VSPDriver::getPortCount(uint8_t* count)
 {
-    if (!count) {
+    if (count == nullptr) {
         return kIOReturnBadArgument;
     }
     
     (*count) = ivars->m_portCount;
+
     return kIOReturnSuccess;
 }
 
@@ -323,7 +410,7 @@ kern_return_t VSPDriver::getPortCount(uint8_t* count)
 //
 kern_return_t VSPDriver::getPortList(uint8_t* list, uint8_t count)
 {
-    if (!list || count >= ivars->m_portCount) {
+    if (!list) {
         return kIOReturnBadArgument;
     }
     
@@ -339,6 +426,26 @@ kern_return_t VSPDriver::getPortList(uint8_t* list, uint8_t count)
 }
 
 // --------------------------------------------------------------------
+// Return all IDs of all allocated serial ports
+//
+kern_return_t VSPDriver::getPortLinkList(uint8_t* list, uint8_t count)
+{
+    if (!list) {
+        return kIOReturnBadArgument;
+    }
+    
+    if (ivars->m_portCount == 0 || !ivars->m_serialPorts) {
+        return kIOReturnNotFound;
+    }
+    
+    for(uint8_t i = 0; i < count && i < ivars->m_portCount; i++) {
+        list[i] = ivars->m_portLinks[i]->id;
+    }
+    
+    return kIOReturnSuccess;
+}
+
+// --------------------------------------------------------------------
 // Create a link between two serial ports
 //
 kern_return_t VSPDriver::createPortLink(uint8_t sourceId, uint8_t targetId, void** link)
@@ -348,7 +455,13 @@ kern_return_t VSPDriver::createPortLink(uint8_t sourceId, uint8_t targetId, void
                sourceId, targetId);
         return kIOReturnBadArgument;
     }
-  
+    
+    if (ivars->m_portLinkCount >= MAX_PORT_LINKS) {
+        VSPLog(LOG_PREFIX, "createPortLink: Maximum of %d links reaced. srcId=%d tgtId=%d\n",
+               ivars->m_portLinkCount, sourceId, targetId);
+        return kIOReturnNoSpace;
+    }
+    
     TVSPSerialPortItem* src = nullptr;
     TVSPSerialPortItem* tgt = nullptr;
     
@@ -532,12 +645,13 @@ kern_return_t VSPDriver::removePortLink(void *link)
 //
 kern_return_t VSPDriver::getPortLinkCount(uint8_t* count)
 {
-    if (!count) {
+    if (count == nullptr) {
         VSPLog(LOG_PREFIX, "getPortLinkCount: Invalid argument.");
         return kIOReturnBadArgument;
     }
-    
+
     (*count) = ivars->m_portLinkCount;
+
     return kIOReturnSuccess;
 }
 

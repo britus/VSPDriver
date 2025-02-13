@@ -1,0 +1,186 @@
+// ********************************************************************
+// VSPController.cpp - VSPDriver user client controller (private)
+//
+// Copyright © 2025 by EoF Software Labs
+// Copyright © 2024 Apple Inc. (some copied parts)
+// SPDX-License-Identifier: MIT
+// ********************************************************************
+/* The classes below are not exported */
+#pragma GCC visibility push(hidden)
+
+#include <CoreFoundation/CoreFoundation.h>
+#include <CoreFoundation/CFNotificationCenter.h>
+#include <IOKit/IOTypes.h>
+#include <IOKit/IOKitLib.h>
+
+typedef enum {
+    vspContextPing   = 0x01,
+    vspContextPort   = 0x02,
+    vspContextResult = 0x03,
+    vspContextError  = 0x04,
+} TVSPUserContext;
+
+typedef enum {
+    vspControlGetStatus,
+    vspControlCreatePort,
+    vspControlRemovePort,
+    vspControlGetPortList,
+    vspControlLinkPorts,
+    vspControlUnlinkPorts,
+    vspControlEnableChecks,
+    vspControlEnableTrace,
+    // Has to be last
+    vspLastCommand,
+} TVSPControlCommand;
+
+typedef struct {
+    uint8_t sourceId;
+    uint8_t targetId;
+} TVSPPortLink;
+
+#define CONTROL_MAGIC 0xBE6605250000L
+#define MAX_SERIAL_PORTS 16
+#define MAX_PORT_LINKS 8
+
+typedef struct {
+    /* In whitch context calld */
+    TVSPUserContext context;
+    /* User client command */
+    TVSPControlCommand command;
+    /* Command parameters */
+    struct Parameter {
+        /* command flags */
+        uint64_t flags;
+        /* port parameters */
+        TVSPPortLink portLink;
+    } parameter;
+    /* Available serial ports */
+    struct PortList {
+        uint8_t count;
+        uint8_t list[MAX_SERIAL_PORTS];
+    } ports;
+    /* Available serial port links */
+    struct LinkList {
+        uint8_t count;
+        uint8_t list[MAX_PORT_LINKS];
+    } links;
+    /* Command status response */
+    struct Status {
+        uint32_t code;
+        uint64_t flags;
+    } status;
+} TVSPControllerData;
+
+#ifndef VSP_UCD_SIZE
+#define VSP_UCD_SIZE sizeof(TVSPControllerData)
+#endif
+
+namespace VSPClient {
+
+class VSPController;
+class VSPControllerPriv
+{
+public:
+    friend class VSPController;
+    
+    /** ----------------------
+     *
+     */
+    VSPControllerPriv(VSPController* parent);
+    /** ----------------------
+     *
+     */
+    virtual ~VSPControllerPriv();
+    /** ----------------------
+     *
+     */
+    bool ConnectDriver();
+    /** ----------------------
+     *
+     */
+    bool GetStatus();
+    /** ----------------------
+     *
+     */
+    bool IsConnected();
+    /** ----------------------
+     *
+     */
+    bool CreatePort();
+    /** ----------------------
+     *
+     */
+    bool RemovePort(const uint8_t id);
+    /** ----------------------
+     *
+     */
+    bool GetPortList();
+    /** ----------------------
+     *
+     */
+    bool LinkPorts(const uint8_t source, const uint8_t target);
+    /** ----------------------
+     *
+     */
+    bool UnlinkPorts(const uint8_t source, const uint8_t target);
+    /** ----------------------
+     *
+     */
+    bool EnableChecks(const uint8_t port);
+    /** ----------------------
+     *
+     */
+    bool EnableTrace(const uint8_t port);
+    /** ----------------------
+     *
+     */
+    const char* DeviceName() const;
+    /** ----------------------
+     *
+     */
+    const char* DevicePath() const;
+
+    // called by static DeviceAdded and DeviceRemoved to set connection object
+    void SetConnection(io_connect_t connection);
+    
+    // called by static AsyncCallback as result of IOUserClient callback
+    void AsyncCallback(IOReturn result, void** args, UInt32 numArgs);
+    
+    // called by static DeviceAdded too
+    void ReportError(IOReturn error, const char* message);
+    
+    // called by static DeviceAdded too
+    void SetNameAndPath(const char* name, const char* path);
+    
+private:
+    // If you don't know what value to use here, it should be identical to the
+    // IOUserClass value in your IOKitPersonalities. You can double check
+    // by searching with the `ioreg` command in your terminal. It will be of
+    // type "IOUserService" not "IOUserServer". The client Info.plist must
+    // contain:
+    // <key>com.apple.developer.driverkit.userclient-access</key>
+    // <array>
+    //     <string>VSPDriver</string>
+    // </array>
+    //
+    const char* dextIdentifier = "VSPDriver";
+    
+    mach_port_t             m_machNotificationPort;
+    CFRunLoopRef            m_runLoop = NULL;
+    CFRunLoopSourceRef      m_runLoopSource = NULL;
+    io_iterator_t           m_deviceAddedIter = IO_OBJECT_NULL;
+    io_iterator_t           m_deviceRemovedIter = IO_OBJECT_NULL;
+    IONotificationPortRef   m_notificationPort = NULL;
+    io_connect_t            m_connection = NULL;
+    VSPController*          m_controller = NULL;
+    io_name_t               m_deviceName;
+    io_name_t               m_devicePath;
+
+    inline bool UserClientSetup(void* refcon);
+    inline void UserClientTeardown(void);
+    inline bool DoAsyncCall(const TVSPControllerData* input);
+};
+
+} // END namespace
+
+#pragma GCC visibility pop

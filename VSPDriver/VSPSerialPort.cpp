@@ -491,7 +491,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     }
 #endif
     
-    // This port is assigned to a port link?
+    // Is port is assigned to a port link?
     if (ivars->m_portLinkId) {
         // send TX to other port instance
         if ((ret = sendToPortLink(buffer, size)) != kIOReturnSuccess) {
