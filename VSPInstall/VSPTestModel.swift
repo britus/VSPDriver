@@ -10,7 +10,6 @@ import Foundation
 @_silgen_name("SwiftAsyncCallback")
 func SwiftAsyncCallback(refcon: UnsafeMutableRawPointer, result: IOReturn, args: UnsafeMutableRawPointer, numArgs: UInt32) {
     let viewModel: VSPTestModel = Unmanaged<VSPTestModel>.fromOpaque(refcon).takeUnretainedValue()
-
     let argsPointer = args.bindMemory(to: UInt8.self, capacity: Int(numArgs * 8))
     let argsBuffer = UnsafeBufferPointer(start: argsPointer, count: Int(numArgs * 8))
 
@@ -69,7 +68,7 @@ class VSPTestModel: NSObject, ObservableObject {
     
     @Published public var isConnected: Bool = false
     public var connection: io_connect_t = 0
-    
+    public var message: String = ""
     // Used by async request/response
     var opaqueSelf: UnsafeMutableRawPointer? = //
     UnsafeMutableRawPointer(bitPattern: 0)
@@ -114,7 +113,11 @@ class VSPTestModel: NSObject, ObservableObject {
     }
     
     func LocalAsyncCallback(result: IOReturn, data: [UInt8]) {
-        state = VSPSmController.process(state, .returned)
+        if (result != kIOReturnSuccess) {
+            state = VSPSmController.process(state, .failed)
+        } else {
+            state = VSPSmController.process(state, .returned)
+        }
     }
 }
 

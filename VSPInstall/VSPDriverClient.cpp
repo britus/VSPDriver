@@ -18,7 +18,7 @@ extern void SwiftDeviceRemoved(void* refcon);
 #include "../VSPController/VSPController.hpp"
 class VSPDriverClient: public VSPClient::VSPController {
 public:
-    explicit VSPDriverClient(void* refcon): VSPController(), m_refcon(refcon){};
+    explicit VSPDriverClient(void* refcon): VSPClient::VSPController(), m_refcon(refcon){};
 protected:
     void OnConnected() override {
         m_connected = true;
