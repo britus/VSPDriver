@@ -482,7 +482,7 @@ kern_return_t VSPUserClient::prepareResponse(void* reference, IOUserClientMethod
 // --------------------------------------------------------------------
 
 // Call VSPUserClient instance method
-#define VSP_CALL_HANDLER(handler) \
+#define VSP_CALL_HANDLER(target, handler) \
 { \
     VSPUserClient* self = (VSPUserClient*) target; \
     return self->handler(reference, arguments); \
@@ -496,7 +496,7 @@ VSPUserClient::name(OSObject* target, void* reference, IOUserClientMethodArgumen
     VSP_CHECK_PARAM_RETURN("target", target); \
     VSP_CHECK_PARAM_RETURN("arguments", arguments);  \
     VSP_CHECK_PARAM_RETURN("completion", arguments->completion); \
-    VSP_CALL_HANDLER(handler) \
+    VSP_CALL_HANDLER(target, handler) \
 }
 
 #define VSP_INIT_RESPONSE(request,flags) \

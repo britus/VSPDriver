@@ -295,7 +295,7 @@ kern_return_t VSPDriver::CreateUserClient(IOService* provider, IOUserClient** us
 kern_return_t VSPDriver::createPort()
 {
     if (ivars->m_portCount >= MAX_SERIAL_PORTS) {
-        VSPLog(LOG_PREFIX, "createPort: Maximum of %d serial ports reaced.\n",
+        VSPLog(LOG_PREFIX, "createPort: Maximum of %d serial ports reached.\n",
                ivars->m_portCount);
         return kIOReturnNoSpace;
     }
@@ -457,7 +457,7 @@ kern_return_t VSPDriver::createPortLink(uint8_t sourceId, uint8_t targetId, void
     }
     
     if (ivars->m_portLinkCount >= MAX_PORT_LINKS) {
-        VSPLog(LOG_PREFIX, "createPortLink: Maximum of %d links reaced. srcId=%d tgtId=%d\n",
+        VSPLog(LOG_PREFIX, "createPortLink: Maximum of %d links reached. srcId=%d tgtId=%d\n",
                ivars->m_portLinkCount, sourceId, targetId);
         return kIOReturnNoSpace;
     }
