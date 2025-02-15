@@ -91,7 +91,7 @@ protected:
     /** ----------------------
      *
      */
-    virtual void OnIOUCCallback(int result, void** args, uint32_t numArgs) = 0;
+    virtual void OnIOUCCallback(int result, void* data, uint32_t size) = 0;
     /** ----------------------
      *
      */

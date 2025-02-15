@@ -35,42 +35,47 @@ typedef enum {
     vspLastCommand,
 } TVSPControlCommand;
 
-typedef struct {
-    uint8_t sourceId;
-    uint8_t targetId;
-} TVSPPortLink;
-
 #define MAGIC_CONTROL 0xBE6605250000L
 #define MAX_SERIAL_PORTS 16
 #define MAX_PORT_LINKS 8
 
 typedef struct {
     /* In whitch context calld */
-    TVSPUserContext context;
+    uint8_t context;
+    
     /* User client command */
-    TVSPControlCommand command;
-    /* Command parameters */
-    struct Parameter {
-        /* command flags */
-        uint64_t flags;
-        /* port parameters */
-        TVSPPortLink portLink;
-    } parameter;
-    /* Available serial ports */
-    struct PortList {
-        uint8_t count;
-        uint8_t list[MAX_SERIAL_PORTS];
-    } ports;
-    /* Available serial port links */
-    struct LinkList {
-        uint8_t count;
-        uint64_t list[MAX_PORT_LINKS];
-    } links;
+    uint8_t command;
+    
     /* Command status response */
     struct Status {
         uint32_t code;
         uint64_t flags;
     } status;
+    
+    /* Command parameters */
+    struct Parameter {
+        /* parameter flags */
+        uint64_t flags;
+       
+        /* port link parameters */
+        struct PortLink {
+            uint8_t source;
+            uint8_t target;
+        } link;
+    } parameter;
+    
+    /* Available serial ports */
+    struct PortList {
+        uint8_t count;
+        uint8_t list[MAX_SERIAL_PORTS];
+    } ports;
+    
+    /* Available serial port links */
+    struct LinkList {
+        uint8_t count;
+        uint64_t list[MAX_PORT_LINKS];
+    } links;
+    
 } TVSPControllerData;
 
 #ifndef VSP_UCD_SIZE
@@ -181,7 +186,8 @@ private:
     VSPController*          m_controller = NULL;
     io_name_t               m_deviceName;
     io_name_t               m_devicePath;
-    TVSPControllerData      m_vspResult;
+    TVSPControllerData      m_vspResult = {};          // directly return
+    TVSPControllerData*     m_vspResponse = NULL;      // mapped async buffer
     
     inline bool UserClientSetup(void* refcon);
     inline void UserClientTeardown(void);
