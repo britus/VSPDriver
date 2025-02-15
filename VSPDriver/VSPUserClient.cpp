@@ -395,7 +395,10 @@ void IMPL(VSPUserClient, AsyncCallback)
     // Async callback message to user client
     uint64_t* message = IONewZero(uint64_t, 4);
     message[0] = MAGIC_CONTROL;
- 
+    message[1] = VSP_UCD_SIZE | 0x001f;
+    message[2] = response.context;
+    message[3] = response.command;
+
     // dispatch message back to user client
     AsyncCompletion(ivars->m_cbAction, response.status.code, message, 4);
     IOSafeDeleteNULL(message, uint64_t, 4);

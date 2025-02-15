@@ -174,9 +174,10 @@ static inline void PrintStruct(const char* ctx, const TVSPControllerData* ptr)
 // -------------------------------------------------------------------
 //
 //
-static inline void PrintErrorDetails(kern_return_t ret)
+static inline void PrintErrorDetails(kern_return_t ret, const char* message)
 {
     fprintf(stderr, "[VSP Driver Error] ---------------------------------\n");
+    fprintf(stderr, "\t%s\n", message);
     fprintf(stderr, "\tSystem...: 0x%02x\n", err_get_system(ret));
     fprintf(stderr, "\tSubsystem: 0x%03x\n", err_get_sub(ret));
     fprintf(stderr, "\tCode.....: 0x%04x\n", err_get_code(ret));
@@ -191,7 +192,6 @@ VSPControllerPriv::VSPControllerPriv(VSPController* parent)
     , m_notificationPort(NULL)
     , m_connection(NULL)
     , m_controller(parent)
-    , m_vspResult()
     , m_vspResponse(NULL)
 {
 }
@@ -461,8 +461,7 @@ static void AsyncCallback(void* refcon, IOReturn result, void** args, UInt32 num
 //
 void VSPControllerPriv::ReportError(IOReturn error, const char* message)
 {
-    PrintErrorDetails(error);
-
+    PrintErrorDetails(error, message);
     m_controller->OnErrorOccured(error, message);
 }
 
@@ -622,10 +621,10 @@ inline bool VSPControllerPriv::DoAsyncCall(TVSPControllerData* input)
                                &size,
                                kIOMapAnywhere);
     if(ret != kIOReturnSuccess) {
-        PrintErrorDetails(ret);
+        ReportError(ret, "Failed to get drivers mapped memory.");
         return false;
     } else if (!address || !size) {
-        PrintErrorDetails(kIOReturnNoSpace);
+        ReportError(ret, "Invalid I/O address mapping memory.");
         return false;
     } else {
         m_vspResponse = reinterpret_cast<TVSPControllerData*>(address);
@@ -650,8 +649,7 @@ inline bool VSPControllerPriv::DoAsyncCall(TVSPControllerData* input)
     PrintStruct("doAsyncCall-Return", m_vspResponse);
 #endif
 
-    m_vspResult = (*m_vspResponse);
-    m_controller->OnDataReady(&m_vspResult);
+    m_controller->OnDataReady(m_vspResponse);
     return true;
 }
 
@@ -680,9 +678,13 @@ void VSPControllerPriv::AsyncCallback(IOReturn result, void** args, UInt32 numAr
     const int64_t* msg = (const int64_t*) args;
     
     // invalid driver message
-    if (numArgs != 4 || !args) {
-        PrintErrorDetails(kIOReturnBadArgument);
+    if (numArgs < 2 || !args) {
+        ReportError(result, "Invalid driver message.");
         return;
+    }
+    
+    if (result != kIOReturnSuccess) {
+        ReportError(result, "Driver error occured.");
     }
     
 #ifdef VSP_DEBUG
@@ -691,13 +693,7 @@ void VSPControllerPriv::AsyncCallback(IOReturn result, void** args, UInt32 numAr
 
     // invalid driver signature
     if ((msg[0] & MAGIC_CONTROL) != MAGIC_CONTROL) {
-        PrintErrorDetails(kIOReturnInvalid);
-        return;
-    }
-    
-    // driver error occured
-    if ((msg[0] & 0x00f1L) != 0x00f1 && msg[1]) {
-        PrintErrorDetails((int) msg[1]);
+        ReportError(result, "Invalid driver signature.");
         return;
     }
  

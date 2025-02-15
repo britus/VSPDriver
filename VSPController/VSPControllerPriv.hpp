@@ -186,7 +186,6 @@ private:
     VSPController*          m_controller = NULL;
     io_name_t               m_deviceName;
     io_name_t               m_devicePath;
-    TVSPControllerData      m_vspResult = {};          // directly return
     TVSPControllerData*     m_vspResponse = NULL;      // mapped async buffer
     
     inline bool UserClientSetup(void* refcon);
