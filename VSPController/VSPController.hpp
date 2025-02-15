@@ -19,6 +19,14 @@ extern "C" {
 
 namespace VSPClient {
 
+typedef struct {
+    uint32_t baudRate;
+    uint8_t dataBits;
+    uint8_t stopBits;
+    uint8_t parity;
+    uint8_t flowCtrl;
+} TVSPPortParameters;
+
 class VSPControllerPriv;
 class VSPController
 {
@@ -48,7 +56,7 @@ public:
     /** ----------------------
      *
      */
-    bool CreatePort();
+    bool CreatePort(TVSPPortParameters* parameters);
     /** ----------------------
      *
      */
@@ -57,6 +65,10 @@ public:
      *
      */
     bool GetPortList();
+    /** ----------------------
+     *
+     */
+    bool GetLinkList();
     /** ----------------------
      *
      */
@@ -92,6 +104,10 @@ protected:
      *
      */
     virtual void OnErrorOccured(int error, const char* message) = 0;
+    /** ----------------------
+     *
+     */
+    virtual void OnDataReady(void*) = 0;
     /** ----------------------
      *
      */

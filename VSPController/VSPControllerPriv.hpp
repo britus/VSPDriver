@@ -21,12 +21,14 @@ typedef enum {
 } TVSPUserContext;
 
 typedef enum {
+    vspControlPingPong,
     vspControlGetStatus,
     vspControlCreatePort,
     vspControlRemovePort,
-    vspControlGetPortList,
     vspControlLinkPorts,
     vspControlUnlinkPorts,
+    vspControlGetPortList,
+    vspControlGetLinkList,
     vspControlEnableChecks,
     vspControlEnableTrace,
     // Has to be last
@@ -38,7 +40,7 @@ typedef struct {
     uint8_t targetId;
 } TVSPPortLink;
 
-#define CONTROL_MAGIC 0xBE6605250000L
+#define MAGIC_CONTROL 0xBE6605250000L
 #define MAX_SERIAL_PORTS 16
 #define MAX_PORT_LINKS 8
 
@@ -62,7 +64,7 @@ typedef struct {
     /* Available serial port links */
     struct LinkList {
         uint8_t count;
-        uint8_t list[MAX_PORT_LINKS];
+        uint64_t list[MAX_PORT_LINKS];
     } links;
     /* Command status response */
     struct Status {
@@ -106,7 +108,7 @@ public:
     /** ----------------------
      *
      */
-    bool CreatePort();
+    bool CreatePort(TVSPPortParameters* parameters);
     /** ----------------------
      *
      */
@@ -115,6 +117,10 @@ public:
      *
      */
     bool GetPortList();
+    /** ----------------------
+     *
+     */
+    bool GetLinkList();
     /** ----------------------
      *
      */
@@ -175,10 +181,11 @@ private:
     VSPController*          m_controller = NULL;
     io_name_t               m_deviceName;
     io_name_t               m_devicePath;
-
+    TVSPControllerData      m_vspResult;
+    
     inline bool UserClientSetup(void* refcon);
     inline void UserClientTeardown(void);
-    inline bool DoAsyncCall(const TVSPControllerData* input);
+    inline bool DoAsyncCall(TVSPControllerData* input);
 };
 
 } // END namespace

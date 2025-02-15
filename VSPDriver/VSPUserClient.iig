@@ -69,10 +69,16 @@ public:
     static
     kern_return_t exGetPortList(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
     kern_return_t getPortList(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    kern_return_t getPortListHelper(void* reference) LOCALONLY;
+
+    static
+    kern_return_t exGetLinkList(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    kern_return_t getLinkList(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
     
     static
     kern_return_t exLinkPorts(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
     kern_return_t linkPorts(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    kern_return_t getLinkListHelper(void* reference) LOCALONLY;
     
     static
     kern_return_t exUnlinkPorts(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
