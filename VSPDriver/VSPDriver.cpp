@@ -495,10 +495,11 @@ kern_return_t VSPDriver::createPortLink(uint8_t sourceId, uint8_t targetId, void
         }
         
         const TVSPSerialPortItem* port = ivars->m_serialPorts[i];
-        uint8_t linkId;
+        uint8_t linkId = 0;
         
         if (port->id == sourceId) {
-            if ((linkId = port->port->getPortLinkIdentifier()) == 0) {
+            linkId = port->port->getPortLinkIdentifier();
+            if (linkId == 0) {
                 src = ivars->m_serialPorts[i];
             } else {
                 VSPLog(LOG_PREFIX, "createPortLink: Source port %d already assigned to link %d.",
@@ -508,7 +509,8 @@ kern_return_t VSPDriver::createPortLink(uint8_t sourceId, uint8_t targetId, void
         }
 
         if (port->id == targetId) {
-            if ((linkId = port->port->getPortLinkIdentifier()) == 0) {
+            linkId = port->port->getPortLinkIdentifier();
+            if (linkId == 0) {
                 tgt = ivars->m_serialPorts[i];
             } else {
                 VSPLog(LOG_PREFIX, "createPortLink: Target port %d already assigned to link %d.",

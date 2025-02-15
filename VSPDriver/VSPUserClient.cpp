@@ -919,9 +919,6 @@ kern_return_t VSPUserClient::linkPorts(void* reference, IOUserClientMethodArgume
         set_ctlr_status(&response, ret, 0xfa000001);
     }
     else if (link) {
-        TVSPPortLinkItem* pli = reinterpret_cast<TVSPPortLinkItem*>(link);
-        VSPLog(LOG_PREFIX, "linkPorts: got link id: %d\n", pli->id);
-
         if (getLinkListHelper(&response) == kIOReturnSuccess) {
             VSPLog(LOG_PREFIX, "linkPorts finish.\n");
         }
