@@ -371,9 +371,11 @@ kern_return_t VSPDriver::removePort(uint8_t portId)
         }
         if (item->id == portId) {
             VSPLog(LOG_PREFIX, "removePort: Port id=%d found. Release VSPSerialPort\n", item->id);
-            OSSafeReleaseNULL(item->port);
-            IOSafeDeleteNULL(item, TVSPSerialPortItem, 1);
-            found = 1;
+            if (item->port->Stop(GetProvider()) == kIOReturnSuccess) {
+                OSSafeReleaseNULL(item->port);
+                IOSafeDeleteNULL(item, TVSPSerialPortItem, 1);
+                found = 1;
+            }
         } else {
             newl[j++] = item;
         }
@@ -396,7 +398,7 @@ kern_return_t VSPDriver::removePort(uint8_t portId)
 //
 bool VSPDriver::checkPortId(uint8_t id)
 {
-    return (id && (id-1) < ivars->m_portCount);
+    return (id >= 1);
 }
 
 // --------------------------------------------------------------------
@@ -404,7 +406,7 @@ bool VSPDriver::checkPortId(uint8_t id)
 //
 bool VSPDriver::checkPortLinkId(uint8_t id)
 {
-    return (id && (id-1) < ivars->m_portLinkCount);
+    return (id >= 1);
 }
 
 // --------------------------------------------------------------------
