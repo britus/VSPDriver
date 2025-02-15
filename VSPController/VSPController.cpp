@@ -146,24 +146,28 @@ const char* VSPController::DevicePath() const
 #ifdef VSP_DEBUG
 static inline void PrintArray(const char* ctx, const int64_t* ptr, const uint32_t length)
 {
-    printf("[%s] --------------------------\n{\n", ctx);
-    for (uint32_t idx = 0; idx < length; ++idx)
-    {
-        printf("ptr[%02u] = %llu\n", idx, ptr[idx]);
+    if (ptr && length) {
+        printf("[%s] --------------------------\n{\n", ctx);
+        for (uint32_t idx = 0; idx < length; ++idx)
+        {
+            printf("ptr[%02u] = %llu\n", idx, ptr[idx]);
+        }
+        printf("}\n");
     }
-    printf("}\n");
 }
 static inline void PrintStruct(const char* ctx, const TVSPControllerData* ptr)
 {
-    printf("[%s] --------------------------\n{\n", ctx);
-    printf("\t.context = %u,\n", ptr->context);
-    printf("\t.command = %u,\n", ptr->command);
-    printf("\t.parameter.flags = 0x%llx,\n", ptr->parameter.flags);
-    printf("\t.ppl.sourceId = %u,\n", ptr->parameter.portLink.sourceId);
-    printf("\t.ppl.targetId = %u,\n", ptr->parameter.portLink.targetId);
-    printf("\t.status.code = %u,\n", ptr->status.code);
-    printf("\t.status.flags = 0x%llx,\n", ptr->status.flags);
-    printf("}\n");
+    if (ptr) {
+        printf("[%s] --------------------------\n{\n", ctx);
+        printf("\t.context = %u,\n", ptr->context);
+        printf("\t.command = %u,\n", ptr->command);
+        printf("\t.parameter.flags = 0x%llx,\n", ptr->parameter.flags);
+        printf("\t.ppl.sourceId = %u,\n", ptr->parameter.link.source);
+        printf("\t.ppl.targetId = %u,\n", ptr->parameter.link.target);
+        printf("\t.status.code = %u,\n", ptr->status.code);
+        printf("\t.status.flags = 0x%llx,\n", ptr->status.flags);
+        printf("}\n");
+    }
 }
 #endif
 
@@ -172,7 +176,7 @@ static inline void PrintStruct(const char* ctx, const TVSPControllerData* ptr)
 //
 static inline void PrintErrorDetails(kern_return_t ret)
 {
-    fprintf(stderr, "\tVSP Error:\n");
+    fprintf(stderr, "[VSP Driver Error] ---------------------------------\n");
     fprintf(stderr, "\tSystem...: 0x%02x\n", err_get_system(ret));
     fprintf(stderr, "\tSubsystem: 0x%03x\n", err_get_sub(ret));
     fprintf(stderr, "\tCode.....: 0x%04x\n", err_get_code(ret));
@@ -187,6 +191,8 @@ VSPControllerPriv::VSPControllerPriv(VSPController* parent)
     , m_notificationPort(NULL)
     , m_connection(NULL)
     , m_controller(parent)
+    , m_vspResult()
+    , m_vspResponse(NULL)
 {
 }
 
@@ -255,8 +261,8 @@ bool VSPControllerPriv::RemovePort(const uint8_t id)
     TVSPControllerData input = {};
     input.context = vspContextPort;
     input.command = vspControlRemovePort;
-    input.parameter.portLink.sourceId = id;
-    input.parameter.portLink.targetId = id;
+    input.parameter.link.source = id;
+    input.parameter.link.target = id;
     
     return DoAsyncCall(&input);
 }
@@ -293,8 +299,8 @@ bool VSPControllerPriv::LinkPorts(const uint8_t source, const uint8_t target)
     TVSPControllerData input = {};
     input.context = vspContextPort;
     input.command = vspControlLinkPorts;
-    input.parameter.portLink.sourceId = source;
-    input.parameter.portLink.targetId = target;
+    input.parameter.link.source = source;
+    input.parameter.link.target = target;
     
     return DoAsyncCall(&input);
 }
@@ -307,8 +313,8 @@ bool VSPControllerPriv::UnlinkPorts(const uint8_t source, const uint8_t target)
     TVSPControllerData input = {};
     input.context = vspContextPort;
     input.command = vspControlUnlinkPorts;
-    input.parameter.portLink.sourceId = source;
-    input.parameter.portLink.targetId = target;
+    input.parameter.link.source = source;
+    input.parameter.link.target = target;
     
     return DoAsyncCall(&input);
 }
@@ -321,8 +327,8 @@ bool VSPControllerPriv::EnableChecks(const uint8_t port)
     TVSPControllerData input = {};
     input.context = vspContextPort;
     input.command = vspControlEnableChecks;
-    input.parameter.portLink.sourceId = port;
-    input.parameter.portLink.targetId = port;
+    input.parameter.link.source = port;
+    input.parameter.link.target = port;
     
     return DoAsyncCall(&input);
 }
@@ -335,8 +341,8 @@ bool VSPControllerPriv::EnableTrace(const uint8_t port)
     TVSPControllerData input = {};
     input.context = vspContextPort;
     input.command = vspControlEnableTrace;
-    input.parameter.portLink.sourceId = port;
-    input.parameter.portLink.targetId = port;
+    input.parameter.link.source = port;
+    input.parameter.link.target = port;
     
     return DoAsyncCall(&input);
 }
@@ -546,7 +552,7 @@ bool VSPControllerPriv::UserClientSetup(void* refcon)
         return false;
     }
     DeviceRemoved(refcon, m_deviceRemovedIter);
-    
+
     return true;
 }
 
@@ -602,15 +608,38 @@ inline bool VSPControllerPriv::DoAsyncCall(TVSPControllerData* input)
     asyncRef[kIOAsyncCalloutRefconIndex] = (io_user_reference_t) this;
     
     // Instant response of the DEXT user client instance
+    // Allocate response IOMemoryDescriptor at driver site
+    // to response data above 128 bytes. This will filled,
+    // by DEXT.
+    m_vspResponse = nullptr;
     size_t resultSize = VSP_UCD_SIZE;
-    TVSPControllerData result = { };
+    mach_vm_address_t address = 0;
+    mach_vm_size_t size = 0;
+    ret = IOConnectMapMemory64(m_connection,
+                               input->command,
+                               mach_task_self(),
+                               &address,
+                               &size,
+                               kIOMapAnywhere);
+    if(ret != kIOReturnSuccess) {
+        PrintErrorDetails(ret);
+        return false;
+    } else if (!address || !size) {
+        PrintErrorDetails(kIOReturnNoSpace);
+        return false;
+    } else {
+        m_vspResponse = reinterpret_cast<TVSPControllerData*>(address);
+    }
     
+    // - do it --
     ret = IOConnectCallAsyncStructMethod(m_connection,
                                          input->command,
                                          m_machNotificationPort,
                                          asyncRef,
                                          kIOAsyncCalloutCount,
-                                         input, VSP_UCD_SIZE, &result, &resultSize);
+                                         input, VSP_UCD_SIZE,
+                                         m_vspResponse,
+                                         &resultSize);
     if (ret != kIOReturnSuccess) {
         ReportError(ret, "Driver async call failed.");
         return false;
@@ -618,10 +647,10 @@ inline bool VSPControllerPriv::DoAsyncCall(TVSPControllerData* input)
     
 #ifdef VSP_DEBUG
     PrintStruct("doAsyncCall-Request", input);
-    PrintStruct("doAsyncCall-Return", &result);
+    PrintStruct("doAsyncCall-Return", m_vspResponse);
 #endif
 
-    m_vspResult = result;
+    m_vspResult = (*m_vspResponse);
     m_controller->OnDataReady(&m_vspResult);
     return true;
 }
@@ -631,12 +660,15 @@ inline bool VSPControllerPriv::DoAsyncCall(TVSPControllerData* input)
 //
 void VSPControllerPriv::SetConnection(io_connect_t connection)
 {
-    if (connection) {
-        m_connection = connection;
-        m_controller->OnConnected();
-    } else {
+    if (connection == 0) {
         m_connection = NULL;
         m_controller->OnDisconnected();
+        return;
+    }
+    
+    if (connection != m_connection) {
+        m_connection = connection;
+        m_controller->OnConnected();
     }
 }
 
@@ -645,11 +677,35 @@ void VSPControllerPriv::SetConnection(io_connect_t connection)
 //
 void VSPControllerPriv::AsyncCallback(IOReturn result, void** args, UInt32 numArgs)
 {
+    const int64_t* msg = (const int64_t*) args;
+    
+    // invalid driver message
+    if (numArgs != 4 || !args) {
+        PrintErrorDetails(kIOReturnBadArgument);
+        return;
+    }
+    
 #ifdef VSP_DEBUG
-    PrintArray("AsyncCallback", (const int64_t*) args, numArgs);
+    PrintArray("AsyncCallback", msg, numArgs);
 #endif
 
-    m_controller->OnIOUCCallback(result, args, numArgs);
+    // invalid driver signature
+    if ((msg[0] & MAGIC_CONTROL) != MAGIC_CONTROL) {
+        PrintErrorDetails(kIOReturnInvalid);
+        return;
+    }
+    
+    // driver error occured
+    if ((msg[0] & 0x00f1L) != 0x00f1 && msg[1]) {
+        PrintErrorDetails((int) msg[1]);
+        return;
+    }
+ 
+    if (m_vspResponse) {
+        m_controller->OnIOUCCallback(result, m_vspResponse, sizeof(TVSPControllerData));
+    } else {
+        m_controller->OnErrorOccured(kIOReturnNoSpace, "[UC] No async result buffer.");
+    }
 }
 
 } // END namspace VSPClient

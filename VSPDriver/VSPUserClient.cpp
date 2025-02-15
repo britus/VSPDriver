@@ -16,6 +16,7 @@
 #include <DriverKit/IOTypes.h>
 #include <DriverKit/IOService.h>
 #include <DriverKit/IOUserClient.h>
+#include <DriverKit/IOMemoryMap.h>
 #include <DriverKit/OSDictionary.h>
 #include <DriverKit/OSData.h>
 #include <DriverKit/OSAction.h>
@@ -54,9 +55,6 @@ using namespace VSPController;
 VSPUserClient::name(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) \
 { \
     VSPLog(LOG_PREFIX, prefix " called.\n"); \
-    VSP_CHECK_PARAM_RETURN("target", target); \
-    VSP_CHECK_PARAM_RETURN("arguments", arguments);  \
-    VSP_CHECK_PARAM_RETURN("completion", arguments->completion); \
     VSP_CALL_HANDLER(target, handler) \
 }
 
@@ -70,8 +68,8 @@ static inline void dump_ctrl_data(const TVSPControllerData* data)
     VSPLog(LOG_PREFIX, "Data.status.code......: %d\n", data->status.code);
     VSPLog(LOG_PREFIX, "Data.status.flags.....: 0x%llx\n", data->status.flags);
     VSPLog(LOG_PREFIX, "Data.parameter.flags..: 0x%llx\n", data->parameter.flags);
-    VSPLog(LOG_PREFIX, "Data.p.portlink.source: %d\n", data->parameter.portLink.sourceId);
-    VSPLog(LOG_PREFIX, "Data.p.portlink.target: %d\n", data->parameter.portLink.targetId);
+    VSPLog(LOG_PREFIX, "Data.p.portlink.source: %d\n", data->parameter.link.source);
+    VSPLog(LOG_PREFIX, "Data.p.portlink.target: %d\n", data->parameter.link.target);
     VSPLog(LOG_PREFIX, "Data.ports.count......: %d\n", data->ports.count);
     VSPLog(LOG_PREFIX, "Data.links.count......: %d\n", data->links.count);
 }
@@ -189,12 +187,7 @@ const IOUserClientMethodDispatch uc_methods[vspLastCommand] = {
     },
 };
 
-static inline const TVSPControllerData* toVspData(const OSData* p)
-{
-    return reinterpret_cast<const TVSPControllerData*>(p->getBytesNoCopy());
-}
-
-void set_ctlr_status(TVSPControllerData* data, uint32_t code, uint64_t flags)
+static inline void set_ctlr_status(TVSPControllerData* data, uint32_t code, uint64_t flags)
 {
     data->context = (code == kIOReturnSuccess ? vspContextResult : vspContextError);
     data->status.code = code;
@@ -222,7 +215,6 @@ bool VSPUserClient::init()
         result = false;
         goto finish;
     }
-    
     VSPLog(LOG_PREFIX, "init finished.\n");
     return true;
     
@@ -300,7 +292,7 @@ kern_return_t IMPL(VSPUserClient, Start)
         VSPLog(LOG_PREFIX, "Start() - Failed to assign simulated action to handler with error: 0x%08x.", ret);
         return ret;
     }
-    
+
     ret = RegisterService();
     if (ret != kIOReturnSuccess)
     {
@@ -325,7 +317,7 @@ kern_return_t IMPL(VSPUserClient, Stop)
     OSSafeReleaseNULL(ivars->m_eventSource);
     OSSafeReleaseNULL(ivars->m_eventQueue);
     OSSafeReleaseNULL(ivars->m_cbAction);
-    
+
     // service instance (Apple style super call)
     if ((ret= Stop(provider, SUPERDISPATCH)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "Stop (suprt) failed. code=%d\n", ret);
@@ -336,8 +328,46 @@ kern_return_t IMPL(VSPUserClient, Stop)
     return ret;
 }
 
+
 // --------------------------------------------------------------------
-// AsyncCallback_Impl(OSAction* action, uint64_t time)
+// CopyClientMemoryForType_Impl(uint64_t type, uint64_t *options, IOMemoryDescriptor **memory)
+// Allocate space for UC
+//
+kern_return_t IMPL(VSPUserClient, CopyClientMemoryForType)
+{
+    kern_return_t ret = kIOReturnSuccess;
+    
+    VSPLog(LOG_PREFIX, "CopyClientMemoryForType called. type=%llu optionsptr=0x%llx\n",
+           type, (uint64_t)options);
+    
+    if (type >= 0 && type < vspLastCommand)
+    {
+        IOBufferMemoryDescriptor* md;
+        ret = IOBufferMemoryDescriptor::Create(kIOMemoryDirectionInOut, //
+                                               VSP_UCD_SIZE    /* capacity */, //
+                                               0               /* alignment */, //
+                                               &md);
+        if (ret != kIOReturnSuccess || !md) {
+            VSPLog(LOG_PREFIX, "CopyClientMemoryForType: IOBufferMemoryDescriptor::Create failed: 0x%x", ret);
+            return ret;
+        }
+        
+        // returned with refcount 1
+        *memory = md;
+    }
+    else
+    {
+        VSPLog(LOG_PREFIX, "CopyClientMemoryForType super call.\n");
+        ret = this->CopyClientMemoryForType(type, options, memory, SUPERDISPATCH);
+    }
+    
+    VSPLog(LOG_PREFIX, "CopyClientMemoryForType complete.\n");
+    return ret;
+}
+
+// --------------------------------------------------------------------
+// AsyncCallback_IMPL(...)
+// Event raised by IOTimerDispatchSource::TimerOccurred event
 //
 void IMPL(VSPUserClient, AsyncCallback)
 {
@@ -353,62 +383,24 @@ void IMPL(VSPUserClient, AsyncCallback)
     }
 
     // Get back our data previously stored in OSAction.
-    TVSPControllerData* eventData = (TVSPControllerData*) action->GetReference();
-    
+    TVSPControllerData* evd = (TVSPControllerData*) action->GetReference();
+
     // Get function response data
     TVSPControllerData response = {};
-    memcpy(&response, eventData, VSP_UCD_SIZE);
+    memcpy(&response, evd, VSP_UCD_SIZE);
    
-    // Debug !!
+    // Debug !! 
     VSP_DUMP_DATA(&response);
-    
-    // Create async message array with 7 header items
-    uint32_t count = 7;
-    
-    // add port list
-    if (response.ports.count) {
-        count += response.ports.count;
-        count += 1; // item count
-    }
-    
-    // add link list
-    if (response.links.count) {
-        count += response.links.count;
-        count += 1; // item count
-    }
 
-    uint64_t* message = IONewZero(uint64_t, count);
-    uint8_t index = 0;
-    
-    // Setup message header
-    message[index++] = response.context;
-    message[index++] = response.command;
-    message[index++] = response.parameter.flags;
-    message[index++] = response.parameter.portLink.sourceId;
-    message[index++] = response.parameter.portLink.targetId;
-    message[index++] = response.status.code;
-    message[index++] = response.status.flags;
-
-    if (response.ports.count) {
-        message[index++] = response.ports.count;
-        // Append port list
-        for (uint8_t i = 0; i < response.ports.count; i++) {
-            message[index++] = response.ports.list[i];
-        }
-    }
-    
-    if (response.links.count) {
-        message[index++] = response.links.count;
-        // Append port list
-        for (uint8_t i = 0; i < response.links.count; i++) {
-            message[index++] = response.links.list[i];
-        }
-    }
-
+    // Async callback message to user client
+    uint64_t* message = IONewZero(uint64_t, 4);
+    message[0] = MAGIC_CONTROL;
+ 
     // dispatch message back to user client
-    AsyncCompletion(ivars->m_cbAction, kIOReturnSuccess, message, count);
-    
-    IOSafeDeleteNULL(message, uint64_t, count);
+    AsyncCompletion(ivars->m_cbAction, response.status.code, message, 4);
+    IOSafeDeleteNULL(message, uint64_t, 4);
+
+    VSPLog(LOG_PREFIX, "AsyncCallback complete.");
     return;
 }
 
@@ -423,8 +415,13 @@ kern_return_t VSPUserClient::ExternalMethod(uint64_t selector,
 {
     kern_return_t ret = kIOReturnSuccess;
     
-    VSPLog(LOG_PREFIX, "ExternalMethod called.\n");
-    
+    VSPLog(LOG_PREFIX, "ExternalMethod called. sel=%llu arg=0x%llx disp=0x%llx tgt=0x%llx ref=0x%llx\n",
+           selector,
+           (uint64_t)arguments,
+           (uint64_t)dispatch,
+           (uint64_t)target,
+           (uint64_t)reference);
+
     if (selector >= vspLastCommand) {
         VSPLog(LOG_PREFIX, "Invalid method selector detected, skip.");
         return kIOReturnBadArgument;
@@ -434,6 +431,10 @@ kern_return_t VSPUserClient::ExternalMethod(uint64_t selector,
     dispatch = &uc_methods[selector];
     target   = (target == nullptr ? this : target);
     reference= (reference == nullptr ? ivars : reference);
+
+    VSP_CHECK_PARAM_RETURN("arguments", arguments);  \
+    VSP_CHECK_PARAM_RETURN("completion", arguments->completion); \
+    VSP_CHECK_PARAM_RETURN("target", target); \
 
     // This will call the functions as defined in the IOUserClientMethodDispatch.
     ret = super::ExternalMethod(selector, arguments, dispatch, target, reference);
@@ -491,21 +492,61 @@ kern_return_t VSPUserClient::scheduleEvent(void* reference, IOUserClientMethodAr
 kern_return_t VSPUserClient::prepareResponse(void* reference, IOUserClientMethodArguments* arguments)
 {
     const TVSPControllerData* response = reinterpret_cast<TVSPControllerData*>(reference);
+    IOMemoryMap* outputMap = nullptr;
+    uint8_t* outputPtr;
+    uint64_t length;
+    IOReturn ret;
     
     VSPLog(LOG_PREFIX, "prepareResponse called.\n");
 
     if (!response) {
-        VSPLog(LOG_PREFIX, "prepareResponse Invalid argument 'reference' detected.\n");
+        VSPLog(LOG_PREFIX, "prepareResponse: Invalid argument 'reference' detected.\n");
         return kIOReturnBadArgument;
     }
-    
+
     if (!arguments || !arguments->completion) {
-        VSPLog(LOG_PREFIX, "prepareResponse Invalid argument 'arguments' detected.\n");
+        VSPLog(LOG_PREFIX, "prepareResponse: Invalid argument 'arguments' detected.\n");
         return kIOReturnBadArgument;
     }
-    
+ 
     VSP_DUMP_DATA(response);
 
+    // Memory is not passed from the caller into the dext.
+    // The dext needs to create its own OSData to hold this
+    // information in order to pass it back to the caller.
+    if (arguments->structureOutputDescriptor != nullptr)
+    {
+        if (VSP_UCD_SIZE > arguments->structureOutputMaximumSize)
+        {
+            VSPLog(LOG_PREFIX,
+                   "prepareResponse: Required output size of %lu"
+                   "is larger than the given maximum UC size of %llu. Failing.",
+                   VSP_UCD_SIZE, arguments->structureOutputMaximumSize);
+            return kIOReturnNoSpace;
+        }
+
+        ret = arguments->structureOutputDescriptor->CreateMapping(0, 0, 0, 0, 0, &outputMap);
+        if (ret != kIOReturnSuccess || !outputMap) {
+            VSPLog(LOG_PREFIX, "prepareResponse: UC output CreateMapping failed. code=%d\n", ret);
+        }
+        else {
+            outputPtr = (uint8_t*) outputMap->GetAddress();
+            length    = outputMap->GetLength();
+            
+            VSPLog(LOG_PREFIX, "prepareResponse: Share result to UC. length: %lld addr: 0x%llx\n",
+                   length, (uint64_t) outputPtr);
+            
+            // Copy the data from DataStruct over and then fill the rest with zeroes.
+            memcpy(outputPtr, response, (length < VSP_UCD_SIZE ? length : VSP_UCD_SIZE));
+            memset(outputPtr + VSP_UCD_SIZE, 0, length - VSP_UCD_SIZE);
+            OSSafeReleaseNULL(outputMap);
+        }
+    }
+    else
+    {
+        arguments->structureOutput = OSData::withBytes(response, VSP_UCD_SIZE);
+    }
+    
     // Save the completion for later. If not saved, then it
     // might be freed before the asychronous return.
     ivars->m_cbAction = arguments->completion;
@@ -514,10 +555,7 @@ kern_return_t VSPUserClient::prepareResponse(void* reference, IOUserClientMethod
     // Retain action memory for later work.
     void* evData = ivars->m_eventAction->GetReference();
     memcpy(evData, response, VSP_UCD_SIZE);
-
-    // sync response
-    arguments->structureOutput = OSData::withBytes(response, VSP_UCD_SIZE);
-
+    
     VSPLog(LOG_PREFIX, "prepareResponse finish.\n");
     return kIOReturnSuccess;
 }
@@ -526,13 +564,52 @@ kern_return_t VSPUserClient::prepareResponse(void* reference, IOUserClientMethod
 // MARK: Static External Handlers
 // --------------------------------------------------------------------
 
+inline static IOReturn toRequest(IOUserClientMethodArguments* arguments, TVSPControllerData* request)
+{
+    IOReturn ret;
+    IOMemoryMap* inputMap = nullptr;
+    void* buffer = nullptr;
+    uint64_t size = 0;
+    
+    if (!request) {
+        return kIOReturnBadArgument;
+    }
+    
+    if (arguments->structureInput != nullptr)
+    {
+        size = arguments->structureInput->getLength();
+        buffer = (void*)arguments->structureInput->getBytesNoCopy();
+        memcpy(request, buffer, (size < VSP_UCD_SIZE ? size : VSP_UCD_SIZE));
+    }
+    else if (arguments->structureInputDescriptor != nullptr)
+    {
+        ret = arguments->structureInputDescriptor->CreateMapping(0, 0, 0, 0, 0, &inputMap);
+        if (ret != kIOReturnSuccess || !inputMap)
+        {
+            VSPLog(LOG_PREFIX, "toRequest: Failed to create mapping for descriptor with error: 0x%08x", ret);
+            return kIOReturnBadArgument;
+        }
+        size = inputMap->GetLength();
+        buffer = (void*) inputMap->GetAddress();
+        memcpy(request, buffer, (size < VSP_UCD_SIZE ? size : VSP_UCD_SIZE));
+        OSSafeReleaseNULL(inputMap);
+    }
+    else
+    {
+        VSPLog(LOG_PREFIX, "toRequest: Both structureInput and structureInputDescriptor were null.");
+        return kIOReturnBadArgument;
+    }
+    
+    return kIOReturnSuccess;
+}
+
 // --------------------------------------------------------------------
 // Return status of VSPDriver instance
 //
 kern_return_t VSP_IMPL_EX_METHOD("exGetStatus", exGetStatus, getStatus)
 kern_return_t VSPUserClient::getStatus(void* reference, IOUserClientMethodArguments* arguments)
 {
-    const TVSPControllerData* request = toVspData(arguments->structureInput);
+    TVSPControllerData request = {};
     TVSPControllerData response = {};
     uint8_t portCount = 0;
     uint8_t linkCount = 0;
@@ -541,9 +618,15 @@ kern_return_t VSPUserClient::getStatus(void* reference, IOUserClientMethodArgume
     kern_return_t ret;
 
     VSPLog(LOG_PREFIX, "getStatus called.\n");
-    VSP_INIT_RESPONSE(request, MAGIC_CONTROL);
+    
+    if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
+        set_ctlr_status(&response, ret, 0xdd000000);
+        goto finish;
+    }
+    
+    VSP_INIT_RESPONSE(&request, MAGIC_CONTROL);
 
-    if ((request->status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
+    if ((request.status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
         set_ctlr_status(&response, kIOReturnInvalid, 0xee000000);
         goto finish;
     }
@@ -593,14 +676,20 @@ finish:
 kern_return_t VSP_IMPL_EX_METHOD("exCreatePort", exCreatePort, createPort)
 kern_return_t VSPUserClient::createPort(void* reference, IOUserClientMethodArguments* arguments)
 {
-    const TVSPControllerData* request = toVspData(arguments->structureInput);
     TVSPControllerData response = {};
+    TVSPControllerData request = {};
     kern_return_t ret;
 
     VSPLog(LOG_PREFIX, "createPort called.\n");
-    VSP_INIT_RESPONSE(request, MAGIC_CONTROL);
 
-    if ((request->status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
+    if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
+        set_ctlr_status(&response, ret, 0xdd000000);
+        goto finish;
+    }
+
+    VSP_INIT_RESPONSE(&request, MAGIC_CONTROL);
+
+    if ((request.status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
         set_ctlr_status(&response, kIOReturnInvalid, 0xee000000);
         goto finish;
     }
@@ -623,19 +712,26 @@ finish:
 kern_return_t VSP_IMPL_EX_METHOD("exRemovePort", exRemovePort, removePort)
 kern_return_t VSPUserClient::removePort(void* reference, IOUserClientMethodArguments* arguments)
 {
-    const TVSPControllerData* request = toVspData(arguments->structureInput);
-    const uint8_t portId = request->parameter.portLink.sourceId;
-    TVSPControllerData response = {};
     kern_return_t ret;
+    TVSPControllerData response = {};
+    TVSPControllerData request = {};
+    uint8_t portId = 0;
 
     VSPLog(LOG_PREFIX, "removePort called.\n");
-    VSP_INIT_RESPONSE(request, MAGIC_CONTROL);
 
-    if ((request->status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
+    if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
+        set_ctlr_status(&response, ret, 0xdd000000);
+        goto finish;
+    }
+
+    VSP_INIT_RESPONSE(&request, MAGIC_CONTROL);
+
+    if ((request.status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
         set_ctlr_status(&response, kIOReturnInvalid, 0xee000000);
         goto finish;
     }
 
+    portId = request.parameter.link.source;
     if ((ret = ivars->m_parent->removePort(portId))!= kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "removePort: Parent removePort failed. code=%d\n", ret);
         set_ctlr_status(&response, ret, 0xfa000002);
@@ -654,13 +750,20 @@ finish:
 kern_return_t VSP_IMPL_EX_METHOD("exGetPortList", exGetPortList, getPortList)
 kern_return_t VSPUserClient::getPortList(void* reference, IOUserClientMethodArguments* arguments)
 {
-    const TVSPControllerData* request = toVspData(arguments->structureInput);
+    kern_return_t ret;
     TVSPControllerData response = {};
+    TVSPControllerData request = {};
 
     VSPLog(LOG_PREFIX, "getPortList called.\n");
-    VSP_INIT_RESPONSE(request, MAGIC_CONTROL);
 
-    if ((request->status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
+    if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
+        set_ctlr_status(&response, ret, 0xdd000000);
+        goto finish;
+    }
+
+    VSP_INIT_RESPONSE(&request, MAGIC_CONTROL);
+
+    if ((request.status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
         set_ctlr_status(&response, kIOReturnInvalid, 0xee000000);
         goto finish;
     }
@@ -716,13 +819,20 @@ kern_return_t VSPUserClient::getPortListHelper(void* reference)
 kern_return_t VSP_IMPL_EX_METHOD("exGetLinkList", exGetLinkList, getLinkList)
 kern_return_t VSPUserClient::getLinkList(void* reference, IOUserClientMethodArguments* arguments)
 {
-    const TVSPControllerData* request = toVspData(arguments->structureInput);
+    kern_return_t ret;
     TVSPControllerData response = {};
+    TVSPControllerData request = {};
 
     VSPLog(LOG_PREFIX, "getLinkList called.\n");
-    VSP_INIT_RESPONSE(request, MAGIC_CONTROL);
 
-    if ((request->status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
+    if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
+        set_ctlr_status(&response, ret, 0xdd000000);
+        goto finish;
+    }
+
+    VSP_INIT_RESPONSE(&request, MAGIC_CONTROL);
+
+    if ((request.status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
         set_ctlr_status(&response, kIOReturnInvalid, 0xee000000);
         goto finish;
     }
@@ -778,21 +888,28 @@ kern_return_t VSPUserClient::getLinkListHelper(void* reference)
 kern_return_t VSP_IMPL_EX_METHOD("exLinkPorts", exLinkPorts, linkPorts)
 kern_return_t VSPUserClient::linkPorts(void* reference, IOUserClientMethodArguments* arguments)
 {
-    const TVSPControllerData* request = toVspData(arguments->structureInput);
-    const uint8_t sid = request->parameter.portLink.sourceId;
-    const uint8_t tid = request->parameter.portLink.targetId;
-    void* link = nullptr;
-    TVSPControllerData response = {};
     kern_return_t ret;
+    TVSPControllerData response = {};
+    TVSPControllerData request = {};
+    uint8_t sid, tid;
+    void* link = nullptr;
 
     VSPLog(LOG_PREFIX, "linkPorts called.\n");
-    VSP_INIT_RESPONSE(request, MAGIC_CONTROL);
 
-    if ((request->status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
+    if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
+        set_ctlr_status(&response, ret, 0xdd000000);
+        goto finish;
+    }
+
+    VSP_INIT_RESPONSE(&request, MAGIC_CONTROL);
+
+    if ((request.status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
         set_ctlr_status(&response, kIOReturnInvalid, 0xee000000);
         goto finish;
     }
 
+    sid = request.parameter.link.source;
+    tid = request.parameter.link.target;
     ret = ivars->m_parent->createPortLink(sid, tid, &link);
     if (ret != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "linkPorts: parent createPortLink failed. code=%d\n", ret);
@@ -818,21 +935,28 @@ finish:
 kern_return_t VSP_IMPL_EX_METHOD("exUnlinkPorts", exUnlinkPorts, unlinkPorts)
 kern_return_t VSPUserClient::unlinkPorts(void* reference, IOUserClientMethodArguments* arguments)
 {
-    const TVSPControllerData* request = toVspData(arguments->structureInput);
-    const uint8_t sid = request->parameter.portLink.sourceId;
-    const uint8_t tid = request->parameter.portLink.targetId;
-    TVSPControllerData response = {};
     kern_return_t ret;
+    TVSPControllerData response = {};
+    TVSPControllerData request = {};
+    uint8_t sid, tid;
     void* link = nullptr;
 
     VSPLog(LOG_PREFIX, "unlinkPorts called.\n");
-    VSP_INIT_RESPONSE(request, MAGIC_CONTROL);
 
-    if ((request->status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
+    if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
+        set_ctlr_status(&response, ret, 0xdd000000);
+        goto finish;
+    }
+        
+    VSP_INIT_RESPONSE(&request, MAGIC_CONTROL);
+
+    if ((request.status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
         set_ctlr_status(&response, kIOReturnInvalid, 0xee000000);
         goto finish;
     }
 
+    sid = request.parameter.link.source;
+    tid = request.parameter.link.target;
     ret = ivars->m_parent->getPortLinkByPorts(sid, tid, &link);
     if (ret != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xfb000001);
@@ -861,18 +985,27 @@ finish:
 kern_return_t VSP_IMPL_EX_METHOD("exEnableChecks", exEnableChecks, enableChecks)
 kern_return_t VSPUserClient::enableChecks(void* reference, IOUserClientMethodArguments* arguments)
 {
-    const TVSPControllerData* request = toVspData(arguments->structureInput);
+    kern_return_t ret;
     TVSPControllerData response = {};
+    TVSPControllerData request = {};
+    //uint8_t portId;
 
     VSPLog(LOG_PREFIX, "enableChecks called.\n");
-    VSP_INIT_RESPONSE(request, MAGIC_CONTROL);
 
-    if ((request->status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
+    if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
+        set_ctlr_status(&response, ret, 0xdd000000);
+        goto finish;
+    }
+
+    VSP_INIT_RESPONSE(&request, MAGIC_CONTROL);
+
+    if ((request.status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
         set_ctlr_status(&response, kIOReturnInvalid, 0xee000000);
         goto finish;
     }
 
     // --
+    // portId = request.parameter.link.source;
 
     VSPLog(LOG_PREFIX, "enableChecks finish.\n");
 
@@ -886,19 +1019,27 @@ finish:
 kern_return_t VSP_IMPL_EX_METHOD("exEnableTrace", exEnableTrace, enableTrace)
 kern_return_t VSPUserClient::enableTrace(void* reference, IOUserClientMethodArguments* arguments)
 {
-    const TVSPControllerData* request = toVspData(arguments->structureInput);
+    kern_return_t ret;
     TVSPControllerData response = {};
-
+    TVSPControllerData request = {};
+    //uint8_t portId;
+    
     VSPLog(LOG_PREFIX, "enableTrace called.\n");
-    VSP_INIT_RESPONSE(request, MAGIC_CONTROL);
 
+    if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
+        set_ctlr_status(&response, ret, 0xdd000000);
+        goto finish;
+    }
 
-    if ((request->status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
+    VSP_INIT_RESPONSE(&request, MAGIC_CONTROL);
+
+    if ((request.status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
         set_ctlr_status(&response, kIOReturnInvalid, 0xee000000);
         goto finish;
     }
 
     // --
+    //portId = request.parameter.link.source;
     
     VSPLog(LOG_PREFIX, "enableTrace finish.\n");
 

@@ -28,8 +28,8 @@ protected:
         m_connected = false;
         SwiftDeviceRemoved(m_refcon);
     }
-    void OnIOUCCallback(int result, void** args, uint32_t numArgs) override {
-        SwiftAsyncCallback(m_refcon, result, args, numArgs);
+    void OnIOUCCallback(int result, void* data, uint32_t size) override {
+        SwiftAsyncCallback(m_refcon, result, &data, size);
     }
     void OnErrorOccured(int error, const char* message) override {
         SwiftAsyncCallback(m_refcon, kIOReturnError, (void**)&message, (UInt32)strlen(message));
