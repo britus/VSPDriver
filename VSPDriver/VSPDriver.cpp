@@ -190,23 +190,39 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count)
 {
     kern_return_t ret;
     IOService* service;
+    uint8_t offset = 0;
+    uint8_t lastId = 0;
     
     VSPLog(LOG_PREFIX, "CreateSerialPort: create #%d VSPSerialPort from Info.plist.\n", count);
-    
-    // reset first
-    ivars->m_portCount = 0;
 
-    // Allocate serial port list. Holds each allocated
+    // Allocate serial port list. Hold each allocated
     // instance of the VSPSerialPort object
-    ivars->m_serialPorts = IONewZero(TVSPSerialPortItem*, count);
     if (!ivars->m_serialPorts) {
-        VSPLog(LOG_PREFIX, "CreateSerialPort: Out of memory.\n");
-        return kIOReturnNoMemory;
+        ivars->m_portCount = 0;
+        ivars->m_serialPorts = IONewZero(TVSPSerialPortItem*, count);
+        if (!ivars->m_serialPorts) {
+            VSPLog(LOG_PREFIX, "CreateSerialPort: Out of memory.\n");
+            return kIOReturnNoMemory;
+        }
+        offset = 0;
     }
-
+    // expand current port list
+    else {
+        uint8_t portCount = ivars->m_portCount;
+        TVSPSerialPortItem** oldl = ivars->m_serialPorts;
+        TVSPSerialPortItem** newl = IONewZero(TVSPSerialPortItem*, portCount + 1);
+        for (int i = 0; i < portCount; i++) {
+            newl[i] = ivars->m_serialPorts[i];
+            lastId = newl[i]->id;
+            offset++;
+        }
+        IOSafeDeleteNULL(oldl, TVSPSerialPortItem*, portCount);
+        ivars->m_serialPorts = newl;
+    }
+    
     // do it
-    for (uint8_t i = 0; i < count && i < kVSPMaxumumPorts; i++) {
-        VSPLog(LOG_PREFIX, "CreateSerialPort: Create serial port %d.\n", i);
+    for (uint8_t i = offset; i < (offset + count) && i < kVSPMaxumumPorts; i++) {
+        VSPLog(LOG_PREFIX, "CreateSerialPort: Create serial port %d.\n", lastId + 1);
         
         TVSPSerialPortItem* item = IONewZero(TVSPSerialPortItem, 1);
         if (!item) {
@@ -236,11 +252,11 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count)
             return kIOReturnInvalid;
         }
         
-        item->id = i + 1;
-        item->flags = 0x00;
+        item->id = ++lastId;
         item->port->setParent(this);                // set this as parent
         item->port->setPortIdentifier(item->id);    // set unique identifier
-        
+        item->flags = 0x00;
+
         // save instance for controller
         ivars->m_serialPorts[i] = item;
         ivars->m_portCount++;
@@ -428,7 +444,7 @@ kern_return_t VSPDriver::getPortList(uint8_t* list, uint8_t count)
 // --------------------------------------------------------------------
 // Return all IDs of all allocated serial ports
 //
-kern_return_t VSPDriver::getPortLinkList(uint8_t* list, uint8_t count)
+kern_return_t VSPDriver::getPortLinkList(uint64_t* list, uint8_t count)
 {
     if (!list) {
         return kIOReturnBadArgument;
@@ -439,7 +455,10 @@ kern_return_t VSPDriver::getPortLinkList(uint8_t* list, uint8_t count)
     }
     
     for(uint8_t i = 0; i < count && i < ivars->m_portCount; i++) {
-        list[i] = ivars->m_portLinks[i]->id;
+        const uint8_t lid = ivars->m_portLinks[i]->id;
+        const uint8_t src = ivars->m_portLinks[i]->sourcePort.id;
+        const uint8_t tgt = ivars->m_portLinks[i]->targetPort.id;
+        list[i] = (lid << 16) | (src << 8) | tgt;
     }
     
     return kIOReturnSuccess;

@@ -10,9 +10,9 @@
 #include <IOKit/IOKitLib.h>
 
 extern "C" {
-extern void SwiftAsyncCallback(void* refcon, IOReturn result, void** args, UInt32 numArgs);
-extern void SwiftDeviceAdded(void* refcon, io_connect_t connection);
-extern void SwiftDeviceRemoved(void* refcon);
+    extern void SwiftAsyncCallback(void* refcon, IOReturn result, void** args, UInt32 numArgs);
+    extern void SwiftDeviceAdded(void* refcon, io_connect_t connection);
+    extern void SwiftDeviceRemoved(void* refcon);
 }
 
 #include "../VSPController/VSPController.hpp"
@@ -33,6 +33,9 @@ protected:
     }
     void OnErrorOccured(int error, const char* message) override {
         SwiftAsyncCallback(m_refcon, kIOReturnError, (void**)&message, (UInt32)strlen(message));
+    }
+    void OnDataReady(void* /*data*/) override {
+        //--
     }
 private:
     void* m_refcon;

@@ -20,6 +20,7 @@
 		8854A9B02D5DBBBE00C27252 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880539F92D4BB5AD00E55104 /* IOKit.framework */; };
 		8854A9B52D5DE54400C27252 /* libVSPController.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8854A9A42D5DB82C00C27252 /* libVSPController.dylib */; };
 		8854A9B62D5DE54400C27252 /* libVSPController.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 8854A9A42D5DB82C00C27252 /* libVSPController.dylib */; };
+		885DE92D2D5E7F3900CFECEE /* SystemExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B40D842D4B873C00DFE7C5 /* SystemExtensions.framework */; };
 		88667D6B2D53474900DFA26E /* VSPDriver-Start.log in Resources */ = {isa = PBXBuildFile; fileRef = 88667D692D53474900DFA26E /* VSPDriver-Start.log */; };
 		88667D6C2D53474900DFA26E /* VSPDriver-Full.log in Resources */ = {isa = PBXBuildFile; fileRef = 88667D6A2D53474900DFA26E /* VSPDriver-Full.log */; };
 		8899C34A2D525AD800E17727 /* VSPSerialPort.iig in Sources */ = {isa = PBXBuildFile; fileRef = 8899C3492D525AD800E17727 /* VSPSerialPort.iig */; };
@@ -120,6 +121,8 @@
 		8854A9A82D5DB82D00C27252 /* VSPControllerPriv.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VSPControllerPriv.hpp; sourceTree = "<group>"; };
 		8854A9AA2D5DB82D00C27252 /* VSPController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VSPController.cpp; sourceTree = "<group>"; };
 		8854A9BA2D5DED8A00C27252 /* VSPDriverClient.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VSPDriverClient.hpp; sourceTree = "<group>"; };
+		885DE9312D5E82C500CFECEE /* ExtensionFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExtensionFoundation.framework; path = System/Library/PrivateFrameworks/ExtensionFoundation.framework; sourceTree = SDKROOT; };
+		885DE9332D5E82CD00CFECEE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88667D692D53474900DFA26E /* VSPDriver-Start.log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "VSPDriver-Start.log"; sourceTree = "<group>"; };
 		88667D6A2D53474900DFA26E /* VSPDriver-Full.log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "VSPDriver-Full.log"; sourceTree = "<group>"; };
 		8889C45C2D5B0BBF0071D1F3 /* Used-Entitlements.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Used-Entitlements.xml"; sourceTree = "<group>"; };
@@ -168,6 +171,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				885DE92D2D5E7F3900CFECEE /* SystemExtensions.framework in Frameworks */,
 				8854A9AF2D5DBBB700C27252 /* CoreFoundation.framework in Frameworks */,
 				8854A9B02D5DBBBE00C27252 /* IOKit.framework in Frameworks */,
 			);
@@ -247,6 +251,8 @@
 		88B40D592D4B666700DFE7C5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				885DE9332D5E82CD00CFECEE /* Foundation.framework */,
+				885DE9312D5E82C500CFECEE /* ExtensionFoundation.framework */,
 				8854A99E2D5DB1E400C27252 /* CoreFoundation.framework */,
 				88906F492D4CCACB00E500BB /* DriverKit.framework */,
 				880539F92D4BB5AD00E55104 /* IOKit.framework */,
@@ -545,7 +551,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.2;
 				MARKETING_VERSION = 1.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPInstall;
@@ -594,7 +600,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.2;
 				MARKETING_VERSION = 1.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPInstall;
@@ -625,9 +631,13 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 by EoF Software Labs";
 				INFOPLIST_KEY_NSSystemExtensionUsageDescription = "Communicate with VSPDriver to control virtual serial ports";
 				INFOPLIST_KEY_OSBundleUsageDescription = "Communicate with VSPDriver to control virtual serial ports";
-				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MACOSX_DEPLOYMENT_TARGET = 12.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+				);
 			};
 			name = Debug;
 		};
@@ -646,9 +656,13 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 by EoF Software Labs";
 				INFOPLIST_KEY_NSSystemExtensionUsageDescription = "Communicate with VSPDriver to control virtual serial ports";
 				INFOPLIST_KEY_OSBundleUsageDescription = "Communicate with VSPDriver to control virtual serial ports";
-				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MACOSX_DEPLOYMENT_TARGET = 12.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+				);
 			};
 			name = Release;
 		};

@@ -54,9 +54,9 @@ bool VSPController::IsConnected()
 // -------------------------------------------------------------------
 //
 //
-bool VSPController::CreatePort()
+bool VSPController::CreatePort(TVSPPortParameters* parameters)
 {
-    return p->CreatePort();
+    return p->CreatePort(parameters);
 }
 
 // -------------------------------------------------------------------
@@ -73,6 +73,14 @@ bool VSPController::RemovePort(const uint8_t id)
 bool VSPController::GetPortList()
 {
     return p->GetPortList();
+}
+
+// -------------------------------------------------------------------
+//
+//
+bool VSPController::GetLinkList()
+{
+    return p->GetLinkList();
 }
 
 // -------------------------------------------------------------------
@@ -212,7 +220,6 @@ bool VSPControllerPriv::GetStatus()
     TVSPControllerData input = {};
     input.context = vspContextPort;
     input.command = vspControlGetStatus;
-    input.parameter.flags = (CONTROL_MAGIC | BIT(input.command));
     
     return DoAsyncCall(&input);
 }
@@ -220,13 +227,23 @@ bool VSPControllerPriv::GetStatus()
 // -------------------------------------------------------------------
 //
 //
-bool VSPControllerPriv::CreatePort()
+bool VSPControllerPriv::CreatePort(TVSPPortParameters* parameters)
 {
+    if (!parameters)
+        return false;
+    
     TVSPControllerData input = {};
     input.context = vspContextPort;
     input.command = vspControlCreatePort;
-    input.parameter.flags = (CONTROL_MAGIC | BIT(input.command));
-    
+    input.ports.count = 8;
+    input.ports.list[0] = ((parameters->baudRate >> 24) & 0x00000ff);
+    input.ports.list[1] = ((parameters->baudRate >> 16) & 0x00000ff);
+    input.ports.list[2] = ((parameters->baudRate >> 8) & 0x00000ff);
+    input.ports.list[3] = (parameters->baudRate & 0x00000ff);
+    input.ports.list[4] = parameters->dataBits;
+    input.ports.list[5] = parameters->stopBits + 1;
+    input.ports.list[6] = parameters->parity;
+    input.ports.list[7] = parameters->flowCtrl;
     return DoAsyncCall(&input);
 }
 
@@ -240,7 +257,6 @@ bool VSPControllerPriv::RemovePort(const uint8_t id)
     input.command = vspControlRemovePort;
     input.parameter.portLink.sourceId = id;
     input.parameter.portLink.targetId = id;
-    input.parameter.flags = (CONTROL_MAGIC | BIT(input.command));
     
     return DoAsyncCall(&input);
 }
@@ -253,7 +269,18 @@ bool VSPControllerPriv::GetPortList()
     TVSPControllerData input = {};
     input.context = vspContextPort;
     input.command = vspControlGetPortList;
-    input.parameter.flags = (CONTROL_MAGIC | BIT(input.command));
+    
+    return DoAsyncCall(&input);
+}
+
+// -------------------------------------------------------------------
+//
+//
+bool VSPControllerPriv::GetLinkList()
+{
+    TVSPControllerData input = {};
+    input.context = vspContextPort;
+    input.command = vspControlGetLinkList;
     
     return DoAsyncCall(&input);
 }
@@ -268,7 +295,6 @@ bool VSPControllerPriv::LinkPorts(const uint8_t source, const uint8_t target)
     input.command = vspControlLinkPorts;
     input.parameter.portLink.sourceId = source;
     input.parameter.portLink.targetId = target;
-    input.parameter.flags = (CONTROL_MAGIC | BIT(input.command));
     
     return DoAsyncCall(&input);
 }
@@ -283,7 +309,6 @@ bool VSPControllerPriv::UnlinkPorts(const uint8_t source, const uint8_t target)
     input.command = vspControlUnlinkPorts;
     input.parameter.portLink.sourceId = source;
     input.parameter.portLink.targetId = target;
-    input.parameter.flags = (CONTROL_MAGIC | BIT(input.command));
     
     return DoAsyncCall(&input);
 }
@@ -298,7 +323,6 @@ bool VSPControllerPriv::EnableChecks(const uint8_t port)
     input.command = vspControlEnableChecks;
     input.parameter.portLink.sourceId = port;
     input.parameter.portLink.targetId = port;
-    input.parameter.flags = (CONTROL_MAGIC | BIT(input.command));
     
     return DoAsyncCall(&input);
 }
@@ -313,7 +337,6 @@ bool VSPControllerPriv::EnableTrace(const uint8_t port)
     input.command = vspControlEnableTrace;
     input.parameter.portLink.sourceId = port;
     input.parameter.portLink.targetId = port;
-    input.parameter.flags = (CONTROL_MAGIC | BIT(input.command));
     
     return DoAsyncCall(&input);
 }
@@ -559,11 +582,14 @@ void VSPControllerPriv::UserClientTeardown(void)
 // -------------------------------------------------------------------
 //
 //
-inline bool VSPControllerPriv::DoAsyncCall(const TVSPControllerData* input)
+inline bool VSPControllerPriv::DoAsyncCall(TVSPControllerData* input)
 {
     kern_return_t ret = kIOReturnSuccess;
     io_async_ref64_t asyncRef = {};
     
+    // set magic control
+    input->status.flags = (MAGIC_CONTROL | BIT(input->command));
+
     // Establish our "AsyncCallback" function as the function that will be called
     // by our Dext when it calls its "AsyncCompletion" function.
     // We'll use kIOAsyncCalloutFuncIndex and kIOAsyncCalloutRefconIndex
@@ -595,6 +621,8 @@ inline bool VSPControllerPriv::DoAsyncCall(const TVSPControllerData* input)
     PrintStruct("doAsyncCall-Return", &result);
 #endif
 
+    m_vspResult = result;
+    m_controller->OnDataReady(&m_vspResult);
     return true;
 }
 
