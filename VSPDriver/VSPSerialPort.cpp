@@ -451,7 +451,7 @@ static inline void update_txqbmd(struct VSPSerialPort_IVars* ivars)
 
 void IMPL(VSPSerialPort, TxDataAvailable)
 {
-    IOReturn ret;
+    IOReturn ret = kIOReturnSuccess;
     uint8_t* buffer;
     uint64_t address;
     uint32_t size;
@@ -494,14 +494,16 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     // Is port is assigned to a port link?
     if (ivars->m_portLinkId) {
         // send TX to other port instance
-        if ((ret = sendToPortLink(buffer, size)) != kIOReturnSuccess) {
+        ret = sendToPortLink(buffer, size);
+        if (ret != kIOReturnSuccess) {
             VSPLog(LOG_PREFIX, "TxDataAvailable: Data routing failed. code=%d\n", ret);
             goto finish;
         }
     }
     // Loopback TX data
     else {
-        if ((ret = sendResponse(this, buffer, size)) != kIOReturnSuccess) {
+        ret = sendResponse(this, buffer, size);
+        if (ret != kIOReturnSuccess) {
             VSPLog(LOG_PREFIX, "TxDataAvailable: Unable to enqueue response. code=%d\n", ret);
             goto finish;
         }
@@ -900,7 +902,8 @@ kern_return_t VSPSerialPort::setupTTYBaseName()
     //properties->setObject(kIOTTYBaseNameKey, baseName);
     
     // write back to driver instance
-    if ((ret = SetProperties(properties)) != kIOReturnSuccess) {
+    ret = SetProperties(properties);
+    if (ret != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "setupTTYBaseName: Unable to set TTY base name. code=%d\n", ret);
         //return ret; // ??? an error - why???
     }
