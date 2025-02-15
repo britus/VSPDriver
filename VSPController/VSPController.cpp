@@ -150,7 +150,7 @@ static inline void PrintArray(const char* ctx, const int64_t* ptr, const uint32_
         printf("[%s] --------------------------\n{\n", ctx);
         for (uint32_t idx = 0; idx < length; ++idx)
         {
-            printf("ptr[%02u] = %llu\n", idx, ptr[idx]);
+            printf("\tptr[%02u] = %llu\n", idx, ptr[idx]);
         }
         printf("}\n");
     }
