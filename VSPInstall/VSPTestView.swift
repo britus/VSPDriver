@@ -1,10 +1,10 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-The SwiftUI view that provides the userclient communication UI.
-*/
-
+// ********************************************************************
+// VSPTestView.swift - VSP setup app
+//
+// Copyright © 2025 by EoF Software Labs
+// Copyright © 2024 Apple Inc. (some copied parts)
+// SPDX-License-Identifier: MIT
+// ********************************************************************
 import SwiftUI
 
 struct VSPTestView: View {
