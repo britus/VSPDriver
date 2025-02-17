@@ -17,6 +17,10 @@ a installation App suggested by Apple.
 ### Client application
 The Project [VSPClient](https://github.com/britus/VSPClient) contains the user interface for managing and two frameworks in QT for the virtual serial port driver
 
+## Log Files (deep view:)
+
+A look at this [log]() shows how the driver ticks with the IOUserClient :)
+
 ### Donation
 
 *Request to viewers: Need help to continue (> /pm me please ;-)*
