@@ -1,10 +1,10 @@
-/*
- * See the LICENSE-APPLE.txt file for this sample’s licensing information.
- *
- * Abstract:
- * The view model that indicates the state of driver loading.
- */
-
+// ********************************************************************
+// VSPLoaderModel.swift - VSP setup app
+//
+// Copyright © 2025 by EoF Software Labs
+// Copyright © 2024 Apple Inc. (some copied parts)
+// SPDX-License-Identifier: MIT
+// ********************************************************************
 import Foundation
 import SystemExtensions
 import os.log
@@ -99,7 +99,7 @@ extension VSPLoaderModel {
         request.delegate = self
         OSSystemExtensionManager.shared.submitRequest(request)
         
-        // Update your state machine with deactivation states and process that change here
+        self.state = VSPSmLoader.process(self.state, .uninstallStarted)
     }
 }
 
@@ -190,6 +190,7 @@ extension VSPLoaderModel: OSSystemExtensionRequestDelegate {
 #endif
 }
 
+/* Loader state machine */
 class VSPSmLoader {
     
     enum State {
