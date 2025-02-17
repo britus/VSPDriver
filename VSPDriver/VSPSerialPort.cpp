@@ -868,7 +868,8 @@ uint8_t VSPSerialPort::getPortIdentifier()
 //
 void VSPSerialPort::setPortLinkIdentifier(uint8_t id)
 {
-    VSPLog(LOG_PREFIX, "setPortLinkIdentifier id=%d.\n", id);
+    VSPLog(LOG_PREFIX, "setPortLinkIdentifier id=%d at port=%d\n",
+           id, ivars->m_portId);
     ivars->m_portLinkId = id;
 }
 
