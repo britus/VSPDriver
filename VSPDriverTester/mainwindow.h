@@ -35,6 +35,8 @@ private slots:
     void on_btnSendLine_clicked();
     void on_btnLooper_clicked();
 
+    void on_actionNewWindow_triggered();
+
 private:
     inline void initComboSerialPort(QComboBox* cbx, QComboBox* link = nullptr);
     inline void initComboBaudRate(QComboBox* cbx, QComboBox* link = nullptr);

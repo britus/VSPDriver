@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
+#include <QScreen>
 #include <QSerialPort>
 #include <QSerialPortInfo>
 #include <QThread>
@@ -64,6 +65,10 @@ MainWindow::MainWindow(QWidget* parent)
 
     connect(qApp, &QGuiApplication::aboutToQuit, this, [this]() {
         disconnectPort();
+    });
+
+    connect(qApp, &QGuiApplication::lastWindowClosed, this, []() {
+        qApp->quit();
     });
 }
 
@@ -542,4 +547,10 @@ void MainWindow::onPortClosed()
     m_isLooping = false;
     ui->btnLooper->setText("Looper");
     ui->btnLooper->setEnabled(true);
+}
+
+void MainWindow::on_actionNewWindow_triggered()
+{
+    MainWindow* w = new MainWindow();
+    w->show();
 }
