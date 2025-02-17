@@ -642,29 +642,27 @@ kern_return_t VSPUserClient::getStatus(void* reference, IOUserClientMethodArgume
         set_ctlr_status(&response, ret, 0xfe000002);
         goto finish;
     }
-    if ((ret = ivars->m_parent->getPortList(portList, portCount)) != kIOReturnSuccess) {
-        set_ctlr_status(&response, ret, 0xfe000003);
-        goto finish;
-    }
-    if ((ret = ivars->m_parent->getPortLinkList(linkList, linkCount)) != kIOReturnSuccess) {
-        set_ctlr_status(&response, ret, 0xfe000004);
-        goto finish;
-    }
-    
     if (portCount) {
-        response.parameter.flags |= BIT(1);
-        response.ports.count = portCount;
+        if ((ret = ivars->m_parent->getPortList(portList, portCount)) != kIOReturnSuccess) {
+            set_ctlr_status(&response, ret, 0xfe000003);
+            goto finish;
+        }
         for(uint8_t i = 0; i < portCount && i < MAX_SERIAL_PORTS; i++) {
             response.ports.list[i] = portList[i];
         }
+        response.ports.count = portCount;
+        response.parameter.flags |= BIT(1);
     }
-    
     if (linkCount) {
-        response.parameter.flags |= BIT(2);
-        response.links.count = linkCount;
+        if ((ret = ivars->m_parent->getPortLinkList(linkList, linkCount)) != kIOReturnSuccess) {
+            set_ctlr_status(&response, ret, 0xfe000004);
+            goto finish;
+        }
         for(uint8_t i = 0; i < linkCount && i < MAX_PORT_LINKS; i++) {
             response.links.list[i] = portList[i];
         }
+        response.links.count = linkCount;
+        response.parameter.flags |= BIT(2);
     }
     
     VSPLog(LOG_PREFIX, "getStatus finish.\n");
