@@ -447,7 +447,7 @@ kern_return_t VSPDriver::removePort(uint8_t portId)
             VSPLog(LOG_PREFIX, "removePort: Port id=%d found. Release VSPSerialPort\n", item->id);
             ret = item->port->Stop(GetProvider());
             if (ret == kIOReturnSuccess) {
-                OSSafeReleaseNULL(item->port);
+                //??OSSafeReleaseNULL(item->port);
                 IOSafeDeleteNULL(item, TVSPortItem, 1);
                 found = 1;
             } else {
