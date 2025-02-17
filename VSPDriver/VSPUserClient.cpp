@@ -791,27 +791,29 @@ kern_return_t VSPUserClient::getPortListHelper(void* reference)
         set_ctlr_status(response, ret, 0xfc000001);
     }
 
-    if (count > 0) {
-        if (!(list = IONewZero(uint8_t, count))) {
-            VSPLog(LOG_PREFIX, "getPortListHelper: Out of memory.\n");
-            set_ctlr_status(response, ret, 0xfc0000ff);
-        } else {
-            if ((ret = ivars->m_parent->getPortList(list, count)) != kIOReturnSuccess) {
-                VSPLog(LOG_PREFIX, "getPortListHelper: parent getPortList failed. code=%d\n", ret);
-                set_ctlr_status(response, ret, 0xfc000002);
-            }
-            else {
-                for (uint8_t i = 0; i < count; i++) {
-                    response->ports.list[i] = list[i];
-                }
-                response->ports.count = count;
-            }
-            IOSafeDeleteNULL(list, uint8_t, count);
-        }
+    if (count == 0) {
+        /* be quiet to caller */
+        VSPLog(LOG_PREFIX, "getPortListHelper: No serial ports available.\n");
+        response->ports.count = 0;
+    }
+    else if (!(list = IONewZero(uint8_t, count))) {
+        VSPLog(LOG_PREFIX, "getPortListHelper: Out of memory.\n");
+        set_ctlr_status(response, ret, 0xfc0000ff);
     }
     else {
-        VSPLog(LOG_PREFIX, "getPortListHelper: No serial ports available.\n");
+        if ((ret = ivars->m_parent->getPortList(list, count)) != kIOReturnSuccess) {
+            VSPLog(LOG_PREFIX, "getPortListHelper: parent getPortList failed. code=%d\n", ret);
+            set_ctlr_status(response, ret, 0xfc000002);
+        }
+        else {
+            for (uint8_t i = 0; i < count; i++) {
+                response->ports.list[i] = list[i];
+            }
+            response->ports.count = count;
+        }
+        IOSafeDeleteNULL(list, uint8_t, count);
     }
+    
     
     return response->status.code;
 }
@@ -855,33 +857,37 @@ kern_return_t VSPUserClient::getLinkListHelper(void* reference)
     uint64_t* list = nullptr;
     uint8_t count = 0;
 
-    if ((ret = ivars->m_parent->getPortLinkCount(&count)) != kIOReturnSuccess) {
+    if ((ret = getPortListHelper(reference)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "getLinkListHelper: getPortListHelper failed. code=%d\n", ret);
+        set_ctlr_status(response, ret, 0xd000000a);
+    }
+    else if ((ret = ivars->m_parent->getPortLinkCount(&count)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "getLinkListHelper: parent getPortLinkCount failed. code=%d\n", ret);
         set_ctlr_status(response, ret, 0xd0000001);
     }
-
-    if (count > 0) {
-        if (!(list = IONewZero(uint64_t, count))) {
-            VSPLog(LOG_PREFIX, "getLinkListHelper: Out of memory.\n");
-            set_ctlr_status(response, ret, 0xd00000ff);
-        } else {
-            if ((ret = ivars->m_parent->getPortLinkList(list, count)) != kIOReturnSuccess) {
-                VSPLog(LOG_PREFIX, "getLinkListHelper: parent getPortLinkList failed. code=%d\n", ret);
-                set_ctlr_status(response, ret, 0xd0000002);
-            }
-            else {
-                for (uint8_t i = 0; i < count; i++) {
-                    response->links.list[i] = list[i];
-                }
-                response->links.count = count;
-            }
-            IOSafeDeleteNULL(list, uint64_t, count);
-        }
+    else if (count == 0) {
+        /* be quiet to caller */
+        VSPLog(LOG_PREFIX, "getLinkListHelper: No port links available.\n");
+        response->links.count = 0;
+    }
+    else if (!(list = IONewZero(uint64_t, count))) {
+        VSPLog(LOG_PREFIX, "getLinkListHelper: Out of memory.\n");
+        set_ctlr_status(response, ret, 0xd00000ff);
     }
     else {
-        VSPLog(LOG_PREFIX, "getLinkListHelper: No port links available.\n");
+        if ((ret = ivars->m_parent->getPortLinkList(list, count)) != kIOReturnSuccess) {
+            VSPLog(LOG_PREFIX, "getLinkListHelper: parent getPortLinkList failed. code=%d\n", ret);
+            set_ctlr_status(response, ret, 0xd0000002);
+        }
+        else {
+            for (uint8_t i = 0; i < count; i++) {
+                response->links.list[i] = list[i];
+            }
+            response->links.count = count;
+        }
+        IOSafeDeleteNULL(list, uint64_t, count);
     }
-
+    
     return response->status.code;
 }
 
