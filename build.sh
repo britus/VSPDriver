@@ -25,6 +25,7 @@ echo ":> Build project..."
 
 #-arch x86_64
 xcodebuild -project ${prjname}.xcodeproj \
-    -target VSPInstall \
+    -target VSPDriver \
     -target VSPController \
-    -target VSPSetup
+    -target VSPSetup \
+    -target VSPInstall
