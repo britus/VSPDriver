@@ -552,7 +552,7 @@ kern_return_t VSPDriver::createPortLink(uint8_t sourceId, uint8_t targetId, void
 
     uint8_t count = ivars->m_portLinkCount;
  
-    // double check existing links
+    // safe check: check existing links
     if (count && ivars->m_portLinks) {
         for (uint8_t i = 0; i < count; i++) {
             // skip invalid entry
