@@ -1,1 +1,1 @@
-systemextensionsctl uninstall 83NQU389JN org.eof.tools.VSPDriver
+systemextensionsctl uninstall ${1} org.eof.tools.VSPDriver
