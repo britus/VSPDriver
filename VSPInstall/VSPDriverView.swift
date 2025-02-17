@@ -1,9 +1,10 @@
-/* See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-The SwiftUI view that manages the views of the app.
-*/
-
+// ********************************************************************
+// VSPDriverView.swift - VSP setup app
+//
+// Copyright © 2025 by EoF Software Labs
+// Copyright © 2024 Apple Inc. (some copied parts)
+// SPDX-License-Identifier: MIT
+// ********************************************************************
 import SwiftUI
 
 struct VSPDriverView: View {

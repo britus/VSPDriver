@@ -1,10 +1,10 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-The view model that indicates the state of driver communication.
-*/
-
+// ********************************************************************
+// VSPTestModel.swift - VSP setup app
+//
+// Copyright © 2025 by EoF Software Labs
+// Copyright © 2024 Apple Inc. (some copied parts)
+// SPDX-License-Identifier: MIT
+// ********************************************************************
 import Foundation
 
 @_silgen_name("SwiftAsyncCallback")
