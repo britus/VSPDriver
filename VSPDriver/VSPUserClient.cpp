@@ -29,6 +29,7 @@
 #include "VSPController.h"
 #include "VSPLogger.h"
 #include "VSPDriver.h"
+
 using namespace VSPController;
 
 #define LOG_PREFIX "VSPUserClient"
@@ -44,7 +45,7 @@ using namespace VSPController;
 }
 
 // Call VSPUserClient instance method
-#define VSP_CALL_HANDLER(target, handler) \
+#define VSP_HANDLER_CALL(target, handler) \
 { \
     VSPUserClient* self = (VSPUserClient*) target; \
     return self->handler(reference, arguments); \
@@ -55,7 +56,7 @@ using namespace VSPController;
 VSPUserClient::name(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) \
 { \
     VSPLog(LOG_PREFIX, prefix " called.\n"); \
-    VSP_CALL_HANDLER(target, handler) \
+    VSP_HANDLER_CALL(target, handler) \
 }
 
 #ifdef DEBUG
@@ -71,7 +72,16 @@ static inline void dump_ctrl_data(const TVSPControllerData* data)
     VSPLog(LOG_PREFIX, "Data.p.portlink.source: %d\n", data->parameter.link.source);
     VSPLog(LOG_PREFIX, "Data.p.portlink.target: %d\n", data->parameter.link.target);
     VSPLog(LOG_PREFIX, "Data.ports.count......: %d\n", data->ports.count);
+    for (uint8_t i = 0; i < data->ports.count && i < MAX_SERIAL_PORTS; i++) {
+        VSPLog(LOG_PREFIX, "\tPort item #%d: %d\n", i, data->ports.list[i]);
+    }
     VSPLog(LOG_PREFIX, "Data.links.count......: %d\n", data->links.count);
+    for (uint8_t i = 0; i < data->links.count && i < MAX_SERIAL_PORTS; i++) {
+        VSPLog(LOG_PREFIX, "\tPort Link #%d: %d <-> %d\n", //
+               (uint8_t)(data->links.list[i] >> 16) & 0x000000ff,
+               (uint8_t)(data->links.list[i] >> 8) & 0x000000ff,
+               (uint8_t)(data->links.list[i]) & 0x000000ff);
+    }
 }
 #else
 #define VSP_DUMP_DATA(data)
@@ -966,7 +976,7 @@ kern_return_t VSPUserClient::unlinkPorts(void* reference, IOUserClientMethodArgu
         set_ctlr_status(&response, ret, 0xfb000001);
     }
     else {
-        TVSPPortLinkItem* item = reinterpret_cast<TVSPPortLinkItem*>(link);
+        TVSPLinkItem* item = reinterpret_cast<TVSPLinkItem*>(link);
         VSPLog(LOG_PREFIX, "unlinkPorts: remove src=%d tgt=%d in %d\n", sid, tid, item->id);
       
         ret = ivars->m_parent->removePortLink(item);

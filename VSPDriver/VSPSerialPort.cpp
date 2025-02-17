@@ -920,7 +920,7 @@ kern_return_t VSPSerialPort::sendToPortLink(const void* buffer, const uint32_t s
 {
     IOReturn ret;
     VSPSerialPort* port = nullptr;
-    TVSPPortLinkItem* item = nullptr;
+    TVSPLinkItem* item = nullptr;
     uint8_t id = ivars->m_portLinkId;
     void* link = nullptr;
 
@@ -933,7 +933,7 @@ kern_return_t VSPSerialPort::sendToPortLink(const void* buffer, const uint32_t s
 
     VSPLog(LOG_PREFIX, "sendToPortLink: got port link.\n");
 
-    item = reinterpret_cast<TVSPPortLinkItem*>(link);
+    item = reinterpret_cast<TVSPLinkItem*>(link);
     if (item->sourcePort.id != ivars->m_portId) {
         port = item->sourcePort.port;
     }
