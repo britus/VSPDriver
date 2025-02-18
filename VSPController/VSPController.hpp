@@ -5,12 +5,10 @@
 // Copyright © 2024 Apple Inc. (some copied parts)
 // SPDX-License-Identifier: MIT
 // ********************************************************************
-#ifndef VSPController_
-#define VSPController_
+#pragma once
 
 extern "C" {
 #define __FAVOR_BSD
-#include <inttypes.h>
 #include <stdlib.h>
 }
 
@@ -28,7 +26,8 @@ typedef struct {
 } TVSPPortParameters;
 
 class VSPControllerPriv;
-class VSPController
+
+class __exported VSPController
 {
 public:
     VSPController();
@@ -85,7 +84,7 @@ public:
      *
      */
     bool EnableTrace(const uint8_t port);
-    
+
 protected:
     friend class VSPControllerPriv;
     /** ----------------------
@@ -112,12 +111,11 @@ protected:
      *
      */
     int GetConnection();
-    
+
 private:
-    VSPControllerPriv *p;
+    VSPControllerPriv* p;
 };
 
 } // END namespace
 
 #pragma GCC visibility pop
-#endif

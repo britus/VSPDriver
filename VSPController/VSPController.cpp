@@ -5,15 +5,18 @@
 // Copyright © 2024 Apple Inc. (some copied parts)
 // SPDX-License-Identifier: MIT
 // ********************************************************************
-#include <iostream>
 #include <CoreFoundation/CoreFoundation.h>
-#include <IOKit/IOTypes.h>
 #include <IOKit/IOKitLib.h>
-#include "VSPController.hpp"
-#include "VSPControllerPriv.hpp"
+#include <IOKit/IOTypes.h>
+#include <iostream>
+#include <vspcontroller.hpp>
+#include <vspcontrollerpriv.hpp>
 
 #define BIT(x) (1 << x)
+
+#ifndef VSP_DEBUG
 #define VSP_DEBUG
+#endif
 
 namespace VSPClient {
 
@@ -148,13 +151,13 @@ static inline void PrintArray(const char* ctx, const int64_t* ptr, const uint32_
 {
     if (ptr && length) {
         printf("[%s] --------------------------\n{\n", ctx);
-        for (uint32_t idx = 0; idx < length; ++idx)
-        {
+        for (uint32_t idx = 0; idx < length; ++idx) {
             printf("\tptr[%02u] = %llu\n", idx, ptr[idx]);
         }
         printf("}\n");
     }
 }
+
 static inline void PrintStruct(const char* ctx, const TVSPControllerData* ptr)
 {
     if (ptr) {
@@ -184,13 +187,13 @@ static inline void PrintErrorDetails(kern_return_t ret, const char* message)
 }
 
 VSPControllerPriv::VSPControllerPriv(VSPController* parent)
-    : m_machNotificationPort(NULL)
+    : m_machNotificationPort(0L)
     , m_runLoop(NULL)
     , m_runLoopSource(NULL)
     , m_deviceAddedIter(IO_OBJECT_NULL)
     , m_deviceRemovedIter(IO_OBJECT_NULL)
     , m_notificationPort(NULL)
-    , m_connection(NULL)
+    , m_connection(0L)
     , m_controller(parent)
     , m_vspResponse(NULL)
 {
@@ -226,7 +229,7 @@ bool VSPControllerPriv::GetStatus()
     TVSPControllerData input = {};
     input.context = vspContextPort;
     input.command = vspControlGetStatus;
-    
+
     return DoAsyncCall(&input);
 }
 
@@ -237,19 +240,29 @@ bool VSPControllerPriv::CreatePort(TVSPPortParameters* parameters)
 {
     if (!parameters)
         return false;
-    
+
     TVSPControllerData input = {};
     input.context = vspContextPort;
     input.command = vspControlCreatePort;
-    input.ports.count = 8;
-    input.ports.list[0] = ((parameters->baudRate >> 24) & 0x00000ff);
-    input.ports.list[1] = ((parameters->baudRate >> 16) & 0x00000ff);
-    input.ports.list[2] = ((parameters->baudRate >> 8) & 0x00000ff);
-    input.ports.list[3] = (parameters->baudRate & 0x00000ff);
-    input.ports.list[4] = parameters->dataBits;
-    input.ports.list[5] = parameters->stopBits + 1;
-    input.ports.list[6] = parameters->parity;
-    input.ports.list[7] = parameters->flowCtrl;
+    input.parameter.link.source = 1;
+    input.parameter.link.target = 1;
+    if (sizeof(TVSPPortParameters) <= MAX_SERIAL_PORTS) {
+        input.ports.count = sizeof(TVSPPortParameters);
+        input.parameter.flags = 0x5350503aff01;
+        memcpy(input.ports.list, parameters, input.ports.count);
+    }
+    else {
+        input.parameter.flags = 0x5350503aff02;
+        input.ports.count = 8;
+        input.ports.list[0] = ((parameters->baudRate >> 24) & 0x000000ff);
+        input.ports.list[1] = ((parameters->baudRate >> 16) & 0x000000ff);
+        input.ports.list[2] = ((parameters->baudRate >> 8) & 0x000000ff);
+        input.ports.list[3] = (parameters->baudRate & 0x00000ff);
+        input.ports.list[4] = parameters->dataBits;
+        input.ports.list[5] = parameters->stopBits + 1;
+        input.ports.list[6] = parameters->parity;
+        input.ports.list[7] = parameters->flowCtrl;
+    }
     return DoAsyncCall(&input);
 }
 
@@ -263,7 +276,7 @@ bool VSPControllerPriv::RemovePort(const uint8_t id)
     input.command = vspControlRemovePort;
     input.parameter.link.source = id;
     input.parameter.link.target = id;
-    
+
     return DoAsyncCall(&input);
 }
 
@@ -275,7 +288,7 @@ bool VSPControllerPriv::GetPortList()
     TVSPControllerData input = {};
     input.context = vspContextPort;
     input.command = vspControlGetPortList;
-    
+
     return DoAsyncCall(&input);
 }
 
@@ -287,7 +300,7 @@ bool VSPControllerPriv::GetLinkList()
     TVSPControllerData input = {};
     input.context = vspContextPort;
     input.command = vspControlGetLinkList;
-    
+
     return DoAsyncCall(&input);
 }
 
@@ -301,7 +314,7 @@ bool VSPControllerPriv::LinkPorts(const uint8_t source, const uint8_t target)
     input.command = vspControlLinkPorts;
     input.parameter.link.source = source;
     input.parameter.link.target = target;
-    
+
     return DoAsyncCall(&input);
 }
 
@@ -315,7 +328,7 @@ bool VSPControllerPriv::UnlinkPorts(const uint8_t source, const uint8_t target)
     input.command = vspControlUnlinkPorts;
     input.parameter.link.source = source;
     input.parameter.link.target = target;
-    
+
     return DoAsyncCall(&input);
 }
 
@@ -329,7 +342,7 @@ bool VSPControllerPriv::EnableChecks(const uint8_t port)
     input.command = vspControlEnableChecks;
     input.parameter.link.source = port;
     input.parameter.link.target = port;
-    
+
     return DoAsyncCall(&input);
 }
 
@@ -343,7 +356,7 @@ bool VSPControllerPriv::EnableTrace(const uint8_t port)
     input.command = vspControlEnableTrace;
     input.parameter.link.source = port;
     input.parameter.link.target = port;
-    
+
     return DoAsyncCall(&input);
 }
 
@@ -379,10 +392,9 @@ static void DeviceAdded(void* refcon, io_iterator_t iterator)
     bool clientFound = false;
     io_name_t deviceName = {};
     io_name_t devicePath = {};
-    
-    while ((device = IOIteratorNext(iterator)) != IO_OBJECT_NULL)
-    {
-        //attemptedToMatchDevice = true;
+
+    while ((device = IOIteratorNext(iterator)) != IO_OBJECT_NULL) {
+        // attemptedToMatchDevice = true;
         if ((ret = IORegistryEntryGetName(device, deviceName)) != kIOReturnSuccess) {
             p->ReportError(ret, "Get service registry name failed.");
         }
@@ -392,28 +404,29 @@ static void DeviceAdded(void* refcon, io_iterator_t iterator)
         if (strlen(deviceName) > 0 && strlen(devicePath) > 0) {
             p->SetNameAndPath(deviceName, devicePath);
         }
-        
+
         // Open a connection to this user client as a server
         // to that client, and store the instance in "service"
         if ((ret = IOServiceOpen(device, mach_task_self_, 0, &connection)) != kIOReturnSuccess) {
             if (ret == kIOReturnNotPermitted) {
                 p->ReportError(ret, "Operation 'IOServiceOpen' not permitted.");
-            } else {
+            }
+            else {
                 p->ReportError(ret, "Open service failed.");
             }
             IOObjectRelease(device);
             continue;
         }
-        
+
         IOObjectRelease(device);
-        
+
         //-> SwiftDeviceAdded(refcon, connection);
         p->SetConnection(connection);
-        
+
         clientFound = true;
         ret = kIOReturnSuccess;
     }
-    
+
     if (!clientFound) {
         p->ReportError(kIOReturnNotFound, "Unable to find VSPDriver extensions.");
     }
@@ -426,9 +439,8 @@ static void DeviceRemoved(void* refcon, io_iterator_t iterator)
 {
     VSPControllerPriv* p = (VSPControllerPriv*) refcon;
     io_service_t device = IO_OBJECT_NULL;
-    
-    while ((device = IOIteratorNext(iterator)) != IO_OBJECT_NULL)
-    {
+
+    while ((device = IOIteratorNext(iterator)) != IO_OBJECT_NULL) {
         IOObjectRelease(device);
         p->SetConnection(0L);
     }
@@ -470,8 +482,8 @@ void VSPControllerPriv::ReportError(IOReturn error, const char* message)
 //
 void VSPControllerPriv::SetNameAndPath(const char* name, const char* path)
 {
-    strncpy(m_deviceName, name, sizeof(m_deviceName)-1);
-    strncpy(m_devicePath, path, sizeof(m_devicePath)-1);
+    strncpy(m_deviceName, name, sizeof(m_deviceName) - 1);
+    strncpy(m_devicePath, path, sizeof(m_devicePath) - 1);
 }
 
 // -------------------------------------------------------------------
@@ -480,72 +492,64 @@ void VSPControllerPriv::SetNameAndPath(const char* name, const char* path)
 bool VSPControllerPriv::UserClientSetup(void* refcon)
 {
     kern_return_t ret = kIOReturnSuccess;
-    
+
     m_runLoop = CFRunLoopGetCurrent();
-    if (m_runLoop == NULL)
-    {
+    if (m_runLoop == NULL) {
         ReportError(kIOReturnError, "Failed to initialize run loop.");
         return false;
     }
     CFRetain(m_runLoop);
-    
-    m_notificationPort = IONotificationPortCreate(kIOMainPortDefault);
-    if (m_notificationPort == NULL)
-    {
+
+    if (__builtin_available(macOS 12.0, *)) {
+        m_notificationPort = IONotificationPortCreate(kIOMainPortDefault);
+    }
+    else {
+        return false;
+    }
+    if (m_notificationPort == NULL) {
         ReportError(kIOReturnError, "Failed to initialize motification port.");
         UserClientTeardown();
         return false;
     }
-    
+
     m_machNotificationPort = IONotificationPortGetMachPort(m_notificationPort);
-    if (m_machNotificationPort == 0)
-    {
+    if (m_machNotificationPort == 0) {
         ReportError(kIOReturnError, "Failed to initialize mach notification port.");
         UserClientTeardown();
         return false;
     }
-    
+
     m_runLoopSource = IONotificationPortGetRunLoopSource(m_notificationPort);
-    if (m_runLoopSource == NULL)
-    {
+    if (m_runLoopSource == NULL) {
         ReportError(kIOReturnError, "Failed to initialize run loop source.");
         return false;
     }
-    
+
     // Establish our notifications in the run loop, so we can get callbacks.
     CFRunLoopAddSource(m_runLoop, m_runLoopSource, kCFRunLoopDefaultMode);
-    
+
     /// - Tag: SetUpMatchingNotification
     CFMutableDictionaryRef matchingDictionary = IOServiceNameMatching(dextIdentifier);
-    if (matchingDictionary == NULL)
-    {
+    if (matchingDictionary == NULL) {
         ReportError(kIOReturnError, "Failed to initialize matching dictionary.");
         UserClientTeardown();
         return false;
     }
-    matchingDictionary = (CFMutableDictionaryRef)CFRetain(matchingDictionary);
-    matchingDictionary = (CFMutableDictionaryRef)CFRetain(matchingDictionary);
-    
-    ret = IOServiceAddMatchingNotification(m_notificationPort,
-                                           kIOFirstMatchNotification,
-                                           matchingDictionary,
-                                           DeviceAdded, refcon,
-                                           &m_deviceAddedIter);
-    if (ret != kIOReturnSuccess)
-    {
+    matchingDictionary = (CFMutableDictionaryRef) CFRetain(matchingDictionary);
+    matchingDictionary = (CFMutableDictionaryRef) CFRetain(matchingDictionary);
+
+    ret = IOServiceAddMatchingNotification(
+       m_notificationPort, kIOFirstMatchNotification, matchingDictionary, DeviceAdded, refcon, &m_deviceAddedIter);
+    if (ret != kIOReturnSuccess) {
         ReportError(ret, "Add matching notification failed.");
         UserClientTeardown();
         return false;
     }
     DeviceAdded(refcon, m_deviceAddedIter);
-    
-    ret = IOServiceAddMatchingNotification(m_notificationPort,
-                                           kIOTerminatedNotification,
-                                           matchingDictionary,
-                                           DeviceRemoved, refcon,
-                                           &m_deviceRemovedIter);
-    if (ret != kIOReturnSuccess)
-    {
+
+    ret = IOServiceAddMatchingNotification(
+       m_notificationPort, kIOTerminatedNotification, matchingDictionary, DeviceRemoved, refcon, &m_deviceRemovedIter);
+    if (ret != kIOReturnSuccess) {
         ReportError(ret, "Add termination notification failed.");
         UserClientTeardown();
         return false;
@@ -560,28 +564,25 @@ bool VSPControllerPriv::UserClientSetup(void* refcon)
 //
 void VSPControllerPriv::UserClientTeardown(void)
 {
-    if (m_runLoopSource)
-    {
+    if (m_runLoopSource) {
         CFRunLoopRemoveSource(m_runLoop, m_runLoopSource, kCFRunLoopDefaultMode);
         m_runLoopSource = NULL;
     }
-    
-    if (m_notificationPort)
-    {
+
+    if (m_notificationPort) {
         IONotificationPortDestroy(m_notificationPort);
         m_notificationPort = NULL;
         m_machNotificationPort = 0;
     }
-    
-    if (m_runLoop)
-    {
+
+    if (m_runLoop) {
         CFRelease(m_runLoop);
         m_runLoop = NULL;
     }
-    
-    m_deviceAddedIter   = IO_OBJECT_NULL;
+
+    m_deviceAddedIter = IO_OBJECT_NULL;
     m_deviceRemovedIter = IO_OBJECT_NULL;
-    m_connection        = IO_OBJECT_NULL;
+    m_connection = IO_OBJECT_NULL;
 }
 
 // -------------------------------------------------------------------
@@ -591,7 +592,7 @@ inline bool VSPControllerPriv::DoAsyncCall(TVSPControllerData* input)
 {
     kern_return_t ret = kIOReturnSuccess;
     io_async_ref64_t asyncRef = {};
-    
+
     // set magic control
     input->status.flags = (MAGIC_CONTROL | BIT(input->command));
 
@@ -600,12 +601,12 @@ inline bool VSPControllerPriv::DoAsyncCall(TVSPControllerData* input)
     // We'll use kIOAsyncCalloutFuncIndex and kIOAsyncCalloutRefconIndex
     // to define the parameters for our async callback. This is your callback
     // function. Check the definition for more details.
-    asyncRef[kIOAsyncCalloutFuncIndex]   = (io_user_reference_t) VSPClient::AsyncCallback;
-    
+    asyncRef[kIOAsyncCalloutFuncIndex] = (io_user_reference_t) VSPClient::AsyncCallback;
+
     // Use this for context on the return. We'll pass the refcon so we can
     // talk back to the view model.
     asyncRef[kIOAsyncCalloutRefconIndex] = (io_user_reference_t) this;
-    
+
     // Instant response of the DEXT user client instance
     // Allocate response IOMemoryDescriptor at driver site
     // to response data above 128 bytes. This will filled,
@@ -614,36 +615,35 @@ inline bool VSPControllerPriv::DoAsyncCall(TVSPControllerData* input)
     size_t resultSize = VSP_UCD_SIZE;
     mach_vm_address_t address = 0;
     mach_vm_size_t size = 0;
-    ret = IOConnectMapMemory64(m_connection,
-                               input->command,
-                               mach_task_self(),
-                               &address,
-                               &size,
-                               kIOMapAnywhere);
-    if(ret != kIOReturnSuccess) {
+    ret = IOConnectMapMemory64(m_connection, input->command, mach_task_self(), &address, &size, kIOMapAnywhere);
+    if (ret != kIOReturnSuccess) {
         ReportError(ret, "Failed to get drivers mapped memory.");
         return false;
-    } else if (!address || !size) {
-        ReportError(ret, "Invalid I/O address mapping memory.");
+    }
+    else if (!address || !size) {
+        ReportError(ret, "Invalid memory address mapping.");
         return false;
-    } else {
+    }
+    else {
         m_vspResponse = reinterpret_cast<TVSPControllerData*>(address);
     }
-    
+
     // - do it --
-    ret = IOConnectCallAsyncStructMethod(m_connection,
-                                         input->command,
-                                         m_machNotificationPort,
-                                         asyncRef,
-                                         kIOAsyncCalloutCount,
-                                         input, VSP_UCD_SIZE,
-                                         m_vspResponse,
-                                         &resultSize);
+    ret = IOConnectCallAsyncStructMethod(
+       m_connection,
+       input->command,
+       m_machNotificationPort,
+       asyncRef,
+       kIOAsyncCalloutCount,
+       input,
+       VSP_UCD_SIZE,
+       m_vspResponse,
+       &resultSize);
     if (ret != kIOReturnSuccess) {
         ReportError(ret, "Driver async call failed.");
         return false;
     }
-    
+
 #ifdef VSP_DEBUG
     PrintStruct("doAsyncCall-Request", input);
     PrintStruct("doAsyncCall-Return", m_vspResponse);
@@ -659,11 +659,11 @@ inline bool VSPControllerPriv::DoAsyncCall(TVSPControllerData* input)
 void VSPControllerPriv::SetConnection(io_connect_t connection)
 {
     if (connection == 0) {
-        m_connection = NULL;
+        m_connection = 0L;
         m_controller->OnDisconnected();
         return;
     }
-    
+
     if (connection != m_connection) {
         m_connection = connection;
         m_controller->OnConnected();
@@ -676,17 +676,17 @@ void VSPControllerPriv::SetConnection(io_connect_t connection)
 void VSPControllerPriv::AsyncCallback(IOReturn result, void** args, UInt32 numArgs)
 {
     const int64_t* msg = (const int64_t*) args;
-    
+
     // invalid driver message
     if (numArgs < 2 || !args) {
         ReportError(result, "Invalid driver message.");
         return;
     }
-    
+
     if (result != kIOReturnSuccess) {
         ReportError(result, "Driver error occured.");
     }
-    
+
 #ifdef VSP_DEBUG
     PrintArray("AsyncCallback", msg, numArgs);
 #endif
@@ -696,10 +696,11 @@ void VSPControllerPriv::AsyncCallback(IOReturn result, void** args, UInt32 numAr
         ReportError(result, "Invalid driver signature.");
         return;
     }
- 
+
     if (m_vspResponse) {
         m_controller->OnIOUCCallback(result, m_vspResponse, sizeof(TVSPControllerData));
-    } else {
+    }
+    else {
         m_controller->OnErrorOccured(kIOReturnNoSpace, "[UC] No async result buffer.");
     }
 }
