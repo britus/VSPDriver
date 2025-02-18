@@ -35,7 +35,12 @@ static char g_message[256];
     }
     return self;
 }
-
+/* ARC ??
+-(void)dealloc {
+    [_loaderModel release];
+    [super dealloc];
+}
+*/
 - (void) activate {
     [_loaderModel activateMyDext];
 }
