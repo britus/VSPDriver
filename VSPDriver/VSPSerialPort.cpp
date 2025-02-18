@@ -927,15 +927,14 @@ kern_return_t VSPSerialPort::setupTTYBaseName()
 kern_return_t VSPSerialPort::sendToPortLink(const void* buffer, const uint32_t size)
 {
     IOReturn ret;
-    VSPSerialPort* port = nullptr;
     TVSPLinkItem item = {};
-    uint8_t id = ivars->m_portLinkId;
-    void* link = nullptr;
+    VSPSerialPort* port = nullptr;
+    uint8_t myid = ivars->m_portLinkId;
 
-    VSPLog(LOG_PREFIX, "sendToPortLink called. using linkId=%d\n", id);
+    VSPLog(LOG_PREFIX, "sendToPortLink called. using linkId=%d\n", myid);
 
-    ret = ivars->m_parent->getPortLinkById(id, &link, sizeof(TVSPLinkItem));
-    if (ret != kIOReturnSuccess || !link) {
+    ret = ivars->m_parent->getPortLinkById(myid, &item, sizeof(TVSPLinkItem));
+    if (ret != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "sendToPortLink: Parent getPortLinkById failed. code=%d\n", ret);
         return ret;
     }
@@ -947,14 +946,15 @@ kern_return_t VSPSerialPort::sendToPortLink(const void* buffer, const uint32_t s
     }
     else if (item.targetPort.id != ivars->m_portId) {
         port = item.targetPort.port;
-    } else {
+    }
+    else {
         VSPLog(LOG_PREFIX, "sendToPortLink: Double port IDs detectd! myLinkId=%d myPortId=%d\n",
-               id, ivars->m_portId);
+               myid, ivars->m_portId);
         return kIOReturnInvalid;
     }
     if (!port) {
         VSPLog(LOG_PREFIX, "sendToPortLink: Linked port NULL pointer! myLinkId=%d myPortId=%d\n",
-               id, ivars->m_portId);
+               myid, ivars->m_portId);
         return kIOReturnInvalid;
     }
    
