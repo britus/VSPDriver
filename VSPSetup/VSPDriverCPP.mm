@@ -22,8 +22,6 @@
 @end
 
 static VSPDriverSetup* g_callback;
-static uint32_t g_error_code;
-static uint8_t g_cb_index;
 static char g_message[256];
 
 @implementation VSPDriverSetupWrapper
@@ -65,24 +63,18 @@ extern "C" {
 void onDidFailWithError(uint32_t code, const char* message)
 {
     strncpy(g_message, message, sizeof(g_message)-1);
-    g_error_code = code;
-    g_cb_index = 1;
-    g_callback->OnDidFailWithError(g_error_code, g_message);
+    g_callback->OnDidFailWithError(code, g_message);
 }
 
 void onDidFinishWithResult(uint32_t code, const char* message)
 {
     strncpy(g_message, message, sizeof(g_message)-1);
-    g_error_code = code;
-    g_cb_index = 2;
-    g_callback->OnDidFinishWithResult(g_error_code, g_message);
+    g_callback->OnDidFinishWithResult(code, g_message);
 }
 
 void onNeedsUserApproval()
 {
     g_message[0] = 0;
-    g_error_code = 0;
-    g_cb_index = 3;
     g_callback->OnNeedsUserApproval();
 }
 } /* "C" */
@@ -100,25 +92,11 @@ VSPDriverSetup::VSPDriverSetup() :
 void VSPDriverSetup::activateDriver()
 {
     [(__bridge VSPDriverSetupWrapper*)_loader activate];
-#if 0
-    switch(g_cb_index) {
-        case 1: {OnDidFailWithError(g_error_code, g_message); break;}
-        case 2: {OnDidFinishWithResult(g_error_code, g_message); break;}
-        case 3: {OnNeedsUserApproval(); break;}
-    }
-#endif
 }
 
 void VSPDriverSetup::deactivateDriver()
 {
     [(__bridge VSPDriverSetupWrapper*)_loader deactivate];
-#if 0
-    switch(g_cb_index) {
-        case 1: {OnDidFailWithError(g_error_code, g_message); break;}
-        case 2: {OnDidFinishWithResult(g_error_code, g_message); break;}
-        case 3: {OnNeedsUserApproval(); break;}
-    }
-#endif
 }
 
 std::string VSPDriverSetup::getDriverState() const
