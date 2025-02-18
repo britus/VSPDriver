@@ -23,11 +23,11 @@ typedef struct {
     VSPSerialPort* port;                    // object instance
     uint8_t        id;                      // port item id
     uint64_t       flags;                   // Trace and check flags
-} TVSPortItem;
+} TVSPPortItem;
 
 typedef struct {
-    TVSPortItem sourcePort;          // first port
-    TVSPortItem targetPort;          // second port
+    TVSPPortItem sourcePort;          // first port
+    TVSPPortItem targetPort;          // second port
     uint8_t         id;                     // link item id
 } TVSPLinkItem;
 

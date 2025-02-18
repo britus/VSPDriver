@@ -928,25 +928,25 @@ kern_return_t VSPSerialPort::sendToPortLink(const void* buffer, const uint32_t s
 {
     IOReturn ret;
     VSPSerialPort* port = nullptr;
-    TVSPLinkItem* item = nullptr;
+    TVSPLinkItem item = {};
     uint8_t id = ivars->m_portLinkId;
     void* link = nullptr;
 
     VSPLog(LOG_PREFIX, "sendToPortLink called. using linkId=%d\n", id);
 
-    if ((ret = ivars->m_parent->getPortLinkById(id, &link)) != kIOReturnSuccess || !link) {
+    ret = ivars->m_parent->getPortLinkById(id, &link, sizeof(TVSPLinkItem));
+    if (ret != kIOReturnSuccess || !link) {
         VSPLog(LOG_PREFIX, "sendToPortLink: Parent getPortLinkById failed. code=%d\n", ret);
         return ret;
     }
 
     VSPLog(LOG_PREFIX, "sendToPortLink: got port link.\n");
 
-    item = reinterpret_cast<TVSPLinkItem*>(link);
-    if (item->sourcePort.id != ivars->m_portId) {
-        port = item->sourcePort.port;
+    if (item.sourcePort.id != ivars->m_portId) {
+        port = item.sourcePort.port;
     }
-    else if (item->targetPort.id != ivars->m_portId) {
-        port = item->targetPort.port;
+    else if (item.targetPort.id != ivars->m_portId) {
+        port = item.targetPort.port;
     } else {
         VSPLog(LOG_PREFIX, "sendToPortLink: Double port IDs detectd! myLinkId=%d myPortId=%d\n",
                id, ivars->m_portId);

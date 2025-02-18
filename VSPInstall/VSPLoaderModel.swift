@@ -162,8 +162,9 @@ extension VSPLoaderModel: OSSystemExtensionRequestDelegate {
         
         // While this app only logs errors, production apps should provide feedback
         // to customers about any errors encountered while loading the dext.
-        
-        self.state = VSPSmLoader.process(self.state, .activationFailed)
+        DispatchQueue.main.async {
+            self.state = VSPSmLoader.process(self.state, .activationFailed)
+        }
     }
     
 #if swift(>=5.5)

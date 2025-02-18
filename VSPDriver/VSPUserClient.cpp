@@ -624,10 +624,6 @@ kern_return_t VSPUserClient::getStatus(void* reference, IOUserClientMethodArgume
 {
     TVSPControllerData request = {};
     TVSPControllerData response = {};
-    uint8_t portCount = 0;
-    uint8_t linkCount = 0;
-    uint8_t portList[MAX_SERIAL_PORTS] = {};
-    uint64_t linkList[MAX_PORT_LINKS] = {};
     kern_return_t ret;
 
     VSPLog(LOG_PREFIX, "getStatus called.\n");
@@ -644,35 +640,29 @@ kern_return_t VSPUserClient::getStatus(void* reference, IOUserClientMethodArgume
         goto finish;
     }
     
-    if ((ret = ivars->m_parent->getPortCount(&portCount)) != kIOReturnSuccess) {
+    if ((ret = ivars->m_parent->getPortCount(&response.ports.count)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xfe000001);
         goto finish;
     }
-    else if (portCount) {
-        if ((ret = ivars->m_parent->getPortList(portList, portCount)) != kIOReturnSuccess) {
+    
+    if (response.ports.count) {
+        if ((ret = ivars->m_parent->getPortList(response.ports.list, MAX_SERIAL_PORTS)) != kIOReturnSuccess) {
             set_ctlr_status(&response, ret, 0xfe000003);
             goto finish;
         }
-        for(uint8_t i = 0; i < portCount && i < MAX_SERIAL_PORTS; i++) {
-            response.ports.list[i] = portList[i];
-        }
-        response.ports.count = portCount;
         response.parameter.flags |= BIT(1);
     }
 
-    if ((ret = ivars->m_parent->getPortLinkCount(&linkCount)) != kIOReturnSuccess) {
+    if ((ret = ivars->m_parent->getPortLinkCount(&response.links.count)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xfe000002);
         goto finish;
     }
-    else if (linkCount) {
-        if ((ret = ivars->m_parent->getPortLinkList(linkList, linkCount)) != kIOReturnSuccess) {
+    
+    if (response.links.count) {
+        if ((ret = ivars->m_parent->getPortLinkList(response.links.list, MAX_PORT_LINKS)) != kIOReturnSuccess) {
             set_ctlr_status(&response, ret, 0xfe000004);
             goto finish;
         }
-        for(uint8_t i = 0; i < linkCount && i < MAX_PORT_LINKS; i++) {
-            response.links.list[i] = linkList[i];
-        }
-        response.links.count = linkCount;
         response.parameter.flags |= BIT(2);
     }
     
@@ -792,36 +782,30 @@ kern_return_t VSPUserClient::getPortListHelper(void* reference)
 {
     TVSPControllerData* response = reinterpret_cast<TVSPControllerData*>(reference);
     kern_return_t ret;
-    uint8_t* list = nullptr;
+    uint8_t list[MAX_SERIAL_PORTS] = {};
     uint8_t count = 0;
     
     if ((ret = ivars->m_parent->getPortCount(&count)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "getPortListHelper: parent getPortCount failed. code=%d\n", ret);
         set_ctlr_status(response, ret, 0xfc000001);
     }
-
+    
     if (count == 0) {
         /* be quiet to caller */
         VSPLog(LOG_PREFIX, "getPortListHelper: No serial ports available.\n");
         response->ports.count = 0;
     }
-    else if (!(list = IONewZero(uint8_t, count))) {
-        VSPLog(LOG_PREFIX, "getPortListHelper: Out of memory.\n");
-        set_ctlr_status(response, ret, 0xfc0000ff);
+    else if ((ret = ivars->m_parent->getPortList(list, count)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "getPortListHelper: parent getPortList failed. code=%d\n", ret);
+        set_ctlr_status(response, ret, 0xfc000002);
     }
     else {
-        if ((ret = ivars->m_parent->getPortList(list, count)) != kIOReturnSuccess) {
-            VSPLog(LOG_PREFIX, "getPortListHelper: parent getPortList failed. code=%d\n", ret);
-            set_ctlr_status(response, ret, 0xfc000002);
+        for (uint8_t i = 0; i < count; i++) {
+            response->ports.list[i] = list[i];
         }
-        else {
-            for (uint8_t i = 0; i < count; i++) {
-                response->ports.list[i] = list[i];
-            }
-            response->ports.count = count;
-        }
-        IOSafeDeleteNULL(list, uint8_t, count);
+        response->ports.count = count;
     }
+    
     
     
     return response->status.code;
@@ -863,10 +847,10 @@ kern_return_t VSPUserClient::getLinkListHelper(void* reference)
 {
     TVSPControllerData* response = reinterpret_cast<TVSPControllerData*>(reference);
     kern_return_t ret;
-    uint64_t* list = nullptr;
+    uint64_t list[MAX_PORT_LINKS] = {};
     uint8_t count = 0;
 
-    if ((ret = getPortListHelper(reference)) != kIOReturnSuccess) {
+    if ((ret = getPortListHelper(response)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "getLinkListHelper: getPortListHelper failed. code=%d\n", ret);
         set_ctlr_status(response, ret, 0xd000000a);
     }
@@ -879,22 +863,15 @@ kern_return_t VSPUserClient::getLinkListHelper(void* reference)
         VSPLog(LOG_PREFIX, "getLinkListHelper: No port links available.\n");
         response->links.count = 0;
     }
-    else if (!(list = IONewZero(uint64_t, count))) {
-        VSPLog(LOG_PREFIX, "getLinkListHelper: Out of memory.\n");
-        set_ctlr_status(response, ret, 0xd00000ff);
+    else if ((ret = ivars->m_parent->getPortLinkList(list, count)) != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "getLinkListHelper: parent getPortLinkList failed. code=%d\n", ret);
+        set_ctlr_status(response, ret, 0xd0000002);
     }
     else {
-        if ((ret = ivars->m_parent->getPortLinkList(list, count)) != kIOReturnSuccess) {
-            VSPLog(LOG_PREFIX, "getLinkListHelper: parent getPortLinkList failed. code=%d\n", ret);
-            set_ctlr_status(response, ret, 0xd0000002);
+        for (uint8_t i = 0; i < count; i++) {
+            response->links.list[i] = list[i];
         }
-        else {
-            for (uint8_t i = 0; i < count; i++) {
-                response->links.list[i] = list[i];
-            }
-            response->links.count = count;
-        }
-        IOSafeDeleteNULL(list, uint64_t, count);
+        response->links.count = count;
     }
     
     return response->status.code;
@@ -909,8 +886,8 @@ kern_return_t VSPUserClient::linkPorts(void* reference, IOUserClientMethodArgume
     kern_return_t ret;
     TVSPControllerData response = {};
     TVSPControllerData request = {};
+    TVSPLinkItem link = {};
     uint8_t sid, tid;
-    void* link = nullptr;
 
     VSPLog(LOG_PREFIX, "linkPorts called.\n");
 
@@ -928,15 +905,21 @@ kern_return_t VSPUserClient::linkPorts(void* reference, IOUserClientMethodArgume
 
     sid = request.parameter.link.source;
     tid = request.parameter.link.target;
-    ret = ivars->m_parent->createPortLink(sid, tid, &link);
+   
+    ret = ivars->m_parent->createPortLink(sid, tid, &link, sizeof(TVSPLinkItem));
     if (ret != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "linkPorts: parent createPortLink failed. code=%d\n", ret);
         set_ctlr_status(&response, ret, 0xfa000001);
     }
-    else if (link) {
+    else if (link.id) {
         if (getLinkListHelper(&response) == kIOReturnSuccess) {
             VSPLog(LOG_PREFIX, "linkPorts finish.\n");
         }
+    }
+    else {
+        VSPLog(LOG_PREFIX, "linkPorts: Got invalid link Id %d. code=%d\n",
+               link.id, ret);
+        set_ctlr_status(&response, ret, 0xfa000002);
     }
 
 
@@ -953,8 +936,8 @@ kern_return_t VSPUserClient::unlinkPorts(void* reference, IOUserClientMethodArgu
     kern_return_t ret;
     TVSPControllerData response = {};
     TVSPControllerData request = {};
+    TVSPLinkItem link = {};
     uint8_t sid, tid;
-    void* link = nullptr;
 
     VSPLog(LOG_PREFIX, "unlinkPorts called.\n");
 
@@ -972,15 +955,15 @@ kern_return_t VSPUserClient::unlinkPorts(void* reference, IOUserClientMethodArgu
 
     sid = request.parameter.link.source;
     tid = request.parameter.link.target;
-    ret = ivars->m_parent->getPortLinkByPorts(sid, tid, &link);
+    
+    ret = ivars->m_parent->getPortLinkByPorts(sid, tid, &link, sizeof(TVSPLinkItem));
     if (ret != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xfb000001);
     }
-    else {
-        TVSPLinkItem* item = reinterpret_cast<TVSPLinkItem*>(link);
-        VSPLog(LOG_PREFIX, "unlinkPorts: remove src=%d tgt=%d in %d\n", sid, tid, item->id);
+    else if (link.id) {
+        VSPLog(LOG_PREFIX, "unlinkPorts: remove src=%d tgt=%d in %d\n", sid, tid, link.id);
       
-        ret = ivars->m_parent->removePortLink(item);
+        ret = ivars->m_parent->removePortLink(link.id);
         if (ret != kIOReturnSuccess) {
             VSPLog(LOG_PREFIX, "unlinkPorts: parent removePortLink failed. code=%d\n", ret);
             set_ctlr_status(&response, ret, 0xfb000002);
@@ -988,6 +971,10 @@ kern_return_t VSPUserClient::unlinkPorts(void* reference, IOUserClientMethodArgu
         else if (getLinkListHelper(&response) == kIOReturnSuccess) {
             VSPLog(LOG_PREFIX, "unlinkPorts finish.\n");
         }
+    }
+    else {
+        VSPLog(LOG_PREFIX, "unlinkPorts: Got invalid linkId failed. code=%d\n", ret);
+        set_ctlr_status(&response, ret, 0xfa000002);
     }
 
 finish:
