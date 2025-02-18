@@ -232,7 +232,7 @@ kern_return_t IMPL(VSPSerialPort, Start)
         goto error_exit;
     }
     
-    VSPLog(LOG_PREFIX, "Start: driver started successfully.\n");
+    VSPLog(LOG_PREFIX, "Start: Port started successfully.\n");
     return kIOReturnSuccess;
     
 error_exit:
@@ -250,8 +250,10 @@ kern_return_t IMPL(VSPSerialPort, Stop)
     
     VSPLog(LOG_PREFIX, "Stop called.\n");
     
-    // Unlink VSP parent
+    // Unlink VSP
     ivars->m_parent = nullptr;
+    ivars->m_portId = 0;
+    ivars->m_portLinkId = 0;
     
     // Remove all IVars resources
     cleanupResources();
@@ -260,7 +262,7 @@ kern_return_t IMPL(VSPSerialPort, Stop)
     if ((ret= Stop(provider, SUPERDISPATCH)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "super::Stop failed. code=%d\n", ret);
     } else {
-        VSPLog(LOG_PREFIX, "driver successfully removed.\n");
+        VSPLog(LOG_PREFIX, "Port successfully removed.\n");
     }
     
     return ret;

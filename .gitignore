@@ -12,6 +12,8 @@
 /xcshareddata/
 /xcuserdata/
 
+vspremove.sh 
+
 Info*.xml
 entitlements*.xml
 

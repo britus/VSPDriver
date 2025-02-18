@@ -395,12 +395,23 @@ kern_return_t VSPDriver::createPort()
 // Remove VSPSerialPort incstance by given portId
 // (called by VSPUserClient)
 //
+static inline void deletePortsList(TVSPortItem** list, uint8_t count)
+{
+    // release new items
+    for(uint8_t i = 0; i < count; i++) {
+        IOSafeDeleteNULL(list[i], TVSPortItem, 1);
+    }
+
+    // release list itself
+    IOSafeDeleteNULL(list, TVSPortItem*, count - 1);
+}
+
 kern_return_t VSPDriver::removePort(uint8_t portId)
 {
+    const uint8_t count = ivars->m_portCount;
+    uint8_t modified = 0;
     IOReturn ret;
-    uint8_t count = ivars->m_portCount;
-    uint8_t found = 0;
-    
+
     if (count == 0) {
         return kIOReturnNotFound;
     }
@@ -420,15 +431,12 @@ kern_return_t VSPDriver::removePort(uint8_t portId)
                 removePortLink(pli);
                 break;
             }
-            else if (pli->targetPort.id == portId) {
+            if (pli->targetPort.id == portId) {
                 removePortLink(pli);
                 break;
             }
         }
     }
-
-    // old port list to remove
-    TVSPortItem** oldl = ivars->m_serialPorts;
 
     // new port link list
     TVSPortItem** newl;
@@ -438,49 +446,65 @@ kern_return_t VSPDriver::removePort(uint8_t portId)
     }
 
     /* find given serial port item and exclude this from new new list */
-    for (uint8_t i = 0, j = 0; i < count; i++) {
-        TVSPortItem* item;
-        if (!(item = ivars->m_serialPorts[i])) {
+    for (uint8_t i = 0, j = 0; i < count; i++)
+    {
+        // skip invalid
+        if (ivars->m_serialPorts[i] == nullptr || //
+            ivars->m_serialPorts[i]->port == nullptr)
+        {
             continue;
         }
-        if (item->id == portId) {
-            VSPLog(LOG_PREFIX, "removePort: Port id=%d found. Release VSPSerialPort\n", item->id);
-            ret = item->port->Stop(GetProvider());
-            if (ret == kIOReturnSuccess) {
-                //??OSSafeReleaseNULL(item->port);
-                IOSafeDeleteNULL(item, TVSPortItem, 1);
-                found = 1;
-            } else {
-                VSPLog(LOG_PREFIX, "removePort: Releae port failed. code=%d\n", ret);
-            }
-        }
-        else {
+        
+        // not matching, take deep copy instead of pointers!
+        if (ivars->m_serialPorts[i]->id != portId) {
+            
             TVSPortItem* nitm;
             if ((nitm = IONewZero(TVSPortItem, 1)) == nullptr) {
                 VSPLog(LOG_PREFIX, "removePort: Out of memory\n");
-                IOSafeDeleteNULL(newl, TVSPortItem*, count - 1);
+                deletePortsList(newl, (count - 1));
                 return kIOReturnNoMemory;
             }
-            // deep copy instead pointers!
-            memcpy(nitm, item, sizeof(TVSPortItem));
+            
+            memcpy(nitm, ivars->m_serialPorts[i], sizeof(TVSPortItem));
             newl[j++] = nitm;
+            continue;
+        }
+
+        if (ivars->m_serialPorts[i]->port) {
+            VSPLog(LOG_PREFIX, "removePort: Shutdown serial port #%d\n",
+                   ivars->m_serialPorts[i]->id);
+            
+            ret = ivars->m_serialPorts[i]->port->Stop(GetProvider());
+            if (ret != kIOReturnSuccess) {
+                VSPLog(LOG_PREFIX, "removePort: Shutdown port failed. code=%d\n", ret);
+                deletePortsList(newl, (count - 1));
+                return ret;
+            }
+            
+            VSPLog(LOG_PREFIX, "removePort: Release port instance");
+            //??while(ivars->m_serialPorts[i]->port->refcount > 1)
+            //??    ivars->m_serialPorts[i]->port->release();
+            OSSafeReleaseNULL(ivars->m_serialPorts[i]->port);
+            modified = 1;
         }
     }
 
-    // remove serial port
-    if (found) {
+    // change port listq
+    if (modified) {
+        // old port list to delete
+        TVSPortItem** oldl = ivars->m_serialPorts;
+        // set modified list
         ivars->m_serialPorts = newl;
         ivars->m_portCount--;
-        // remove old items
-        for(uint8_t i = 0; i < count; i++) {
-            IOSafeDeleteNULL(oldl[i], TVSPortItem, 1);
-        }
-        // dealloc old list
-        IOSafeDeleteNULL(oldl, TVSPortItem*, count);
-        return kIOReturnSuccess; // done!
+        // remove old list
+        deletePortsList(oldl, count);
+        // done!
+        return kIOReturnSuccess;
     }
-
-    IOSafeDeleteNULL(newl, TVSPortItem*, count - 1);
+    
+    // release temporary list
+    deletePortsList(newl, (count - 1));
+    
     return kIOReturnNotFound;
 }
 
