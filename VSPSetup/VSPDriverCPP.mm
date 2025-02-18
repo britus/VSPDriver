@@ -57,7 +57,7 @@ static char g_message[256];
 // ---------------------------------------------------
 
 extern "C" {
-void __exported onDidFailWithError(uint32_t code, const char* message)
+void onDidFailWithError(uint32_t code, const char* message)
 {
     strncpy(g_message, message, sizeof(g_message)-1);
     g_error_code = code;
@@ -65,7 +65,7 @@ void __exported onDidFailWithError(uint32_t code, const char* message)
     g_callback->OnDidFailWithError(g_error_code, g_message);
 }
 
-void __exported onDidFinishWithResult(uint32_t code, const char* message)
+void onDidFinishWithResult(uint32_t code, const char* message)
 {
     strncpy(g_message, message, sizeof(g_message)-1);
     g_error_code = code;
@@ -73,7 +73,7 @@ void __exported onDidFinishWithResult(uint32_t code, const char* message)
     g_callback->OnDidFinishWithResult(g_error_code, g_message);
 }
 
-void __exported onNeedsUserApproval()
+void onNeedsUserApproval()
 {
     g_message[0] = 0;
     g_error_code = 0;
