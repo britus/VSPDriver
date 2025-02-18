@@ -145,7 +145,14 @@ kern_return_t IMPL(VSPDriver, Stop)
     kern_return_t ret;
     
     VSPLog(LOG_PREFIX, "Stop called.\n");
-    
+  
+    // shutdown serial port instances
+    for(uint8_t i = 0; i < MAX_SERIAL_PORTS ; i++) {
+        if (ivars->m_serialPorts[i].id) {
+            removePort(ivars->m_serialPorts[i].id);
+        }
+    }
+
     // service instance (Apple style super call)
     if ((ret= Stop(provider, SUPERDISPATCH)) != kIOReturnSuccess) {
         VSPLog(LOG_PREFIX, "Stop (suprt) failed. code=%d\n", ret);
