@@ -151,7 +151,6 @@
 		880539F52D4BB0F900E55104 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		880539F72D4BB59800E55104 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
 		880539F92D4BB5AD00E55104 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOKit.framework; sourceTree = DEVELOPER_DIR; };
-		8814834F2D53B906003FB561 /* build.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build.sh; sourceTree = "<group>"; };
 		884F6EC42D59A58D0066353A /* VSPUserClient.iig */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.iig; path = VSPUserClient.iig; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		884F6EC62D59A5C90066353A /* VSPUserClient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VSPUserClient.cpp; sourceTree = "<group>"; };
 		8854A99E2D5DB1E400C27252 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -171,7 +170,6 @@
 		88650FFA2D612B7C00BA74D8 /* VSPDriverCPP.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = VSPDriverCPP.mm; sourceTree = "<group>"; };
 		88650FFF2D612EC000BA74D8 /* VSPSmLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VSPSmLoader.m; sourceTree = "<group>"; };
 		886510012D612EC300BA74D8 /* VSPSmLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VSPSmLoader.h; sourceTree = "<group>"; };
-		88667D692D53474900DFA26E /* VSPDriver-Start.log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "VSPDriver-Start.log"; sourceTree = "<group>"; };
 		88667D6A2D53474900DFA26E /* VSPDriver-Full.log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "VSPDriver-Full.log"; sourceTree = "<group>"; };
 		8884826D2D61192900F3BAD7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		8889C45C2D5B0BBF0071D1F3 /* Used-Entitlements.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Used-Entitlements.xml"; sourceTree = "<group>"; };
@@ -192,9 +190,6 @@
 		88B40D842D4B873C00DFE7C5 /* SystemExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemExtensions.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/SystemExtensions.framework; sourceTree = DEVELOPER_DIR; };
 		88B47EC92D59B43800868CA5 /* VSPController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VSPController.h; sourceTree = "<group>"; };
 		88D46EB82D639B6C00D58D8A /* vspremove.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = vspremove.sh; sourceTree = "<group>"; };
-		88D46EB92D639B6C00D58D8A /* vspshow.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = vspshow.sh; sourceTree = "<group>"; };
-		88D46EBA2D639B6C00D58D8A /* vsplog.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = vsplog.sh; sourceTree = "<group>"; };
-		88D46EBB2D639B6C00D58D8A /* vsptest.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = vsptest.sh; sourceTree = "<group>"; };
 		88D46EBC2D639B6C00D58D8A /* klog.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = klog.sh; sourceTree = "<group>"; };
 		88DA7BA62D532C6700C8F759 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		88DA7BA72D532C6700C8F759 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -314,17 +309,12 @@
 				880539E92D4BAFBD00E55104 /* VSPInstall */,
 				88650FE02D61281100BA74D8 /* VSPSetup */,
 				88DA7BA72D532C6700C8F759 /* LICENSE */,
-				88667D692D53474900DFA26E /* VSPDriver-Start.log */,
 				88667D6A2D53474900DFA26E /* VSPDriver-Full.log */,
 				88AEEFF62D5233D4007F2A4C /* IOReg-Outline.md */,
 				8889C45C2D5B0BBF0071D1F3 /* Used-Entitlements.xml */,
 				88DA7BA62D532C6700C8F759 /* README.md */,
-				8814834F2D53B906003FB561 /* build.sh */,
 				88D46EBC2D639B6C00D58D8A /* klog.sh */,
-				88D46EBA2D639B6C00D58D8A /* vsplog.sh */,
 				88D46EB82D639B6C00D58D8A /* vspremove.sh */,
-				88D46EB92D639B6C00D58D8A /* vspshow.sh */,
-				88D46EBB2D639B6C00D58D8A /* vsptest.sh */,
 				88B40D592D4B666700DFE7C5 /* Frameworks */,
 				88B40D582D4B666700DFE7C5 /* Products */,
 			);
