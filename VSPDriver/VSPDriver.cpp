@@ -471,19 +471,24 @@ kern_return_t VSPDriver::removePort(uint8_t portId)
         }
 
         if (ivars->m_serialPorts[i]->port) {
+            if (ivars->m_serialPorts[i]->port->isConnected()) {
+                VSPLog(LOG_PREFIX, "removePort: Port already in use, you can't remove right now.\n");
+                deletePortsList(newl, (count - 1));
+                return kIOReturnBusy;
+            }
+
             VSPLog(LOG_PREFIX, "removePort: Shutdown serial port #%d\n",
                    ivars->m_serialPorts[i]->id);
             
-            ret = ivars->m_serialPorts[i]->port->Stop(GetProvider());
+            // Start an IOService termination.
+            ret = ivars->m_serialPorts[i]->port->Terminate(0);
             if (ret != kIOReturnSuccess) {
                 VSPLog(LOG_PREFIX, "removePort: Shutdown port failed. code=%d\n", ret);
                 deletePortsList(newl, (count - 1));
                 return ret;
             }
-            
-            VSPLog(LOG_PREFIX, "removePort: Release port instance");
-            //??while(ivars->m_serialPorts[i]->port->refcount > 1)
-            //??    ivars->m_serialPorts[i]->port->release();
+            ivars->m_serialPorts[i]->id = 0;
+            ivars->m_serialPorts[i]->flags = 0xff;
             OSSafeReleaseNULL(ivars->m_serialPorts[i]->port);
             modified = 1;
         }

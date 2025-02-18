@@ -278,6 +278,11 @@ void VSPSerialPort::cleanupResources()
     IOLockFreeNULL(ivars->m_lock);
 }
 
+bool VSPSerialPort::isConnected()
+{
+    return (ivars->m_txqbmd && ivars->m_rxqbmd);
+}
+
 // ====================================================================
 // ** ----------------[ Connection live cycle ]--------------------- **
 // ====================================================================

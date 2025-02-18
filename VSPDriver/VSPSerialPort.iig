@@ -98,6 +98,9 @@ public:
 
     // update rxqbmd
     kern_return_t sendResponse(void* sender, const void* buffer, const uint32_t size) LOCALONLY;
+    
+    // return true if active connection
+    bool isConnected() LOCALONLY;
 };
 
 
