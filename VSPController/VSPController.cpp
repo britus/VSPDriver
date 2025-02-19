@@ -246,23 +246,13 @@ bool VSPControllerPriv::CreatePort(TVSPPortParameters* parameters)
     input.command = vspControlCreatePort;
     input.parameter.link.source = 1;
     input.parameter.link.target = 1;
+
     if (sizeof(TVSPPortParameters) <= MAX_SERIAL_PORTS) {
         input.ports.count = sizeof(TVSPPortParameters);
-        input.parameter.flags = 0x5350503aff01;
+        input.parameter.flags = 0xff01;
         memcpy(input.ports.list, parameters, input.ports.count);
     }
-    else {
-        input.parameter.flags = 0x5350503aff02;
-        input.ports.count = 8;
-        input.ports.list[0] = ((parameters->baudRate >> 24) & 0x000000ff);
-        input.ports.list[1] = ((parameters->baudRate >> 16) & 0x000000ff);
-        input.ports.list[2] = ((parameters->baudRate >> 8) & 0x000000ff);
-        input.ports.list[3] = (parameters->baudRate & 0x00000ff);
-        input.ports.list[4] = parameters->dataBits;
-        input.ports.list[5] = parameters->stopBits + 1;
-        input.ports.list[6] = parameters->parity;
-        input.ports.list[7] = parameters->flowCtrl;
-    }
+
     return DoAsyncCall(&input);
 }
 
