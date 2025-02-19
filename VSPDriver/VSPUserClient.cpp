@@ -39,7 +39,7 @@ using namespace VSPController;
 #define VSP_CHECK_PARAM_RETURN(f, p) \
 { \
     if (p == nullptr) { \
-        VSPLog(LOG_PREFIX, "%s: Invalid argument '" f "' detected", __func__); \
+        VSPErr(LOG_PREFIX, "%s: Invalid argument '" f "' detected", __func__); \
         return kIOReturnBadArgument; \
     } \
 }
@@ -214,14 +214,14 @@ bool VSPUserClient::init()
     VSPLog(LOG_PREFIX, "init called.\n");
     
     if (!(result = super::init())) {
-        VSPLog(LOG_PREFIX, "free (super) falsed. result=%d\n", result);
+        VSPErr(LOG_PREFIX, "free (super) falsed. result=%d\n", result);
         goto finish;
     }
     
     // Create instance state resource
     ivars = IONewZero(VSPUserClient_IVars, 1);
     if (!ivars) {
-        VSPLog(LOG_PREFIX, "Unable to allocate driver data.\n");
+        VSPErr(LOG_PREFIX, "Unable to allocate driver data.\n");
         result = false;
         goto finish;
     }
@@ -255,21 +255,21 @@ kern_return_t IMPL(VSPUserClient, Start)
     
     // sane check our driver instance vars
     if (!ivars) {
-        VSPLog(LOG_PREFIX, "Start: Private driver instance is NULL\n");
+        VSPErr(LOG_PREFIX, "Start: Private driver instance is NULL\n");
         return kIOReturnInvalid;
     }
     
     // Start service instance (Apple style super call)
     ret = Start(provider, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Start(super): failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "Start(super): failed. code=%d\n", ret);
         return ret;
     }
     
     ret = IODispatchQueue::Create("kVSPUserClientQueue", 0, 0, &ivars->m_eventQueue);
     if (ret != kIOReturnSuccess || !ivars->m_eventQueue)
     {
-        VSPLog(LOG_PREFIX, "Start() - Failed to create dispatch queue with error: 0x%08x.", ret);
+        VSPErr(LOG_PREFIX, "Start() - Failed to create dispatch queue with error: 0x%08x.", ret);
         if (ret == kIOReturnSuccess) {
             ret = kIOReturnInvalid;
         }
@@ -279,7 +279,7 @@ kern_return_t IMPL(VSPUserClient, Start)
     ret = IOTimerDispatchSource::Create(ivars->m_eventQueue, &ivars->m_eventSource);
     if (ret != kIOReturnSuccess || !ivars->m_eventSource)
     {
-        VSPLog(LOG_PREFIX, "Start() - Failed to create dispatch source with error: 0x%08x.", ret);
+        VSPErr(LOG_PREFIX, "Start() - Failed to create dispatch source with error: 0x%08x.", ret);
         if (ret == kIOReturnSuccess) {
             ret = kIOReturnInvalid;
         }
@@ -289,7 +289,7 @@ kern_return_t IMPL(VSPUserClient, Start)
     ret = CreateActionAsyncCallback(VSP_UCD_SIZE, &ivars->m_eventAction);
     if (ret != kIOReturnSuccess || !ivars->m_eventAction)
     {
-        VSPLog(LOG_PREFIX, "Start() - Failed to create action for simulated async event with error: 0x%08x.", ret);
+        VSPErr(LOG_PREFIX, "Start() - Failed to create action for simulated async event with error: 0x%08x.", ret);
         if (ret == kIOReturnSuccess) {
             ret = kIOReturnInvalid;
         }
@@ -299,14 +299,14 @@ kern_return_t IMPL(VSPUserClient, Start)
     ret = ivars->m_eventSource->SetHandler(ivars->m_eventAction);
     if (ret != kIOReturnSuccess)
     {
-        VSPLog(LOG_PREFIX, "Start() - Failed to assign simulated action to handler with error: 0x%08x.", ret);
+        VSPErr(LOG_PREFIX, "Start() - Failed to assign simulated action to handler with error: 0x%08x.", ret);
         return ret;
     }
 
     ret = RegisterService();
     if (ret != kIOReturnSuccess)
     {
-        VSPLog(LOG_PREFIX, "Start() - Failed to register service with error: 0x%08x.", ret);
+        VSPErr(LOG_PREFIX, "Start() - Failed to register service with error: 0x%08x.", ret);
         return ret;
     }
     
@@ -330,7 +330,7 @@ kern_return_t IMPL(VSPUserClient, Stop)
 
     // service instance (Apple style super call)
     if ((ret= Stop(provider, SUPERDISPATCH)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Stop (suprt) failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "Stop (super) failed. code=%d\n", ret);
     } else {
         VSPLog(LOG_PREFIX, "User client successfully removed.\n");
     }
@@ -358,7 +358,7 @@ kern_return_t IMPL(VSPUserClient, CopyClientMemoryForType)
                                                0               /* alignment */, //
                                                &md);
         if (ret != kIOReturnSuccess || !md) {
-            VSPLog(LOG_PREFIX, "CopyClientMemoryForType: IOBufferMemoryDescriptor::Create failed: 0x%x", ret);
+            VSPErr(LOG_PREFIX, "CopyClientMemoryForType: IOBufferMemoryDescriptor::Create failed: 0x%x", ret);
             return ret;
         }
         
@@ -367,7 +367,6 @@ kern_return_t IMPL(VSPUserClient, CopyClientMemoryForType)
     }
     else
     {
-        VSPLog(LOG_PREFIX, "CopyClientMemoryForType super call.\n");
         ret = this->CopyClientMemoryForType(type, options, memory, SUPERDISPATCH);
     }
     
@@ -384,11 +383,11 @@ void IMPL(VSPUserClient, AsyncCallback)
     VSPLog(LOG_PREFIX, "AsyncCallback called.\n");
     
     if (!action) {
-        VSPLog(LOG_PREFIX, "AsyncCallback: Event action NULL pointer!");
+        VSPErr(LOG_PREFIX, "AsyncCallback: Event action NULL pointer!");
         return;
     }
     if (!ivars->m_cbAction) {
-        VSPLog(LOG_PREFIX, "AsyncCallback: Client callback action NULL pointer!");
+        VSPErr(LOG_PREFIX, "AsyncCallback: Client callback action NULL pointer!");
         return;
     }
 
@@ -436,7 +435,7 @@ kern_return_t VSPUserClient::ExternalMethod(uint64_t selector,
            (uint64_t)reference);
 
     if (selector >= vspLastCommand) {
-        VSPLog(LOG_PREFIX, "Invalid method selector detected, skip.");
+        VSPErr(LOG_PREFIX, "Invalid method selector detected, skip.");
         return kIOReturnBadArgument;
     }
     
@@ -452,7 +451,7 @@ kern_return_t VSPUserClient::ExternalMethod(uint64_t selector,
     // This will call the functions as defined in the IOUserClientMethodDispatch.
     ret = super::ExternalMethod(selector, arguments, dispatch, target, reference);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "ExternalMethod dispatch failed. code=%d", ret);
+        VSPErr(LOG_PREFIX, "ExternalMethod dispatch failed. code=%d", ret);
         return kIOReturnBadArgument;
     }
     
@@ -489,7 +488,7 @@ kern_return_t VSPUserClient::scheduleEvent(void* reference, IOUserClientMethodAr
     VSPLog(LOG_PREFIX, "scheduleEvent called.\n");
     
     if ((ret = prepareResponse(response, arguments)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "scheduleEvent: Preprare response failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "scheduleEvent: Preprare response failed. code=%d\n", ret);
         set_ctlr_status(response, ret, 0xea000001);
     }
     
@@ -513,12 +512,12 @@ kern_return_t VSPUserClient::prepareResponse(void* reference, IOUserClientMethod
     VSPLog(LOG_PREFIX, "prepareResponse called.\n");
 
     if (!response) {
-        VSPLog(LOG_PREFIX, "prepareResponse: Invalid argument 'reference' detected.\n");
+        VSPErr(LOG_PREFIX, "prepareResponse: Invalid argument 'reference' detected.\n");
         return kIOReturnBadArgument;
     }
 
     if (!arguments || !arguments->completion) {
-        VSPLog(LOG_PREFIX, "prepareResponse: Invalid argument 'arguments' detected.\n");
+        VSPErr(LOG_PREFIX, "prepareResponse: Invalid argument 'arguments' detected.\n");
         return kIOReturnBadArgument;
     }
  
@@ -531,7 +530,7 @@ kern_return_t VSPUserClient::prepareResponse(void* reference, IOUserClientMethod
     {
         if (VSP_UCD_SIZE > arguments->structureOutputMaximumSize)
         {
-            VSPLog(LOG_PREFIX,
+            VSPErr(LOG_PREFIX,
                    "prepareResponse: Required output size of %lu"
                    "is larger than the given maximum UC size of %llu. Failing.",
                    VSP_UCD_SIZE, arguments->structureOutputMaximumSize);
@@ -540,7 +539,7 @@ kern_return_t VSPUserClient::prepareResponse(void* reference, IOUserClientMethod
 
         ret = arguments->structureOutputDescriptor->CreateMapping(0, 0, 0, 0, 0, &outputMap);
         if (ret != kIOReturnSuccess || !outputMap) {
-            VSPLog(LOG_PREFIX, "prepareResponse: UC output CreateMapping failed. code=%d\n", ret);
+            VSPErr(LOG_PREFIX, "prepareResponse: UC output CreateMapping failed. code=%d\n", ret);
         }
         else {
             outputPtr = (uint8_t*) outputMap->GetAddress();
@@ -599,7 +598,7 @@ inline static IOReturn toRequest(IOUserClientMethodArguments* arguments, TVSPCon
         ret = arguments->structureInputDescriptor->CreateMapping(0, 0, 0, 0, 0, &inputMap);
         if (ret != kIOReturnSuccess || !inputMap)
         {
-            VSPLog(LOG_PREFIX, "toRequest: Failed to create mapping for descriptor with error: 0x%08x", ret);
+            VSPErr(LOG_PREFIX, "toRequest: Failed to create mapping for descriptor with error: 0x%08x", ret);
             return kIOReturnBadArgument;
         }
         size = inputMap->GetLength();
@@ -609,7 +608,7 @@ inline static IOReturn toRequest(IOUserClientMethodArguments* arguments, TVSPCon
     }
     else
     {
-        VSPLog(LOG_PREFIX, "toRequest: Both structureInput and structureInputDescriptor were null.");
+        VSPErr(LOG_PREFIX, "toRequest: Both structureInput and structureInputDescriptor were null.");
         return kIOReturnBadArgument;
     }
     
@@ -696,8 +695,8 @@ kern_return_t VSPUserClient::createPort(void* reference, IOUserClientMethodArgum
         goto finish;
     }
 
-    if ((ret = ivars->m_parent->createPort())!= kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "createPort: Parent createPort failed. code=%d\n", ret);
+    if ((ret = ivars->m_parent->createPort()) != kIOReturnSuccess) {
+        VSPErr(LOG_PREFIX, "createPort: Parent createPort failed. code=%d\n", ret);
         set_ctlr_status(&response, ret, 0xfa000001);
     }
     else if (getPortListHelper(&response) == kIOReturnSuccess) {
@@ -735,7 +734,7 @@ kern_return_t VSPUserClient::removePort(void* reference, IOUserClientMethodArgum
 
     portId = request.parameter.link.source;
     if ((ret = ivars->m_parent->removePort(portId))!= kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "removePort: Parent removePort failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "removePort: Parent removePort failed. code=%d\n", ret);
         set_ctlr_status(&response, ret, 0xfa000002);
     }
     else if (getPortListHelper(&response) == kIOReturnSuccess) {
@@ -786,17 +785,17 @@ kern_return_t VSPUserClient::getPortListHelper(void* reference)
     uint8_t count = 0;
     
     if ((ret = ivars->m_parent->getPortCount(&count)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "getPortListHelper: parent getPortCount failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "getPortListHelper: parent getPortCount failed. code=%d\n", ret);
         set_ctlr_status(response, ret, 0xfc000001);
     }
     
     if (count == 0) {
         /* be quiet to caller */
-        VSPLog(LOG_PREFIX, "getPortListHelper: No serial ports available.\n");
+        VSPErr(LOG_PREFIX, "getPortListHelper: No serial ports available.\n");
         response->ports.count = 0;
     }
     else if ((ret = ivars->m_parent->getPortList(list, count)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "getPortListHelper: parent getPortList failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "getPortListHelper: parent getPortList failed. code=%d\n", ret);
         set_ctlr_status(response, ret, 0xfc000002);
     }
     else {
@@ -851,11 +850,11 @@ kern_return_t VSPUserClient::getLinkListHelper(void* reference)
     uint8_t count = 0;
 
     if ((ret = getPortListHelper(response)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "getLinkListHelper: getPortListHelper failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "getLinkListHelper: getPortListHelper failed. code=%d\n", ret);
         set_ctlr_status(response, ret, 0xd000000a);
     }
     else if ((ret = ivars->m_parent->getPortLinkCount(&count)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "getLinkListHelper: parent getPortLinkCount failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "getLinkListHelper: parent getPortLinkCount failed. code=%d\n", ret);
         set_ctlr_status(response, ret, 0xd0000001);
     }
     else if (count == 0) {
@@ -864,7 +863,7 @@ kern_return_t VSPUserClient::getLinkListHelper(void* reference)
         response->links.count = 0;
     }
     else if ((ret = ivars->m_parent->getPortLinkList(list, count)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "getLinkListHelper: parent getPortLinkList failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "getLinkListHelper: parent getPortLinkList failed. code=%d\n", ret);
         set_ctlr_status(response, ret, 0xd0000002);
     }
     else {
@@ -908,7 +907,7 @@ kern_return_t VSPUserClient::linkPorts(void* reference, IOUserClientMethodArgume
    
     ret = ivars->m_parent->createPortLink(sid, tid, &link, sizeof(TVSPLinkItem));
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "linkPorts: parent createPortLink failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "linkPorts: parent createPortLink failed. code=%d\n", ret);
         set_ctlr_status(&response, ret, 0xfa000001);
     }
     else if (link.id) {
@@ -917,7 +916,7 @@ kern_return_t VSPUserClient::linkPorts(void* reference, IOUserClientMethodArgume
         }
     }
     else {
-        VSPLog(LOG_PREFIX, "linkPorts: Got invalid link Id %d. code=%d\n",
+        VSPErr(LOG_PREFIX, "linkPorts: Got invalid link Id %d. code=%d\n",
                link.id, ret);
         set_ctlr_status(&response, ret, 0xfa000002);
     }
@@ -965,7 +964,7 @@ kern_return_t VSPUserClient::unlinkPorts(void* reference, IOUserClientMethodArgu
       
         ret = ivars->m_parent->removePortLink(link.id);
         if (ret != kIOReturnSuccess) {
-            VSPLog(LOG_PREFIX, "unlinkPorts: parent removePortLink failed. code=%d\n", ret);
+            VSPErr(LOG_PREFIX, "unlinkPorts: parent removePortLink failed. code=%d\n", ret);
             set_ctlr_status(&response, ret, 0xfb000002);
         }
         else if (getLinkListHelper(&response) == kIOReturnSuccess) {
@@ -973,7 +972,7 @@ kern_return_t VSPUserClient::unlinkPorts(void* reference, IOUserClientMethodArgu
         }
     }
     else {
-        VSPLog(LOG_PREFIX, "unlinkPorts: Got invalid linkId failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "unlinkPorts: Got invalid linkId failed. code=%d\n", ret);
         set_ctlr_status(&response, ret, 0xfa000002);
     }
 

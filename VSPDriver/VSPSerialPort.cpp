@@ -66,13 +66,28 @@ VSPLog(LOG_PREFIX, "<= lock level=%d this=0x%llx", ivars->m_lockLevel, (uint64_t
 IOLockUnlock(ivars->m_lock); \
 }
 
+#ifndef BIT
+#define BIT(b) (1 << b)
+#endif
+
 // Updated by SetModemStatus read by HwGetModemStatus
-typedef struct {
-    bool cts;
-    bool dsr;
-    bool ri;
-    bool dcd;
-} THwSerialStatus;
+#define MODEM_STATUS_CTS BIT(1)
+#define MODEM_STATUS_DSR BIT(2)
+#define MODEM_STATUS_RI BIT(3)
+#define MODEM_STATUS_DCD BIT(4)
+
+#define MCR_STATUS_DTR BIT(5)
+#define MCR_STATUS_RTS BIT(6)
+
+#define ERROR_STATE_OVERRUN BIT(1)
+#define ERROR_STATE_BREAK BIT(2)
+#define ERROR_STATE_FRAME BIT(3)
+#define ERROR_STATE_PARITY BIT(4)
+
+#define IS_BIT(v, b)  ((v & b) == b)
+#define SET_BIT(v, b) (v |= b)
+#define RMV_BIT(v, b) (v &= ~b)
+#define UPDATE_BIT(v, b, s) if (s) {SET_BIT(v,b);} else {RMV_BIT(v,b);}
 
 // Updated by HwProgramFlowControl
 typedef struct{
@@ -81,12 +96,6 @@ typedef struct{
     uint8_t xoff;
 } THwFlowControl;
 
-// Updated by HwProgramMCR
-typedef struct {
-    bool dtr;
-    bool rts;
-} THwMCR;
-
 // Updated by HwProgramUART and HwProgramBaudRate
 typedef struct {
     uint32_t baudRate;
@@ -94,19 +103,6 @@ typedef struct {
     uint8_t nHalfStopBits;
     uint8_t parity;
 } TUartParameters;
-
-// Updated by RxError and HwSendBreak
-typedef struct {
-    bool overrun;
-    bool gotBreak;
-    bool framingError;
-    bool parityError;
-} TErrorState;
-
-typedef struct {
-    uint8_t* buffer;
-    uint32_t length;
-} TRXBufferState;
 
 // Driver instance state resource
 struct VSPSerialPort_IVars {
@@ -130,13 +126,15 @@ struct VSPSerialPort_IVars {
     IOAddressSegment m_rxseg = {};                  // VSP RX buffer segment
      
     // Serial interface
-    TErrorState m_errorState = {};
-    TUartParameters m_uartParams = {};
-    THwSerialStatus m_hwStatus = {};
-    THwFlowControl m_hwFlowControl = {};
-    THwMCR m_hwMCR = {};
+    uint8_t m_errorState = 0;
+    uint8_t m_hwStatus = 0;
+    uint8_t m_hwMCR = 0;
+
     uint32_t m_hwLatency = 25;
-    bool m_txNextOffset = 0;
+
+    TUartParameters m_uartParams = {};
+    THwFlowControl m_hwFlowControl = {};
+
     bool m_hwActivated = false;
 };
 
@@ -150,14 +148,14 @@ bool VSPSerialPort::init(void)
     VSPLog(LOG_PREFIX, "init called.\n");
     
     if (!(result = super::init())) {
-        VSPLog(LOG_PREFIX, "super::init falsed. result=%d\n", result);
+        VSPErr(LOG_PREFIX, "super::init falsed. result=%d\n", result);
         goto error_exit;
     }
     
     // Create instance state resource
     ivars = IONewZero(VSPSerialPort_IVars, 1);
     if (!ivars) {
-        VSPLog(LOG_PREFIX, "Unable to allocate driver data.\n");
+        VSPErr(LOG_PREFIX, "Unable to allocate driver data.\n");
         result = false;
         goto error_exit;
     }
@@ -192,14 +190,14 @@ kern_return_t IMPL(VSPSerialPort, Start)
     
     // sane check our driver instance vars
     if (!ivars) {
-        VSPLog(LOG_PREFIX, "Start: Private driver instance is NULL\n");
+        VSPErr(LOG_PREFIX, "Start: Private driver instance is NULL\n");
         return kIOReturnInvalid;
     }
     
     // call super method (apple style)
     ret = Start(provider, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Start(super): failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "Start(super): failed. code=%d\n", ret);
         return ret;
     }
     
@@ -209,7 +207,7 @@ kern_return_t IMPL(VSPSerialPort, Start)
     // the resource locker
     ivars->m_lock = IOLockAlloc();
     if (ivars->m_lock == nullptr) {
-        VSPLog(LOG_PREFIX, "Start: Unable to allocate lock object.\n");
+        VSPErr(LOG_PREFIX, "Start: Unable to allocate lock object.\n");
         goto error_exit;
     }
     
@@ -228,7 +226,7 @@ kern_return_t IMPL(VSPSerialPort, Start)
     
     // Register driver instance to IOReg
     if ((ret = RegisterService()) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Start: RegisterService failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "Start: RegisterService failed. code=%d\n", ret);
         goto error_exit;
     }
     
@@ -260,7 +258,7 @@ kern_return_t IMPL(VSPSerialPort, Stop)
     
     /* Shutdown instane */
     if ((ret= Stop(provider, SUPERDISPATCH)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "super::Stop failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "super::Stop failed. code=%d\n", ret);
     } else {
         VSPLog(LOG_PREFIX, "Port successfully removed.\n");
     }
@@ -300,7 +298,7 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
     
     //-- Sane check --//
     if (!in_txqlogsz || !in_rxqlogsz) {
-        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid in_rxqlogsz or in_txqlogsz detected.\n");
+        VSPErr(LOG_PREFIX, "ConnectQueues: Invalid in_rxqlogsz or in_txqlogsz detected.\n");
         return kIOReturnBadArgument;
     }
     
@@ -311,7 +309,7 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
     txcapacity = (size_t) ::pow(2, in_txqlogsz);
     ret = IOBufferMemoryDescriptor::Create(kIOMemoryDirectionIn, txcapacity, 0, &ivars->m_txqbmd);
     if (ret != kIOReturnSuccess || !ivars->m_txqbmd) {
-        VSPLog(LOG_PREFIX, "Start: Unable to create TX memory descriptor. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "Start: Unable to create TX memory descriptor. code=%d\n", ret);
         goto error_exit;
     }
     
@@ -319,7 +317,7 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
     rxcapacity = (size_t) ::pow(2, in_rxqlogsz);
     ret = IOBufferMemoryDescriptor::Create(kIOMemoryDirectionOut, rxcapacity, 0, &ivars->m_rxqbmd);
     if (ret != kIOReturnSuccess || !ivars->m_rxqbmd) {
-        VSPLog(LOG_PREFIX, "Start: Unable to create RX memory descriptor. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "Start: Unable to create RX memory descriptor. code=%d\n", ret);
         goto error_exit;
     }
     
@@ -336,23 +334,23 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
                         in_rxqlogsz,
                         in_txqlogsz, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "super::ConnectQueues failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "super::ConnectQueues failed. code=%d\n", ret);
         goto error_exit;
     }
     
     //-- Sane check --//
     if (!ifmd || !(*ifmd) || !txqmd || !(*txqmd) || !rxqmd || !(*rxqmd)) {
-        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid memory descriptors detected. (NULL)\n");
+        VSPErr(LOG_PREFIX, "ConnectQueues: Invalid memory descriptors detected. (NULL)\n");
         ret = kIOReturnBadArgument;
         goto error_exit;
     }
     if ((*txqmd) != ivars->m_txqbmd) {
-        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid 'txqmd' memory descriptor detected.\n");
+        VSPErr(LOG_PREFIX, "ConnectQueues: Invalid 'txqmd' memory descriptor detected.\n");
         ret = kIOReturnInvalid;
         goto error_exit;
     }
     if ((*rxqmd) != ivars->m_rxqbmd) {
-        VSPLog(LOG_PREFIX, "ConnectQueues: Invalid 'rxqmd' memory descriptor detected.\n");
+        VSPErr(LOG_PREFIX, "ConnectQueues: Invalid 'rxqmd' memory descriptor detected.\n");
         ret = kIOReturnInvalid;
         goto error_exit;
     }
@@ -360,20 +358,20 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
     // Get the address segment of the TX memory descriptor
     ret = ivars->m_txqbmd->GetAddressRange(&ivars->m_txseg);
     if (ret != kIOReturnSuccess || !ivars->m_txseg.address || ivars->m_txseg.length != txcapacity) {
-        VSPLog(LOG_PREFIX, "ConnectQueues: Unable to get TX-MD segment. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "ConnectQueues: Unable to get TX-MD segment. code=%d\n", ret);
         goto error_exit;
     }
     
     // Get the address segment of the RX memory descriptor
     ret = ivars->m_rxqbmd->GetAddressRange(&ivars->m_rxseg);
     if (ret != kIOReturnSuccess || !ivars->m_rxseg.address || ivars->m_rxseg.length != rxcapacity) {
-        VSPLog(LOG_PREFIX, "ConnectQueues: Unable to get TX-MD segment. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "ConnectQueues: Unable to get TX-MD segment. code=%d\n", ret);
         goto error_exit;
     }
     
     // Get the address segment of the SerialPortInterface (mapped space)
     if ((ret = (*ifmd)->GetAddressRange(&ifseg)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "ConnectQueues: IF GetAddressRange failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "ConnectQueues: IF GetAddressRange failed. code=%d\n", ret);
         goto error_exit;
     }
     
@@ -383,8 +381,8 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
     ivars->m_spi->txPI = 0;
         
     // Modem is ready
-    ivars->m_hwStatus.dcd = true;
-    ivars->m_hwStatus.cts = true;
+    setDataCarrierDetect(true);
+    setClearToSend(true);
     
     VSPUnlock(ivars);
     return kIOReturnSuccess;
@@ -419,17 +417,17 @@ kern_return_t IMPL(VSPSerialPort, DisconnectQueues)
     ivars->m_txseg = {};
     ivars->m_rxseg = {};
     
-    // Reset modem status
-    ivars->m_hwStatus.dcd = false;
-    ivars->m_hwStatus.dsr = false;
-    ivars->m_hwStatus.cts = false;
-    
     // Unlock thread
     VSPUnlock(ivars);
-    
+
+    // Reset modem status
+    setDataCarrierDetect(false);
+    setDataSetReady(false);
+    setClearToSend(false);
+
     ret = DisconnectQueues(SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "super::DisconnectQueues: failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "super::DisconnectQueues: failed. code=%d\n", ret);
         return ret;
     }
     
@@ -465,21 +463,20 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     
     VSPLog(LOG_PREFIX, "--------------------------------------------------\n");
     VSPLog(LOG_PREFIX, "TxDataAvailable called.\n");
-    
+
     // Lock to ensure thread safety
     VSPAquireLock(ivars);
     
-    // We working...
-    ivars->m_hwStatus.cts = false;
-    ivars->m_hwStatus.dsr = false;
-    
+    // We are working
+    setClearToSend(false);
+
     // Show me indexes be fore manipulate
     VSPLog(LOG_PREFIX, "TxDataAvailable: [IOSPI-TX 1] txPI: %d, txCI: %d, txqoffset: %d, txqlogsz: %d",
            ivars->m_spi->txPI, ivars->m_spi->txCI, ivars->m_spi->txqoffset, ivars->m_spi->txqlogsz);
     
     // skip if nothing to do
     if (!ivars->m_spi->txPI) {
-        VSPLog(LOG_PREFIX, "TxDataAvailable: spi->txPI is zero, skip\n");
+        VSPErr(LOG_PREFIX, "TxDataAvailable: spi->txPI is zero, skip\n");
         goto finish;
     }
 
@@ -503,7 +500,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
         // send TX to other port instance
         ret = sendToPortLink(buffer, size);
         if (ret != kIOReturnSuccess) {
-            VSPLog(LOG_PREFIX, "TxDataAvailable: Data routing failed. code=%d\n", ret);
+            VSPErr(LOG_PREFIX, "TxDataAvailable: Data routing failed. code=%d\n", ret);
             goto finish;
         }
     }
@@ -511,7 +508,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     else {
         ret = sendResponse(this, buffer, size);
         if (ret != kIOReturnSuccess) {
-            VSPLog(LOG_PREFIX, "TxDataAvailable: Unable to enqueue response. code=%d\n", ret);
+            VSPErr(LOG_PREFIX, "TxDataAvailable: Unable to enqueue response. code=%d\n", ret);
             goto finish;
         }
     }
@@ -524,8 +521,8 @@ void IMPL(VSPSerialPort, TxDataAvailable)
            ivars->m_spi->txPI, ivars->m_spi->txCI, ivars->m_spi->txqoffset, ivars->m_spi->txqlogsz);
 
     // Update modem status
-    ivars->m_hwStatus.cts = true;
-
+    setClearToSend(true);
+    
     // reset memory
     memset(buffer, 0, size);
     
@@ -564,6 +561,67 @@ void IMPL(VSPSerialPort, TxFreeSpaceAvailable)
 }
 
 // --------------------------------------------------------------------
+// Enable/Disable modem status clear to send
+//
+void VSPSerialPort::setClearToSend(bool cts)
+{
+    if (IS_BIT(ivars->m_hwStatus, MODEM_STATUS_CTS) != cts) {
+        UPDATE_BIT(ivars->m_hwStatus, MODEM_STATUS_CTS, cts);
+        reportModemStatus();
+    }
+}
+
+// --------------------------------------------------------------------
+// Enable/Disable modem status data set ready
+//
+void VSPSerialPort::setDataSetReady(bool dsr)
+{
+    if (IS_BIT(ivars->m_hwStatus, MODEM_STATUS_DSR) != dsr) {
+        UPDATE_BIT(ivars->m_hwStatus, MODEM_STATUS_DSR, dsr);
+        reportModemStatus();
+    }
+}
+
+// --------------------------------------------------------------------
+// Enable/Disable modem status ring indicator
+//
+void VSPSerialPort::setRingIndicator(bool ri)
+{
+    if (IS_BIT(ivars->m_hwStatus, MODEM_STATUS_RI) != ri) {
+        UPDATE_BIT(ivars->m_hwStatus, MODEM_STATUS_RI, ri);
+        reportModemStatus();
+    }
+}
+
+// --------------------------------------------------------------------
+// Enable/Disable modem status data carrier detect
+//
+void VSPSerialPort::setDataCarrierDetect(bool dcd)
+{
+    if (IS_BIT(ivars->m_hwStatus, MODEM_STATUS_DCD) != dcd) {
+        UPDATE_BIT(ivars->m_hwStatus, MODEM_STATUS_DCD, dcd);
+        reportModemStatus();
+    }
+}
+
+// --------------------------------------------------------------------
+// Report current modem status to the system
+//
+kern_return_t VSPSerialPort::reportModemStatus()
+{
+    IOReturn ret = SetModemStatus(
+            IS_BIT(ivars->m_hwStatus, MODEM_STATUS_CTS),
+            IS_BIT(ivars->m_hwStatus, MODEM_STATUS_DSR),
+            IS_BIT(ivars->m_hwStatus, MODEM_STATUS_RI),
+            IS_BIT(ivars->m_hwStatus, MODEM_STATUS_DCD), SUPERDISPATCH);
+    if (ret != kIOReturnSuccess) {
+        VSPErr(LOG_PREFIX, "super::SetModemStatus failed. code=%d\n", ret);
+    }
+    
+    return ret;
+}
+
+// --------------------------------------------------------------------
 // SetModemStatus_Impl(bool cts, bool dsr, bool ri, bool dcd)
 // Called during serial port setup or communication
 kern_return_t IMPL(VSPSerialPort, SetModemStatus)
@@ -574,15 +632,15 @@ kern_return_t IMPL(VSPSerialPort, SetModemStatus)
            cts, dsr, ri, dcd);
     
     VSPAquireLock(ivars);
-    ivars->m_hwStatus.cts = cts;
-    ivars->m_hwStatus.dsr = dsr;
-    ivars->m_hwStatus.ri  = ri;
-    ivars->m_hwStatus.dcd = dcd;
+    UPDATE_BIT(ivars->m_hwStatus, MODEM_STATUS_CTS, cts);
+    UPDATE_BIT(ivars->m_hwStatus, MODEM_STATUS_DSR, dsr);
+    UPDATE_BIT(ivars->m_hwStatus, MODEM_STATUS_RI, ri);
+    UPDATE_BIT(ivars->m_hwStatus, MODEM_STATUS_DCD, dcd);
     VSPUnlock(ivars);
     
     ret = SetModemStatus(cts, dsr, ri, dcd, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "super::SetModemStatus failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "super::SetModemStatus failed. code=%d\n", ret);
         return ret;
     }
     
@@ -599,31 +657,31 @@ kern_return_t IMPL(VSPSerialPort, RxError)
     VSPLog(LOG_PREFIX, "RxError called.\n");
     
     if (overrun) {
-        VSPLog(LOG_PREFIX, "RX overrun.\n");
+        VSPLog(LOG_PREFIX, "Overrun detected.\n");
     }
     
     if (gotBreak) {
-        VSPLog(LOG_PREFIX, "RX got break.\n");
+        VSPLog(LOG_PREFIX, "Got break.\n");
     }
     
     if (framingError) {
-        VSPLog(LOG_PREFIX, "RX framing error.\n");
+        VSPLog(LOG_PREFIX, "Framing error detected.\n");
     }
     
     if (parityError) {
-        VSPLog(LOG_PREFIX, "RX parity error.\n");
+        VSPLog(LOG_PREFIX, "Parity error detected.\n");
     }
     
     VSPAquireLock(ivars);
-    ivars->m_errorState.overrun = overrun;
-    ivars->m_errorState.framingError = framingError;
-    ivars->m_errorState.gotBreak = gotBreak;
-    ivars->m_errorState.parityError = parityError;
+    UPDATE_BIT(ivars->m_errorState, ERROR_STATE_OVERRUN, overrun);
+    UPDATE_BIT(ivars->m_errorState, ERROR_STATE_FRAME, framingError);
+    UPDATE_BIT(ivars->m_errorState, ERROR_STATE_BREAK, gotBreak);
+    UPDATE_BIT(ivars->m_errorState, ERROR_STATE_PARITY, parityError);
     VSPUnlock(ivars);
     
     ret = RxError(overrun, gotBreak, framingError, parityError, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "super::RxError: failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "super::RxError: failed. code=%d\n", ret);
         return ret;
     }
     
@@ -641,15 +699,12 @@ kern_return_t IMPL(VSPSerialPort, HwActivate)
     
     VSPAquireLock(ivars);
     ivars->m_hwActivated = true;
-    // ???
-    ivars->m_hwStatus.dcd = true;
-    // ???
-    ivars->m_hwStatus.cts = true;
+    setDataCarrierDetect(true);
     VSPUnlock(ivars);
     
     ret = HwActivate(SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "super::HwActivate failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "super::HwActivate failed. code=%d\n", ret);
         return ret;
     }
     
@@ -667,15 +722,12 @@ kern_return_t IMPL(VSPSerialPort, HwDeactivate)
     
     VSPAquireLock(ivars);
     ivars->m_hwActivated = false;
-    // ???
-    ivars->m_hwStatus.dcd = false;
-    // ???
-    ivars->m_hwStatus.cts = false;
+    setDataCarrierDetect(false);
     VSPUnlock(ivars);
     
     ret = HwDeactivate(SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "super::HwDeactivate failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "super::HwDeactivate failed. code=%d\n", ret);
         return ret;
     }
     
@@ -688,18 +740,26 @@ kern_return_t IMPL(VSPSerialPort, HwDeactivate)
 // or other reasons.
 kern_return_t IMPL(VSPSerialPort, HwResetFIFO)
 {
+    uint64_t len;
+    void* buf;
+    
     VSPLog(LOG_PREFIX, "HwResetFIFO called -> tx=%d rx=%d\n",
            tx, rx);
     
     VSPAquireLock(ivars);
-    // ?? notify caller (IOUserSerial)
-    if (rx) {
-        ivars->m_hwStatus.dsr = false;
+    if (tx && ivars->m_rxqbmd && ivars->m_spi) {
+        ivars->m_spi->txCI = 0;
+        ivars->m_spi->txPI = 0;
+        buf = (void*) ivars->m_txseg.address;
+        len = ivars->m_txseg.length;
+        memset(buf, 0, len);
     }
-    
-    // ?? notify caller (IOUserSerial)
-    if (tx) {
-        ivars->m_hwStatus.cts = true;
+    if (rx && ivars->m_rxqbmd && ivars->m_spi) {
+        ivars->m_spi->rxCI = 0;
+        ivars->m_spi->rxPI = 0;
+        buf = (void*) ivars->m_rxseg.address;
+        len = ivars->m_rxseg.length;
+        memset(buf, 0, len);
     }
     VSPUnlock(ivars);
     
@@ -714,7 +774,7 @@ kern_return_t IMPL(VSPSerialPort, HwSendBreak)
     VSPLog(LOG_PREFIX, "HwSendBreak called -> sendBreak=%d\n", sendBreak);
     
     VSPAquireLock(ivars);
-    ivars->m_errorState.gotBreak = sendBreak;
+    UPDATE_BIT(ivars->m_errorState, ERROR_STATE_BREAK, sendBreak);
     VSPUnlock(ivars);
     
     return kIOReturnSuccess;
@@ -726,24 +786,26 @@ kern_return_t IMPL(VSPSerialPort, HwSendBreak)
 kern_return_t IMPL(VSPSerialPort, HwGetModemStatus)
 {
     VSPLog(LOG_PREFIX, "HwGetModemStatus called [out] CTS=%d DSR=%d RI=%d DCD=%d\n", //
-           ivars->m_hwStatus.cts, ivars->m_hwStatus.dsr, //
-           ivars->m_hwStatus.ri, ivars->m_hwStatus.dcd);
+           IS_BIT(ivars->m_hwStatus, MODEM_STATUS_CTS),
+           IS_BIT(ivars->m_hwStatus, MODEM_STATUS_DSR),
+           IS_BIT(ivars->m_hwStatus, MODEM_STATUS_RI),
+           IS_BIT(ivars->m_hwStatus, MODEM_STATUS_DCD));
     
     VSPAquireLock(ivars);
     if (cts != nullptr) {
-        (*cts) = ivars->m_hwStatus.cts;
+        (*cts) = IS_BIT(ivars->m_hwStatus, MODEM_STATUS_CTS);
     }
     
     if (dsr != nullptr) {
-        (*dsr) = ivars->m_hwStatus.dsr;
+        (*dsr) = IS_BIT(ivars->m_hwStatus, MODEM_STATUS_DSR);
     }
     
     if (ri != nullptr) {
-        (*ri) = ivars->m_hwStatus.ri;
+        (*ri) = IS_BIT(ivars->m_hwStatus, MODEM_STATUS_RI);
     }
     
     if (dcd != nullptr) {
-        (*dcd) = ivars->m_hwStatus.dcd;
+        (*dcd) = IS_BIT(ivars->m_hwStatus, MODEM_STATUS_DCD);
     }
     VSPUnlock(ivars);
     
@@ -792,8 +854,8 @@ kern_return_t IMPL(VSPSerialPort, HwProgramMCR)
            dtr, rts);
     
     VSPAquireLock(ivars);
-    ivars->m_hwMCR.dtr = dtr;
-    ivars->m_hwMCR.rts = rts;
+    UPDATE_BIT(ivars->m_hwMCR, MCR_STATUS_DTR, dtr);
+    UPDATE_BIT(ivars->m_hwMCR, MCR_STATUS_RTS, rts);
     VSPUnlock(ivars);
     
     return kIOReturnSuccess;
@@ -901,7 +963,7 @@ kern_return_t VSPSerialPort::setupTTYBaseName()
     
     // setup custom TTY name
     if ((ret = CopyProperties(&properties)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "setupTTYBaseName: Unable to get properties. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "setupTTYBaseName: Unable to get properties. code=%d\n", ret);
         return ret;
     }
     
@@ -912,7 +974,7 @@ kern_return_t VSPSerialPort::setupTTYBaseName()
     // write back to driver instance
     ret = SetProperties(properties);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "setupTTYBaseName: Unable to set TTY base name. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "setupTTYBaseName: Unable to set TTY base name. code=%d\n", ret);
         //return ret; // ??? an error - why???
     }
     
@@ -935,7 +997,7 @@ kern_return_t VSPSerialPort::sendToPortLink(const void* buffer, const uint32_t s
 
     ret = ivars->m_parent->getPortLinkById(myid, &item, sizeof(TVSPLinkItem));
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "sendToPortLink: Parent getPortLinkById failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "sendToPortLink: Parent getPortLinkById failed. code=%d\n", ret);
         return ret;
     }
 
@@ -948,12 +1010,12 @@ kern_return_t VSPSerialPort::sendToPortLink(const void* buffer, const uint32_t s
         port = item.targetPort.port;
     }
     else {
-        VSPLog(LOG_PREFIX, "sendToPortLink: Double port IDs detectd! myLinkId=%d myPortId=%d\n",
+        VSPErr(LOG_PREFIX, "sendToPortLink: Double port IDs detectd! myLinkId=%d myPortId=%d\n",
                myid, ivars->m_portId);
         return kIOReturnInvalid;
     }
     if (!port) {
-        VSPLog(LOG_PREFIX, "sendToPortLink: Linked port NULL pointer! myLinkId=%d myPortId=%d\n",
+        VSPErr(LOG_PREFIX, "sendToPortLink: Linked port NULL pointer! myLinkId=%d myPortId=%d\n",
                myid, ivars->m_portId);
         return kIOReturnInvalid;
     }
@@ -962,13 +1024,13 @@ kern_return_t VSPSerialPort::sendToPortLink(const void* buffer, const uint32_t s
            port->getPortIdentifier());
 
     if ((ret = port->sendResponse(this, buffer, size)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "sendToPortLink: Port %d enqueueResponse failed. code=%d\n",
+        VSPErr(LOG_PREFIX, "sendToPortLink: Port %d enqueueResponse failed. code=%d\n",
                ivars->m_portId, ret);
+        return ret;
     }
     
     VSPLog(LOG_PREFIX, "sendToPortLink complete.\n");
-    
-    return ret;
+    return kIOReturnSuccess;
 }
 
 
@@ -981,13 +1043,13 @@ kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, cons
     uint8_t* mdbuffer;
     
     if (!ivars->m_spi || !ivars->m_rxqbmd || !ivars->m_txqbmd || !ivars->m_hwActivated) {
-        VSPLog(LOG_PREFIX, "sendResponse: Device is closed.\n");
+        VSPErr(LOG_PREFIX, "sendResponse: Device is closed.\n");
         return kIOReturnNotOpen;
     }
-    
-    // Update modem status
-    ivars->m_hwStatus.dsr = false;
 
+    // Update modem status
+    setDataSetReady(false);
+    
     VSPLog(LOG_PREFIX, "sendResponse: [IOSPI-RX 1] rxPI=%d rxCI=%d rxqoffset=%d rxqlogsz=%d\n",
            ivars->m_spi->rxPI, ivars->m_spi->rxCI, ivars->m_spi->rxqoffset, ivars->m_spi->rxqlogsz);
     
@@ -1019,12 +1081,11 @@ kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, cons
            ivars->m_spi->rxPI, ivars->m_spi->rxCI, ivars->m_spi->rxqoffset, ivars->m_spi->rxqlogsz);
     
     // Update modem status
-    ivars->m_hwStatus.dsr = true;
-
+    setDataSetReady(true);
+    
     // Notify OS interrest parties
     this->RxDataAvailable_Impl();
 
     VSPLog(LOG_PREFIX, "sendResponse: complete.\n");
-
     return kIOReturnSuccess;
 }

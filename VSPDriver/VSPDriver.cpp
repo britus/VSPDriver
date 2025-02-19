@@ -47,27 +47,27 @@ bool VSPDriver::init(void)
     VSPLog(LOG_PREFIX, "init called.\n");
     
     if (!(result = super::init())) {
-        VSPLog(LOG_PREFIX, "free (super) falsed. result=%d\n", result);
+        VSPErr(LOG_PREFIX, "free (super) falsed. result=%d\n", result);
         goto finish;
     }
     
     // Create instance state resource
     ivars = IONewZero(VSPDriver_IVars, 1);
     if (!ivars) {
-        VSPLog(LOG_PREFIX, "Unable to allocate driver data.\n");
+        VSPErr(LOG_PREFIX, "Unable to allocate driver data.\n");
         result = false;
         goto finish;
     }
 
     ivars->m_serialPorts = IONewZero(TVSPPortItem, MAX_SERIAL_PORTS);
     if (!ivars->m_serialPorts) {
-        VSPLog(LOG_PREFIX, "CreateSerialPort: Out of memory.\n");
+        VSPErr(LOG_PREFIX, "CreateSerialPort: Out of memory.\n");
         return false;
     }
 
     ivars->m_portLinks = IONewZero(TVSPLinkItem, MAX_PORT_LINKS);
-    if (!ivars->m_serialPorts) {
-        VSPLog(LOG_PREFIX, "CreateSerialPort: Out of memory.\n");
+    if (!ivars->m_portLinks) {
+        VSPErr(LOG_PREFIX, "CreateSerialPort: Out of memory.\n");
         return false;
     }
 
@@ -107,14 +107,14 @@ kern_return_t IMPL(VSPDriver, Start)
     
     // sane check our driver instance vars
     if (!ivars) {
-        VSPLog(LOG_PREFIX, "Start: Private driver instance is NULL\n");
+        VSPErr(LOG_PREFIX, "Start: Private driver instance is NULL\n");
         return kIOReturnInvalid;
     }
     
     // Start service instance (Apple style super call)
     ret = Start(provider, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Start(super): failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "Start(super): failed. code=%d\n", ret);
         return ret;
     }
     
@@ -125,7 +125,7 @@ kern_return_t IMPL(VSPDriver, Start)
     
     // Register driver instance to IOReg
     if ((ret = RegisterService()) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Start: RegisterService failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "Start: RegisterService failed. code=%d\n", ret);
         goto finish;
     }
     
@@ -155,7 +155,7 @@ kern_return_t IMPL(VSPDriver, Stop)
 
     // service instance (Apple style super call)
     if ((ret= Stop(provider, SUPERDISPATCH)) != kIOReturnSuccess) {
-        VSPLog(LOG_PREFIX, "Stop (suprt) failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "Stop (suprt) failed. code=%d\n", ret);
     } else {
         VSPLog(LOG_PREFIX, "driver successfully removed.\n");
     }
@@ -173,7 +173,7 @@ kern_return_t IMPL(VSPDriver, NewUserClient)
     VSPLog(LOG_PREFIX, "NewUserClient called.\n");
 
     if (!userClient) {
-        VSPLog(LOG_PREFIX, "NewUserClient: Invalid argument.\n");
+        VSPErr(LOG_PREFIX, "NewUserClient: Invalid argument.\n");
         return kIOReturnBadArgument;
     }
     
@@ -196,14 +196,14 @@ kern_return_t VSPDriver::CreateUserClient(IOService* provider, IOUserClient** us
     VSPLog(LOG_PREFIX, "CreateUserClient: create VSP user client from Info.plist.\n");
     
     if (!userClient) {
-        VSPLog(LOG_PREFIX, "CreateUserClient: Bad argument 'userClient' detected.\n");
+        VSPErr(LOG_PREFIX, "CreateUserClient: Bad argument 'userClient' detected.\n");
         return kIOReturnBadArgument;
     }
     
     // Create sub service object from UserClientProperties in Info.plist
     ret= Create(this, kVSPContollerProperties, &service);
     if (ret != kIOReturnSuccess || service == nullptr) {
-        VSPLog(LOG_PREFIX, "CreateUserClient: create failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "CreateUserClient: create failed. code=%d\n", ret);
         return ret;
     }
     
@@ -213,7 +213,7 @@ kern_return_t VSPDriver::CreateUserClient(IOService* provider, IOUserClient** us
     VSPUserClient* client;
     client = OSDynamicCast(VSPUserClient, service);
     if (client == nullptr) {
-        VSPLog(LOG_PREFIX, "CreateUserClient: Cast to VSPUserClient failed.\n");
+        VSPErr(LOG_PREFIX, "CreateUserClient: Cast to VSPUserClient failed.\n");
         service->release();
         return kIOReturnInvalid;
     }
@@ -267,7 +267,7 @@ kern_return_t VSPDriver::getPortCount(uint8_t* count)
 kern_return_t VSPDriver::getPortLinkCount(uint8_t* count)
 {
     if (count == nullptr) {
-        VSPLog(LOG_PREFIX, "getPortLinkCount: Invalid argument.");
+        VSPErr(LOG_PREFIX, "getPortLinkCount: Invalid argument.");
         return kIOReturnBadArgument;
     }
     
@@ -335,11 +335,11 @@ kern_return_t VSPDriver::getPortLinkList(uint64_t* list, uint8_t count)
 kern_return_t VSPDriver::getPortById(uint8_t id, void* result, const uint32_t size)
 {
     if (!checkPortId(id) || !result || size < sizeof(TVSPPortItem)) {
-        VSPLog(LOG_PREFIX, "getPortLinkById: Invalid argument. linkId=%d", id);
+        VSPErr(LOG_PREFIX, "getPortLinkById: Invalid argument. linkId=%d", id);
         return kIOReturnBadArgument;
     }
     if (size < sizeof(TVSPPortItem)) {
-        VSPLog(LOG_PREFIX, "removePortLink: Invalid structure size parameter.");
+        VSPErr(LOG_PREFIX, "removePortLink: Invalid structure size parameter.");
         return kIOReturnBadArgument;
     }
 
@@ -360,11 +360,11 @@ kern_return_t VSPDriver::getPortById(uint8_t id, void* result, const uint32_t si
 kern_return_t VSPDriver::getPortLinkById(uint8_t id, void* result, const uint32_t size)
 {
     if (!checkPortLinkId(id) || !result || size < sizeof(TVSPLinkItem)) {
-        VSPLog(LOG_PREFIX, "getPortLinkById: Invalid argument. linkId=%d", id);
+        VSPErr(LOG_PREFIX, "getPortLinkById: Invalid argument. linkId=%d", id);
         return kIOReturnBadArgument;
     }
     if (size < sizeof(TVSPLinkItem)) {
-        VSPLog(LOG_PREFIX, "removePortLink: Invalid structure size parameter.");
+        VSPErr(LOG_PREFIX, "removePortLink: Invalid structure size parameter.");
         return kIOReturnBadArgument;
     }
 
@@ -387,7 +387,7 @@ kern_return_t VSPDriver::getPortLinkById(uint8_t id, void* result, const uint32_
 kern_return_t VSPDriver::getPortLinkByPorts(uint8_t sourceId, uint8_t targetId, void* link, const uint32_t size)
 {
     if (!checkPortId(sourceId) || !checkPortId(targetId) || !link || size < sizeof(TVSPLinkItem)) {
-        VSPLog(LOG_PREFIX, "getPortLinkByPorts: Invalid argument. srcId=%d tgtId=%d",
+        VSPErr(LOG_PREFIX, "getPortLinkByPorts: Invalid argument. srcId=%d tgtId=%d",
                sourceId, targetId);
         return kIOReturnBadArgument;
     }
@@ -417,7 +417,7 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count)
     VSPLog(LOG_PREFIX, "CreateSerialPort: create %d x VSPSerialPort from Info.plist.\n", count);
 
     if ((ivars->m_portCount + count) >= MAX_SERIAL_PORTS) {
-        VSPLog(LOG_PREFIX, "createPort: Maximum of %d serial ports reached.\n",
+        VSPErr(LOG_PREFIX, "createPort: Maximum of %d serial ports reached.\n",
                ivars->m_portCount);
         return kIOReturnNoSpace;
     }
@@ -435,7 +435,7 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count)
         // Create sub service object from SerialPortProperties in Info.plist
         ret= Create(this, kVSPSerialPortProperties, &service);
         if (ret != kIOReturnSuccess || service == nullptr) {
-            VSPLog(LOG_PREFIX, "CreateSerialPort: create [%d] failed. code=%d\n", count, ret);
+            VSPErr(LOG_PREFIX, "CreateSerialPort: create [%d] failed. code=%d\n", count, ret);
             return ret;
         }
         
@@ -444,7 +444,7 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count)
         // Sane check object type
         ivars->m_serialPorts[i].port = OSDynamicCast(VSPSerialPort, service);
         if (ivars->m_serialPorts[i].port == nullptr) {
-            VSPLog(LOG_PREFIX, "CreateSerialPort: Cast to VSPSerialPort failed.\n");
+            VSPErr(LOG_PREFIX, "CreateSerialPort: Cast to VSPSerialPort failed.\n");
             service->release();
             return kIOReturnInvalid;
         }
@@ -507,7 +507,7 @@ kern_return_t VSPDriver::removePort(uint8_t portId)
             if (ivars->m_serialPorts[i].port) {
                 ret = ivars->m_serialPorts[i].port->Terminate(0);
                 if (ret != kIOReturnSuccess) {
-                    VSPLog(LOG_PREFIX, "removePort: Shutdown serial port failed. code=%d\n", ret);
+                    VSPErr(LOG_PREFIX, "removePort: Shutdown serial port failed. code=%d\n", ret);
                     return ret;
                 }
             }
@@ -536,13 +536,13 @@ kern_return_t VSPDriver::portsInLinkList(uint8_t sourceId, uint8_t targetId)
         }
         
         if (ivars->m_portLinks[i].sourcePort.id == sourceId) {
-            VSPLog(LOG_PREFIX, "createPortLink: Source port %d already assigned to link %d\n",
+            VSPErr(LOG_PREFIX, "createPortLink: Source port %d already assigned to link %d\n",
                    sourceId, ivars->m_portLinks[i].id);
             return kIOReturnBusy;
         }
         
         if (ivars->m_portLinks[i].targetPort.id == targetId) {
-            VSPLog(LOG_PREFIX, "createPortLink: Target port %d already assigned to link %d\n",
+            VSPErr(LOG_PREFIX, "createPortLink: Target port %d already assigned to link %d\n",
                    targetId, ivars->m_portLinks[i].id);
             return kIOReturnBusy;
         }
@@ -569,7 +569,7 @@ kern_return_t VSPDriver::portsAssigned(uint8_t sourceId, uint8_t targetId)
         // check port assignment source and get port entry
         if (ivars->m_serialPorts[i].id == sourceId) {
             if ((id = ivars->m_serialPorts[i].port->getPortLinkIdentifier())) {
-                VSPLog(LOG_PREFIX, "createPortLink: Source port %d already assigned to link %d.",
+                VSPErr(LOG_PREFIX, "createPortLink: Source port %d already assigned to link %d.",
                        ivars->m_serialPorts[i].id, id);
                 return kIOReturnBusy;
             }
@@ -578,7 +578,7 @@ kern_return_t VSPDriver::portsAssigned(uint8_t sourceId, uint8_t targetId)
         // check port assignment target and get port entry
         if (ivars->m_serialPorts[i].id == targetId) {
             if ((id = ivars->m_serialPorts[i].port->getPortLinkIdentifier())) {
-                VSPLog(LOG_PREFIX, "createPortLink: Target port %d already assigned to link %d.",
+                VSPErr(LOG_PREFIX, "createPortLink: Target port %d already assigned to link %d.",
                        ivars->m_serialPorts[i].id, id);
                 return kIOReturnBusy;
             }
@@ -593,19 +593,19 @@ kern_return_t VSPDriver::createPortLink(uint8_t sourceId, uint8_t targetId, void
     IOReturn ret;
     
     if (!link || !checkPortId(sourceId) || !checkPortId(targetId) || size < sizeof(TVSPLinkItem)) {
-        VSPLog(LOG_PREFIX, "createPortLink: Invalid arguments. srcId=%d tgtId=%d size=%d\n",
+        VSPErr(LOG_PREFIX, "createPortLink: Invalid arguments. srcId=%d tgtId=%d size=%d\n",
                sourceId, targetId, size);
         return kIOReturnBadArgument;
     }
     
     if (ivars->m_portLinkCount >= MAX_PORT_LINKS) {
-        VSPLog(LOG_PREFIX, "createPortLink: Maximum of %d links reached. srcId=%d tgtId=%d\n",
+        VSPErr(LOG_PREFIX, "createPortLink: Maximum of %d links reached. srcId=%d tgtId=%d\n",
                ivars->m_portLinkCount, sourceId, targetId);
         return kIOReturnNoSpace;
     }
 
     if (sourceId == targetId) {
-        VSPLog(LOG_PREFIX, "createPortLink: Link of same ports prohibited. srcId=%d tgtId=%d\n",
+        VSPErr(LOG_PREFIX, "createPortLink: Link of same ports prohibited. srcId=%d tgtId=%d\n",
                sourceId, targetId);
         return kIOReturnInvalid;
     }
@@ -629,7 +629,7 @@ kern_return_t VSPDriver::createPortLink(uint8_t sourceId, uint8_t targetId, void
     }
 
     if (!src.port || !tgt.port) {
-        VSPLog(LOG_PREFIX, "createPortLink: Invalid port in sourceId=%d or targetId=%d\n",
+        VSPErr(LOG_PREFIX, "createPortLink: Invalid port in sourceId=%d or targetId=%d\n",
                sourceId, targetId);
         return kIOReturnNotFound;
     }
@@ -671,12 +671,12 @@ kern_return_t VSPDriver::createPortLink(uint8_t sourceId, uint8_t targetId, void
 kern_return_t VSPDriver::removePortLink(uint8_t linkId)
 {
     if (!linkId) {
-        VSPLog(LOG_PREFIX, "removePortLink: Invalid argument.");
+        VSPErr(LOG_PREFIX, "removePortLink: Invalid argument.");
         return kIOReturnBadArgument;
     }
     
     if (ivars->m_portLinkCount == 0) {
-        VSPLog(LOG_PREFIX, "removePortLink: No serial port links available.");
+        VSPErr(LOG_PREFIX, "removePortLink: No serial port links available.");
         return kIOReturnNotFound;
     }
             
