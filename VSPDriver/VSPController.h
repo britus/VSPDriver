@@ -58,6 +58,14 @@ typedef enum {
     vspLastCommand,
 } TVSPControlCommand;
 
+typedef struct {
+    uint32_t baudRate;
+    uint8_t dataBits;
+    uint8_t stopBits;
+    uint8_t parity;
+    uint8_t flowCtrl;
+} TVSPPortParameters;
+
 #define MAGIC_CONTROL 0xBE6605250000L
 #define MAX_SERIAL_PORTS 16
 #define MAX_PORT_LINKS 8

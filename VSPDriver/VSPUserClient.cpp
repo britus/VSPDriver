@@ -23,6 +23,7 @@
 #include <DriverKit/IODataQueueDispatchSource.h>
 #include <DriverKit/IOInterruptDispatchSource.h>
 #include <DriverKit/IOTimerDispatchSource.h>
+#include <SerialDriverKit/SerialDriverKit.h>
 
 // -- My
 #include "VSPUserClient.h"
@@ -679,8 +680,9 @@ kern_return_t VSPUserClient::createPort(void* reference, IOUserClientMethodArgum
 {
     TVSPControllerData response = {};
     TVSPControllerData request = {};
+    TVSPPortParameters params = {115200, 8, 2, PD_RS232_PARITY_NONE, 0};
     kern_return_t ret;
-
+    
     VSPLog(LOG_PREFIX, "createPort called.\n");
 
     if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
@@ -694,8 +696,15 @@ kern_return_t VSPUserClient::createPort(void* reference, IOUserClientMethodArgum
         set_ctlr_status(&response, kIOReturnInvalid, 0xee000000);
         goto finish;
     }
-
-    if ((ret = ivars->m_parent->createPort()) != kIOReturnSuccess) {
+   
+    // extract magic from parameter flags
+    if (request.ports.count == sizeof(TVSPPortParameters)) {
+        if (request.parameter.flags & 0xff01) {
+            memcpy(&params, request.ports.list, sizeof(TVSPPortParameters));
+        }
+    }
+    
+    if ((ret = ivars->m_parent->createPort(&params, sizeof(TVSPPortParameters))) != kIOReturnSuccess) {
         VSPErr(LOG_PREFIX, "createPort: Parent createPort failed. code=%d\n", ret);
         set_ctlr_status(&response, ret, 0xfa000001);
     }

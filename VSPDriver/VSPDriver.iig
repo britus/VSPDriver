@@ -26,7 +26,7 @@ public:
     virtual kern_return_t NewUserClient(uint32_t type, IOUserClient ** userClient) override;
     
     // --
-    kern_return_t CreateSerialPort(IOService* provider, uint8_t count = 1) LOCALONLY;
+    kern_return_t CreateSerialPort(IOService* provider, uint8_t count = 1, void* params = NULL, uint64_t size = 0) LOCALONLY;
     kern_return_t CreateUserClient(IOService* provider, IOUserClient ** userClient) LOCALONLY;
     
     bool checkPortId(uint8_t id) LOCALONLY;
@@ -42,7 +42,7 @@ public:
     kern_return_t portsInLinkList(uint8_t sourceId, uint8_t targetId) LOCALONLY;
     kern_return_t portsAssigned(uint8_t sourceId, uint8_t targetId) LOCALONLY;
 
-    kern_return_t createPort() LOCALONLY;
+    kern_return_t createPort(void* params, uint64_t size) LOCALONLY;
     kern_return_t removePort(uint8_t portId) LOCALONLY;
 
     kern_return_t createPortLink(uint8_t sourceId, uint8_t targetId, void* link, const uint32_t size) LOCALONLY;

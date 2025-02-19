@@ -71,13 +71,13 @@ IOLockUnlock(ivars->m_lock); \
 #endif
 
 // Updated by SetModemStatus read by HwGetModemStatus
-#define MODEM_STATUS_CTS BIT(1)
-#define MODEM_STATUS_DSR BIT(2)
-#define MODEM_STATUS_RI BIT(3)
-#define MODEM_STATUS_DCD BIT(4)
+#define MODEM_STATUS_CTS PD_RS232_S_CTS
+#define MODEM_STATUS_DSR PD_RS232_S_DSR
+#define MODEM_STATUS_RI PD_RS232_S_RNG
+#define MODEM_STATUS_DCD PD_RS232_S_DCD
 
-#define MCR_STATUS_DTR BIT(5)
-#define MCR_STATUS_RTS BIT(6)
+#define MCR_STATUS_DTR PD_RS232_S_DTR
+#define MCR_STATUS_RTS PD_RS232_S_RTS
 
 #define ERROR_STATE_OVERRUN BIT(1)
 #define ERROR_STATE_BREAK BIT(2)
@@ -125,11 +125,10 @@ struct VSPSerialPort_IVars {
     IOBufferMemoryDescriptor* m_rxqbmd;             // VSP RX queue memory descriptor
     IOAddressSegment m_rxseg = {};                  // VSP RX buffer segment
      
-    // Serial interface
-    uint8_t m_errorState = 0;
-    uint8_t m_hwStatus = 0;
-    uint8_t m_hwMCR = 0;
-
+    // Serial port interface
+    uint32_t m_errorState = 0;
+    uint32_t m_hwStatus = 0;
+    uint32_t m_hwMCR = 0;
     uint32_t m_hwLatency = 25;
 
     TUartParameters m_uartParams = {};
@@ -217,10 +216,10 @@ kern_return_t IMPL(VSPSerialPort, Start)
     }
     
     // default UART parameters
-    ivars->m_uartParams.baudRate = 112500;
+    ivars->m_uartParams.baudRate = 115200;
     ivars->m_uartParams.nHalfStopBits = 2;
     ivars->m_uartParams.nDataBits = 8;
-    ivars->m_uartParams.parity = 0;
+    ivars->m_uartParams.parity = PD_RS232_PARITY_DEFAULT;
     
     VSPLog(LOG_PREFIX, "Start: register service.\n");
     

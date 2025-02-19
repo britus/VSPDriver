@@ -24,6 +24,8 @@
 #include "VSPSerialPort.h"
 #include "VSPUserClient.h"
 
+using namespace VSPController;
+
 #define LOG_PREFIX "VSPDriver"
 
 #define kVSPSerialPortProperties "SerialPortProperties"
@@ -409,7 +411,7 @@ kern_return_t VSPDriver::getPortLinkByPorts(uint8_t sourceId, uint8_t targetId, 
 // --------------------------------------------------------------------
 // Create given number of VSPSerialPort instances
 //
-kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count)
+kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count, void* params, uint64_t size)
 {
     kern_return_t ret;
     IOService* service;
@@ -454,6 +456,14 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count)
         ivars->m_serialPorts[i].port->setParent(this);           // set this as parent
         ivars->m_serialPorts[i].port->setPortIdentifier(_id);    // set unique identifier
         ivars->m_serialPorts[i].flags = 0x00;
+        if (params && size == sizeof(TVSPPortParameters)) {
+            TVSPPortParameters* p = reinterpret_cast<TVSPPortParameters*>(params);
+            ivars->m_serialPorts[i].port->HwProgramUART( //
+                            p->baudRate, //
+                            p->dataBits, //
+                            p->stopBits, //
+                            p->flowCtrl);
+        }
         ivars->m_portCount++;
         items++;
     }
@@ -464,9 +474,9 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count)
 // --------------------------------------------------------------------
 // Create new VSPSerialPort incstance (called by VSPUserClient)
 //
-kern_return_t VSPDriver::createPort()
+kern_return_t VSPDriver::createPort(void* params, uint64_t size)
 {
-    return CreateSerialPort(GetProvider(), 1);
+    return CreateSerialPort(GetProvider(), 1, params, size);
 }
 
 // --------------------------------------------------------------------
