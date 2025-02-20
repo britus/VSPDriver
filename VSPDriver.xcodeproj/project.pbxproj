@@ -27,20 +27,15 @@
 		88B47EC82D59B30600868CA5 /* VSPUserClient.iig in Sources */ = {isa = PBXBuildFile; fileRef = 884F6EC42D59A58D0066353A /* VSPUserClient.iig */; };
 		88B47ECA2D59B43800868CA5 /* VSPController.h in Headers */ = {isa = PBXBuildFile; fileRef = 88B47EC92D59B43800868CA5 /* VSPController.h */; };
 		88BEFD842D4BCF8900CD40E6 /* org.eof.tools.VSPDriver.dext in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 88B40D572D4B666700DFE7C5 /* org.eof.tools.VSPDriver.dext */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		88D4A3EA2D673FE70070B5F5 /* VSPClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D4A3E72D673FE70070B5F5 /* VSPClient.framework */; };
-		88D4A3EB2D673FE70070B5F5 /* VSPController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D4A3E82D673FE70070B5F5 /* VSPController.framework */; };
-		88D4A3EC2D673FE70070B5F5 /* VSPSetup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D4A3E92D673FE70070B5F5 /* VSPSetup.framework */; };
-		88D4A3ED2D673FF50070B5F5 /* VSPClient.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88D4A3E72D673FE70070B5F5 /* VSPClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		88D4A3EE2D673FF50070B5F5 /* VSPController.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88D4A3E82D673FE70070B5F5 /* VSPController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		88D4A3EF2D673FF50070B5F5 /* VSPSetup.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88D4A3E92D673FE70070B5F5 /* VSPSetup.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88C758E82D67563B009DA487 /* VSPController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88C758E52D67563B009DA487 /* VSPController.framework */; };
+		88C758E92D67563B009DA487 /* VSPClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88C758E62D67563B009DA487 /* VSPClient.framework */; };
+		88C758EA2D67563B009DA487 /* VSPSetup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88C758E72D67563B009DA487 /* VSPSetup.framework */; };
+		88C758EB2D67572E009DA487 /* VSPClient.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88C758E62D67563B009DA487 /* VSPClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88C758EC2D67572E009DA487 /* VSPController.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88C758E52D67563B009DA487 /* VSPController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88C758ED2D67572E009DA487 /* VSPSetup.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88C758E72D67563B009DA487 /* VSPSetup.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88D4A3F32D67559A0070B5F5 /* VSPClientApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4A3F22D6755990070B5F5 /* VSPClientApp.swift */; };
 		88D938132D53655E009AA45C /* ORSSerial in Frameworks */ = {isa = PBXBuildFile; productRef = 88D938122D53655E009AA45C /* ORSSerial */; };
 		88DA7BA92D532C6800C8F759 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 88DA7BA72D532C6700C8F759 /* LICENSE */; };
-		88F5D9332D59E3E5007A6E1F /* VSPLoaderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F5D9322D59E3E5007A6E1F /* VSPLoaderModel.swift */; };
-		88F5D9352D59E50D007A6E1F /* VSPLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F5D9342D59E50D007A6E1F /* VSPLoaderView.swift */; };
-		88F5D9372D59E55D007A6E1F /* VSPDriverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F5D9362D59E55D007A6E1F /* VSPDriverView.swift */; };
-		88F5D9392D59E5DC007A6E1F /* VSPTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F5D9382D59E5DC007A6E1F /* VSPTestView.swift */; };
-		88F5D93B2D59E608007A6E1F /* VSPTestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F5D93A2D59E608007A6E1F /* VSPTestModel.swift */; };
-		88F5D93D2D59E85B007A6E1F /* VSPInstallApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F5D93C2D59E85B007A6E1F /* VSPInstallApp.swift */; };
 		88F5D9402D59E933007A6E1F /* VSPDriverClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88F5D93F2D59E933007A6E1F /* VSPDriverClient.cpp */; };
 /* End PBXBuildFile section */
 
@@ -61,9 +56,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				88D4A3ED2D673FF50070B5F5 /* VSPClient.framework in Embed Libraries */,
-				88D4A3EE2D673FF50070B5F5 /* VSPController.framework in Embed Libraries */,
-				88D4A3EF2D673FF50070B5F5 /* VSPSetup.framework in Embed Libraries */,
+				88C758EB2D67572E009DA487 /* VSPClient.framework in Embed Libraries */,
+				88C758EC2D67572E009DA487 /* VSPController.framework in Embed Libraries */,
+				88C758ED2D67572E009DA487 /* VSPSetup.framework in Embed Libraries */,
 			);
 			name = "Embed Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -82,9 +77,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		880539E82D4BAFBD00E55104 /* VSPInstall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VSPInstall.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		880539E82D4BAFBD00E55104 /* VSPClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VSPClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		880539EC2D4BAFBF00E55104 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		880539F12D4BAFBF00E55104 /* VSPInstall.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VSPInstall.entitlements; sourceTree = "<group>"; };
 		880539F52D4BB0F900E55104 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		880539F72D4BB59800E55104 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
 		880539F92D4BB5AD00E55104 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/IOKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -96,11 +90,7 @@
 		885DE9332D5E82CD00CFECEE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88667D6A2D53474900DFA26E /* VSPDriver-Full.log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "VSPDriver-Full.log"; sourceTree = "<group>"; };
 		8884826D2D61192900F3BAD7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		8885FBE02D673CFA004F0541 /* VSPClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VSPClient.framework; path = Frameworks/VSPClient.framework; sourceTree = "<group>"; };
-		8885FBE12D673CFA004F0541 /* VSPSetup.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VSPSetup.framework; path = Frameworks/VSPSetup.framework; sourceTree = "<group>"; };
-		8885FBE22D673CFA004F0541 /* VSPController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VSPController.framework; path = Frameworks/VSPController.framework; sourceTree = "<group>"; };
 		8889C45C2D5B0BBF0071D1F3 /* Used-Entitlements.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Used-Entitlements.xml"; sourceTree = "<group>"; };
-		88906F452D4CCA9400E500BB /* VSPInstall-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VSPInstall-Bridging-Header.h"; sourceTree = "<group>"; };
 		88906F492D4CCACB00E500BB /* DriverKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DriverKit.framework; path = System/Library/Frameworks/DriverKit.framework; sourceTree = SDKROOT; };
 		8899C3492D525AD800E17727 /* VSPSerialPort.iig */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.iig; path = VSPSerialPort.iig; sourceTree = "<group>"; };
 		8899C34B2D525AFB00E17727 /* VSPSerialPort.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VSPSerialPort.cpp; sourceTree = "<group>"; };
@@ -121,18 +111,18 @@
 		88B40D702D4B85ED00DFE7C5 /* VSPDriver.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VSPDriver.entitlements; sourceTree = "<group>"; };
 		88B40D842D4B873C00DFE7C5 /* SystemExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemExtensions.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/System/Library/Frameworks/SystemExtensions.framework; sourceTree = DEVELOPER_DIR; };
 		88B47EC92D59B43800868CA5 /* VSPController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VSPController.h; sourceTree = "<group>"; };
+		88C758E52D67563B009DA487 /* VSPController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VSPController.framework; path = VSPClient/Frameworks/VSPController.framework; sourceTree = "<group>"; };
+		88C758E62D67563B009DA487 /* VSPClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VSPClient.framework; path = VSPClient/Frameworks/VSPClient.framework; sourceTree = "<group>"; };
+		88C758E72D67563B009DA487 /* VSPSetup.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VSPSetup.framework; path = VSPClient/Frameworks/VSPSetup.framework; sourceTree = "<group>"; };
 		88D46EBC2D639B6C00D58D8A /* klog.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = klog.sh; sourceTree = "<group>"; };
 		88D4A3E72D673FE70070B5F5 /* VSPClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VSPClient.framework; path = VSPInstall/Frameworks/VSPClient.framework; sourceTree = "<group>"; };
 		88D4A3E82D673FE70070B5F5 /* VSPController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VSPController.framework; path = VSPInstall/Frameworks/VSPController.framework; sourceTree = "<group>"; };
 		88D4A3E92D673FE70070B5F5 /* VSPSetup.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VSPSetup.framework; path = VSPInstall/Frameworks/VSPSetup.framework; sourceTree = "<group>"; };
+		88D4A3F02D6755990070B5F5 /* VSPClient.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = VSPClient.entitlements; sourceTree = "<group>"; };
+		88D4A3F12D6755990070B5F5 /* VSPClient-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VSPClient-Bridging-Header.h"; sourceTree = "<group>"; };
+		88D4A3F22D6755990070B5F5 /* VSPClientApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPClientApp.swift; sourceTree = "<group>"; };
 		88DA7BA62D532C6700C8F759 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		88DA7BA72D532C6700C8F759 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		88F5D9322D59E3E5007A6E1F /* VSPLoaderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSPLoaderModel.swift; sourceTree = "<group>"; };
-		88F5D9342D59E50D007A6E1F /* VSPLoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSPLoaderView.swift; sourceTree = "<group>"; };
-		88F5D9362D59E55D007A6E1F /* VSPDriverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSPDriverView.swift; sourceTree = "<group>"; };
-		88F5D9382D59E5DC007A6E1F /* VSPTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSPTestView.swift; sourceTree = "<group>"; };
-		88F5D93A2D59E608007A6E1F /* VSPTestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSPTestModel.swift; sourceTree = "<group>"; };
-		88F5D93C2D59E85B007A6E1F /* VSPInstallApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSPInstallApp.swift; sourceTree = "<group>"; };
 		88F5D93F2D59E933007A6E1F /* VSPDriverClient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VSPDriverClient.cpp; sourceTree = "<group>"; };
 		88F5D9412D5A10C2007A6E1F /* IOKitPersonalities.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = IOKitPersonalities.xml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -142,12 +132,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88D4A3EA2D673FE70070B5F5 /* VSPClient.framework in Frameworks */,
-				88D4A3EB2D673FE70070B5F5 /* VSPController.framework in Frameworks */,
-				88D4A3EC2D673FE70070B5F5 /* VSPSetup.framework in Frameworks */,
 				880539F82D4BB59900E55104 /* AppKit.framework in Frameworks */,
-				88D938132D53655E009AA45C /* ORSSerial in Frameworks */,
 				880539FA2D4BB5AD00E55104 /* IOKit.framework in Frameworks */,
+				88C758E82D67563B009DA487 /* VSPController.framework in Frameworks */,
+				88C758E92D67563B009DA487 /* VSPClient.framework in Frameworks */,
+				88C758EA2D67563B009DA487 /* VSPSetup.framework in Frameworks */,
+				88D938132D53655E009AA45C /* ORSSerial in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,30 +154,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		880539E92D4BAFBD00E55104 /* VSPInstall */ = {
+		880539E92D4BAFBD00E55104 /* VSPClient */ = {
 			isa = PBXGroup;
 			children = (
-				880539F12D4BAFBF00E55104 /* VSPInstall.entitlements */,
-				880539F52D4BB0F900E55104 /* Info.plist */,
-				880539EC2D4BAFBF00E55104 /* Assets.xcassets */,
-				88906F452D4CCA9400E500BB /* VSPInstall-Bridging-Header.h */,
-				88F5D93C2D59E85B007A6E1F /* VSPInstallApp.swift */,
-				88F5D9362D59E55D007A6E1F /* VSPDriverView.swift */,
-				88F5D9322D59E3E5007A6E1F /* VSPLoaderModel.swift */,
-				88F5D9342D59E50D007A6E1F /* VSPLoaderView.swift */,
-				88F5D93A2D59E608007A6E1F /* VSPTestModel.swift */,
-				88F5D9382D59E5DC007A6E1F /* VSPTestView.swift */,
+				88D4A3F12D6755990070B5F5 /* VSPClient-Bridging-Header.h */,
+				88D4A3F22D6755990070B5F5 /* VSPClientApp.swift */,
 				88F5D93F2D59E933007A6E1F /* VSPDriverClient.cpp */,
 				8854A9BA2D5DED8A00C27252 /* VSPDriverClient.hpp */,
+				88D4A3F02D6755990070B5F5 /* VSPClient.entitlements */,
+				880539F52D4BB0F900E55104 /* Info.plist */,
+				880539EC2D4BAFBF00E55104 /* Assets.xcassets */,
 			);
-			path = VSPInstall;
+			path = VSPClient;
 			sourceTree = "<group>";
 		};
 		88B40D4D2D4B666700DFE7C5 = {
 			isa = PBXGroup;
 			children = (
 				88B40D5C2D4B666700DFE7C5 /* VSPDriver */,
-				880539E92D4BAFBD00E55104 /* VSPInstall */,
+				880539E92D4BAFBD00E55104 /* VSPClient */,
 				88DA7BA72D532C6700C8F759 /* LICENSE */,
 				88AB34E62D64937300260D19 /* entitlements.txt */,
 				88AB34E72D64937300260D19 /* info-plist-ioreg.xml */,
@@ -199,9 +184,6 @@
 				88DA7BA62D532C6700C8F759 /* README.md */,
 				88AB34E92D64937300260D19 /* make.sh */,
 				88D46EBC2D639B6C00D58D8A /* klog.sh */,
-				8885FBE02D673CFA004F0541 /* VSPClient.framework */,
-				8885FBE22D673CFA004F0541 /* VSPController.framework */,
-				8885FBE12D673CFA004F0541 /* VSPSetup.framework */,
 				88B40D592D4B666700DFE7C5 /* Frameworks */,
 				88B40D582D4B666700DFE7C5 /* Products */,
 			);
@@ -211,7 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				88B40D572D4B666700DFE7C5 /* org.eof.tools.VSPDriver.dext */,
-				880539E82D4BAFBD00E55104 /* VSPInstall.app */,
+				880539E82D4BAFBD00E55104 /* VSPClient.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -220,8 +202,11 @@
 			isa = PBXGroup;
 			children = (
 				88D4A3E72D673FE70070B5F5 /* VSPClient.framework */,
+				88C758E62D67563B009DA487 /* VSPClient.framework */,
 				88D4A3E82D673FE70070B5F5 /* VSPController.framework */,
 				88D4A3E92D673FE70070B5F5 /* VSPSetup.framework */,
+				88C758E52D67563B009DA487 /* VSPController.framework */,
+				88C758E72D67563B009DA487 /* VSPSetup.framework */,
 				8884826D2D61192900F3BAD7 /* Cocoa.framework */,
 				885DE9332D5E82CD00CFECEE /* Foundation.framework */,
 				885DE9312D5E82C500CFECEE /* ExtensionFoundation.framework */,
@@ -270,9 +255,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		880539E72D4BAFBD00E55104 /* VSPInstall */ = {
+		880539E72D4BAFBD00E55104 /* VSPClient */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 880539F22D4BAFBF00E55104 /* Build configuration list for PBXNativeTarget "VSPInstall" */;
+			buildConfigurationList = 880539F22D4BAFBF00E55104 /* Build configuration list for PBXNativeTarget "VSPClient" */;
 			buildPhases = (
 				880539E42D4BAFBD00E55104 /* Sources */,
 				880539E52D4BAFBD00E55104 /* Frameworks */,
@@ -286,12 +271,12 @@
 				8814834D2D5385EC003FB561 /* PBXTargetDependency */,
 				88BEFD6A2D4BC16200CD40E6 /* PBXTargetDependency */,
 			);
-			name = VSPInstall;
+			name = VSPClient;
 			packageProductDependencies = (
 				88D938122D53655E009AA45C /* ORSSerial */,
 			);
 			productName = VSPInstall;
-			productReference = 880539E82D4BAFBD00E55104 /* VSPInstall.app */;
+			productReference = 880539E82D4BAFBD00E55104 /* VSPClient.app */;
 			productType = "com.apple.product-type.application";
 		};
 		88B40D562D4B666700DFE7C5 /* VSPDriver */ = {
@@ -348,7 +333,7 @@
 			projectRoot = "";
 			targets = (
 				88B40D562D4B666700DFE7C5 /* VSPDriver */,
-				880539E72D4BAFBD00E55104 /* VSPInstall */,
+				880539E72D4BAFBD00E55104 /* VSPClient */,
 			);
 		};
 /* End PBXProject section */
@@ -382,13 +367,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88D4A3F32D67559A0070B5F5 /* VSPClientApp.swift in Sources */,
 				88F5D9402D59E933007A6E1F /* VSPDriverClient.cpp in Sources */,
-				88F5D9332D59E3E5007A6E1F /* VSPLoaderModel.swift in Sources */,
-				88F5D93B2D59E608007A6E1F /* VSPTestModel.swift in Sources */,
-				88F5D9392D59E5DC007A6E1F /* VSPTestView.swift in Sources */,
-				88F5D9352D59E50D007A6E1F /* VSPLoaderView.swift in Sources */,
-				88F5D9372D59E55D007A6E1F /* VSPDriverView.swift in Sources */,
-				88F5D93D2D59E85B007A6E1F /* VSPInstallApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,7 +407,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = VSPInstall/VSPInstall.entitlements;
+				CODE_SIGN_ENTITLEMENTS = VSPClient/VSPClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
@@ -437,19 +417,20 @@
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = 83NQU389JN;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
+				EXCLUDED_ARCHS = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/VSPInstall/Frameworks/**",
-					"$(PROJECT_DIR)/VSPInstall",
-					"$(PROJECT_DIR)/VSPInstall/Frameworks",
+					"$(PROJECT_DIR)/VSPClient",
+					"$(PROJECT_DIR)/VSPClient/Frameworks/**",
+					"$(PROJECT_DIR)/VSPClient/Frameworks",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/VSPInstall/Frameworks/VSPController.framework/**",
-					"$(PROJECT_DIR)/VSPInstall/Frameworks/VSPSetup.framework/**",
+					"$(PROJECT_DIR)/VSPClient/Frameworks/VSPController.framework/**",
+					"$(PROJECT_DIR)/VSPClient/Frameworks/VSPSetup.framework/**",
 				);
-				INFOPLIST_FILE = VSPInstall/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "VSP Installer";
+				INFOPLIST_FILE = VSPClient/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Virtual Serial Port Controller";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 by EoF Software Labs";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
@@ -478,7 +459,7 @@
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "VSPInstall/VSPInstall-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "VSPClient/VSPClient-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -491,7 +472,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = VSPInstall/VSPInstall.entitlements;
+				CODE_SIGN_ENTITLEMENTS = VSPClient/VSPClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
@@ -501,19 +482,20 @@
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = 83NQU389JN;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
+				EXCLUDED_ARCHS = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/VSPInstall/Frameworks/**",
-					"$(PROJECT_DIR)/VSPInstall",
-					"$(PROJECT_DIR)/VSPInstall/Frameworks",
+					"$(PROJECT_DIR)/VSPClient",
+					"$(PROJECT_DIR)/VSPClient/Frameworks/**",
+					"$(PROJECT_DIR)/VSPClient/Frameworks",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/VSPInstall/Frameworks/VSPController.framework/**",
-					"$(PROJECT_DIR)/VSPInstall/Frameworks/VSPSetup.framework/**",
+					"$(PROJECT_DIR)/VSPClient/Frameworks/VSPController.framework/**",
+					"$(PROJECT_DIR)/VSPClient/Frameworks/VSPSetup.framework/**",
 				);
-				INFOPLIST_FILE = VSPInstall/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "VSP Installer";
+				INFOPLIST_FILE = VSPClient/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Virtual Serial Port Controller";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 by EoF Software Labs";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
@@ -542,7 +524,7 @@
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "VSPInstall/VSPInstall-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "VSPClient/VSPClient-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 			};
@@ -738,7 +720,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		880539F22D4BAFBF00E55104 /* Build configuration list for PBXNativeTarget "VSPInstall" */ = {
+		880539F22D4BAFBF00E55104 /* Build configuration list for PBXNativeTarget "VSPClient" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				880539F32D4BAFBF00E55104 /* Debug */,
