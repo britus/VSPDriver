@@ -247,9 +247,10 @@ bool VSPControllerPriv::CreatePort(TVSPPortParameters* parameters)
     input.parameter.link.source = 1;
     input.parameter.link.target = 1;
 
-    if (sizeof(TVSPPortParameters) <= MAX_SERIAL_PORTS) {
-        input.ports.count = sizeof(TVSPPortParameters);
+    // missusage of the 'ports.list' take care!
+    if (sizeof(TVSPPortParameters) <= sizeof(input.ports.list)) {
         input.parameter.flags = 0xff01;
+        input.ports.count = sizeof(TVSPPortParameters);
         memcpy(input.ports.list, parameters, input.ports.count);
     }
 
