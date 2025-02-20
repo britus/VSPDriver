@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct VSPInstallApp: App {
+    
     var body: some Scene {
         WindowGroup {
-            VSPDriverView()
+            //VSPDriverView()
         }
     }
 }

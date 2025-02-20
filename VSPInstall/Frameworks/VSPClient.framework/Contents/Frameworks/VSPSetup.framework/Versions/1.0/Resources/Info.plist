@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>BuildMachineOSBuild</key>
+    <string>21H1320</string>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>en</string>
+    <key>CFBundleExecutable</key>
+    <string>VSPSetup</string>
+    <key>CFBundleIdentifier</key>
+    <string>org.eof.tools.VSPSetup</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>VSPSetup</string>
+    <key>CFBundlePackageType</key>
+    <string>FMWK</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
+    <key>CFBundleSupportedPlatforms</key>
+    <array>
+        <string>MacOSX</string>
+    </array>
+    <key>CFBundleVersion</key>
+    <string>1</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>12.2</string>
+    <key>NSHumanReadableCopyright</key>
+    <string>Copyright © 2025 EoF Software Labs</string>
+    <key>com.apple.developer.driverkit</key>
+    <true/>
+    <key>com.apple.developer.driverkit.install</key>
+    <true/>
+    <key>com.apple.developer.system-extension.install</key>
+    <true/>
+    <key>com.apple.developer.system-extension.uninstall</key>
+    <true/>
+    <key>com.apple.developer.driverkit.userclient-access</key>
+    <array>
+        <string>VSPDriver</string>
+    </array>
+    <key>com.apple.private.driverkit.driver-access</key>
+    <array>
+        <string>VSPDriver</string>
+    </array>
+    <key>com.apple.security.temporary-exception.iokit-user-client-class</key>
+    <array>
+        <string>IOUserUserClient</string>
+    </array>
+</dict>
+</plist>

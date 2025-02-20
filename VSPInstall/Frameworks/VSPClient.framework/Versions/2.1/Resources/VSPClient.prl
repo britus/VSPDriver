@@ -1,0 +1,5 @@
+QMAKE_PRL_BUILD_DIR = /Users/beschric/EoF/tests/VSPClient/build/VSPClient
+QMAKE_PRO_INPUT = VSPClient.pro
+QMAKE_PRL_TARGET = VSPClient
+QMAKE_PRL_CONFIG = lex yacc debug exceptions depend_includepath testcase_targets import_plugins import_qpa_plugin asset_catalogs rez file_copies qmake_use qt warn_on link_prl app_bundle incremental global_init_link_order lib_version_first sdk clang_pch_style shared shared qt_framework macos osx macx mac darwin unix posix gcc clang llvm c++17 sdk_no_version_check nostrip debug embed_translations create_prl lib_bundle embed_translations embed_libraries incremental global_init_link_order lib_version_first have_target dll debug_info c++1z objective_c thread uic opengl moc resources
+QMAKE_PRL_VERSION = 1.0.3.14

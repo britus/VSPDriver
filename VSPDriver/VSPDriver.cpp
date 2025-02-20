@@ -454,7 +454,7 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count, vo
         VSPLog(LOG_PREFIX, "CreateSerialPort: Create serial port %d.\n", _id);
 
         // Create sub service object from SerialPortProperties in Info.plist
-        ret= Create(this, kVSPSerialPortProperties, &service);
+        ret = Create(this, kVSPSerialPortProperties, &service);
         if (ret != kIOReturnSuccess || service == nullptr) {
             VSPErr(LOG_PREFIX, "CreateSerialPort: create [%d] failed. code=%d\n", count, ret);
             return ret;
@@ -470,6 +470,14 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count, vo
             return kIOReturnInvalid;
         }
 
+        // TODO: My experience is that we are at this point to fast to query final TTY name properties.
+        // TODO: The OS needs a bit time to create registry and the BSD sub service.
+        // TODO: We have to wait for OS completion due serial port device naming ?? How ??
+        // this->CopySystemStateNotificationService(<#IOService **service#>)
+        // this->StateNotificationItemCreate(<#OSString *itemName#>, <#OSDictionary *schema#>)
+        // this->StateNotificationItemSet(<#OSString *itemName#>, <#OSDictionary *value#>)
+        // this->StateNotificationItemCopy(<#OSString *itemName#>, <#OSDictionary **value#>)
+        
         // save instance for controller
         ivars->m_serialPorts[i].id = _id;
         ivars->m_serialPorts[i].port->setParent(this);           // set this as parent

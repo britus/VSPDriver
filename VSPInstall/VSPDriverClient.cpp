@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <CoreFoundation/CoreFoundation.h>
 #include <IOKit/IOKitLib.h>
+#include <VSPController.hpp>
 
 extern "C" {
     extern void SwiftAsyncCallback(void* refcon, IOReturn result, void** args, UInt32 numArgs);
@@ -15,7 +16,6 @@ extern "C" {
     extern void SwiftDeviceRemoved(void* refcon);
 }
 
-#include "../VSPController/VSPController.hpp"
 class VSPDriverClient: public VSPClient::VSPController {
 public:
     explicit VSPDriverClient(void* refcon): VSPClient::VSPController(), m_refcon(refcon){};
