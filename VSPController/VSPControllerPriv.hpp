@@ -1,5 +1,5 @@
 // ********************************************************************
-// VSPController.cpp - VSPDriver user client controller (private)
+// VSPControllerPriv.cpp - VSPDriver user client controller (private)
 //
 // Copyright © 2025 by EoF Software Labs
 // Copyright © 2024 Apple Inc. (some copied parts)

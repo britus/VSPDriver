@@ -186,6 +186,7 @@ void VSPSerialPort::free(void)
     
     // Release instance state resource
     IOSafeDeleteNULL(ivars, VSPSerialPort_IVars, 1);
+    
     super::free();
 }
 
@@ -306,7 +307,7 @@ void VSPSerialPort::cleanupResources()
 
 bool VSPSerialPort::isConnected()
 {
-    return (ivars->m_txqbmd && ivars->m_rxqbmd);
+    return (ivars->m_txqbmd && ivars->m_rxqbmd && ivars->m_hwActivated);
 }
 
 // ====================================================================
@@ -430,28 +431,26 @@ kern_return_t IMPL(VSPSerialPort, DisconnectQueues)
     IOReturn ret;
     
     VSPLog(LOG_PREFIX, "DisconnectQueues called\n");
-    
-    // Lock to ensure thread safety
-    VSPAquireLock(ivars);
-    
-    // reset SPI pointer from OS
-    ivars->m_spi = nullptr;
-    
-    // Remove our memory descriptors
-    OSSafeReleaseNULL(ivars->m_txqbmd);
-    OSSafeReleaseNULL(ivars->m_rxqbmd);
-    
-    // reset our TX/RX segments
-    ivars->m_txseg = {};
-    ivars->m_rxseg = {};
-    
-    // Unlock thread
-    VSPUnlock(ivars);
+  
+    // stopping...
+    ivars->m_hwActivated = false;
 
     // Reset modem status
     setDataCarrierDetect(false);
     setDataSetReady(false);
     setClearToSend(false);
+    HwDeactivate();
+
+    // reset SPI pointer from OS
+    ivars->m_spi = nullptr;
+    
+    // reset our TX/RX segments
+    ivars->m_txseg = {};
+    ivars->m_rxseg = {};
+
+    // Remove our memory descriptors
+    OSSafeReleaseNULL(ivars->m_txqbmd);
+    OSSafeReleaseNULL(ivars->m_rxqbmd);
 
     ret = DisconnectQueues(SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
@@ -529,7 +528,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
         ret = sendToPortLink(buffer, size);
         if (ret != kIOReturnSuccess) {
             VSPErr(LOG_PREFIX, "TxDataAvailable: Data routing failed. code=%d\n", ret);
-            goto finish;
+            goto not_routed; // update spi::tx, no echo and done.
         }
     }
     // Loopback TX data
@@ -540,6 +539,8 @@ void IMPL(VSPSerialPort, TxDataAvailable)
             goto finish;
         }
     }
+    
+not_routed:
 
     // update TX in serial port interface
     update_txqbmd(ivars);
@@ -1022,6 +1023,11 @@ kern_return_t VSPSerialPort::sendToPortLink(const void* buffer, const uint32_t s
     VSPLog(LOG_PREFIX, "sendToPortLink: got portId=%d -> enqueue on target\n",
            port->getPortIdentifier());
 
+    if (!port->isConnected()) {
+        VSPLog(LOG_PREFIX, "sendToPortLink: port is disconnected, skip\n");
+        return kIOReturnNotOpen;
+    }
+    
     if ((ret = port->sendResponse(this, buffer, size)) != kIOReturnSuccess) {
         VSPErr(LOG_PREFIX, "sendToPortLink: Port %d enqueueResponse failed. code=%d\n",
                ivars->m_portId, ret);
