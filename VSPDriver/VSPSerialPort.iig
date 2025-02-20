@@ -36,10 +36,12 @@ public:
     virtual kern_return_t Start(IOService* provider) override;
     virtual kern_return_t Stop(IOService* provider) override;
     
+    // For patching IOTTYBaseName and IOTTYSuffix
+    virtual kern_return_t SetProperties(OSDictionary * properties) override;
+    
     // ------ [IOUserSerial overridden stuff] -------------------------
 
-    /* overridden to get the right MDs of the OS.
-     * we don't (let OS do) provide any own MDs */
+    /* overridden to set our own MDs for tx/rx */
     virtual kern_return_t ConnectQueues(
             IOBufferMemoryDescriptor** ifmd,
             IOMemoryDescriptor**       rxqmd,
@@ -90,9 +92,10 @@ public:
     void setPortLinkIdentifier(uint8_t id) LOCALONLY;
     uint8_t getPortLinkIdentifier() LOCALONLY;
     
-    // Set our TTY name
-    kern_return_t setupTTYBaseName() LOCALONLY;
-
+    // Set our TTY properties
+    kern_return_t updateTTYProperties(uint8_t portId) LOCALONLY;
+    kern_return_t getDeviceName(char* result, const uint32_t size) LOCALONLY;
+    
     // routing through port link
     kern_return_t sendToPortLink(const void* buffer, const uint32_t size) LOCALONLY;
 

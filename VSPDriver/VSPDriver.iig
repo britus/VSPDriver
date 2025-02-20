@@ -33,12 +33,13 @@ public:
     bool checkPortLinkId(uint8_t id) LOCALONLY;
     
     kern_return_t getPortCount(uint8_t* count) LOCALONLY;
-    kern_return_t getPortList(uint8_t* list, uint8_t count) LOCALONLY;
+    kern_return_t getPortList(void* list, uint8_t count) LOCALONLY;
     kern_return_t getPortLinkList(uint64_t* list, uint8_t count) LOCALONLY;
     kern_return_t getPortLinkCount(uint8_t* count) LOCALONLY;
     kern_return_t getPortById(uint8_t id, void* result, const uint32_t size) LOCALONLY;
     kern_return_t getPortLinkById(uint8_t id, void* link, const uint32_t size) LOCALONLY;
     kern_return_t getPortLinkByPorts(uint8_t sourceId, uint8_t targetId, void* link, const uint32_t size) LOCALONLY;
+    kern_return_t getPortDeviceName(uint8_t portId, char* result, const uint32_t size) LOCALONLY;
     kern_return_t portsInLinkList(uint8_t sourceId, uint8_t targetId) LOCALONLY;
     kern_return_t portsAssigned(uint8_t sourceId, uint8_t targetId) LOCALONLY;
 

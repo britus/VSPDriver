@@ -9,18 +9,26 @@
 // -- OS
 #include <os/log.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <time.h>
 #include <math.h>
 
-#include <DriverKit/OSDictionary.h>
-#include <DriverKit/OSData.h>
+#include <DriverKit/OSBundle.h>
 #include <DriverKit/OSString.h>
+#include <DriverKit/OSNumber.h>
+#include <DriverKit/OSBoolean.h>
 #include <DriverKit/OSArray.h>
 #include <DriverKit/OSSet.h>
 #include <DriverKit/OSOrderedSet.h>
+#include <DriverKit/OSPtr.h>
+#include <DriverKit/OSData.h>
+#include <DriverKit/OSDictionary.h>
+#include <DriverKit/OSCollection.h>
+#include <DriverKit/OSCollections.h>
 #include <DriverKit/IOLib.h>
-#include <DriverKit/IOService.h>
 #include <DriverKit/IOTypes.h>
+#include <DriverKit/IOService.h>
 #include <DriverKit/IOMemoryMap.h>
 #include <DriverKit/IOMemoryDescriptor.h>
 #include <DriverKit/IOBufferMemoryDescriptor.h>
@@ -112,6 +120,9 @@ struct VSPSerialPort_IVars {
     uint8_t m_portId = 0;                           // port id given by VSPDriver
     uint8_t m_portLinkId = 0;                       // port link id given by VSPDriver
     
+    IOPropertyName m_portSuffix = {};
+    IOPropertyName m_portBaseName = {};
+    
     IOLock* m_lock = nullptr;                       // for resource locking
     volatile atomic_int m_lockLevel = 0;
     
@@ -184,7 +195,7 @@ void VSPSerialPort::free(void)
 kern_return_t IMPL(VSPSerialPort, Start)
 {
     kern_return_t ret;
-    
+
     VSPLog(LOG_PREFIX, "Start: called.\n");
     
     // sane check our driver instance vars
@@ -207,11 +218,6 @@ kern_return_t IMPL(VSPSerialPort, Start)
     ivars->m_lock = IOLockAlloc();
     if (ivars->m_lock == nullptr) {
         VSPErr(LOG_PREFIX, "Start: Unable to allocate lock object.\n");
-        goto error_exit;
-    }
-    
-    // create our own TTY name and index
-    if ((ret = setupTTYBaseName()) != kIOReturnSuccess) {
         goto error_exit;
     }
     
@@ -266,12 +272,35 @@ kern_return_t IMPL(VSPSerialPort, Stop)
 }
 
 // --------------------------------------------------------------------
+// SetProperties(OSDictionary* properties)
+// No super dispatch here!!
+kern_return_t IMPL(VSPSerialPort, SetProperties)
+{
+    IOReturn ret;
+    
+    VSPLog(LOG_PREFIX, "SetProperties called.\n");
+    
+    if (properties == nullptr) {
+        return kIOReturnBadArgument;
+    }
+    
+    // update
+    ret = UserSetProperties(properties);
+    if (ret != kIOReturnSuccess) {
+        VSPErr(LOG_PREFIX, "updateTTYProperties: UserSetProperties() failed. code=%d", ret);
+    }
+    
+    VSPLog(LOG_PREFIX, "SetProperties complete.\n");
+    return kIOReturnSuccess;
+}
+
+// --------------------------------------------------------------------
 // Remove all resources in IVars
 //
 void VSPSerialPort::cleanupResources()
 {
     VSPLog(LOG_PREFIX, "cleanupResources called.\n");
-    
+ 
     IOLockFreeNULL(ivars->m_lock);
 }
 
@@ -920,7 +949,11 @@ void VSPSerialPort::unlinkParent()
 void VSPSerialPort::setPortIdentifier(uint8_t id)
 {
     VSPLog(LOG_PREFIX, "setPortIdentifier id=%d.\n", id);
+    
     ivars->m_portId = id;
+    
+    // update properties
+    updateTTYProperties(id);
 }
 
 // --------------------------------------------------------------------
@@ -947,39 +980,6 @@ void VSPSerialPort::setPortLinkIdentifier(uint8_t id)
 uint8_t VSPSerialPort::getPortLinkIdentifier()
 {
     return ivars->m_portLinkId;
-}
-
-// --------------------------------------------------------------------
-// Called by VSPDriver instance to set TTY base and number based on
-// managed instance of this object instance
-kern_return_t VSPSerialPort::setupTTYBaseName()
-{
-    IOReturn ret;
-    OSDictionary* properties = nullptr;
-    OSString* baseName = nullptr;
-    
-    VSPLog(LOG_PREFIX, "setupTTYBaseName called.\n");
-    
-    // setup custom TTY name
-    if ((ret = CopyProperties(&properties)) != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "setupTTYBaseName: Unable to get properties. code=%d\n", ret);
-        return ret;
-    }
-    
-    //CreateNameMatchingDictionary(OSString *serviceName, OSDictionary *matching)
-    //baseName = OSString::withCString(kVSPTTYBaseName);
-    //properties->setObject(kIOTTYBaseNameKey, baseName);
-    
-    // write back to driver instance
-    ret = SetProperties(properties);
-    if (ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "setupTTYBaseName: Unable to set TTY base name. code=%d\n", ret);
-        //return ret; // ??? an error - why???
-    }
-    
-    OSSafeReleaseNULL(baseName);
-    OSSafeReleaseNULL(properties);
-    return kIOReturnSuccess;
 }
 
 // --------------------------------------------------------------------
@@ -1086,5 +1086,140 @@ kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, cons
     this->RxDataAvailable_Impl();
 
     VSPLog(LOG_PREFIX, "sendResponse: complete.\n");
+    return kIOReturnSuccess;
+}
+
+// --------------------------------------------------------------------
+// Get proptery value by specified property key using SearchProperty()
+//
+static inline kern_return_t getProperty(VSPSerialPort* self, const char* key, char* result, size_t size)
+{
+    const char* plane = "IOService:/IOUserResources/VSPDriver"; // How to get this dynamically?
+    const uint32_t options = 0;//kIOServiceSearchPropertyParents;
+    OSContainer* property = nullptr;
+    OSString* val = nullptr;
+    const char* value;
+    IOReturn ret;
+
+    if ((ret = self->SearchProperty(key, plane, options, &property)) != kIOReturnSuccess) {
+        return ret;
+    }
+    
+    if ((val = OSDynamicCast(OSString, property)) != nullptr) {
+        if ((value = val->getCStringNoCopy()) != nullptr) {
+            strncpy(result, value, size);
+        } else {
+            ret = kIOReturnInvalid;
+        }
+    } else {
+        ret = kIOReturnInvalid;
+    }
+    
+    OSSafeReleaseNULL(property);
+    return ret;
+}
+
+// --------------------------------------------------------------------
+// Read IOTTYBaseName and IOTTYSuffix from service properties
+//
+static inline kern_return_t readTTYProperties(VSPSerialPort* self)
+{
+    IOReturn ret;
+
+    ret = getProperty(self, "IOTTYBaseName", self->ivars->m_portBaseName, sizeof(IOPropertyName)-1);
+    if (ret != kIOReturnSuccess) {
+        VSPErr(LOG_PREFIX, "readTTYProperties: getProperty(IOTTYBaseName) failed. code=%d", ret);
+        goto finish;
+    }
+
+    ret = getProperty(self, "IOTTYSuffix", self->ivars->m_portSuffix, sizeof(IOPropertyName)-1);
+    if (ret != kIOReturnSuccess) {
+        VSPErr(LOG_PREFIX, "readTTYProperties: getProperty(IOTTYSuffix) failed. code=%d", ret);
+        goto finish;
+    }
+
+finish:
+    return ret;
+}
+
+// --------------------------------------------------------------------
+// Called by VSPDriver instance to set TTY base and number based on
+// managed instance of this object instance
+kern_return_t VSPSerialPort::updateTTYProperties(uint8_t portId)
+{
+    IOReturn ret;
+    OSDictionary* properties = nullptr;
+    
+    VSPLog(LOG_PREFIX, "updateTTYProperties called.\n");
+
+    // Get current TTY properties. This is read from Info.plist (IOReg)
+    // and should have default base name 'vsp' and suffix '1'
+    if ((ret = readTTYProperties(this)) != kIOReturnSuccess) {
+        return ret;
+    }
+    
+    // Set given port id as TTY suffix
+    snprintf(ivars->m_portSuffix, sizeof(IOPropertyName)-1, "%d", portId);
+
+    // Get service instance properties
+    ret = CopyProperties(&properties);
+    if (ret != kIOReturnSuccess || properties == nullptr) {
+        VSPErr(LOG_PREFIX, "updateTTYProperties: Copy properties failed. code=%d", ret);
+        return ret;
+    }
+
+    OSString* bnstr = OSString::withCString("IOTTYBaseName");
+    OSString* bnval = OSString::withCString("vsp");
+
+    // Update TTY base name with our base name if not match
+    if (strncmp(ivars->m_portBaseName, "vsp", sizeof(IOPropertyName))) {
+        if (!properties->setObject(bnstr, bnval)) {
+            VSPErr(LOG_PREFIX, "updateTTYProperties: Failed to set property IOTTYBaseName");
+        }
+    }
+    
+    OSString* snstr = OSString::withCString("IOTTYSuffix");
+    OSString* snval = nullptr;
+
+    // force update of the TTY suffix with our port ID number
+    snval = OSString::withCString(ivars->m_portSuffix);
+    if (!properties->setObject(bnstr, bnval)) {
+        VSPErr(LOG_PREFIX, "updateTTYProperties: Failed to set property IOTTYBaseName");
+    }
+    
+    // update
+    ret = SetProperties(properties);
+    if (ret != kIOReturnSuccess) {
+        VSPErr(LOG_PREFIX, "updateTTYProperties: UserSetProperties() failed. code=%d", ret);
+    }
+    
+    OSSafeReleaseNULL(bnstr);
+    OSSafeReleaseNULL(bnval);
+    OSSafeReleaseNULL(snstr);
+    OSSafeReleaseNULL(snval);
+    OSSafeReleaseNULL(properties);
+
+    return kIOReturnSuccess;
+}
+
+// --------------------------------------------------------------------
+// Return TTY base name with device number.
+//
+kern_return_t VSPSerialPort::getDeviceName(char* result, const uint32_t size)
+{
+    IOReturn ret;
+    
+    // Get current TTY properties.
+    if ((ret = readTTYProperties(this)) != kIOReturnSuccess) {
+        return ret;
+    }
+    
+    if (!result || size < (strlen(ivars->m_portBaseName) + strlen(ivars->m_portSuffix))) {
+        return kIOReturnBadArgument;
+    }
+    
+    strncpy(result, ivars->m_portBaseName, size);
+    strncat(result, ivars->m_portSuffix, size);
+    
     return kIOReturnSuccess;
 }

@@ -26,7 +26,7 @@ public:
     virtual kern_return_t Start(IOService* provider) override;
     virtual kern_return_t Stop(IOService* provider) override;
     virtual kern_return_t CopyClientMemoryForType(
-        uint64_t type, uint64_t *options, IOMemoryDescriptor **memory) override;
+                                                  uint64_t type, uint64_t *options, IOMemoryDescriptor **memory) override;
     virtual kern_return_t ExternalMethod(uint64_t selector,
                                          IOUserClientMethodArguments* arguments,
                                          const IOUserClientMethodDispatch* dispatch,
@@ -43,7 +43,7 @@ public:
     // called by VSPDriver instance
     void setParent(VSPDriver* parent) LOCALONLY;
     void unlinkParent() LOCALONLY;
-
+    
     // Schedule timed event -> IOTimerDispatchSource::TimerOccurred
     kern_return_t scheduleEvent(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
     
@@ -58,20 +58,20 @@ public:
     static
     kern_return_t exGetStatus(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
     kern_return_t getStatus(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
-
+    
     static
     kern_return_t exCreatePort(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
     kern_return_t createPort(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
-
+    
     static
     kern_return_t exRemovePort(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
     kern_return_t removePort(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
-
+    
     static
     kern_return_t exGetPortList(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
     kern_return_t getPortList(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
     kern_return_t getPortListHelper(void* reference) LOCALONLY;
-
+    
     static
     kern_return_t exGetLinkList(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
     kern_return_t getLinkList(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;

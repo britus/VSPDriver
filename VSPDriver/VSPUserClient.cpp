@@ -74,7 +74,7 @@ static inline void dump_ctrl_data(const TVSPControllerData* data)
     VSPLog(LOG_PREFIX, "Data.p.portlink.target: %d\n", data->parameter.link.target);
     VSPLog(LOG_PREFIX, "Data.ports.count......: %d\n", data->ports.count);
     for (uint8_t i = 0; i < data->ports.count && i < MAX_SERIAL_PORTS; i++) {
-        VSPLog(LOG_PREFIX, "\tPort item #%d: %d\n", i, data->ports.list[i]);
+        VSPLog(LOG_PREFIX, "\tPort item #%d: %d\n", i, data->ports.list[i].id);
     }
     VSPLog(LOG_PREFIX, "Data.links.count......: %d\n", data->links.count);
     for (uint8_t i = 0; i < data->links.count && i < MAX_SERIAL_PORTS; i++) {
@@ -640,29 +640,19 @@ kern_return_t VSPUserClient::getStatus(void* reference, IOUserClientMethodArgume
         goto finish;
     }
     
-    if ((ret = ivars->m_parent->getPortCount(&response.ports.count)) != kIOReturnSuccess) {
+    if ((ret = getPortListHelper(&response)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xfe000001);
         goto finish;
     }
-    
-    if (response.ports.count) {
-        if ((ret = ivars->m_parent->getPortList(response.ports.list, MAX_SERIAL_PORTS)) != kIOReturnSuccess) {
-            set_ctlr_status(&response, ret, 0xfe000003);
-            goto finish;
-        }
+    else if (response.ports.count) {
         response.parameter.flags |= BIT(1);
     }
-
-    if ((ret = ivars->m_parent->getPortLinkCount(&response.links.count)) != kIOReturnSuccess) {
+ 
+    if ((ret = getLinkListHelper(&response)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xfe000002);
         goto finish;
     }
-    
-    if (response.links.count) {
-        if ((ret = ivars->m_parent->getPortLinkList(response.links.list, MAX_PORT_LINKS)) != kIOReturnSuccess) {
-            set_ctlr_status(&response, ret, 0xfe000004);
-            goto finish;
-        }
+    else if (response.links.count) {
         response.parameter.flags |= BIT(2);
     }
     
@@ -790,32 +780,25 @@ kern_return_t VSPUserClient::getPortListHelper(void* reference)
 {
     TVSPControllerData* response = reinterpret_cast<TVSPControllerData*>(reference);
     kern_return_t ret;
-    uint8_t list[MAX_SERIAL_PORTS] = {};
     uint8_t count = 0;
     
     if ((ret = ivars->m_parent->getPortCount(&count)) != kIOReturnSuccess) {
         VSPErr(LOG_PREFIX, "getPortListHelper: parent getPortCount failed. code=%d\n", ret);
         set_ctlr_status(response, ret, 0xfc000001);
     }
-    
-    if (count == 0) {
+    else if (count == 0) {
         /* be quiet to caller */
         VSPErr(LOG_PREFIX, "getPortListHelper: No serial ports available.\n");
         response->ports.count = 0;
     }
-    else if ((ret = ivars->m_parent->getPortList(list, count)) != kIOReturnSuccess) {
+    else if ((ret = ivars->m_parent->getPortList(response->ports.list, count)) != kIOReturnSuccess) {
         VSPErr(LOG_PREFIX, "getPortListHelper: parent getPortList failed. code=%d\n", ret);
         set_ctlr_status(response, ret, 0xfc000002);
     }
     else {
-        for (uint8_t i = 0; i < count; i++) {
-            response->ports.list[i] = list[i];
-        }
         response->ports.count = count;
     }
-    
-    
-    
+
     return response->status.code;
 }
 
@@ -855,14 +838,9 @@ kern_return_t VSPUserClient::getLinkListHelper(void* reference)
 {
     TVSPControllerData* response = reinterpret_cast<TVSPControllerData*>(reference);
     kern_return_t ret;
-    uint64_t list[MAX_PORT_LINKS] = {};
     uint8_t count = 0;
 
-    if ((ret = getPortListHelper(response)) != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "getLinkListHelper: getPortListHelper failed. code=%d\n", ret);
-        set_ctlr_status(response, ret, 0xd000000a);
-    }
-    else if ((ret = ivars->m_parent->getPortLinkCount(&count)) != kIOReturnSuccess) {
+    if ((ret = ivars->m_parent->getPortLinkCount(&count)) != kIOReturnSuccess) {
         VSPErr(LOG_PREFIX, "getLinkListHelper: parent getPortLinkCount failed. code=%d\n", ret);
         set_ctlr_status(response, ret, 0xd0000001);
     }
@@ -871,14 +849,11 @@ kern_return_t VSPUserClient::getLinkListHelper(void* reference)
         VSPLog(LOG_PREFIX, "getLinkListHelper: No port links available.\n");
         response->links.count = 0;
     }
-    else if ((ret = ivars->m_parent->getPortLinkList(list, count)) != kIOReturnSuccess) {
+    else if ((ret = ivars->m_parent->getPortLinkList(response->links.list, count)) != kIOReturnSuccess) {
         VSPErr(LOG_PREFIX, "getLinkListHelper: parent getPortLinkList failed. code=%d\n", ret);
         set_ctlr_status(response, ret, 0xd0000002);
     }
     else {
-        for (uint8_t i = 0; i < count; i++) {
-            response->links.list[i] = list[i];
-        }
         response->links.count = count;
     }
     

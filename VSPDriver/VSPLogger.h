@@ -24,6 +24,6 @@
 #endif
 #endif
 
-#define VSPErr(prefix, fmt, ...) os_log(OS_LOG_DEFAULT, "[" prefix "]: " fmt, ##__VA_ARGS__)
+#define VSPErr(prefix, fmt, ...) OSReportWithBacktrace("[" prefix "]: " fmt, ##__VA_ARGS__);
 
 #endif /* VSPLogger_h */
