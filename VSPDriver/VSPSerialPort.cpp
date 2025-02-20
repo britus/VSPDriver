@@ -1181,13 +1181,13 @@ kern_return_t VSPSerialPort::updateTTYProperties(uint8_t portId)
     OSString* snkey = OSString::withCString("IOTTYSuffix");
     OSString* snval = OSString::withCString(ivars->m_portSuffix);
     if (!properties->setObject(bnkey, bnval)) {
-        VSPErr(LOG_PREFIX, "updateTTYProperties: Failed to set property IOTTYBaseName");
+        VSPErr(LOG_PREFIX, "updateTTYProperties: Failed to set property IOTTYSuffix");
     }
     
     // update
     ret = SetProperties(properties);
     if (ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "updateTTYProperties: UserSetProperties() failed. code=%d", ret);
+        VSPErr(LOG_PREFIX, "updateTTYProperties: SetProperties() failed. code=%d", ret);
     }
     
     OSSafeReleaseNULL(bnkey);
