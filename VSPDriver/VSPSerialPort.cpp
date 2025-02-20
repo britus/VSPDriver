@@ -1168,22 +1168,19 @@ kern_return_t VSPSerialPort::updateTTYProperties(uint8_t portId)
         return ret;
     }
 
-    OSString* bnstr = OSString::withCString("IOTTYBaseName");
-    OSString* bnval = OSString::withCString("vsp");
-
     // Update TTY base name with our base name if not match
+    OSString* bnkey = OSString::withCString("IOTTYBaseName");
+    OSString* bnval = OSString::withCString("vsp");
     if (strncmp(ivars->m_portBaseName, "vsp", sizeof(IOPropertyName))) {
-        if (!properties->setObject(bnstr, bnval)) {
+        if (!properties->setObject(bnkey, bnval)) {
             VSPErr(LOG_PREFIX, "updateTTYProperties: Failed to set property IOTTYBaseName");
         }
     }
     
-    OSString* snstr = OSString::withCString("IOTTYSuffix");
-    OSString* snval = nullptr;
-
     // force update of the TTY suffix with our port ID number
-    snval = OSString::withCString(ivars->m_portSuffix);
-    if (!properties->setObject(bnstr, bnval)) {
+    OSString* snkey = OSString::withCString("IOTTYSuffix");
+    OSString* snval = OSString::withCString(ivars->m_portSuffix);
+    if (!properties->setObject(bnkey, bnval)) {
         VSPErr(LOG_PREFIX, "updateTTYProperties: Failed to set property IOTTYBaseName");
     }
     
@@ -1193,9 +1190,9 @@ kern_return_t VSPSerialPort::updateTTYProperties(uint8_t portId)
         VSPErr(LOG_PREFIX, "updateTTYProperties: UserSetProperties() failed. code=%d", ret);
     }
     
-    OSSafeReleaseNULL(bnstr);
+    OSSafeReleaseNULL(bnkey);
     OSSafeReleaseNULL(bnval);
-    OSSafeReleaseNULL(snstr);
+    OSSafeReleaseNULL(snkey);
     OSSafeReleaseNULL(snval);
     OSSafeReleaseNULL(properties);
 
@@ -1209,15 +1206,15 @@ kern_return_t VSPSerialPort::getDeviceName(char* result, const uint32_t size)
 {
     IOReturn ret;
     
-    // Get current TTY properties.
-    if ((ret = readTTYProperties(this)) != kIOReturnSuccess) {
-        return ret;
-    }
-    
     if (!result || size < (strlen(ivars->m_portBaseName) + strlen(ivars->m_portSuffix))) {
         return kIOReturnBadArgument;
     }
     
+    // Get current TTY properties.
+    if ((ret = readTTYProperties(this)) != kIOReturnSuccess) {
+        return ret;
+    }
+
     strncpy(result, ivars->m_portBaseName, size);
     strncat(result, ivars->m_portSuffix, size);
     
