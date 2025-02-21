@@ -2,86 +2,86 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>LSApplicationCategoryType</key>
-    <string>public.app-category.developer-tools</string>
-    <key>NSUserNotificationsUsageDescription</key>
-    <string>Shows informative messages about the state of the VSP driver.</string>
-    <key>OSBundleUsageDescription</key>
-    <string>Required to Control the Virtual Serial Port links</string>
-    <key>NSDownloadsFolderUsageDescription</key>
-    <string>Require acces to file for VSP test.</string>
-    <key>NSDocumentsFolderUsageDescription</key>
-    <string>Require acces to file for VSP test.</string>
-    <key>NSDesktopFolderUsageDescription</key>
-    <string>Require acces to file for VSP test.</string>
-    <key>NSPrefPaneIconFile</key>
-    <string>vspclient.icns</string>
-    <key>UILaunchImageFile</key>
-    <string>vspclient_5.png</string>
-    <key>UIPrerenderedIcon</key>
-    <false/>
-    <key>NSHighResolutionCapable</key>
-    <true/>
-    <key>LSUIPresentationMode</key>
-    <integer>0</integer>
-    <key>LSVisibleInClassic</key>
-    <true/>
-    <key>NSSupportsSuddenTermination</key>
-    <true/>
-    <key>NSHumanReadableCopyright</key>
-    <string>Copyright © 2025 by EoF Software Labs</string>
-    <key>BuildMachineOSBuild</key>
-    <string>21H1320</string>
-    <key>CFBundleDevelopmentRegion</key>
-    <string>$(DEVELOPMENT_LANGUAGE)</string>
-    <key>CFBundleExecutable</key>
-    <string>$(EXECUTABLE_NAME)</string>
-    <key>CFBundleIconFile</key>
-    <string>vspclient.icns</string>
-    <key>CFBundleIdentifier</key>
-    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-    <key>CFBundleInfoDictionaryVersion</key>
-    <string>6.0</string>
-    <key>CFBundleName</key>
-    <string>$(PRODUCT_NAME)</string>
-    <key>CFBundlePackageType</key>
-    <string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
-    <key>CFBundleShortVersionString</key>
-    <string>1.0</string>
-    <key>CFBundleVersion</key>
-    <string>1</string>
-    <key>LSMinimumSystemVersion</key>
-    <string>$(MACOSX_DEPLOYMENT_TARGET)</string>
-    <key>com.apple.developer.driverkit</key>
-    <true/>
-    <key>com.apple.developer.driverkit.install</key>
-    <true/>
-    <key>com.apple.developer.system-extension.install</key>
-    <true/>
-    <key>com.apple.developer.system-extension.uninstall</key>
-    <true/>
-    <key>com.apple.developer.driverkit.userclient-access</key>
-    <array>
-        <string>VSPDriver</string>
-    </array>
-    <key>com.apple.private.driverkit.driver-access</key>
-    <array>
-        <string>VSPDriver</string>
-    </array>
-    <key>com.apple.security.temporary-exception.iokit-user-client-class</key>
-    <array>
-        <string>IOUserUserClient</string>
-    </array>
-    <key>CFBundleURLTypes</key>
-    <array>
-        <dict>
-            <key>CFBundleURLName</key>
-            <string>VSP Driver Setup</string>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>vspctl</string>
-            </array>
-        </dict>
-    </array>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.developer-tools</string>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>Shows informative messages about the state of the VSP driver.</string>
+	<key>OSBundleUsageDescription</key>
+	<string>Required to Control the Virtual Serial Port links</string>
+	<key>NSDownloadsFolderUsageDescription</key>
+	<string>Require acces to file for VSP test.</string>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>Require acces to file for VSP test.</string>
+	<key>NSDesktopFolderUsageDescription</key>
+	<string>Require acces to file for VSP test.</string>
+	<key>NSPrefPaneIconFile</key>
+	<string>vspclient.icns</string>
+	<key>UILaunchImageFile</key>
+	<string>vspclient_5.png</string>
+	<key>UIPrerenderedIcon</key>
+	<false/>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>LSUIPresentationMode</key>
+	<integer>0</integer>
+	<key>LSVisibleInClassic</key>
+	<true/>
+	<key>NSSupportsSuddenTermination</key>
+	<true/>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2025 by EoF Software Labs</string>
+	<key>BuildMachineOSBuild</key>
+	<string>21H1320</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIconFile</key>
+	<string>vspclient.icns</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Virtual Serial Port Controller</string>
+	<key>CFBundlePackageType</key>
+	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+	<key>com.apple.developer.driverkit</key>
+	<true/>
+	<key>com.apple.developer.driverkit.install</key>
+	<true/>
+	<key>com.apple.developer.system-extension.install</key>
+	<true/>
+	<key>com.apple.developer.system-extension.uninstall</key>
+	<true/>
+	<key>com.apple.developer.driverkit.userclient-access</key>
+	<array>
+		<string>VSPDriver</string>
+	</array>
+	<key>com.apple.private.driverkit.driver-access</key>
+	<array>
+		<string>VSPDriver</string>
+	</array>
+	<key>com.apple.security.temporary-exception.iokit-user-client-class</key>
+	<array>
+		<string>IOUserUserClient</string>
+	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>VSP Driver Setup</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>vspctl</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

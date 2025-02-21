@@ -19,7 +19,6 @@
 		88A671262D68DA7400CE4E12 /* VSPController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A671252D68DA7400CE4E12 /* VSPController.framework */; };
 		88A671272D68DA7400CE4E12 /* VSPController.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88A671252D68DA7400CE4E12 /* VSPController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		88A6712C2D68DBEE00CE4E12 /* VSPSetup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A6712B2D68DBEE00CE4E12 /* VSPSetup.framework */; };
-		88A6712D2D68DC0000CE4E12 /* VSPSetup.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88A6712B2D68DBEE00CE4E12 /* VSPSetup.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		88A671492D68DDE000CE4E12 /* vspclient_0.ico in Resources */ = {isa = PBXBuildFile; fileRef = 88A671332D68DDE000CE4E12 /* vspclient_0.ico */; };
 		88A6714A2D68DDE000CE4E12 /* vspclient.icns in Resources */ = {isa = PBXBuildFile; fileRef = 88A671312D68DDE000CE4E12 /* vspclient.icns */; };
 		88A6714B2D68DDE000CE4E12 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 88A671472D68DDE000CE4E12 /* InfoPlist.strings */; };
@@ -40,6 +39,7 @@
 		88A6715A2D68DDE000CE4E12 /* progress.gif in Resources */ = {isa = PBXBuildFile; fileRef = 88A6712E2D68DDE000CE4E12 /* progress.gif */; };
 		88A6715B2D68DDE000CE4E12 /* vspclient_3.ico in Resources */ = {isa = PBXBuildFile; fileRef = 88A671362D68DDE000CE4E12 /* vspclient_3.ico */; };
 		88A6715C2D68DDE000CE4E12 /* vspclient_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A6713F2D68DDE000CE4E12 /* vspclient_3.png */; };
+		88A6715D2D68DFC800CE4E12 /* VSPSetup.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88A6712B2D68DBEE00CE4E12 /* VSPSetup.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		88AB34EB2D64937300260D19 /* kdk-instructions.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 88AB34E82D64937300260D19 /* kdk-instructions.pdf */; };
 		88AB34EC2D64937300260D19 /* info-plist-ioreg.xml in Resources */ = {isa = PBXBuildFile; fileRef = 88AB34E72D64937300260D19 /* info-plist-ioreg.xml */; };
 		88AB34ED2D64937300260D19 /* entitlements.txt in Resources */ = {isa = PBXBuildFile; fileRef = 88AB34E62D64937300260D19 /* entitlements.txt */; };
@@ -72,12 +72,12 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		8869B5072D627FCD002643D9 /* Embed Libraries */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				88A6715D2D68DFC800CE4E12 /* VSPSetup.framework in Embed Libraries */,
 				88A671272D68DA7400CE4E12 /* VSPController.framework in Embed Libraries */,
-				88A6712D2D68DC0000CE4E12 /* VSPSetup.framework in Embed Libraries */,
 				88A671162D68CE4100CE4E12 /* VSPClient.framework in Embed Libraries */,
 			);
 			name = "Embed Libraries";
@@ -531,7 +531,7 @@
 		880539F32D4BAFBF00E55104 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = vspclient;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = VSPClient/VSPClient.entitlements;
@@ -552,7 +552,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = ../../VSPController;
 				INFOPLIST_FILE = VSPClient/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "VSP Installer";
+				INFOPLIST_KEY_CFBundleDisplayName = "Virtual Serial Port Controller";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 by EoF Software Labs";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
@@ -590,7 +590,7 @@
 		880539F42D4BAFBF00E55104 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = vspclient;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = VSPClient/VSPClient.entitlements;
@@ -611,7 +611,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = ../../VSPController;
 				INFOPLIST_FILE = VSPClient/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "VSP Installer";
+				INFOPLIST_KEY_CFBundleDisplayName = "Virtual Serial Port Controller";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 by EoF Software Labs";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
