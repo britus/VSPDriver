@@ -28,4 +28,4 @@ xcodebuild -project ${prjname}.xcodeproj \
     -target VSPDriver \
     -target VSPController \
     -target VSPSetup \
-    -target VSPInstall
+    -target VSPClient
