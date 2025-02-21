@@ -531,6 +531,10 @@
 		880539F32D4BAFBF00E55104 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD_disabled)",
+					arm64,
+				);
 				ASSETCATALOG_COMPILER_APPICON_NAME = vspclient;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
@@ -550,7 +554,10 @@
 					"$(PROJECT_DIR)",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
-				HEADER_SEARCH_PATHS = ../../VSPController;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/**",
+				);
 				INFOPLIST_FILE = VSPClient/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Virtual Serial Port Controller";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
@@ -567,13 +574,8 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.2;
 				MARKETING_VERSION = 1.1;
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = (
-					"-rpath",
-					"@executable_path/../Frameworks",
-					"-rpath",
-					"@executable_path/",
-				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPInstall;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -590,6 +592,10 @@
 		880539F42D4BAFBF00E55104 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD_disabled)",
+					arm64,
+				);
 				ASSETCATALOG_COMPILER_APPICON_NAME = vspclient;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
@@ -609,7 +615,10 @@
 					"$(PROJECT_DIR)",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
-				HEADER_SEARCH_PATHS = ../../VSPController;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/**",
+				);
 				INFOPLIST_FILE = VSPClient/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Virtual Serial Port Controller";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
@@ -626,13 +635,8 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.2;
 				MARKETING_VERSION = 1.1;
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = (
-					"-rpath",
-					"@executable_path/../Frameworks",
-					"-rpath",
-					"@executable_path/",
-				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPInstall;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -789,7 +793,7 @@
 					"$(SDKROOT)/System/DriverKit/usr/lib/system",
 				);
 				MARKETING_VERSION = 1.1;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPDriver;
 				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -827,7 +831,7 @@
 					"$(SDKROOT)/System/DriverKit/usr/lib/system",
 				);
 				MARKETING_VERSION = 1.1;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPDriver;
 				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
