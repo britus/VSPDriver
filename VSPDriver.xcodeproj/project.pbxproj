@@ -53,7 +53,6 @@
 		88B47EC82D59B30600868CA5 /* VSPUserClient.iig in Sources */ = {isa = PBXBuildFile; fileRef = 884F6EC42D59A58D0066353A /* VSPUserClient.iig */; };
 		88B47ECA2D59B43800868CA5 /* VSPController.h in Headers */ = {isa = PBXBuildFile; fileRef = 88B47EC92D59B43800868CA5 /* VSPController.h */; };
 		88BEFD842D4BCF8900CD40E6 /* org.eof.tools.VSPDriver.dext in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 88B40D572D4B666700DFE7C5 /* org.eof.tools.VSPDriver.dext */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		88D938132D53655E009AA45C /* ORSSerial in Frameworks */ = {isa = PBXBuildFile; productRef = 88D938122D53655E009AA45C /* ORSSerial */; };
 		88DA7BA92D532C6800C8F759 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 88DA7BA72D532C6700C8F759 /* LICENSE */; };
 		88F5D93D2D59E85B007A6E1F /* VSPInstallApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F5D93C2D59E85B007A6E1F /* VSPInstallApp.swift */; };
 		88F5D9402D59E933007A6E1F /* VSPDriverClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88F5D93F2D59E933007A6E1F /* VSPDriverClient.cpp */; };
@@ -175,7 +174,6 @@
 				88A671262D68DA7400CE4E12 /* VSPController.framework in Frameworks */,
 				88A6712C2D68DBEE00CE4E12 /* VSPSetup.framework in Frameworks */,
 				88A671152D68CE4100CE4E12 /* VSPClient.framework in Frameworks */,
-				88D938132D53655E009AA45C /* ORSSerial in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,12 +361,10 @@
 			buildRules = (
 			);
 			dependencies = (
-				8814834D2D5385EC003FB561 /* PBXTargetDependency */,
 				88BEFD6A2D4BC16200CD40E6 /* PBXTargetDependency */,
 			);
 			name = VSPClient;
 			packageProductDependencies = (
-				88D938122D53655E009AA45C /* ORSSerial */,
 			);
 			productName = VSPInstall;
 			productReference = 880539E82D4BAFBD00E55104 /* VSPClient.app */;
@@ -422,7 +418,6 @@
 			);
 			mainGroup = 88B40D4D2D4B666700DFE7C5;
 			packageReferences = (
-				88D938112D53655E009AA45C /* XCRemoteSwiftPackageReference "ORSSerialPort" */,
 			);
 			productRefGroup = 88B40D582D4B666700DFE7C5 /* Products */;
 			projectDirPath = "";
@@ -504,10 +499,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		8814834D2D5385EC003FB561 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 8814834C2D5385EC003FB561 /* ORSSerial */;
-		};
 		88BEFD6A2D4BC16200CD40E6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 88B40D562D4B666700DFE7C5 /* VSPDriver */;
@@ -531,12 +522,10 @@
 		880539F32D4BAFBF00E55104 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					"$(ARCHS_STANDARD_disabled)",
-					arm64,
-				);
-				ASSETCATALOG_COMPILER_APPICON_NAME = vspclient;
+				ARCHS = "$(ARCHS_STANDARD)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = VSPClient/VSPClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -549,6 +538,7 @@
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = 83NQU389JN;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
+				EXCLUDED_ARCHS = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -592,12 +582,10 @@
 		880539F42D4BAFBF00E55104 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					"$(ARCHS_STANDARD_disabled)",
-					arm64,
-				);
-				ASSETCATALOG_COMPILER_APPICON_NAME = vspclient;
+				ARCHS = "$(ARCHS_STANDARD)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = VSPClient/VSPClient.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -610,6 +598,7 @@
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = 83NQU389JN;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
+				EXCLUDED_ARCHS = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -874,30 +863,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		88D938112D53655E009AA45C /* XCRemoteSwiftPackageReference "ORSSerialPort" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/armadsen/ORSSerialPort";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		8814834C2D5385EC003FB561 /* ORSSerial */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 88D938112D53655E009AA45C /* XCRemoteSwiftPackageReference "ORSSerialPort" */;
-			productName = ORSSerial;
-		};
-		88D938122D53655E009AA45C /* ORSSerial */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 88D938112D53655E009AA45C /* XCRemoteSwiftPackageReference "ORSSerialPort" */;
-			productName = ORSSerial;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 88B40D4E2D4B666700DFE7C5 /* Project object */;
 }

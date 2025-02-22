@@ -1150,7 +1150,7 @@ finish:
 
 // --------------------------------------------------------------------
 // Called by VSPDriver instance to set TTY base and number based on
-// managed instance of this object instance
+// number from the port list for this object instance
 kern_return_t VSPSerialPort::updateTTYProperties(uint8_t portId)
 {
     IOReturn ret;

@@ -1,5 +1,0 @@
-QMAKE_PRL_BUILD_DIR = /Users/beschric/tests/VSPClient/build/VSPController
-QMAKE_PRO_INPUT = VSPController.pro
-QMAKE_PRL_TARGET = VSPController
-QMAKE_PRL_CONFIG = lex yacc debug exceptions depend_includepath testcase_targets import_plugins import_qpa_plugin asset_catalogs rez file_copies qmake_use warn_on link_prl only_active_arch app_bundle incremental global_init_link_order lib_version_first sdk clang_pch_style shared qt_framework plugin_manifest trivial_auto_var_init_pattern stack_protector libcpp_hardening macos osx macx mac darwin unix posix gcc clang llvm c++17 sdk_no_version_check lib_bundle shared nostrip debug embed_translations embed_libraries create_prl incremental global_init_link_order lib_version_first have_target dll debug_info c++1z objective_c
-QMAKE_PRL_VERSION = 1.0.0
