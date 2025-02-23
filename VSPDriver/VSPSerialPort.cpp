@@ -191,6 +191,61 @@ void VSPSerialPort::free(void)
 }
 
 // --------------------------------------------------------------------
+// Get proptery value by specified property key using SearchProperty()
+//
+static inline kern_return_t getProperty(VSPSerialPort* self, const char* key, char* result, size_t size)
+{
+    const char* plane = "IOService:/IOUserResources/VSPDriver"; // How to get this dynamically?
+    const uint32_t options = 0;//kIOServiceSearchPropertyParents;
+    OSContainer* property = nullptr;
+    OSString* val = nullptr;
+    const char* value;
+    IOReturn ret;
+
+    if ((ret = self->SearchProperty(key, plane, options, &property)) != kIOReturnSuccess) {
+        return ret;
+    }
+    
+    if ((val = OSDynamicCast(OSString, property)) != nullptr) {
+        if ((value = val->getCStringNoCopy()) != nullptr) {
+            strncpy(result, value, size);
+        } else {
+            ret = kIOReturnInvalid;
+        }
+    } else {
+        ret = kIOReturnInvalid;
+    }
+    
+    OSSafeReleaseNULL(property);
+    return ret;
+}
+
+// --------------------------------------------------------------------
+// Read IOTTYBaseName and IOTTYSuffix from service properties
+//
+static inline kern_return_t readTTYProperties(VSPSerialPort* self)
+{
+    IOReturn ret;
+    
+    VSPLog(LOG_PREFIX, "readTTYProperties called.\n");
+    
+    ret = getProperty(self, "IOTTYBaseName", self->ivars->m_portBaseName, sizeof(IOPropertyName)-1);
+    if (ret != kIOReturnSuccess) {
+        VSPErr(LOG_PREFIX, "readTTYProperties: getProperty(IOTTYBaseName) failed. code=%x", ret);
+        goto finish;
+    }
+
+    ret = getProperty(self, "IOTTYSuffix", self->ivars->m_portSuffix, sizeof(IOPropertyName)-1);
+    if (ret != kIOReturnSuccess) {
+        VSPErr(LOG_PREFIX, "readTTYProperties: getProperty(IOTTYSuffix) failed. code=%x", ret);
+        goto finish;
+    }
+
+finish:
+    return ret;
+}
+
+// --------------------------------------------------------------------
 // Start_Impl(IOService* provider)
 //
 kern_return_t IMPL(VSPSerialPort, Start)
@@ -205,16 +260,18 @@ kern_return_t IMPL(VSPSerialPort, Start)
         return kIOReturnInvalid;
     }
     
+    // remember OS provider before Start. Start calls
+    // SetProperties implicit and we update the TTY
+    // properties there. Therfore we need the provider.
+    ivars->m_provider = provider;
+
     // call super method (apple style)
     ret = Start(provider, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
         VSPErr(LOG_PREFIX, "Start(super): failed. code=%x\n", ret);
         return ret;
     }
-    
-    // remember OS provider
-    ivars->m_provider = provider;
-    
+
     // the resource locker
     ivars->m_lock = IOLockAlloc();
     if (ivars->m_lock == nullptr) {
@@ -236,12 +293,13 @@ kern_return_t IMPL(VSPSerialPort, Start)
         goto error_exit;
     }
     
+    readTTYProperties(this);
+    
     VSPLog(LOG_PREFIX, "Start: Port started successfully.\n");
     return kIOReturnSuccess;
     
 error_exit:
     cleanupResources();
-    Stop(provider, SUPERDISPATCH);
     return ret;
 }
 
@@ -253,11 +311,6 @@ kern_return_t IMPL(VSPSerialPort, Stop)
     kern_return_t ret;
     
     VSPLog(LOG_PREFIX, "Stop called.\n");
-    
-    // Unlink VSP
-    ivars->m_parent = nullptr;
-    ivars->m_portId = 0;
-    ivars->m_portLinkId = 0;
     
     // Remove all IVars resources
     cleanupResources();
@@ -278,21 +331,60 @@ kern_return_t IMPL(VSPSerialPort, Stop)
 kern_return_t IMPL(VSPSerialPort, SetProperties)
 {
     IOReturn ret;
-    
+    OSString* key;
+    OSString* val;
+    VSPDriver* parent;
+
     VSPLog(LOG_PREFIX, "SetProperties called.\n");
     
     if (properties == nullptr) {
         return kIOReturnBadArgument;
     }
     
-    // update
-    ret = UserSetProperties(properties);
-    if (ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "updateTTYProperties: UserSetProperties() failed. code=%x", ret);
+    // Tage next port id
+    if ((parent = OSDynamicCast(VSPDriver, ivars->m_provider))) {
+        parent->getNextPortId(&ivars->m_portId);
+    }
+    else {
+        VSPLog(LOG_PREFIX, "Start: Provider is not VSPDriver !!!!!!!!\n");
+        return kIOReturnInvalid;
     }
     
-    VSPLog(LOG_PREFIX, "SetProperties complete.\n");
-    return kIOReturnSuccess;
+    strncpy(ivars->m_portBaseName, "vsp", sizeof(IOPropertyName)-1);
+    snprintf(ivars->m_portSuffix, sizeof(IOPropertyName), "%d", ivars->m_portId);
+    
+    VSPLog(LOG_PREFIX, "SetProperties: property count=%d\n", properties->getCount());
+    
+    // Update TTY base name with our 'vsp'
+    key = OSString::withCString(kIOTTYBaseNameKey);
+    val = OSString::withCString(ivars->m_portBaseName);
+    if (properties->setObject(key, val)) {
+        VSPLog(LOG_PREFIX, "SetProperties: TTY base name updated with 'vsp'.\n");
+    }
+    OSSafeReleaseNULL(val);
+    OSSafeReleaseNULL(key);
+    
+    // Update suffix with our port number
+    key = OSString::withCString(kIOTTYSuffixKey);
+    val = OSString::withCString(ivars->m_portSuffix);
+    if (properties->setObject(key, val)) {
+        VSPLog(LOG_PREFIX, "SetProperties: property IOTTYSuffix updated with portId=%d.\n", ivars->m_portId);
+    }
+    OSSafeReleaseNULL(val);
+    OSSafeReleaseNULL(key);
+
+    // Save properties
+    ret = SetProperties(properties, SUPERDISPATCH);
+    if (ret != kIOReturnSuccess) {
+        VSPLog(LOG_PREFIX, "SetProperties returned=%x, try UserSetProperties\n", ret);
+        ret = UserSetProperties(properties);
+        if (ret != kIOReturnSuccess) {
+            VSPErr(LOG_PREFIX, "SetProperties: UserSetProperties() failed. code=%x", ret);
+        }
+    }
+    
+    VSPLog(LOG_PREFIX, "SetProperties complete with code=%x\n", ret);
+    return ret;
 }
 
 // --------------------------------------------------------------------
@@ -301,7 +393,12 @@ kern_return_t IMPL(VSPSerialPort, SetProperties)
 void VSPSerialPort::cleanupResources()
 {
     VSPLog(LOG_PREFIX, "cleanupResources called.\n");
- 
+    
+    // Unlink VSP
+    ivars->m_parent = nullptr;
+    ivars->m_portId = 0;
+    ivars->m_portLinkId = 0;
+
     IOLockFreeNULL(ivars->m_lock);
 }
 
@@ -925,13 +1022,18 @@ kern_return_t IMPL(VSPSerialPort, HwProgramFlowControl)
 // --------------------------------------------------------------------
 // Called by VSPDriver instance to link to parent level
 //
-void VSPSerialPort::setParent(VSPDriver* parent)
+void VSPSerialPort::setPortItem(VSPDriver* parent, void* data)
 {
-    VSPLog(LOG_PREFIX, "setParent called.\n");
-    
-    if (ivars != nullptr && !ivars->m_parent) {
-        ivars->m_parent = parent;
+    if (!parent || !data) {
+        return;
     }
+    
+    // Save instance for VSP controller
+    TVSPPortItem* item = (TVSPPortItem*) data;
+    ivars->m_parent = parent;
+    item->id        = ivars->m_portId;
+    item->port      = this;
+    item->flags     = 0x00;
 }
 
 // --------------------------------------------------------------------
@@ -1089,116 +1191,6 @@ kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, cons
     this->RxDataAvailable_Impl();
 
     VSPLog(LOG_PREFIX, "sendResponse: complete.\n");
-    return kIOReturnSuccess;
-}
-
-// --------------------------------------------------------------------
-// Get proptery value by specified property key using SearchProperty()
-//
-static inline kern_return_t getProperty(VSPSerialPort* self, const char* key, char* result, size_t size)
-{
-    const char* plane = "IOService:/IOUserResources/VSPDriver"; // How to get this dynamically?
-    const uint32_t options = 0;//kIOServiceSearchPropertyParents;
-    OSContainer* property = nullptr;
-    OSString* val = nullptr;
-    const char* value;
-    IOReturn ret;
-
-    if ((ret = self->SearchProperty(key, plane, options, &property)) != kIOReturnSuccess) {
-        return ret;
-    }
-    
-    if ((val = OSDynamicCast(OSString, property)) != nullptr) {
-        if ((value = val->getCStringNoCopy()) != nullptr) {
-            strncpy(result, value, size);
-        } else {
-            ret = kIOReturnInvalid;
-        }
-    } else {
-        ret = kIOReturnInvalid;
-    }
-    
-    OSSafeReleaseNULL(property);
-    return ret;
-}
-
-// --------------------------------------------------------------------
-// Read IOTTYBaseName and IOTTYSuffix from service properties
-//
-static inline kern_return_t readTTYProperties(VSPSerialPort* self)
-{
-    IOReturn ret;
-
-    ret = getProperty(self, "IOTTYBaseName", self->ivars->m_portBaseName, sizeof(IOPropertyName)-1);
-    if (ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "readTTYProperties: getProperty(IOTTYBaseName) failed. code=%x", ret);
-        goto finish;
-    }
-
-    ret = getProperty(self, "IOTTYSuffix", self->ivars->m_portSuffix, sizeof(IOPropertyName)-1);
-    if (ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "readTTYProperties: getProperty(IOTTYSuffix) failed. code=%x", ret);
-        goto finish;
-    }
-
-finish:
-    return ret;
-}
-
-// --------------------------------------------------------------------
-// Called by VSPDriver instance to set TTY base and number based on
-// number from the port list for this object instance
-kern_return_t VSPSerialPort::updateTTYProperties(uint8_t portId)
-{
-    IOReturn ret;
-    OSDictionary* properties = nullptr;
-    
-    VSPLog(LOG_PREFIX, "updateTTYProperties called.\n");
-
-    // Get current TTY properties. This is read from Info.plist (IOReg)
-    // and should have default base name 'vsp' and suffix '1'
-    if ((ret = readTTYProperties(this)) != kIOReturnSuccess) {
-        return ret;
-    }
-    
-    // Set given port id as TTY suffix
-    snprintf(ivars->m_portSuffix, sizeof(IOPropertyName)-1, "%d", portId);
-
-    // Get service instance properties
-    ret = CopyProperties(&properties);
-    if (ret != kIOReturnSuccess || properties == nullptr) {
-        VSPErr(LOG_PREFIX, "updateTTYProperties: Copy properties failed. code=%x", ret);
-        return ret;
-    }
-
-    // Update TTY base name with our base name if not match
-    OSString* bnkey = OSString::withCString("IOTTYBaseName");
-    OSString* bnval = OSString::withCString("vsp");
-    if (strncmp(ivars->m_portBaseName, "vsp", sizeof(IOPropertyName))) {
-        if (!properties->setObject(bnkey, bnval)) {
-            VSPErr(LOG_PREFIX, "updateTTYProperties: Failed to set property IOTTYBaseName");
-        }
-    }
-    
-    // force update of the TTY suffix with our port ID number
-    OSString* snkey = OSString::withCString("IOTTYSuffix");
-    OSString* snval = OSString::withCString(ivars->m_portSuffix);
-    if (!properties->setObject(bnkey, bnval)) {
-        VSPErr(LOG_PREFIX, "updateTTYProperties: Failed to set property IOTTYSuffix");
-    }
-    
-    // update
-    ret = SetProperties(properties);
-    if (ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "updateTTYProperties: SetProperties() failed. code=%x", ret);
-    }
-    
-    OSSafeReleaseNULL(bnkey);
-    OSSafeReleaseNULL(bnval);
-    OSSafeReleaseNULL(snkey);
-    OSSafeReleaseNULL(snval);
-    OSSafeReleaseNULL(properties);
-
     return kIOReturnSuccess;
 }
 

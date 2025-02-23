@@ -14,6 +14,8 @@
 #include <Availability.h>
 #include <DriverKit/IOService.iig>
 #include <DriverKit/IOUserClient.iig>
+#include <DriverKit/IOServiceNotificationDispatchSource.iig>
+#include <DriverKit/IOServiceStateNotificationDispatchSource.iig>
 
 class VSPDriver: public IOService
 {
@@ -25,6 +27,10 @@ public:
     virtual kern_return_t Stop(IOService* provider) override;
     virtual kern_return_t NewUserClient(uint32_t type, IOUserClient ** userClient) override;
     
+    // Get IOService state notification
+    virtual void SPReadyEvent(OSAction* action) TYPE(IOServiceNotificationDispatchSource::ServiceNotificationReady);
+    virtual void SPStateEvent(OSAction* action) TYPE(IOServiceStateNotificationDispatchSource::StateNotificationReady);
+
     // --
     kern_return_t CreateSerialPort(IOService* provider, uint8_t count = 1, void* params = NULL, uint64_t size = 0) LOCALONLY;
     kern_return_t CreateUserClient(IOService* provider, IOUserClient ** userClient) LOCALONLY;
@@ -33,6 +39,7 @@ public:
     bool checkPortLinkId(uint8_t id) LOCALONLY;
     
     kern_return_t getPortCount(uint8_t* count) LOCALONLY;
+    kern_return_t getNextPortId(uint8_t* id) LOCALONLY;
     kern_return_t getPortList(void* list, uint8_t count) LOCALONLY;
     kern_return_t getPortLinkList(uint64_t* list, uint8_t count) LOCALONLY;
     kern_return_t getPortLinkCount(uint8_t* count) LOCALONLY;

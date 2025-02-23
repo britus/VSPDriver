@@ -8,6 +8,10 @@
 #ifndef VSPController_h
 #define VSPController_h
 
+#include <DriverKit/OSAction.h>
+#include <DriverKit/IOServiceNotificationDispatchSource.h>
+#include <DriverKit/IOServiceStateNotificationDispatchSource.h>
+
 // --------------------------------------------------------
 // used by VSPDriver
 // --------------------------------------------------------
@@ -20,15 +24,19 @@
 class VSPSerialPort;
 
 typedef struct {
-    VSPSerialPort* port;                    // object instance
-    uint8_t        id;                      // port item id
-    uint64_t       flags;                   // Trace and check flags
+    VSPSerialPort* port;        // object instance
+    uint8_t        id;          // port item id
+    uint64_t       flags;       // Trace and check flags
+    OSAction*      notifyAction; // CreateSerialPort -> IOServiceNotificationDispatchSource::ServiceNotificationReady
+    IOServiceNotificationDispatchSource* notifySource;
+    OSAction*      stateAction; // CreateSerialPort -> IOServiceStateNotificationDispatchSource::StateNotificationReady
+    IOServiceStateNotificationDispatchSource* stateSource;
 } TVSPPortItem;
 
 typedef struct {
-    TVSPPortItem sourcePort;          // first port
-    TVSPPortItem targetPort;          // second port
-    uint8_t         id;                     // link item id
+    TVSPPortItem sourcePort;    // first port
+    TVSPPortItem targetPort;    // second port
+    uint8_t         id;         // link item id
 } TVSPLinkItem;
 
 // --------------------------------------------------------

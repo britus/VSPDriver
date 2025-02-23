@@ -268,32 +268,23 @@ kern_return_t IMPL(VSPUserClient, Start)
     }
     
     ret = IODispatchQueue::Create("kVSPUserClientQueue", 0, 0, &ivars->m_eventQueue);
-    if (ret != kIOReturnSuccess || !ivars->m_eventQueue)
+    if (ret != kIOReturnSuccess)
     {
         VSPErr(LOG_PREFIX, "Start() - Failed to create dispatch queue with error: 0x%08x.", ret);
-        if (ret == kIOReturnSuccess) {
-            ret = kIOReturnInvalid;
-        }
         return ret;
     }
     
     ret = IOTimerDispatchSource::Create(ivars->m_eventQueue, &ivars->m_eventSource);
-    if (ret != kIOReturnSuccess || !ivars->m_eventSource)
+    if (ret != kIOReturnSuccess)
     {
         VSPErr(LOG_PREFIX, "Start() - Failed to create dispatch source with error: 0x%08x.", ret);
-        if (ret == kIOReturnSuccess) {
-            ret = kIOReturnInvalid;
-        }
         return ret;
     }
     
     ret = CreateActionAsyncCallback(VSP_UCD_SIZE, &ivars->m_eventAction);
-    if (ret != kIOReturnSuccess || !ivars->m_eventAction)
+    if (ret != kIOReturnSuccess)
     {
         VSPErr(LOG_PREFIX, "Start() - Failed to create action for simulated async event with error: 0x%08x.", ret);
-        if (ret == kIOReturnSuccess) {
-            ret = kIOReturnInvalid;
-        }
         return ret;
     }
     
