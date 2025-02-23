@@ -16,6 +16,8 @@
 #include <DriverKit/IOUserClient.h>
 #include <DriverKit/OSDictionary.h>
 #include <DriverKit/OSData.h>
+#include <DriverKit/OSString.h>
+#include <DriverKit/OSNumber.h>
 
 // -- My
 #include "VSPDriver.h"
@@ -116,18 +118,18 @@ kern_return_t IMPL(VSPDriver, Start)
     // Start service instance (Apple style super call)
     ret = Start(provider, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "Start(super): failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "Start(super): failed. code=%x\n", ret);
         return ret;
     }
     
     // Create 4 serial port instances with each IOSerialBSDClient as a child instance
-    if ((ret = CreateSerialPort(provider, 4)) != kIOReturnSuccess) {
+    if ((ret = CreateSerialPort(provider, 1)) != kIOReturnSuccess) {
         goto finish;
     }
     
     // Register driver instance to IOReg
     if ((ret = RegisterService()) != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "Start: RegisterService failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "Start: RegisterService failed. code=%x\n", ret);
         goto finish;
     }
     
@@ -157,7 +159,7 @@ kern_return_t IMPL(VSPDriver, Stop)
 
     // service instance (Apple style super call)
     if ((ret= Stop(provider, SUPERDISPATCH)) != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "Stop (suprt) failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "Stop (suprt) failed. code=%x\n", ret);
     } else {
         VSPLog(LOG_PREFIX, "driver successfully removed.\n");
     }
@@ -202,10 +204,10 @@ kern_return_t VSPDriver::CreateUserClient(IOService* provider, IOUserClient** us
         return kIOReturnBadArgument;
     }
     
-    // Create sub service object from UserClientProperties in Info.plist
+    // Create sub service object from Info.plist
     ret= Create(this, kVSPContollerProperties, &service);
     if (ret != kIOReturnSuccess || service == nullptr) {
-        VSPErr(LOG_PREFIX, "CreateUserClient: create failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "CreateUserClient: create failed. code=%x\n", ret);
         return ret;
     }
     
@@ -428,6 +430,64 @@ kern_return_t VSPDriver::getPortLinkByPorts(uint8_t sourceId, uint8_t targetId, 
 }
 
 // --------------------------------------------------------------------
+// Properties update helper
+//
+static inline kern_return_t setupSerialProperties(VSPDriver* self, uint8_t portId)
+{
+    kern_return_t ret = kIOReturnSuccess;
+    OSDictionary *svProperties;
+    OSDictionary* spProperties;
+    OSObject *property;
+    OSString* ttySuffix;
+    OSString* suffixKey;
+    OSString* spPropsKey;
+    IOPropertyName suffix;
+
+    // Take service properties from Info.plist
+    ret = self->CopyProperties(&svProperties);
+    if (ret == kIOReturnSuccess) {
+        // Take SerialPortPorperties dictionary from Info.plist
+        property = svProperties->getObject(kVSPSerialPortProperties);
+        if (property && (spProperties = OSDynamicCast(OSDictionary, property))) {
+            snprintf(suffix, sizeof(IOPropertyName)-1, "%d", portId);
+            suffixKey = OSString::withCString("IOTTYSuffix");
+            ttySuffix = OSString::withCString(suffix);
+            // Update IOTTYSuffix with port number
+            if (spProperties->setObject(suffixKey, ttySuffix)) {
+                VSPLog(LOG_PREFIX, "CreateSerialPort: Property set IOTTYSuffix success portId=%d.\n", portId);
+                spPropsKey = OSString::withCString(kVSPSerialPortProperties);
+                // Set modified SerialPortPorperties to service properties
+                if (svProperties->setObject(spPropsKey, spProperties)) {
+                    VSPLog(LOG_PREFIX, "CreateSerialPort: Update SP properties success with portId=%d.\n", portId);
+                    svProperties->flushCollection(); // force update??????
+                    // Set service properties. TAKE CRARE HERE -> Kernel:
+                    // - Checks Entitlement: kIOResourcesSetPropertyKey "com.apple.private.iokit.ioresources.setproperty"
+                    // - and kIOClientPrivilegeAdministrator "root"
+                    // -> if (!IOCurrentTaskHasEntitlement(kIOResourcesSetPropertyKey)) {
+                    // ->   err = IOUserClient::clientHasPrivilege(current_task(), kIOClientPrivilegeAdministrator)
+                    // ->   err check returns with err
+                    // -> }
+                    // w/o Disabled entitlements check (boot-args != "dk=0x8001"), this mehod may fail because
+                    // it lacks of kIOResourcesSetPropertyKey and clientHasPrivilege kIOClientPrivilegeAdministrator
+                    if ((ret = self->SetProperties(svProperties)) == kIOReturnSuccess) {
+                        VSPLog(LOG_PREFIX, "CreateSerialPort: SetProperties success with portId=%d.\n", portId);
+                        //DEXT Trap: SendIOMessageServicePropertyChange();
+                    } else {
+                        VSPLog(LOG_PREFIX, "CreateSerialPort: SetProperties failed. code=%x\n", ret);
+                    }
+                }
+                spPropsKey->release();
+            }
+            ttySuffix->release();
+            suffixKey->release();
+        }
+        OSSafeReleaseNULL(svProperties);
+    }
+    
+    return ret;
+}
+
+// --------------------------------------------------------------------
 // Create given number of VSPSerialPort instances
 //
 kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count, void* params, uint64_t size)
@@ -453,10 +513,17 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count, vo
 
         VSPLog(LOG_PREFIX, "CreateSerialPort: Create serial port %d.\n", _id);
 
-        // Create sub service object from SerialPortProperties in Info.plist
+        // Patch IOTTYSuffix property in SerialPortProperties with new port number
+        ret = setupSerialProperties(this, _id);
+        if (ret != kIOReturnSuccess) {
+            VSPErr(LOG_PREFIX, "CreateSerialPort: setupSerialProperties failed. code=%x\n", ret);
+            return ret;
+        }
+
+        // Create sub service object from Info.plist
         ret= Create(this, kVSPSerialPortProperties, &service);
         if (ret != kIOReturnSuccess || service == nullptr) {
-            VSPErr(LOG_PREFIX, "CreateSerialPort: create [%d] failed. code=%d\n", count, ret);
+            VSPErr(LOG_PREFIX, "CreateSerialPort: create [%d] failed. code=%x\n", count, ret);
             return ret;
         }
         
@@ -485,6 +552,10 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count, vo
                             p->flowCtrl);
         }
         
+        // update VSPSerialPort properties too -
+        // but no effekt for my port numbering at kernel site!
+        ivars->m_serialPorts[i].port->updateTTYProperties(_id);
+
         ivars->m_portCount++;
         items++;
     }
@@ -538,7 +609,7 @@ kern_return_t VSPDriver::removePort(uint8_t portId)
             if (ivars->m_serialPorts[i].port) {
                 ret = ivars->m_serialPorts[i].port->Terminate(0);
                 if (ret != kIOReturnSuccess) {
-                    VSPErr(LOG_PREFIX, "removePort: Shutdown serial port failed. code=%d\n", ret);
+                    VSPErr(LOG_PREFIX, "removePort: Shutdown serial port failed. code=%x\n", ret);
                     return ret;
                 }
             }

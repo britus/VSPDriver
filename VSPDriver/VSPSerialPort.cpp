@@ -208,7 +208,7 @@ kern_return_t IMPL(VSPSerialPort, Start)
     // call super method (apple style)
     ret = Start(provider, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "Start(super): failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "Start(super): failed. code=%x\n", ret);
         return ret;
     }
     
@@ -232,7 +232,7 @@ kern_return_t IMPL(VSPSerialPort, Start)
     
     // Register driver instance to IOReg
     if ((ret = RegisterService()) != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "Start: RegisterService failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "Start: RegisterService failed. code=%x\n", ret);
         goto error_exit;
     }
     
@@ -264,7 +264,7 @@ kern_return_t IMPL(VSPSerialPort, Stop)
     
     /* Shutdown instane */
     if ((ret= Stop(provider, SUPERDISPATCH)) != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "super::Stop failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "super::Stop failed. code=%x\n", ret);
     } else {
         VSPLog(LOG_PREFIX, "Port successfully removed.\n");
     }
@@ -288,7 +288,7 @@ kern_return_t IMPL(VSPSerialPort, SetProperties)
     // update
     ret = UserSetProperties(properties);
     if (ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "updateTTYProperties: UserSetProperties() failed. code=%d", ret);
+        VSPErr(LOG_PREFIX, "updateTTYProperties: UserSetProperties() failed. code=%x", ret);
     }
     
     VSPLog(LOG_PREFIX, "SetProperties complete.\n");
@@ -338,7 +338,7 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
     txcapacity = (size_t) ::pow(2, in_txqlogsz);
     ret = IOBufferMemoryDescriptor::Create(kIOMemoryDirectionIn, txcapacity, 0, &ivars->m_txqbmd);
     if (ret != kIOReturnSuccess || !ivars->m_txqbmd) {
-        VSPErr(LOG_PREFIX, "Start: Unable to create TX memory descriptor. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "Start: Unable to create TX memory descriptor. code=%x\n", ret);
         goto error_exit;
     }
     
@@ -346,7 +346,7 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
     rxcapacity = (size_t) ::pow(2, in_rxqlogsz);
     ret = IOBufferMemoryDescriptor::Create(kIOMemoryDirectionOut, rxcapacity, 0, &ivars->m_rxqbmd);
     if (ret != kIOReturnSuccess || !ivars->m_rxqbmd) {
-        VSPErr(LOG_PREFIX, "Start: Unable to create RX memory descriptor. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "Start: Unable to create RX memory descriptor. code=%x\n", ret);
         goto error_exit;
     }
     
@@ -363,7 +363,7 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
                         in_rxqlogsz,
                         in_txqlogsz, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "super::ConnectQueues failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "super::ConnectQueues failed. code=%x\n", ret);
         goto error_exit;
     }
     
@@ -387,20 +387,20 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
     // Get the address segment of the TX memory descriptor
     ret = ivars->m_txqbmd->GetAddressRange(&ivars->m_txseg);
     if (ret != kIOReturnSuccess || !ivars->m_txseg.address || ivars->m_txseg.length != txcapacity) {
-        VSPErr(LOG_PREFIX, "ConnectQueues: Unable to get TX-MD segment. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "ConnectQueues: Unable to get TX-MD segment. code=%x\n", ret);
         goto error_exit;
     }
     
     // Get the address segment of the RX memory descriptor
     ret = ivars->m_rxqbmd->GetAddressRange(&ivars->m_rxseg);
     if (ret != kIOReturnSuccess || !ivars->m_rxseg.address || ivars->m_rxseg.length != rxcapacity) {
-        VSPErr(LOG_PREFIX, "ConnectQueues: Unable to get TX-MD segment. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "ConnectQueues: Unable to get TX-MD segment. code=%x\n", ret);
         goto error_exit;
     }
     
     // Get the address segment of the SerialPortInterface (mapped space)
     if ((ret = (*ifmd)->GetAddressRange(&ifseg)) != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "ConnectQueues: IF GetAddressRange failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "ConnectQueues: IF GetAddressRange failed. code=%x\n", ret);
         goto error_exit;
     }
     
@@ -454,7 +454,7 @@ kern_return_t IMPL(VSPSerialPort, DisconnectQueues)
 
     ret = DisconnectQueues(SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "super::DisconnectQueues: failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "super::DisconnectQueues: failed. code=%x\n", ret);
         return ret;
     }
     
@@ -527,7 +527,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
         // send TX to other port instance
         ret = sendToPortLink(buffer, size);
         if (ret != kIOReturnSuccess) {
-            VSPErr(LOG_PREFIX, "TxDataAvailable: Data routing failed. code=%d\n", ret);
+            VSPErr(LOG_PREFIX, "TxDataAvailable: Data routing failed. code=%x\n", ret);
             goto not_routed; // update spi::tx, no echo and done.
         }
     }
@@ -535,7 +535,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     else {
         ret = sendResponse(this, buffer, size);
         if (ret != kIOReturnSuccess) {
-            VSPErr(LOG_PREFIX, "TxDataAvailable: Unable to enqueue response. code=%d\n", ret);
+            VSPErr(LOG_PREFIX, "TxDataAvailable: Unable to enqueue response. code=%x\n", ret);
             goto finish;
         }
     }
@@ -644,7 +644,7 @@ kern_return_t VSPSerialPort::reportModemStatus()
             IS_BIT(ivars->m_hwStatus, MODEM_STATUS_RI),
             IS_BIT(ivars->m_hwStatus, MODEM_STATUS_DCD), SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "super::SetModemStatus failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "super::SetModemStatus failed. code=%x\n", ret);
     }
     
     return ret;
@@ -669,7 +669,7 @@ kern_return_t IMPL(VSPSerialPort, SetModemStatus)
     
     ret = SetModemStatus(cts, dsr, ri, dcd, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "super::SetModemStatus failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "super::SetModemStatus failed. code=%x\n", ret);
         return ret;
     }
     
@@ -710,7 +710,7 @@ kern_return_t IMPL(VSPSerialPort, RxError)
     
     ret = RxError(overrun, gotBreak, framingError, parityError, SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "super::RxError: failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "super::RxError: failed. code=%x\n", ret);
         return ret;
     }
     
@@ -733,7 +733,7 @@ kern_return_t IMPL(VSPSerialPort, HwActivate)
     
     ret = HwActivate(SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "super::HwActivate failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "super::HwActivate failed. code=%x\n", ret);
         return ret;
     }
     
@@ -756,7 +756,7 @@ kern_return_t IMPL(VSPSerialPort, HwDeactivate)
     
     ret = HwDeactivate(SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "super::HwDeactivate failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "super::HwDeactivate failed. code=%x\n", ret);
         return ret;
     }
     
@@ -952,9 +952,6 @@ void VSPSerialPort::setPortIdentifier(uint8_t id)
     VSPLog(LOG_PREFIX, "setPortIdentifier id=%d.\n", id);
     
     ivars->m_portId = id;
-    
-    // update properties
-    updateTTYProperties(id);
 }
 
 // --------------------------------------------------------------------
@@ -997,7 +994,7 @@ kern_return_t VSPSerialPort::sendToPortLink(const void* buffer, const uint32_t s
 
     ret = ivars->m_parent->getPortLinkById(myid, &item, sizeof(TVSPLinkItem));
     if (ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "sendToPortLink: Parent getPortLinkById failed. code=%d\n", ret);
+        VSPErr(LOG_PREFIX, "sendToPortLink: Parent getPortLinkById failed. code=%x\n", ret);
         return ret;
     }
 
@@ -1029,7 +1026,7 @@ kern_return_t VSPSerialPort::sendToPortLink(const void* buffer, const uint32_t s
     }
     
     if ((ret = port->sendResponse(this, buffer, size)) != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "sendToPortLink: Port %d enqueueResponse failed. code=%d\n",
+        VSPErr(LOG_PREFIX, "sendToPortLink: Port %d enqueueResponse failed. code=%x\n",
                ivars->m_portId, ret);
         return ret;
     }
@@ -1134,13 +1131,13 @@ static inline kern_return_t readTTYProperties(VSPSerialPort* self)
 
     ret = getProperty(self, "IOTTYBaseName", self->ivars->m_portBaseName, sizeof(IOPropertyName)-1);
     if (ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "readTTYProperties: getProperty(IOTTYBaseName) failed. code=%d", ret);
+        VSPErr(LOG_PREFIX, "readTTYProperties: getProperty(IOTTYBaseName) failed. code=%x", ret);
         goto finish;
     }
 
     ret = getProperty(self, "IOTTYSuffix", self->ivars->m_portSuffix, sizeof(IOPropertyName)-1);
     if (ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "readTTYProperties: getProperty(IOTTYSuffix) failed. code=%d", ret);
+        VSPErr(LOG_PREFIX, "readTTYProperties: getProperty(IOTTYSuffix) failed. code=%x", ret);
         goto finish;
     }
 
@@ -1170,7 +1167,7 @@ kern_return_t VSPSerialPort::updateTTYProperties(uint8_t portId)
     // Get service instance properties
     ret = CopyProperties(&properties);
     if (ret != kIOReturnSuccess || properties == nullptr) {
-        VSPErr(LOG_PREFIX, "updateTTYProperties: Copy properties failed. code=%d", ret);
+        VSPErr(LOG_PREFIX, "updateTTYProperties: Copy properties failed. code=%x", ret);
         return ret;
     }
 
@@ -1193,7 +1190,7 @@ kern_return_t VSPSerialPort::updateTTYProperties(uint8_t portId)
     // update
     ret = SetProperties(properties);
     if (ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "updateTTYProperties: SetProperties() failed. code=%d", ret);
+        VSPErr(LOG_PREFIX, "updateTTYProperties: SetProperties() failed. code=%x", ret);
     }
     
     OSSafeReleaseNULL(bnkey);
