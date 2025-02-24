@@ -7,13 +7,11 @@ a installation App suggested by Apple.
 
 - Without a port link, the data is sent back to the sender
 - With a port link, the data is written from sender 1 to receiver 2 and vice versa
-- The installation app has a simple and generic function test for the IOUserClient (controller)
+- The client app provide installation, deinstallation and management
 
-### ToDo:
-- Write a controller app that handles the complete management of the port links and provides a TCP server to redirect the data from the serial interface to TCP/IP.
-
-### Client application
-The Project [VSPClient](https://github.com/britus/VSPClient) contains the user interface for managing and two frameworks in QT for the virtual serial port driver
+### Client application / references frameworks
+The Project [VSPClient](https://github.com/britus/VSPClient) contains the user interface for managing the virtual serialports. This project provide the
+3 frameworks written in QT for the virtual serial port driver.
 
 ## Log Files and Tester
 
