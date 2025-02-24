@@ -352,6 +352,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 880539F22D4BAFBF00E55104 /* Build configuration list for PBXNativeTarget "VSPClient" */;
 			buildPhases = (
+				8858477F2D6CDC9100956777 /* ShellScript */,
 				880539E42D4BAFBD00E55104 /* Sources */,
 				880539E52D4BAFBD00E55104 /* Frameworks */,
 				8869B5072D627FCD002643D9 /* Embed Libraries */,
@@ -472,6 +473,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8858477F2D6CDC9100956777 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif [ -d ${PROJECT_DIR}/../VSPClient ] ; then\n    echo \"****** BUILD VSPClient Frameworks **********\"\n    cd ${PROJECT_DIR}/../VSPClient\n    ./make.sh\n    cd ${PROJECT_DIR}\n    echo \"****** BUILD END **********\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		880539E42D4BAFBD00E55104 /* Sources */ = {
