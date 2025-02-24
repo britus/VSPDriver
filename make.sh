@@ -23,7 +23,6 @@ cd ${prjroot}
 
 echo ":> Build project..."
 
-#-arch x86_64
-xcodebuild -project ${prjname}.xcodeproj \
+xcodebuild -arch `uname -m` -project ${prjname}.xcodeproj \
     -target VSPDriver \
     -target VSPClient
