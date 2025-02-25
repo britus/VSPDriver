@@ -40,11 +40,6 @@
 		88A6715B2D68DDE000CE4E12 /* vspclient_3.ico in Resources */ = {isa = PBXBuildFile; fileRef = 88A671362D68DDE000CE4E12 /* vspclient_3.ico */; };
 		88A6715C2D68DDE000CE4E12 /* vspclient_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A6713F2D68DDE000CE4E12 /* vspclient_3.png */; };
 		88A6715D2D68DFC800CE4E12 /* VSPSetup.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88A6712B2D68DBEE00CE4E12 /* VSPSetup.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		88AB34EB2D64937300260D19 /* kdk-instructions.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 88AB34E82D64937300260D19 /* kdk-instructions.pdf */; };
-		88AB34EC2D64937300260D19 /* info-plist-ioreg.xml in Resources */ = {isa = PBXBuildFile; fileRef = 88AB34E72D64937300260D19 /* info-plist-ioreg.xml */; };
-		88AB34ED2D64937300260D19 /* entitlements.txt in Resources */ = {isa = PBXBuildFile; fileRef = 88AB34E62D64937300260D19 /* entitlements.txt */; };
-		88AB34EE2D64937300260D19 /* make.sh in Resources */ = {isa = PBXBuildFile; fileRef = 88AB34E92D64937300260D19 /* make.sh */; };
-		88AB34EF2D64937300260D19 /* VSPDriver-PortLink.log in Resources */ = {isa = PBXBuildFile; fileRef = 88AB34EA2D64937300260D19 /* VSPDriver-PortLink.log */; };
 		88B40D5E2D4B666700DFE7C5 /* VSPDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B40D5D2D4B666700DFE7C5 /* VSPDriver.cpp */; };
 		88B40D602D4B666700DFE7C5 /* VSPDriver.iig in Sources */ = {isa = PBXBuildFile; fileRef = 88B40D5F2D4B666700DFE7C5 /* VSPDriver.iig */; };
 		88B40D682D4B669100DFE7C5 /* DriverKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B40D672D4B669100DFE7C5 /* DriverKit.framework */; };
@@ -464,11 +459,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88AB34EB2D64937300260D19 /* kdk-instructions.pdf in Resources */,
-				88AB34EC2D64937300260D19 /* info-plist-ioreg.xml in Resources */,
-				88AB34ED2D64937300260D19 /* entitlements.txt in Resources */,
-				88AB34EE2D64937300260D19 /* make.sh in Resources */,
-				88AB34EF2D64937300260D19 /* VSPDriver-PortLink.log in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
