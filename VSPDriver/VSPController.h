@@ -27,16 +27,12 @@ typedef struct {
     VSPSerialPort* port;        // object instance
     uint8_t        id;          // port item id
     uint64_t       flags;       // Trace and check flags
-    OSAction*      notifyAction; // CreateSerialPort -> IOServiceNotificationDispatchSource::ServiceNotificationReady
-    IOServiceNotificationDispatchSource* notifySource;
-    OSAction*      stateAction; // CreateSerialPort -> IOServiceStateNotificationDispatchSource::StateNotificationReady
-    IOServiceStateNotificationDispatchSource* stateSource;
 } TVSPPortItem;
 
 typedef struct {
-    TVSPPortItem sourcePort;    // first port
-    TVSPPortItem targetPort;    // second port
-    uint8_t         id;         // link item id
+    TVSPPortItem source;        // first port
+    TVSPPortItem target;        // second port
+    uint8_t      id;            // link item id
 } TVSPLinkItem;
 
 // --------------------------------------------------------
@@ -46,7 +42,7 @@ namespace VSPController {
 
 #define MAGIC_CONTROL 0xBE6605250000L
 #define MAX_SERIAL_PORTS 16
-#define MAX_PORT_LINKS 8
+#define MAX_PORT_LINKS 16
 #define MAX_PORT_NAME 64
 
 #ifndef VSP_UCD_SIZE
