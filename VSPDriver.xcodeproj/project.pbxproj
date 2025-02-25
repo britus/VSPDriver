@@ -40,11 +40,6 @@
 		88A6715B2D68DDE000CE4E12 /* vspclient_3.ico in Resources */ = {isa = PBXBuildFile; fileRef = 88A671362D68DDE000CE4E12 /* vspclient_3.ico */; };
 		88A6715C2D68DDE000CE4E12 /* vspclient_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A6713F2D68DDE000CE4E12 /* vspclient_3.png */; };
 		88A6715D2D68DFC800CE4E12 /* VSPSetup.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88A6712B2D68DBEE00CE4E12 /* VSPSetup.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		88AB34EB2D64937300260D19 /* kdk-instructions.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 88AB34E82D64937300260D19 /* kdk-instructions.pdf */; };
-		88AB34EC2D64937300260D19 /* info-plist-ioreg.xml in Resources */ = {isa = PBXBuildFile; fileRef = 88AB34E72D64937300260D19 /* info-plist-ioreg.xml */; };
-		88AB34ED2D64937300260D19 /* entitlements.txt in Resources */ = {isa = PBXBuildFile; fileRef = 88AB34E62D64937300260D19 /* entitlements.txt */; };
-		88AB34EE2D64937300260D19 /* make.sh in Resources */ = {isa = PBXBuildFile; fileRef = 88AB34E92D64937300260D19 /* make.sh */; };
-		88AB34EF2D64937300260D19 /* VSPDriver-PortLink.log in Resources */ = {isa = PBXBuildFile; fileRef = 88AB34EA2D64937300260D19 /* VSPDriver-PortLink.log */; };
 		88B40D5E2D4B666700DFE7C5 /* VSPDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B40D5D2D4B666700DFE7C5 /* VSPDriver.cpp */; };
 		88B40D602D4B666700DFE7C5 /* VSPDriver.iig in Sources */ = {isa = PBXBuildFile; fileRef = 88B40D5F2D4B666700DFE7C5 /* VSPDriver.iig */; };
 		88B40D682D4B669100DFE7C5 /* DriverKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B40D672D4B669100DFE7C5 /* DriverKit.framework */; };
@@ -352,6 +347,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 880539F22D4BAFBF00E55104 /* Build configuration list for PBXNativeTarget "VSPClient" */;
 			buildPhases = (
+				8858477F2D6CDC9100956777 /* ShellScript */,
 				880539E42D4BAFBD00E55104 /* Sources */,
 				880539E52D4BAFBD00E55104 /* Frameworks */,
 				8869B5072D627FCD002643D9 /* Embed Libraries */,
@@ -463,15 +459,31 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88AB34EB2D64937300260D19 /* kdk-instructions.pdf in Resources */,
-				88AB34EC2D64937300260D19 /* info-plist-ioreg.xml in Resources */,
-				88AB34ED2D64937300260D19 /* entitlements.txt in Resources */,
-				88AB34EE2D64937300260D19 /* make.sh in Resources */,
-				88AB34EF2D64937300260D19 /* VSPDriver-PortLink.log in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8858477F2D6CDC9100956777 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif [ -d ${PROJECT_DIR}/../VSPClient ] ; then\n    echo \"****** BUILD VSPClient Frameworks **********\"\n    cd ${PROJECT_DIR}/../VSPClient\n    ./make.sh\n    cd ${PROJECT_DIR}\n    echo \"****** BUILD END **********\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		880539E42D4BAFBD00E55104 /* Sources */ = {
@@ -532,13 +544,12 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 24;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = 83NQU389JN;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
-				EXCLUDED_ARCHS = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -567,13 +578,13 @@
 					"$(SDKROOT)/usr/lib/system",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.2;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "Virtual Serial Port Client (parimac-cert)";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "Virtual Serial Port Client develop (parimac-cert)";
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -596,13 +607,12 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 24;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = 83NQU389JN;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
-				EXCLUDED_ARCHS = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -631,13 +641,13 @@
 					"$(SDKROOT)/usr/lib/system",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.2;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "Virtual Serial Port Client (parimac-cert)";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "Virtual Serial Port Client develop (parimac-cert)";
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -770,9 +780,8 @@
 				AD_HOC_CODE_SIGNING_ALLOWED = YES;
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=driverkit*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=driverkit*]" = 83NQU389JN;
 				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
@@ -784,17 +793,18 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VSPDriver/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Virtual Serial Port Driver";
-				INFOPLIST_KEY_OSBundleUsageDescription = "Virtual Serial Port Device using DriverKit";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 by EoF Software Labs";
+				INFOPLIST_KEY_OSBundleUsageDescription = "Provide virtual serial port";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/System/DriverKit/usr/lib/system",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.5;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPDriver;
 				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=driverkit*]" = "VSPDriver Development (parimac-cert)";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=driverkit*]" = "Virtual Serial Port Driver develop (parimac-cert)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = driverkit;
 				SKIP_INSTALL = YES;
@@ -808,9 +818,8 @@
 				AD_HOC_CODE_SIGNING_ALLOWED = YES;
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=driverkit*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=driverkit*]" = 83NQU389JN;
 				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
@@ -822,17 +831,18 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VSPDriver/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Virtual Serial Port Driver";
-				INFOPLIST_KEY_OSBundleUsageDescription = "Virtual Serial Port Device using DriverKit";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 by EoF Software Labs";
+				INFOPLIST_KEY_OSBundleUsageDescription = "Provide virtual serial port";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/System/DriverKit/usr/lib/system",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.5;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPDriver;
 				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=driverkit*]" = "VSPDriver Development (parimac-cert)";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=driverkit*]" = "Virtual Serial Port Driver develop (parimac-cert)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = driverkit;
 				SKIP_INSTALL = YES;

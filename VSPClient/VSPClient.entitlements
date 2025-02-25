@@ -4,8 +4,6 @@
 <dict>
 	<key>com.apple.developer.driverkit</key>
 	<true/>
-	<key>com.apple.developer.driverkit.allow-third-party-userclients</key>
-	<true/>
 	<key>com.apple.developer.driverkit.communicates-with-drivers</key>
 	<true/>
 	<key>com.apple.developer.shared-with-you</key>
@@ -16,13 +14,5 @@
 	<array>
 		<string>$(TeamIdentifierPrefix)org.eof.apps</string>
 	</array>
-	<key>com.apple.security.cs.allow-unsigned-executable-memory</key>
-	<true/>
-	<key>com.apple.security.cs.debugger</key>
-	<true/>
-	<key>com.apple.security.cs.disable-executable-page-protection</key>
-	<true/>
-	<key>com.apple.security.cs.disable-library-validation</key>
-	<true/>
 </dict>
 </plist>
