@@ -20,7 +20,7 @@ This [picture](https://github.com/britus/VSPDriver/blob/master/VSPDriver-Tester.
 
 ## Donation
 
-If you want to [donate my work](https://www.paypal.com/donate/?hosted_button_id=4QZT5YLGGW7S4), please feel free and do it :-)
-.. or you can use the [QR-Code](https://github.com/britus/VSPDriver/blob/master/VSPDriver-Donate_Please.png) too.
+If you want to [donate my work](https://www.paypal.com/donate/?hosted_button_id=4QZT5YLGGW7S4), please feel free and do it.
+You can use the [QR-Code](https://github.com/britus/VSPDriver/blob/master/VSPDriver-Donate_Please.png) too.
 
 Thank you very much.
