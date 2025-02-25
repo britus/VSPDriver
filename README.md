@@ -9,14 +9,14 @@ a installation App suggested by Apple.
 - With a port link, the data is written from sender 1 to receiver 2 and vice versa
 - The client app provide installation, deinstallation and management
 
-### Client application / references frameworks
+### Client application / referenced frameworks
 The Project [VSPClient](https://github.com/britus/VSPClient) contains the user interface for managing the virtual serialports. This project provide the
 3 frameworks written in QT for the virtual serial port driver.
 
 ## Log Files and Tester
 
-A look at this [log](https://github.com/britus/VSPDriver/blob/master/VSPDriver-Full.log) shows how the driver ticks with the IOUserClient :)
-This [picture](https://github.com/britus/VSPDriver/blob/master/VSPDriver-Tester.jpg) shows the VSP driver in action :)
+A look at this [log](https://github.com/britus/VSPDriver/blob/master/VSPDriver-Full.log) shows how the driver ticks with the IOUserClient.
+This [picture](https://github.com/britus/VSPDriver/blob/master/VSPDriver-Tester.jpg) shows the VSP driver in action.
 
 ### Donation
 
