@@ -1102,11 +1102,11 @@ kern_return_t VSPSerialPort::sendToPortLink(const void* buffer, const uint32_t s
 
     VSPLog(LOG_PREFIX, "sendToPortLink: got port link.\n");
 
-    if (item.sourcePort.id != ivars->m_portId) {
-        port = item.sourcePort.port;
+    if (item.source.id != ivars->m_portId) {
+        port = item.source.port;
     }
-    else if (item.targetPort.id != ivars->m_portId) {
-        port = item.targetPort.port;
+    else if (item.target.id != ivars->m_portId) {
+        port = item.target.port;
     }
     else {
         VSPErr(LOG_PREFIX, "sendToPortLink: Double port IDs detectd! myLinkId=%d myPortId=%d\n",

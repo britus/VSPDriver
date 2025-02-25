@@ -16,6 +16,8 @@ vspremove.sh
 
 Info*.xml
 entitlements*.xml
+.DS*
+.private
 
 # Prerequisites
 *.d
