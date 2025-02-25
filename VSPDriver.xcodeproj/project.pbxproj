@@ -560,7 +560,6 @@
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = 83NQU389JN;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
-				EXCLUDED_ARCHS = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -624,7 +623,6 @@
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = 83NQU389JN;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
-				EXCLUDED_ARCHS = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -792,7 +790,6 @@
 				AD_HOC_CODE_SIGNING_ALLOWED = YES;
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=driverkit*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = "";
@@ -817,7 +814,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPDriver;
 				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=driverkit*]" = "VSPDriver Development (parimac-cert)";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=driverkit*]" = "Virtual Serial Port Driver develop (parimac-cert)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = driverkit;
 				SKIP_INSTALL = YES;
@@ -831,7 +828,6 @@
 				AD_HOC_CODE_SIGNING_ALLOWED = YES;
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=driverkit*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = "";
@@ -856,7 +852,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPDriver;
 				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=driverkit*]" = "VSPDriver Development (parimac-cert)";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=driverkit*]" = "Virtual Serial Port Driver develop (parimac-cert)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = driverkit;
 				SKIP_INSTALL = YES;
