@@ -680,7 +680,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 88B40D512D4B666700DFE7C5 /* Build configuration list for PBXProject "VSPDriver" */;
+			buildConfigurationList = 88B40D512D4B666700DFE7C5 /* Build configuration list for PBXProject "VSPDriver_QT_6.8.2_arm64" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -1130,7 +1130,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		88B40D512D4B666700DFE7C5 /* Build configuration list for PBXProject "VSPDriver" */ = {
+		88B40D512D4B666700DFE7C5 /* Build configuration list for PBXProject "VSPDriver_QT_6.8.2_arm64" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				88B40D622D4B666700DFE7C5 /* Debug */,
