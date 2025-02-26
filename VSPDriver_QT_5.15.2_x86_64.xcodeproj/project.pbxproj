@@ -7,74 +7,112 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		88005A7C2D6F5C010057089B /* QtConcurrent.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88005A5E2D6F5BE70057089B /* QtConcurrent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88005A7D2D6F5C010057089B /* QtCore.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88005A592D6F5BE70057089B /* QtCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88005A7E2D6F5C010057089B /* QtDBus.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88005A522D6F5BE70057089B /* QtDBus.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88005A7F2D6F5C010057089B /* QtGui.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88005A572D6F5BE70057089B /* QtGui.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88005A802D6F5C010057089B /* QtMacExtras.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88005A552D6F5BE70057089B /* QtMacExtras.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88005A812D6F5C010057089B /* QtNetwork.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88005A5D2D6F5BE70057089B /* QtNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88005A822D6F5C010057089B /* QtOpenGL.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88005A5A2D6F5BE70057089B /* QtOpenGL.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88005A832D6F5C010057089B /* QtPrintSupport.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88005A502D6F5BE70057089B /* QtPrintSupport.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88005A842D6F5C010057089B /* QtQml.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88005A512D6F5BE70057089B /* QtQml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88005A852D6F5C010057089B /* QtQmlModels.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88005A562D6F5BE70057089B /* QtQmlModels.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88005A862D6F5C010057089B /* QtQuick.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88005A5C2D6F5BE70057089B /* QtQuick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88005A872D6F5C010057089B /* QtSensors.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88005A5B2D6F5BE70057089B /* QtSensors.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88005A882D6F5C010057089B /* QtSerialBus.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88005A582D6F5BE70057089B /* QtSerialBus.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88005A892D6F5C010057089B /* QtSerialPort.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88005A542D6F5BE70057089B /* QtSerialPort.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88005A8A2D6F5C020057089B /* QtSvg.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88005A5F2D6F5BE70057089B /* QtSvg.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88005A8B2D6F5C020057089B /* QtVirtualKeyboard.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88005A532D6F5BE70057089B /* QtVirtualKeyboard.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88005A8C2D6F5C020057089B /* QtXml.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88005A602D6F5BE80057089B /* QtXml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88005A8D2D6F5C0A0057089B /* VSPClientUI.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88005A362D6F5B6A0057089B /* VSPClientUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88005A8E2D6F5C0A0057089B /* VSPController.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88005A382D6F5B6A0057089B /* VSPController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88005A8F2D6F5C0A0057089B /* VSPSetup.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 88005A372D6F5B6A0057089B /* VSPSetup.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88005A902D6F5C130057089B /* VSPClientUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88005A362D6F5B6A0057089B /* VSPClientUI.framework */; };
+		88005A912D6F5C130057089B /* VSPController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88005A382D6F5B6A0057089B /* VSPController.framework */; };
+		88005A922D6F5C130057089B /* VSPSetup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88005A372D6F5B6A0057089B /* VSPSetup.framework */; };
+		88005A932D6F5C190057089B /* QtConcurrent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88005A5E2D6F5BE70057089B /* QtConcurrent.framework */; };
+		88005A942D6F5C190057089B /* QtCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88005A592D6F5BE70057089B /* QtCore.framework */; };
+		88005A952D6F5C190057089B /* QtDBus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88005A522D6F5BE70057089B /* QtDBus.framework */; };
+		88005A962D6F5C190057089B /* QtGui.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88005A572D6F5BE70057089B /* QtGui.framework */; };
+		88005A972D6F5C190057089B /* QtMacExtras.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88005A552D6F5BE70057089B /* QtMacExtras.framework */; };
+		88005A982D6F5C190057089B /* QtNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88005A5D2D6F5BE70057089B /* QtNetwork.framework */; };
+		88005A992D6F5C190057089B /* QtOpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88005A5A2D6F5BE70057089B /* QtOpenGL.framework */; };
+		88005A9A2D6F5C190057089B /* QtPrintSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88005A502D6F5BE70057089B /* QtPrintSupport.framework */; };
+		88005A9B2D6F5C190057089B /* QtQml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88005A512D6F5BE70057089B /* QtQml.framework */; };
+		88005A9C2D6F5C190057089B /* QtQmlModels.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88005A562D6F5BE70057089B /* QtQmlModels.framework */; };
+		88005A9D2D6F5C190057089B /* QtQuick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88005A5C2D6F5BE70057089B /* QtQuick.framework */; };
+		88005A9E2D6F5C190057089B /* QtSensors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88005A5B2D6F5BE70057089B /* QtSensors.framework */; };
+		88005A9F2D6F5C190057089B /* QtSerialBus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88005A582D6F5BE70057089B /* QtSerialBus.framework */; };
+		88005AA02D6F5C190057089B /* QtSerialPort.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88005A542D6F5BE70057089B /* QtSerialPort.framework */; };
+		88005AA12D6F5C190057089B /* QtSvg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88005A5F2D6F5BE70057089B /* QtSvg.framework */; };
+		88005AA22D6F5C190057089B /* QtVirtualKeyboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88005A532D6F5BE70057089B /* QtVirtualKeyboard.framework */; };
+		88005AA32D6F5C190057089B /* QtXml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88005A602D6F5BE80057089B /* QtXml.framework */; };
+		88005AA52D6F5FB90057089B /* DriverKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880059DB2D6F55870057089B /* DriverKit.framework */; };
+		88005AA62D6F5FBA0057089B /* SerialDriverKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880059D92D6F557A0057089B /* SerialDriverKit.framework */; };
+		88005AB22D6FB2010057089B /* libqgenericbearer.dylib in Copy QT Plugins - bearer */ = {isa = PBXBuildFile; fileRef = 88005AB02D6FB2010057089B /* libqgenericbearer.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005AB32D6FB2020057089B /* libqgenericbearer.dylib.dSYM in Copy QT Plugins - bearer */ = {isa = PBXBuildFile; fileRef = 88005AB12D6FB2010057089B /* libqgenericbearer.dylib.dSYM */; };
+		88005ABC2D6FB25B0057089B /* libqttinycanbus.dylib.dSYM in Copy QT Plugins - canbus */ = {isa = PBXBuildFile; fileRef = 88005AB42D6FB25B0057089B /* libqttinycanbus.dylib.dSYM */; };
+		88005ABD2D6FB25B0057089B /* libqttinycanbus.dylib in Copy QT Plugins - canbus */ = {isa = PBXBuildFile; fileRef = 88005AB52D6FB25B0057089B /* libqttinycanbus.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005ABE2D6FB25B0057089B /* libqtvirtualcanbus.dylib.dSYM in Copy QT Plugins - canbus */ = {isa = PBXBuildFile; fileRef = 88005AB62D6FB25B0057089B /* libqtvirtualcanbus.dylib.dSYM */; };
+		88005ABF2D6FB25B0057089B /* libqtpeakcanbus.dylib.dSYM in Copy QT Plugins - canbus */ = {isa = PBXBuildFile; fileRef = 88005AB72D6FB25B0057089B /* libqtpeakcanbus.dylib.dSYM */; };
+		88005AC02D6FB25B0057089B /* libqtpassthrucanbus.dylib.dSYM in Copy QT Plugins - canbus */ = {isa = PBXBuildFile; fileRef = 88005AB82D6FB25B0057089B /* libqtpassthrucanbus.dylib.dSYM */; };
+		88005AC12D6FB25B0057089B /* libqtpassthrucanbus.dylib in Copy QT Plugins - canbus */ = {isa = PBXBuildFile; fileRef = 88005AB92D6FB25B0057089B /* libqtpassthrucanbus.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005AC22D6FB25B0057089B /* libqtpeakcanbus.dylib in Copy QT Plugins - canbus */ = {isa = PBXBuildFile; fileRef = 88005ABA2D6FB25B0057089B /* libqtpeakcanbus.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005AC32D6FB25B0057089B /* libqtvirtualcanbus.dylib in Copy QT Plugins - canbus */ = {isa = PBXBuildFile; fileRef = 88005ABB2D6FB25B0057089B /* libqtvirtualcanbus.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005AD02D6FB2C00057089B /* libqsvgicon.dylib in Copy QT Plugins - iconengines */ = {isa = PBXBuildFile; fileRef = 88005ACE2D6FB2C00057089B /* libqsvgicon.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005AD12D6FB2C00057089B /* libqsvgicon.dylib.dSYM in Copy QT Plugins - iconengines */ = {isa = PBXBuildFile; fileRef = 88005ACF2D6FB2C00057089B /* libqsvgicon.dylib.dSYM */; };
+		88005AE92D6FB30D0057089B /* libqmacheif.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88005AD22D6FB30C0057089B /* libqmacheif.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005AEA2D6FB30D0057089B /* libqmacheif.dylib.dSYM in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88005AD32D6FB30C0057089B /* libqmacheif.dylib.dSYM */; };
+		88005AEB2D6FB30D0057089B /* libqsvg.dylib.dSYM in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88005AD42D6FB30C0057089B /* libqsvg.dylib.dSYM */; };
+		88005AEC2D6FB30D0057089B /* libqwbmp.dylib.dSYM in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88005AD52D6FB30C0057089B /* libqwbmp.dylib.dSYM */; };
+		88005AED2D6FB30D0057089B /* libqwebp.dylib.dSYM in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88005AD62D6FB30C0057089B /* libqwebp.dylib.dSYM */; };
+		88005AEE2D6FB30D0057089B /* libqwbmp.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88005AD72D6FB30C0057089B /* libqwbmp.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005AEF2D6FB30D0057089B /* libqwebp.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88005AD82D6FB30C0057089B /* libqwebp.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005AF02D6FB30D0057089B /* libqtga.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88005AD92D6FB30C0057089B /* libqtga.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005AF12D6FB30D0057089B /* libqtiff.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88005ADA2D6FB30C0057089B /* libqtiff.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005AF22D6FB30D0057089B /* libqico.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88005ADB2D6FB30C0057089B /* libqico.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005AF32D6FB30D0057089B /* libqgif.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88005ADC2D6FB30C0057089B /* libqgif.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005AF42D6FB30D0057089B /* libqtga.dylib.dSYM in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88005ADD2D6FB30C0057089B /* libqtga.dylib.dSYM */; };
+		88005AF52D6FB30D0057089B /* libqmacjp2.dylib.dSYM in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88005ADE2D6FB30C0057089B /* libqmacjp2.dylib.dSYM */; };
+		88005AF62D6FB30D0057089B /* libqjpeg.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88005ADF2D6FB30C0057089B /* libqjpeg.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005AF72D6FB30D0057089B /* libqicns.dylib.dSYM in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88005AE02D6FB30C0057089B /* libqicns.dylib.dSYM */; };
+		88005AF82D6FB30D0057089B /* libqico.dylib.dSYM in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88005AE12D6FB30C0057089B /* libqico.dylib.dSYM */; };
+		88005AF92D6FB30D0057089B /* libqgif.dylib.dSYM in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88005AE22D6FB30D0057089B /* libqgif.dylib.dSYM */; };
+		88005AFA2D6FB30D0057089B /* libqjpeg.dylib.dSYM in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88005AE32D6FB30D0057089B /* libqjpeg.dylib.dSYM */; };
+		88005AFB2D6FB30D0057089B /* libqicns.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88005AE42D6FB30D0057089B /* libqicns.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005AFC2D6FB30D0057089B /* libqsvg.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88005AE52D6FB30D0057089B /* libqsvg.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005AFD2D6FB30D0057089B /* libqtiff.dylib.dSYM in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88005AE62D6FB30D0057089B /* libqtiff.dylib.dSYM */; };
+		88005AFE2D6FB30D0057089B /* libqmacjp2.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88005AE72D6FB30D0057089B /* libqmacjp2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005AFF2D6FB30D0057089B /* libqpdf.dylib.dSYM in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88005AE82D6FB30D0057089B /* libqpdf.dylib.dSYM */; };
+		88005B022D6FB3330057089B /* libqtvirtualkeyboardplugin.dylib in Copy QT Plugins - platforminputcontexts */ = {isa = PBXBuildFile; fileRef = 88005B002D6FB3330057089B /* libqtvirtualkeyboardplugin.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005B032D6FB3330057089B /* libqtvirtualkeyboardplugin.dylib.dSYM in Copy QT Plugins - platforminputcontexts */ = {isa = PBXBuildFile; fileRef = 88005B012D6FB3330057089B /* libqtvirtualkeyboardplugin.dylib.dSYM */; };
+		88005B0C2D6FB36D0057089B /* libqcocoa.dylib.dSYM in Copy QT Plugins - platforms */ = {isa = PBXBuildFile; fileRef = 88005B042D6FB36D0057089B /* libqcocoa.dylib.dSYM */; };
+		88005B0D2D6FB36D0057089B /* libqminimal.dylib.dSYM in Copy QT Plugins - platforms */ = {isa = PBXBuildFile; fileRef = 88005B052D6FB36D0057089B /* libqminimal.dylib.dSYM */; };
+		88005B0E2D6FB36D0057089B /* libqwebgl.dylib in Copy QT Plugins - platforms */ = {isa = PBXBuildFile; fileRef = 88005B062D6FB36D0057089B /* libqwebgl.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005B0F2D6FB36D0057089B /* libqminimal.dylib in Copy QT Plugins - platforms */ = {isa = PBXBuildFile; fileRef = 88005B072D6FB36D0057089B /* libqminimal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005B102D6FB36D0057089B /* libqoffscreen.dylib in Copy QT Plugins - platforms */ = {isa = PBXBuildFile; fileRef = 88005B082D6FB36D0057089B /* libqoffscreen.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005B112D6FB36D0057089B /* libqoffscreen.dylib.dSYM in Copy QT Plugins - platforms */ = {isa = PBXBuildFile; fileRef = 88005B092D6FB36D0057089B /* libqoffscreen.dylib.dSYM */; };
+		88005B122D6FB36D0057089B /* libqwebgl.dylib.dSYM in Copy QT Plugins - platforms */ = {isa = PBXBuildFile; fileRef = 88005B0A2D6FB36D0057089B /* libqwebgl.dylib.dSYM */; };
+		88005B132D6FB36D0057089B /* libqcocoa.dylib in Copy QT Plugins - platforms */ = {isa = PBXBuildFile; fileRef = 88005B0B2D6FB36D0057089B /* libqcocoa.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005B162D6FB3970057089B /* libcocoaprintersupport.dylib.dSYM in Copy QT Plugins - printsupport */ = {isa = PBXBuildFile; fileRef = 88005B142D6FB3970057089B /* libcocoaprintersupport.dylib.dSYM */; };
+		88005B172D6FB3970057089B /* libcocoaprintersupport.dylib in Copy QT Plugins - printsupport */ = {isa = PBXBuildFile; fileRef = 88005B152D6FB3970057089B /* libcocoaprintersupport.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005B1B2D6FB3D10057089B /* libqxdgdesktopportal.dylib in Copy QT Plugins - platformthemes */ = {isa = PBXBuildFile; fileRef = 88005B192D6FB3D10057089B /* libqxdgdesktopportal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005B1C2D6FB3D10057089B /* libqxdgdesktopportal.dylib.dSYM in Copy QT Plugins - platformthemes */ = {isa = PBXBuildFile; fileRef = 88005B1A2D6FB3D10057089B /* libqxdgdesktopportal.dylib.dSYM */; };
+		88005B1F2D6FB3F10057089B /* libqmacstyle.dylib.dSYM in Copy Copy QT Plugins - styles */ = {isa = PBXBuildFile; fileRef = 88005B1D2D6FB3F10057089B /* libqmacstyle.dylib.dSYM */; };
+		88005B202D6FB3F10057089B /* libqmacstyle.dylib in Copy Copy QT Plugins - styles */ = {isa = PBXBuildFile; fileRef = 88005B1E2D6FB3F10057089B /* libqmacstyle.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005B2B2D6FB4140057089B /* libqtvirtualkeyboard_hangul.dylib in Copy QT Plugins - virtualkeyboard */ = {isa = PBXBuildFile; fileRef = 88005B212D6FB4130057089B /* libqtvirtualkeyboard_hangul.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005B2C2D6FB4140057089B /* libqtvirtualkeyboard_hangul.dylib.dSYM in Copy QT Plugins - virtualkeyboard */ = {isa = PBXBuildFile; fileRef = 88005B222D6FB4130057089B /* libqtvirtualkeyboard_hangul.dylib.dSYM */; };
+		88005B2D2D6FB4140057089B /* libqtvirtualkeyboard_openwnn.dylib in Copy QT Plugins - virtualkeyboard */ = {isa = PBXBuildFile; fileRef = 88005B232D6FB4130057089B /* libqtvirtualkeyboard_openwnn.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005B2E2D6FB4140057089B /* libqtvirtualkeyboard_thai.dylib.dSYM in Copy QT Plugins - virtualkeyboard */ = {isa = PBXBuildFile; fileRef = 88005B242D6FB4130057089B /* libqtvirtualkeyboard_thai.dylib.dSYM */; };
+		88005B2F2D6FB4140057089B /* libqtvirtualkeyboard_pinyin.dylib in Copy QT Plugins - virtualkeyboard */ = {isa = PBXBuildFile; fileRef = 88005B252D6FB4130057089B /* libqtvirtualkeyboard_pinyin.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005B302D6FB4140057089B /* libqtvirtualkeyboard_tcime.dylib.dSYM in Copy QT Plugins - virtualkeyboard */ = {isa = PBXBuildFile; fileRef = 88005B262D6FB4130057089B /* libqtvirtualkeyboard_tcime.dylib.dSYM */; };
+		88005B312D6FB4140057089B /* libqtvirtualkeyboard_thai.dylib in Copy QT Plugins - virtualkeyboard */ = {isa = PBXBuildFile; fileRef = 88005B272D6FB4130057089B /* libqtvirtualkeyboard_thai.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005B322D6FB4140057089B /* libqtvirtualkeyboard_openwnn.dylib.dSYM in Copy QT Plugins - virtualkeyboard */ = {isa = PBXBuildFile; fileRef = 88005B282D6FB4130057089B /* libqtvirtualkeyboard_openwnn.dylib.dSYM */; };
+		88005B332D6FB4140057089B /* libqtvirtualkeyboard_tcime.dylib in Copy QT Plugins - virtualkeyboard */ = {isa = PBXBuildFile; fileRef = 88005B292D6FB4130057089B /* libqtvirtualkeyboard_tcime.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88005B342D6FB4140057089B /* libqtvirtualkeyboard_pinyin.dylib.dSYM in Copy QT Plugins - virtualkeyboard */ = {isa = PBXBuildFile; fileRef = 88005B2A2D6FB4130057089B /* libqtvirtualkeyboard_pinyin.dylib.dSYM */; };
 		880539ED2D4BAFBF00E55104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 880539EC2D4BAFBF00E55104 /* Assets.xcassets */; };
-		883C30152D6EDEB20029BE30 /* QtQmlMeta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30042D6EDEB10029BE30 /* QtQmlMeta.framework */; };
-		883C30162D6EDEB20029BE30 /* QtQmlMeta.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 883C30042D6EDEB10029BE30 /* QtQmlMeta.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		883C30172D6EDEB20029BE30 /* QtDBus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30052D6EDEB10029BE30 /* QtDBus.framework */; };
-		883C30182D6EDEB20029BE30 /* QtDBus.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 883C30052D6EDEB10029BE30 /* QtDBus.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		883C30192D6EDEB20029BE30 /* QtXml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30062D6EDEB10029BE30 /* QtXml.framework */; };
-		883C301A2D6EDEB20029BE30 /* QtXml.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 883C30062D6EDEB10029BE30 /* QtXml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		883C301B2D6EDEB20029BE30 /* QtSerialPort.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30072D6EDEB10029BE30 /* QtSerialPort.framework */; };
-		883C301C2D6EDEB20029BE30 /* QtSerialPort.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 883C30072D6EDEB10029BE30 /* QtSerialPort.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		883C301D2D6EDEB20029BE30 /* QtVirtualKeyboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30082D6EDEB20029BE30 /* QtVirtualKeyboard.framework */; };
-		883C301E2D6EDEB20029BE30 /* QtVirtualKeyboard.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 883C30082D6EDEB20029BE30 /* QtVirtualKeyboard.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		883C301F2D6EDEB20029BE30 /* QtConcurrent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30092D6EDEB20029BE30 /* QtConcurrent.framework */; };
-		883C30202D6EDEB20029BE30 /* QtConcurrent.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 883C30092D6EDEB20029BE30 /* QtConcurrent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		883C30212D6EDEB20029BE30 /* QtNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C300A2D6EDEB20029BE30 /* QtNetwork.framework */; };
-		883C30222D6EDEB20029BE30 /* QtNetwork.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 883C300A2D6EDEB20029BE30 /* QtNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		883C30232D6EDEB20029BE30 /* QtWidgets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C300B2D6EDEB20029BE30 /* QtWidgets.framework */; };
-		883C30242D6EDEB20029BE30 /* QtWidgets.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 883C300B2D6EDEB20029BE30 /* QtWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		883C30252D6EDEB20029BE30 /* QtQuick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C300C2D6EDEB20029BE30 /* QtQuick.framework */; };
-		883C30262D6EDEB20029BE30 /* QtQuick.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 883C300C2D6EDEB20029BE30 /* QtQuick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		883C30272D6EDEB20029BE30 /* QtOpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C300D2D6EDEB20029BE30 /* QtOpenGL.framework */; };
-		883C30282D6EDEB20029BE30 /* QtOpenGL.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 883C300D2D6EDEB20029BE30 /* QtOpenGL.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		883C30292D6EDEB20029BE30 /* QtQmlWorkerScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C300E2D6EDEB20029BE30 /* QtQmlWorkerScript.framework */; };
-		883C302A2D6EDEB20029BE30 /* QtQmlWorkerScript.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 883C300E2D6EDEB20029BE30 /* QtQmlWorkerScript.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		883C302B2D6EDEB20029BE30 /* QtQml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C300F2D6EDEB20029BE30 /* QtQml.framework */; };
-		883C302C2D6EDEB20029BE30 /* QtQml.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 883C300F2D6EDEB20029BE30 /* QtQml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		883C302D2D6EDEB20029BE30 /* QtGui.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30102D6EDEB20029BE30 /* QtGui.framework */; };
-		883C302E2D6EDEB20029BE30 /* QtGui.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 883C30102D6EDEB20029BE30 /* QtGui.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		883C302F2D6EDEB20029BE30 /* QtCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30112D6EDEB20029BE30 /* QtCore.framework */; };
-		883C30302D6EDEB20029BE30 /* QtCore.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 883C30112D6EDEB20029BE30 /* QtCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		883C30312D6EDEB20029BE30 /* QtQmlModels.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30122D6EDEB20029BE30 /* QtQmlModels.framework */; };
-		883C30322D6EDEB20029BE30 /* QtQmlModels.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 883C30122D6EDEB20029BE30 /* QtQmlModels.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		883C30332D6EDEB20029BE30 /* QtSerialBus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30132D6EDEB20029BE30 /* QtSerialBus.framework */; };
-		883C30342D6EDEB20029BE30 /* QtSerialBus.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 883C30132D6EDEB20029BE30 /* QtSerialBus.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		883C30352D6EDEB20029BE30 /* QtSvg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30142D6EDEB20029BE30 /* QtSvg.framework */; };
-		883C30362D6EDEB20029BE30 /* QtSvg.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 883C30142D6EDEB20029BE30 /* QtSvg.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		883C303C2D6EDF710029BE30 /* libqtvirtualcanbus.dylib in Copy QT Plugins - canbus */ = {isa = PBXBuildFile; fileRef = 883C30382D6EDF710029BE30 /* libqtvirtualcanbus.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		883C303D2D6EDF710029BE30 /* libqtpassthrucanbus.dylib in Copy QT Plugins - canbus */ = {isa = PBXBuildFile; fileRef = 883C30392D6EDF710029BE30 /* libqtpassthrucanbus.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		883C303E2D6EDF710029BE30 /* libqtpeakcanbus.dylib in Copy QT Plugins - canbus */ = {isa = PBXBuildFile; fileRef = 883C303A2D6EDF710029BE30 /* libqtpeakcanbus.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		883C303F2D6EDF710029BE30 /* libqttinycanbus.dylib in Copy QT Plugins - canbus */ = {isa = PBXBuildFile; fileRef = 883C303B2D6EDF710029BE30 /* libqttinycanbus.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		883C30422D6EE02D0029BE30 /* libqsvgicon.dylib in Copy QT Plugins - iconengines */ = {isa = PBXBuildFile; fileRef = 883C30412D6EE02D0029BE30 /* libqsvgicon.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		883C304F2D6EE0920029BE30 /* libqmacheif.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 883C30442D6EE0910029BE30 /* libqmacheif.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		883C30502D6EE0920029BE30 /* libqgif.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 883C30452D6EE0910029BE30 /* libqgif.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		883C30512D6EE0920029BE30 /* libqmacjp2.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 883C30462D6EE0910029BE30 /* libqmacjp2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		883C30522D6EE0920029BE30 /* libqtiff.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 883C30472D6EE0910029BE30 /* libqtiff.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		883C30532D6EE0920029BE30 /* libqtga.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 883C30482D6EE0910029BE30 /* libqtga.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		883C30542D6EE0920029BE30 /* libqsvg.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 883C30492D6EE0910029BE30 /* libqsvg.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		883C30552D6EE0920029BE30 /* libqwbmp.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 883C304A2D6EE0920029BE30 /* libqwbmp.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		883C30562D6EE0920029BE30 /* libqicns.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 883C304B2D6EE0920029BE30 /* libqicns.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		883C30572D6EE0920029BE30 /* libqwebp.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 883C304C2D6EE0920029BE30 /* libqwebp.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		883C30582D6EE0920029BE30 /* libqjpeg.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 883C304D2D6EE0920029BE30 /* libqjpeg.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		883C30592D6EE0920029BE30 /* libqico.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 883C304E2D6EE0920029BE30 /* libqico.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		883C305C2D6EE0E90029BE30 /* libqscnetworkreachability.dylib in Copy QT Plugins - networkinformation */ = {isa = PBXBuildFile; fileRef = 883C305B2D6EE0E90029BE30 /* libqscnetworkreachability.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		883C305F2D6EE1310029BE30 /* libqtvirtualkeyboardplugin.dylib in Copy QT Plugins - platforminputcontexts */ = {isa = PBXBuildFile; fileRef = 883C305E2D6EE1310029BE30 /* libqtvirtualkeyboardplugin.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		883C30622D6EE1820029BE30 /* libqcocoa.dylib in Copy QT Plugins - platforms */ = {isa = PBXBuildFile; fileRef = 883C30612D6EE1820029BE30 /* libqcocoa.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		883C30652D6EE1C80029BE30 /* libqmacstyle.dylib in Copy QT Plugins - styles */ = {isa = PBXBuildFile; fileRef = 883C30642D6EE1C80029BE30 /* libqmacstyle.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		883C306A2D6EE20A0029BE30 /* libqopensslbackend.dylib in Copy QT Plugins - tls */ = {isa = PBXBuildFile; fileRef = 883C30672D6EE20A0029BE30 /* libqopensslbackend.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		883C306B2D6EE20A0029BE30 /* libqsecuretransportbackend.dylib in Copy QT Plugins - tls */ = {isa = PBXBuildFile; fileRef = 883C30682D6EE20A0029BE30 /* libqsecuretransportbackend.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		883C306C2D6EE20A0029BE30 /* libqcertonlybackend.dylib in Copy QT Plugins - tls */ = {isa = PBXBuildFile; fileRef = 883C30692D6EE20A0029BE30 /* libqcertonlybackend.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		883C309B2D6F12090029BE30 /* VSPClientUI.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 883C30982D6F12090029BE30 /* VSPClientUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		883C309C2D6F12090029BE30 /* VSPSetup.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 883C30992D6F12090029BE30 /* VSPSetup.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		883C309D2D6F12090029BE30 /* VSPController.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 883C309A2D6F12090029BE30 /* VSPController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		883C309E2D6F12470029BE30 /* VSPClientUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30982D6F12090029BE30 /* VSPClientUI.framework */; };
-		883C309F2D6F12470029BE30 /* VSPController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C309A2D6F12090029BE30 /* VSPController.framework */; };
-		883C30A02D6F12470029BE30 /* VSPSetup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30992D6F12090029BE30 /* VSPSetup.framework */; };
 		883C30A22D6F1C550029BE30 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30A12D6F1C550029BE30 /* IOKit.framework */; };
 		883C30A32D6F1C610029BE30 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8854A99E2D5DB1E400C27252 /* CoreFoundation.framework */; };
-		883C30A52D6F1C7B0029BE30 /* DriverKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30A42D6F1C7B0029BE30 /* DriverKit.framework */; };
-		883C30A72D6F1C810029BE30 /* SerialDriverKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30A62D6F1C810029BE30 /* SerialDriverKit.framework */; };
 		884F6EC72D59A5C90066353A /* VSPUserClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 884F6EC62D59A5C90066353A /* VSPUserClient.cpp */; };
 		8899C34A2D525AD800E17727 /* VSPSerialPort.iig in Sources */ = {isa = PBXBuildFile; fileRef = 8899C3492D525AD800E17727 /* VSPSerialPort.iig */; };
 		8899C34C2D525AFB00E17727 /* VSPSerialPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8899C34B2D525AFB00E17727 /* VSPSerialPort.cpp */; };
@@ -120,107 +158,165 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		883C30372D6EDEDB0029BE30 /* Copy QT Plugins - canbus */ = {
+		88005AA72D6FB0D90057089B /* Copy QT Plugins - bearer */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = bearer;
+			dstSubfolderSpec = 13;
+			files = (
+				88005AB22D6FB2010057089B /* libqgenericbearer.dylib in Copy QT Plugins - bearer */,
+				88005AB32D6FB2020057089B /* libqgenericbearer.dylib.dSYM in Copy QT Plugins - bearer */,
+			);
+			name = "Copy QT Plugins - bearer";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		88005AA82D6FB0DB0057089B /* Copy QT Plugins - canbus */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = canbus;
 			dstSubfolderSpec = 13;
 			files = (
-				883C303C2D6EDF710029BE30 /* libqtvirtualcanbus.dylib in Copy QT Plugins - canbus */,
-				883C303D2D6EDF710029BE30 /* libqtpassthrucanbus.dylib in Copy QT Plugins - canbus */,
-				883C303E2D6EDF710029BE30 /* libqtpeakcanbus.dylib in Copy QT Plugins - canbus */,
-				883C303F2D6EDF710029BE30 /* libqttinycanbus.dylib in Copy QT Plugins - canbus */,
+				88005ABC2D6FB25B0057089B /* libqttinycanbus.dylib.dSYM in Copy QT Plugins - canbus */,
+				88005ABD2D6FB25B0057089B /* libqttinycanbus.dylib in Copy QT Plugins - canbus */,
+				88005ABE2D6FB25B0057089B /* libqtvirtualcanbus.dylib.dSYM in Copy QT Plugins - canbus */,
+				88005ABF2D6FB25B0057089B /* libqtpeakcanbus.dylib.dSYM in Copy QT Plugins - canbus */,
+				88005AC02D6FB25B0057089B /* libqtpassthrucanbus.dylib.dSYM in Copy QT Plugins - canbus */,
+				88005AC12D6FB25B0057089B /* libqtpassthrucanbus.dylib in Copy QT Plugins - canbus */,
+				88005AC22D6FB25B0057089B /* libqtpeakcanbus.dylib in Copy QT Plugins - canbus */,
+				88005AC32D6FB25B0057089B /* libqtvirtualcanbus.dylib in Copy QT Plugins - canbus */,
 			);
 			name = "Copy QT Plugins - canbus";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		883C30402D6EDFA60029BE30 /* Copy QT Plugins - iconengines */ = {
+		88005AA92D6FB0DE0057089B /* Copy QT Plugins - iconengines */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = iconengines;
 			dstSubfolderSpec = 13;
 			files = (
-				883C30422D6EE02D0029BE30 /* libqsvgicon.dylib in Copy QT Plugins - iconengines */,
+				88005AD02D6FB2C00057089B /* libqsvgicon.dylib in Copy QT Plugins - iconengines */,
+				88005AD12D6FB2C00057089B /* libqsvgicon.dylib.dSYM in Copy QT Plugins - iconengines */,
 			);
 			name = "Copy QT Plugins - iconengines";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		883C30432D6EE0450029BE30 /* Copy QT Plugins - imageformats */ = {
+		88005AAA2D6FB0DF0057089B /* Copy QT Plugins - imageformats */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = imageformats;
 			dstSubfolderSpec = 13;
 			files = (
-				883C304F2D6EE0920029BE30 /* libqmacheif.dylib in Copy QT Plugins - imageformats */,
-				883C30502D6EE0920029BE30 /* libqgif.dylib in Copy QT Plugins - imageformats */,
-				883C30512D6EE0920029BE30 /* libqmacjp2.dylib in Copy QT Plugins - imageformats */,
-				883C30522D6EE0920029BE30 /* libqtiff.dylib in Copy QT Plugins - imageformats */,
-				883C30532D6EE0920029BE30 /* libqtga.dylib in Copy QT Plugins - imageformats */,
-				883C30542D6EE0920029BE30 /* libqsvg.dylib in Copy QT Plugins - imageformats */,
-				883C30552D6EE0920029BE30 /* libqwbmp.dylib in Copy QT Plugins - imageformats */,
-				883C30562D6EE0920029BE30 /* libqicns.dylib in Copy QT Plugins - imageformats */,
-				883C30572D6EE0920029BE30 /* libqwebp.dylib in Copy QT Plugins - imageformats */,
-				883C30582D6EE0920029BE30 /* libqjpeg.dylib in Copy QT Plugins - imageformats */,
-				883C30592D6EE0920029BE30 /* libqico.dylib in Copy QT Plugins - imageformats */,
+				88005AE92D6FB30D0057089B /* libqmacheif.dylib in Copy QT Plugins - imageformats */,
+				88005AEA2D6FB30D0057089B /* libqmacheif.dylib.dSYM in Copy QT Plugins - imageformats */,
+				88005AEB2D6FB30D0057089B /* libqsvg.dylib.dSYM in Copy QT Plugins - imageformats */,
+				88005AEC2D6FB30D0057089B /* libqwbmp.dylib.dSYM in Copy QT Plugins - imageformats */,
+				88005AED2D6FB30D0057089B /* libqwebp.dylib.dSYM in Copy QT Plugins - imageformats */,
+				88005AEE2D6FB30D0057089B /* libqwbmp.dylib in Copy QT Plugins - imageformats */,
+				88005AEF2D6FB30D0057089B /* libqwebp.dylib in Copy QT Plugins - imageformats */,
+				88005AF02D6FB30D0057089B /* libqtga.dylib in Copy QT Plugins - imageformats */,
+				88005AF12D6FB30D0057089B /* libqtiff.dylib in Copy QT Plugins - imageformats */,
+				88005AF22D6FB30D0057089B /* libqico.dylib in Copy QT Plugins - imageformats */,
+				88005AF32D6FB30D0057089B /* libqgif.dylib in Copy QT Plugins - imageformats */,
+				88005AF42D6FB30D0057089B /* libqtga.dylib.dSYM in Copy QT Plugins - imageformats */,
+				88005AF52D6FB30D0057089B /* libqmacjp2.dylib.dSYM in Copy QT Plugins - imageformats */,
+				88005AF62D6FB30D0057089B /* libqjpeg.dylib in Copy QT Plugins - imageformats */,
+				88005AF72D6FB30D0057089B /* libqicns.dylib.dSYM in Copy QT Plugins - imageformats */,
+				88005AF82D6FB30D0057089B /* libqico.dylib.dSYM in Copy QT Plugins - imageformats */,
+				88005AF92D6FB30D0057089B /* libqgif.dylib.dSYM in Copy QT Plugins - imageformats */,
+				88005AFA2D6FB30D0057089B /* libqjpeg.dylib.dSYM in Copy QT Plugins - imageformats */,
+				88005AFB2D6FB30D0057089B /* libqicns.dylib in Copy QT Plugins - imageformats */,
+				88005AFC2D6FB30D0057089B /* libqsvg.dylib in Copy QT Plugins - imageformats */,
+				88005AFD2D6FB30D0057089B /* libqtiff.dylib.dSYM in Copy QT Plugins - imageformats */,
+				88005AFE2D6FB30D0057089B /* libqmacjp2.dylib in Copy QT Plugins - imageformats */,
+				88005AFF2D6FB30D0057089B /* libqpdf.dylib.dSYM in Copy QT Plugins - imageformats */,
 			);
 			name = "Copy QT Plugins - imageformats";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		883C305A2D6EE0A10029BE30 /* Copy QT Plugins - networkinformation */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = networkinformation;
-			dstSubfolderSpec = 13;
-			files = (
-				883C305C2D6EE0E90029BE30 /* libqscnetworkreachability.dylib in Copy QT Plugins - networkinformation */,
-			);
-			name = "Copy QT Plugins - networkinformation";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		883C305D2D6EE0EE0029BE30 /* Copy QT Plugins - platforminputcontexts */ = {
+		88005AAB2D6FB0E10057089B /* Copy QT Plugins - platforminputcontexts */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = platforminputcontexts;
 			dstSubfolderSpec = 13;
 			files = (
-				883C305F2D6EE1310029BE30 /* libqtvirtualkeyboardplugin.dylib in Copy QT Plugins - platforminputcontexts */,
+				88005B022D6FB3330057089B /* libqtvirtualkeyboardplugin.dylib in Copy QT Plugins - platforminputcontexts */,
+				88005B032D6FB3330057089B /* libqtvirtualkeyboardplugin.dylib.dSYM in Copy QT Plugins - platforminputcontexts */,
 			);
 			name = "Copy QT Plugins - platforminputcontexts";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		883C30602D6EE1390029BE30 /* Copy QT Plugins - platforms */ = {
+		88005AAC2D6FB0E30057089B /* Copy QT Plugins - platforms */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = platforms;
 			dstSubfolderSpec = 13;
 			files = (
-				883C30622D6EE1820029BE30 /* libqcocoa.dylib in Copy QT Plugins - platforms */,
+				88005B0C2D6FB36D0057089B /* libqcocoa.dylib.dSYM in Copy QT Plugins - platforms */,
+				88005B0D2D6FB36D0057089B /* libqminimal.dylib.dSYM in Copy QT Plugins - platforms */,
+				88005B0E2D6FB36D0057089B /* libqwebgl.dylib in Copy QT Plugins - platforms */,
+				88005B0F2D6FB36D0057089B /* libqminimal.dylib in Copy QT Plugins - platforms */,
+				88005B102D6FB36D0057089B /* libqoffscreen.dylib in Copy QT Plugins - platforms */,
+				88005B112D6FB36D0057089B /* libqoffscreen.dylib.dSYM in Copy QT Plugins - platforms */,
+				88005B122D6FB36D0057089B /* libqwebgl.dylib.dSYM in Copy QT Plugins - platforms */,
+				88005B132D6FB36D0057089B /* libqcocoa.dylib in Copy QT Plugins - platforms */,
 			);
 			name = "Copy QT Plugins - platforms";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		883C30632D6EE18E0029BE30 /* Copy QT Plugins - styles */ = {
+		88005AAD2D6FB1470057089B /* Copy QT Plugins - printsupport */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = printsupport;
+			dstSubfolderSpec = 13;
+			files = (
+				88005B162D6FB3970057089B /* libcocoaprintersupport.dylib.dSYM in Copy QT Plugins - printsupport */,
+				88005B172D6FB3970057089B /* libcocoaprintersupport.dylib in Copy QT Plugins - printsupport */,
+			);
+			name = "Copy QT Plugins - printsupport";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		88005AAE2D6FB1490057089B /* Copy Copy QT Plugins - styles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = styles;
 			dstSubfolderSpec = 13;
 			files = (
-				883C30652D6EE1C80029BE30 /* libqmacstyle.dylib in Copy QT Plugins - styles */,
+				88005B1F2D6FB3F10057089B /* libqmacstyle.dylib.dSYM in Copy Copy QT Plugins - styles */,
+				88005B202D6FB3F10057089B /* libqmacstyle.dylib in Copy Copy QT Plugins - styles */,
 			);
-			name = "Copy QT Plugins - styles";
+			name = "Copy Copy QT Plugins - styles";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		883C30662D6EE1D50029BE30 /* Copy QT Plugins - tls */ = {
+		88005AAF2D6FB14C0057089B /* Copy QT Plugins - virtualkeyboard */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = tls;
+			dstPath = virtualkeyboard;
 			dstSubfolderSpec = 13;
 			files = (
-				883C306A2D6EE20A0029BE30 /* libqopensslbackend.dylib in Copy QT Plugins - tls */,
-				883C306B2D6EE20A0029BE30 /* libqsecuretransportbackend.dylib in Copy QT Plugins - tls */,
-				883C306C2D6EE20A0029BE30 /* libqcertonlybackend.dylib in Copy QT Plugins - tls */,
+				88005B2B2D6FB4140057089B /* libqtvirtualkeyboard_hangul.dylib in Copy QT Plugins - virtualkeyboard */,
+				88005B2C2D6FB4140057089B /* libqtvirtualkeyboard_hangul.dylib.dSYM in Copy QT Plugins - virtualkeyboard */,
+				88005B2D2D6FB4140057089B /* libqtvirtualkeyboard_openwnn.dylib in Copy QT Plugins - virtualkeyboard */,
+				88005B2E2D6FB4140057089B /* libqtvirtualkeyboard_thai.dylib.dSYM in Copy QT Plugins - virtualkeyboard */,
+				88005B2F2D6FB4140057089B /* libqtvirtualkeyboard_pinyin.dylib in Copy QT Plugins - virtualkeyboard */,
+				88005B302D6FB4140057089B /* libqtvirtualkeyboard_tcime.dylib.dSYM in Copy QT Plugins - virtualkeyboard */,
+				88005B312D6FB4140057089B /* libqtvirtualkeyboard_thai.dylib in Copy QT Plugins - virtualkeyboard */,
+				88005B322D6FB4140057089B /* libqtvirtualkeyboard_openwnn.dylib.dSYM in Copy QT Plugins - virtualkeyboard */,
+				88005B332D6FB4140057089B /* libqtvirtualkeyboard_tcime.dylib in Copy QT Plugins - virtualkeyboard */,
+				88005B342D6FB4140057089B /* libqtvirtualkeyboard_pinyin.dylib.dSYM in Copy QT Plugins - virtualkeyboard */,
 			);
-			name = "Copy QT Plugins - tls";
+			name = "Copy QT Plugins - virtualkeyboard";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		88005B182D6FB3A20057089B /* Copy QT Plugins - platformthemes */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = platformthemes;
+			dstSubfolderSpec = 13;
+			files = (
+				88005B1B2D6FB3D10057089B /* libqxdgdesktopportal.dylib in Copy QT Plugins - platformthemes */,
+				88005B1C2D6FB3D10057089B /* libqxdgdesktopportal.dylib.dSYM in Copy QT Plugins - platformthemes */,
+			);
+			name = "Copy QT Plugins - platformthemes";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		8869B5072D627FCD002643D9 /* Embed Libraries */ = {
@@ -229,26 +325,26 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				883C309B2D6F12090029BE30 /* VSPClientUI.framework in Embed Libraries */,
-				883C309C2D6F12090029BE30 /* VSPSetup.framework in Embed Libraries */,
-				883C309D2D6F12090029BE30 /* VSPController.framework in Embed Libraries */,
-				883C301A2D6EDEB20029BE30 /* QtXml.framework in Embed Libraries */,
-				883C30222D6EDEB20029BE30 /* QtNetwork.framework in Embed Libraries */,
-				883C30262D6EDEB20029BE30 /* QtQuick.framework in Embed Libraries */,
-				883C30342D6EDEB20029BE30 /* QtSerialBus.framework in Embed Libraries */,
-				883C30242D6EDEB20029BE30 /* QtWidgets.framework in Embed Libraries */,
-				883C302E2D6EDEB20029BE30 /* QtGui.framework in Embed Libraries */,
-				883C30322D6EDEB20029BE30 /* QtQmlModels.framework in Embed Libraries */,
-				883C302A2D6EDEB20029BE30 /* QtQmlWorkerScript.framework in Embed Libraries */,
-				883C30182D6EDEB20029BE30 /* QtDBus.framework in Embed Libraries */,
-				883C30162D6EDEB20029BE30 /* QtQmlMeta.framework in Embed Libraries */,
-				883C30282D6EDEB20029BE30 /* QtOpenGL.framework in Embed Libraries */,
-				883C301E2D6EDEB20029BE30 /* QtVirtualKeyboard.framework in Embed Libraries */,
-				883C30302D6EDEB20029BE30 /* QtCore.framework in Embed Libraries */,
-				883C30362D6EDEB20029BE30 /* QtSvg.framework in Embed Libraries */,
-				883C302C2D6EDEB20029BE30 /* QtQml.framework in Embed Libraries */,
-				883C301C2D6EDEB20029BE30 /* QtSerialPort.framework in Embed Libraries */,
-				883C30202D6EDEB20029BE30 /* QtConcurrent.framework in Embed Libraries */,
+				88005A7C2D6F5C010057089B /* QtConcurrent.framework in Embed Libraries */,
+				88005A7D2D6F5C010057089B /* QtCore.framework in Embed Libraries */,
+				88005A7E2D6F5C010057089B /* QtDBus.framework in Embed Libraries */,
+				88005A7F2D6F5C010057089B /* QtGui.framework in Embed Libraries */,
+				88005A802D6F5C010057089B /* QtMacExtras.framework in Embed Libraries */,
+				88005A812D6F5C010057089B /* QtNetwork.framework in Embed Libraries */,
+				88005A822D6F5C010057089B /* QtOpenGL.framework in Embed Libraries */,
+				88005A832D6F5C010057089B /* QtPrintSupport.framework in Embed Libraries */,
+				88005A842D6F5C010057089B /* QtQml.framework in Embed Libraries */,
+				88005A852D6F5C010057089B /* QtQmlModels.framework in Embed Libraries */,
+				88005A862D6F5C010057089B /* QtQuick.framework in Embed Libraries */,
+				88005A872D6F5C010057089B /* QtSensors.framework in Embed Libraries */,
+				88005A882D6F5C010057089B /* QtSerialBus.framework in Embed Libraries */,
+				88005A892D6F5C010057089B /* QtSerialPort.framework in Embed Libraries */,
+				88005A8A2D6F5C020057089B /* QtSvg.framework in Embed Libraries */,
+				88005A8B2D6F5C020057089B /* QtVirtualKeyboard.framework in Embed Libraries */,
+				88005A8C2D6F5C020057089B /* QtXml.framework in Embed Libraries */,
+				88005A8D2D6F5C0A0057089B /* VSPClientUI.framework in Embed Libraries */,
+				88005A8E2D6F5C0A0057089B /* VSPController.framework in Embed Libraries */,
+				88005A8F2D6F5C0A0057089B /* VSPSetup.framework in Embed Libraries */,
 			);
 			name = "Embed Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -267,6 +363,109 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		880059D92D6F557A0057089B /* SerialDriverKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SerialDriverKit.framework; path = Platforms/DriverKit.platform/Developer/SDKs/DriverKit22.2.sdk/System/DriverKit/System/Library/Frameworks/SerialDriverKit.framework; sourceTree = DEVELOPER_DIR; };
+		880059DB2D6F55870057089B /* DriverKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DriverKit.framework; path = Platforms/DriverKit.platform/Developer/SDKs/DriverKit22.2.sdk/System/DriverKit/System/Library/Frameworks/DriverKit.framework; sourceTree = DEVELOPER_DIR; };
+		88005A362D6F5B6A0057089B /* VSPClientUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VSPClientUI.framework; sourceTree = "<group>"; };
+		88005A372D6F5B6A0057089B /* VSPSetup.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VSPSetup.framework; sourceTree = "<group>"; };
+		88005A382D6F5B6A0057089B /* VSPController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VSPController.framework; sourceTree = "<group>"; };
+		88005A3C2D6F5B920057089B /* styles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = styles; path = ../../../../Qt/5.15.2/clang_64/plugins/styles; sourceTree = "<group>"; };
+		88005A3D2D6F5B920057089B /* imageformats */ = {isa = PBXFileReference; lastKnownFileType = folder; name = imageformats; path = ../../../../Qt/5.15.2/clang_64/plugins/imageformats; sourceTree = "<group>"; };
+		88005A3E2D6F5B920057089B /* platforms */ = {isa = PBXFileReference; lastKnownFileType = folder; name = platforms; path = ../../../../Qt/5.15.2/clang_64/plugins/platforms; sourceTree = "<group>"; };
+		88005A3F2D6F5B920057089B /* platforminputcontexts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = platforminputcontexts; path = ../../../../Qt/5.15.2/clang_64/plugins/platforminputcontexts; sourceTree = "<group>"; };
+		88005A402D6F5B920057089B /* bearer */ = {isa = PBXFileReference; lastKnownFileType = folder; name = bearer; path = ../../../../Qt/5.15.2/clang_64/plugins/bearer; sourceTree = "<group>"; };
+		88005A412D6F5B920057089B /* virtualkeyboard */ = {isa = PBXFileReference; lastKnownFileType = folder; name = virtualkeyboard; path = ../../../../Qt/5.15.2/clang_64/plugins/virtualkeyboard; sourceTree = "<group>"; };
+		88005A422D6F5B920057089B /* platformthemes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = platformthemes; path = ../../../../Qt/5.15.2/clang_64/plugins/platformthemes; sourceTree = "<group>"; };
+		88005A432D6F5B920057089B /* canbus */ = {isa = PBXFileReference; lastKnownFileType = folder; name = canbus; path = ../../../../Qt/5.15.2/clang_64/plugins/canbus; sourceTree = "<group>"; };
+		88005A442D6F5B920057089B /* iconengines */ = {isa = PBXFileReference; lastKnownFileType = folder; name = iconengines; path = ../../../../Qt/5.15.2/clang_64/plugins/iconengines; sourceTree = "<group>"; };
+		88005A452D6F5B920057089B /* printsupport */ = {isa = PBXFileReference; lastKnownFileType = folder; name = printsupport; path = ../../../../Qt/5.15.2/clang_64/plugins/printsupport; sourceTree = "<group>"; };
+		88005A502D6F5BE70057089B /* QtPrintSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtPrintSupport.framework; path = ../../../../Qt/5.15.2/clang_64/lib/QtPrintSupport.framework; sourceTree = "<group>"; };
+		88005A512D6F5BE70057089B /* QtQml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQml.framework; path = ../../../../Qt/5.15.2/clang_64/lib/QtQml.framework; sourceTree = "<group>"; };
+		88005A522D6F5BE70057089B /* QtDBus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtDBus.framework; path = ../../../../Qt/5.15.2/clang_64/lib/QtDBus.framework; sourceTree = "<group>"; };
+		88005A532D6F5BE70057089B /* QtVirtualKeyboard.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtVirtualKeyboard.framework; path = ../../../../Qt/5.15.2/clang_64/lib/QtVirtualKeyboard.framework; sourceTree = "<group>"; };
+		88005A542D6F5BE70057089B /* QtSerialPort.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtSerialPort.framework; path = ../../../../Qt/5.15.2/clang_64/lib/QtSerialPort.framework; sourceTree = "<group>"; };
+		88005A552D6F5BE70057089B /* QtMacExtras.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtMacExtras.framework; path = ../../../../Qt/5.15.2/clang_64/lib/QtMacExtras.framework; sourceTree = "<group>"; };
+		88005A562D6F5BE70057089B /* QtQmlModels.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQmlModels.framework; path = ../../../../Qt/5.15.2/clang_64/lib/QtQmlModels.framework; sourceTree = "<group>"; };
+		88005A572D6F5BE70057089B /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = ../../../../Qt/5.15.2/clang_64/lib/QtGui.framework; sourceTree = "<group>"; };
+		88005A582D6F5BE70057089B /* QtSerialBus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtSerialBus.framework; path = ../../../../Qt/5.15.2/clang_64/lib/QtSerialBus.framework; sourceTree = "<group>"; };
+		88005A592D6F5BE70057089B /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = ../../../../Qt/5.15.2/clang_64/lib/QtCore.framework; sourceTree = "<group>"; };
+		88005A5A2D6F5BE70057089B /* QtOpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtOpenGL.framework; path = ../../../../Qt/5.15.2/clang_64/lib/QtOpenGL.framework; sourceTree = "<group>"; };
+		88005A5B2D6F5BE70057089B /* QtSensors.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtSensors.framework; path = ../../../../Qt/5.15.2/clang_64/lib/QtSensors.framework; sourceTree = "<group>"; };
+		88005A5C2D6F5BE70057089B /* QtQuick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuick.framework; path = ../../../../Qt/5.15.2/clang_64/lib/QtQuick.framework; sourceTree = "<group>"; };
+		88005A5D2D6F5BE70057089B /* QtNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtNetwork.framework; path = ../../../../Qt/5.15.2/clang_64/lib/QtNetwork.framework; sourceTree = "<group>"; };
+		88005A5E2D6F5BE70057089B /* QtConcurrent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtConcurrent.framework; path = ../../../../Qt/5.15.2/clang_64/lib/QtConcurrent.framework; sourceTree = "<group>"; };
+		88005A5F2D6F5BE70057089B /* QtSvg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtSvg.framework; path = ../../../../Qt/5.15.2/clang_64/lib/QtSvg.framework; sourceTree = "<group>"; };
+		88005A602D6F5BE80057089B /* QtXml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtXml.framework; path = ../../../../Qt/5.15.2/clang_64/lib/QtXml.framework; sourceTree = "<group>"; };
+		88005AB02D6FB2010057089B /* libqgenericbearer.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqgenericbearer.dylib; path = ../../../../Qt/5.15.2/clang_64/plugins/bearer/libqgenericbearer.dylib; sourceTree = "<group>"; };
+		88005AB12D6FB2010057089B /* libqgenericbearer.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqgenericbearer.dylib.dSYM; path = ../../../../Qt/5.15.2/clang_64/plugins/bearer/libqgenericbearer.dylib.dSYM; sourceTree = "<group>"; };
+		88005AB42D6FB25B0057089B /* libqttinycanbus.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqttinycanbus.dylib.dSYM; path = ../../../../Qt/5.15.2/clang_64/plugins/canbus/libqttinycanbus.dylib.dSYM; sourceTree = "<group>"; };
+		88005AB52D6FB25B0057089B /* libqttinycanbus.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqttinycanbus.dylib; path = ../../../../Qt/5.15.2/clang_64/plugins/canbus/libqttinycanbus.dylib; sourceTree = "<group>"; };
+		88005AB62D6FB25B0057089B /* libqtvirtualcanbus.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqtvirtualcanbus.dylib.dSYM; path = ../../../../Qt/5.15.2/clang_64/plugins/canbus/libqtvirtualcanbus.dylib.dSYM; sourceTree = "<group>"; };
+		88005AB72D6FB25B0057089B /* libqtpeakcanbus.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqtpeakcanbus.dylib.dSYM; path = ../../../../Qt/5.15.2/clang_64/plugins/canbus/libqtpeakcanbus.dylib.dSYM; sourceTree = "<group>"; };
+		88005AB82D6FB25B0057089B /* libqtpassthrucanbus.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqtpassthrucanbus.dylib.dSYM; path = ../../../../Qt/5.15.2/clang_64/plugins/canbus/libqtpassthrucanbus.dylib.dSYM; sourceTree = "<group>"; };
+		88005AB92D6FB25B0057089B /* libqtpassthrucanbus.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqtpassthrucanbus.dylib; path = ../../../../Qt/5.15.2/clang_64/plugins/canbus/libqtpassthrucanbus.dylib; sourceTree = "<group>"; };
+		88005ABA2D6FB25B0057089B /* libqtpeakcanbus.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqtpeakcanbus.dylib; path = ../../../../Qt/5.15.2/clang_64/plugins/canbus/libqtpeakcanbus.dylib; sourceTree = "<group>"; };
+		88005ABB2D6FB25B0057089B /* libqtvirtualcanbus.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqtvirtualcanbus.dylib; path = ../../../../Qt/5.15.2/clang_64/plugins/canbus/libqtvirtualcanbus.dylib; sourceTree = "<group>"; };
+		88005AC42D6FB2790057089B /* libqtpeakcanbus.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtpeakcanbus.dylib.dSYM; sourceTree = "<group>"; };
+		88005AC52D6FB27A0057089B /* libqttinycanbus.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqttinycanbus.dylib; sourceTree = "<group>"; };
+		88005AC62D6FB27B0057089B /* libqtpeakcanbus.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqtpeakcanbus.dylib; sourceTree = "<group>"; };
+		88005AC72D6FB27B0057089B /* libqtpassthrucanbus.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtpassthrucanbus.dylib.dSYM; sourceTree = "<group>"; };
+		88005AC82D6FB27C0057089B /* libqtvirtualcanbus.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqtvirtualcanbus.dylib; sourceTree = "<group>"; };
+		88005AC92D6FB27D0057089B /* libqttinycanbus.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqttinycanbus.dylib.dSYM; sourceTree = "<group>"; };
+		88005ACA2D6FB27E0057089B /* libqgenericbearer.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqgenericbearer.dylib; sourceTree = "<group>"; };
+		88005ACB2D6FB27E0057089B /* libqgenericbearer.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqgenericbearer.dylib.dSYM; sourceTree = "<group>"; };
+		88005ACC2D6FB27F0057089B /* libqtpassthrucanbus.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqtpassthrucanbus.dylib; sourceTree = "<group>"; };
+		88005ACD2D6FB2800057089B /* libqtvirtualcanbus.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtvirtualcanbus.dylib.dSYM; sourceTree = "<group>"; };
+		88005ACE2D6FB2C00057089B /* libqsvgicon.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqsvgicon.dylib; sourceTree = "<group>"; };
+		88005ACF2D6FB2C00057089B /* libqsvgicon.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqsvgicon.dylib.dSYM; sourceTree = "<group>"; };
+		88005AD22D6FB30C0057089B /* libqmacheif.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqmacheif.dylib; sourceTree = "<group>"; };
+		88005AD32D6FB30C0057089B /* libqmacheif.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqmacheif.dylib.dSYM; sourceTree = "<group>"; };
+		88005AD42D6FB30C0057089B /* libqsvg.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqsvg.dylib.dSYM; sourceTree = "<group>"; };
+		88005AD52D6FB30C0057089B /* libqwbmp.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqwbmp.dylib.dSYM; sourceTree = "<group>"; };
+		88005AD62D6FB30C0057089B /* libqwebp.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqwebp.dylib.dSYM; sourceTree = "<group>"; };
+		88005AD72D6FB30C0057089B /* libqwbmp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqwbmp.dylib; sourceTree = "<group>"; };
+		88005AD82D6FB30C0057089B /* libqwebp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqwebp.dylib; sourceTree = "<group>"; };
+		88005AD92D6FB30C0057089B /* libqtga.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqtga.dylib; sourceTree = "<group>"; };
+		88005ADA2D6FB30C0057089B /* libqtiff.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqtiff.dylib; sourceTree = "<group>"; };
+		88005ADB2D6FB30C0057089B /* libqico.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqico.dylib; sourceTree = "<group>"; };
+		88005ADC2D6FB30C0057089B /* libqgif.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqgif.dylib; sourceTree = "<group>"; };
+		88005ADD2D6FB30C0057089B /* libqtga.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtga.dylib.dSYM; sourceTree = "<group>"; };
+		88005ADE2D6FB30C0057089B /* libqmacjp2.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqmacjp2.dylib.dSYM; sourceTree = "<group>"; };
+		88005ADF2D6FB30C0057089B /* libqjpeg.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqjpeg.dylib; sourceTree = "<group>"; };
+		88005AE02D6FB30C0057089B /* libqicns.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqicns.dylib.dSYM; sourceTree = "<group>"; };
+		88005AE12D6FB30C0057089B /* libqico.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqico.dylib.dSYM; sourceTree = "<group>"; };
+		88005AE22D6FB30D0057089B /* libqgif.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqgif.dylib.dSYM; sourceTree = "<group>"; };
+		88005AE32D6FB30D0057089B /* libqjpeg.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqjpeg.dylib.dSYM; sourceTree = "<group>"; };
+		88005AE42D6FB30D0057089B /* libqicns.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqicns.dylib; sourceTree = "<group>"; };
+		88005AE52D6FB30D0057089B /* libqsvg.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqsvg.dylib; sourceTree = "<group>"; };
+		88005AE62D6FB30D0057089B /* libqtiff.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtiff.dylib.dSYM; sourceTree = "<group>"; };
+		88005AE72D6FB30D0057089B /* libqmacjp2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqmacjp2.dylib; sourceTree = "<group>"; };
+		88005AE82D6FB30D0057089B /* libqpdf.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqpdf.dylib.dSYM; sourceTree = "<group>"; };
+		88005B002D6FB3330057089B /* libqtvirtualkeyboardplugin.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqtvirtualkeyboardplugin.dylib; sourceTree = "<group>"; };
+		88005B012D6FB3330057089B /* libqtvirtualkeyboardplugin.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtvirtualkeyboardplugin.dylib.dSYM; sourceTree = "<group>"; };
+		88005B042D6FB36D0057089B /* libqcocoa.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqcocoa.dylib.dSYM; sourceTree = "<group>"; };
+		88005B052D6FB36D0057089B /* libqminimal.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqminimal.dylib.dSYM; sourceTree = "<group>"; };
+		88005B062D6FB36D0057089B /* libqwebgl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqwebgl.dylib; sourceTree = "<group>"; };
+		88005B072D6FB36D0057089B /* libqminimal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqminimal.dylib; sourceTree = "<group>"; };
+		88005B082D6FB36D0057089B /* libqoffscreen.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqoffscreen.dylib; sourceTree = "<group>"; };
+		88005B092D6FB36D0057089B /* libqoffscreen.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqoffscreen.dylib.dSYM; sourceTree = "<group>"; };
+		88005B0A2D6FB36D0057089B /* libqwebgl.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqwebgl.dylib.dSYM; sourceTree = "<group>"; };
+		88005B0B2D6FB36D0057089B /* libqcocoa.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqcocoa.dylib; sourceTree = "<group>"; };
+		88005B142D6FB3970057089B /* libcocoaprintersupport.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libcocoaprintersupport.dylib.dSYM; sourceTree = "<group>"; };
+		88005B152D6FB3970057089B /* libcocoaprintersupport.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libcocoaprintersupport.dylib; sourceTree = "<group>"; };
+		88005B192D6FB3D10057089B /* libqxdgdesktopportal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqxdgdesktopportal.dylib; sourceTree = "<group>"; };
+		88005B1A2D6FB3D10057089B /* libqxdgdesktopportal.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqxdgdesktopportal.dylib.dSYM; sourceTree = "<group>"; };
+		88005B1D2D6FB3F10057089B /* libqmacstyle.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqmacstyle.dylib.dSYM; sourceTree = "<group>"; };
+		88005B1E2D6FB3F10057089B /* libqmacstyle.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqmacstyle.dylib; sourceTree = "<group>"; };
+		88005B212D6FB4130057089B /* libqtvirtualkeyboard_hangul.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqtvirtualkeyboard_hangul.dylib; sourceTree = "<group>"; };
+		88005B222D6FB4130057089B /* libqtvirtualkeyboard_hangul.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtvirtualkeyboard_hangul.dylib.dSYM; sourceTree = "<group>"; };
+		88005B232D6FB4130057089B /* libqtvirtualkeyboard_openwnn.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqtvirtualkeyboard_openwnn.dylib; sourceTree = "<group>"; };
+		88005B242D6FB4130057089B /* libqtvirtualkeyboard_thai.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtvirtualkeyboard_thai.dylib.dSYM; sourceTree = "<group>"; };
+		88005B252D6FB4130057089B /* libqtvirtualkeyboard_pinyin.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqtvirtualkeyboard_pinyin.dylib; sourceTree = "<group>"; };
+		88005B262D6FB4130057089B /* libqtvirtualkeyboard_tcime.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtvirtualkeyboard_tcime.dylib.dSYM; sourceTree = "<group>"; };
+		88005B272D6FB4130057089B /* libqtvirtualkeyboard_thai.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqtvirtualkeyboard_thai.dylib; sourceTree = "<group>"; };
+		88005B282D6FB4130057089B /* libqtvirtualkeyboard_openwnn.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtvirtualkeyboard_openwnn.dylib.dSYM; sourceTree = "<group>"; };
+		88005B292D6FB4130057089B /* libqtvirtualkeyboard_tcime.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libqtvirtualkeyboard_tcime.dylib; sourceTree = "<group>"; };
+		88005B2A2D6FB4130057089B /* libqtvirtualkeyboard_pinyin.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtvirtualkeyboard_pinyin.dylib.dSYM; sourceTree = "<group>"; };
 		880539E82D4BAFBD00E55104 /* VSPClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VSPClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		880539EC2D4BAFBF00E55104 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		880539F12D4BAFBF00E55104 /* VSPClient.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VSPClient.entitlements; sourceTree = "<group>"; };
@@ -288,36 +487,10 @@
 		883C30122D6EDEB20029BE30 /* QtQmlModels.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQmlModels.framework; path = ../../Qt/6.8.2/macos/lib/QtQmlModels.framework; sourceTree = "<group>"; };
 		883C30132D6EDEB20029BE30 /* QtSerialBus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtSerialBus.framework; path = ../../Qt/6.8.2/macos/lib/QtSerialBus.framework; sourceTree = "<group>"; };
 		883C30142D6EDEB20029BE30 /* QtSvg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtSvg.framework; path = ../../Qt/6.8.2/macos/lib/QtSvg.framework; sourceTree = "<group>"; };
-		883C30382D6EDF710029BE30 /* libqtvirtualcanbus.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqtvirtualcanbus.dylib; path = ../../../Qt/6.8.2/macos/plugins/canbus/libqtvirtualcanbus.dylib; sourceTree = "<group>"; };
-		883C30392D6EDF710029BE30 /* libqtpassthrucanbus.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqtpassthrucanbus.dylib; path = ../../../Qt/6.8.2/macos/plugins/canbus/libqtpassthrucanbus.dylib; sourceTree = "<group>"; };
-		883C303A2D6EDF710029BE30 /* libqtpeakcanbus.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqtpeakcanbus.dylib; path = ../../../Qt/6.8.2/macos/plugins/canbus/libqtpeakcanbus.dylib; sourceTree = "<group>"; };
-		883C303B2D6EDF710029BE30 /* libqttinycanbus.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqttinycanbus.dylib; path = ../../../Qt/6.8.2/macos/plugins/canbus/libqttinycanbus.dylib; sourceTree = "<group>"; };
-		883C30412D6EE02D0029BE30 /* libqsvgicon.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqsvgicon.dylib; path = ../../../Qt/6.8.2/macos/plugins/iconengines/libqsvgicon.dylib; sourceTree = "<group>"; };
-		883C30442D6EE0910029BE30 /* libqmacheif.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqmacheif.dylib; path = ../../../Qt/6.8.2/macos/plugins/imageformats/libqmacheif.dylib; sourceTree = "<group>"; };
-		883C30452D6EE0910029BE30 /* libqgif.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqgif.dylib; path = ../../../Qt/6.8.2/macos/plugins/imageformats/libqgif.dylib; sourceTree = "<group>"; };
-		883C30462D6EE0910029BE30 /* libqmacjp2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqmacjp2.dylib; path = ../../../Qt/6.8.2/macos/plugins/imageformats/libqmacjp2.dylib; sourceTree = "<group>"; };
-		883C30472D6EE0910029BE30 /* libqtiff.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqtiff.dylib; path = ../../../Qt/6.8.2/macos/plugins/imageformats/libqtiff.dylib; sourceTree = "<group>"; };
-		883C30482D6EE0910029BE30 /* libqtga.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqtga.dylib; path = ../../../Qt/6.8.2/macos/plugins/imageformats/libqtga.dylib; sourceTree = "<group>"; };
-		883C30492D6EE0910029BE30 /* libqsvg.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqsvg.dylib; path = ../../../Qt/6.8.2/macos/plugins/imageformats/libqsvg.dylib; sourceTree = "<group>"; };
-		883C304A2D6EE0920029BE30 /* libqwbmp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqwbmp.dylib; path = ../../../Qt/6.8.2/macos/plugins/imageformats/libqwbmp.dylib; sourceTree = "<group>"; };
-		883C304B2D6EE0920029BE30 /* libqicns.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqicns.dylib; path = ../../../Qt/6.8.2/macos/plugins/imageformats/libqicns.dylib; sourceTree = "<group>"; };
-		883C304C2D6EE0920029BE30 /* libqwebp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqwebp.dylib; path = ../../../Qt/6.8.2/macos/plugins/imageformats/libqwebp.dylib; sourceTree = "<group>"; };
-		883C304D2D6EE0920029BE30 /* libqjpeg.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqjpeg.dylib; path = ../../../Qt/6.8.2/macos/plugins/imageformats/libqjpeg.dylib; sourceTree = "<group>"; };
-		883C304E2D6EE0920029BE30 /* libqico.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqico.dylib; path = ../../../Qt/6.8.2/macos/plugins/imageformats/libqico.dylib; sourceTree = "<group>"; };
-		883C305B2D6EE0E90029BE30 /* libqscnetworkreachability.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqscnetworkreachability.dylib; path = ../../../Qt/6.8.2/macos/plugins/networkinformation/libqscnetworkreachability.dylib; sourceTree = "<group>"; };
-		883C305E2D6EE1310029BE30 /* libqtvirtualkeyboardplugin.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqtvirtualkeyboardplugin.dylib; path = ../../../Qt/6.8.2/macos/plugins/platforminputcontexts/libqtvirtualkeyboardplugin.dylib; sourceTree = "<group>"; };
-		883C30612D6EE1820029BE30 /* libqcocoa.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqcocoa.dylib; path = ../../../Qt/6.8.2/macos/plugins/platforms/libqcocoa.dylib; sourceTree = "<group>"; };
-		883C30642D6EE1C80029BE30 /* libqmacstyle.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqmacstyle.dylib; path = ../../../Qt/6.8.2/macos/plugins/styles/libqmacstyle.dylib; sourceTree = "<group>"; };
-		883C30672D6EE20A0029BE30 /* libqopensslbackend.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqopensslbackend.dylib; path = ../../../Qt/6.8.2/macos/plugins/tls/libqopensslbackend.dylib; sourceTree = "<group>"; };
-		883C30682D6EE20A0029BE30 /* libqsecuretransportbackend.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqsecuretransportbackend.dylib; path = ../../../Qt/6.8.2/macos/plugins/tls/libqsecuretransportbackend.dylib; sourceTree = "<group>"; };
-		883C30692D6EE20A0029BE30 /* libqcertonlybackend.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqcertonlybackend.dylib; path = ../../../Qt/6.8.2/macos/plugins/tls/libqcertonlybackend.dylib; sourceTree = "<group>"; };
 		883C306E2D6EEB3D0029BE30 /* VSPController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VSPController.framework; path = ../VSPClient/build/VSPController/VSPController.framework; sourceTree = "<group>"; };
 		883C30712D6EEB520029BE30 /* VSPSetup.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VSPSetup.framework; path = ../VSPClient/build/VSPSetup/VSPSetup.framework; sourceTree = "<group>"; };
 		883C30772D6EFA600029BE30 /* VSPSetup.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VSPSetup.framework; path = QT/VSPSetup.framework; sourceTree = "<group>"; };
 		883C30792D6EFA600029BE30 /* VSPController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VSPController.framework; path = QT/VSPController.framework; sourceTree = "<group>"; };
-		883C30982D6F12090029BE30 /* VSPClientUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VSPClientUI.framework; sourceTree = "<group>"; };
-		883C30992D6F12090029BE30 /* VSPSetup.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VSPSetup.framework; sourceTree = "<group>"; };
-		883C309A2D6F12090029BE30 /* VSPController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VSPController.framework; sourceTree = "<group>"; };
 		883C30A12D6F1C550029BE30 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		883C30A42D6F1C7B0029BE30 /* DriverKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DriverKit.framework; path = Platforms/DriverKit.platform/Developer/SDKs/DriverKit24.2.sdk/System/DriverKit/System/Library/Frameworks/DriverKit.framework; sourceTree = DEVELOPER_DIR; };
 		883C30A62D6F1C810029BE30 /* SerialDriverKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SerialDriverKit.framework; path = Platforms/DriverKit.platform/Developer/SDKs/DriverKit24.2.sdk/System/DriverKit/System/Library/Frameworks/SerialDriverKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -377,26 +550,26 @@
 			files = (
 				883C30A32D6F1C610029BE30 /* CoreFoundation.framework in Frameworks */,
 				883C30A22D6F1C550029BE30 /* IOKit.framework in Frameworks */,
-				883C309E2D6F12470029BE30 /* VSPClientUI.framework in Frameworks */,
-				883C309F2D6F12470029BE30 /* VSPController.framework in Frameworks */,
-				883C30A02D6F12470029BE30 /* VSPSetup.framework in Frameworks */,
-				883C30232D6EDEB20029BE30 /* QtWidgets.framework in Frameworks */,
-				883C30172D6EDEB20029BE30 /* QtDBus.framework in Frameworks */,
-				883C302D2D6EDEB20029BE30 /* QtGui.framework in Frameworks */,
-				883C30292D6EDEB20029BE30 /* QtQmlWorkerScript.framework in Frameworks */,
-				883C30352D6EDEB20029BE30 /* QtSvg.framework in Frameworks */,
-				883C30332D6EDEB20029BE30 /* QtSerialBus.framework in Frameworks */,
-				883C30152D6EDEB20029BE30 /* QtQmlMeta.framework in Frameworks */,
-				883C302F2D6EDEB20029BE30 /* QtCore.framework in Frameworks */,
-				883C30212D6EDEB20029BE30 /* QtNetwork.framework in Frameworks */,
-				883C301F2D6EDEB20029BE30 /* QtConcurrent.framework in Frameworks */,
-				883C30312D6EDEB20029BE30 /* QtQmlModels.framework in Frameworks */,
-				883C301D2D6EDEB20029BE30 /* QtVirtualKeyboard.framework in Frameworks */,
-				883C301B2D6EDEB20029BE30 /* QtSerialPort.framework in Frameworks */,
-				883C30272D6EDEB20029BE30 /* QtOpenGL.framework in Frameworks */,
-				883C302B2D6EDEB20029BE30 /* QtQml.framework in Frameworks */,
-				883C30192D6EDEB20029BE30 /* QtXml.framework in Frameworks */,
-				883C30252D6EDEB20029BE30 /* QtQuick.framework in Frameworks */,
+				88005A902D6F5C130057089B /* VSPClientUI.framework in Frameworks */,
+				88005A912D6F5C130057089B /* VSPController.framework in Frameworks */,
+				88005A922D6F5C130057089B /* VSPSetup.framework in Frameworks */,
+				88005A932D6F5C190057089B /* QtConcurrent.framework in Frameworks */,
+				88005A942D6F5C190057089B /* QtCore.framework in Frameworks */,
+				88005A952D6F5C190057089B /* QtDBus.framework in Frameworks */,
+				88005A962D6F5C190057089B /* QtGui.framework in Frameworks */,
+				88005A972D6F5C190057089B /* QtMacExtras.framework in Frameworks */,
+				88005A982D6F5C190057089B /* QtNetwork.framework in Frameworks */,
+				88005A992D6F5C190057089B /* QtOpenGL.framework in Frameworks */,
+				88005A9A2D6F5C190057089B /* QtPrintSupport.framework in Frameworks */,
+				88005A9B2D6F5C190057089B /* QtQml.framework in Frameworks */,
+				88005A9C2D6F5C190057089B /* QtQmlModels.framework in Frameworks */,
+				88005A9D2D6F5C190057089B /* QtQuick.framework in Frameworks */,
+				88005A9E2D6F5C190057089B /* QtSensors.framework in Frameworks */,
+				88005A9F2D6F5C190057089B /* QtSerialBus.framework in Frameworks */,
+				88005AA02D6F5C190057089B /* QtSerialPort.framework in Frameworks */,
+				88005AA12D6F5C190057089B /* QtSvg.framework in Frameworks */,
+				88005AA22D6F5C190057089B /* QtVirtualKeyboard.framework in Frameworks */,
+				88005AA32D6F5C190057089B /* QtXml.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,8 +577,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				883C30A72D6F1C810029BE30 /* SerialDriverKit.framework in Frameworks */,
-				883C30A52D6F1C7B0029BE30 /* DriverKit.framework in Frameworks */,
+				88005AA52D6F5FB90057089B /* DriverKit.framework in Frameworks */,
+				88005AA62D6F5FBA0057089B /* SerialDriverKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,32 +603,107 @@
 		883C306D2D6EE7CB0029BE30 /* QT */ = {
 			isa = PBXGroup;
 			children = (
-				883C30982D6F12090029BE30 /* VSPClientUI.framework */,
-				883C309A2D6F12090029BE30 /* VSPController.framework */,
-				883C30992D6F12090029BE30 /* VSPSetup.framework */,
-				883C30692D6EE20A0029BE30 /* libqcertonlybackend.dylib */,
-				883C30672D6EE20A0029BE30 /* libqopensslbackend.dylib */,
-				883C30682D6EE20A0029BE30 /* libqsecuretransportbackend.dylib */,
-				883C30642D6EE1C80029BE30 /* libqmacstyle.dylib */,
-				883C30612D6EE1820029BE30 /* libqcocoa.dylib */,
-				883C305E2D6EE1310029BE30 /* libqtvirtualkeyboardplugin.dylib */,
-				883C305B2D6EE0E90029BE30 /* libqscnetworkreachability.dylib */,
-				883C30452D6EE0910029BE30 /* libqgif.dylib */,
-				883C304B2D6EE0920029BE30 /* libqicns.dylib */,
-				883C304E2D6EE0920029BE30 /* libqico.dylib */,
-				883C304D2D6EE0920029BE30 /* libqjpeg.dylib */,
-				883C30442D6EE0910029BE30 /* libqmacheif.dylib */,
-				883C30462D6EE0910029BE30 /* libqmacjp2.dylib */,
-				883C30492D6EE0910029BE30 /* libqsvg.dylib */,
-				883C30482D6EE0910029BE30 /* libqtga.dylib */,
-				883C30472D6EE0910029BE30 /* libqtiff.dylib */,
-				883C304A2D6EE0920029BE30 /* libqwbmp.dylib */,
-				883C304C2D6EE0920029BE30 /* libqwebp.dylib */,
-				883C30412D6EE02D0029BE30 /* libqsvgicon.dylib */,
-				883C30392D6EDF710029BE30 /* libqtpassthrucanbus.dylib */,
-				883C303A2D6EDF710029BE30 /* libqtpeakcanbus.dylib */,
-				883C303B2D6EDF710029BE30 /* libqttinycanbus.dylib */,
-				883C30382D6EDF710029BE30 /* libqtvirtualcanbus.dylib */,
+				88005B212D6FB4130057089B /* libqtvirtualkeyboard_hangul.dylib */,
+				88005B222D6FB4130057089B /* libqtvirtualkeyboard_hangul.dylib.dSYM */,
+				88005B232D6FB4130057089B /* libqtvirtualkeyboard_openwnn.dylib */,
+				88005B282D6FB4130057089B /* libqtvirtualkeyboard_openwnn.dylib.dSYM */,
+				88005B252D6FB4130057089B /* libqtvirtualkeyboard_pinyin.dylib */,
+				88005B2A2D6FB4130057089B /* libqtvirtualkeyboard_pinyin.dylib.dSYM */,
+				88005B292D6FB4130057089B /* libqtvirtualkeyboard_tcime.dylib */,
+				88005B262D6FB4130057089B /* libqtvirtualkeyboard_tcime.dylib.dSYM */,
+				88005B272D6FB4130057089B /* libqtvirtualkeyboard_thai.dylib */,
+				88005B242D6FB4130057089B /* libqtvirtualkeyboard_thai.dylib.dSYM */,
+				88005B1E2D6FB3F10057089B /* libqmacstyle.dylib */,
+				88005B1D2D6FB3F10057089B /* libqmacstyle.dylib.dSYM */,
+				88005B192D6FB3D10057089B /* libqxdgdesktopportal.dylib */,
+				88005B1A2D6FB3D10057089B /* libqxdgdesktopportal.dylib.dSYM */,
+				88005B152D6FB3970057089B /* libcocoaprintersupport.dylib */,
+				88005B142D6FB3970057089B /* libcocoaprintersupport.dylib.dSYM */,
+				88005B0B2D6FB36D0057089B /* libqcocoa.dylib */,
+				88005B042D6FB36D0057089B /* libqcocoa.dylib.dSYM */,
+				88005B072D6FB36D0057089B /* libqminimal.dylib */,
+				88005B052D6FB36D0057089B /* libqminimal.dylib.dSYM */,
+				88005B082D6FB36D0057089B /* libqoffscreen.dylib */,
+				88005B092D6FB36D0057089B /* libqoffscreen.dylib.dSYM */,
+				88005B062D6FB36D0057089B /* libqwebgl.dylib */,
+				88005B0A2D6FB36D0057089B /* libqwebgl.dylib.dSYM */,
+				88005B002D6FB3330057089B /* libqtvirtualkeyboardplugin.dylib */,
+				88005B012D6FB3330057089B /* libqtvirtualkeyboardplugin.dylib.dSYM */,
+				88005ADC2D6FB30C0057089B /* libqgif.dylib */,
+				88005AE22D6FB30D0057089B /* libqgif.dylib.dSYM */,
+				88005AE42D6FB30D0057089B /* libqicns.dylib */,
+				88005AE02D6FB30C0057089B /* libqicns.dylib.dSYM */,
+				88005ADB2D6FB30C0057089B /* libqico.dylib */,
+				88005AE12D6FB30C0057089B /* libqico.dylib.dSYM */,
+				88005ADF2D6FB30C0057089B /* libqjpeg.dylib */,
+				88005AE32D6FB30D0057089B /* libqjpeg.dylib.dSYM */,
+				88005AD22D6FB30C0057089B /* libqmacheif.dylib */,
+				88005AD32D6FB30C0057089B /* libqmacheif.dylib.dSYM */,
+				88005AE72D6FB30D0057089B /* libqmacjp2.dylib */,
+				88005ADE2D6FB30C0057089B /* libqmacjp2.dylib.dSYM */,
+				88005AE82D6FB30D0057089B /* libqpdf.dylib.dSYM */,
+				88005AE52D6FB30D0057089B /* libqsvg.dylib */,
+				88005AD42D6FB30C0057089B /* libqsvg.dylib.dSYM */,
+				88005AD92D6FB30C0057089B /* libqtga.dylib */,
+				88005ADD2D6FB30C0057089B /* libqtga.dylib.dSYM */,
+				88005ADA2D6FB30C0057089B /* libqtiff.dylib */,
+				88005AE62D6FB30D0057089B /* libqtiff.dylib.dSYM */,
+				88005AD72D6FB30C0057089B /* libqwbmp.dylib */,
+				88005AD52D6FB30C0057089B /* libqwbmp.dylib.dSYM */,
+				88005AD82D6FB30C0057089B /* libqwebp.dylib */,
+				88005AD62D6FB30C0057089B /* libqwebp.dylib.dSYM */,
+				88005ACE2D6FB2C00057089B /* libqsvgicon.dylib */,
+				88005ACF2D6FB2C00057089B /* libqsvgicon.dylib.dSYM */,
+				88005ACC2D6FB27F0057089B /* libqtpassthrucanbus.dylib */,
+				88005AB92D6FB25B0057089B /* libqtpassthrucanbus.dylib */,
+				88005AC72D6FB27B0057089B /* libqtpassthrucanbus.dylib.dSYM */,
+				88005AB82D6FB25B0057089B /* libqtpassthrucanbus.dylib.dSYM */,
+				88005AC62D6FB27B0057089B /* libqtpeakcanbus.dylib */,
+				88005ABA2D6FB25B0057089B /* libqtpeakcanbus.dylib */,
+				88005AC42D6FB2790057089B /* libqtpeakcanbus.dylib.dSYM */,
+				88005AC52D6FB27A0057089B /* libqttinycanbus.dylib */,
+				88005AB52D6FB25B0057089B /* libqttinycanbus.dylib */,
+				88005AC92D6FB27D0057089B /* libqttinycanbus.dylib.dSYM */,
+				88005AC82D6FB27C0057089B /* libqtvirtualcanbus.dylib */,
+				88005ACD2D6FB2800057089B /* libqtvirtualcanbus.dylib.dSYM */,
+				88005ACA2D6FB27E0057089B /* libqgenericbearer.dylib */,
+				88005AB02D6FB2010057089B /* libqgenericbearer.dylib */,
+				88005ACB2D6FB27E0057089B /* libqgenericbearer.dylib.dSYM */,
+				88005AB72D6FB25B0057089B /* libqtpeakcanbus.dylib.dSYM */,
+				88005AB42D6FB25B0057089B /* libqttinycanbus.dylib.dSYM */,
+				88005ABB2D6FB25B0057089B /* libqtvirtualcanbus.dylib */,
+				88005AB62D6FB25B0057089B /* libqtvirtualcanbus.dylib.dSYM */,
+				88005AB12D6FB2010057089B /* libqgenericbearer.dylib.dSYM */,
+				88005A5E2D6F5BE70057089B /* QtConcurrent.framework */,
+				88005A592D6F5BE70057089B /* QtCore.framework */,
+				88005A522D6F5BE70057089B /* QtDBus.framework */,
+				88005A572D6F5BE70057089B /* QtGui.framework */,
+				88005A552D6F5BE70057089B /* QtMacExtras.framework */,
+				88005A5D2D6F5BE70057089B /* QtNetwork.framework */,
+				88005A5A2D6F5BE70057089B /* QtOpenGL.framework */,
+				88005A502D6F5BE70057089B /* QtPrintSupport.framework */,
+				88005A512D6F5BE70057089B /* QtQml.framework */,
+				88005A562D6F5BE70057089B /* QtQmlModels.framework */,
+				88005A5C2D6F5BE70057089B /* QtQuick.framework */,
+				88005A5B2D6F5BE70057089B /* QtSensors.framework */,
+				88005A582D6F5BE70057089B /* QtSerialBus.framework */,
+				88005A542D6F5BE70057089B /* QtSerialPort.framework */,
+				88005A5F2D6F5BE70057089B /* QtSvg.framework */,
+				88005A532D6F5BE70057089B /* QtVirtualKeyboard.framework */,
+				88005A602D6F5BE80057089B /* QtXml.framework */,
+				88005A402D6F5B920057089B /* bearer */,
+				88005A432D6F5B920057089B /* canbus */,
+				88005A442D6F5B920057089B /* iconengines */,
+				88005A3D2D6F5B920057089B /* imageformats */,
+				88005A3F2D6F5B920057089B /* platforminputcontexts */,
+				88005A3E2D6F5B920057089B /* platforms */,
+				88005A422D6F5B920057089B /* platformthemes */,
+				88005A452D6F5B920057089B /* printsupport */,
+				88005A3C2D6F5B920057089B /* styles */,
+				88005A412D6F5B920057089B /* virtualkeyboard */,
+				88005A362D6F5B6A0057089B /* VSPClientUI.framework */,
+				88005A382D6F5B6A0057089B /* VSPController.framework */,
+				88005A372D6F5B6A0057089B /* VSPSetup.framework */,
 			);
 			path = QT;
 			sourceTree = "<group>";
@@ -549,7 +797,9 @@
 		88B40D592D4B666700DFE7C5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				880059DB2D6F55870057089B /* DriverKit.framework */,
 				883C30A62D6F1C810029BE30 /* SerialDriverKit.framework */,
+				880059D92D6F557A0057089B /* SerialDriverKit.framework */,
 				883C30A42D6F1C7B0029BE30 /* DriverKit.framework */,
 				883C30A12D6F1C550029BE30 /* IOKit.framework */,
 				883C30792D6EFA600029BE30 /* VSPController.framework */,
@@ -622,14 +872,16 @@
 				8869B5072D627FCD002643D9 /* Embed Libraries */,
 				88BEFD792D4BC84A00CD40E6 /* Embed System Extensions */,
 				880539E62D4BAFBD00E55104 /* Resources */,
-				883C30372D6EDEDB0029BE30 /* Copy QT Plugins - canbus */,
-				883C30402D6EDFA60029BE30 /* Copy QT Plugins - iconengines */,
-				883C30432D6EE0450029BE30 /* Copy QT Plugins - imageformats */,
-				883C305A2D6EE0A10029BE30 /* Copy QT Plugins - networkinformation */,
-				883C305D2D6EE0EE0029BE30 /* Copy QT Plugins - platforminputcontexts */,
-				883C30602D6EE1390029BE30 /* Copy QT Plugins - platforms */,
-				883C30632D6EE18E0029BE30 /* Copy QT Plugins - styles */,
-				883C30662D6EE1D50029BE30 /* Copy QT Plugins - tls */,
+				88005AA72D6FB0D90057089B /* Copy QT Plugins - bearer */,
+				88005AA82D6FB0DB0057089B /* Copy QT Plugins - canbus */,
+				88005AA92D6FB0DE0057089B /* Copy QT Plugins - iconengines */,
+				88005AAA2D6FB0DF0057089B /* Copy QT Plugins - imageformats */,
+				88005AAB2D6FB0E10057089B /* Copy QT Plugins - platforminputcontexts */,
+				88005AAC2D6FB0E30057089B /* Copy QT Plugins - platforms */,
+				88005B182D6FB3A20057089B /* Copy QT Plugins - platformthemes */,
+				88005AAD2D6FB1470057089B /* Copy QT Plugins - printsupport */,
+				88005AAE2D6FB1490057089B /* Copy Copy QT Plugins - styles */,
+				88005AAF2D6FB14C0057089B /* Copy QT Plugins - virtualkeyboard */,
 			);
 			buildRules = (
 			);
@@ -667,7 +919,7 @@
 		88B40D4E2D4B666700DFE7C5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = 1;
+				BuildIndependentTargetsInParallel = NO;
 				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
@@ -680,7 +932,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 88B40D512D4B666700DFE7C5 /* Build configuration list for PBXProject "VSPDriver" */;
+			buildConfigurationList = 88B40D512D4B666700DFE7C5 /* Build configuration list for PBXProject "VSPDriver_QT_5.15.2_x86_64" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -802,6 +1054,7 @@
 				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 83NQU389JN;
+				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -811,8 +1064,10 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
 					"$(PROJECT_DIR)/QT/**",
+					"$(QTDIR)/lib/**",
+					"$(QTDIR)/include/**",
+					"$(inherited)",
 				);
 				INFOPLIST_FILE = VSPClient/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Virtual Serial Port Controller";
@@ -825,14 +1080,16 @@
 				INFOPLIST_KEY_OSBundleUsageDescription = "Required to Control the Virtual Serial Port links";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@executable_path/../Frameworks",
+					"@executable_path/../PlugIns/bearer",
 					"@executable_path/../PlugIns/canbus",
 					"@executable_path/../PlugIns/iconengines",
 					"@executable_path/../PlugIns/imageformats",
-					"@executable_path/../PlugIns/networkinformation",
 					"@executable_path/../PlugIns/platforminputcontexts",
 					"@executable_path/../PlugIns/platforms",
+					"@executable_path/../PlugIns/printsupport",
+					"@executable_path/../PlugIns/sensors",
 					"@executable_path/../PlugIns/styles",
-					"@executable_path/../PlugIns/tls",
+					"@executable_path/../PlugIns/virtualkeyboard",
 					"$(inherited)",
 				);
 				LIBRARY_SEARCH_PATHS = (
@@ -841,13 +1098,13 @@
 					"$(SDKROOT)/usr/lib/system",
 					"$(inherited)",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.2;
 				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				QTDIR = "$(HOME)/Qt/5.15.2/clang_64";
 				SDKROOT = macosx;
+				STRIP_STYLE = debugging;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "VSPClient/VSPClient-Bridging-Header.h";
@@ -871,6 +1128,7 @@
 				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 83NQU389JN;
+				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -880,8 +1138,10 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
 					"$(PROJECT_DIR)/QT/**",
+					"$(QTDIR)/lib/**",
+					"$(QTDIR)/include/**",
+					"$(inherited)",
 				);
 				INFOPLIST_FILE = VSPClient/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Virtual Serial Port Controller";
@@ -894,14 +1154,16 @@
 				INFOPLIST_KEY_OSBundleUsageDescription = "Required to Control the Virtual Serial Port links";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@executable_path/../Frameworks",
+					"@executable_path/../PlugIns/bearer",
 					"@executable_path/../PlugIns/canbus",
 					"@executable_path/../PlugIns/iconengines",
 					"@executable_path/../PlugIns/imageformats",
-					"@executable_path/../PlugIns/networkinformation",
 					"@executable_path/../PlugIns/platforminputcontexts",
 					"@executable_path/../PlugIns/platforms",
+					"@executable_path/../PlugIns/printsupport",
+					"@executable_path/../PlugIns/sensors",
 					"@executable_path/../PlugIns/styles",
-					"@executable_path/../PlugIns/tls",
+					"@executable_path/../PlugIns/virtualkeyboard",
 					"$(inherited)",
 				);
 				LIBRARY_SEARCH_PATHS = (
@@ -910,13 +1172,13 @@
 					"$(SDKROOT)/usr/lib/system",
 					"$(inherited)",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.2;
 				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				QTDIR = "$(HOME)/Qt/5.15.2/clang_64";
 				SDKROOT = macosx;
+				STRIP_STYLE = debugging;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "VSPClient/VSPClient-Bridging-Header.h";
@@ -1056,6 +1318,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/System/DriverKit/System/Library/Frameworks",
+					"$(PROJECT_DIR)/QT",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VSPDriver/Info.plist;
@@ -1091,6 +1354,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/System/DriverKit/System/Library/Frameworks",
+					"$(PROJECT_DIR)/QT",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VSPDriver/Info.plist;
@@ -1122,16 +1386,16 @@
 				880539F42D4BAFBF00E55104 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
-		88B40D512D4B666700DFE7C5 /* Build configuration list for PBXProject "VSPDriver" */ = {
+		88B40D512D4B666700DFE7C5 /* Build configuration list for PBXProject "VSPDriver_QT_5.15.2_x86_64" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				88B40D622D4B666700DFE7C5 /* Debug */,
 				88B40D632D4B666700DFE7C5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		88B40D642D4B666700DFE7C5 /* Build configuration list for PBXNativeTarget "VSPDriver" */ = {
 			isa = XCConfigurationList;
@@ -1140,7 +1404,7 @@
 				88B40D662D4B666700DFE7C5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
