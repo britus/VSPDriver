@@ -6,8 +6,6 @@
 	<true/>
 	<key>com.apple.developer.driverkit.communicates-with-drivers</key>
 	<true/>
-	<key>com.apple.developer.shared-with-you</key>
-	<true/>
 	<key>com.apple.developer.system-extension.install</key>
 	<true/>
 	<key>com.apple.security.application-groups</key>
