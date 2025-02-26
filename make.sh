@@ -5,8 +5,6 @@ ARCH=`uname -m`
 
 if [ -d ${PROJECT_DIR}/../VSPClient ] ; then
     echo "** PRE-BUILD VSPClient Frameworks"
-    test -d ${PROJECT_DIR}/QT && \
-        rm -fR ${PROJECT_DIR}/QT
     mkdir -vp ${PROJECT_DIR}/QT
     cd ${PROJECT_DIR}/../VSPClient
     ./make.sh ${PROJECT_DIR}/QT
