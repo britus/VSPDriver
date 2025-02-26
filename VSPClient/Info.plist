@@ -2,21 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>BuildMachineOSBuild</key>
-	<string>21H1320</string>
-	<key>CFBundleIconFile</key>
-	<string>vspclient.icns</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLName</key>
-			<string>VSP Driver Setup</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>vspctl</string>
-			</array>
-		</dict>
-	</array>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>LSUIPresentationMode</key>
@@ -33,12 +18,27 @@
 	<string>Shows informative messages about the state of the VSP driver.</string>
 	<key>UILaunchImageFile</key>
 	<string>vspclient_5.png</string>
+	<key>CFBundleIconFile</key>
+	<string>vspclient.icns</string>
 	<key>UIPrerenderedIcon</key>
+	<false/>
+	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>com.apple.developer.driverkit</key>
 	<true/>
 	<key>com.apple.developer.driverkit.install</key>
 	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>VSP Driver Setup</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>vspctl</string>
+			</array>
+		</dict>
+	</array>
 	<key>com.apple.developer.driverkit.userclient-access</key>
 	<array>
 		<string>VSPDriver</string>
