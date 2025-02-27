@@ -17,7 +17,7 @@ echo ":> Build project: ${ARCH} ..."
 rm -fR build
 
 if [ "${ARCH}" == "arm64" ] ; then
-	xcodebuild -arch `uname -m` -project VSPDriver_QT_6.8.2_arm64.xcodeproj \
+	xcodebuild -arch `uname -m` -project VSPDriver.xcodeproj \
     	-target VSPDriver \
     	-target VSPClient
 fi
