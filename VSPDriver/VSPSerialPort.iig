@@ -100,7 +100,13 @@ public:
 
     // Update rxqbmd
     kern_return_t sendResponse(void* sender, const void* buffer, const uint32_t size) LOCALONLY;
-   
+    
+    // Enable or disable traces
+    void setTraceFlags(uint64_t flags) LOCALONLY;
+    
+    // Enable or disable port parameter checks
+    void setParameterChecks(uint64_t flags) LOCALONLY;
+
     // internal modem status update
     void setClearToSend(bool cts) LOCALONLY;
     void setDataSetReady(bool dsr) LOCALONLY;

@@ -7,7 +7,7 @@ if [ -d ${PROJECT_DIR}/../VSPClient ] ; then
     echo "** PRE-BUILD VSPClient Frameworks"
     mkdir -vp ${PROJECT_DIR}/QT
     cd ${PROJECT_DIR}/../VSPClient
-    ./make.sh ${PROJECT_DIR}/QT
+    rm -fR build && ./make.sh ${PROJECT_DIR}/QT
     cd ${PROJECT_DIR}
     echo "** PRE-BUILD END"
 fi
