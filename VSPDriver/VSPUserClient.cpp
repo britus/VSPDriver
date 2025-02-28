@@ -998,7 +998,8 @@ kern_return_t VSPUserClient::enableTrace(void* reference, IOUserClientMethodArgu
     kern_return_t ret;
     TVSPControllerData response = {};
     TVSPControllerData request = {};
-    //uint8_t portId;
+    uint8_t portId;
+    uint64_t flags;
     
     VSPLog(LOG_PREFIX, "enableTrace called.\n");
 
@@ -1015,8 +1016,13 @@ kern_return_t VSPUserClient::enableTrace(void* reference, IOUserClientMethodArgu
     }
 
     // --
-    //portId = request.parameter.link.source;
+    flags = request.parameter.flags;
+    portId = request.parameter.link.source;
     
+    if (!portId)
+        goto finish;
+    
+    ivars->
     VSPLog(LOG_PREFIX, "enableTrace finish.\n");
 
 finish:
