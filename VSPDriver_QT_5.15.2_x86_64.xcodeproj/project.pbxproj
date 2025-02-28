@@ -344,7 +344,6 @@
 		885DE9332D5E82CD00CFECEE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88667D6A2D53474900DFA26E /* VSPDriver-Full.log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "VSPDriver-Full.log"; sourceTree = "<group>"; };
 		8874CB892D72322B009FBF60 /* QtWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtWidgets.framework; path = ../../../../Qt/5.15.2/clang_64/lib/QtWidgets.framework; sourceTree = "<group>"; };
-		8874CB8B2D723283009FBF60 /* QtWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QtWidgets.framework; sourceTree = "<group>"; };
 		8884826D2D61192900F3BAD7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		88906F452D4CCA9400E500BB /* VSPClient-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VSPClient-Bridging-Header.h"; sourceTree = "<group>"; };
 		8899C3492D525AD800E17727 /* VSPSerialPort.iig */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.iig; path = VSPSerialPort.iig; sourceTree = "<group>"; };
@@ -518,7 +517,6 @@
 				88005A5F2D6F5BE70057089B /* QtSvg.framework */,
 				88005A532D6F5BE70057089B /* QtVirtualKeyboard.framework */,
 				8874CB892D72322B009FBF60 /* QtWidgets.framework */,
-				8874CB8B2D723283009FBF60 /* QtWidgets.framework */,
 				88005A602D6F5BE80057089B /* QtXml.framework */,
 				88005A362D6F5B6A0057089B /* VSPClientUI.framework */,
 				88005A382D6F5B6A0057089B /* VSPController.framework */,
