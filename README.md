@@ -13,6 +13,9 @@ a installation App.
 The Project [VSPClient](https://github.com/britus/VSPClient) contains the user interface for managing the virtual serialports. This project provide the
 3 frameworks written in QT for the virtual serial port driver.
 
+### Release
+- [RC_1.3.10_qt5](https://github.com/britus/VSPClient/releases/tag/RC_1.3.10_qt5)
+
 ### Log Files and Tester
 
 A look at this [log](https://github.com/britus/VSPDriver/blob/master/VSPDriver-Full.log) shows how the driver ticks with the IOUserClient.
