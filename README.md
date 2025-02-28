@@ -1,7 +1,7 @@
 ## VSPDriver - Virtual Serial Port Driver
 
-This is a MacOS DriverKit driver implementation including
-a installation App suggested by Apple.
+This is a macOS DriverKit driver implementation including
+a installation App.
  
 ### Current development status
 
