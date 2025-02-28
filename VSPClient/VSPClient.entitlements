@@ -9,6 +9,11 @@
 	<key>com.apple.developer.system-extension.install</key>
 	<true/>
 	<key>com.apple.security.app-sandbox</key>
+<<<<<<< HEAD
+=======
+	<false/>
+	<key>com.apple.security.files.user-selected.read-only</key>
+>>>>>>> 7b513d1191328dc33124aad880dae2d626b1b7c8
 	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
