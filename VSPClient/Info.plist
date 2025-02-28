@@ -28,6 +28,22 @@
 	<true/>
 	<key>com.apple.developer.driverkit.install</key>
 	<true/>
+	<key>com.apple.developer.system-extension.install</key>
+	<true/>
+	<key>com.apple.developer.system-extension.uninstall</key>
+	<true/>
+	<key>com.apple.developer.driverkit.userclient-access</key>
+	<array>
+		<string>VSPDriver</string>
+	</array>
+	<key>com.apple.private.driverkit.driver-access</key>
+	<array>
+		<string>VSPDriver</string>
+	</array>
+	<key>com.apple.security.temporary-exception.iokit-user-client-class</key>
+	<array>
+		<string>IOUserUserClient</string>
+	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -38,22 +54,6 @@
 				<string>vspctl</string>
 			</array>
 		</dict>
-	</array>
-	<key>com.apple.developer.driverkit.userclient-access</key>
-	<array>
-		<string>VSPDriver</string>
-	</array>
-	<key>com.apple.developer.system-extension.install</key>
-	<true/>
-	<key>com.apple.developer.system-extension.uninstall</key>
-	<true/>
-	<key>com.apple.private.driverkit.driver-access</key>
-	<array>
-		<string>VSPDriver</string>
-	</array>
-	<key>com.apple.security.temporary-exception.iokit-user-client-class</key>
-	<array>
-		<string>IOUserUserClient</string>
 	</array>
 </dict>
 </plist>

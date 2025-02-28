@@ -82,65 +82,33 @@
 		88B47ECA2D59B43800868CA5 /* VSPController.h in Headers */ = {isa = PBXBuildFile; fileRef = 88B47EC92D59B43800868CA5 /* VSPController.h */; };
 		88BEFD842D4BCF8900CD40E6 /* org.eof.tools.VSPDriver.dext in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 88B40D572D4B666700DFE7C5 /* org.eof.tools.VSPDriver.dext */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		88DA7BA92D532C6800C8F759 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 88DA7BA72D532C6700C8F759 /* LICENSE */; };
-		88E8F85B2D71D826009E9075 /* libqgenericbearer.dylib.dSYM in Copy QT Plugins - bearer */ = {isa = PBXBuildFile; fileRef = 88E8F85A2D71D826009E9075 /* libqgenericbearer.dylib.dSYM */; };
 		88E8F85F2D71D832009E9075 /* libqgenericbearer.dylib in Copy QT Plugins - bearer */ = {isa = PBXBuildFile; fileRef = 88E8F85E2D71D832009E9075 /* libqgenericbearer.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		88E8F8712D71D868009E9075 /* libqtvirtualcanbus.dylib in Copy QT Plugins - canbus */ = {isa = PBXBuildFile; fileRef = 88E8F8612D71D867009E9075 /* libqtvirtualcanbus.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		88E8F8722D71D868009E9075 /* libqtpassthrucanbus.dylib.dSYM in Copy QT Plugins - canbus */ = {isa = PBXBuildFile; fileRef = 88E8F8622D71D867009E9075 /* libqtpassthrucanbus.dylib.dSYM */; };
-		88E8F8742D71D868009E9075 /* libqtvirtualcanbus.dylib.dSYM in Copy QT Plugins - canbus */ = {isa = PBXBuildFile; fileRef = 88E8F8642D71D867009E9075 /* libqtvirtualcanbus.dylib.dSYM */; };
 		88E8F8762D71D868009E9075 /* libqttinycanbus.dylib in Copy QT Plugins - canbus */ = {isa = PBXBuildFile; fileRef = 88E8F8662D71D867009E9075 /* libqttinycanbus.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		88E8F8782D71D868009E9075 /* libqtpeakcanbus.dylib in Copy QT Plugins - canbus */ = {isa = PBXBuildFile; fileRef = 88E8F8682D71D867009E9075 /* libqtpeakcanbus.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		88E8F8792D71D868009E9075 /* libqttinycanbus.dylib.dSYM in Copy QT Plugins - canbus */ = {isa = PBXBuildFile; fileRef = 88E8F8692D71D867009E9075 /* libqttinycanbus.dylib.dSYM */; };
 		88E8F87A2D71D868009E9075 /* libqtpassthrucanbus.dylib in Copy QT Plugins - canbus */ = {isa = PBXBuildFile; fileRef = 88E8F86A2D71D867009E9075 /* libqtpassthrucanbus.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		88E8F87D2D71D868009E9075 /* libqtpeakcanbus.dylib.dSYM in Copy QT Plugins - canbus */ = {isa = PBXBuildFile; fileRef = 88E8F86D2D71D867009E9075 /* libqtpeakcanbus.dylib.dSYM */; };
-		88E8F8822D71D887009E9075 /* libqsvgicon.dylib.dSYM in Copy QT Plugins - iconengines */ = {isa = PBXBuildFile; fileRef = 88E8F8802D71D886009E9075 /* libqsvgicon.dylib.dSYM */; };
 		88E8F8832D71D887009E9075 /* libqsvgicon.dylib in Copy QT Plugins - iconengines */ = {isa = PBXBuildFile; fileRef = 88E8F8812D71D886009E9075 /* libqsvgicon.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		88E8F89B2D71D8BC009E9075 /* libqjpeg.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88E8F8842D71D8BB009E9075 /* libqjpeg.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		88E8F89C2D71D8BC009E9075 /* libqicns.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88E8F8852D71D8BB009E9075 /* libqicns.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		88E8F89D2D71D8BC009E9075 /* libqgif.dylib.dSYM in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88E8F8862D71D8BB009E9075 /* libqgif.dylib.dSYM */; };
 		88E8F89E2D71D8BC009E9075 /* libqmacjp2.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88E8F8872D71D8BB009E9075 /* libqmacjp2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		88E8F89F2D71D8BC009E9075 /* libqtga.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88E8F8882D71D8BB009E9075 /* libqtga.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		88E8F8A02D71D8BD009E9075 /* libqsvg.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88E8F8892D71D8BB009E9075 /* libqsvg.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		88E8F8A12D71D8BD009E9075 /* libqtiff.dylib.dSYM in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88E8F88A2D71D8BC009E9075 /* libqtiff.dylib.dSYM */; };
-		88E8F8A22D71D8BD009E9075 /* libqico.dylib.dSYM in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88E8F88B2D71D8BC009E9075 /* libqico.dylib.dSYM */; };
 		88E8F8A32D71D8BD009E9075 /* libqmacheif.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88E8F88C2D71D8BC009E9075 /* libqmacheif.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		88E8F8A42D71D8BD009E9075 /* libqwbmp.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88E8F88D2D71D8BC009E9075 /* libqwbmp.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		88E8F8A52D71D8BD009E9075 /* libqwebp.dylib.dSYM in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88E8F88E2D71D8BC009E9075 /* libqwebp.dylib.dSYM */; };
 		88E8F8A62D71D8BD009E9075 /* libqwebp.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88E8F88F2D71D8BC009E9075 /* libqwebp.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		88E8F8A72D71D8BD009E9075 /* libqtga.dylib.dSYM in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88E8F8902D71D8BC009E9075 /* libqtga.dylib.dSYM */; };
-		88E8F8A82D71D8BD009E9075 /* libqicns.dylib.dSYM in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88E8F8912D71D8BC009E9075 /* libqicns.dylib.dSYM */; };
-		88E8F8A92D71D8BD009E9075 /* libqmacjp2.dylib.dSYM in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88E8F8922D71D8BC009E9075 /* libqmacjp2.dylib.dSYM */; };
-		88E8F8AA2D71D8BD009E9075 /* libqsvg.dylib.dSYM in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88E8F8932D71D8BC009E9075 /* libqsvg.dylib.dSYM */; };
-		88E8F8AB2D71D8BD009E9075 /* libqmacheif.dylib.dSYM in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88E8F8942D71D8BC009E9075 /* libqmacheif.dylib.dSYM */; };
 		88E8F8AC2D71D8BD009E9075 /* libqgif.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88E8F8952D71D8BC009E9075 /* libqgif.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		88E8F8AD2D71D8BD009E9075 /* libqjpeg.dylib.dSYM in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88E8F8962D71D8BC009E9075 /* libqjpeg.dylib.dSYM */; };
 		88E8F8AE2D71D8BD009E9075 /* libqtiff.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88E8F8972D71D8BC009E9075 /* libqtiff.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		88E8F8AF2D71D8BD009E9075 /* libqwbmp.dylib.dSYM in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88E8F8982D71D8BC009E9075 /* libqwbmp.dylib.dSYM */; };
 		88E8F8B02D71D8BD009E9075 /* libqico.dylib in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88E8F8992D71D8BC009E9075 /* libqico.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		88E8F8B12D71D8BD009E9075 /* libqpdf.dylib.dSYM in Copy QT Plugins - imageformats */ = {isa = PBXBuildFile; fileRef = 88E8F89A2D71D8BC009E9075 /* libqpdf.dylib.dSYM */; };
-		88E8F8B42D71D8FC009E9075 /* libqtvirtualkeyboardplugin.dylib.dSYM in Copy QT Plugins - platforminputcontexts */ = {isa = PBXBuildFile; fileRef = 88E8F8B22D71D8FC009E9075 /* libqtvirtualkeyboardplugin.dylib.dSYM */; };
 		88E8F8B52D71D8FC009E9075 /* libqtvirtualkeyboardplugin.dylib in Copy QT Plugins - platforminputcontexts */ = {isa = PBXBuildFile; fileRef = 88E8F8B32D71D8FC009E9075 /* libqtvirtualkeyboardplugin.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		88E8F8BE2D71D920009E9075 /* libqcocoa.dylib in Copy QT Plugins - platforms */ = {isa = PBXBuildFile; fileRef = 88E8F8B62D71D920009E9075 /* libqcocoa.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		88E8F8BF2D71D920009E9075 /* libqoffscreen.dylib.dSYM in Copy QT Plugins - platforms */ = {isa = PBXBuildFile; fileRef = 88E8F8B72D71D920009E9075 /* libqoffscreen.dylib.dSYM */; };
-		88E8F8C02D71D920009E9075 /* libqcocoa.dylib.dSYM in Copy QT Plugins - platforms */ = {isa = PBXBuildFile; fileRef = 88E8F8B82D71D920009E9075 /* libqcocoa.dylib.dSYM */; };
-		88E8F8C12D71D920009E9075 /* libqwebgl.dylib.dSYM in Copy QT Plugins - platforms */ = {isa = PBXBuildFile; fileRef = 88E8F8B92D71D920009E9075 /* libqwebgl.dylib.dSYM */; };
 		88E8F8C22D71D920009E9075 /* libqminimal.dylib in Copy QT Plugins - platforms */ = {isa = PBXBuildFile; fileRef = 88E8F8BA2D71D920009E9075 /* libqminimal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		88E8F8C32D71D920009E9075 /* libqminimal.dylib.dSYM in Copy QT Plugins - platforms */ = {isa = PBXBuildFile; fileRef = 88E8F8BB2D71D920009E9075 /* libqminimal.dylib.dSYM */; };
 		88E8F8C42D71D920009E9075 /* libqwebgl.dylib in Copy QT Plugins - platforms */ = {isa = PBXBuildFile; fileRef = 88E8F8BC2D71D920009E9075 /* libqwebgl.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		88E8F8C52D71D920009E9075 /* libqoffscreen.dylib in Copy QT Plugins - platforms */ = {isa = PBXBuildFile; fileRef = 88E8F8BD2D71D920009E9075 /* libqoffscreen.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		88E8F8C82D71D934009E9075 /* libqxdgdesktopportal.dylib in Copy QT Plugins - platformthemes */ = {isa = PBXBuildFile; fileRef = 88E8F8C62D71D933009E9075 /* libqxdgdesktopportal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		88E8F8C92D71D934009E9075 /* libqxdgdesktopportal.dylib.dSYM in Copy QT Plugins - platformthemes */ = {isa = PBXBuildFile; fileRef = 88E8F8C72D71D933009E9075 /* libqxdgdesktopportal.dylib.dSYM */; };
 		88E8F8CC2D71D948009E9075 /* libcocoaprintersupport.dylib in Copy QT Plugins - printsupport */ = {isa = PBXBuildFile; fileRef = 88E8F8CA2D71D948009E9075 /* libcocoaprintersupport.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		88E8F8CD2D71D948009E9075 /* libcocoaprintersupport.dylib.dSYM in Copy QT Plugins - printsupport */ = {isa = PBXBuildFile; fileRef = 88E8F8CB2D71D948009E9075 /* libcocoaprintersupport.dylib.dSYM */; };
-		88E8F8D02D71D966009E9075 /* libqmacstyle.dylib.dSYM in Copy QT Plugins - styles */ = {isa = PBXBuildFile; fileRef = 88E8F8CE2D71D966009E9075 /* libqmacstyle.dylib.dSYM */; };
 		88E8F8D12D71D966009E9075 /* libqmacstyle.dylib in Copy QT Plugins - styles */ = {isa = PBXBuildFile; fileRef = 88E8F8CF2D71D966009E9075 /* libqmacstyle.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		88E8F8DE2D71D97F009E9075 /* libqtvirtualkeyboard_tcime.dylib in Copy QT Plugins - virtualkeyboard */ = {isa = PBXBuildFile; fileRef = 88E8F8D22D71D97E009E9075 /* libqtvirtualkeyboard_tcime.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		88E8F8DF2D71D97F009E9075 /* libqtvirtualkeyboard_pinyin.dylib in Copy QT Plugins - virtualkeyboard */ = {isa = PBXBuildFile; fileRef = 88E8F8D32D71D97E009E9075 /* libqtvirtualkeyboard_pinyin.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		88E8F8E02D71D97F009E9075 /* libqtvirtualkeyboard_tcime.dylib.dSYM in Copy QT Plugins - virtualkeyboard */ = {isa = PBXBuildFile; fileRef = 88E8F8D42D71D97F009E9075 /* libqtvirtualkeyboard_tcime.dylib.dSYM */; };
-		88E8F8E12D71D97F009E9075 /* libqtvirtualkeyboardplugin.dylib.dSYM in Copy QT Plugins - virtualkeyboard */ = {isa = PBXBuildFile; fileRef = 88E8F8D52D71D97F009E9075 /* libqtvirtualkeyboardplugin.dylib.dSYM */; };
-		88E8F8E22D71D97F009E9075 /* libqtvirtualkeyboard_hangul.dylib.dSYM in Copy QT Plugins - virtualkeyboard */ = {isa = PBXBuildFile; fileRef = 88E8F8D62D71D97F009E9075 /* libqtvirtualkeyboard_hangul.dylib.dSYM */; };
-		88E8F8E32D71D97F009E9075 /* libqtvirtualkeyboard_pinyin.dylib.dSYM in Copy QT Plugins - virtualkeyboard */ = {isa = PBXBuildFile; fileRef = 88E8F8D72D71D97F009E9075 /* libqtvirtualkeyboard_pinyin.dylib.dSYM */; };
-		88E8F8E42D71D97F009E9075 /* libqtvirtualkeyboard_openwnn.dylib.dSYM in Copy QT Plugins - virtualkeyboard */ = {isa = PBXBuildFile; fileRef = 88E8F8D82D71D97F009E9075 /* libqtvirtualkeyboard_openwnn.dylib.dSYM */; };
-		88E8F8E52D71D97F009E9075 /* libqtvirtualkeyboard_thai.dylib.dSYM in Copy QT Plugins - virtualkeyboard */ = {isa = PBXBuildFile; fileRef = 88E8F8D92D71D97F009E9075 /* libqtvirtualkeyboard_thai.dylib.dSYM */; };
 		88E8F8E62D71D97F009E9075 /* libqtvirtualkeyboard_thai.dylib in Copy QT Plugins - virtualkeyboard */ = {isa = PBXBuildFile; fileRef = 88E8F8DA2D71D97F009E9075 /* libqtvirtualkeyboard_thai.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		88E8F8E72D71D97F009E9075 /* libqtvirtualkeyboardplugin.dylib in Copy QT Plugins - virtualkeyboard */ = {isa = PBXBuildFile; fileRef = 88E8F8DB2D71D97F009E9075 /* libqtvirtualkeyboardplugin.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		88E8F8E82D71D97F009E9075 /* libqtvirtualkeyboard_hangul.dylib in Copy QT Plugins - virtualkeyboard */ = {isa = PBXBuildFile; fileRef = 88E8F8DC2D71D97F009E9075 /* libqtvirtualkeyboard_hangul.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -166,7 +134,6 @@
 			dstPath = bearer;
 			dstSubfolderSpec = 13;
 			files = (
-				88E8F85B2D71D826009E9075 /* libqgenericbearer.dylib.dSYM in Copy QT Plugins - bearer */,
 				88E8F85F2D71D832009E9075 /* libqgenericbearer.dylib in Copy QT Plugins - bearer */,
 			);
 			name = "Copy QT Plugins - bearer";
@@ -179,13 +146,9 @@
 			dstSubfolderSpec = 13;
 			files = (
 				88E8F8712D71D868009E9075 /* libqtvirtualcanbus.dylib in Copy QT Plugins - canbus */,
-				88E8F8722D71D868009E9075 /* libqtpassthrucanbus.dylib.dSYM in Copy QT Plugins - canbus */,
-				88E8F8742D71D868009E9075 /* libqtvirtualcanbus.dylib.dSYM in Copy QT Plugins - canbus */,
 				88E8F8762D71D868009E9075 /* libqttinycanbus.dylib in Copy QT Plugins - canbus */,
 				88E8F8782D71D868009E9075 /* libqtpeakcanbus.dylib in Copy QT Plugins - canbus */,
-				88E8F8792D71D868009E9075 /* libqttinycanbus.dylib.dSYM in Copy QT Plugins - canbus */,
 				88E8F87A2D71D868009E9075 /* libqtpassthrucanbus.dylib in Copy QT Plugins - canbus */,
-				88E8F87D2D71D868009E9075 /* libqtpeakcanbus.dylib.dSYM in Copy QT Plugins - canbus */,
 			);
 			name = "Copy QT Plugins - canbus";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -196,7 +159,6 @@
 			dstPath = iconengines;
 			dstSubfolderSpec = 13;
 			files = (
-				88E8F8822D71D887009E9075 /* libqsvgicon.dylib.dSYM in Copy QT Plugins - iconengines */,
 				88E8F8832D71D887009E9075 /* libqsvgicon.dylib in Copy QT Plugins - iconengines */,
 			);
 			name = "Copy QT Plugins - iconengines";
@@ -210,27 +172,15 @@
 			files = (
 				88E8F89B2D71D8BC009E9075 /* libqjpeg.dylib in Copy QT Plugins - imageformats */,
 				88E8F89C2D71D8BC009E9075 /* libqicns.dylib in Copy QT Plugins - imageformats */,
-				88E8F89D2D71D8BC009E9075 /* libqgif.dylib.dSYM in Copy QT Plugins - imageformats */,
 				88E8F89E2D71D8BC009E9075 /* libqmacjp2.dylib in Copy QT Plugins - imageformats */,
 				88E8F89F2D71D8BC009E9075 /* libqtga.dylib in Copy QT Plugins - imageformats */,
 				88E8F8A02D71D8BD009E9075 /* libqsvg.dylib in Copy QT Plugins - imageformats */,
-				88E8F8A12D71D8BD009E9075 /* libqtiff.dylib.dSYM in Copy QT Plugins - imageformats */,
-				88E8F8A22D71D8BD009E9075 /* libqico.dylib.dSYM in Copy QT Plugins - imageformats */,
 				88E8F8A32D71D8BD009E9075 /* libqmacheif.dylib in Copy QT Plugins - imageformats */,
 				88E8F8A42D71D8BD009E9075 /* libqwbmp.dylib in Copy QT Plugins - imageformats */,
-				88E8F8A52D71D8BD009E9075 /* libqwebp.dylib.dSYM in Copy QT Plugins - imageformats */,
 				88E8F8A62D71D8BD009E9075 /* libqwebp.dylib in Copy QT Plugins - imageformats */,
-				88E8F8A72D71D8BD009E9075 /* libqtga.dylib.dSYM in Copy QT Plugins - imageformats */,
-				88E8F8A82D71D8BD009E9075 /* libqicns.dylib.dSYM in Copy QT Plugins - imageformats */,
-				88E8F8A92D71D8BD009E9075 /* libqmacjp2.dylib.dSYM in Copy QT Plugins - imageformats */,
-				88E8F8AA2D71D8BD009E9075 /* libqsvg.dylib.dSYM in Copy QT Plugins - imageformats */,
-				88E8F8AB2D71D8BD009E9075 /* libqmacheif.dylib.dSYM in Copy QT Plugins - imageformats */,
 				88E8F8AC2D71D8BD009E9075 /* libqgif.dylib in Copy QT Plugins - imageformats */,
-				88E8F8AD2D71D8BD009E9075 /* libqjpeg.dylib.dSYM in Copy QT Plugins - imageformats */,
 				88E8F8AE2D71D8BD009E9075 /* libqtiff.dylib in Copy QT Plugins - imageformats */,
-				88E8F8AF2D71D8BD009E9075 /* libqwbmp.dylib.dSYM in Copy QT Plugins - imageformats */,
 				88E8F8B02D71D8BD009E9075 /* libqico.dylib in Copy QT Plugins - imageformats */,
-				88E8F8B12D71D8BD009E9075 /* libqpdf.dylib.dSYM in Copy QT Plugins - imageformats */,
 			);
 			name = "Copy QT Plugins - imageformats";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -241,7 +191,6 @@
 			dstPath = platforminputcontexts;
 			dstSubfolderSpec = 13;
 			files = (
-				88E8F8B42D71D8FC009E9075 /* libqtvirtualkeyboardplugin.dylib.dSYM in Copy QT Plugins - platforminputcontexts */,
 				88E8F8B52D71D8FC009E9075 /* libqtvirtualkeyboardplugin.dylib in Copy QT Plugins - platforminputcontexts */,
 			);
 			name = "Copy QT Plugins - platforminputcontexts";
@@ -254,11 +203,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				88E8F8BE2D71D920009E9075 /* libqcocoa.dylib in Copy QT Plugins - platforms */,
-				88E8F8BF2D71D920009E9075 /* libqoffscreen.dylib.dSYM in Copy QT Plugins - platforms */,
-				88E8F8C02D71D920009E9075 /* libqcocoa.dylib.dSYM in Copy QT Plugins - platforms */,
-				88E8F8C12D71D920009E9075 /* libqwebgl.dylib.dSYM in Copy QT Plugins - platforms */,
 				88E8F8C22D71D920009E9075 /* libqminimal.dylib in Copy QT Plugins - platforms */,
-				88E8F8C32D71D920009E9075 /* libqminimal.dylib.dSYM in Copy QT Plugins - platforms */,
 				88E8F8C42D71D920009E9075 /* libqwebgl.dylib in Copy QT Plugins - platforms */,
 				88E8F8C52D71D920009E9075 /* libqoffscreen.dylib in Copy QT Plugins - platforms */,
 			);
@@ -272,7 +217,6 @@
 			dstSubfolderSpec = 13;
 			files = (
 				88E8F8CC2D71D948009E9075 /* libcocoaprintersupport.dylib in Copy QT Plugins - printsupport */,
-				88E8F8CD2D71D948009E9075 /* libcocoaprintersupport.dylib.dSYM in Copy QT Plugins - printsupport */,
 			);
 			name = "Copy QT Plugins - printsupport";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -283,7 +227,6 @@
 			dstPath = styles;
 			dstSubfolderSpec = 13;
 			files = (
-				88E8F8D02D71D966009E9075 /* libqmacstyle.dylib.dSYM in Copy QT Plugins - styles */,
 				88E8F8D12D71D966009E9075 /* libqmacstyle.dylib in Copy QT Plugins - styles */,
 			);
 			name = "Copy QT Plugins - styles";
@@ -297,12 +240,6 @@
 			files = (
 				88E8F8DE2D71D97F009E9075 /* libqtvirtualkeyboard_tcime.dylib in Copy QT Plugins - virtualkeyboard */,
 				88E8F8DF2D71D97F009E9075 /* libqtvirtualkeyboard_pinyin.dylib in Copy QT Plugins - virtualkeyboard */,
-				88E8F8E02D71D97F009E9075 /* libqtvirtualkeyboard_tcime.dylib.dSYM in Copy QT Plugins - virtualkeyboard */,
-				88E8F8E12D71D97F009E9075 /* libqtvirtualkeyboardplugin.dylib.dSYM in Copy QT Plugins - virtualkeyboard */,
-				88E8F8E22D71D97F009E9075 /* libqtvirtualkeyboard_hangul.dylib.dSYM in Copy QT Plugins - virtualkeyboard */,
-				88E8F8E32D71D97F009E9075 /* libqtvirtualkeyboard_pinyin.dylib.dSYM in Copy QT Plugins - virtualkeyboard */,
-				88E8F8E42D71D97F009E9075 /* libqtvirtualkeyboard_openwnn.dylib.dSYM in Copy QT Plugins - virtualkeyboard */,
-				88E8F8E52D71D97F009E9075 /* libqtvirtualkeyboard_thai.dylib.dSYM in Copy QT Plugins - virtualkeyboard */,
 				88E8F8E62D71D97F009E9075 /* libqtvirtualkeyboard_thai.dylib in Copy QT Plugins - virtualkeyboard */,
 				88E8F8E72D71D97F009E9075 /* libqtvirtualkeyboardplugin.dylib in Copy QT Plugins - virtualkeyboard */,
 				88E8F8E82D71D97F009E9075 /* libqtvirtualkeyboard_hangul.dylib in Copy QT Plugins - virtualkeyboard */,
@@ -318,7 +255,6 @@
 			dstSubfolderSpec = 13;
 			files = (
 				88E8F8C82D71D934009E9075 /* libqxdgdesktopportal.dylib in Copy QT Plugins - platformthemes */,
-				88E8F8C92D71D934009E9075 /* libqxdgdesktopportal.dylib.dSYM in Copy QT Plugins - platformthemes */,
 			);
 			name = "Copy QT Plugins - platformthemes";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -453,75 +389,33 @@
 		88E8F8492D71D7D7009E9075 /* printsupport */ = {isa = PBXFileReference; lastKnownFileType = folder; name = printsupport; path = ../../../../Qt/5.15.2/clang_64/plugins/printsupport; sourceTree = "<group>"; };
 		88E8F84A2D71D7D7009E9075 /* platformthemes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = platformthemes; path = ../../../../Qt/5.15.2/clang_64/plugins/platformthemes; sourceTree = "<group>"; };
 		88E8F84B2D71D7D7009E9075 /* platforms */ = {isa = PBXFileReference; lastKnownFileType = folder; name = platforms; path = ../../../../Qt/5.15.2/clang_64/plugins/platforms; sourceTree = "<group>"; };
-		88E8F8582D71D820009E9075 /* libqgenericbearer.dylib.dSYM 12-24-23-809.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = "libqgenericbearer.dylib.dSYM 12-24-23-809.dSYM"; path = "../../../Qt/5.15.2/clang_64/plugins/bearer/libqgenericbearer.dylib.dSYM 12-24-23-809.dSYM"; sourceTree = "<group>"; };
-		88E8F85A2D71D826009E9075 /* libqgenericbearer.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqgenericbearer.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/bearer/libqgenericbearer.dylib.dSYM; sourceTree = "<group>"; };
-		88E8F85C2D71D82B009E9075 /* libqgenericbearer.dylib 12-24-23-802.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libqgenericbearer.dylib 12-24-23-802.dylib"; path = "../../../Qt/5.15.2/clang_64/plugins/bearer/libqgenericbearer.dylib 12-24-23-802.dylib"; sourceTree = "<group>"; };
 		88E8F85E2D71D832009E9075 /* libqgenericbearer.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqgenericbearer.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/bearer/libqgenericbearer.dylib; sourceTree = "<group>"; };
-		88E8F8602D71D867009E9075 /* libqtpeakcanbus.dylib.dSYM 12-24-23-800.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = "libqtpeakcanbus.dylib.dSYM 12-24-23-800.dSYM"; path = "../../../Qt/5.15.2/clang_64/plugins/canbus/libqtpeakcanbus.dylib.dSYM 12-24-23-800.dSYM"; sourceTree = "<group>"; };
 		88E8F8612D71D867009E9075 /* libqtvirtualcanbus.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqtvirtualcanbus.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/canbus/libqtvirtualcanbus.dylib; sourceTree = "<group>"; };
-		88E8F8622D71D867009E9075 /* libqtpassthrucanbus.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqtpassthrucanbus.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/canbus/libqtpassthrucanbus.dylib.dSYM; sourceTree = "<group>"; };
-		88E8F8632D71D867009E9075 /* libqtpassthrucanbus.dylib.dSYM 12-24-23-799.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = "libqtpassthrucanbus.dylib.dSYM 12-24-23-799.dSYM"; path = "../../../Qt/5.15.2/clang_64/plugins/canbus/libqtpassthrucanbus.dylib.dSYM 12-24-23-799.dSYM"; sourceTree = "<group>"; };
-		88E8F8642D71D867009E9075 /* libqtvirtualcanbus.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqtvirtualcanbus.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/canbus/libqtvirtualcanbus.dylib.dSYM; sourceTree = "<group>"; };
-		88E8F8652D71D867009E9075 /* libqttinycanbus.dylib.dSYM 12-24-23-805.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = "libqttinycanbus.dylib.dSYM 12-24-23-805.dSYM"; path = "../../../Qt/5.15.2/clang_64/plugins/canbus/libqttinycanbus.dylib.dSYM 12-24-23-805.dSYM"; sourceTree = "<group>"; };
 		88E8F8662D71D867009E9075 /* libqttinycanbus.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqttinycanbus.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/canbus/libqttinycanbus.dylib; sourceTree = "<group>"; };
-		88E8F8672D71D867009E9075 /* libqtpassthrucanbus.dylib 12-24-23-803.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libqtpassthrucanbus.dylib 12-24-23-803.dylib"; path = "../../../Qt/5.15.2/clang_64/plugins/canbus/libqtpassthrucanbus.dylib 12-24-23-803.dylib"; sourceTree = "<group>"; };
 		88E8F8682D71D867009E9075 /* libqtpeakcanbus.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqtpeakcanbus.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/canbus/libqtpeakcanbus.dylib; sourceTree = "<group>"; };
-		88E8F8692D71D867009E9075 /* libqttinycanbus.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqttinycanbus.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/canbus/libqttinycanbus.dylib.dSYM; sourceTree = "<group>"; };
 		88E8F86A2D71D867009E9075 /* libqtpassthrucanbus.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqtpassthrucanbus.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/canbus/libqtpassthrucanbus.dylib; sourceTree = "<group>"; };
-		88E8F86B2D71D867009E9075 /* libqtvirtualcanbus.dylib.dSYM 12-24-23-806.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = "libqtvirtualcanbus.dylib.dSYM 12-24-23-806.dSYM"; path = "../../../Qt/5.15.2/clang_64/plugins/canbus/libqtvirtualcanbus.dylib.dSYM 12-24-23-806.dSYM"; sourceTree = "<group>"; };
-		88E8F86C2D71D867009E9075 /* libqttinycanbus.dylib 12-24-23-797.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libqttinycanbus.dylib 12-24-23-797.dylib"; path = "../../../Qt/5.15.2/clang_64/plugins/canbus/libqttinycanbus.dylib 12-24-23-797.dylib"; sourceTree = "<group>"; };
-		88E8F86D2D71D867009E9075 /* libqtpeakcanbus.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqtpeakcanbus.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/canbus/libqtpeakcanbus.dylib.dSYM; sourceTree = "<group>"; };
-		88E8F86E2D71D868009E9075 /* libqtpeakcanbus.dylib 12-24-23-807.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libqtpeakcanbus.dylib 12-24-23-807.dylib"; path = "../../../Qt/5.15.2/clang_64/plugins/canbus/libqtpeakcanbus.dylib 12-24-23-807.dylib"; sourceTree = "<group>"; };
-		88E8F86F2D71D868009E9075 /* libqtvirtualcanbus.dylib 12-24-23-795.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libqtvirtualcanbus.dylib 12-24-23-795.dylib"; path = "../../../Qt/5.15.2/clang_64/plugins/canbus/libqtvirtualcanbus.dylib 12-24-23-795.dylib"; sourceTree = "<group>"; };
-		88E8F8802D71D886009E9075 /* libqsvgicon.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqsvgicon.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/iconengines/libqsvgicon.dylib.dSYM; sourceTree = "<group>"; };
 		88E8F8812D71D886009E9075 /* libqsvgicon.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqsvgicon.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/iconengines/libqsvgicon.dylib; sourceTree = "<group>"; };
 		88E8F8842D71D8BB009E9075 /* libqjpeg.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqjpeg.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/imageformats/libqjpeg.dylib; sourceTree = "<group>"; };
 		88E8F8852D71D8BB009E9075 /* libqicns.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqicns.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/imageformats/libqicns.dylib; sourceTree = "<group>"; };
-		88E8F8862D71D8BB009E9075 /* libqgif.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqgif.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/imageformats/libqgif.dylib.dSYM; sourceTree = "<group>"; };
 		88E8F8872D71D8BB009E9075 /* libqmacjp2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqmacjp2.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/imageformats/libqmacjp2.dylib; sourceTree = "<group>"; };
 		88E8F8882D71D8BB009E9075 /* libqtga.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqtga.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/imageformats/libqtga.dylib; sourceTree = "<group>"; };
 		88E8F8892D71D8BB009E9075 /* libqsvg.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqsvg.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/imageformats/libqsvg.dylib; sourceTree = "<group>"; };
-		88E8F88A2D71D8BC009E9075 /* libqtiff.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqtiff.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/imageformats/libqtiff.dylib.dSYM; sourceTree = "<group>"; };
-		88E8F88B2D71D8BC009E9075 /* libqico.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqico.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/imageformats/libqico.dylib.dSYM; sourceTree = "<group>"; };
 		88E8F88C2D71D8BC009E9075 /* libqmacheif.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqmacheif.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/imageformats/libqmacheif.dylib; sourceTree = "<group>"; };
 		88E8F88D2D71D8BC009E9075 /* libqwbmp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqwbmp.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/imageformats/libqwbmp.dylib; sourceTree = "<group>"; };
-		88E8F88E2D71D8BC009E9075 /* libqwebp.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqwebp.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/imageformats/libqwebp.dylib.dSYM; sourceTree = "<group>"; };
 		88E8F88F2D71D8BC009E9075 /* libqwebp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqwebp.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/imageformats/libqwebp.dylib; sourceTree = "<group>"; };
-		88E8F8902D71D8BC009E9075 /* libqtga.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqtga.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/imageformats/libqtga.dylib.dSYM; sourceTree = "<group>"; };
-		88E8F8912D71D8BC009E9075 /* libqicns.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqicns.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/imageformats/libqicns.dylib.dSYM; sourceTree = "<group>"; };
-		88E8F8922D71D8BC009E9075 /* libqmacjp2.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqmacjp2.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/imageformats/libqmacjp2.dylib.dSYM; sourceTree = "<group>"; };
-		88E8F8932D71D8BC009E9075 /* libqsvg.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqsvg.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/imageformats/libqsvg.dylib.dSYM; sourceTree = "<group>"; };
-		88E8F8942D71D8BC009E9075 /* libqmacheif.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqmacheif.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/imageformats/libqmacheif.dylib.dSYM; sourceTree = "<group>"; };
 		88E8F8952D71D8BC009E9075 /* libqgif.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqgif.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/imageformats/libqgif.dylib; sourceTree = "<group>"; };
-		88E8F8962D71D8BC009E9075 /* libqjpeg.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqjpeg.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/imageformats/libqjpeg.dylib.dSYM; sourceTree = "<group>"; };
 		88E8F8972D71D8BC009E9075 /* libqtiff.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqtiff.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/imageformats/libqtiff.dylib; sourceTree = "<group>"; };
-		88E8F8982D71D8BC009E9075 /* libqwbmp.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqwbmp.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/imageformats/libqwbmp.dylib.dSYM; sourceTree = "<group>"; };
 		88E8F8992D71D8BC009E9075 /* libqico.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqico.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/imageformats/libqico.dylib; sourceTree = "<group>"; };
-		88E8F89A2D71D8BC009E9075 /* libqpdf.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqpdf.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/imageformats/libqpdf.dylib.dSYM; sourceTree = "<group>"; };
-		88E8F8B22D71D8FC009E9075 /* libqtvirtualkeyboardplugin.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqtvirtualkeyboardplugin.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/platforminputcontexts/libqtvirtualkeyboardplugin.dylib.dSYM; sourceTree = "<group>"; };
 		88E8F8B32D71D8FC009E9075 /* libqtvirtualkeyboardplugin.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqtvirtualkeyboardplugin.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/platforminputcontexts/libqtvirtualkeyboardplugin.dylib; sourceTree = "<group>"; };
 		88E8F8B62D71D920009E9075 /* libqcocoa.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqcocoa.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/platforms/libqcocoa.dylib; sourceTree = "<group>"; };
-		88E8F8B72D71D920009E9075 /* libqoffscreen.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqoffscreen.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/platforms/libqoffscreen.dylib.dSYM; sourceTree = "<group>"; };
-		88E8F8B82D71D920009E9075 /* libqcocoa.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqcocoa.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/platforms/libqcocoa.dylib.dSYM; sourceTree = "<group>"; };
-		88E8F8B92D71D920009E9075 /* libqwebgl.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqwebgl.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/platforms/libqwebgl.dylib.dSYM; sourceTree = "<group>"; };
 		88E8F8BA2D71D920009E9075 /* libqminimal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqminimal.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/platforms/libqminimal.dylib; sourceTree = "<group>"; };
-		88E8F8BB2D71D920009E9075 /* libqminimal.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqminimal.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/platforms/libqminimal.dylib.dSYM; sourceTree = "<group>"; };
 		88E8F8BC2D71D920009E9075 /* libqwebgl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqwebgl.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/platforms/libqwebgl.dylib; sourceTree = "<group>"; };
 		88E8F8BD2D71D920009E9075 /* libqoffscreen.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqoffscreen.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/platforms/libqoffscreen.dylib; sourceTree = "<group>"; };
 		88E8F8C62D71D933009E9075 /* libqxdgdesktopportal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqxdgdesktopportal.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/platformthemes/libqxdgdesktopportal.dylib; sourceTree = "<group>"; };
-		88E8F8C72D71D933009E9075 /* libqxdgdesktopportal.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqxdgdesktopportal.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/platformthemes/libqxdgdesktopportal.dylib.dSYM; sourceTree = "<group>"; };
 		88E8F8CA2D71D948009E9075 /* libcocoaprintersupport.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcocoaprintersupport.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/printsupport/libcocoaprintersupport.dylib; sourceTree = "<group>"; };
-		88E8F8CB2D71D948009E9075 /* libcocoaprintersupport.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libcocoaprintersupport.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/printsupport/libcocoaprintersupport.dylib.dSYM; sourceTree = "<group>"; };
-		88E8F8CE2D71D966009E9075 /* libqmacstyle.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqmacstyle.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/styles/libqmacstyle.dylib.dSYM; sourceTree = "<group>"; };
 		88E8F8CF2D71D966009E9075 /* libqmacstyle.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqmacstyle.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/styles/libqmacstyle.dylib; sourceTree = "<group>"; };
 		88E8F8D22D71D97E009E9075 /* libqtvirtualkeyboard_tcime.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqtvirtualkeyboard_tcime.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/virtualkeyboard/libqtvirtualkeyboard_tcime.dylib; sourceTree = "<group>"; };
 		88E8F8D32D71D97E009E9075 /* libqtvirtualkeyboard_pinyin.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqtvirtualkeyboard_pinyin.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/virtualkeyboard/libqtvirtualkeyboard_pinyin.dylib; sourceTree = "<group>"; };
-		88E8F8D42D71D97F009E9075 /* libqtvirtualkeyboard_tcime.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqtvirtualkeyboard_tcime.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/virtualkeyboard/libqtvirtualkeyboard_tcime.dylib.dSYM; sourceTree = "<group>"; };
-		88E8F8D52D71D97F009E9075 /* libqtvirtualkeyboardplugin.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqtvirtualkeyboardplugin.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/virtualkeyboard/libqtvirtualkeyboardplugin.dylib.dSYM; sourceTree = "<group>"; };
-		88E8F8D62D71D97F009E9075 /* libqtvirtualkeyboard_hangul.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqtvirtualkeyboard_hangul.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/virtualkeyboard/libqtvirtualkeyboard_hangul.dylib.dSYM; sourceTree = "<group>"; };
-		88E8F8D72D71D97F009E9075 /* libqtvirtualkeyboard_pinyin.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqtvirtualkeyboard_pinyin.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/virtualkeyboard/libqtvirtualkeyboard_pinyin.dylib.dSYM; sourceTree = "<group>"; };
-		88E8F8D82D71D97F009E9075 /* libqtvirtualkeyboard_openwnn.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqtvirtualkeyboard_openwnn.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/virtualkeyboard/libqtvirtualkeyboard_openwnn.dylib.dSYM; sourceTree = "<group>"; };
-		88E8F8D92D71D97F009E9075 /* libqtvirtualkeyboard_thai.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = libqtvirtualkeyboard_thai.dylib.dSYM; path = ../../../Qt/5.15.2/clang_64/plugins/virtualkeyboard/libqtvirtualkeyboard_thai.dylib.dSYM; sourceTree = "<group>"; };
 		88E8F8DA2D71D97F009E9075 /* libqtvirtualkeyboard_thai.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqtvirtualkeyboard_thai.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/virtualkeyboard/libqtvirtualkeyboard_thai.dylib; sourceTree = "<group>"; };
 		88E8F8DB2D71D97F009E9075 /* libqtvirtualkeyboardplugin.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqtvirtualkeyboardplugin.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/virtualkeyboard/libqtvirtualkeyboardplugin.dylib; sourceTree = "<group>"; };
 		88E8F8DC2D71D97F009E9075 /* libqtvirtualkeyboard_hangul.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqtvirtualkeyboard_hangul.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/virtualkeyboard/libqtvirtualkeyboard_hangul.dylib; sourceTree = "<group>"; };
@@ -629,78 +523,36 @@
 			isa = PBXGroup;
 			children = (
 				88E8F8DC2D71D97F009E9075 /* libqtvirtualkeyboard_hangul.dylib */,
-				88E8F8D62D71D97F009E9075 /* libqtvirtualkeyboard_hangul.dylib.dSYM */,
 				88E8F8DD2D71D97F009E9075 /* libqtvirtualkeyboard_openwnn.dylib */,
-				88E8F8D82D71D97F009E9075 /* libqtvirtualkeyboard_openwnn.dylib.dSYM */,
 				88E8F8D32D71D97E009E9075 /* libqtvirtualkeyboard_pinyin.dylib */,
-				88E8F8D72D71D97F009E9075 /* libqtvirtualkeyboard_pinyin.dylib.dSYM */,
 				88E8F8D22D71D97E009E9075 /* libqtvirtualkeyboard_tcime.dylib */,
-				88E8F8D42D71D97F009E9075 /* libqtvirtualkeyboard_tcime.dylib.dSYM */,
 				88E8F8DA2D71D97F009E9075 /* libqtvirtualkeyboard_thai.dylib */,
-				88E8F8D92D71D97F009E9075 /* libqtvirtualkeyboard_thai.dylib.dSYM */,
 				88E8F8DB2D71D97F009E9075 /* libqtvirtualkeyboardplugin.dylib */,
 				88E8F8B32D71D8FC009E9075 /* libqtvirtualkeyboardplugin.dylib */,
-				88E8F8B22D71D8FC009E9075 /* libqtvirtualkeyboardplugin.dylib.dSYM */,
-				88E8F8D52D71D97F009E9075 /* libqtvirtualkeyboardplugin.dylib.dSYM */,
 				88E8F8CF2D71D966009E9075 /* libqmacstyle.dylib */,
-				88E8F8CE2D71D966009E9075 /* libqmacstyle.dylib.dSYM */,
 				88E8F8CA2D71D948009E9075 /* libcocoaprintersupport.dylib */,
-				88E8F8CB2D71D948009E9075 /* libcocoaprintersupport.dylib.dSYM */,
 				88E8F8C62D71D933009E9075 /* libqxdgdesktopportal.dylib */,
-				88E8F8C72D71D933009E9075 /* libqxdgdesktopportal.dylib.dSYM */,
 				88E8F8B62D71D920009E9075 /* libqcocoa.dylib */,
-				88E8F8B82D71D920009E9075 /* libqcocoa.dylib.dSYM */,
 				88E8F8BA2D71D920009E9075 /* libqminimal.dylib */,
-				88E8F8BB2D71D920009E9075 /* libqminimal.dylib.dSYM */,
 				88E8F8BD2D71D920009E9075 /* libqoffscreen.dylib */,
-				88E8F8B72D71D920009E9075 /* libqoffscreen.dylib.dSYM */,
 				88E8F8BC2D71D920009E9075 /* libqwebgl.dylib */,
-				88E8F8B92D71D920009E9075 /* libqwebgl.dylib.dSYM */,
 				88E8F8952D71D8BC009E9075 /* libqgif.dylib */,
-				88E8F8862D71D8BB009E9075 /* libqgif.dylib.dSYM */,
 				88E8F8852D71D8BB009E9075 /* libqicns.dylib */,
-				88E8F8912D71D8BC009E9075 /* libqicns.dylib.dSYM */,
 				88E8F8992D71D8BC009E9075 /* libqico.dylib */,
-				88E8F88B2D71D8BC009E9075 /* libqico.dylib.dSYM */,
 				88E8F8842D71D8BB009E9075 /* libqjpeg.dylib */,
-				88E8F8962D71D8BC009E9075 /* libqjpeg.dylib.dSYM */,
 				88E8F88C2D71D8BC009E9075 /* libqmacheif.dylib */,
-				88E8F8942D71D8BC009E9075 /* libqmacheif.dylib.dSYM */,
 				88E8F8872D71D8BB009E9075 /* libqmacjp2.dylib */,
-				88E8F8922D71D8BC009E9075 /* libqmacjp2.dylib.dSYM */,
-				88E8F89A2D71D8BC009E9075 /* libqpdf.dylib.dSYM */,
 				88E8F8892D71D8BB009E9075 /* libqsvg.dylib */,
-				88E8F8932D71D8BC009E9075 /* libqsvg.dylib.dSYM */,
 				88E8F8882D71D8BB009E9075 /* libqtga.dylib */,
-				88E8F8902D71D8BC009E9075 /* libqtga.dylib.dSYM */,
 				88E8F8972D71D8BC009E9075 /* libqtiff.dylib */,
-				88E8F88A2D71D8BC009E9075 /* libqtiff.dylib.dSYM */,
 				88E8F88D2D71D8BC009E9075 /* libqwbmp.dylib */,
-				88E8F8982D71D8BC009E9075 /* libqwbmp.dylib.dSYM */,
 				88E8F88F2D71D8BC009E9075 /* libqwebp.dylib */,
-				88E8F88E2D71D8BC009E9075 /* libqwebp.dylib.dSYM */,
 				88E8F8812D71D886009E9075 /* libqsvgicon.dylib */,
-				88E8F8802D71D886009E9075 /* libqsvgicon.dylib.dSYM */,
 				88E8F86A2D71D867009E9075 /* libqtpassthrucanbus.dylib */,
-				88E8F8672D71D867009E9075 /* libqtpassthrucanbus.dylib 12-24-23-803.dylib */,
-				88E8F8622D71D867009E9075 /* libqtpassthrucanbus.dylib.dSYM */,
-				88E8F8632D71D867009E9075 /* libqtpassthrucanbus.dylib.dSYM 12-24-23-799.dSYM */,
 				88E8F8682D71D867009E9075 /* libqtpeakcanbus.dylib */,
-				88E8F86E2D71D868009E9075 /* libqtpeakcanbus.dylib 12-24-23-807.dylib */,
-				88E8F86D2D71D867009E9075 /* libqtpeakcanbus.dylib.dSYM */,
-				88E8F8602D71D867009E9075 /* libqtpeakcanbus.dylib.dSYM 12-24-23-800.dSYM */,
 				88E8F8662D71D867009E9075 /* libqttinycanbus.dylib */,
-				88E8F86C2D71D867009E9075 /* libqttinycanbus.dylib 12-24-23-797.dylib */,
-				88E8F8692D71D867009E9075 /* libqttinycanbus.dylib.dSYM */,
-				88E8F8652D71D867009E9075 /* libqttinycanbus.dylib.dSYM 12-24-23-805.dSYM */,
 				88E8F8612D71D867009E9075 /* libqtvirtualcanbus.dylib */,
-				88E8F86F2D71D868009E9075 /* libqtvirtualcanbus.dylib 12-24-23-795.dylib */,
-				88E8F8642D71D867009E9075 /* libqtvirtualcanbus.dylib.dSYM */,
-				88E8F86B2D71D867009E9075 /* libqtvirtualcanbus.dylib.dSYM 12-24-23-806.dSYM */,
 				88E8F85E2D71D832009E9075 /* libqgenericbearer.dylib */,
-				88E8F85C2D71D82B009E9075 /* libqgenericbearer.dylib 12-24-23-802.dylib */,
-				88E8F85A2D71D826009E9075 /* libqgenericbearer.dylib.dSYM */,
-				88E8F8582D71D820009E9075 /* libqgenericbearer.dylib.dSYM 12-24-23-809.dSYM */,
 			);
 			name = QT_Library_References;
 			sourceTree = "<group>";
@@ -1033,7 +885,6 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
-				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/QT",
@@ -1096,7 +947,6 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
-				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/QT",
@@ -1181,7 +1031,7 @@
 				DRIVERKIT_DEPLOYMENT_TARGET = 20.0;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SELECTED_FILES = readwrite;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1242,7 +1092,7 @@
 				DRIVERKIT_DEPLOYMENT_TARGET = 20.0;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SELECTED_FILES = readwrite;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1270,7 +1120,6 @@
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
-				ENABLE_USER_SELECTED_FILES = readonly;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/System/DriverKit/System/Library/Frameworks",
@@ -1306,7 +1155,6 @@
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
-				ENABLE_USER_SELECTED_FILES = readonly;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/System/DriverKit/System/Library/Frameworks",
