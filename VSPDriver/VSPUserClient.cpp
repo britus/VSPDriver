@@ -26,9 +26,10 @@
 #include <SerialDriverKit/SerialDriverKit.h>
 
 // -- My
+#include "VSPLogger.h"
 #include "VSPUserClient.h"
 #include "VSPController.h"
-#include "VSPLogger.h"
+#include "VSPSerialPort.h"
 #include "VSPDriver.h"
 
 using namespace VSPController;
@@ -964,7 +965,9 @@ kern_return_t VSPUserClient::enableChecks(void* reference, IOUserClientMethodArg
     kern_return_t ret;
     TVSPControllerData response = {};
     TVSPControllerData request = {};
-    //uint8_t portId;
+    TVSPPortItem portItem = {};
+    uint8_t portId;
+    uint64_t flags;
 
     VSPLog(LOG_PREFIX, "enableChecks called.\n");
 
@@ -980,8 +983,16 @@ kern_return_t VSPUserClient::enableChecks(void* reference, IOUserClientMethodArg
         goto finish;
     }
 
-    // --
-    // portId = request.parameter.link.source;
+    flags = request.parameter.flags;
+    portId = request.parameter.link.source;
+    
+    ret = ivars->m_parent->getPortById(portId, &portItem, sizeof(TVSPPortItem));
+    if (ret != kIOReturnSuccess) {
+        set_ctlr_status(&response, ret, 0xaa000001);
+        goto finish;
+    }
+    
+    portItem.port->setParameterChecks(flags);
 
     VSPLog(LOG_PREFIX, "enableChecks finish.\n");
 
@@ -998,7 +1009,9 @@ kern_return_t VSPUserClient::enableTrace(void* reference, IOUserClientMethodArgu
     kern_return_t ret;
     TVSPControllerData response = {};
     TVSPControllerData request = {};
-    //uint8_t portId;
+    TVSPPortItem portItem = {};
+    uint8_t portId;
+    uint64_t flags;
     
     VSPLog(LOG_PREFIX, "enableTrace called.\n");
 
@@ -1014,8 +1027,16 @@ kern_return_t VSPUserClient::enableTrace(void* reference, IOUserClientMethodArgu
         goto finish;
     }
 
-    // --
-    //portId = request.parameter.link.source;
+    flags = request.parameter.flags;
+    portId = request.parameter.link.source;
+    
+    ret = ivars->m_parent->getPortById(portId, &portItem, sizeof(TVSPPortItem));
+    if (ret != kIOReturnSuccess) {
+        set_ctlr_status(&response, ret, 0xaa000001);
+        goto finish;
+    }
+    
+    portItem.port->setTraceFlags(flags);
     
     VSPLog(LOG_PREFIX, "enableTrace finish.\n");
 

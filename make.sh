@@ -1,16 +1,29 @@
 #!/bin/bash
 
-prjroot=`pwd`
-prjname="VSPDriver"
+PROJECT_DIR=`pwd`
+ARCH=`uname -m`
 
-basedir="${HOME}/Library/Developer/Xcode/DerivedData"
-prjpath=`basename ${basedir}/${prjname}-*`
+if [ -d ${PROJECT_DIR}/../VSPClient ] ; then
+    echo "** PRE-BUILD VSPClient Frameworks"
+    mkdir -vp ${PROJECT_DIR}/QT
+    cd ${PROJECT_DIR}/../VSPClient
+    rm -fR build && ./make.sh ${PROJECT_DIR}/QT
+    cd ${PROJECT_DIR}
+    echo "** PRE-BUILD END"
+fi
 
-echo ":> ${basedir}"
-echo ":> ${prjpath}"
+echo ":> Build project: ${ARCH} ..."
 
-echo ":> Build project..."
+rm -fR build
 
-xcodebuild -arch `uname -m` -project ${prjname}.xcodeproj \
-    -target VSPDriver \
-    -target VSPClient
+if [ "${ARCH}" == "arm64" ] ; then
+	xcodebuild -arch `uname -m` -project VSPDriver.xcodeproj \
+    	-target VSPDriver \
+    	-target VSPClient
+fi
+
+if [ "${ARCH}" == "x86_64" ] ; then
+    xcodebuild -arch `uname -m` -project VSPDriver_QT_5.15.2_x86_64.xcodeproj \
+        -target VSPDriver \
+        -target VSPClient
+fi

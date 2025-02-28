@@ -145,6 +145,9 @@ struct VSPSerialPort_IVars {
     TUartParameters m_uartParams = {};
     THwFlowControl m_hwFlowControl = {};
 
+    uint64_t m_paramChecks = 0;
+    uint64_t m_traceFlags = 0;
+    
     bool m_hwActivated = false;
 };
 
@@ -1080,6 +1083,22 @@ void VSPSerialPort::setPortLinkIdentifier(uint8_t id)
 uint8_t VSPSerialPort::getPortLinkIdentifier()
 {
     return ivars->m_portLinkId;
+}
+
+// --------------------------------------------------------------------
+// Enable or disable traces
+//
+void VSPSerialPort::setTraceFlags(uint64_t flags)
+{
+    ivars->m_traceFlags = flags;
+}
+
+// --------------------------------------------------------------------
+// Enable or disable port parameter checks
+//
+void VSPSerialPort::setParameterChecks(uint64_t flags)
+{
+    ivars->m_paramChecks = flags;
 }
 
 // --------------------------------------------------------------------
