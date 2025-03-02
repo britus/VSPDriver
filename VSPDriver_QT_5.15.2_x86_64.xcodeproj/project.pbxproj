@@ -53,6 +53,10 @@
 		883C30A22D6F1C550029BE30 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30A12D6F1C550029BE30 /* IOKit.framework */; };
 		883C30A32D6F1C610029BE30 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8854A99E2D5DB1E400C27252 /* CoreFoundation.framework */; };
 		884F6EC72D59A5C90066353A /* VSPUserClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 884F6EC62D59A5C90066353A /* VSPUserClient.cpp */; };
+		885E23E82D74518900B7B0FE /* VSPClient_macos_12.7.6-entitlements.xml in Resources */ = {isa = PBXBuildFile; fileRef = 885E23E62D74518900B7B0FE /* VSPClient_macos_12.7.6-entitlements.xml */; };
+		885E23E92D74518900B7B0FE /* VSPClient_macos_15.3.1-entitlements.xml in Resources */ = {isa = PBXBuildFile; fileRef = 885E23E72D74518900B7B0FE /* VSPClient_macos_15.3.1-entitlements.xml */; };
+		885E23EC2D7451BF00B7B0FE /* VSPDriver_macos_12.7.6-entitlements.xml in Resources */ = {isa = PBXBuildFile; fileRef = 885E23EA2D7451BF00B7B0FE /* VSPDriver_macos_12.7.6-entitlements.xml */; };
+		885E23ED2D7451BF00B7B0FE /* VSPDriver_macos_15.3.1-entitlements.xml in Resources */ = {isa = PBXBuildFile; fileRef = 885E23EB2D7451BF00B7B0FE /* VSPDriver_macos_15.3.1-entitlements.xml */; };
 		8874CB8A2D72322C009FBF60 /* QtWidgets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8874CB892D72322B009FBF60 /* QtWidgets.framework */; };
 		8874CB8C2D7232E8009FBF60 /* QtWidgets.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 8874CB892D72322B009FBF60 /* QtWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8899C34A2D525AD800E17727 /* VSPSerialPort.iig in Sources */ = {isa = PBXBuildFile; fileRef = 8899C3492D525AD800E17727 /* VSPSerialPort.iig */; };
@@ -342,6 +346,10 @@
 		8854A99E2D5DB1E400C27252 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		8854A9BA2D5DED8A00C27252 /* VSPDriverClient.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VSPDriverClient.hpp; sourceTree = "<group>"; };
 		885DE9332D5E82CD00CFECEE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		885E23E62D74518900B7B0FE /* VSPClient_macos_12.7.6-entitlements.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "VSPClient_macos_12.7.6-entitlements.xml"; sourceTree = "<group>"; };
+		885E23E72D74518900B7B0FE /* VSPClient_macos_15.3.1-entitlements.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "VSPClient_macos_15.3.1-entitlements.xml"; sourceTree = "<group>"; };
+		885E23EA2D7451BF00B7B0FE /* VSPDriver_macos_12.7.6-entitlements.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "VSPDriver_macos_12.7.6-entitlements.xml"; sourceTree = "<group>"; };
+		885E23EB2D7451BF00B7B0FE /* VSPDriver_macos_15.3.1-entitlements.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "VSPDriver_macos_15.3.1-entitlements.xml"; sourceTree = "<group>"; };
 		88667D6A2D53474900DFA26E /* VSPDriver-Full.log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "VSPDriver-Full.log"; sourceTree = "<group>"; };
 		8874CB892D72322B009FBF60 /* QtWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtWidgets.framework; path = ../../../../Qt/5.15.2/clang_64/lib/QtWidgets.framework; sourceTree = "<group>"; };
 		8884826D2D61192900F3BAD7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -474,10 +482,12 @@
 		880539E92D4BAFBD00E55104 /* VSPClient */ = {
 			isa = PBXGroup;
 			children = (
-				88A671482D68DDE000CE4E12 /* Resources */,
+				885E23E62D74518900B7B0FE /* VSPClient_macos_12.7.6-entitlements.xml */,
+				885E23E72D74518900B7B0FE /* VSPClient_macos_15.3.1-entitlements.xml */,
 				880539F12D4BAFBF00E55104 /* VSPClient.entitlements */,
 				880539F52D4BB0F900E55104 /* Info.plist */,
 				880539EC2D4BAFBF00E55104 /* Assets.xcassets */,
+				88A671482D68DDE000CE4E12 /* Resources */,
 				88906F452D4CCA9400E500BB /* VSPClient-Bridging-Header.h */,
 				88F5D93C2D59E85B007A6E1F /* VSPInstallApp.swift */,
 				88F5D93F2D59E933007A6E1F /* VSPDriverClient.cpp */,
@@ -670,6 +680,8 @@
 		88B40D5C2D4B666700DFE7C5 /* VSPDriver */ = {
 			isa = PBXGroup;
 			children = (
+				885E23EA2D7451BF00B7B0FE /* VSPDriver_macos_12.7.6-entitlements.xml */,
+				885E23EB2D7451BF00B7B0FE /* VSPDriver_macos_15.3.1-entitlements.xml */,
 				88B40D5F2D4B666700DFE7C5 /* VSPDriver.iig */,
 				88B40D5D2D4B666700DFE7C5 /* VSPDriver.cpp */,
 				8899C3492D525AD800E17727 /* VSPSerialPort.iig */,
@@ -806,8 +818,10 @@
 				88A6714F2D68DDE000CE4E12 /* vspclient_1.png in Resources */,
 				88A671502D68DDE000CE4E12 /* vspclient_7.png in Resources */,
 				88A671512D68DDE000CE4E12 /* vspclient_0.png in Resources */,
+				885E23E82D74518900B7B0FE /* VSPClient_macos_12.7.6-entitlements.xml in Resources */,
 				88A671522D68DDE000CE4E12 /* vspclient_2.png in Resources */,
 				88A671532D68DDE000CE4E12 /* vspclient_5.ico in Resources */,
+				885E23E92D74518900B7B0FE /* VSPClient_macos_15.3.1-entitlements.xml in Resources */,
 				88A671542D68DDE000CE4E12 /* vspclient_5.png in Resources */,
 				88A671552D68DDE000CE4E12 /* vspclient_6.ico in Resources */,
 				88A671562D68DDE000CE4E12 /* vspclient_2.ico in Resources */,
@@ -824,6 +838,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				885E23EC2D7451BF00B7B0FE /* VSPDriver_macos_12.7.6-entitlements.xml in Resources */,
+				885E23ED2D7451BF00B7B0FE /* VSPDriver_macos_15.3.1-entitlements.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -887,7 +903,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 18;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
@@ -949,7 +965,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 18;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
@@ -1123,7 +1139,7 @@
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1158,7 +1174,7 @@
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
 				FRAMEWORK_SEARCH_PATHS = (
