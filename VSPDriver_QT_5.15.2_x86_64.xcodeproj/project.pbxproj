@@ -53,8 +53,6 @@
 		883C30A22D6F1C550029BE30 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30A12D6F1C550029BE30 /* IOKit.framework */; };
 		883C30A32D6F1C610029BE30 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8854A99E2D5DB1E400C27252 /* CoreFoundation.framework */; };
 		884F6EC72D59A5C90066353A /* VSPUserClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 884F6EC62D59A5C90066353A /* VSPUserClient.cpp */; };
-		885E23E82D74518900B7B0FE /* VSPClient_macos_12.7.6-entitlements.xml in Resources */ = {isa = PBXBuildFile; fileRef = 885E23E62D74518900B7B0FE /* VSPClient_macos_12.7.6-entitlements.xml */; };
-		885E23E92D74518900B7B0FE /* VSPClient_macos_15.3.1-entitlements.xml in Resources */ = {isa = PBXBuildFile; fileRef = 885E23E72D74518900B7B0FE /* VSPClient_macos_15.3.1-entitlements.xml */; };
 		885E23EC2D7451BF00B7B0FE /* VSPDriver_macos_12.7.6-entitlements.xml in Resources */ = {isa = PBXBuildFile; fileRef = 885E23EA2D7451BF00B7B0FE /* VSPDriver_macos_12.7.6-entitlements.xml */; };
 		885E23ED2D7451BF00B7B0FE /* VSPDriver_macos_15.3.1-entitlements.xml in Resources */ = {isa = PBXBuildFile; fileRef = 885E23EB2D7451BF00B7B0FE /* VSPDriver_macos_15.3.1-entitlements.xml */; };
 		8874CB8A2D72322C009FBF60 /* QtWidgets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8874CB892D72322B009FBF60 /* QtWidgets.framework */; };
@@ -62,26 +60,9 @@
 		8899C34A2D525AD800E17727 /* VSPSerialPort.iig in Sources */ = {isa = PBXBuildFile; fileRef = 8899C3492D525AD800E17727 /* VSPSerialPort.iig */; };
 		8899C34C2D525AFB00E17727 /* VSPSerialPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8899C34B2D525AFB00E17727 /* VSPSerialPort.cpp */; };
 		889E8EBC2D4DF4BF002F387A /* VSPLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 889E8EBB2D4DF4BF002F387A /* VSPLogger.h */; };
-		88A671492D68DDE000CE4E12 /* vspclient_0.ico in Resources */ = {isa = PBXBuildFile; fileRef = 88A671332D68DDE000CE4E12 /* vspclient_0.ico */; };
-		88A6714A2D68DDE000CE4E12 /* vspclient.icns in Resources */ = {isa = PBXBuildFile; fileRef = 88A671312D68DDE000CE4E12 /* vspclient.icns */; };
 		88A6714B2D68DDE000CE4E12 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 88A671472D68DDE000CE4E12 /* InfoPlist.strings */; };
 		88A6714C2D68DDE000CE4E12 /* progress2.gif in Resources */ = {isa = PBXBuildFile; fileRef = 88A6712F2D68DDE000CE4E12 /* progress2.gif */; };
-		88A6714D2D68DDE000CE4E12 /* vspclient_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A671422D68DDE000CE4E12 /* vspclient_6.png */; };
-		88A6714E2D68DDE000CE4E12 /* vspclient_4.ico in Resources */ = {isa = PBXBuildFile; fileRef = 88A671372D68DDE000CE4E12 /* vspclient_4.ico */; };
-		88A6714F2D68DDE000CE4E12 /* vspclient_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A6713D2D68DDE000CE4E12 /* vspclient_1.png */; };
-		88A671502D68DDE000CE4E12 /* vspclient_7.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A671432D68DDE000CE4E12 /* vspclient_7.png */; };
-		88A671512D68DDE000CE4E12 /* vspclient_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A6713C2D68DDE000CE4E12 /* vspclient_0.png */; };
-		88A671522D68DDE000CE4E12 /* vspclient_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A6713E2D68DDE000CE4E12 /* vspclient_2.png */; };
-		88A671532D68DDE000CE4E12 /* vspclient_5.ico in Resources */ = {isa = PBXBuildFile; fileRef = 88A671382D68DDE000CE4E12 /* vspclient_5.ico */; };
-		88A671542D68DDE000CE4E12 /* vspclient_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A671412D68DDE000CE4E12 /* vspclient_5.png */; };
-		88A671552D68DDE000CE4E12 /* vspclient_6.ico in Resources */ = {isa = PBXBuildFile; fileRef = 88A671392D68DDE000CE4E12 /* vspclient_6.ico */; };
-		88A671562D68DDE000CE4E12 /* vspclient_2.ico in Resources */ = {isa = PBXBuildFile; fileRef = 88A671352D68DDE000CE4E12 /* vspclient_2.ico */; };
-		88A671572D68DDE000CE4E12 /* vspclient_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A671402D68DDE000CE4E12 /* vspclient_4.png */; };
-		88A671582D68DDE000CE4E12 /* vspclient_1.ico in Resources */ = {isa = PBXBuildFile; fileRef = 88A671342D68DDE000CE4E12 /* vspclient_1.ico */; };
-		88A671592D68DDE000CE4E12 /* vspclient_7.ico in Resources */ = {isa = PBXBuildFile; fileRef = 88A6713A2D68DDE000CE4E12 /* vspclient_7.ico */; };
 		88A6715A2D68DDE000CE4E12 /* progress.gif in Resources */ = {isa = PBXBuildFile; fileRef = 88A6712E2D68DDE000CE4E12 /* progress.gif */; };
-		88A6715B2D68DDE000CE4E12 /* vspclient_3.ico in Resources */ = {isa = PBXBuildFile; fileRef = 88A671362D68DDE000CE4E12 /* vspclient_3.ico */; };
-		88A6715C2D68DDE000CE4E12 /* vspclient_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A6713F2D68DDE000CE4E12 /* vspclient_3.png */; };
 		88B40D5E2D4B666700DFE7C5 /* VSPDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B40D5D2D4B666700DFE7C5 /* VSPDriver.cpp */; };
 		88B40D602D4B666700DFE7C5 /* VSPDriver.iig in Sources */ = {isa = PBXBuildFile; fileRef = 88B40D5F2D4B666700DFE7C5 /* VSPDriver.iig */; };
 		88B47EC82D59B30600868CA5 /* VSPUserClient.iig in Sources */ = {isa = PBXBuildFile; fileRef = 884F6EC42D59A58D0066353A /* VSPUserClient.iig */; };
@@ -119,6 +100,24 @@
 		88E8F8E72D71D97F009E9075 /* libqtvirtualkeyboardplugin.dylib in Copy QT Plugins - virtualkeyboard */ = {isa = PBXBuildFile; fileRef = 88E8F8DB2D71D97F009E9075 /* libqtvirtualkeyboardplugin.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		88E8F8E82D71D97F009E9075 /* libqtvirtualkeyboard_hangul.dylib in Copy QT Plugins - virtualkeyboard */ = {isa = PBXBuildFile; fileRef = 88E8F8DC2D71D97F009E9075 /* libqtvirtualkeyboard_hangul.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		88E8F8E92D71D97F009E9075 /* libqtvirtualkeyboard_openwnn.dylib in Copy QT Plugins - virtualkeyboard */ = {isa = PBXBuildFile; fileRef = 88E8F8DD2D71D97F009E9075 /* libqtvirtualkeyboard_openwnn.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		88EA93FD2D758A3C0080CAA3 /* vspclient_32x32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EA93F32D758A3B0080CAA3 /* vspclient_32x32@2x.png */; };
+		88EA93FE2D758A3C0080CAA3 /* vspclient_16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EA93F42D758A3B0080CAA3 /* vspclient_16x16.png */; };
+		88EA93FF2D758A3C0080CAA3 /* vspclient_128x128@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EA93F52D758A3B0080CAA3 /* vspclient_128x128@2x.png */; };
+		88EA94002D758A3C0080CAA3 /* vspclient_32x32.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EA93F62D758A3B0080CAA3 /* vspclient_32x32.png */; };
+		88EA94012D758A3C0080CAA3 /* vspclient_128x128.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EA93F72D758A3B0080CAA3 /* vspclient_128x128.png */; };
+		88EA94022D758A3C0080CAA3 /* vspclient_16x16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EA93F82D758A3B0080CAA3 /* vspclient_16x16@2x.png */; };
+		88EA94032D758A3C0080CAA3 /* vspclient_256x256.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EA93F92D758A3B0080CAA3 /* vspclient_256x256.png */; };
+		88EA94042D758A3C0080CAA3 /* vspclient_256x256@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EA93FA2D758A3B0080CAA3 /* vspclient_256x256@2x.png */; };
+		88EA94052D758A3C0080CAA3 /* vspclient_512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EA93FB2D758A3B0080CAA3 /* vspclient_512x512.png */; };
+		88EA94062D758A3C0080CAA3 /* vspclient_512x512@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EA93FC2D758A3B0080CAA3 /* vspclient_512x512@2x.png */; };
+		88EA94102D758A740080CAA3 /* vspclient_32x32.icns in Resources */ = {isa = PBXBuildFile; fileRef = 88EA94072D758A730080CAA3 /* vspclient_32x32.icns */; };
+		88EA94112D758A740080CAA3 /* vspclient_256x256.icns in Resources */ = {isa = PBXBuildFile; fileRef = 88EA94082D758A730080CAA3 /* vspclient_256x256.icns */; };
+		88EA94132D758A740080CAA3 /* vspclient_512x512.icns in Resources */ = {isa = PBXBuildFile; fileRef = 88EA940A2D758A730080CAA3 /* vspclient_512x512.icns */; };
+		88EA94142D758A740080CAA3 /* vspclient_16x16.icns in Resources */ = {isa = PBXBuildFile; fileRef = 88EA940B2D758A730080CAA3 /* vspclient_16x16.icns */; };
+		88EA94162D758A740080CAA3 /* vspclient_128x128.icns in Resources */ = {isa = PBXBuildFile; fileRef = 88EA940D2D758A730080CAA3 /* vspclient_128x128.icns */; };
+		88EA94172D758A740080CAA3 /* vspclient_1024x1024.icns in Resources */ = {isa = PBXBuildFile; fileRef = 88EA940E2D758A740080CAA3 /* vspclient_1024x1024.icns */; };
+		88EA94182D758A740080CAA3 /* vspclient.icns in Resources */ = {isa = PBXBuildFile; fileRef = 88EA940F2D758A740080CAA3 /* vspclient.icns */; };
+		88EA94192D7595500080CAA3 /* vspclient_64x64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 88EA94092D758A730080CAA3 /* vspclient_64x64.icns */; };
 		88F5D93D2D59E85B007A6E1F /* VSPInstallApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F5D93C2D59E85B007A6E1F /* VSPInstallApp.swift */; };
 		88F5D9402D59E933007A6E1F /* VSPDriverClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88F5D93F2D59E933007A6E1F /* VSPDriverClient.cpp */; };
 /* End PBXBuildFile section */
@@ -359,23 +358,6 @@
 		889E8EBB2D4DF4BF002F387A /* VSPLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VSPLogger.h; sourceTree = "<group>"; };
 		88A6712E2D68DDE000CE4E12 /* progress.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = progress.gif; sourceTree = "<group>"; };
 		88A6712F2D68DDE000CE4E12 /* progress2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = progress2.gif; sourceTree = "<group>"; };
-		88A671312D68DDE000CE4E12 /* vspclient.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = vspclient.icns; sourceTree = "<group>"; };
-		88A671332D68DDE000CE4E12 /* vspclient_0.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = vspclient_0.ico; sourceTree = "<group>"; };
-		88A671342D68DDE000CE4E12 /* vspclient_1.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = vspclient_1.ico; sourceTree = "<group>"; };
-		88A671352D68DDE000CE4E12 /* vspclient_2.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = vspclient_2.ico; sourceTree = "<group>"; };
-		88A671362D68DDE000CE4E12 /* vspclient_3.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = vspclient_3.ico; sourceTree = "<group>"; };
-		88A671372D68DDE000CE4E12 /* vspclient_4.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = vspclient_4.ico; sourceTree = "<group>"; };
-		88A671382D68DDE000CE4E12 /* vspclient_5.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = vspclient_5.ico; sourceTree = "<group>"; };
-		88A671392D68DDE000CE4E12 /* vspclient_6.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = vspclient_6.ico; sourceTree = "<group>"; };
-		88A6713A2D68DDE000CE4E12 /* vspclient_7.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = vspclient_7.ico; sourceTree = "<group>"; };
-		88A6713C2D68DDE000CE4E12 /* vspclient_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_0.png; sourceTree = "<group>"; };
-		88A6713D2D68DDE000CE4E12 /* vspclient_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_1.png; sourceTree = "<group>"; };
-		88A6713E2D68DDE000CE4E12 /* vspclient_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_2.png; sourceTree = "<group>"; };
-		88A6713F2D68DDE000CE4E12 /* vspclient_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_3.png; sourceTree = "<group>"; };
-		88A671402D68DDE000CE4E12 /* vspclient_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_4.png; sourceTree = "<group>"; };
-		88A671412D68DDE000CE4E12 /* vspclient_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_5.png; sourceTree = "<group>"; };
-		88A671422D68DDE000CE4E12 /* vspclient_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_6.png; sourceTree = "<group>"; };
-		88A671432D68DDE000CE4E12 /* vspclient_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_7.png; sourceTree = "<group>"; };
 		88A671452D68DDE000CE4E12 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		88A671462D68DDE000CE4E12 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		88AB34E92D64937300260D19 /* make.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = make.sh; sourceTree = "<group>"; };
@@ -432,6 +414,24 @@
 		88E8F8DB2D71D97F009E9075 /* libqtvirtualkeyboardplugin.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqtvirtualkeyboardplugin.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/virtualkeyboard/libqtvirtualkeyboardplugin.dylib; sourceTree = "<group>"; };
 		88E8F8DC2D71D97F009E9075 /* libqtvirtualkeyboard_hangul.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqtvirtualkeyboard_hangul.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/virtualkeyboard/libqtvirtualkeyboard_hangul.dylib; sourceTree = "<group>"; };
 		88E8F8DD2D71D97F009E9075 /* libqtvirtualkeyboard_openwnn.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libqtvirtualkeyboard_openwnn.dylib; path = ../../../Qt/5.15.2/clang_64/plugins/virtualkeyboard/libqtvirtualkeyboard_openwnn.dylib; sourceTree = "<group>"; };
+		88EA93F32D758A3B0080CAA3 /* vspclient_32x32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vspclient_32x32@2x.png"; sourceTree = "<group>"; };
+		88EA93F42D758A3B0080CAA3 /* vspclient_16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_16x16.png; sourceTree = "<group>"; };
+		88EA93F52D758A3B0080CAA3 /* vspclient_128x128@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vspclient_128x128@2x.png"; sourceTree = "<group>"; };
+		88EA93F62D758A3B0080CAA3 /* vspclient_32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_32x32.png; sourceTree = "<group>"; };
+		88EA93F72D758A3B0080CAA3 /* vspclient_128x128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_128x128.png; sourceTree = "<group>"; };
+		88EA93F82D758A3B0080CAA3 /* vspclient_16x16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vspclient_16x16@2x.png"; sourceTree = "<group>"; };
+		88EA93F92D758A3B0080CAA3 /* vspclient_256x256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_256x256.png; sourceTree = "<group>"; };
+		88EA93FA2D758A3B0080CAA3 /* vspclient_256x256@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vspclient_256x256@2x.png"; sourceTree = "<group>"; };
+		88EA93FB2D758A3B0080CAA3 /* vspclient_512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_512x512.png; sourceTree = "<group>"; };
+		88EA93FC2D758A3B0080CAA3 /* vspclient_512x512@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vspclient_512x512@2x.png"; sourceTree = "<group>"; };
+		88EA94072D758A730080CAA3 /* vspclient_32x32.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = vspclient_32x32.icns; sourceTree = "<group>"; };
+		88EA94082D758A730080CAA3 /* vspclient_256x256.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = vspclient_256x256.icns; sourceTree = "<group>"; };
+		88EA94092D758A730080CAA3 /* vspclient_64x64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = vspclient_64x64.icns; sourceTree = "<group>"; };
+		88EA940A2D758A730080CAA3 /* vspclient_512x512.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = vspclient_512x512.icns; sourceTree = "<group>"; };
+		88EA940B2D758A730080CAA3 /* vspclient_16x16.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = vspclient_16x16.icns; sourceTree = "<group>"; };
+		88EA940D2D758A730080CAA3 /* vspclient_128x128.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = vspclient_128x128.icns; sourceTree = "<group>"; };
+		88EA940E2D758A740080CAA3 /* vspclient_1024x1024.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = vspclient_1024x1024.icns; sourceTree = "<group>"; };
+		88EA940F2D758A740080CAA3 /* vspclient.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = vspclient.icns; sourceTree = "<group>"; };
 		88F5D93C2D59E85B007A6E1F /* VSPInstallApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSPInstallApp.swift; sourceTree = "<group>"; };
 		88F5D93F2D59E933007A6E1F /* VSPDriverClient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VSPDriverClient.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -585,37 +585,31 @@
 		88A671322D68DDE000CE4E12 /* icns */ = {
 			isa = PBXGroup;
 			children = (
-				88A671312D68DDE000CE4E12 /* vspclient.icns */,
+				88EA940B2D758A730080CAA3 /* vspclient_16x16.icns */,
+				88EA94072D758A730080CAA3 /* vspclient_32x32.icns */,
+				88EA94092D758A730080CAA3 /* vspclient_64x64.icns */,
+				88EA940D2D758A730080CAA3 /* vspclient_128x128.icns */,
+				88EA94082D758A730080CAA3 /* vspclient_256x256.icns */,
+				88EA940A2D758A730080CAA3 /* vspclient_512x512.icns */,
+				88EA940E2D758A740080CAA3 /* vspclient_1024x1024.icns */,
+				88EA940F2D758A740080CAA3 /* vspclient.icns */,
 			);
 			path = icns;
-			sourceTree = "<group>";
-		};
-		88A6713B2D68DDE000CE4E12 /* ico */ = {
-			isa = PBXGroup;
-			children = (
-				88A671332D68DDE000CE4E12 /* vspclient_0.ico */,
-				88A671342D68DDE000CE4E12 /* vspclient_1.ico */,
-				88A671352D68DDE000CE4E12 /* vspclient_2.ico */,
-				88A671362D68DDE000CE4E12 /* vspclient_3.ico */,
-				88A671372D68DDE000CE4E12 /* vspclient_4.ico */,
-				88A671382D68DDE000CE4E12 /* vspclient_5.ico */,
-				88A671392D68DDE000CE4E12 /* vspclient_6.ico */,
-				88A6713A2D68DDE000CE4E12 /* vspclient_7.ico */,
-			);
-			path = ico;
 			sourceTree = "<group>";
 		};
 		88A671442D68DDE000CE4E12 /* png */ = {
 			isa = PBXGroup;
 			children = (
-				88A6713C2D68DDE000CE4E12 /* vspclient_0.png */,
-				88A6713D2D68DDE000CE4E12 /* vspclient_1.png */,
-				88A6713E2D68DDE000CE4E12 /* vspclient_2.png */,
-				88A6713F2D68DDE000CE4E12 /* vspclient_3.png */,
-				88A671402D68DDE000CE4E12 /* vspclient_4.png */,
-				88A671412D68DDE000CE4E12 /* vspclient_5.png */,
-				88A671422D68DDE000CE4E12 /* vspclient_6.png */,
-				88A671432D68DDE000CE4E12 /* vspclient_7.png */,
+				88EA93F42D758A3B0080CAA3 /* vspclient_16x16.png */,
+				88EA93F82D758A3B0080CAA3 /* vspclient_16x16@2x.png */,
+				88EA93F62D758A3B0080CAA3 /* vspclient_32x32.png */,
+				88EA93F32D758A3B0080CAA3 /* vspclient_32x32@2x.png */,
+				88EA93F72D758A3B0080CAA3 /* vspclient_128x128.png */,
+				88EA93F52D758A3B0080CAA3 /* vspclient_128x128@2x.png */,
+				88EA93F92D758A3B0080CAA3 /* vspclient_256x256.png */,
+				88EA93FA2D758A3B0080CAA3 /* vspclient_256x256@2x.png */,
+				88EA93FB2D758A3B0080CAA3 /* vspclient_512x512.png */,
+				88EA93FC2D758A3B0080CAA3 /* vspclient_512x512@2x.png */,
 			);
 			path = png;
 			sourceTree = "<group>";
@@ -625,7 +619,6 @@
 			children = (
 				88A671302D68DDE000CE4E12 /* ani */,
 				88A671322D68DDE000CE4E12 /* icns */,
-				88A6713B2D68DDE000CE4E12 /* ico */,
 				88A671442D68DDE000CE4E12 /* png */,
 				88A671472D68DDE000CE4E12 /* InfoPlist.strings */,
 			);
@@ -807,30 +800,29 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				880539ED2D4BAFBF00E55104 /* Assets.xcassets in Resources */,
-				88DA7BA92D532C6800C8F759 /* LICENSE in Resources */,
-				88A671492D68DDE000CE4E12 /* vspclient_0.ico in Resources */,
-				88A6714A2D68DDE000CE4E12 /* vspclient.icns in Resources */,
 				88A6714B2D68DDE000CE4E12 /* InfoPlist.strings in Resources */,
-				88A6714C2D68DDE000CE4E12 /* progress2.gif in Resources */,
-				88A6714D2D68DDE000CE4E12 /* vspclient_6.png in Resources */,
-				88A6714E2D68DDE000CE4E12 /* vspclient_4.ico in Resources */,
-				88A6714F2D68DDE000CE4E12 /* vspclient_1.png in Resources */,
-				88A671502D68DDE000CE4E12 /* vspclient_7.png in Resources */,
-				88A671512D68DDE000CE4E12 /* vspclient_0.png in Resources */,
-				885E23E82D74518900B7B0FE /* VSPClient_macos_12.7.6-entitlements.xml in Resources */,
-				88A671522D68DDE000CE4E12 /* vspclient_2.png in Resources */,
-				88A671532D68DDE000CE4E12 /* vspclient_5.ico in Resources */,
-				885E23E92D74518900B7B0FE /* VSPClient_macos_15.3.1-entitlements.xml in Resources */,
-				88A671542D68DDE000CE4E12 /* vspclient_5.png in Resources */,
-				88A671552D68DDE000CE4E12 /* vspclient_6.ico in Resources */,
-				88A671562D68DDE000CE4E12 /* vspclient_2.ico in Resources */,
-				88A671572D68DDE000CE4E12 /* vspclient_4.png in Resources */,
-				88A671582D68DDE000CE4E12 /* vspclient_1.ico in Resources */,
-				88A671592D68DDE000CE4E12 /* vspclient_7.ico in Resources */,
+				88DA7BA92D532C6800C8F759 /* LICENSE in Resources */,
+				880539ED2D4BAFBF00E55104 /* Assets.xcassets in Resources */,
+				88EA94182D758A740080CAA3 /* vspclient.icns in Resources */,
+				88EA93FE2D758A3C0080CAA3 /* vspclient_16x16.png in Resources */,
+				88EA94022D758A3C0080CAA3 /* vspclient_16x16@2x.png in Resources */,
+				88EA94142D758A740080CAA3 /* vspclient_16x16.icns in Resources */,
+				88EA94002D758A3C0080CAA3 /* vspclient_32x32.png in Resources */,
+				88EA93FD2D758A3C0080CAA3 /* vspclient_32x32@2x.png in Resources */,
+				88EA94102D758A740080CAA3 /* vspclient_32x32.icns in Resources */,
+				88EA94192D7595500080CAA3 /* vspclient_64x64.icns in Resources */,
+				88EA94012D758A3C0080CAA3 /* vspclient_128x128.png in Resources */,
+				88EA93FF2D758A3C0080CAA3 /* vspclient_128x128@2x.png in Resources */,
+				88EA94162D758A740080CAA3 /* vspclient_128x128.icns in Resources */,
+				88EA94032D758A3C0080CAA3 /* vspclient_256x256.png in Resources */,
+				88EA94042D758A3C0080CAA3 /* vspclient_256x256@2x.png in Resources */,
+				88EA94112D758A740080CAA3 /* vspclient_256x256.icns in Resources */,
+				88EA94052D758A3C0080CAA3 /* vspclient_512x512.png in Resources */,
+				88EA94062D758A3C0080CAA3 /* vspclient_512x512@2x.png in Resources */,
+				88EA94132D758A740080CAA3 /* vspclient_512x512.icns in Resources */,
+				88EA94172D758A740080CAA3 /* vspclient_1024x1024.icns in Resources */,
 				88A6715A2D68DDE000CE4E12 /* progress.gif in Resources */,
-				88A6715B2D68DDE000CE4E12 /* vspclient_3.ico in Resources */,
-				88A6715C2D68DDE000CE4E12 /* vspclient_3.png in Resources */,
+				88A6714C2D68DDE000CE4E12 /* progress2.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

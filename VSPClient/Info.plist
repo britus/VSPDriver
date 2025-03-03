@@ -29,7 +29,7 @@
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>Permit VPS Controller to redirect data from serial port to a network connection.</string>
 	<key>UILaunchImageFile</key>
-	<string>vspclient_5.png</string>
+	<string>vspclient_512x512.png</string>
 	<key>CFBundleIconFile</key>
 	<string>vspclient.icns</string>
 	<key>UIPrerenderedIcon</key>
