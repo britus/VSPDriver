@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2025 by EoF Software Labs</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>LSUIPresentationMode</key>
@@ -30,10 +32,14 @@
 	<string>Permit VPS Controller to redirect data from serial port to a network connection.</string>
 	<key>UILaunchImageFile</key>
 	<string>vspclient_512x512.png</string>
+	<key>CFBundleDisplayName</key>
+	<string>Virtual Serial Port Controller</string>
 	<key>CFBundleIconFile</key>
 	<string>vspclient.icns</string>
 	<key>UIPrerenderedIcon</key>
 	<false/>
+	<key>LSUIElement</key>
+	<true/>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>com.apple.developer.driverkit</key>
@@ -48,6 +54,8 @@
 	<array>
 		<string>VSPDriver</string>
 	</array>
+	<key>NOTE</key>
+	<string>Copyright © 2025 by EoF Software Labs</string>
 	<key>com.apple.private.driverkit.driver-access</key>
 	<array>
 		<string>VSPDriver</string>

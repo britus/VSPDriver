@@ -76,29 +76,21 @@
 		883C30A52D6F1C7B0029BE30 /* DriverKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30A42D6F1C7B0029BE30 /* DriverKit.framework */; };
 		883C30A72D6F1C810029BE30 /* SerialDriverKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30A62D6F1C810029BE30 /* SerialDriverKit.framework */; };
 		884F6EC72D59A5C90066353A /* VSPUserClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 884F6EC62D59A5C90066353A /* VSPUserClient.cpp */; };
+		88698B912D76DDD70008EF6B /* vspclient_16x16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88698B882D76DDD70008EF6B /* vspclient_16x16@2x.png */; };
+		88698B922D76DDD70008EF6B /* vspclient_128x128.png in Resources */ = {isa = PBXBuildFile; fileRef = 88698B8B2D76DDD70008EF6B /* vspclient_128x128.png */; };
+		88698B932D76DDD70008EF6B /* vspclient_256x256@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88698B8E2D76DDD70008EF6B /* vspclient_256x256@2x.png */; };
+		88698B942D76DDD70008EF6B /* vspclient_512x512@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88698B902D76DDD70008EF6B /* vspclient_512x512@2x.png */; };
+		88698B952D76DDD70008EF6B /* vspclient_32x32.png in Resources */ = {isa = PBXBuildFile; fileRef = 88698B892D76DDD70008EF6B /* vspclient_32x32.png */; };
+		88698B962D76DDD70008EF6B /* vspclient_32x32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88698B8A2D76DDD70008EF6B /* vspclient_32x32@2x.png */; };
+		88698B972D76DDD70008EF6B /* vspclient_256x256.png in Resources */ = {isa = PBXBuildFile; fileRef = 88698B8D2D76DDD70008EF6B /* vspclient_256x256.png */; };
+		88698B982D76DDD70008EF6B /* vspclient_128x128@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88698B8C2D76DDD70008EF6B /* vspclient_128x128@2x.png */; };
+		88698B992D76DDD70008EF6B /* vspclient_512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 88698B8F2D76DDD70008EF6B /* vspclient_512x512.png */; };
+		88698B9A2D76DDD70008EF6B /* vspclient_16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 88698B872D76DDD70008EF6B /* vspclient_16x16.png */; };
 		8899C34A2D525AD800E17727 /* VSPSerialPort.iig in Sources */ = {isa = PBXBuildFile; fileRef = 8899C3492D525AD800E17727 /* VSPSerialPort.iig */; };
 		8899C34C2D525AFB00E17727 /* VSPSerialPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8899C34B2D525AFB00E17727 /* VSPSerialPort.cpp */; };
 		889E8EBC2D4DF4BF002F387A /* VSPLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 889E8EBB2D4DF4BF002F387A /* VSPLogger.h */; };
-		88A671492D68DDE000CE4E12 /* vspclient_0.ico in Resources */ = {isa = PBXBuildFile; fileRef = 88A671332D68DDE000CE4E12 /* vspclient_0.ico */; };
 		88A6714A2D68DDE000CE4E12 /* vspclient.icns in Resources */ = {isa = PBXBuildFile; fileRef = 88A671312D68DDE000CE4E12 /* vspclient.icns */; };
 		88A6714B2D68DDE000CE4E12 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 88A671472D68DDE000CE4E12 /* InfoPlist.strings */; };
-		88A6714C2D68DDE000CE4E12 /* progress2.gif in Resources */ = {isa = PBXBuildFile; fileRef = 88A6712F2D68DDE000CE4E12 /* progress2.gif */; };
-		88A6714D2D68DDE000CE4E12 /* vspclient_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A671422D68DDE000CE4E12 /* vspclient_6.png */; };
-		88A6714E2D68DDE000CE4E12 /* vspclient_4.ico in Resources */ = {isa = PBXBuildFile; fileRef = 88A671372D68DDE000CE4E12 /* vspclient_4.ico */; };
-		88A6714F2D68DDE000CE4E12 /* vspclient_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A6713D2D68DDE000CE4E12 /* vspclient_1.png */; };
-		88A671502D68DDE000CE4E12 /* vspclient_7.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A671432D68DDE000CE4E12 /* vspclient_7.png */; };
-		88A671512D68DDE000CE4E12 /* vspclient_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A6713C2D68DDE000CE4E12 /* vspclient_0.png */; };
-		88A671522D68DDE000CE4E12 /* vspclient_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A6713E2D68DDE000CE4E12 /* vspclient_2.png */; };
-		88A671532D68DDE000CE4E12 /* vspclient_5.ico in Resources */ = {isa = PBXBuildFile; fileRef = 88A671382D68DDE000CE4E12 /* vspclient_5.ico */; };
-		88A671542D68DDE000CE4E12 /* vspclient_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A671412D68DDE000CE4E12 /* vspclient_5.png */; };
-		88A671552D68DDE000CE4E12 /* vspclient_6.ico in Resources */ = {isa = PBXBuildFile; fileRef = 88A671392D68DDE000CE4E12 /* vspclient_6.ico */; };
-		88A671562D68DDE000CE4E12 /* vspclient_2.ico in Resources */ = {isa = PBXBuildFile; fileRef = 88A671352D68DDE000CE4E12 /* vspclient_2.ico */; };
-		88A671572D68DDE000CE4E12 /* vspclient_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A671402D68DDE000CE4E12 /* vspclient_4.png */; };
-		88A671582D68DDE000CE4E12 /* vspclient_1.ico in Resources */ = {isa = PBXBuildFile; fileRef = 88A671342D68DDE000CE4E12 /* vspclient_1.ico */; };
-		88A671592D68DDE000CE4E12 /* vspclient_7.ico in Resources */ = {isa = PBXBuildFile; fileRef = 88A6713A2D68DDE000CE4E12 /* vspclient_7.ico */; };
-		88A6715A2D68DDE000CE4E12 /* progress.gif in Resources */ = {isa = PBXBuildFile; fileRef = 88A6712E2D68DDE000CE4E12 /* progress.gif */; };
-		88A6715B2D68DDE000CE4E12 /* vspclient_3.ico in Resources */ = {isa = PBXBuildFile; fileRef = 88A671362D68DDE000CE4E12 /* vspclient_3.ico */; };
-		88A6715C2D68DDE000CE4E12 /* vspclient_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A6713F2D68DDE000CE4E12 /* vspclient_3.png */; };
 		88B40D5E2D4B666700DFE7C5 /* VSPDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B40D5D2D4B666700DFE7C5 /* VSPDriver.cpp */; };
 		88B40D602D4B666700DFE7C5 /* VSPDriver.iig in Sources */ = {isa = PBXBuildFile; fileRef = 88B40D5F2D4B666700DFE7C5 /* VSPDriver.iig */; };
 		88B47EC82D59B30600868CA5 /* VSPUserClient.iig in Sources */ = {isa = PBXBuildFile; fileRef = 884F6EC42D59A58D0066353A /* VSPUserClient.iig */; };
@@ -327,6 +319,16 @@
 		8854A9BA2D5DED8A00C27252 /* VSPDriverClient.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VSPDriverClient.hpp; sourceTree = "<group>"; };
 		885DE9332D5E82CD00CFECEE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88667D6A2D53474900DFA26E /* VSPDriver-Full.log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "VSPDriver-Full.log"; sourceTree = "<group>"; };
+		88698B872D76DDD70008EF6B /* vspclient_16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_16x16.png; sourceTree = "<group>"; };
+		88698B882D76DDD70008EF6B /* vspclient_16x16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vspclient_16x16@2x.png"; sourceTree = "<group>"; };
+		88698B892D76DDD70008EF6B /* vspclient_32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_32x32.png; sourceTree = "<group>"; };
+		88698B8A2D76DDD70008EF6B /* vspclient_32x32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vspclient_32x32@2x.png"; sourceTree = "<group>"; };
+		88698B8B2D76DDD70008EF6B /* vspclient_128x128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_128x128.png; sourceTree = "<group>"; };
+		88698B8C2D76DDD70008EF6B /* vspclient_128x128@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vspclient_128x128@2x.png"; sourceTree = "<group>"; };
+		88698B8D2D76DDD70008EF6B /* vspclient_256x256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_256x256.png; sourceTree = "<group>"; };
+		88698B8E2D76DDD70008EF6B /* vspclient_256x256@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vspclient_256x256@2x.png"; sourceTree = "<group>"; };
+		88698B8F2D76DDD70008EF6B /* vspclient_512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_512x512.png; sourceTree = "<group>"; };
+		88698B902D76DDD70008EF6B /* vspclient_512x512@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vspclient_512x512@2x.png"; sourceTree = "<group>"; };
 		8884826D2D61192900F3BAD7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		88906F452D4CCA9400E500BB /* VSPClient-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VSPClient-Bridging-Header.h"; sourceTree = "<group>"; };
 		88906F492D4CCACB00E500BB /* DriverKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DriverKit.framework; path = System/Library/Frameworks/DriverKit.framework; sourceTree = SDKROOT; };
@@ -336,22 +338,6 @@
 		88A6712E2D68DDE000CE4E12 /* progress.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = progress.gif; sourceTree = "<group>"; };
 		88A6712F2D68DDE000CE4E12 /* progress2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = progress2.gif; sourceTree = "<group>"; };
 		88A671312D68DDE000CE4E12 /* vspclient.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = vspclient.icns; sourceTree = "<group>"; };
-		88A671332D68DDE000CE4E12 /* vspclient_0.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = vspclient_0.ico; sourceTree = "<group>"; };
-		88A671342D68DDE000CE4E12 /* vspclient_1.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = vspclient_1.ico; sourceTree = "<group>"; };
-		88A671352D68DDE000CE4E12 /* vspclient_2.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = vspclient_2.ico; sourceTree = "<group>"; };
-		88A671362D68DDE000CE4E12 /* vspclient_3.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = vspclient_3.ico; sourceTree = "<group>"; };
-		88A671372D68DDE000CE4E12 /* vspclient_4.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = vspclient_4.ico; sourceTree = "<group>"; };
-		88A671382D68DDE000CE4E12 /* vspclient_5.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = vspclient_5.ico; sourceTree = "<group>"; };
-		88A671392D68DDE000CE4E12 /* vspclient_6.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = vspclient_6.ico; sourceTree = "<group>"; };
-		88A6713A2D68DDE000CE4E12 /* vspclient_7.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = vspclient_7.ico; sourceTree = "<group>"; };
-		88A6713C2D68DDE000CE4E12 /* vspclient_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_0.png; sourceTree = "<group>"; };
-		88A6713D2D68DDE000CE4E12 /* vspclient_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_1.png; sourceTree = "<group>"; };
-		88A6713E2D68DDE000CE4E12 /* vspclient_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_2.png; sourceTree = "<group>"; };
-		88A6713F2D68DDE000CE4E12 /* vspclient_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_3.png; sourceTree = "<group>"; };
-		88A671402D68DDE000CE4E12 /* vspclient_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_4.png; sourceTree = "<group>"; };
-		88A671412D68DDE000CE4E12 /* vspclient_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_5.png; sourceTree = "<group>"; };
-		88A671422D68DDE000CE4E12 /* vspclient_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_6.png; sourceTree = "<group>"; };
-		88A671432D68DDE000CE4E12 /* vspclient_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_7.png; sourceTree = "<group>"; };
 		88A671452D68DDE000CE4E12 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		88A671462D68DDE000CE4E12 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		88AB34E92D64937300260D19 /* make.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = make.sh; sourceTree = "<group>"; };
@@ -477,32 +463,19 @@
 			path = icns;
 			sourceTree = "<group>";
 		};
-		88A6713B2D68DDE000CE4E12 /* ico */ = {
-			isa = PBXGroup;
-			children = (
-				88A671332D68DDE000CE4E12 /* vspclient_0.ico */,
-				88A671342D68DDE000CE4E12 /* vspclient_1.ico */,
-				88A671352D68DDE000CE4E12 /* vspclient_2.ico */,
-				88A671362D68DDE000CE4E12 /* vspclient_3.ico */,
-				88A671372D68DDE000CE4E12 /* vspclient_4.ico */,
-				88A671382D68DDE000CE4E12 /* vspclient_5.ico */,
-				88A671392D68DDE000CE4E12 /* vspclient_6.ico */,
-				88A6713A2D68DDE000CE4E12 /* vspclient_7.ico */,
-			);
-			path = ico;
-			sourceTree = "<group>";
-		};
 		88A671442D68DDE000CE4E12 /* png */ = {
 			isa = PBXGroup;
 			children = (
-				88A6713C2D68DDE000CE4E12 /* vspclient_0.png */,
-				88A6713D2D68DDE000CE4E12 /* vspclient_1.png */,
-				88A6713E2D68DDE000CE4E12 /* vspclient_2.png */,
-				88A6713F2D68DDE000CE4E12 /* vspclient_3.png */,
-				88A671402D68DDE000CE4E12 /* vspclient_4.png */,
-				88A671412D68DDE000CE4E12 /* vspclient_5.png */,
-				88A671422D68DDE000CE4E12 /* vspclient_6.png */,
-				88A671432D68DDE000CE4E12 /* vspclient_7.png */,
+				88698B872D76DDD70008EF6B /* vspclient_16x16.png */,
+				88698B882D76DDD70008EF6B /* vspclient_16x16@2x.png */,
+				88698B892D76DDD70008EF6B /* vspclient_32x32.png */,
+				88698B8A2D76DDD70008EF6B /* vspclient_32x32@2x.png */,
+				88698B8B2D76DDD70008EF6B /* vspclient_128x128.png */,
+				88698B8C2D76DDD70008EF6B /* vspclient_128x128@2x.png */,
+				88698B8D2D76DDD70008EF6B /* vspclient_256x256.png */,
+				88698B8E2D76DDD70008EF6B /* vspclient_256x256@2x.png */,
+				88698B8F2D76DDD70008EF6B /* vspclient_512x512.png */,
+				88698B902D76DDD70008EF6B /* vspclient_512x512@2x.png */,
 			);
 			path = png;
 			sourceTree = "<group>";
@@ -512,7 +485,6 @@
 			children = (
 				88A671302D68DDE000CE4E12 /* ani */,
 				88A671322D68DDE000CE4E12 /* icns */,
-				88A6713B2D68DDE000CE4E12 /* ico */,
 				88A671442D68DDE000CE4E12 /* png */,
 				88A671472D68DDE000CE4E12 /* InfoPlist.strings */,
 			);
@@ -707,28 +679,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				880539ED2D4BAFBF00E55104 /* Assets.xcassets in Resources */,
+				88698B912D76DDD70008EF6B /* vspclient_16x16@2x.png in Resources */,
+				88698B922D76DDD70008EF6B /* vspclient_128x128.png in Resources */,
+				88698B932D76DDD70008EF6B /* vspclient_256x256@2x.png in Resources */,
+				88698B942D76DDD70008EF6B /* vspclient_512x512@2x.png in Resources */,
+				88698B952D76DDD70008EF6B /* vspclient_32x32.png in Resources */,
+				88698B962D76DDD70008EF6B /* vspclient_32x32@2x.png in Resources */,
+				88698B972D76DDD70008EF6B /* vspclient_256x256.png in Resources */,
+				88698B982D76DDD70008EF6B /* vspclient_128x128@2x.png in Resources */,
+				88698B992D76DDD70008EF6B /* vspclient_512x512.png in Resources */,
+				88698B9A2D76DDD70008EF6B /* vspclient_16x16.png in Resources */,
 				88DA7BA92D532C6800C8F759 /* LICENSE in Resources */,
-				88A671492D68DDE000CE4E12 /* vspclient_0.ico in Resources */,
-				88A6714A2D68DDE000CE4E12 /* vspclient.icns in Resources */,
+				880539ED2D4BAFBF00E55104 /* Assets.xcassets in Resources */,
 				88A6714B2D68DDE000CE4E12 /* InfoPlist.strings in Resources */,
-				88A6714C2D68DDE000CE4E12 /* progress2.gif in Resources */,
-				88A6714D2D68DDE000CE4E12 /* vspclient_6.png in Resources */,
-				88A6714E2D68DDE000CE4E12 /* vspclient_4.ico in Resources */,
-				88A6714F2D68DDE000CE4E12 /* vspclient_1.png in Resources */,
-				88A671502D68DDE000CE4E12 /* vspclient_7.png in Resources */,
-				88A671512D68DDE000CE4E12 /* vspclient_0.png in Resources */,
-				88A671522D68DDE000CE4E12 /* vspclient_2.png in Resources */,
-				88A671532D68DDE000CE4E12 /* vspclient_5.ico in Resources */,
-				88A671542D68DDE000CE4E12 /* vspclient_5.png in Resources */,
-				88A671552D68DDE000CE4E12 /* vspclient_6.ico in Resources */,
-				88A671562D68DDE000CE4E12 /* vspclient_2.ico in Resources */,
-				88A671572D68DDE000CE4E12 /* vspclient_4.png in Resources */,
-				88A671582D68DDE000CE4E12 /* vspclient_1.ico in Resources */,
-				88A671592D68DDE000CE4E12 /* vspclient_7.ico in Resources */,
-				88A6715A2D68DDE000CE4E12 /* progress.gif in Resources */,
-				88A6715B2D68DDE000CE4E12 /* vspclient_3.ico in Resources */,
-				88A6715C2D68DDE000CE4E12 /* vspclient_3.png in Resources */,
+				88A6714A2D68DDE000CE4E12 /* vspclient.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
