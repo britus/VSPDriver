@@ -53,8 +53,6 @@
 		883C30A22D6F1C550029BE30 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30A12D6F1C550029BE30 /* IOKit.framework */; };
 		883C30A32D6F1C610029BE30 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8854A99E2D5DB1E400C27252 /* CoreFoundation.framework */; };
 		884F6EC72D59A5C90066353A /* VSPUserClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 884F6EC62D59A5C90066353A /* VSPUserClient.cpp */; };
-		885E23EC2D7451BF00B7B0FE /* VSPDriver_macos_12.7.6-entitlements.xml in Resources */ = {isa = PBXBuildFile; fileRef = 885E23EA2D7451BF00B7B0FE /* VSPDriver_macos_12.7.6-entitlements.xml */; };
-		885E23ED2D7451BF00B7B0FE /* VSPDriver_macos_15.3.1-entitlements.xml in Resources */ = {isa = PBXBuildFile; fileRef = 885E23EB2D7451BF00B7B0FE /* VSPDriver_macos_15.3.1-entitlements.xml */; };
 		8874CB8A2D72322C009FBF60 /* QtWidgets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8874CB892D72322B009FBF60 /* QtWidgets.framework */; };
 		8874CB8C2D7232E8009FBF60 /* QtWidgets.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 8874CB892D72322B009FBF60 /* QtWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8899C34A2D525AD800E17727 /* VSPSerialPort.iig in Sources */ = {isa = PBXBuildFile; fileRef = 8899C3492D525AD800E17727 /* VSPSerialPort.iig */; };
@@ -830,8 +828,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				885E23EC2D7451BF00B7B0FE /* VSPDriver_macos_12.7.6-entitlements.xml in Resources */,
-				885E23ED2D7451BF00B7B0FE /* VSPDriver_macos_15.3.1-entitlements.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
