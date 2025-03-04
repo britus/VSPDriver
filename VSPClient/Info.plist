@@ -39,9 +39,11 @@
 	<key>UIPrerenderedIcon</key>
 	<false/>
 	<key>LSUIElement</key>
-	<true/>
+	<false/>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>NOTE</key>
+	<string>Copyright © 2025 by EoF Software Labs</string>
 	<key>com.apple.developer.driverkit</key>
 	<true/>
 	<key>com.apple.developer.driverkit.install</key>
@@ -54,15 +56,9 @@
 	<array>
 		<string>VSPDriver</string>
 	</array>
-	<key>NOTE</key>
-	<string>Copyright © 2025 by EoF Software Labs</string>
 	<key>com.apple.private.driverkit.driver-access</key>
 	<array>
 		<string>VSPDriver</string>
-	</array>
-	<key>com.apple.security.temporary-exception.iokit-user-client-class</key>
-	<array>
-		<string>IOUserUserClient</string>
 	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
