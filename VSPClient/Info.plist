@@ -56,10 +56,6 @@
 	<array>
 		<string>VSPDriver</string>
 	</array>
-	<key>com.apple.private.driverkit.driver-access</key>
-	<array>
-		<string>VSPDriver</string>
-	</array>
     <key>CFBundleURLTypes</key>
 	<array>
 		<dict>
