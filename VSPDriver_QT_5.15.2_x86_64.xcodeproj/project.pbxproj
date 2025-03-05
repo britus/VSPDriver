@@ -482,14 +482,14 @@
 			children = (
 				880539F12D4BAFBF00E55104 /* VSPClient.entitlements */,
 				880539F52D4BB0F900E55104 /* Info.plist */,
-				880539EC2D4BAFBF00E55104 /* Assets.xcassets */,
-				88A671482D68DDE000CE4E12 /* Resources */,
 				88906F452D4CCA9400E500BB /* VSPClient-Bridging-Header.h */,
 				88F5D93C2D59E85B007A6E1F /* VSPInstallApp.swift */,
 				88F5D93F2D59E933007A6E1F /* VSPDriverClient.cpp */,
-				8854A9BA2D5DED8A00C27252 /* VSPDriverClient.hpp */,
 				885E23E62D74518900B7B0FE /* VSPClient_macos_12.7.6-entitlements.xml */,
 				885E23E72D74518900B7B0FE /* VSPClient_macos_15.3.1-entitlements.xml */,
+				880539EC2D4BAFBF00E55104 /* Assets.xcassets */,
+				8854A9BA2D5DED8A00C27252 /* VSPDriverClient.hpp */,
+				88A671482D68DDE000CE4E12 /* Resources */,
 			);
 			path = VSPClient;
 			sourceTree = "<group>";
