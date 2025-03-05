@@ -44,19 +44,7 @@
 	<false/>
 	<key>NOTE</key>
 	<string>Copyright © 2025 by EoF Software Labs</string>
-	<key>com.apple.developer.driverkit</key>
-	<true/>
-	<key>com.apple.developer.driverkit.install</key>
-	<true/>
-	<key>com.apple.developer.system-extension.install</key>
-	<true/>
-	<key>com.apple.developer.system-extension.uninstall</key>
-	<true/>
-	<key>com.apple.developer.driverkit.userclient-access</key>
-	<array>
-		<string>VSPDriver</string>
-	</array>
-    <key>CFBundleURLTypes</key>
+	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>

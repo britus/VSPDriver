@@ -50,18 +50,5 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>OSBundleLibraries</key>
-	<dict>
-		<key>com.apple.iokit.IOSerialFamily</key>
-		<string>1.0</string>
-	</dict>
-	<key>com.apple.developer.driverkit</key>
-	<true/>
-	<key>com.apple.developer.driverkit.allow-any-userclient-access</key>
-	<true/>
-	<key>com.apple.developer.driverkit.communicates-with-drivers</key>
-	<true/>
-	<key>com.apple.developer.system-extension.redistributable</key>
-	<true/>
 </dict>
 </plist>
