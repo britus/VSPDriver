@@ -6,9 +6,5 @@
 	<true/>
 	<key>com.apple.developer.driverkit.family.serial</key>
 	<true/>
-	<key>com.apple.developer.driverkit.userclient-access</key>
-	<array>
-		<string>org.eof.tools.VSPClient</string>
-	</array>
 </dict>
 </plist>

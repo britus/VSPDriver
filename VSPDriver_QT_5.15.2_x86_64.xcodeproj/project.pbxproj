@@ -485,8 +485,6 @@
 				88906F452D4CCA9400E500BB /* VSPClient-Bridging-Header.h */,
 				88F5D93C2D59E85B007A6E1F /* VSPInstallApp.swift */,
 				88F5D93F2D59E933007A6E1F /* VSPDriverClient.cpp */,
-				885E23E62D74518900B7B0FE /* VSPClient_macos_12.7.6-entitlements.xml */,
-				885E23E72D74518900B7B0FE /* VSPClient_macos_15.3.1-entitlements.xml */,
 				880539EC2D4BAFBF00E55104 /* Assets.xcassets */,
 				8854A9BA2D5DED8A00C27252 /* VSPDriverClient.hpp */,
 				88A671482D68DDE000CE4E12 /* Resources */,
@@ -629,6 +627,10 @@
 				88B40D5C2D4B666700DFE7C5 /* VSPDriver */,
 				880539E92D4BAFBD00E55104 /* VSPClient */,
 				88DA7BA72D532C6700C8F759 /* LICENSE */,
+				885E23EA2D7451BF00B7B0FE /* VSPDriver_macos_12.7.6-entitlements.xml */,
+				885E23EB2D7451BF00B7B0FE /* VSPDriver_macos_15.3.1-entitlements.xml */,
+				885E23E62D74518900B7B0FE /* VSPClient_macos_12.7.6-entitlements.xml */,
+				885E23E72D74518900B7B0FE /* VSPClient_macos_15.3.1-entitlements.xml */,
 				88AB34EA2D64937300260D19 /* VSPDriver-PortLink.log */,
 				88667D6A2D53474900DFA26E /* VSPDriver-Full.log */,
 				88AEEFF62D5233D4007F2A4C /* IOReg-Outline.md */,
@@ -671,8 +673,6 @@
 		88B40D5C2D4B666700DFE7C5 /* VSPDriver */ = {
 			isa = PBXGroup;
 			children = (
-				885E23EA2D7451BF00B7B0FE /* VSPDriver_macos_12.7.6-entitlements.xml */,
-				885E23EB2D7451BF00B7B0FE /* VSPDriver_macos_15.3.1-entitlements.xml */,
 				88B40D5F2D4B666700DFE7C5 /* VSPDriver.iig */,
 				88B40D5D2D4B666700DFE7C5 /* VSPDriver.cpp */,
 				8899C3492D525AD800E17727 /* VSPSerialPort.iig */,
