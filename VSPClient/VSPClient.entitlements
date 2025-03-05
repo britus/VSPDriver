@@ -6,20 +6,18 @@
 	<true/>
 	<key>com.apple.developer.driverkit.communicates-with-drivers</key>
 	<true/>
+	<key>com.apple.developer.driverkit.userclient-access</key>
+	<array>
+		<string>org.eof.tools.VSPClient</string>
+	</array>
 	<key>com.apple.developer.system-extension.install</key>
 	<true/>
-    <key>com.apple.developer.driverkit.userclient-access</key>
-    <array>
-        <string>org.eof.tools.VSPClient</string>
-    </array>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
 		<string>$(TeamIdentifierPrefix)org.eof.apps</string>
 	</array>
-	<key>com.apple.security.network.client</key>
-	<true/>
 	<key>com.apple.security.device.bluetooth</key>
 	<true/>
 	<key>com.apple.security.device.serial</key>
@@ -29,6 +27,8 @@
 	<key>com.apple.security.files.downloads.read-write</key>
 	<true/>
 	<key>com.apple.security.files.user-selected.read-write</key>
+	<true/>
+	<key>com.apple.security.network.client</key>
 	<true/>
 	<key>com.apple.security.network.server</key>
 	<true/>

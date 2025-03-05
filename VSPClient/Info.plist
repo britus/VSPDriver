@@ -60,7 +60,7 @@
 	<array>
 		<string>VSPDriver</string>
 	</array>
-	<key>CFBundleURLTypes</key>
+    <key>CFBundleURLTypes</key>
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>

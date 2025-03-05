@@ -891,7 +891,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = 33;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
@@ -911,6 +911,9 @@
 				INFOPLIST_FILE = VSPClient/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Virtual Serial Port Controller";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Require acces to file for VSP test.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Require acces to file for VSP test.";
+				INFOPLIST_KEY_NSBluetoothWhileInUseUsageDescription = "Require acces to file for VSP test.";
 				INFOPLIST_KEY_NSDesktopFolderUsageDescription = "Require acces to file for VSP test.";
 				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "Require acces to file for VSP test.";
 				INFOPLIST_KEY_NSDownloadsFolderUsageDescription = "Require acces to file for VSP test.";
@@ -933,6 +936,9 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				QTDIR = "$(HOME)/Qt/5.15.2/clang_64";
 				STRIP_STYLE = debugging;
+				SUPPORTED_PLATFORMS = macosx;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "VSPClient/VSPClient-Bridging-Header.h";
@@ -953,7 +959,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = 33;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
@@ -973,6 +979,9 @@
 				INFOPLIST_FILE = VSPClient/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Virtual Serial Port Controller";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Require acces to file for VSP test.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Require acces to file for VSP test.";
+				INFOPLIST_KEY_NSBluetoothWhileInUseUsageDescription = "Require acces to file for VSP test.";
 				INFOPLIST_KEY_NSDesktopFolderUsageDescription = "Require acces to file for VSP test.";
 				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "Require acces to file for VSP test.";
 				INFOPLIST_KEY_NSDownloadsFolderUsageDescription = "Require acces to file for VSP test.";
@@ -995,6 +1004,9 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				QTDIR = "$(HOME)/Qt/5.15.2/clang_64";
 				STRIP_STYLE = debugging;
+				SUPPORTED_PLATFORMS = macosx;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "VSPClient/VSPClient-Bridging-Header.h";
@@ -1038,7 +1050,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
+				DRIVERKIT_DEPLOYMENT_TARGET = 20.0;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SELECTED_FILES = readwrite;
@@ -1099,7 +1111,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
+				DRIVERKIT_DEPLOYMENT_TARGET = 20.0;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SELECTED_FILES = readwrite;
@@ -1127,9 +1139,9 @@
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = 33;
 				DEVELOPMENT_TEAM = 83NQU389JN;
-				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
+				DRIVERKIT_DEPLOYMENT_TARGET = 20.0;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/System/DriverKit/System/Library/Frameworks",
@@ -1162,9 +1174,9 @@
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = 33;
 				DEVELOPMENT_TEAM = 83NQU389JN;
-				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
+				DRIVERKIT_DEPLOYMENT_TARGET = 20.0;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/System/DriverKit/System/Library/Frameworks",
