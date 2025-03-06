@@ -6,14 +6,14 @@
 	<true/>
 	<key>com.apple.developer.driverkit.communicates-with-drivers</key>
 	<true/>
-	<key>com.apple.developer.system-extension.install</key>
-	<true/>
 	<key>com.apple.developer.driverkit.userclient-access</key>
 	<array>
 		<string>org.eof.tools.VSPDriver</string>
 	</array>
-	<key>com.apple.security.app-sandbox</key>
+	<key>com.apple.developer.system-extension.install</key>
 	<true/>
+	<key>com.apple.security.app-sandbox</key>
+	<false/>
 	<key>com.apple.security.application-groups</key>
 	<array>
 		<string>$(TeamIdentifierPrefix)org.eof.apps</string>
