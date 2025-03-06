@@ -485,8 +485,8 @@
 				88906F452D4CCA9400E500BB /* VSPClient-Bridging-Header.h */,
 				88F5D93C2D59E85B007A6E1F /* VSPInstallApp.swift */,
 				88F5D93F2D59E933007A6E1F /* VSPDriverClient.cpp */,
-				880539EC2D4BAFBF00E55104 /* Assets.xcassets */,
 				8854A9BA2D5DED8A00C27252 /* VSPDriverClient.hpp */,
+				880539EC2D4BAFBF00E55104 /* Assets.xcassets */,
 				88A671482D68DDE000CE4E12 /* Resources */,
 			);
 			path = VSPClient;
