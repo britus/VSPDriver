@@ -14,7 +14,7 @@ The Project [VSPClient](https://github.com/britus/VSPClient) contains the user i
 3 frameworks written in QT for the virtual serial port driver.
 
 ### Release
-- [RC_1.3.10_qt5](https://github.com/britus/VSPClient/releases/tag/RC_1.3.10_qt5)
+- [All releases](https://github.com/britus/VSPClient/releases)
 
 ### Log Files and Tester
 
