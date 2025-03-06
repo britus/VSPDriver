@@ -52,8 +52,8 @@ You should have:
 
 You should use you own bundle IDs. To do this:
 
-Replace bundle ID "org.eof.tools.VSPDriver" in the Xcode VSPDriver target
-Replace bundle ID "org.eof.tools.VSPClient" in the Xcode VSPClient target
+Replace bundle ID "org.eof.tools.VSPDriver" in the Xcode VSPDriver target and replace 
+bundle ID "org.eof.tools.VSPClient" in the Xcode VSPClient target
 
 After that you must replace the Dext bundle ID "org.eof.tools.VSPDriver" in 
 VSPClient.entitlements file.
