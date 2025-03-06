@@ -114,14 +114,14 @@ typedef struct {
 
 // Driver instance state resource
 struct VSPSerialPort_IVars {
-    IOService* m_provider = nullptr;
-    VSPDriver* m_parent = nullptr;                  // VSPDriver instance
+    IOService* m_provider = nullptr;                // should be the VSPDriver instance
+    VSPDriver* m_parent = nullptr;                  // VSPDriver instance set by VSPDriver
     
     uint8_t m_portId = 0;                           // port id given by VSPDriver
     uint8_t m_portLinkId = 0;                       // port link id given by VSPDriver
     
-    IOPropertyName m_portSuffix = {};
-    IOPropertyName m_portBaseName = {};
+    IOPropertyName m_portSuffix = {};               // the TTY device number
+    IOPropertyName m_portBaseName = {};             // the TTY device name 'vsp'
     
     IOLock* m_lock = nullptr;                       // for resource locking
     volatile atomic_int m_lockLevel = 0;
@@ -142,18 +142,18 @@ struct VSPSerialPort_IVars {
     uint32_t m_hwMCR = 0;
     uint32_t m_hwLatency = 25;
 
-    TUartParameters m_uartParams = {};
-    THwFlowControl m_hwFlowControl = {};
+    TUartParameters m_uartParams = {};              // set by TTY client and VSPUserClient
+    THwFlowControl m_hwFlowControl = {};            // set by TTY client and VSPUserClient
 
-    uint64_t m_paramChecks = 0;
-    uint64_t m_traceFlags = 0;
+    uint64_t m_paramChecks = 0;                     // flags for TTY parameter checks
+    uint64_t m_traceFlags = 0;                      // flags for runtime tracing
     
-    bool m_hwActivated = false;
+    bool m_hwActivated = false;                     // set by OS to activate SP hardware
 };
 
 // --------------------------------------------------------------------
-// Allocate internal resources
-//
+// Allocate internal resources. Returns true if successfully
+// initialized.
 bool VSPSerialPort::init(void)
 {
     bool result;
@@ -215,7 +215,8 @@ static inline kern_return_t getProperty(VSPSerialPort* self, const char* key, ch
         } else {
             ret = kIOReturnInvalid;
         }
-    } else {
+    }
+    else {
         ret = kIOReturnInvalid;
     }
     
@@ -265,7 +266,8 @@ kern_return_t IMPL(VSPSerialPort, Start)
     
     // remember OS provider before Start. Start calls
     // SetProperties implicit and we update the TTY
-    // properties there. Therfore we need the provider.
+    // properties there. Therfore we need the provider
+    // which is our VSPDriver instance.
     ivars->m_provider = provider;
 
     // call super method (apple style)
@@ -330,7 +332,8 @@ kern_return_t IMPL(VSPSerialPort, Stop)
 
 // --------------------------------------------------------------------
 // SetProperties(OSDictionary* properties)
-// No super dispatch here!!
+// Modify instance properties. Change IOTTYBaseName to "vsp"
+// and set our unique port number to IOTTYSuffix
 kern_return_t IMPL(VSPSerialPort, SetProperties)
 {
     IOReturn ret;
@@ -494,7 +497,7 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
     // Get the address segment of the RX memory descriptor
     ret = ivars->m_rxqbmd->GetAddressRange(&ivars->m_rxseg);
     if (ret != kIOReturnSuccess || !ivars->m_rxseg.address || ivars->m_rxseg.length != rxcapacity) {
-        VSPErr(LOG_PREFIX, "ConnectQueues: Unable to get TX-MD segment. code=%x\n", ret);
+        VSPErr(LOG_PREFIX, "ConnectQueues: Unable to get RX-MD segment. code=%x\n", ret);
         goto error_exit;
     }
     
@@ -504,7 +507,7 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
         goto error_exit;
     }
     
-    // Initialize the indexes
+    // Initialize the SPI indexes
     ivars->m_spi = reinterpret_cast<SerialPortInterface*>(ifseg.address);
     ivars->m_spi->txCI = 0;
     ivars->m_spi->txPI = 0;
@@ -568,14 +571,13 @@ kern_return_t IMPL(VSPSerialPort, DisconnectQueues)
 static inline void update_txqbmd(struct VSPSerialPort_IVars* ivars)
 {
     // We reserve 1K size from the capacity from t_txqbmd.
-    // This protects against a buffer overflow.
+    // This protects against a buffer overflow by OS calls.
     if (((uint32_t) ivars->m_txseg.length - ivars->m_spi->txPI) < 1024) {
         ivars->m_spi->txPI = 0;
         ivars->m_spi->txCI = 0;
     }
-    // Reset TX consumer index to end of received block. This increases the
-    // offset for the m_txqbmd buffer. Finally the DEXT crash if to protection.
-    // Reset values like txPI = 0 and txCI = 0 after some transmissions.
+    // Set TX consumer index to end of received block. This increases
+    // the offset for the m_txqbmd buffer.
     else {
         ivars->m_spi->txCI = ivars->m_spi->txPI;
     }
@@ -622,13 +624,13 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     }
 #endif
     
-    // Is port is assigned to a port link?
+    // Is this port assigned to a port link?
     if (ivars->m_portLinkId) {
         // send TX to other port instance
         ret = sendToPortLink(buffer, size);
         if (ret != kIOReturnSuccess) {
             VSPErr(LOG_PREFIX, "TxDataAvailable: Data routing failed. code=%x\n", ret);
-            goto not_routed; // update spi::tx, no echo and done.
+            goto not_routed; // update spi::tx, no echo. strictly required for OS
         }
     }
     // Loopback TX data
@@ -642,10 +644,10 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     
 not_routed:
 
-    // update TX in serial port interface
+    // update TX indexes in serial port interface
     update_txqbmd(ivars);
 
-    // Show me indexes be fore manipulation
+    // Show me indexes
     VSPLog(LOG_PREFIX, "TxDataAvailable: [IOSPI-TX 2] txPI: %d, txCI: %d, txqoffset: %d, txqlogsz: %d",
            ivars->m_spi->txPI, ivars->m_spi->txCI, ivars->m_spi->txqoffset, ivars->m_spi->txqlogsz);
 

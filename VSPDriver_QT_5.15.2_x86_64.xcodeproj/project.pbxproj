@@ -343,10 +343,10 @@
 		8854A99E2D5DB1E400C27252 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		8854A9BA2D5DED8A00C27252 /* VSPDriverClient.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VSPDriverClient.hpp; sourceTree = "<group>"; };
 		885DE9332D5E82CD00CFECEE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		885E23E62D74518900B7B0FE /* VSPClient_macos_12.7.6-entitlements.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "VSPClient_macos_12.7.6-entitlements.xml"; sourceTree = "<group>"; };
-		885E23E72D74518900B7B0FE /* VSPClient_macos_15.3.1-entitlements.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "VSPClient_macos_15.3.1-entitlements.xml"; sourceTree = "<group>"; };
-		885E23EA2D7451BF00B7B0FE /* VSPDriver_macos_12.7.6-entitlements.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "VSPDriver_macos_12.7.6-entitlements.xml"; sourceTree = "<group>"; };
-		885E23EB2D7451BF00B7B0FE /* VSPDriver_macos_15.3.1-entitlements.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "VSPDriver_macos_15.3.1-entitlements.xml"; sourceTree = "<group>"; };
+		885E23E62D74518900B7B0FE /* VSPClient_sandbox-off-entitlements.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "VSPClient_sandbox-off-entitlements.xml"; sourceTree = "<group>"; };
+		885E23E72D74518900B7B0FE /* VSPClient_sandbox-on-entitlements.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "VSPClient_sandbox-on-entitlements.xml"; sourceTree = "<group>"; };
+		885E23EA2D7451BF00B7B0FE /* VSPDriver_3rd_Party-entitlements.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "VSPDriver_3rd_Party-entitlements.xml"; sourceTree = "<group>"; };
+		885E23EB2D7451BF00B7B0FE /* VSPDriver_normal-entitlements.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "VSPDriver_normal-entitlements.xml"; sourceTree = "<group>"; };
 		88667D6A2D53474900DFA26E /* VSPDriver-Full.log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "VSPDriver-Full.log"; sourceTree = "<group>"; };
 		8874CB892D72322B009FBF60 /* QtWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtWidgets.framework; path = ../../../../Qt/5.15.2/clang_64/lib/QtWidgets.framework; sourceTree = "<group>"; };
 		8884826D2D61192900F3BAD7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -627,10 +627,10 @@
 				88B40D5C2D4B666700DFE7C5 /* VSPDriver */,
 				880539E92D4BAFBD00E55104 /* VSPClient */,
 				88DA7BA72D532C6700C8F759 /* LICENSE */,
-				885E23EA2D7451BF00B7B0FE /* VSPDriver_macos_12.7.6-entitlements.xml */,
-				885E23EB2D7451BF00B7B0FE /* VSPDriver_macos_15.3.1-entitlements.xml */,
-				885E23E62D74518900B7B0FE /* VSPClient_macos_12.7.6-entitlements.xml */,
-				885E23E72D74518900B7B0FE /* VSPClient_macos_15.3.1-entitlements.xml */,
+				885E23EA2D7451BF00B7B0FE /* VSPDriver_3rd_Party-entitlements.xml */,
+				885E23EB2D7451BF00B7B0FE /* VSPDriver_normal-entitlements.xml */,
+				885E23E62D74518900B7B0FE /* VSPClient_sandbox-off-entitlements.xml */,
+				885E23E72D74518900B7B0FE /* VSPClient_sandbox-on-entitlements.xml */,
 				88AB34EA2D64937300260D19 /* VSPDriver-PortLink.log */,
 				88667D6A2D53474900DFA26E /* VSPDriver-Full.log */,
 				88AEEFF62D5233D4007F2A4C /* IOReg-Outline.md */,

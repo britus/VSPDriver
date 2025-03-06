@@ -8,6 +8,13 @@
 	<true/>
 	<key>com.apple.developer.system-extension.install</key>
 	<true/>
+    <!-- This entitlement must be granted upon request to Apple. Apple
+         may allow you to use this entitlement in you client App. Make
+         sure you ask for the correct Dext bundle ID!! -->
+    <key>com.apple.developer.driverkit.userclient-access</key>
+    <array>
+        <string>org.eof.tools.VSPDriver</string>
+    </array>
 	<key>com.apple.security.app-sandbox</key>
 	<false/>
 	<key>com.apple.security.files.user-selected.read-only</key>
