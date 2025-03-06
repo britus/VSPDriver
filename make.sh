@@ -14,7 +14,7 @@ fi
 
 echo ":> Build project: ${ARCH} ..."
 
-rm -fR build
+sudo rm -fR build
 
 if [ "${ARCH}" == "arm64" ] ; then
 	xcodebuild -arch `uname -m` -project VSPDriver.xcodeproj \
