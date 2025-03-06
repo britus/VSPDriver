@@ -10,10 +10,10 @@
 	<true/>
 	<key>com.apple.developer.driverkit.userclient-access</key>
 	<array>
-		<string>org.eof.tools.VSPClient</string>
+		<string>org.eof.tools.VSPDriver</string>
 	</array>
 	<key>com.apple.security.app-sandbox</key>
-	<false/>
+	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
 		<string>$(TeamIdentifierPrefix)org.eof.apps</string>
