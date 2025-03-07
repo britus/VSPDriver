@@ -103,6 +103,7 @@ struct VSPUserClient_IVars {
     IOTimerDispatchSource* m_eventSource = nullptr;
     OSAction* m_eventAction = nullptr;
     OSAction* m_cbAction = nullptr;
+    IOBufferMemoryDescriptor* m_uciomd;
 };
 
 // Define all possible commands with its parameters and callback entry points.
@@ -316,6 +317,7 @@ kern_return_t IMPL(VSPUserClient, Stop)
     
     VSPLog(LOG_PREFIX, "Stop called.\n");
     
+    OSSafeReleaseNULL(ivars->m_uciomd);
     OSSafeReleaseNULL(ivars->m_eventAction);
     OSSafeReleaseNULL(ivars->m_eventSource);
     OSSafeReleaseNULL(ivars->m_eventQueue);
@@ -334,7 +336,7 @@ kern_return_t IMPL(VSPUserClient, Stop)
 
 // --------------------------------------------------------------------
 // CopyClientMemoryForType_Impl(uint64_t type, uint64_t *options, IOMemoryDescriptor **memory)
-// Allocate space for UC
+// Allocate space for UC. The user space must be call IOConnectUnmapMemory with type 0
 //
 kern_return_t IMPL(VSPUserClient, CopyClientMemoryForType)
 {
@@ -343,27 +345,39 @@ kern_return_t IMPL(VSPUserClient, CopyClientMemoryForType)
     VSPLog(LOG_PREFIX, "CopyClientMemoryForType called. type=%llu optionsptr=0x%llx\n",
            type, (uint64_t)options);
     
-    if (type >= 0 && type < vspLastCommand)
+    if (type >= vspControlPingPong && type < vspLastCommand)
     {
-        IOBufferMemoryDescriptor* md;
-        ret = IOBufferMemoryDescriptor::Create(kIOMemoryDirectionInOut, //
-                                               VSP_UCD_SIZE    /* capacity */, //
-                                               0               /* alignment */, //
-                                               &md);
-        if (ret != kIOReturnSuccess || !md) {
-            VSPErr(LOG_PREFIX, "CopyClientMemoryForType: IOBufferMemoryDescriptor::Create failed: 0x%x", ret);
-            return ret;
+        // share only one memory buffer
+        if (!ivars->m_uciomd) {
+            IOBufferMemoryDescriptor* md;
+            ret = IOBufferMemoryDescriptor::Create(kIOMemoryDirectionInOut, //
+                                                   VSP_UCD_SIZE    /* capacity */, //
+                                                   0               /* alignment */, //
+                                                   &md);
+            if (ret == kIOReturnSuccess) {
+                if (!md) {
+                    ret = kIOReturnNoSpace;
+                }
+                else {
+                    ivars->m_uciomd = md;
+                }
+            }
         }
-        
         // returned with refcount 1
-        *memory = md;
+        *memory = ivars->m_uciomd;
     }
     else
     {
         ret = this->CopyClientMemoryForType(type, options, memory, SUPERDISPATCH);
     }
     
-    VSPLog(LOG_PREFIX, "CopyClientMemoryForType complete.\n");
+    if (ret != kIOReturnSuccess) {
+        VSPErr(LOG_PREFIX, "CopyClientMemoryForType failed: 0x%x", ret);
+    }
+    else {
+        VSPLog(LOG_PREFIX, "CopyClientMemoryForType complete. code=%d\n", ret);
+    }
+    
     return ret;
 }
 
