@@ -86,6 +86,8 @@
 		88698B982D76DDD70008EF6B /* vspclient_128x128@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88698B8C2D76DDD70008EF6B /* vspclient_128x128@2x.png */; };
 		88698B992D76DDD70008EF6B /* vspclient_512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 88698B8F2D76DDD70008EF6B /* vspclient_512x512.png */; };
 		88698B9A2D76DDD70008EF6B /* vspclient_16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 88698B872D76DDD70008EF6B /* vspclient_16x16.png */; };
+		88878E1A2D7A085F00092D65 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 885DE9332D5E82CD00CFECEE /* Foundation.framework */; };
+		88878E1C2D7A09EB00092D65 /* VSPInfoDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 88878E1B2D7A09EB00092D65 /* VSPInfoDialog.m */; };
 		8899C34A2D525AD800E17727 /* VSPSerialPort.iig in Sources */ = {isa = PBXBuildFile; fileRef = 8899C3492D525AD800E17727 /* VSPSerialPort.iig */; };
 		8899C34C2D525AFB00E17727 /* VSPSerialPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8899C34B2D525AFB00E17727 /* VSPSerialPort.cpp */; };
 		889E8EBC2D4DF4BF002F387A /* VSPLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 889E8EBB2D4DF4BF002F387A /* VSPLogger.h */; };
@@ -330,6 +332,7 @@
 		88698B8F2D76DDD70008EF6B /* vspclient_512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_512x512.png; sourceTree = "<group>"; };
 		88698B902D76DDD70008EF6B /* vspclient_512x512@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vspclient_512x512@2x.png"; sourceTree = "<group>"; };
 		8884826D2D61192900F3BAD7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		88878E1B2D7A09EB00092D65 /* VSPInfoDialog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VSPInfoDialog.m; sourceTree = "<group>"; };
 		88906F452D4CCA9400E500BB /* VSPClient-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VSPClient-Bridging-Header.h"; sourceTree = "<group>"; };
 		88906F492D4CCACB00E500BB /* DriverKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DriverKit.framework; path = System/Library/Frameworks/DriverKit.framework; sourceTree = SDKROOT; };
 		8899C3492D525AD800E17727 /* VSPSerialPort.iig */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.iig; path = VSPSerialPort.iig; sourceTree = "<group>"; };
@@ -367,6 +370,7 @@
 				883C309F2D6F12470029BE30 /* VSPController.framework in Frameworks */,
 				883C30A02D6F12470029BE30 /* VSPSetup.framework in Frameworks */,
 				883C30232D6EDEB20029BE30 /* QtWidgets.framework in Frameworks */,
+				88878E1A2D7A085F00092D65 /* Foundation.framework in Frameworks */,
 				883C30172D6EDEB20029BE30 /* QtDBus.framework in Frameworks */,
 				883C302D2D6EDEB20029BE30 /* QtGui.framework in Frameworks */,
 				883C30292D6EDEB20029BE30 /* QtQmlWorkerScript.framework in Frameworks */,
@@ -404,11 +408,12 @@
 				88A671482D68DDE000CE4E12 /* Resources */,
 				880539F12D4BAFBF00E55104 /* VSPClient.entitlements */,
 				880539F52D4BB0F900E55104 /* Info.plist */,
-				880539EC2D4BAFBF00E55104 /* Assets.xcassets */,
 				88906F452D4CCA9400E500BB /* VSPClient-Bridging-Header.h */,
 				88F5D93C2D59E85B007A6E1F /* VSPInstallApp.swift */,
+				88878E1B2D7A09EB00092D65 /* VSPInfoDialog.m */,
 				88F5D93F2D59E933007A6E1F /* VSPDriverClient.cpp */,
 				8854A9BA2D5DED8A00C27252 /* VSPDriverClient.hpp */,
+				880539EC2D4BAFBF00E55104 /* Assets.xcassets */,
 			);
 			path = VSPClient;
 			sourceTree = "<group>";
@@ -711,6 +716,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88F5D9402D59E933007A6E1F /* VSPDriverClient.cpp in Sources */,
+				88878E1C2D7A09EB00092D65 /* VSPInfoDialog.m in Sources */,
 				88F5D93D2D59E85B007A6E1F /* VSPInstallApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -763,7 +769,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 21;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				ENABLE_APP_SANDBOX = YES;
@@ -832,7 +838,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 21;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				ENABLE_APP_SANDBOX = YES;
@@ -928,7 +934,6 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				EXCLUDED_ARCHS = x86_64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -946,7 +951,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 12.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -990,7 +994,6 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				EXCLUDED_ARCHS = x86_64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1002,7 +1005,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 12.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
@@ -1015,7 +1017,7 @@
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -1050,7 +1052,7 @@
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
 				ENABLE_USER_SELECTED_FILES = readonly;

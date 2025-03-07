@@ -13,10 +13,22 @@ extern "C" {
     
 extern bool qt_main(int argc, char** argv);
 
+bool isArchArm64() {
+#if defined(__arm64)
+    return true;
+#else
+    return false;
+#endif
+}
+
 // MARK: Wrap into QT app
 bool QT_StartApplication() {
+#if defined(__arm64)
     char* argv[] = {};
     return qt_main(0, argv);
+#else
+    return KERN_INVALID_CAPABILITY;
+#endif
 }
 
 } // extern "C"
