@@ -12,3 +12,4 @@
 void showMessage(NSString* title, NSString* message);
 bool QT_StartApplication();
 bool isArchArm64();
+bool isQt5();

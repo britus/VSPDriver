@@ -21,14 +21,24 @@ bool isArchArm64() {
 #endif
 }
 
+bool isQt5() {
+#if defined(VSP_x86_64)
+    return true;
+#else
+    return false;
+#endif
+}
+
 // MARK: Wrap into QT app
 bool QT_StartApplication() {
-#if defined(__arm64)
     char* argv[] = {};
+
+#if defined(__arm64) || defined(VSP_x86_64)
     return qt_main(0, argv);
 #else
     return KERN_INVALID_CAPABILITY;
 #endif
+
 }
 
 } // extern "C"

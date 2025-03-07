@@ -103,7 +103,7 @@ struct VSPUserClient_IVars {
     IOTimerDispatchSource* m_eventSource = nullptr;
     OSAction* m_eventAction = nullptr;
     OSAction* m_cbAction = nullptr;
-    IOBufferMemoryDescriptor* m_uciomd;
+    IOBufferMemoryDescriptor* m_uciomd = nullptr;
 };
 
 // Define all possible commands with its parameters and callback entry points.

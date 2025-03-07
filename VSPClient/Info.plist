@@ -10,6 +10,8 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundleDisplayName</key>
+	<string>Virtual Serial Port Controller</string>
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
@@ -48,8 +50,6 @@
 	<string>Permit VPS Controller to redirect data from serial port to a network connection.</string>
 	<key>UILaunchImageFile</key>
 	<string>vspclient_512x512.png</string>
-	<key>CFBundleDisplayName</key>
-	<string>Virtual Serial Port Controller</string>
 	<key>CFBundleIconFile</key>
 	<string>vspclient.icns</string>
 	<key>UIPrerenderedIcon</key>

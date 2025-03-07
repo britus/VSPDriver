@@ -1,33 +1,25 @@
+// ********************************************************************
+// VSPInfoDialog.m - Show a message on startup
 //
-//  VSPInfoDialog.m
-//  VSPClient
-//
-//  Created by Björn Eschrich on 06.03.25.
-//
-
+// Copyright © 2025 by EoF Software Labs
+// Copyright © 2024 Apple Inc. (some copied parts)
+// SPDX-License-Identifier: MIT
+// ********************************************************************
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 
 @interface AlertHelper : NSObject
-
-// Statische Methode zum Anzeigen eines Alerts
 + (void)showAlertWithTitle:(NSString *)title message:(NSString *)message;
-
 @end
 
 @implementation AlertHelper
-
 + (void)showAlertWithTitle:(NSString *)title message:(NSString *)message {
-    // Erstelle das Alert-Fenster
     NSAlert *alert = [[NSAlert alloc] init];
-    [alert setMessageText:title];  // Titel setzen
-    [alert setInformativeText:message];  // Nachricht setzen
-    [alert addButtonWithTitle:@"OK"];  // OK-Button hinzufügen
-    
-    // Zeige das Alert an
+    [alert setMessageText:title];
+    [alert setInformativeText:message];
+    [alert addButtonWithTitle:@"OK"];
     [alert runModal];
 }
-
 @end
 
 void showMessage(NSString* title, NSString* message) {

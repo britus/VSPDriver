@@ -53,6 +53,7 @@
 		883C30A22D6F1C550029BE30 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30A12D6F1C550029BE30 /* IOKit.framework */; };
 		883C30A32D6F1C610029BE30 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8854A99E2D5DB1E400C27252 /* CoreFoundation.framework */; };
 		884F6EC72D59A5C90066353A /* VSPUserClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 884F6EC62D59A5C90066353A /* VSPUserClient.cpp */; };
+		8872220D2D7AC9B7008D54D9 /* VSPInfoDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 8872220C2D7AC9B7008D54D9 /* VSPInfoDialog.m */; };
 		8874CB8A2D72322C009FBF60 /* QtWidgets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8874CB892D72322B009FBF60 /* QtWidgets.framework */; };
 		8874CB8C2D7232E8009FBF60 /* QtWidgets.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 8874CB892D72322B009FBF60 /* QtWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8899C34A2D525AD800E17727 /* VSPSerialPort.iig in Sources */ = {isa = PBXBuildFile; fileRef = 8899C3492D525AD800E17727 /* VSPSerialPort.iig */; };
@@ -343,11 +344,8 @@
 		8854A99E2D5DB1E400C27252 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		8854A9BA2D5DED8A00C27252 /* VSPDriverClient.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VSPDriverClient.hpp; sourceTree = "<group>"; };
 		885DE9332D5E82CD00CFECEE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		885E23E62D74518900B7B0FE /* VSPClient_sandbox-off-entitlements.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "VSPClient_sandbox-off-entitlements.xml"; sourceTree = "<group>"; };
-		885E23E72D74518900B7B0FE /* VSPClient_sandbox-on-entitlements.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "VSPClient_sandbox-on-entitlements.xml"; sourceTree = "<group>"; };
-		885E23EA2D7451BF00B7B0FE /* VSPDriver_3rd_Party-entitlements.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "VSPDriver_3rd_Party-entitlements.xml"; sourceTree = "<group>"; };
-		885E23EB2D7451BF00B7B0FE /* VSPDriver_normal-entitlements.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "VSPDriver_normal-entitlements.xml"; sourceTree = "<group>"; };
 		88667D6A2D53474900DFA26E /* VSPDriver-Full.log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "VSPDriver-Full.log"; sourceTree = "<group>"; };
+		8872220C2D7AC9B7008D54D9 /* VSPInfoDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSPInfoDialog.m; sourceTree = "<group>"; };
 		8874CB892D72322B009FBF60 /* QtWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtWidgets.framework; path = ../../../../Qt/5.15.2/clang_64/lib/QtWidgets.framework; sourceTree = "<group>"; };
 		8884826D2D61192900F3BAD7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		88906F452D4CCA9400E500BB /* VSPClient-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VSPClient-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -484,6 +482,7 @@
 				880539F52D4BB0F900E55104 /* Info.plist */,
 				88906F452D4CCA9400E500BB /* VSPClient-Bridging-Header.h */,
 				88F5D93C2D59E85B007A6E1F /* VSPInstallApp.swift */,
+				8872220C2D7AC9B7008D54D9 /* VSPInfoDialog.m */,
 				88F5D93F2D59E933007A6E1F /* VSPDriverClient.cpp */,
 				8854A9BA2D5DED8A00C27252 /* VSPDriverClient.hpp */,
 				880539EC2D4BAFBF00E55104 /* Assets.xcassets */,
@@ -627,10 +626,6 @@
 				88B40D5C2D4B666700DFE7C5 /* VSPDriver */,
 				880539E92D4BAFBD00E55104 /* VSPClient */,
 				88DA7BA72D532C6700C8F759 /* LICENSE */,
-				885E23EA2D7451BF00B7B0FE /* VSPDriver_3rd_Party-entitlements.xml */,
-				885E23EB2D7451BF00B7B0FE /* VSPDriver_normal-entitlements.xml */,
-				885E23E62D74518900B7B0FE /* VSPClient_sandbox-off-entitlements.xml */,
-				885E23E72D74518900B7B0FE /* VSPClient_sandbox-on-entitlements.xml */,
 				88AB34EA2D64937300260D19 /* VSPDriver-PortLink.log */,
 				88667D6A2D53474900DFA26E /* VSPDriver-Full.log */,
 				88AEEFF62D5233D4007F2A4C /* IOReg-Outline.md */,
@@ -839,6 +834,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88F5D9402D59E933007A6E1F /* VSPDriverClient.cpp in Sources */,
+				8872220D2D7AC9B7008D54D9 /* VSPInfoDialog.m in Sources */,
 				88F5D93D2D59E85B007A6E1F /* VSPInstallApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -891,7 +887,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 41;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
@@ -944,6 +940,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "VSPClient/VSPClient-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				VSP_x86_64 = 1;
 			};
 			name = Debug;
 		};
@@ -959,7 +956,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 41;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
@@ -1012,6 +1009,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "VSPClient/VSPClient-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
+				VSP_x86_64 = 1;
 			};
 			name = Release;
 		};
@@ -1072,6 +1070,8 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "-DVSP_x86_64";
+				OTHER_CPLUSPLUSFLAGS = "-DVSP_x86_64";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -1127,6 +1127,8 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "-DVSP_x86_64";
+				OTHER_CPLUSPLUSFLAGS = "-DVSP_x86_64";
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
@@ -1139,7 +1141,7 @@
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 41;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				DRIVERKIT_DEPLOYMENT_TARGET = 20.0;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1174,7 +1176,7 @@
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 41;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				DRIVERKIT_DEPLOYMENT_TARGET = 20.0;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1212,7 +1214,7 @@
 				880539F42D4BAFBF00E55104 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		88B40D512D4B666700DFE7C5 /* Build configuration list for PBXProject "VSPDriver_QT_5.15.2_x86_64" */ = {
 			isa = XCConfigurationList;
@@ -1221,7 +1223,7 @@
 				88B40D632D4B666700DFE7C5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		88B40D642D4B666700DFE7C5 /* Build configuration list for PBXNativeTarget "VSPDriver" */ = {
 			isa = XCConfigurationList;
@@ -1230,7 +1232,7 @@
 				88B40D662D4B666700DFE7C5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
