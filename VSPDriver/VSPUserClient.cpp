@@ -54,10 +54,10 @@ using namespace VSPController;
 }
 
 // Implements the static method for ExternalMethod dispatch
-#define VSP_IMPL_EX_METHOD(prefix, name, handler) \
+#define VSP_IMPL_EX_METHOD(name, handler) \
 VSPUserClient::name(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) \
 { \
-    VSPLog(LOG_PREFIX, prefix " called.\n"); \
+    VSPLog(LOG_PREFIX, #name " called.\n"); \
     VSP_HANDLER_CALL(target, handler) \
 }
 
@@ -80,21 +80,14 @@ static inline void dump_ctrl_data(const TVSPControllerData* data)
     VSPLog(LOG_PREFIX, "Data.links.count......: %d\n", data->links.count);
     for (uint8_t i = 0; i < data->links.count && i < MAX_SERIAL_PORTS; i++) {
         VSPLog(LOG_PREFIX, "\tPort Link #%d: %d <-> %d\n", //
-               (uint8_t)(data->links.list[i] >> 16) & 0x000000ff,
-               (uint8_t)(data->links.list[i] >> 8) & 0x000000ff,
-               (uint8_t)(data->links.list[i]) & 0x000000ff);
+               ((uint8_t)((data->links.list[i] >> 16) & 0xffL)),
+               ((uint8_t)((data->links.list[i] >> 8) & 0xffL)),
+               ((uint8_t)((data->links.list[i]) & 0xffL)));
     }
 }
 #else
 #define VSP_DUMP_DATA(data)
 #endif
-
-#define VSP_INIT_RESPONSE(request,flags) \
-do { \
-    VSP_DUMP_DATA(request); \
-    memcpy(&response, request, VSP_UCD_SIZE); \
-    set_ctlr_status(&response, kIOReturnSuccess, flags); \
-} while(0)
 
 struct VSPUserClient_IVars {
     IOService* m_provider = nullptr;
@@ -110,7 +103,7 @@ struct VSPUserClient_IVars {
 const IOUserClientMethodDispatch uc_methods[vspLastCommand] = {
     [vspControlPingPong] =
     {
-        .function = VSP_METHOD(exGetStatus),
+        .function = VSP_METHOD(exRestoreSession),
         .checkCompletionExists = true,
         .checkScalarInputCount = 0,
         .checkScalarOutputCount = 0,
@@ -619,13 +612,74 @@ inline static IOReturn toRequest(IOUserClientMethodArguments* arguments, TVSPCon
         return kIOReturnBadArgument;
     }
     
+    VSP_DUMP_DATA(request);
+   
+    if ((request->status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
+        return kIOReturnUnsupported;
+    }
+
     return kIOReturnSuccess;
+}
+// --------------------------------------------------------------------
+// Return status of VSPDriver instance
+//
+kern_return_t VSP_IMPL_EX_METHOD(exRestoreSession, restoreSession)
+kern_return_t VSPUserClient::restoreSession(void* reference, IOUserClientMethodArguments* arguments)
+{
+    const size_t psize = sizeof(TVSPPortItem);
+    const size_t lsize = sizeof(TVSPLinkItem);
+    TVSPControllerData request = {};
+    TVSPControllerData response = {};
+    TVSPPortItem port = {};
+    TVSPLinkItem link = {};
+    kern_return_t ret;
+    uint8_t sid, tid, lid, pfh, pfl;
+
+    VSPLog(LOG_PREFIX, "restoreSession called.\n");
+
+    set_ctlr_status(&response, kIOReturnSuccess, MAGIC_CONTROL);
+
+    if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
+        set_ctlr_status(&response, ret, 0xee00ee00);
+        goto finish;
+    }
+    
+    pfh = ((request.parameter.flags >> 8) & 0xffL);
+    pfl = (request.parameter.flags & 0xffL);
+    if ((pfh & 0xff) != 0xff || (pfl & 0x08) != 0x08) {
+        goto finish;
+    }
+    
+    if (request.ports.count) {
+        for (uint8_t i = 0; i < request.ports.count && i < MAX_SERIAL_PORTS; i++) {
+            sid = request.ports.list[i].id;
+            if (ivars->m_parent->getPortById(sid, &port, psize) == kIOReturnNotFound) {
+                ivars->m_parent->createPort(nullptr, 0);
+            }
+        }
+    }
+
+    if (request.links.count) {
+        for (uint8_t i = 0; i < request.links.count && i < MAX_PORT_LINKS; i++) {
+            lid = (request.links.list[i] >> 16) & 0xffL;
+            sid = (request.links.list[i] >> 8) & 0xffL;
+            tid = (request.links.list[i] & 0xffL);
+            if (ivars->m_parent->getPortLinkById(lid, &link, lsize) == kIOReturnNotFound) {
+                ivars->m_parent->createPortLink(sid, tid, &link, lsize);
+            }
+        }
+    }
+
+    VSPLog(LOG_PREFIX, "restoreSession complete.\n");
+
+finish:
+    return getStatus(&response, arguments);
 }
 
 // --------------------------------------------------------------------
 // Return status of VSPDriver instance
 //
-kern_return_t VSP_IMPL_EX_METHOD("exGetStatus", exGetStatus, getStatus)
+kern_return_t VSP_IMPL_EX_METHOD(exGetStatus, getStatus)
 kern_return_t VSPUserClient::getStatus(void* reference, IOUserClientMethodArguments* arguments)
 {
     TVSPControllerData request = {};
@@ -634,18 +688,13 @@ kern_return_t VSPUserClient::getStatus(void* reference, IOUserClientMethodArgume
 
     VSPLog(LOG_PREFIX, "getStatus called.\n");
     
-    if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
-        set_ctlr_status(&response, ret, 0xdd000000);
-        goto finish;
-    }
-    
-    VSP_INIT_RESPONSE(&request, MAGIC_CONTROL);
+    set_ctlr_status(&response, kIOReturnSuccess, MAGIC_CONTROL);
 
-    if ((request.status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
-        set_ctlr_status(&response, kIOReturnInvalid, 0xee000000);
+    if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
+        set_ctlr_status(&response, ret, 0xee00ee00);
         goto finish;
     }
-    
+
     if ((ret = getPortListHelper(&response)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xfe000001);
         goto finish;
@@ -671,7 +720,7 @@ finish:
 // --------------------------------------------------------------------
 // Create new serial port instance
 //
-kern_return_t VSP_IMPL_EX_METHOD("exCreatePort", exCreatePort, createPort)
+kern_return_t VSP_IMPL_EX_METHOD(exCreatePort, createPort)
 kern_return_t VSPUserClient::createPort(void* reference, IOUserClientMethodArguments* arguments)
 {
     TVSPControllerData response = {};
@@ -681,15 +730,10 @@ kern_return_t VSPUserClient::createPort(void* reference, IOUserClientMethodArgum
     
     VSPLog(LOG_PREFIX, "createPort called.\n");
 
+    set_ctlr_status(&response, kIOReturnSuccess, MAGIC_CONTROL);
+
     if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
-        set_ctlr_status(&response, ret, 0xdd000000);
-        goto finish;
-    }
-
-    VSP_INIT_RESPONSE(&request, MAGIC_CONTROL);
-
-    if ((request.status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
-        set_ctlr_status(&response, kIOReturnInvalid, 0xee000000);
+        set_ctlr_status(&response, ret, 0xee00ee00);
         goto finish;
     }
    
@@ -715,7 +759,7 @@ finish:
 // --------------------------------------------------------------------
 // Remove serial port instance
 //
-kern_return_t VSP_IMPL_EX_METHOD("exRemovePort", exRemovePort, removePort)
+kern_return_t VSP_IMPL_EX_METHOD(exRemovePort, removePort)
 kern_return_t VSPUserClient::removePort(void* reference, IOUserClientMethodArguments* arguments)
 {
     kern_return_t ret;
@@ -725,15 +769,10 @@ kern_return_t VSPUserClient::removePort(void* reference, IOUserClientMethodArgum
 
     VSPLog(LOG_PREFIX, "removePort called.\n");
 
+    set_ctlr_status(&response, kIOReturnSuccess, MAGIC_CONTROL);
+
     if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
-        set_ctlr_status(&response, ret, 0xdd000000);
-        goto finish;
-    }
-
-    VSP_INIT_RESPONSE(&request, MAGIC_CONTROL);
-
-    if ((request.status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
-        set_ctlr_status(&response, kIOReturnInvalid, 0xee000000);
+        set_ctlr_status(&response, ret, 0xee00ee00);
         goto finish;
     }
 
@@ -753,7 +792,7 @@ finish:
 // --------------------------------------------------------------------
 // Return active port list
 //
-kern_return_t VSP_IMPL_EX_METHOD("exGetPortList", exGetPortList, getPortList)
+kern_return_t VSP_IMPL_EX_METHOD(exGetPortList, getPortList)
 kern_return_t VSPUserClient::getPortList(void* reference, IOUserClientMethodArguments* arguments)
 {
     kern_return_t ret;
@@ -762,15 +801,10 @@ kern_return_t VSPUserClient::getPortList(void* reference, IOUserClientMethodArgu
 
     VSPLog(LOG_PREFIX, "getPortList called.\n");
 
+    set_ctlr_status(&response, kIOReturnSuccess, MAGIC_CONTROL);
+
     if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
-        set_ctlr_status(&response, ret, 0xdd000000);
-        goto finish;
-    }
-
-    VSP_INIT_RESPONSE(&request, MAGIC_CONTROL);
-
-    if ((request.status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
-        set_ctlr_status(&response, kIOReturnInvalid, 0xee000000);
+        set_ctlr_status(&response, ret, 0xee00ee00);
         goto finish;
     }
 
@@ -811,7 +845,7 @@ kern_return_t VSPUserClient::getPortListHelper(void* reference)
 // --------------------------------------------------------------------
 // Return active port link list
 //
-kern_return_t VSP_IMPL_EX_METHOD("exGetLinkList", exGetLinkList, getLinkList)
+kern_return_t VSP_IMPL_EX_METHOD(exGetLinkList, getLinkList)
 kern_return_t VSPUserClient::getLinkList(void* reference, IOUserClientMethodArguments* arguments)
 {
     kern_return_t ret;
@@ -820,15 +854,10 @@ kern_return_t VSPUserClient::getLinkList(void* reference, IOUserClientMethodArgu
 
     VSPLog(LOG_PREFIX, "getLinkList called.\n");
 
+    set_ctlr_status(&response, kIOReturnSuccess, MAGIC_CONTROL);
+
     if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
-        set_ctlr_status(&response, ret, 0xdd000000);
-        goto finish;
-    }
-
-    VSP_INIT_RESPONSE(&request, MAGIC_CONTROL);
-
-    if ((request.status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
-        set_ctlr_status(&response, kIOReturnInvalid, 0xee000000);
+        set_ctlr_status(&response, ret, 0xee00ee00);
         goto finish;
     }
 
@@ -869,7 +898,7 @@ kern_return_t VSPUserClient::getLinkListHelper(void* reference)
 // --------------------------------------------------------------------
 // Link two serial ports together
 //
-kern_return_t VSP_IMPL_EX_METHOD("exLinkPorts", exLinkPorts, linkPorts)
+kern_return_t VSP_IMPL_EX_METHOD(exLinkPorts, linkPorts)
 kern_return_t VSPUserClient::linkPorts(void* reference, IOUserClientMethodArguments* arguments)
 {
     kern_return_t ret;
@@ -880,15 +909,10 @@ kern_return_t VSPUserClient::linkPorts(void* reference, IOUserClientMethodArgume
 
     VSPLog(LOG_PREFIX, "linkPorts called.\n");
 
+    set_ctlr_status(&response, kIOReturnSuccess, MAGIC_CONTROL);
+
     if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
-        set_ctlr_status(&response, ret, 0xdd000000);
-        goto finish;
-    }
-
-    VSP_INIT_RESPONSE(&request, MAGIC_CONTROL);
-
-    if ((request.status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
-        set_ctlr_status(&response, kIOReturnInvalid, 0xee000000);
+        set_ctlr_status(&response, ret, 0xee00ee00);
         goto finish;
     }
 
@@ -919,7 +943,7 @@ finish:
 // --------------------------------------------------------------------
 // Unlink prior linked ports
 //
-kern_return_t VSP_IMPL_EX_METHOD("exUnlinkPorts", exUnlinkPorts, unlinkPorts)
+kern_return_t VSP_IMPL_EX_METHOD(exUnlinkPorts, unlinkPorts)
 kern_return_t VSPUserClient::unlinkPorts(void* reference, IOUserClientMethodArguments* arguments)
 {
     kern_return_t ret;
@@ -929,16 +953,11 @@ kern_return_t VSPUserClient::unlinkPorts(void* reference, IOUserClientMethodArgu
     uint8_t sid, tid;
 
     VSPLog(LOG_PREFIX, "unlinkPorts called.\n");
+    
+    set_ctlr_status(&response, kIOReturnSuccess, MAGIC_CONTROL);
 
     if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
-        set_ctlr_status(&response, ret, 0xdd000000);
-        goto finish;
-    }
-        
-    VSP_INIT_RESPONSE(&request, MAGIC_CONTROL);
-
-    if ((request.status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
-        set_ctlr_status(&response, kIOReturnInvalid, 0xee000000);
+        set_ctlr_status(&response, ret, 0xee00ee00);
         goto finish;
     }
 
@@ -973,7 +992,7 @@ finish:
 // --------------------------------------------------------------------
 // Enable serial port parameter check on linkPorts()
 //
-kern_return_t VSP_IMPL_EX_METHOD("exEnableChecks", exEnableChecks, enableChecks)
+kern_return_t VSP_IMPL_EX_METHOD(exEnableChecks, enableChecks)
 kern_return_t VSPUserClient::enableChecks(void* reference, IOUserClientMethodArguments* arguments)
 {
     kern_return_t ret;
@@ -985,15 +1004,10 @@ kern_return_t VSPUserClient::enableChecks(void* reference, IOUserClientMethodArg
 
     VSPLog(LOG_PREFIX, "enableChecks called.\n");
 
+    set_ctlr_status(&response, kIOReturnSuccess, MAGIC_CONTROL);
+
     if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
-        set_ctlr_status(&response, ret, 0xdd000000);
-        goto finish;
-    }
-
-    VSP_INIT_RESPONSE(&request, MAGIC_CONTROL);
-
-    if ((request.status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
-        set_ctlr_status(&response, kIOReturnInvalid, 0xee000000);
+        set_ctlr_status(&response, ret, 0xee00ee00);
         goto finish;
     }
 
@@ -1017,7 +1031,7 @@ finish:
 // --------------------------------------------------------------------
 // Enable serial port protocol trace
 //
-kern_return_t VSP_IMPL_EX_METHOD("exEnableTrace", exEnableTrace, enableTrace)
+kern_return_t VSP_IMPL_EX_METHOD(exEnableTrace, enableTrace)
 kern_return_t VSPUserClient::enableTrace(void* reference, IOUserClientMethodArguments* arguments)
 {
     kern_return_t ret;
@@ -1029,15 +1043,10 @@ kern_return_t VSPUserClient::enableTrace(void* reference, IOUserClientMethodArgu
     
     VSPLog(LOG_PREFIX, "enableTrace called.\n");
 
+    set_ctlr_status(&response, kIOReturnSuccess, MAGIC_CONTROL);
+
     if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
-        set_ctlr_status(&response, ret, 0xdd000000);
-        goto finish;
-    }
-
-    VSP_INIT_RESPONSE(&request, MAGIC_CONTROL);
-
-    if ((request.status.flags & MAGIC_CONTROL) != MAGIC_CONTROL) {
-        set_ctlr_status(&response, kIOReturnInvalid, 0xee000000);
+        set_ctlr_status(&response, ret, 0xee00ee00);
         goto finish;
     }
 

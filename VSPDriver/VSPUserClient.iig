@@ -54,7 +54,11 @@ public:
     // User client external interface method
     // entry points and its instance methods
     // -----------------------------------------
-    
+
+    static
+    kern_return_t exRestoreSession(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    kern_return_t restoreSession(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+
     static
     kern_return_t exGetStatus(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
     kern_return_t getStatus(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
