@@ -310,7 +310,6 @@ kern_return_t IMPL(VSPUserClient, Stop)
     
     VSPLog(LOG_PREFIX, "Stop called.\n");
     
-    OSSafeReleaseNULL(ivars->m_uciomd);
     OSSafeReleaseNULL(ivars->m_eventAction);
     OSSafeReleaseNULL(ivars->m_eventSource);
     OSSafeReleaseNULL(ivars->m_eventQueue);
