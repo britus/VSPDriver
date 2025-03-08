@@ -60,8 +60,7 @@ VSPClient.entitlements file.
 
 ### Update source code to install the Dext
 
-Change the the bundle ID in [vscmainwindow.cpp](https://github.com/britus/VSPClient/blob/469c8c5c9cfe79e8b9656f229e3d72b667c441d4/VSPClient/ui/vscmainwindow.cpp#L43)
-with you own Dext bundle ID.
+Change the the bundle ID in [VSPClient/vscmainwindow.cpp](https://github.com/britus/VSPClient/blob/master/VSPClient/ui/vscmainwindow.cpp) in method "createVspController()".
 
 ## VSPDriver without any signing and security checks.
 
