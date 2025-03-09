@@ -325,10 +325,9 @@ kern_return_t IMPL(VSPUserClient, Stop)
     return ret;
 }
 
-
 // --------------------------------------------------------------------
 // CopyClientMemoryForType_Impl(uint64_t type, uint64_t *options, IOMemoryDescriptor **memory)
-// Allocate space for UC. The user space must be call IOConnectUnmapMemory with type 0
+// Allocate space for UC. The user space must be call IOConnectUnmapMemory
 //
 kern_return_t IMPL(VSPUserClient, CopyClientMemoryForType)
 {
@@ -342,10 +341,7 @@ kern_return_t IMPL(VSPUserClient, CopyClientMemoryForType)
         // share only one memory buffer
         if (!ivars->m_uciomd) {
             IOBufferMemoryDescriptor* md;
-            ret = IOBufferMemoryDescriptor::Create(kIOMemoryDirectionInOut, //
-                                                   VSP_UCD_SIZE    /* capacity */, //
-                                                   0               /* alignment */, //
-                                                   &md);
+            ret = IOBufferMemoryDescriptor::Create(kIOMemoryDirectionInOut, VSP_UCD_SIZE, 0, &md);
             if (ret == kIOReturnSuccess) {
                 if (!md) {
                     ret = kIOReturnNoSpace;
@@ -391,21 +387,22 @@ void IMPL(VSPUserClient, AsyncCallback)
     }
 
     // Get back our data previously stored in OSAction.
-    TVSPControllerData* evd = (TVSPControllerData*) action->GetReference();
+    TVSPControllerData* data = (TVSPControllerData*) action->GetReference();
 
     // Debug !!
-    VSP_DUMP_DATA(evd);
+    VSP_DUMP_DATA(data);
 
     // Async callback message to user client
-    uint64_t* message = IONewZero(uint64_t, 4);
+    uint64_t* message = IONewZero(uint64_t, 5);
     message[0] = MAGIC_CONTROL;
-    message[1] = VSP_UCD_SIZE | 0x001f;
-    message[2] = evd->context;
-    message[3] = evd->command;
+    message[1] = VSP_UCD_SIZE;
+    message[2] = data->context;
+    message[3] = data->command;
+    message[4] = 0x001f;
 
     // dispatch message back to user client
-    AsyncCompletion(ivars->m_cbAction, evd->status.code, message, 4);
-    IOSafeDeleteNULL(message, uint64_t, 4);
+    AsyncCompletion(ivars->m_cbAction, data->status.code, message, 5);
+    IOSafeDeleteNULL(message, uint64_t, 5);
 
     VSPLog(LOG_PREFIX, "AsyncCallback complete.");
     return;
@@ -433,15 +430,14 @@ kern_return_t VSPUserClient::ExternalMethod(uint64_t selector,
         VSPErr(LOG_PREFIX, "Invalid method selector detected, skip.");
         return kIOReturnBadArgument;
     }
-    
-    // Set method dispatch descriptor
-    dispatch = &uc_methods[selector];
-    target   = (target == nullptr ? this : target);
-    reference= (reference == nullptr ? ivars : reference);
 
-    VSP_CHECK_PARAM_RETURN("arguments", arguments);  \
-    VSP_CHECK_PARAM_RETURN("completion", arguments->completion); \
-    VSP_CHECK_PARAM_RETURN("target", target); \
+    VSP_CHECK_PARAM_RETURN("arguments", arguments);
+    VSP_CHECK_PARAM_RETURN("completion", arguments->completion);
+
+    // Set method dispatch descriptor
+    dispatch  = &uc_methods[selector];
+    target    = this;
+    reference = ivars;
 
     // This will call the functions as defined in the IOUserClientMethodDispatch.
     ret = super::ExternalMethod(selector, arguments, dispatch, target, reference);
@@ -474,7 +470,7 @@ void VSPUserClient::unlinkParent()
 }
 
 // --------------------------------------------------------------------
-// Called by scheduleEvent() and dispatching action as async event
+// Dispatch async event
 kern_return_t VSPUserClient::scheduleEvent(void* reference, IOUserClientMethodArguments* arguments)
 {
     TVSPControllerData* response = (TVSPControllerData*) reference;
@@ -557,9 +553,11 @@ kern_return_t VSPUserClient::prepareResponse(void* reference, IOUserClientMethod
     // Save the completion for later. If not saved, then it
     // might be freed before the asychronous return.
     ivars->m_cbAction = arguments->completion;
-    ivars->m_cbAction->retain();
-        
+
     // Retain action memory for later work.
+    ivars->m_cbAction->retain();
+    
+    // Fill event data with response
     void* evData = ivars->m_eventAction->GetReference();
     memcpy(evData, response, VSP_UCD_SIZE);
     
@@ -568,9 +566,8 @@ kern_return_t VSPUserClient::prepareResponse(void* reference, IOUserClientMethod
 }
 
 // --------------------------------------------------------------------
-// MARK: Static External Handlers
-// --------------------------------------------------------------------
-
+// Get user's request data from method arguments
+//
 inline static IOReturn toRequest(IOUserClientMethodArguments* arguments, TVSPControllerData* request)
 {
     IOReturn ret;
@@ -615,6 +612,11 @@ inline static IOReturn toRequest(IOUserClientMethodArguments* arguments, TVSPCon
 
     return kIOReturnSuccess;
 }
+
+// --------------------------------------------------------------------
+// MARK: Static External Handlers
+// --------------------------------------------------------------------
+
 // --------------------------------------------------------------------
 // Return status of VSPDriver instance
 //
