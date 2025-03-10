@@ -539,9 +539,14 @@ kern_return_t VSPUserClient::prepareResponse(void* reference, IOUserClientMethod
             VSPLog(LOG_PREFIX, "prepareResponse: Share result to UC. length: %lld addr: 0x%llx\n",
                    length, (uint64_t) outputPtr);
             
-            // Copy the data from DataStruct over and then fill the rest with zeroes.
-            memcpy(outputPtr, response, (length < VSP_UCD_SIZE ? length : VSP_UCD_SIZE));
-            memset(outputPtr + VSP_UCD_SIZE, 0, length - VSP_UCD_SIZE);
+            // Copy the data from DataStruct over
+            memcpy(outputPtr, response, length);
+            
+            // and then fill the rest with zeroes.
+            if ((length - VSP_UCD_SIZE) > 0) {
+                memset(outputPtr + VSP_UCD_SIZE, 0, length - VSP_UCD_SIZE);
+            }
+            
             OSSafeReleaseNULL(outputMap);
         }
     }
