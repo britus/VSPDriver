@@ -65,12 +65,6 @@
 		883C306A2D6EE20A0029BE30 /* libqopensslbackend.dylib in Copy QT Plugins - tls */ = {isa = PBXBuildFile; fileRef = 883C30672D6EE20A0029BE30 /* libqopensslbackend.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		883C306B2D6EE20A0029BE30 /* libqsecuretransportbackend.dylib in Copy QT Plugins - tls */ = {isa = PBXBuildFile; fileRef = 883C30682D6EE20A0029BE30 /* libqsecuretransportbackend.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		883C306C2D6EE20A0029BE30 /* libqcertonlybackend.dylib in Copy QT Plugins - tls */ = {isa = PBXBuildFile; fileRef = 883C30692D6EE20A0029BE30 /* libqcertonlybackend.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		883C309B2D6F12090029BE30 /* VSPClientUI.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 883C30982D6F12090029BE30 /* VSPClientUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		883C309C2D6F12090029BE30 /* VSPSetup.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 883C30992D6F12090029BE30 /* VSPSetup.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		883C309D2D6F12090029BE30 /* VSPController.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 883C309A2D6F12090029BE30 /* VSPController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		883C309E2D6F12470029BE30 /* VSPClientUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30982D6F12090029BE30 /* VSPClientUI.framework */; };
-		883C309F2D6F12470029BE30 /* VSPController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C309A2D6F12090029BE30 /* VSPController.framework */; };
-		883C30A02D6F12470029BE30 /* VSPSetup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30992D6F12090029BE30 /* VSPSetup.framework */; };
 		883C30A22D6F1C550029BE30 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30A12D6F1C550029BE30 /* IOKit.framework */; };
 		883C30A32D6F1C610029BE30 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8854A99E2D5DB1E400C27252 /* CoreFoundation.framework */; };
 		883C30A52D6F1C7B0029BE30 /* DriverKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883C30A42D6F1C7B0029BE30 /* DriverKit.framework */; };
@@ -86,6 +80,12 @@
 		88698B982D76DDD70008EF6B /* vspclient_128x128@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88698B8C2D76DDD70008EF6B /* vspclient_128x128@2x.png */; };
 		88698B992D76DDD70008EF6B /* vspclient_512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 88698B8F2D76DDD70008EF6B /* vspclient_512x512.png */; };
 		88698B9A2D76DDD70008EF6B /* vspclient_16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = 88698B872D76DDD70008EF6B /* vspclient_16x16.png */; };
+		886B50982D805192007BE2EC /* VSPSetup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 886B508A2D805141007BE2EC /* VSPSetup.framework */; };
+		886B50992D805196007BE2EC /* VSPController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 886B50832D805115007BE2EC /* VSPController.framework */; };
+		886B509A2D805199007BE2EC /* VSPClientUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 886B50912D805161007BE2EC /* VSPClientUI.framework */; };
+		886B509B2D8051B7007BE2EC /* VSPSetup.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 886B508A2D805141007BE2EC /* VSPSetup.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		886B509C2D8051C0007BE2EC /* VSPController.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 886B50832D805115007BE2EC /* VSPController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		886B509D2D8051C5007BE2EC /* VSPClientUI.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 886B50912D805161007BE2EC /* VSPClientUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		88878E1A2D7A085F00092D65 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 885DE9332D5E82CD00CFECEE /* Foundation.framework */; };
 		88878E1C2D7A09EB00092D65 /* VSPInfoDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 88878E1B2D7A09EB00092D65 /* VSPInfoDialog.m */; };
 		8899C34A2D525AD800E17727 /* VSPSerialPort.iig in Sources */ = {isa = PBXBuildFile; fileRef = 8899C3492D525AD800E17727 /* VSPSerialPort.iig */; };
@@ -104,6 +104,48 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		886B50822D805115007BE2EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 886B507D2D805115007BE2EC /* VSPController.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DBCE78BB6407523D91A55299;
+			remoteInfo = VSPController;
+		};
+		886B50892D805141007BE2EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 886B50842D805141007BE2EC /* VSPSetup.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4500675966A2DEF7F86C5DA1;
+			remoteInfo = VSPSetup;
+		};
+		886B50902D805161007BE2EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 886B508B2D805161007BE2EC /* VSPClientUI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C1DAE4978C5BADCF56BE1E50;
+			remoteInfo = VSPClientUI;
+		};
+		886B50922D805174007BE2EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 886B50842D805141007BE2EC /* VSPSetup.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 6669A69914EC8850F7E03CDF;
+			remoteInfo = VSPSetup;
+		};
+		886B50942D805178007BE2EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 886B507D2D805115007BE2EC /* VSPController.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 455826097BA7DDAEB1846DF6;
+			remoteInfo = VSPController;
+		};
+		886B50962D80517C007BE2EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 886B508B2D805161007BE2EC /* VSPClientUI.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 424D6912C9EA59B8F234BBD5;
+			remoteInfo = VSPClientUI;
+		};
 		88BEFD692D4BC16200CD40E6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88B40D4E2D4B666700DFE7C5 /* Project object */;
@@ -223,9 +265,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				883C309B2D6F12090029BE30 /* VSPClientUI.framework in Embed Libraries */,
-				883C309C2D6F12090029BE30 /* VSPSetup.framework in Embed Libraries */,
-				883C309D2D6F12090029BE30 /* VSPController.framework in Embed Libraries */,
+				886B509D2D8051C5007BE2EC /* VSPClientUI.framework in Embed Libraries */,
+				886B509C2D8051C0007BE2EC /* VSPController.framework in Embed Libraries */,
+				886B509B2D8051B7007BE2EC /* VSPSetup.framework in Embed Libraries */,
 				883C301A2D6EDEB20029BE30 /* QtXml.framework in Embed Libraries */,
 				883C30222D6EDEB20029BE30 /* QtNetwork.framework in Embed Libraries */,
 				883C30262D6EDEB20029BE30 /* QtQuick.framework in Embed Libraries */,
@@ -331,6 +373,9 @@
 		88698B8E2D76DDD70008EF6B /* vspclient_256x256@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vspclient_256x256@2x.png"; sourceTree = "<group>"; };
 		88698B8F2D76DDD70008EF6B /* vspclient_512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_512x512.png; sourceTree = "<group>"; };
 		88698B902D76DDD70008EF6B /* vspclient_512x512@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vspclient_512x512@2x.png"; sourceTree = "<group>"; };
+		886B507D2D805115007BE2EC /* VSPController.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VSPController.xcodeproj; path = VSPController/xcode/VSPController.xcodeproj; sourceTree = "<group>"; };
+		886B50842D805141007BE2EC /* VSPSetup.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VSPSetup.xcodeproj; path = VSPSetup/xcode/VSPSetup.xcodeproj; sourceTree = "<group>"; };
+		886B508B2D805161007BE2EC /* VSPClientUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VSPClientUI.xcodeproj; path = VSPClientUI/xcode/VSPClientUI.xcodeproj; sourceTree = "<group>"; };
 		8884826D2D61192900F3BAD7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		88878E1B2D7A09EB00092D65 /* VSPInfoDialog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VSPInfoDialog.m; sourceTree = "<group>"; };
 		88906F452D4CCA9400E500BB /* VSPClient-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VSPClient-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -364,11 +409,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				886B509A2D805199007BE2EC /* VSPClientUI.framework in Frameworks */,
+				886B50992D805196007BE2EC /* VSPController.framework in Frameworks */,
+				886B50982D805192007BE2EC /* VSPSetup.framework in Frameworks */,
 				883C30A32D6F1C610029BE30 /* CoreFoundation.framework in Frameworks */,
 				883C30A22D6F1C550029BE30 /* IOKit.framework in Frameworks */,
-				883C309E2D6F12470029BE30 /* VSPClientUI.framework in Frameworks */,
-				883C309F2D6F12470029BE30 /* VSPController.framework in Frameworks */,
-				883C30A02D6F12470029BE30 /* VSPSetup.framework in Frameworks */,
 				883C30232D6EDEB20029BE30 /* QtWidgets.framework in Frameworks */,
 				88878E1A2D7A085F00092D65 /* Foundation.framework in Frameworks */,
 				883C30172D6EDEB20029BE30 /* QtDBus.framework in Frameworks */,
@@ -451,6 +496,30 @@
 			path = QT;
 			sourceTree = "<group>";
 		};
+		886B507E2D805115007BE2EC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				886B50832D805115007BE2EC /* VSPController.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		886B50852D805141007BE2EC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				886B508A2D805141007BE2EC /* VSPSetup.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		886B508C2D805161007BE2EC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				886B50912D805161007BE2EC /* VSPClientUI.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		88A671302D68DDE000CE4E12 /* ani */ = {
 			isa = PBXGroup;
 			children = (
@@ -499,6 +568,9 @@
 		88B40D4D2D4B666700DFE7C5 = {
 			isa = PBXGroup;
 			children = (
+				886B508B2D805161007BE2EC /* VSPClientUI.xcodeproj */,
+				886B50842D805141007BE2EC /* VSPSetup.xcodeproj */,
+				886B507D2D805115007BE2EC /* VSPController.xcodeproj */,
 				88B40D5C2D4B666700DFE7C5 /* VSPDriver */,
 				880539E92D4BAFBD00E55104 /* VSPClient */,
 				883C306D2D6EE7CB0029BE30 /* QT */,
@@ -611,6 +683,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				886B50972D80517C007BE2EC /* PBXTargetDependency */,
+				886B50952D805178007BE2EC /* PBXTargetDependency */,
+				886B50932D805174007BE2EC /* PBXTargetDependency */,
 				88BEFD6A2D4BC16200CD40E6 /* PBXTargetDependency */,
 			);
 			name = VSPClient;
@@ -671,6 +746,20 @@
 			);
 			productRefGroup = 88B40D582D4B666700DFE7C5 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 886B508C2D805161007BE2EC /* Products */;
+					ProjectRef = 886B508B2D805161007BE2EC /* VSPClientUI.xcodeproj */;
+				},
+				{
+					ProductGroup = 886B507E2D805115007BE2EC /* Products */;
+					ProjectRef = 886B507D2D805115007BE2EC /* VSPController.xcodeproj */;
+				},
+				{
+					ProductGroup = 886B50852D805141007BE2EC /* Products */;
+					ProjectRef = 886B50842D805141007BE2EC /* VSPSetup.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				88B40D562D4B666700DFE7C5 /* VSPDriver */,
@@ -678,6 +767,30 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		886B50832D805115007BE2EC /* VSPController.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = VSPController.framework;
+			remoteRef = 886B50822D805115007BE2EC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		886B508A2D805141007BE2EC /* VSPSetup.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = VSPSetup.framework;
+			remoteRef = 886B50892D805141007BE2EC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		886B50912D805161007BE2EC /* VSPClientUI.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = VSPClientUI.framework;
+			remoteRef = 886B50902D805161007BE2EC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		880539E62D4BAFBD00E55104 /* Resources */ = {
@@ -737,6 +850,21 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		886B50932D805174007BE2EC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = VSPSetup;
+			targetProxy = 886B50922D805174007BE2EC /* PBXContainerItemProxy */;
+		};
+		886B50952D805178007BE2EC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = VSPController;
+			targetProxy = 886B50942D805178007BE2EC /* PBXContainerItemProxy */;
+		};
+		886B50972D80517C007BE2EC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = VSPClientUI;
+			targetProxy = 886B50962D80517C007BE2EC /* PBXContainerItemProxy */;
+		};
 		88BEFD6A2D4BC16200CD40E6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 88B40D562D4B666700DFE7C5 /* VSPDriver */;

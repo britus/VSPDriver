@@ -1,0 +1,7 @@
+*.h
+*.cpp
+*.qrc
+/.qm/
+.qmake.stash
+Info.plist
+VSPSetup.framework

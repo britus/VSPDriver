@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1420"
+   LastUpgradeVersion = "1620"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BEA8F43E20F9FFF6C9B18CB0"
+               BlueprintIdentifier = "76711AB1F666A120A1A5D0A1"
                BuildableName = "Qt Preprocess"
                BlueprintName = "Qt Preprocess"
                ReferencedContainer = "container:VSPSetup.xcodeproj">
@@ -50,7 +50,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "BEA8F43E20F9FFF6C9B18CB0"
+            BlueprintIdentifier = "76711AB1F666A120A1A5D0A1"
             BuildableName = "Qt Preprocess"
             BlueprintName = "Qt Preprocess"
             ReferencedContainer = "container:VSPSetup.xcodeproj">
