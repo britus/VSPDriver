@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>Virtual Serial Port Controller</string>
+	<key>CFBundleName</key>
+	<string>VSPClient</string>
+	<key>CFBundleExecutable</key>
+	<string>VSPClient</string>
+	<key>CFBundleIconFile</key>
+	<string>vspclient.icns</string>
+	<key>CFBundleIdentifier</key>
+	<string>org.eof.tools.VSPClient</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleAllowMixedLocalizations</key>
+	<true/>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.developer-tools</string>
+	<key>LSUIElement</key>
+	<false/>
+	<key>LSUIPresentationMode</key>
+	<integer>0</integer>
+	<key>LSVisibleInClassic</key>
+	<true/>
+	<key>LSMinimumSystemVersion</key>
+	<string>12.2</string>
+	<key>NOTE</key>
+	<string>Copyright © 2025 by EoF Software Labs</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>NSSupportsAutomaticGraphicsSwitching</key>
+	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>processing</string>
+	</array>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>NSPrefPaneIconFile</key>
+	<string>vspclient.icns</string>
+	<key>NSSupportsSuddenTermination</key>
+	<true/>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>Permit Virtual Serial Port to send, write or save files.</string>
+	<key>NSDownloadsFolderUsageDescription</key>
+	<string>Permit Virtual Serial Port to send, write or save files.</string>
+	<key>NSDesktopFolderUsageDescription</key>
+	<string>Permit Virtual Serial Port to send, write or save files.</string>
+	<key>OSBundleUsageDescription</key>
+	<string>Permit VSP Controller to manage virtual serial ports.</string>
+	<key>NSNetworkVolumesUsageDescription</key>
+	<string>Permit Virtual Serial Port to write data to network volume path.</string>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>Shows informative messages about the state of the VSP driver.</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Permit VPS Controller to redirect data from serial port to a network connection.</string>
+	<key>UILaunchImageFile</key>
+	<string>vspclient_512x512.png</string>
+	<key>UIPrerenderedIcon</key>
+	<false/>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>VSP Driver Setup</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>vspctl</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

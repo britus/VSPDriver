@@ -1,0 +1,6 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="i18n">
+<file alias="vspui_en_US.qm">/Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/.qm/vspui_en_US.qm</file>
+<file alias="vspui_de_DE.qm">/Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/.qm/vspui_de_DE.qm</file>
+</qresource>
+</RCC>

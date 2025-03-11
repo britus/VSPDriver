@@ -7,7 +7,21 @@
 */project.xcworkspace/xcuserdata/
 */project.xcworkspace/xcshareddata/
 */project.xcworkspace
+
 /QT/
+/Release/
+/VSPSetup.build/
+/VSPController.build/
+/VSPClientUI.build/
+/XCBuildData/
+
+VSPClientUI/xcode/Release/
+VSPClientUI/xcode/VSPClientUI.build/
+VSPClientUI/xcode/XCBuildData/
+VSPController/xcode/Release/
+VSPController/xcode/VSPController.build/
+VSPSetup/xcode/Release/
+VSPSetup/xcode/VSPSetup.build/
 
 vspremove.sh 
 

@@ -1,0 +1,18 @@
+
+#MediaFiles.files = media
+#MediaFiles.path = Contents/MacOS
+#QMAKE_BUNDLE_DATA += MediaFiles
+
+##### Framework Lib #####
+
+#TEMPLATE = lib
+#CONFIG += lib_bundle
+#QMAKE_FRAMEWORK_BUNDLE_NAME
+#QMAKE_FRAMEWORK_VERSION
+#QMAKE_BUNDLE_EXTENSION = .framework
+
+#FRAMEWORK_HEADERS += $$PWD/lib/VSPSetup.framework/Versions/Current/Headers
+#QMAKE_BUNDLE_DATA += FRAMEWORK_HEADERS
+#QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
+#QMAKE_INCREMENTAL_STYLE = sublib
+#QMAKE_MAC_SDK = macosx10.9
