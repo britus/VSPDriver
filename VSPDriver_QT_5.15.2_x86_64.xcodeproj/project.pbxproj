@@ -310,9 +310,9 @@
 /* Begin PBXFileReference section */
 		880059D92D6F557A0057089B /* SerialDriverKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SerialDriverKit.framework; path = Platforms/DriverKit.platform/Developer/SDKs/DriverKit22.2.sdk/System/DriverKit/System/Library/Frameworks/SerialDriverKit.framework; sourceTree = DEVELOPER_DIR; };
 		880059DB2D6F55870057089B /* DriverKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DriverKit.framework; path = Platforms/DriverKit.platform/Developer/SDKs/DriverKit22.2.sdk/System/DriverKit/System/Library/Frameworks/DriverKit.framework; sourceTree = DEVELOPER_DIR; };
-		88005A362D6F5B6A0057089B /* VSPClientUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VSPClientUI.framework; sourceTree = "<group>"; };
-		88005A372D6F5B6A0057089B /* VSPSetup.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VSPSetup.framework; sourceTree = "<group>"; };
-		88005A382D6F5B6A0057089B /* VSPController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VSPController.framework; sourceTree = "<group>"; };
+		88005A362D6F5B6A0057089B /* VSPClientUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VSPClientUI.framework; path = "../../../Library/Developer/Xcode/DerivedData/vsp-aidyfmttlxzeolevchhnuwlzrzuh/Build/Products/Debug/VSPClientUI.framework"; sourceTree = "<group>"; };
+		88005A372D6F5B6A0057089B /* VSPSetup.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VSPSetup.framework; path = "../../../Library/Developer/Xcode/DerivedData/vsp-aidyfmttlxzeolevchhnuwlzrzuh/Build/Products/Debug/VSPSetup.framework"; sourceTree = "<group>"; };
+		88005A382D6F5B6A0057089B /* VSPController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VSPController.framework; path = "../../../Library/Developer/Xcode/DerivedData/vsp-aidyfmttlxzeolevchhnuwlzrzuh/Build/Products/Debug/VSPController.framework"; sourceTree = "<group>"; };
 		88005A502D6F5BE70057089B /* QtPrintSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtPrintSupport.framework; path = ../../../Qt/5.15.2/clang_64/lib/QtPrintSupport.framework; sourceTree = "<group>"; };
 		88005A512D6F5BE70057089B /* QtQml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQml.framework; path = ../../../Qt/5.15.2/clang_64/lib/QtQml.framework; sourceTree = "<group>"; };
 		88005A522D6F5BE70057089B /* QtDBus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtDBus.framework; path = ../../../Qt/5.15.2/clang_64/lib/QtDBus.framework; sourceTree = "<group>"; };
@@ -334,10 +334,6 @@
 		880539EC2D4BAFBF00E55104 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		880539F12D4BAFBF00E55104 /* VSPClient.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VSPClient.entitlements; sourceTree = "<group>"; };
 		880539F52D4BB0F900E55104 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		883C306E2D6EEB3D0029BE30 /* VSPController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VSPController.framework; path = ../VSPClient/build/VSPController/VSPController.framework; sourceTree = "<group>"; };
-		883C30712D6EEB520029BE30 /* VSPSetup.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VSPSetup.framework; path = ../VSPClient/build/VSPSetup/VSPSetup.framework; sourceTree = "<group>"; };
-		883C30772D6EFA600029BE30 /* VSPSetup.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VSPSetup.framework; path = QT/VSPSetup.framework; sourceTree = "<group>"; };
-		883C30792D6EFA600029BE30 /* VSPController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VSPController.framework; path = QT/VSPController.framework; sourceTree = "<group>"; };
 		883C30A12D6F1C550029BE30 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		884F6EC42D59A58D0066353A /* VSPUserClient.iig */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.iig; path = VSPUserClient.iig; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		884F6EC62D59A5C90066353A /* VSPUserClient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VSPUserClient.cpp; sourceTree = "<group>"; };
@@ -657,10 +653,6 @@
 				880059DB2D6F55870057089B /* DriverKit.framework */,
 				880059D92D6F557A0057089B /* SerialDriverKit.framework */,
 				883C30A12D6F1C550029BE30 /* IOKit.framework */,
-				883C30792D6EFA600029BE30 /* VSPController.framework */,
-				883C30712D6EEB520029BE30 /* VSPSetup.framework */,
-				883C306E2D6EEB3D0029BE30 /* VSPController.framework */,
-				883C30772D6EFA600029BE30 /* VSPSetup.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
