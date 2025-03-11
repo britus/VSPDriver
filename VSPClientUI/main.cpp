@@ -7,6 +7,7 @@
 #include <QTranslator>
 #include <vscmainwindow.h>
 
+/* Import from vspversion.mm (Objective-C++) */
 extern "C" {
     extern const char* GetBundleVersion();
     extern const char* GetBuildNumber();
@@ -135,13 +136,13 @@ int main(int argc, char* argv[])
 
         if (QFile::exists(fullPath)) {
             if (translator.load(fileName, resPath)) {
-                qDebug("[APPLOC] Set translation from: %s", qPrintable(fullPath));
+                qDebug("[UIi18N] Set translation from: %s", qPrintable(fullPath));
                 a.installTranslator(&translator);
             }
             break;
         }
         else if (translator.load(":/i18n/" + baseName)) {
-            qDebug("[APPLOC] (r) Set translation for: %s", qPrintable(baseName));
+            qDebug("[UIi18N] (r) Set translation for: %s", qPrintable(baseName));
             a.installTranslator(&translator);
             break;
         }
