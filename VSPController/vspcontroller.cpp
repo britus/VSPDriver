@@ -553,7 +553,7 @@ inline void VSPControllerPriv::UserClientTeardown(void)
 inline bool VSPControllerPriv::DoAsyncCall(TVSPControllerData* input)
 {
     kern_return_t ret = kIOReturnSuccess;
-    io_async_ref64_t ref = {};
+    io_async_ref64_t descriptor = {};
 
     // set magic control
     input->status.flags = (MAGIC_CONTROL | BIT(input->command));
@@ -563,22 +563,22 @@ inline bool VSPControllerPriv::DoAsyncCall(TVSPControllerData* input)
     // We'll use kIOAsyncCalloutFuncIndex and kIOAsyncCalloutRefconIndex
     // to define the parameters for our async callback. This is your callback
     // function. Check the definition for more details.
-    ref[kIOAsyncCalloutFuncIndex] = (io_user_reference_t) VSPClient::AsyncCallback;
+    descriptor[kIOAsyncCalloutFuncIndex] = (io_user_reference_t) VSPClient::AsyncCallback;
 
     // Use this for context on the return. We'll pass the refcon so we can
     // talk back to the view model.
-    ref[kIOAsyncCalloutRefconIndex] = (io_user_reference_t) this;
-
-    // Instant response of the DEXT user client instance
-    // Allocate response IOMemoryDescriptor at driver site
-    // to response data above 128 bytes. This will filled,
-    // by DEXT. We must unmap later!
-    mach_vm_address_t address = 0;
-    mach_vm_size_t size = 0;
+    descriptor[kIOAsyncCalloutRefconIndex] = (io_user_reference_t) this;
 
     if (!m_vspResponse) {
+        // Instant response of the DEXT user client instance
+        // Allocate response IOMemoryDescriptor at driver site
+        // to response data above 128 bytes. This will filled,
+        // by DEXT. We must unmap later!
+        mach_vm_address_t address = 0;
+        mach_vm_size_t size = 0;
+
         ret = IOConnectMapMemory64( //
-           m_drv,                   // connection from IOServiceOpenv
+           m_drv,                   // connection from IOServiceOpen
            input->command,          // memoryType -> this is interpreted by VSP driver IOUserClient
            mach_task_self(),        // The task port for the task in which to create the mapping.
            &address,                // Returned address if success (kIOMapAnywhere)
@@ -588,11 +588,11 @@ inline bool VSPControllerPriv::DoAsyncCall(TVSPControllerData* input)
             ReportError(ret, "Failed to get drivers mapped memory.");
             return false;
         }
-        else if (!address || !size) {
-            ReportError(ret, "Invalid mapped memory address or size.");
+        else if (!address) {
+            ReportError(ret, "Invalid mapped memory address.");
             return false;
         }
-        else if (size < VSP_UCD_SIZE) {
+        else if (size != VSP_UCD_SIZE) {
             ReportError(ret, "Mapped memory size does not match requested size.");
             return false;
         }
@@ -603,27 +603,27 @@ inline bool VSPControllerPriv::DoAsyncCall(TVSPControllerData* input)
     // - do it --
     size_t resultSize = VSP_UCD_SIZE;
     ret = IOConnectCallAsyncStructMethod( //
-       m_drv,                             // connection from IOServiceOpen
-       input->command,                    // method selector
-       m_machPort,                        // notification port
-       ref,                               // call back structure
+       m_drv,                             // Connection from IOServiceOpen
+       input->command,                    // Method selector
+       m_machPort,                        // Notification port
+       descriptor,                        // Call back structure
        kIOAsyncCalloutCount,              //
-       input,                             // input parameters
-       VSP_UCD_SIZE,                      // size of input parameters
-       m_vspResponse,                     // shared kenel mapped response buffer
-       &resultSize);                      // size of response, must be VSP_UCD_SIZE
+       input,                             // Input parameters
+       VSP_UCD_SIZE,                      // Size of input parameters
+       m_vspResponse,                     // Kernel mapped response buffer
+       &resultSize);                      // Size of response, must be VSP_UCD_SIZE
 
     if (ret != kIOReturnSuccess) {
         ReportError(ret, "Driver async call failed.");
-        IOConnectUnmapMemory(m_drv, input->command, mach_task_self(), address);
+        IOConnectUnmapMemory(m_drv, input->command, mach_task_self(), (mach_vm_address_t)m_vspResponse);
         m_vspResponse = nullptr;
         return false;
     }
 
     // we have fixed memory space.
     if (resultSize != VSP_UCD_SIZE) {
-        ReportError(ret, "Driver responsed data size to small.");
-        IOConnectUnmapMemory(m_drv, input->command, mach_task_self(), address);
+        ReportError(ret, "Responsed driver data size mismatch.");
+        IOConnectUnmapMemory(m_drv, input->command, mach_task_self(), (mach_vm_address_t)m_vspResponse);
         m_vspResponse = nullptr;
         return false;
     }
