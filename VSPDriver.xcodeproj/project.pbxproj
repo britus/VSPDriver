@@ -129,21 +129,21 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 886B50842D805141007BE2EC /* VSPSetup.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 6669A69914EC8850F7E03CDF;
+			remoteGlobalIDString = D6B83DB7425913B1E3B951F0;
 			remoteInfo = VSPSetup;
 		};
 		886B50942D805178007BE2EC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 886B507D2D805115007BE2EC /* VSPController.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 455826097BA7DDAEB1846DF6;
+			remoteGlobalIDString = 7AF3C4C6213BD51B76C2CF21;
 			remoteInfo = VSPController;
 		};
 		886B50962D80517C007BE2EC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 886B508B2D805161007BE2EC /* VSPClientUI.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 424D6912C9EA59B8F234BBD5;
+			remoteGlobalIDString = 5BFE4744010248731FA6929D;
 			remoteInfo = VSPClientUI;
 		};
 		88BEFD692D4BC16200CD40E6 /* PBXContainerItemProxy */ = {
@@ -902,6 +902,7 @@
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_USER_SELECTED_FILES = readwrite;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/QT",
@@ -971,6 +972,7 @@
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_USER_SELECTED_FILES = readwrite;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/QT",

@@ -355,6 +355,7 @@ VSPClientUI.xcodeproj/project.pbxproj: ../VSPClientUI.pro ../../../../Qt/6.8.2/m
 		../../../../Qt/6.8.2/macos/mkspecs/macx-clang/qmake.conf \
 		../../../../Qt/6.8.2/macos/mkspecs/macx-xcode/qmake.conf \
 		../../../../Qt/6.8.2/macos/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../../Qt/6.8.2/macos/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt/6.8.2/macos/mkspecs/features/mac/sdk.prf \
 		../../../../Qt/6.8.2/macos/mkspecs/features/toolchain.prf \
@@ -745,6 +746,7 @@ VSPClientUI.xcodeproj/project.pbxproj: ../VSPClientUI.pro ../../../../Qt/6.8.2/m
 ../../../../Qt/6.8.2/macos/mkspecs/macx-clang/qmake.conf:
 ../../../../Qt/6.8.2/macos/mkspecs/macx-xcode/qmake.conf:
 ../../../../Qt/6.8.2/macos/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../../Qt/6.8.2/macos/mkspecs/features/exclusive_builds.prf:
 ../../../../Qt/6.8.2/macos/mkspecs/features/mac/sdk.prf:
 ../../../../Qt/6.8.2/macos/mkspecs/features/toolchain.prf:
