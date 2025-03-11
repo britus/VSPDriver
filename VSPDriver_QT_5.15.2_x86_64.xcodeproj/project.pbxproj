@@ -1016,6 +1016,9 @@
 					"$(PROJECT_DIR)/QT",
 					"$(QTDIR)/lib",
 					"$(inherited)",
+					"$(PROJECT_DIR)/VSPClientUI/xcode/Release",
+					"$(PROJECT_DIR)/VSPController/xcode/Release",
+					"$(PROJECT_DIR)/VSPSetup/xcode/Release",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -1085,6 +1088,9 @@
 					"$(PROJECT_DIR)/QT",
 					"$(QTDIR)/lib",
 					"$(inherited)",
+					"$(PROJECT_DIR)/VSPClientUI/xcode/Release",
+					"$(PROJECT_DIR)/VSPController/xcode/Release",
+					"$(PROJECT_DIR)/VSPSetup/xcode/Release",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (

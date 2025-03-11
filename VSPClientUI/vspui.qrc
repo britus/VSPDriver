@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="progress1">assets/ani/progress.gif</file>
+        <file alias="progress2">assets/ani/progress2.gif</file>
+        <file>assets/icns/vspclient.icns</file>
+        <file>assets/png/vspclient_16x16.png</file>
+        <file>assets/png/vspclient_16x16@2x.png</file>
+        <file>assets/png/vspclient_32x32.png</file>
+        <file alias="vspclient_1">assets/png/vspclient_32x32@2x.png</file>
+        <file alias="vspclient_2">assets/png/vspclient_128x128.png</file>
+        <file>assets/png/vspclient_128x128@2x.png</file>
+        <file alias="vspclient_4">assets/png/vspclient_256x256.png</file>
+        <file>assets/png/vspclient_256x256@2x.png</file>
+        <file>assets/png/vspclient_512x512.png</file>
+        <file>assets/png/vspclient_512x512@2x.png</file>
+    </qresource>
+    <qresource prefix="/i18n">
+        <file alias="vspui_de_DE">vspui_de_DE.ts</file>
+        <file alias="vspui_en_US">vspui_en_US.ts</file>
+    </qresource>
+</RCC>
