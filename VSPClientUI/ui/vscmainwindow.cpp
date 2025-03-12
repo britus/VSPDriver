@@ -76,9 +76,12 @@ VSCMainWindow::~VSCMainWindow()
     delete ui;
 }
 
-void VSCMainWindow::closeEvent(QCloseEvent*)
+void VSCMainWindow::closeEvent(QCloseEvent* event)
 {
-    qApp->quit();
+    // save current driver state
+    m_vsp->saveDriverSession();
+    
+    QMainWindow::closeEvent(event);
 }
 
 void VSCMainWindow::resizeEvent(QResizeEvent* event)

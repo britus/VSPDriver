@@ -1117,6 +1117,12 @@
 				);
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					/Users/beschric/Qt/6.8.2/macos/lib,
+					/Users/beschric/Qt/6.8.2/macos/lib,
+					../../VSPController/xcode/Release,
+					../../VSPSetup/xcode/Release,
+				);
 				LIBRARY_STYLE = DYNAMIC;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.eof.tools.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = VSPClientUI;
@@ -1138,6 +1144,12 @@
 				);
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					/Users/beschric/Qt/6.8.2/macos/lib,
+					/Users/beschric/Qt/6.8.2/macos/lib,
+					../../VSPController/xcode/Release,
+					../../VSPSetup/xcode/Release,
+				);
 				GCC_OPTIMIZATION_LEVEL = 0;
 				LIBRARY_STYLE = DYNAMIC;
 				ONLY_ACTIVE_ARCH = YES;

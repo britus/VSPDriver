@@ -178,6 +178,7 @@ bool VSPDriverClient::saveDriverSession()
 {
     m_portList.saveModel(m_session->settings());
     m_linkList.saveModel(m_session->settings());
+    
     return m_session->saveSession();
 }
 
