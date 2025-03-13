@@ -1,18 +1,12 @@
 ## VSPDriver - Virtual Serial Port Driver
 
-This is a macOS DriverKit driver implementation including
-a installation App.
+This is a macOS DriverKit driver implementation including a user interface App.
  
 ### Current development status
 
 - Without a port link, the data is sent back to the sender
 - With a port link, the data is written from sender 1 to receiver 2 and vice versa
 - The client app provide installation, deinstallation and management
-
-### Client application / referenced frameworks
-The Project [VSPClient](https://github.com/britus/VSPClient) contains the user interface 
-for managing the virtual serialports. This project provide the 3 frameworks written in 
-QT for the virtual serial port driver App.
 
 ### Release
 
@@ -27,7 +21,7 @@ This [picture](https://github.com/britus/VSPDriver/blob/master/VSPDriver-Tester.
 
 To build this project you have to do:
 
-- Install QT5 latest from archive for Intel based macOS
+- Install QT5 latest for Intel based macOS from archive
 - Install QT6 latest for M chip based macOS
 
 - Install the QT framework like
@@ -35,18 +29,10 @@ To build this project you have to do:
 ~/Qt
 ```
 
-- Use this directory layout which corresponds with both make.sh scripts.
-```
-~/<any path>/VSPClient
-~/<any path>/VSPDriver
-```
+### Build the VSPDriver project with all frameworks inside
 
-- Build the VSPClient project with all frameworks first
-
-You should have:
-* VSPController.framework
-* VSPClientUI.framework
-* VSPSetup.framework
+- Use branch QT_5.15.2_x86_64_macos_12.7.6 if you want to build for older macOS
+- Use branch QT_6.8.2_arm64_M3_Pro if you want to build for newer macOS
 
 ### Entitlements, signing and security checks
 

@@ -477,7 +477,7 @@ void VSCMainWindow::onActionExecute(const TVSPControlCommand command, const QVar
             break;
         }
         case vspControlEnableChecks: {
-            quint64 value = data.toUInt();
+            quint32 value = data.toUInt();
             quint8 portId = value & 0x00ffL;
             value = (value >> 16) & 0xffffL;
             if (!m_demoMode) {
@@ -495,7 +495,7 @@ void VSCMainWindow::onActionExecute(const TVSPControlCommand command, const QVar
             break;
         }
         case vspControlEnableTrace: {
-            quint64 value = data.toUInt();
+            quint32 value = data.toUInt();
             quint8 portId = value & 0x00ffL;
             value = (value >> 16) & 0xffffL;
             if (!m_demoMode) {
