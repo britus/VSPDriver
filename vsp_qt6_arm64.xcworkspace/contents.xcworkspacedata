@@ -11,6 +11,6 @@
       location = "group:VSPClientUI/xcode/VSPClientUI.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:VSPDriver.xcodeproj">
+      location = "group:VSPDriver_QT_6.8.2_arm64.xcodeproj">
    </FileRef>
 </Workspace>

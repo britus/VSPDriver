@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "424D6912C9EA59B8F234BBD5"
+               BlueprintIdentifier = "5BFE4744010248731FA6929D"
                BuildableName = "VSPClientUI.framework"
                BlueprintName = "VSPClientUI"
                ReferencedContainer = "container:VSPClientUI.xcodeproj">
@@ -31,7 +31,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "424D6912C9EA59B8F234BBD5"
+            BlueprintIdentifier = "5BFE4744010248731FA6929D"
             BuildableName = "VSPClientUI.framework"
             BlueprintName = "VSPClientUI"
             ReferencedContainer = "container:VSPClientUI.xcodeproj">
@@ -73,7 +73,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "424D6912C9EA59B8F234BBD5"
+            BlueprintIdentifier = "5BFE4744010248731FA6929D"
             BuildableName = "VSPClientUI.framework"
             BlueprintName = "VSPClientUI"
             ReferencedContainer = "container:VSPClientUI.xcodeproj">
@@ -97,7 +97,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "424D6912C9EA59B8F234BBD5"
+            BlueprintIdentifier = "5BFE4744010248731FA6929D"
             BuildableName = "VSPClientUI.framework"
             BlueprintName = "VSPClientUI"
             ReferencedContainer = "container:VSPClientUI.xcodeproj">
