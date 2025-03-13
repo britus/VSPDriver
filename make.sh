@@ -14,7 +14,7 @@ if [ "${ARCH}" == "x86_64" ] ; then
 fi
 
 if [ "${ARCH}" == "arm64" ] ; then
-    XC_PROJECT=VSPDriver.xcodeproj
+    XC_PROJECT=VSPDriver_QT_6.8.2_arm64.xcodeproj
 fi
 
 xcodebuild -arch `uname -m` -project ${XC_PROJECT} -target VSPClient
