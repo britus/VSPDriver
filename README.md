@@ -10,7 +10,7 @@ This is a macOS DriverKit driver implementation including a user interface App.
 
 ### Release
 
-- [All releases](https://github.com/britus/VSPClient/releases)
+- [All releases](https://github.com/britus/VSPClient_Releases)
 
 ### Log Files and Tester
 
@@ -31,8 +31,8 @@ To build this project you have to do:
 
 ### Build the VSPDriver project with all frameworks inside
 
-- Use branch QT_5.15.2_x86_64_macos_12.7.6 if you want to build for older macOS
-- Use branch QT_6.8.2_arm64_M3_Pro if you want to build for newer macOS
+- If you want to build for older macOS and open workspace vsp_qt5_x68_64.xcworkspace
+- If you want to build for newer macOS and open workspace vsp_qt6_arm64.xcworkspace
 
 ### Entitlements, signing and security checks
 
@@ -46,7 +46,7 @@ VSPClient.entitlements file.
 
 ### Update source code to install the Dext
 
-Change the the bundle ID in [VSPClient/vscmainwindow.cpp](https://github.com/britus/VSPClient/blob/master/VSPClient/ui/vscmainwindow.cpp) in method "createVspController()".
+Change the the bundle ID in "VSPClientUI/vscmainwindow.cpp" in method "createVspController()".
 
 ## VSPDriver without any signing and security checks.
 
