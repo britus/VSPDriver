@@ -86,8 +86,8 @@ debug {
 LIBS += -dead_strip
 LIBS += -liconv
 
-LIBS += -F../../../VSPController/xcode/Release -framework VSPController
-LIBS += -F../../../VSPSetup/xcode/Release      -framework VSPSetup
+LIBS += -F../../VSPController/xcode/Release -framework VSPController
+LIBS += -F../../VSPSetup/xcode/Release      -framework VSPSetup
 
 # Update translation files
 LOC_QM_FILES.depends = $$TRANSLATIONS
