@@ -2,26 +2,33 @@
 /build/
 
 # Xcode stuff
-*/xcshareddata/
 */xcuserdata/
 */project.xcworkspace/xcuserdata/
-*/project.xcworkspace/xcshareddata/
 */project.xcworkspace
 
 /QT/
 /Release/
+/Debug/
 /VSPSetup.build/
 /VSPController.build/
 /VSPClientUI.build/
 /XCBuildData/
 
+VSPClientUI/xcode/Debug/
 VSPClientUI/xcode/Release/
 VSPClientUI/xcode/VSPClientUI.build/
 VSPClientUI/xcode/XCBuildData/
+
+VSPController/xcode/Debug/
 VSPController/xcode/Release/
 VSPController/xcode/VSPController.build/
+
+VSPSetup/xcode/Debug/
 VSPSetup/xcode/Release/
 VSPSetup/xcode/VSPSetup.build/
+
+/vsp_qt5_x68_64.xcworkspace/xcuserdata/
+/vsp_qt6_arm64.xcworkspace/xcuserdata/
 
 vspremove.sh 
 

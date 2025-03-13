@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:VSPSetup/xcode/VSPSetup.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:VSPController/xcode/VSPController.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:VSPClientUI/xcode/VSPClientUI.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:VSPDriver_QT_5.15.2_x86_64.xcodeproj">
+   </FileRef>
+</Workspace>
