@@ -5,3 +5,4 @@
 .qmake.stash
 Info.plist
 VSPController.framework
+VSPController.xcodeproj/xcuserdata/

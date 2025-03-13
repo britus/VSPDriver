@@ -5,3 +5,4 @@
 .qmake.stash
 Info.plist
 VSPClientUI.framework
+VSPClientUI.xcodeproj/xcuserdata/
