@@ -7,9 +7,9 @@ QT += serialbus
 QT += serialport
 QT += xml
 
-#lessThan(QT_MAJOR_VERSION, 6) {
-#QT += macextras
-#}
+lessThan(QT_MAJOR_VERSION, 6) {
+QT += macextras
+}
 
 # Generate framework bundle
 TEMPLATE = lib

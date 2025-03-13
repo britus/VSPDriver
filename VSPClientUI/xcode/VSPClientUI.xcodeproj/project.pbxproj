@@ -26,6 +26,7 @@
 		0F0574C63FA3ADCB28EA6CAA /* LICENSE in Copy 'LICENSE' Files to Bundle */ = {isa = PBXBuildFile; fileRef = 1247BF375E0E3D71F66B1623 /* LICENSE */; };
 		14C526DDC28AF33596A64B3D /* moc_pgtrace.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = B9F34737B4E0BBBF8B515132 /* moc_pgtrace.cpp */; settings = {ATTRIBUTES = (); }; };
 		17CCBFC2101956BD85E2BA12 /* pgspcreate.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 31B6A7788601BC533AAFC418 /* pgspcreate.cpp */; settings = {ATTRIBUTES = (); }; };
+		1B61607D496009760196E901 /* QtMacExtras.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = FD5F7CD27F010830914BB745 /* QtMacExtras.framework */; };
 		1EA1F9F6E8BE34997A2CED9E /* QtCore.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 0B196B8EE2BEE9FC651C21D1 /* QtCore.framework */; };
 		22D7058DD233DA54A2314BDB /* QtWidgets.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 7A8AA80DF75B0CE6E9FC9106 /* QtWidgets.framework */; };
 		338F017D82E6B6BE164640DE /* pgconnect.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = CCF8617BD6CA66CDBEF0A597 /* pgconnect.cpp */; settings = {ATTRIBUTES = (); }; };
@@ -83,7 +84,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		88D868552D82DAB000AD921C /* PBXContainerItemProxy */ = {
+		88D8685B2D82DC0100AD921C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6DB9C3763D02B1415CD9D565 /* Project object */;
 			proxyType = 1;
@@ -254,6 +255,7 @@
 		F799B9AD456D2FD37E3F7BE8 /* ui.pri */ = {isa = PBXFileReference; lastKnownFileType = text; name = ui.pri; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/ui.pri; sourceTree = "<absolute>"; };
 		FB573AAA8AA5FFF8026F357B /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/assets/de.lproj/InfoPlist.strings; sourceTree = "<absolute>"; };
 		FBE40F4DC8988FF0A2DC6630 /* ui_pgportlist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_pgportlist.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/ui_pgportlist.h; sourceTree = "<absolute>"; };
+		FD5F7CD27F010830914BB745 /* QtMacExtras.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtMacExtras.framework; path = /Users/beschric/Qt/5.15.2/clang_64/lib/QtMacExtras.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -262,6 +264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				22D7058DD233DA54A2314BDB /* QtWidgets.framework in Link Binary With Libraries */,
+				1B61607D496009760196E901 /* QtMacExtras.framework in Link Binary With Libraries */,
 				407AB1EF1F8186896A504098 /* QtGui.framework in Link Binary With Libraries */,
 				F2A75ACAC9DF6A3F4E5711E7 /* AppKit.framework in Link Binary With Libraries */,
 				B3FE8FAC746D3D5BB24FA398 /* Metal.framework in Link Binary With Libraries */,
@@ -462,6 +465,7 @@
 			isa = PBXGroup;
 			children = (
 				7A8AA80DF75B0CE6E9FC9106 /* QtWidgets.framework */,
+				FD5F7CD27F010830914BB745 /* QtMacExtras.framework */,
 				07A507402E075C1B214F8369 /* QtGui.framework */,
 				723F90793B2C195E2CCB2233 /* AppKit.framework */,
 				1B2543FCC48E9436F21C4F63 /* Metal.framework */,
@@ -768,7 +772,7 @@
 		EC49CC84BF62A4E253631F46 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CC735009E7BBBB175DD3A4C4 /* Qt Preprocess */;
-			targetProxy = 88D868552D82DAB000AD921C /* PBXContainerItemProxy */;
+			targetProxy = 88D8685B2D82DC0100AD921C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -805,6 +809,7 @@
 					../session,
 					../ui,
 					../../../../Qt/5.15.2/clang_64/lib/QtWidgets.framework/Headers,
+					../../../../Qt/5.15.2/clang_64/lib/QtMacExtras.framework/Headers,
 					../../../../Qt/5.15.2/clang_64/lib/QtGui.framework/Headers,
 					../../../../Qt/5.15.2/clang_64/lib/QtNetwork.framework/Headers,
 					../../../../Qt/5.15.2/clang_64/lib/QtConcurrent.framework/Headers,
@@ -838,6 +843,7 @@
 					"-DVSPCLIENT_LIBRARY",
 					"-DQT_NO_DEBUG",
 					"-DQT_WIDGETS_LIB",
+					"-DQT_MACEXTRAS_LIB",
 					"-DQT_GUI_LIB",
 					"-DQT_NETWORK_LIB",
 					"-DQT_CONCURRENT_LIB",
@@ -863,6 +869,7 @@
 					"-DVSPCLIENT_LIBRARY",
 					"-DQT_NO_DEBUG",
 					"-DQT_WIDGETS_LIB",
+					"-DQT_MACEXTRAS_LIB",
 					"-DQT_GUI_LIB",
 					"-DQT_NETWORK_LIB",
 					"-DQT_CONCURRENT_LIB",
@@ -938,6 +945,7 @@
 					../session,
 					../ui,
 					../../../../Qt/5.15.2/clang_64/lib/QtWidgets.framework/Headers,
+					../../../../Qt/5.15.2/clang_64/lib/QtMacExtras.framework/Headers,
 					../../../../Qt/5.15.2/clang_64/lib/QtGui.framework/Headers,
 					../../../../Qt/5.15.2/clang_64/lib/QtNetwork.framework/Headers,
 					../../../../Qt/5.15.2/clang_64/lib/QtConcurrent.framework/Headers,
@@ -972,6 +980,7 @@
 					"-DVSPCLIENT_LIBRARY",
 					"-DQT_NO_DEBUG",
 					"-DQT_WIDGETS_LIB",
+					"-DQT_MACEXTRAS_LIB",
 					"-DQT_GUI_LIB",
 					"-DQT_NETWORK_LIB",
 					"-DQT_CONCURRENT_LIB",
@@ -997,6 +1006,7 @@
 					"-DVSPCLIENT_LIBRARY",
 					"-DQT_NO_DEBUG",
 					"-DQT_WIDGETS_LIB",
+					"-DQT_MACEXTRAS_LIB",
 					"-DQT_GUI_LIB",
 					"-DQT_NETWORK_LIB",
 					"-DQT_CONCURRENT_LIB",

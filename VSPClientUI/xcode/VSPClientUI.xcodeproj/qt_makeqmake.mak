@@ -241,6 +241,7 @@ VSPClientUI.xcodeproj/project.pbxproj: ../VSPClientUI.pro ../../../../Qt/5.15.2/
 		../vspui.qrc \
 		qmake_qmake_qm_files.qrc \
 		../../../../Qt/5.15.2/clang_64/lib/QtWidgets.framework/Resources/QtWidgets.prl \
+		../../../../Qt/5.15.2/clang_64/lib/QtMacExtras.framework/Resources/QtMacExtras.prl \
 		../../../../Qt/5.15.2/clang_64/lib/QtGui.framework/Resources/QtGui.prl \
 		../../../../Qt/5.15.2/clang_64/lib/QtNetwork.framework/Resources/QtNetwork.prl \
 		../../../../Qt/5.15.2/clang_64/lib/QtConcurrent.framework/Resources/QtConcurrent.prl \
@@ -478,6 +479,7 @@ VSPClientUI.xcodeproj/project.pbxproj: ../VSPClientUI.pro ../../../../Qt/5.15.2/
 ../vspui.qrc:
 qmake_qmake_qm_files.qrc:
 ../../../../Qt/5.15.2/clang_64/lib/QtWidgets.framework/Resources/QtWidgets.prl:
+../../../../Qt/5.15.2/clang_64/lib/QtMacExtras.framework/Resources/QtMacExtras.prl:
 ../../../../Qt/5.15.2/clang_64/lib/QtGui.framework/Resources/QtGui.prl:
 ../../../../Qt/5.15.2/clang_64/lib/QtNetwork.framework/Resources/QtNetwork.prl:
 ../../../../Qt/5.15.2/clang_64/lib/QtConcurrent.framework/Resources/QtConcurrent.prl:
