@@ -84,7 +84,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		882839FC2D80596400118A2F /* PBXContainerItemProxy */ = {
+		8867654D2D82D76F006C8F01 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6DB9C3763D02B1415CD9D565 /* Project object */;
 			proxyType = 1;
@@ -205,7 +205,6 @@
 		9FEDF2B655670C7474D7A53F /* QtXml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtXml.framework; path = /Users/beschric/Qt/6.8.2/macos/lib/QtXml.framework; sourceTree = "<absolute>"; };
 		A09359E71C0046F8C38235E9 /* VSPClientUI.pro */ = {isa = PBXFileReference; lastKnownFileType = text; name = VSPClientUI.pro; path = /Users/beschric/tests/VSPDriver/VSPClientUI/VSPClientUI.pro; sourceTree = "<absolute>"; };
 		A1A67BEAA744704B29168D39 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
-		A39DBA992EA5623B810646DC /* .qmake.stash */ = {isa = PBXFileReference; lastKnownFileType = text; name = .qmake.stash; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/.qmake.stash; sourceTree = "<absolute>"; };
 		A724D0C6AECDCF844EAF2FDE /* ui_vspserialio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_vspserialio.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/ui_vspserialio.h; sourceTree = "<absolute>"; };
 		A9A5A240664A771613685015 /* vspui_en_US.qm */ = {isa = PBXFileReference; lastKnownFileType = file; name = vspui_en_US.qm; path = /Users/beschric/tests/VSPDriver/VSPClientUI/vspui_en_US.qm; sourceTree = "<absolute>"; };
 		AC2E29EA742247BE11103F2F /* vspserialio.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = vspserialio.ui; path = /Users/beschric/tests/VSPDriver/VSPClientUI/serialio/vspserialio.ui; sourceTree = "<absolute>"; };
@@ -298,7 +297,6 @@
 			isa = PBXGroup;
 			children = (
 				E678471ED45ACD85E5260746 /* VSPClientUI.pro */,
-				A39DBA992EA5623B810646DC /* .qmake.stash */,
 			);
 			name = xcode;
 			sourceTree = "<group>";
@@ -822,7 +820,7 @@
 		0FE452C69D34FA0FA3604C1E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 7CA06C207FF151F0C1E3BF15 /* Qt Preprocess */;
-			targetProxy = 882839FC2D80596400118A2F /* PBXContainerItemProxy */;
+			targetProxy = 8867654D2D82D76F006C8F01 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1117,12 +1115,6 @@
 				);
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					/Users/beschric/Qt/6.8.2/macos/lib,
-					/Users/beschric/Qt/6.8.2/macos/lib,
-					../../VSPController/xcode/Release,
-					../../VSPSetup/xcode/Release,
-				);
 				LIBRARY_STYLE = DYNAMIC;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.eof.tools.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = VSPClientUI;
@@ -1144,12 +1136,6 @@
 				);
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					/Users/beschric/Qt/6.8.2/macos/lib,
-					/Users/beschric/Qt/6.8.2/macos/lib,
-					../../VSPController/xcode/Release,
-					../../VSPSetup/xcode/Release,
-				);
 				GCC_OPTIMIZATION_LEVEL = 0;
 				LIBRARY_STYLE = DYNAMIC;
 				ONLY_ACTIVE_ARCH = YES;
