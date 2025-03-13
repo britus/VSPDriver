@@ -31,12 +31,13 @@ To build this project you have to do:
 
 ### Build the VSPDriver project with all frameworks inside
 
+- run bootstrap.sh first to create dependecies to your QT frameworks
 - If you want to build for older macOS and open workspace vsp_qt5_x68_64.xcworkspace
 - If you want to build for newer macOS and open workspace vsp_qt6_arm64.xcworkspace
 
 ### Entitlements, signing and security checks
 
-You should use you own bundle IDs. To do this:
+You should use your own bundle IDs in targets VSPDriver and VSPClient.
 
 Replace bundle ID "org.eof.tools.VSPDriver" in the Xcode VSPDriver target and replace 
 bundle ID "org.eof.tools.VSPClient" in the Xcode VSPClient target
