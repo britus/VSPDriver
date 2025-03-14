@@ -37,6 +37,9 @@ DEFINES	+= VSPCLIENT_LIBRARY
 INCLUDEPATH += $$PWD/../VSPController
 INCLUDEPATH += $$PWD/../VSPSetup
 
+PRE_TARGETDEPS += $$PWD/../VSPController
+PRE_TARGETDEPS += $$PWD/../VSPSetup
+
 # for QT Creator and Visual Studio project.
 QMAKE_PROJECT_NAME = $${TARGET}
 
