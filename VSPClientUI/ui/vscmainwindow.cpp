@@ -65,8 +65,8 @@ VSCMainWindow::VSCMainWindow(QWidget* parent)
     connectUiEvents();
     connectVspController();
 
-    if (!qApp->isSessionRestored()) {
-        qApp->isSavingSession();
+    foreach (auto page, m_buttonMap) {
+        page->loadSettings(m_session.settings());
     }
 }
 
@@ -80,7 +80,11 @@ void VSCMainWindow::closeEvent(QCloseEvent* event)
 {
     // save current driver state
     m_vsp->saveDriverSession();
-    
+
+    foreach (auto page, m_buttonMap) {
+        page->saveSettings(m_session.settings());
+    }
+
     QMainWindow::closeEvent(event);
 }
 
@@ -102,6 +106,9 @@ void VSCMainWindow::changeEvent(QEvent* event)
 
 void VSCMainWindow::onAppQuit()
 {
+    foreach (auto page, m_buttonMap) {
+        page->saveSettings(m_session.settings());
+    }
     m_vsp->saveDriverSession();
 }
 
@@ -131,6 +138,9 @@ void VSCMainWindow::onCommitSession(QSessionManager& manager)
     switch (ret) {
         case QMessageBox::Yes: {
             manager.release();
+            foreach (auto page, m_buttonMap) {
+                page->saveSettings(m_session.settings());
+            }
             if (!m_vsp->saveDriverSession())
                 manager.cancel();
             break;

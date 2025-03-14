@@ -15,3 +15,11 @@ VSPAbstractPage::VSPAbstractPage(QWidget* parent)
 VSPAbstractPage::~VSPAbstractPage()
 {
 }
+
+void VSPAbstractPage::loadSettings(QSettings* /*settings*/)
+{
+}
+
+void VSPAbstractPage::saveSettings(QSettings* /*settings*/)
+{
+}
