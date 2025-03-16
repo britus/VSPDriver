@@ -376,19 +376,27 @@ kern_return_t IMPL(VSPUserClient, CopyClientMemoryForType)
 //
 void IMPL(VSPUserClient, AsyncCallback)
 {
+    TVSPControllerData* data;
+    
     VSPLog(LOG_PREFIX, "AsyncCallback called.\n");
     
-    if (!action) { // Kernel timer event action object
+    // Kernel timer event action object
+    if (!action) {
         VSPErr(LOG_PREFIX, "AsyncCallback: Event action NULL pointer!");
         return;
     }
-    if (!ivars->m_cbAction) { // UC completion action object
+    
+    // User client completion action object
+    if (!ivars->m_cbAction) {
         VSPErr(LOG_PREFIX, "AsyncCallback: Client callback action NULL pointer!");
         return;
     }
-
+    
     // Get back our data previously stored in OSAction.
-    TVSPControllerData* data = (TVSPControllerData*) action->GetReference();
+    if (!(data = (TVSPControllerData*) action->GetReference())) {
+        VSPErr(LOG_PREFIX, "AsyncCallback: Action returned null data object!");
+        return;
+    }
     
     // Debug !!
     VSP_DUMP_DATA(data);
@@ -496,10 +504,10 @@ kern_return_t VSPUserClient::scheduleEvent(void* reference, IOUserClientMethodAr
 kern_return_t VSPUserClient::prepareResponse(void* reference, IOUserClientMethodArguments* arguments)
 {
     const TVSPControllerData* response = reinterpret_cast<TVSPControllerData*>(reference);
-    IOAddressSegment ucmdseg = {};
+    //IOAddressSegment ucmdseg = {};
     IOMemoryMap* outputMap = nullptr;
     uint8_t* outputPtr;
-    void* evData;
+    void* tevData;
     uint64_t length;
     IOReturn ret;
     
@@ -565,14 +573,13 @@ kern_return_t VSPUserClient::prepareResponse(void* reference, IOUserClientMethod
     // Save the completion for later. If not saved, then it
     // might be freed before the asychronous return.
     ivars->m_cbAction = arguments->completion;
-
     // Retain action memory for later work.
     ivars->m_cbAction->retain();
-    
-    // Fill event data with response. It action GetReference() returns NULL
-    // if the action object doesn't belong to the current process.
-    if ((evData = ivars->m_eventAction->GetReference()) != nullptr) {
-        memcpy(evData, response, VSP_UCD_SIZE);
+
+    // Fill timer event data with response. It action GetReference() returns
+    // NULL if the action object doesn't belong to the current process.
+    if ((tevData = ivars->m_eventAction->GetReference()) != nullptr) {
+        memcpy(tevData, response, VSP_UCD_SIZE);
     }
     
     VSPLog(LOG_PREFIX, "prepareResponse finish.\n");
