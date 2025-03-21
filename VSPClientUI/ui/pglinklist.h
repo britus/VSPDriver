@@ -26,10 +26,16 @@ public:
     ~PGLinkList();
 
     void update(TVSPControlCommand command, VSPPortListModel* portModel, VSPLinkListModel* linkModel) override;
+    void loadSettings(QSettings* settings) override;
+    void saveSettings(QSettings* settings) override;
 
 protected:
     void onActionExecute() override;
 
+private slots:
+    void onSectionResized(int logicalIndex, int oldSize, int newSize);
+
 private:
     Ui::PGLinkList* ui;
+    int m_colWidths[4];
 };

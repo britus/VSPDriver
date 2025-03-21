@@ -28,6 +28,9 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,90">
+    <property name="spacing">
+     <number>12</number>
+    </property>
     <item>
      <widget class="QWidget" name="pnlButtons" native="true">
       <property name="sizePolicy">
@@ -48,6 +51,9 @@
        </property>
        <property name="leftMargin">
         <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>4</number>
        </property>
        <property name="rightMargin">
         <number>0</number>
@@ -408,7 +414,7 @@
              <enum>QFrame::NoFrame</enum>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="PGSPCreate" name="pg01SPCreate"/>
             <widget class="PGSPRemove" name="pg02SPRemove"/>

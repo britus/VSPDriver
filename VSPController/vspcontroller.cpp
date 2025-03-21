@@ -655,26 +655,25 @@ void VSPControllerPriv::AsyncCallback(IOReturn result, void** args, UInt32 numAr
 {
     const int64_t* msg = (const int64_t*) args;
 
+    if (result != kIOReturnSuccess) {
+        ReportError(result, "Driver error occured.");
+        return;
+    }
     // invalid driver message
     if (numArgs < 2 || !args) {
         ReportError(result, "Invalid driver message.");
         return;
     }
-
-    if (result != kIOReturnSuccess) {
-        ReportError(result, "Driver error occured.");
-    }
-
-#ifdef VSP_DEBUG
-    PrintArray("AsyncCallback", msg, numArgs);
-#endif
-
     // invalid driver signature
     if ((msg[0] & MAGIC_CONTROL) != MAGIC_CONTROL) {
         ReportError(result, "Invalid driver signature.");
         return;
     }
-
+    
+#ifdef VSP_DEBUG
+    PrintArray("AsyncCallback", msg, numArgs);
+#endif
+    
     if (m_vspResponse) {
         m_controller->OnIOUCCallback(result, m_vspResponse, VSP_UCD_SIZE);
     }
