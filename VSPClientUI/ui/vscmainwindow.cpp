@@ -55,7 +55,9 @@ VSCMainWindow::VSCMainWindow(QWidget* parent)
     splitter->setSizes(QList<int>() << 280 << 0);
 
     setWindowIcon(QIcon(":/vspclient_2"));
-
+    setWindowFlags(windowFlags() & (~Qt::WindowMaximizeButtonHint));
+    setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint);
+    
     if (QSystemTrayIcon::isSystemTrayAvailable()) {
         setupSystemTray();
     }
@@ -849,17 +851,19 @@ inline void VSCMainWindow::connectUiEvents()
     connect(qApp, &QApplication::saveStateRequest, this, &VSCMainWindow::onSaveSession, Qt::DirectConnection);
     connect(qApp, &QApplication::aboutToQuit, this, &VSCMainWindow::onAppQuit, Qt::DirectConnection);
 
-#if 0
     connect(qApp, &QGuiApplication::applicationStateChanged, this, [this](Qt::ApplicationState state) {
         if (state != Qt::ApplicationActive) {
-            // dummy
-            QTimer::singleShot(1000, this, [this]() {
-                if (this->hasFocus()) {
-                }
+            //QTimer::singleShot(50, this, [this]() {
+            //    this->showMinimized();
+            //    //this->hide();
+            //});
+        }
+        else {
+            QTimer::singleShot(50, this, [this]() {
+                this->showNormal();
             });
         }
     });
-#endif
 
     const QList<VSPAbstractPage*> pages = m_buttonMap.values();
     foreach (auto page, pages) {

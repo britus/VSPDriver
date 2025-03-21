@@ -31,17 +31,17 @@
 	<key>NSSupportsSuddenTermination</key>
 	<true/>
 	<key>NSDocumentsFolderUsageDescription</key>
-	<string>Permit Virtual Serial Port to send, write or save files.</string>
+	<string>Permit Virtual Serial Port Controller to read or save files.</string>
 	<key>NSDownloadsFolderUsageDescription</key>
-	<string>Permit Virtual Serial Port to send, write or save files.</string>
+	<string>Permit Virtual Serial Port Controller to read or save files.</string>
 	<key>NSDesktopFolderUsageDescription</key>
-	<string>Permit Virtual Serial Port to send, write or save files.</string>
+	<string>Permit Virtual Serial Port Controller to read or save files.</string>
 	<key>OSBundleUsageDescription</key>
-	<string>Permit VSP Controller to manage virtual serial ports.</string>
+	<string>Permit Virtual Serial Port Controller to manage virtual serial ports.</string>
 	<key>NSNetworkVolumesUsageDescription</key>
-	<string>Permit Virtual Serial Port to write data to network volume path.</string>
+	<string>Permit Virtual Serial Port Controller to write data to network volume path.</string>
 	<key>NSUserNotificationsUsageDescription</key>
-	<string>Shows informative messages about the state of the VSP driver.</string>
+	<string>Displays informative messages about the status of the VSP driver.</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>Permit VPS Controller to redirect data from serial port to a network connection.</string>
 	<key>UILaunchImageFile</key>
@@ -51,7 +51,7 @@
 	<key>UIPrerenderedIcon</key>
 	<false/>
 	<key>LSUIElement</key>
-	<false/>
+	<true/>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>NOTE</key>
