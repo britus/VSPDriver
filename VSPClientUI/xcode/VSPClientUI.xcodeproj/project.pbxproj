@@ -3,11 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		7CA06C207FF151F0C1E3BF15 /* Qt Preprocess */ = {
+		CC735009E7BBBB175DD3A4C4 /* Qt Preprocess */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 6CC3B5D2136C7CD6A5CF5A59 /* Build configuration list for PBXNativeTarget "VSPClientUI" */;
 			buildPhases = (
@@ -22,73 +22,73 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		079DDC6AE4EDFC91FC8A17DC /* moc_pgspremove.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 0D0CF8E04264751F99A1FAFD /* moc_pgspremove.cpp */; settings = {ATTRIBUTES = (); }; };
-		08BB56048408ED942FCAB2EE /* InfoPlist.strings in Copy 'translations_en' Files to Bundle */ = {isa = PBXBuildFile; fileRef = FC901E0D82F948F20372243F /* InfoPlist.strings */; };
-		0E528948416AC9A2195B2861 /* moc_vsctheme.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = F38F1573AD02CFA96EDC028F /* moc_vsctheme.cpp */; settings = {ATTRIBUTES = (); }; };
-		0FB203A403B2DA64D7790828 /* vspui_en_US.qm in Copy 'translations_en' Files to Bundle */ = {isa = PBXBuildFile; fileRef = A9A5A240664A771613685015 /* vspui_en_US.qm */; };
-		124B3BDC9EC11D6B5DFFCABA /* moc_pglkremove.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 3CE715569C30B39AA42DED3B /* moc_pglkremove.cpp */; settings = {ATTRIBUTES = (); }; };
-		12E6C7413EC502A2CF7BFF20 /* pgportlist.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 91D2FD968696AC3083EB4639 /* pgportlist.cpp */; settings = {ATTRIBUTES = (); }; };
-		16A647F26A6E2264DA9EF01C /* vspdatamodel.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = DD81A0B4E8E15A44B92CB61A /* vspdatamodel.cpp */; settings = {ATTRIBUTES = (); }; };
-		18D43C96757CFE7D7A446C2B /* vspclient.icns in Copy 'icons' Files to Bundle */ = {isa = PBXBuildFile; fileRef = 6E50EFA3B21891CA3B959203 /* vspclient.icns */; };
-		1B29CC44EC5F9B2617D73AD1 /* QtSerialBus.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = EAC486F72E3CC88D8C034F10 /* QtSerialBus.framework */; };
-		22EAFDCF409353BE5A55AAD7 /* vspui_de_DE.qm in Copy 'translations_de' Files to Bundle */ = {isa = PBXBuildFile; fileRef = 6C17434A746012642769AE6E /* vspui_de_DE.qm */; };
-		313D06F4B952558FF888CD27 /* moc_pgportlist.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = AC3C7A408D01B5A8AB5C5D3C /* moc_pgportlist.cpp */; settings = {ATTRIBUTES = (); }; };
-		3AD8A41FB4168F8FCB8644AD /* vscmainwindow.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = BF36D191F1F9AC1200EA80F5 /* vscmainwindow.cpp */; settings = {ATTRIBUTES = (); }; };
-		42A9EF467DE33628C55C6856 /* moc_vspdatamodel.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 22D2B516EC2290B2DF1CFD8A /* moc_vspdatamodel.cpp */; settings = {ATTRIBUTES = (); }; };
-		4BC1A60CF2D5C00A3DF7122F /* QtNetwork.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = B6AC75DD12BEF0E1059577FF /* QtNetwork.framework */; };
-		50DE12BA4F1806D8DAC5478A /* QtSerialPort.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 7BC5B279BA7405AFCD29A067 /* QtSerialPort.framework */; };
-		512B60D3DB4B9DCDBECBDCCF /* pgtrace.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 8C0BACB67D85AE8228D95781 /* pgtrace.cpp */; settings = {ATTRIBUTES = (); }; };
-		51E0183689C63571AAF7482A /* moc_pgspcreate.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = BFAC9B9A405AB6D771F5E8C5 /* moc_pgspcreate.cpp */; settings = {ATTRIBUTES = (); }; };
-		542271716E42A0CE2D95FF6A /* moc_pgconnect.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 702B35ACFEC5AA62231CD95F /* moc_pgconnect.cpp */; settings = {ATTRIBUTES = (); }; };
-		5750AB6F658153FCA462607A /* pgconnect.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = C2E662D393DF99706375A3B7 /* pgconnect.cpp */; settings = {ATTRIBUTES = (); }; };
-		5C70ECE93F5C36E33B171AB0 /* pgspcreate.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 66AACB607530B444997E16C7 /* pgspcreate.cpp */; settings = {ATTRIBUTES = (); }; };
-		5EDFE04616702FDDDD555CAD /* QtXml.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 9FEDF2B655670C7474D7A53F /* QtXml.framework */; };
-		61EEC397DC8556BF8C4E36A7 /* ImageIO.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 3A8EF9C62A8D4790CBB89CEA /* ImageIO.framework */; };
-		679032E91879666794E9CD5C /* moc_vscmainwindow.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 002126C39F5E2A39EB592945 /* moc_vscmainwindow.cpp */; settings = {ATTRIBUTES = (); }; };
-		764228C54AAE3C7224407D66 /* vspdriverclient.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = C15B0EE2F4F6C0D4254ACAD1 /* vspdriverclient.cpp */; settings = {ATTRIBUTES = (); }; };
-		7BB15C3F1A5AE962D2A02C0D /* qrc_qmake_qmake_qm_files.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = CA98AA260A02F81438FE6162 /* qrc_qmake_qmake_qm_files.cpp */; settings = {ATTRIBUTES = (); }; };
-		7C9E0995FEB2441EB4B9FC6D /* LICENSE in Copy 'LICENSE' Files to Bundle */ = {isa = PBXBuildFile; fileRef = B99AFEBEDD4DDBA690CC4A88 /* LICENSE */; };
-		7DB0C591AE47C0A91FF679BE /* moc_vspabstractpage.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = C7D8B39527BD44F64D7ABED7 /* moc_vspabstractpage.cpp */; settings = {ATTRIBUTES = (); }; };
+		0EE5AD8F1D149C82AFAADD45 /* vspclient.icns in Copy 'icons' Files to Bundle */ = {isa = PBXBuildFile; fileRef = 77662C5730DD63FB2C7D36F1 /* vspclient.icns */; };
+		0F0574C63FA3ADCB28EA6CAA /* LICENSE in Copy 'LICENSE' Files to Bundle */ = {isa = PBXBuildFile; fileRef = 1247BF375E0E3D71F66B1623 /* LICENSE */; };
+		14C526DDC28AF33596A64B3D /* moc_pgtrace.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = B9F34737B4E0BBBF8B515132 /* moc_pgtrace.cpp */; settings = {ATTRIBUTES = (); }; };
+		17CCBFC2101956BD85E2BA12 /* pgspcreate.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 31B6A7788601BC533AAFC418 /* pgspcreate.cpp */; settings = {ATTRIBUTES = (); }; };
+		1B61607D496009760196E901 /* QtMacExtras.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = FD5F7CD27F010830914BB745 /* QtMacExtras.framework */; };
+		1EA1F9F6E8BE34997A2CED9E /* QtCore.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 0B196B8EE2BEE9FC651C21D1 /* QtCore.framework */; };
+		22D7058DD233DA54A2314BDB /* QtWidgets.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 7A8AA80DF75B0CE6E9FC9106 /* QtWidgets.framework */; };
+		338F017D82E6B6BE164640DE /* pgconnect.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = CCF8617BD6CA66CDBEF0A597 /* pgconnect.cpp */; settings = {ATTRIBUTES = (); }; };
+		39B0C5B1945FEA40EB6B2B57 /* QtSerialPort.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 0D62750E60C25930C0D98648 /* QtSerialPort.framework */; };
+		407AB1EF1F8186896A504098 /* QtGui.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 07A507402E075C1B214F8369 /* QtGui.framework */; };
+		42AB70619CDCFF043B531880 /* moc_pglkcreate.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 0735666D410201FBB43398DD /* moc_pglkcreate.cpp */; settings = {ATTRIBUTES = (); }; };
+		454EA302BFDB803EF0720DA5 /* vspdriverclient.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 658FAB2FFAC9BFA17563F8E6 /* vspdriverclient.cpp */; settings = {ATTRIBUTES = (); }; };
+		4AA7F5D377CDE9056938F1CF /* QtXml.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = EE3D564D714B2E869D375859 /* QtXml.framework */; };
+		4AC53185930A5C1571723684 /* pglkremove.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 4A36CC182DBD487662595AAB /* pglkremove.cpp */; settings = {ATTRIBUTES = (); }; };
+		4AF2F19D96C2543A9A6B5389 /* moc_pgspcreate.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 1F0CE162B2F0E552B7FB726C /* moc_pgspcreate.cpp */; settings = {ATTRIBUTES = (); }; };
+		4EAF28C9373DDE1B4B578431 /* moc_pgportlist.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 0624F1D1F2E4ED0793357ABD /* moc_pgportlist.cpp */; settings = {ATTRIBUTES = (); }; };
+		529ECA2A40065C609FA309BF /* QtNetwork.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 9D3DCFAD84B8F52FBC513D3B /* QtNetwork.framework */; };
+		552CB962A48F7BAB5C625A46 /* pglinklist.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = A87846AD1E8E6E75C79A708B /* pglinklist.cpp */; settings = {ATTRIBUTES = (); }; };
+		585490CCA3E3712B41299705 /* moc_pgspremove.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 17B2B9D64769DAFD71DA320E /* moc_pgspremove.cpp */; settings = {ATTRIBUTES = (); }; };
+		591C3775A55A4FA96DB3386C /* moc_vspabstractpage.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = A7181A59C07D1DCFFCA96BC1 /* moc_vspabstractpage.cpp */; settings = {ATTRIBUTES = (); }; };
+		5A5197BF2D22335C61EE310F /* pgspremove.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 0E9D99E24E8AA6D65F29F388 /* pgspremove.cpp */; settings = {ATTRIBUTES = (); }; };
+		60FEF6747A600B9D078F0645 /* vspui_en_US.qm in Copy 'translations_en' Files to Bundle */ = {isa = PBXBuildFile; fileRef = 6D2765900D4E013351DA70AA /* vspui_en_US.qm */; };
+		6A4ACADC329F27C1699D28E2 /* qrc_vspui.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 2784A388C79449BF120891AB /* qrc_vspui.cpp */; settings = {ATTRIBUTES = (); }; };
+		776EB38D873ED15F3BB4C751 /* moc_vspserialio.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 03CEDE9595696FCC79CA7140 /* moc_vspserialio.cpp */; settings = {ATTRIBUTES = (); }; };
+		791C2AE71E837E3D8729328B /* moc_vspdriverclient.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 1C57E10EFCD37143A09EC53C /* moc_vspdriverclient.cpp */; settings = {ATTRIBUTES = (); }; };
+		7C518884F4D1CEAA3BA14937 /* vspsession.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = D67D30D4E0C3C68F6D6A21B9 /* vspsession.cpp */; settings = {ATTRIBUTES = (); }; };
+		81ACB0990D1F8589820AED89 /* QtSerialBus.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 9103AA162915BBF1B315FE99 /* QtSerialBus.framework */; };
+		866B72D05B08C23B9BD8B0D8 /* pgtrace.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = C1FE11D67DB09609ED031605 /* pgtrace.cpp */; settings = {ATTRIBUTES = (); }; };
+		86D765975E6B4457B962DDD3 /* qrc_qmake_qmake_qm_files.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 16E5AA15E00A399E3B9CB79B /* qrc_qmake_qmake_qm_files.cpp */; settings = {ATTRIBUTES = (); }; };
 		8771A8C96E9C391044035D99 /* OpenGL.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = D4B32C2222F82AC56BADEB21 /* OpenGL.framework */; };
-		8962C4EB830DB9EE70572552 /* QtCore.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = BD747897CFB017582170C5BF /* QtCore.framework */; };
-		89FBBD79ED6008FFAB881983 /* vspsession.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 583ADEC33CAB5A2019DC2D20 /* vspsession.cpp */; settings = {ATTRIBUTES = (); }; };
+		8AC99D0C2635CDFA47C809F8 /* pgchecks.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 9639660531CEB1DA46858E07 /* pgchecks.cpp */; settings = {ATTRIBUTES = (); }; };
 		8D267F2E4776F0ECA2F49DC8 /* IOKit.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = A1A67BEAA744704B29168D39 /* IOKit.framework */; };
-		8DA5AB2C9EBF6C9FFEEFB7F4 /* pglkremove.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 6A470C9CC83BFCEB734B0621 /* pglkremove.cpp */; settings = {ATTRIBUTES = (); }; };
-		8EC0E2499DDA3B9B2820197D /* pglkcreate.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 15A253075FF127EEFCB70793 /* pglkcreate.cpp */; settings = {ATTRIBUTES = (); }; };
-		8FC2D8C401B1FE05313BAD3E /* moc_pglinklist.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = F2B89125F6F4181E5291CA07 /* moc_pglinklist.cpp */; settings = {ATTRIBUTES = (); }; };
-		9A3470F0D279ABE83EC011E4 /* moc_vspdriverclient.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 31F95B796A7B53E851F9E008 /* moc_vspdriverclient.cpp */; settings = {ATTRIBUTES = (); }; };
-		A55D6193D5F361817C28AD9B /* vspclient_512x512.png in Copy 'icons' Files to Bundle */ = {isa = PBXBuildFile; fileRef = 92918E4DFA0091E8FA5013B6 /* vspclient_512x512.png */; };
+		9137EBA337C46CCEB2F53CD4 /* moc_pglkremove.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 44341AFCAEBBCA0C73705A41 /* moc_pglkremove.cpp */; settings = {ATTRIBUTES = (); }; };
+		927F5F177F33AD4497E192BA /* moc_vspsession.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = F34DD53A6E9EAA77ABFF64CB /* moc_vspsession.cpp */; settings = {ATTRIBUTES = (); }; };
+		972919334FB56FDFF92D3B9D /* moc_pgchecks.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = B7F47100B3FA3D60482FE344 /* moc_pgchecks.cpp */; settings = {ATTRIBUTES = (); }; };
+		9B3C4D60DB786A49760B84E6 /* moc_pgconnect.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 3EFD50188F1388D9183DB31E /* moc_pgconnect.cpp */; settings = {ATTRIBUTES = (); }; };
+		9C6EDBDF14697E8A5847DAE0 /* main.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 7AE68FEFC6B163BEA81090B1 /* main.cpp */; settings = {ATTRIBUTES = (); }; };
+		A2E28CC67973E975AE3FAAA1 /* vspdatamodel.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = A2D643F1713352D07CD45E5F /* vspdatamodel.cpp */; settings = {ATTRIBUTES = (); }; };
+		A58E5E030E3C1A379B3B0215 /* InfoPlist.strings in Copy 'translations_de' Files to Bundle */ = {isa = PBXBuildFile; fileRef = FB573AAA8AA5FFF8026F357B /* InfoPlist.strings */; };
 		A99B2AA0F9CBBDD12BA126A4 /* DiskArbitration.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 2B774D8E4178765CE52EAAF5 /* DiskArbitration.framework */; };
-		AC02BC983EA2853640C86535 /* pglinklist.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = C1CFCA71B2515BD5C127199F /* pglinklist.cpp */; settings = {ATTRIBUTES = (); }; };
-		B1994C8C8C8A9E230CBDB444 /* moc_pgtrace.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 7C12743393A0A7F4D48AA420 /* moc_pgtrace.cpp */; settings = {ATTRIBUTES = (); }; };
+		ACA0286DA427E214EE456576 /* moc_vspdatamodel.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = EE09DDC2A65E00BEE80A7EE4 /* moc_vspdatamodel.cpp */; settings = {ATTRIBUTES = (); }; };
+		AF7E70CA357B511ADCFBC664 /* vsctheme.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 51ECCD2491FDB71271BDC888 /* vsctheme.cpp */; settings = {ATTRIBUTES = (); }; };
 		B3FE8FAC746D3D5BB24FA398 /* Metal.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 1B2543FCC48E9436F21C4F63 /* Metal.framework */; };
-		B4F1A89435A11CF5F3DD20B3 /* vspabstractpage.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = ACE85C1FAD10D7AA6FA288B7 /* vspabstractpage.cpp */; settings = {ATTRIBUTES = (); }; };
-		B76AB4C2367E1C2856C90D53 /* QtGui.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 591B0FAD797BF739B16D29D1 /* QtGui.framework */; };
-		BD8058C82E7815458655B157 /* moc_pglkcreate.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 7410A769B1CA8C6B23A068A5 /* moc_pglkcreate.cpp */; settings = {ATTRIBUTES = (); }; };
-		C2C986C62540F2D9DD78A991 /* main.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = FDCE47F106534D1F7844841A /* main.cpp */; settings = {ATTRIBUTES = (); }; };
-		C33BF17B24F62D09674826C5 /* vsctheme.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = FC2642E8DBC2E97977BB667E /* vsctheme.cpp */; settings = {ATTRIBUTES = (); }; };
-		CA61087C2769BE42BC753F2A /* qrc_vspui.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 7F51E1AA13D2645F27437EEE /* qrc_vspui.cpp */; settings = {ATTRIBUTES = (); }; };
-		CD2A76F54CD8DE9970A07426 /* moc_pgchecks.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = C88BB468ED2A469D28E6E539 /* moc_pgchecks.cpp */; settings = {ATTRIBUTES = (); }; };
-		D31BF037884A58EBC47D9C26 /* moc_vspserialio.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 912EFA67AB6F00A360144B68 /* moc_vspserialio.cpp */; settings = {ATTRIBUTES = (); }; };
-		E0255DCCA64D5CD5C351DAD0 /* vspserialio.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 1E45623617E183844C5D8FA6 /* vspserialio.cpp */; settings = {ATTRIBUTES = (); }; };
-		E1A83B5A3DE8E63AFC3C60D8 /* pgspremove.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = EEC8648E2090B2C5C888C836 /* pgspremove.cpp */; settings = {ATTRIBUTES = (); }; };
-		E278C51C5713857A168DA106 /* InfoPlist.strings in Copy 'translations_de' Files to Bundle */ = {isa = PBXBuildFile; fileRef = 3725C04434C38BF1E0E4D8BC /* InfoPlist.strings */; };
+		B400990943918D6C9CC88D4E /* InfoPlist.strings in Copy 'translations_en' Files to Bundle */ = {isa = PBXBuildFile; fileRef = E0E84A14E32F1899E56B8B37 /* InfoPlist.strings */; };
+		B522A5890938DDDE0118894B /* QtConcurrent.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = C6542D6EEE0BB2F0ED2A55E4 /* QtConcurrent.framework */; };
+		BB0C8DF71CF48401E08359C5 /* vspui_de_DE.qm in Copy 'translations_de' Files to Bundle */ = {isa = PBXBuildFile; fileRef = 35B839C49DC02650D74EA9AF /* vspui_de_DE.qm */; };
+		C3A897400B071A51A7B300A2 /* moc_vscmainwindow.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 30DD822FC33C8675EC7143D5 /* moc_vscmainwindow.cpp */; settings = {ATTRIBUTES = (); }; };
+		C86CD36828D0270D14F4486F /* moc_vsctheme.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 09986D98568E571CA44332D9 /* moc_vsctheme.cpp */; settings = {ATTRIBUTES = (); }; };
+		CAFD27FB0D5EACE4F0D3EC08 /* vspabstractpage.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = B9B8BC5175233E3BBA0376CC /* vspabstractpage.cpp */; settings = {ATTRIBUTES = (); }; };
+		CCAFAE0F730531560A5E1F40 /* dummy.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 3AF1A262A121543C1B627F57 /* dummy.cpp */; settings = {ATTRIBUTES = (); }; };
+		D03AF269D5CE2D6B115FAEE6 /* vscmainwindow.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = CBE43632E17FDE4D8C9700B3 /* vscmainwindow.cpp */; settings = {ATTRIBUTES = (); }; };
+		D06CB3BBD4F09BB72F7FE086 /* pglkcreate.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = E875688FF308CFD3DC86E93D /* pglkcreate.cpp */; settings = {ATTRIBUTES = (); }; };
+		D2E51C67BB13CB0CBC80A652 /* moc_pglinklist.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = E7DB3A25075DEFFFB0BB6AE2 /* moc_pglinklist.cpp */; settings = {ATTRIBUTES = (); }; };
+		DFEE505CC32849DAF8CAAA43 /* vspversion.mm in Compile Sources */ = {isa = PBXBuildFile; fileRef = A253D6FC7014CB2FF0EFA968 /* vspversion.mm */; settings = {ATTRIBUTES = (); }; };
 		E45E51A644D5FC9F942ECE55 /* AGL.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 8D9815BDB5BD9F90D2BC05C5 /* AGL.framework */; };
-		E655B89CB270E7CA8AE8ABA2 /* moc_vspsession.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 01704E9DACFE2200208FAF74 /* moc_vspsession.cpp */; settings = {ATTRIBUTES = (); }; };
-		EB9B97E72C24CCE9691A858A /* QtConcurrent.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = ED8A494F1632F11FA3838791 /* QtConcurrent.framework */; };
-		EC76AF9853348D0FD0003DF0 /* vspversion.mm in Compile Sources */ = {isa = PBXBuildFile; fileRef = 310FDF95D0901F4A1DB369AD /* vspversion.mm */; settings = {ATTRIBUTES = (); }; };
-		F2923574885F9E8040CEB7E7 /* pgchecks.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 60D1D6EA2448F703A8E49FF9 /* pgchecks.cpp */; settings = {ATTRIBUTES = (); }; };
+		E5BEDEBCA9A8A74364CFB29A /* vspclient_512x512.png in Copy 'icons' Files to Bundle */ = {isa = PBXBuildFile; fileRef = 978A1D785EFB021B58E78396 /* vspclient_512x512.png */; };
 		F2A75ACAC9DF6A3F4E5711E7 /* AppKit.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 723F90793B2C195E2CCB2233 /* AppKit.framework */; };
-		F30795E5207D73289814C47C /* UniformTypeIdentifiers.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 5F9A4B2B3FF5EC87C57CF6B4 /* UniformTypeIdentifiers.framework */; };
-		FE15CE0308F7DF67A1E309C0 /* QtWidgets.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 3C84D068EE758BA7519FF6D8 /* QtWidgets.framework */; };
+		F9D154CA0F25535BFE9DAAE0 /* vspserialio.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = B3B4EE30B2E3FDFB093235AB /* vspserialio.cpp */; settings = {ATTRIBUTES = (); }; };
+		FB2B805516F9C012F9DB0796 /* pgportlist.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = E9F1CD7DB8116B6D4FF8E801 /* pgportlist.cpp */; settings = {ATTRIBUTES = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		88F12FDC2DCDBB6800E0486A /* PBXContainerItemProxy */ = {
+		887847602DCDEDFA0081FC7F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6DB9C3763D02B1415CD9D565 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 7CA06C207FF151F0C1E3BF15;
+			remoteGlobalIDString = CC735009E7BBBB175DD3A4C4;
 			remoteInfo = "Qt Preprocess";
 		};
 /* End PBXContainerItemProxy section */
@@ -100,8 +100,8 @@
 			dstPath = Resources/de.lproj;
 			dstSubfolderSpec = 1;
 			files = (
-				E278C51C5713857A168DA106 /* InfoPlist.strings in Copy 'translations_de' Files to Bundle */,
-				22EAFDCF409353BE5A55AAD7 /* vspui_de_DE.qm in Copy 'translations_de' Files to Bundle */,
+				A58E5E030E3C1A379B3B0215 /* InfoPlist.strings in Copy 'translations_de' Files to Bundle */,
+				BB0C8DF71CF48401E08359C5 /* vspui_de_DE.qm in Copy 'translations_de' Files to Bundle */,
 			);
 			name = "Copy 'translations_de' Files to Bundle";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -112,8 +112,8 @@
 			dstPath = Resources;
 			dstSubfolderSpec = 1;
 			files = (
-				18D43C96757CFE7D7A446C2B /* vspclient.icns in Copy 'icons' Files to Bundle */,
-				A55D6193D5F361817C28AD9B /* vspclient_512x512.png in Copy 'icons' Files to Bundle */,
+				0EE5AD8F1D149C82AFAADD45 /* vspclient.icns in Copy 'icons' Files to Bundle */,
+				E5BEDEBCA9A8A74364CFB29A /* vspclient_512x512.png in Copy 'icons' Files to Bundle */,
 			);
 			name = "Copy 'icons' Files to Bundle";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -124,8 +124,8 @@
 			dstPath = Resources/en.lproj;
 			dstSubfolderSpec = 1;
 			files = (
-				08BB56048408ED942FCAB2EE /* InfoPlist.strings in Copy 'translations_en' Files to Bundle */,
-				0FB203A403B2DA64D7790828 /* vspui_en_US.qm in Copy 'translations_en' Files to Bundle */,
+				B400990943918D6C9CC88D4E /* InfoPlist.strings in Copy 'translations_en' Files to Bundle */,
+				60FEF6747A600B9D078F0645 /* vspui_en_US.qm in Copy 'translations_en' Files to Bundle */,
 			);
 			name = "Copy 'translations_en' Files to Bundle";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -136,7 +136,7 @@
 			dstPath = Resources;
 			dstSubfolderSpec = 1;
 			files = (
-				7C9E0995FEB2441EB4B9FC6D /* LICENSE in Copy 'LICENSE' Files to Bundle */,
+				0F0574C63FA3ADCB28EA6CAA /* LICENSE in Copy 'LICENSE' Files to Bundle */,
 			);
 			name = "Copy 'LICENSE' Files to Bundle";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -144,122 +144,118 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		002126C39F5E2A39EB592945 /* moc_vscmainwindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_vscmainwindow.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/moc_vscmainwindow.cpp; sourceTree = "<absolute>"; };
-		01704E9DACFE2200208FAF74 /* moc_vspsession.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_vspsession.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/moc_vspsession.cpp; sourceTree = "<absolute>"; };
-		0C0F89C87C96308CB6475D04 /* vspdatamodel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vspdatamodel.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/model/vspdatamodel.h; sourceTree = "<absolute>"; };
-		0D0CF8E04264751F99A1FAFD /* moc_pgspremove.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_pgspremove.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/moc_pgspremove.cpp; sourceTree = "<absolute>"; };
-		0F2BE6C8C8B089667E291B1B /* pgportlist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pgportlist.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pgportlist.h; sourceTree = "<absolute>"; };
-		1187A09F7FC78421CF83BDA9 /* pglkremove.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = pglkremove.ui; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pglkremove.ui; sourceTree = "<absolute>"; };
-		15A253075FF127EEFCB70793 /* pglkcreate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pglkcreate.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pglkcreate.cpp; sourceTree = "<absolute>"; };
-		1918E02D1E64E0A10DC6FE29 /* pgportlist.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = pgportlist.ui; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pgportlist.ui; sourceTree = "<absolute>"; };
+		008051C42AC0323C6B9A0062 /* pgtrace.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = pgtrace.ui; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pgtrace.ui; sourceTree = "<absolute>"; };
+		00E951DF337A391246BA5A9C /* vspui_de_DE.ts */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = vspui_de_DE.ts; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/vspui_de_DE.ts; sourceTree = "<absolute>"; };
+		03CEDE9595696FCC79CA7140 /* moc_vspserialio.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_vspserialio.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/moc_vspserialio.cpp; sourceTree = "<absolute>"; };
+		0624F1D1F2E4ED0793357ABD /* moc_pgportlist.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_pgportlist.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/moc_pgportlist.cpp; sourceTree = "<absolute>"; };
+		072112A0A4D8D0FCCC2AF3E1 /* themes.pri */ = {isa = PBXFileReference; lastKnownFileType = text; name = themes.pri; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/themes/themes.pri; sourceTree = "<absolute>"; };
+		0735666D410201FBB43398DD /* moc_pglkcreate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_pglkcreate.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/moc_pglkcreate.cpp; sourceTree = "<absolute>"; };
+		07A507402E075C1B214F8369 /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = /Users/beschric/Qt/5.15.2/clang_64/lib/QtGui.framework; sourceTree = "<absolute>"; };
+		09986D98568E571CA44332D9 /* moc_vsctheme.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_vsctheme.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/moc_vsctheme.cpp; sourceTree = "<absolute>"; };
+		0B196B8EE2BEE9FC651C21D1 /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = /Users/beschric/Qt/5.15.2/clang_64/lib/QtCore.framework; sourceTree = "<absolute>"; };
+		0D62750E60C25930C0D98648 /* QtSerialPort.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtSerialPort.framework; path = /Users/beschric/Qt/5.15.2/clang_64/lib/QtSerialPort.framework; sourceTree = "<absolute>"; };
+		0E9D99E24E8AA6D65F29F388 /* pgspremove.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pgspremove.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pgspremove.cpp; sourceTree = "<absolute>"; };
+		0F942895ABB33B16700CAAC0 /* driver.pri */ = {isa = PBXFileReference; lastKnownFileType = text; name = driver.pri; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/driver/driver.pri; sourceTree = "<absolute>"; };
+		1247BF375E0E3D71F66B1623 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/LICENSE; sourceTree = "<absolute>"; };
+		16E5AA15E00A399E3B9CB79B /* qrc_qmake_qmake_qm_files.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = qrc_qmake_qmake_qm_files.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/qrc_qmake_qmake_qm_files.cpp; sourceTree = "<absolute>"; };
+		17B2B9D64769DAFD71DA320E /* moc_pgspremove.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_pgspremove.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/moc_pgspremove.cpp; sourceTree = "<absolute>"; };
 		1B2543FCC48E9436F21C4F63 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = /System/Library/Frameworks/Metal.framework; sourceTree = "<absolute>"; };
-		1E45623617E183844C5D8FA6 /* vspserialio.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vspserialio.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/serialio/vspserialio.cpp; sourceTree = "<absolute>"; };
-		216681ECD7CE99D167FE2B4D /* pgspcreate.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = pgspcreate.ui; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pgspcreate.ui; sourceTree = "<absolute>"; };
-		22D2B516EC2290B2DF1CFD8A /* moc_vspdatamodel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_vspdatamodel.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/moc_vspdatamodel.cpp; sourceTree = "<absolute>"; };
-		232EE9189FA68ABA4681E779 /* session.pri */ = {isa = PBXFileReference; lastKnownFileType = text; name = session.pri; path = /Users/beschric/tests/VSPDriver/VSPClientUI/session/session.pri; sourceTree = "<absolute>"; };
-		2936206FC215C89CAC817BAB /* vspserialio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vspserialio.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/serialio/vspserialio.h; sourceTree = "<absolute>"; };
+		1C57E10EFCD37143A09EC53C /* moc_vspdriverclient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_vspdriverclient.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/moc_vspdriverclient.cpp; sourceTree = "<absolute>"; };
+		1F0CE162B2F0E552B7FB726C /* moc_pgspcreate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_pgspcreate.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/moc_pgspcreate.cpp; sourceTree = "<absolute>"; };
+		2462FD367653971DEC85D92F /* vspabstractpage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vspabstractpage.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/vspabstractpage.h; sourceTree = "<absolute>"; };
+		2784A388C79449BF120891AB /* qrc_vspui.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = qrc_vspui.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/qrc_vspui.cpp; sourceTree = "<absolute>"; };
+		2B1FAB1036A5193135BCA4E4 /* ui_pgconnect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_pgconnect.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/ui_pgconnect.h; sourceTree = "<absolute>"; };
 		2B774D8E4178765CE52EAAF5 /* DiskArbitration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiskArbitration.framework; path = /System/Library/Frameworks/DiskArbitration.framework; sourceTree = "<absolute>"; };
-		2D889E367B12C89D866E61C8 /* pgspremove.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pgspremove.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pgspremove.h; sourceTree = "<absolute>"; };
-		2F75DDD3D417F70E655C4350 /* vscmainwindow.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = vscmainwindow.ui; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/vscmainwindow.ui; sourceTree = "<absolute>"; };
-		310FDF95D0901F4A1DB369AD /* vspversion.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = vspversion.mm; path = /Users/beschric/tests/VSPDriver/VSPClientUI/vspversion.mm; sourceTree = "<absolute>"; };
-		31B66ED923E6989A050434F3 /* pgspcreate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pgspcreate.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pgspcreate.h; sourceTree = "<absolute>"; };
-		31F95B796A7B53E851F9E008 /* moc_vspdriverclient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_vspdriverclient.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/moc_vspdriverclient.cpp; sourceTree = "<absolute>"; };
-		33C4378847875690862E2730 /* ui_pgportlist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_pgportlist.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/ui_pgportlist.h; sourceTree = "<absolute>"; };
-		33DC904D54B8261D209E32C8 /* qmake_qmake_qm_files.qrc */ = {isa = PBXFileReference; lastKnownFileType = text; name = qmake_qmake_qm_files.qrc; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/qmake_qmake_qm_files.qrc; sourceTree = "<absolute>"; };
-		3725C04434C38BF1E0E4D8BC /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = /Users/beschric/tests/VSPDriver/VSPClientUI/assets/de.lproj/InfoPlist.strings; sourceTree = "<absolute>"; };
-		3863829DFBFCCEAFABAA48B1 /* vspui_en_US.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; name = vspui_en_US.ts; path = /Users/beschric/tests/VSPDriver/VSPClientUI/vspui_en_US.ts; sourceTree = "<absolute>"; };
-		3A46F7945D715ACF512622F3 /* VSPClientUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VSPClientUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3A8EF9C62A8D4790CBB89CEA /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = /System/Library/Frameworks/ImageIO.framework; sourceTree = "<absolute>"; };
-		3BA538797E0213D4018CA20A /* pgconnect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pgconnect.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pgconnect.h; sourceTree = "<absolute>"; };
-		3C84D068EE758BA7519FF6D8 /* QtWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtWidgets.framework; path = /Users/beschric/Qt/6.8.2/macos/lib/QtWidgets.framework; sourceTree = "<absolute>"; };
-		3CE715569C30B39AA42DED3B /* moc_pglkremove.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_pglkremove.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/moc_pglkremove.cpp; sourceTree = "<absolute>"; };
-		48E29C8B7925E7FF83B8A394 /* ui_pgchecks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_pgchecks.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/ui_pgchecks.h; sourceTree = "<absolute>"; };
-		4CBEC2B2D6EC45650963A456 /* ui_pglinklist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_pglinklist.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/ui_pglinklist.h; sourceTree = "<absolute>"; };
-		559EEE51CC5E0B7D3DA5CCC7 /* pgconnect.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = pgconnect.ui; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pgconnect.ui; sourceTree = "<absolute>"; };
-		583ADEC33CAB5A2019DC2D20 /* vspsession.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vspsession.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/session/vspsession.cpp; sourceTree = "<absolute>"; };
-		591B0FAD797BF739B16D29D1 /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = /Users/beschric/Qt/6.8.2/macos/lib/QtGui.framework; sourceTree = "<absolute>"; };
-		5F9A4B2B3FF5EC87C57CF6B4 /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = /System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = "<absolute>"; };
-		60867EDB73BE3FA0737923D9 /* serialio.pri */ = {isa = PBXFileReference; lastKnownFileType = text; name = serialio.pri; path = /Users/beschric/tests/VSPDriver/VSPClientUI/serialio/serialio.pri; sourceTree = "<absolute>"; };
-		60D1D6EA2448F703A8E49FF9 /* pgchecks.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pgchecks.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pgchecks.cpp; sourceTree = "<absolute>"; };
-		62BB452E14126EB7CC872BFB /* ui_pglkcreate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_pglkcreate.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/ui_pglkcreate.h; sourceTree = "<absolute>"; };
-		66AACB607530B444997E16C7 /* pgspcreate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pgspcreate.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pgspcreate.cpp; sourceTree = "<absolute>"; };
-		6790A4BDB6C5C527A33D23D6 /* pgchecks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pgchecks.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pgchecks.h; sourceTree = "<absolute>"; };
-		6A470C9CC83BFCEB734B0621 /* pglkremove.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pglkremove.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pglkremove.cpp; sourceTree = "<absolute>"; };
-		6C17434A746012642769AE6E /* vspui_de_DE.qm */ = {isa = PBXFileReference; lastKnownFileType = file; name = vspui_de_DE.qm; path = /Users/beschric/tests/VSPDriver/VSPClientUI/vspui_de_DE.qm; sourceTree = "<absolute>"; };
-		6E50EFA3B21891CA3B959203 /* vspclient.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = vspclient.icns; path = /Users/beschric/tests/VSPDriver/VSPClientUI/assets/icns/vspclient.icns; sourceTree = "<absolute>"; };
-		6FD3AEB2A243C4A09692E50B /* ui_pgspcreate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_pgspcreate.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/ui_pgspcreate.h; sourceTree = "<absolute>"; };
-		702B35ACFEC5AA62231CD95F /* moc_pgconnect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_pgconnect.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/moc_pgconnect.cpp; sourceTree = "<absolute>"; };
-		7146DFBB73D61170E0A6F045 /* vscmainwindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vscmainwindow.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/vscmainwindow.h; sourceTree = "<absolute>"; };
+		2EF421CAFE1189237CCAC6EE /* session.pri */ = {isa = PBXFileReference; lastKnownFileType = text; name = session.pri; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/session/session.pri; sourceTree = "<absolute>"; };
+		30DD822FC33C8675EC7143D5 /* moc_vscmainwindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_vscmainwindow.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/moc_vscmainwindow.cpp; sourceTree = "<absolute>"; };
+		31228AF126831860F8374590 /* VSPClientUI.pro */ = {isa = PBXFileReference; lastKnownFileType = text; name = VSPClientUI.pro; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/VSPClientUI.pro; sourceTree = "<absolute>"; };
+		31B6A7788601BC533AAFC418 /* pgspcreate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pgspcreate.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pgspcreate.cpp; sourceTree = "<absolute>"; };
+		35B839C49DC02650D74EA9AF /* vspui_de_DE.qm */ = {isa = PBXFileReference; lastKnownFileType = file; name = vspui_de_DE.qm; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/vspui_de_DE.qm; sourceTree = "<absolute>"; };
+		3AAC4A38FBC21D12B86F87A6 /* ui_pgchecks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_pgchecks.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/ui_pgchecks.h; sourceTree = "<absolute>"; };
+		3AF1A262A121543C1B627F57 /* dummy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dummy.cpp; path = /Users/beschric/Qt/5.15.2/clang_64/mkspecs/features/data/dummy.cpp; sourceTree = "<absolute>"; };
+		3B279EF20721AA60572A2C90 /* pgspremove.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = pgspremove.ui; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pgspremove.ui; sourceTree = "<absolute>"; };
+		3EFD50188F1388D9183DB31E /* moc_pgconnect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_pgconnect.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/moc_pgconnect.cpp; sourceTree = "<absolute>"; };
+		3F8E9F9490F312782D6E6972 /* pglinklist.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = pglinklist.ui; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pglinklist.ui; sourceTree = "<absolute>"; };
+		44341AFCAEBBCA0C73705A41 /* moc_pglkremove.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_pglkremove.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/moc_pglkremove.cpp; sourceTree = "<absolute>"; };
+		48C2547B60AE2AEFCC0BD0F1 /* pgspremove.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pgspremove.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pgspremove.h; sourceTree = "<absolute>"; };
+		4A36CC182DBD487662595AAB /* pglkremove.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pglkremove.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pglkremove.cpp; sourceTree = "<absolute>"; };
+		4E48031A2CB03CA83397AD5F /* pgchecks.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = pgchecks.ui; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pgchecks.ui; sourceTree = "<absolute>"; };
+		51ECCD2491FDB71271BDC888 /* vsctheme.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vsctheme.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/themes/vsctheme.cpp; sourceTree = "<absolute>"; };
+		586EC51F7DED1D5044C981B9 /* ui_pglkcreate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_pglkcreate.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/ui_pglkcreate.h; sourceTree = "<absolute>"; };
+		598961311B4A6BDB84862AF4 /* model.pri */ = {isa = PBXFileReference; lastKnownFileType = text; name = model.pri; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/model/model.pri; sourceTree = "<absolute>"; };
+		6061381D158DCC90178D1651 /* ui_vscmainwindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_vscmainwindow.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/ui_vscmainwindow.h; sourceTree = "<absolute>"; };
+		64E01D6C4A1A0B724A30B30C /* vspsession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vspsession.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/session/vspsession.h; sourceTree = "<absolute>"; };
+		658FAB2FFAC9BFA17563F8E6 /* vspdriverclient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vspdriverclient.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/driver/vspdriverclient.cpp; sourceTree = "<absolute>"; };
+		6D2765900D4E013351DA70AA /* vspui_en_US.qm */ = {isa = PBXFileReference; lastKnownFileType = file; name = vspui_en_US.qm; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/vspui_en_US.qm; sourceTree = "<absolute>"; };
+		70F72AF5D1C38F9AFE3BAB1D /* pgtrace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pgtrace.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pgtrace.h; sourceTree = "<absolute>"; };
 		723F90793B2C195E2CCB2233 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
-		7410A769B1CA8C6B23A068A5 /* moc_pglkcreate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_pglkcreate.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/moc_pglkcreate.cpp; sourceTree = "<absolute>"; };
-		7BC5B279BA7405AFCD29A067 /* QtSerialPort.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtSerialPort.framework; path = /Users/beschric/Qt/6.8.2/macos/lib/QtSerialPort.framework; sourceTree = "<absolute>"; };
-		7C12743393A0A7F4D48AA420 /* moc_pgtrace.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_pgtrace.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/moc_pgtrace.cpp; sourceTree = "<absolute>"; };
-		7F51E1AA13D2645F27437EEE /* qrc_vspui.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = qrc_vspui.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/qrc_vspui.cpp; sourceTree = "<absolute>"; };
-		88F12FE42DCDBE4B00E0486A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		88F12FE62DCDBE6F00E0486A /* IOBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOBluetooth.framework; path = System/Library/Frameworks/IOBluetooth.framework; sourceTree = SDKROOT; };
-		88F12FE72DCDBE6F00E0486A /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
-		88F12FEA2DCDBE7A00E0486A /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
-		88F12FEC2DCDBEB100E0486A /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
-		8C0BACB67D85AE8228D95781 /* pgtrace.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pgtrace.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pgtrace.cpp; sourceTree = "<absolute>"; };
+		75D915ABB724B839B6FDEFD4 /* pgportlist.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = pgportlist.ui; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pgportlist.ui; sourceTree = "<absolute>"; };
+		766C211A0379771D317BE6AC /* pglkcreate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pglkcreate.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pglkcreate.h; sourceTree = "<absolute>"; };
+		77662C5730DD63FB2C7D36F1 /* vspclient.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = vspclient.icns; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/assets/icns/vspclient.icns; sourceTree = "<absolute>"; };
+		7A5871EFD7D27FA5EA955DBB /* serialio.pri */ = {isa = PBXFileReference; lastKnownFileType = text; name = serialio.pri; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/serialio/serialio.pri; sourceTree = "<absolute>"; };
+		7A67CD283EA499BE60FBA66B /* vspdatamodel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vspdatamodel.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/model/vspdatamodel.h; sourceTree = "<absolute>"; };
+		7A8AA80DF75B0CE6E9FC9106 /* QtWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtWidgets.framework; path = /Users/beschric/Qt/5.15.2/clang_64/lib/QtWidgets.framework; sourceTree = "<absolute>"; };
+		7AE68FEFC6B163BEA81090B1 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/main.cpp; sourceTree = "<absolute>"; };
+		8263D6C334723111163A631D /* pgconnect.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = pgconnect.ui; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pgconnect.ui; sourceTree = "<absolute>"; };
+		86390F02CF4F348E7E41FD91 /* pgspcreate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pgspcreate.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pgspcreate.h; sourceTree = "<absolute>"; };
+		86727F261D737F66DDBC2F07 /* pglkcreate.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = pglkcreate.ui; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pglkcreate.ui; sourceTree = "<absolute>"; };
+		8979A7CC47D2D3DBAD9DDF04 /* ui_pgspremove.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_pgspremove.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/ui_pgspremove.h; sourceTree = "<absolute>"; };
+		8BFF1DC5B9ECB9A8F0DC4105 /* vspserialio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vspserialio.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/serialio/vspserialio.h; sourceTree = "<absolute>"; };
 		8D9815BDB5BD9F90D2BC05C5 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
-		912EFA67AB6F00A360144B68 /* moc_vspserialio.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_vspserialio.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/moc_vspserialio.cpp; sourceTree = "<absolute>"; };
-		91D2FD968696AC3083EB4639 /* pgportlist.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pgportlist.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pgportlist.cpp; sourceTree = "<absolute>"; };
-		92918E4DFA0091E8FA5013B6 /* vspclient_512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = vspclient_512x512.png; path = /Users/beschric/tests/VSPDriver/VSPClientUI/assets/png/vspclient_512x512.png; sourceTree = "<absolute>"; };
-		9864BC2836E1F5B583EA8165 /* vspdriverclient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vspdriverclient.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/driver/vspdriverclient.h; sourceTree = "<absolute>"; };
-		9FDE7AC959CCD39C04F2EF3F /* ui.pri */ = {isa = PBXFileReference; lastKnownFileType = text; name = ui.pri; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/ui.pri; sourceTree = "<absolute>"; };
-		9FEDF2B655670C7474D7A53F /* QtXml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtXml.framework; path = /Users/beschric/Qt/6.8.2/macos/lib/QtXml.framework; sourceTree = "<absolute>"; };
-		A09359E71C0046F8C38235E9 /* VSPClientUI.pro */ = {isa = PBXFileReference; lastKnownFileType = text; name = VSPClientUI.pro; path = /Users/beschric/tests/VSPDriver/VSPClientUI/VSPClientUI.pro; sourceTree = "<absolute>"; };
+		9103AA162915BBF1B315FE99 /* QtSerialBus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtSerialBus.framework; path = /Users/beschric/Qt/5.15.2/clang_64/lib/QtSerialBus.framework; sourceTree = "<absolute>"; };
+		939C465E748EFEE35F71C20B /* qt_plugin_qsqlmysql.pri */ = {isa = PBXFileReference; lastKnownFileType = text; name = qt_plugin_qsqlmysql.pri; path = "/Users/beschric/Qt/5.15.2/Src/qtbase/src/plugins/sqldrivers/build/mkspecs/modules-inst/qt_plugin_qsqlmysql.pri"; sourceTree = "<absolute>"; };
+		95774B4ECD817698D8048988 /* pglkremove.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = pglkremove.ui; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pglkremove.ui; sourceTree = "<absolute>"; };
+		95C6C311E42A72B4AEE97BC0 /* pgchecks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pgchecks.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pgchecks.h; sourceTree = "<absolute>"; };
+		9639660531CEB1DA46858E07 /* pgchecks.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pgchecks.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pgchecks.cpp; sourceTree = "<absolute>"; };
+		972E7EC58663747C4B0B99F8 /* ui_pglinklist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_pglinklist.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/ui_pglinklist.h; sourceTree = "<absolute>"; };
+		978A1D785EFB021B58E78396 /* vspclient_512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = vspclient_512x512.png; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/assets/png/vspclient_512x512.png; sourceTree = "<absolute>"; };
+		992FCB896502344520E445CC /* pglkremove.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pglkremove.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pglkremove.h; sourceTree = "<absolute>"; };
+		9A034818E974099258DDBE87 /* ui_vspserialio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_vspserialio.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/ui_vspserialio.h; sourceTree = "<absolute>"; };
+		9AB93E7FA18E1229A4D0A292 /* ui_pgtrace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_pgtrace.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/ui_pgtrace.h; sourceTree = "<absolute>"; };
+		9D3DCFAD84B8F52FBC513D3B /* QtNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtNetwork.framework; path = /Users/beschric/Qt/5.15.2/clang_64/lib/QtNetwork.framework; sourceTree = "<absolute>"; };
+		9ED2EAC67CA3EC83BF3E4A4E /* vscmainwindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vscmainwindow.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/vscmainwindow.h; sourceTree = "<absolute>"; };
+		A10805602B9DCCA445EA2156 /* VSPClientUI.pro */ = {isa = PBXFileReference; lastKnownFileType = text; name = VSPClientUI.pro; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/VSPClientUI.pro; sourceTree = "<absolute>"; };
 		A1A67BEAA744704B29168D39 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
-		A39DBA992EA5623B810646DC /* .qmake.stash */ = {isa = PBXFileReference; lastKnownFileType = text; name = .qmake.stash; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/.qmake.stash; sourceTree = "<absolute>"; };
-		A724D0C6AECDCF844EAF2FDE /* ui_vspserialio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_vspserialio.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/ui_vspserialio.h; sourceTree = "<absolute>"; };
-		A9A5A240664A771613685015 /* vspui_en_US.qm */ = {isa = PBXFileReference; lastKnownFileType = file; name = vspui_en_US.qm; path = /Users/beschric/tests/VSPDriver/VSPClientUI/vspui_en_US.qm; sourceTree = "<absolute>"; };
-		AC2E29EA742247BE11103F2F /* vspserialio.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = vspserialio.ui; path = /Users/beschric/tests/VSPDriver/VSPClientUI/serialio/vspserialio.ui; sourceTree = "<absolute>"; };
-		AC3C7A408D01B5A8AB5C5D3C /* moc_pgportlist.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_pgportlist.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/moc_pgportlist.cpp; sourceTree = "<absolute>"; };
-		ACE85C1FAD10D7AA6FA288B7 /* vspabstractpage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vspabstractpage.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/vspabstractpage.cpp; sourceTree = "<absolute>"; };
-		B4A5F81A15B07CB98EF39E14 /* pgtrace.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = pgtrace.ui; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pgtrace.ui; sourceTree = "<absolute>"; };
-		B4B87B3E590091B1DFEACEB3 /* vspabstractpage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vspabstractpage.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/vspabstractpage.h; sourceTree = "<absolute>"; };
-		B6AC75DD12BEF0E1059577FF /* QtNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtNetwork.framework; path = /Users/beschric/Qt/6.8.2/macos/lib/QtNetwork.framework; sourceTree = "<absolute>"; };
-		B99AFEBEDD4DDBA690CC4A88 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = /Users/beschric/tests/VSPDriver/VSPClientUI/LICENSE; sourceTree = "<absolute>"; };
-		BD07F996BABDA09D78F17715 /* vspui.qrc */ = {isa = PBXFileReference; lastKnownFileType = text; name = vspui.qrc; path = /Users/beschric/tests/VSPDriver/VSPClientUI/vspui.qrc; sourceTree = "<absolute>"; };
-		BD747897CFB017582170C5BF /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = /Users/beschric/Qt/6.8.2/macos/lib/QtCore.framework; sourceTree = "<absolute>"; };
-		BEEF1F3371B793C8688D5EDE /* vsctheme.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vsctheme.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/themes/vsctheme.h; sourceTree = "<absolute>"; };
-		BF36D191F1F9AC1200EA80F5 /* vscmainwindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vscmainwindow.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/vscmainwindow.cpp; sourceTree = "<absolute>"; };
-		BFAC9B9A405AB6D771F5E8C5 /* moc_pgspcreate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_pgspcreate.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/moc_pgspcreate.cpp; sourceTree = "<absolute>"; };
-		BFC1181C8CD43161CEBE8AE7 /* pglkcreate.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = pglkcreate.ui; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pglkcreate.ui; sourceTree = "<absolute>"; };
-		C15B0EE2F4F6C0D4254ACAD1 /* vspdriverclient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vspdriverclient.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/driver/vspdriverclient.cpp; sourceTree = "<absolute>"; };
-		C1CFCA71B2515BD5C127199F /* pglinklist.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pglinklist.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pglinklist.cpp; sourceTree = "<absolute>"; };
-		C2E662D393DF99706375A3B7 /* pgconnect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pgconnect.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pgconnect.cpp; sourceTree = "<absolute>"; };
-		C461FF17230196466A29AB2C /* pglinklist.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = pglinklist.ui; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pglinklist.ui; sourceTree = "<absolute>"; };
-		C495DA2FD33C7B3576D70612 /* pgspremove.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = pgspremove.ui; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pgspremove.ui; sourceTree = "<absolute>"; };
-		C5B1C558BF7EE0B84F9E6078 /* ui_pgconnect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_pgconnect.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/ui_pgconnect.h; sourceTree = "<absolute>"; };
-		C7D8B39527BD44F64D7ABED7 /* moc_vspabstractpage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_vspabstractpage.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/moc_vspabstractpage.cpp; sourceTree = "<absolute>"; };
-		C88BB468ED2A469D28E6E539 /* moc_pgchecks.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_pgchecks.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/moc_pgchecks.cpp; sourceTree = "<absolute>"; };
-		CA98AA260A02F81438FE6162 /* qrc_qmake_qmake_qm_files.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = qrc_qmake_qmake_qm_files.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/qrc_qmake_qmake_qm_files.cpp; sourceTree = "<absolute>"; };
-		CD9397314B022B8B2CDAB2F5 /* vspsession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vspsession.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/session/vspsession.h; sourceTree = "<absolute>"; };
-		CEF99A138472D28217EC3368 /* vspui_de_DE.ts */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.typescript; name = vspui_de_DE.ts; path = /Users/beschric/tests/VSPDriver/VSPClientUI/vspui_de_DE.ts; sourceTree = "<absolute>"; };
-		D173DB799F95BF0FDE70E0F1 /* model.pri */ = {isa = PBXFileReference; lastKnownFileType = text; name = model.pri; path = /Users/beschric/tests/VSPDriver/VSPClientUI/model/model.pri; sourceTree = "<absolute>"; };
+		A253D6FC7014CB2FF0EFA968 /* vspversion.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = vspversion.mm; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/vspversion.mm; sourceTree = "<absolute>"; };
+		A2A91DA8A8958313377FD65C /* pgspcreate.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = pgspcreate.ui; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pgspcreate.ui; sourceTree = "<absolute>"; };
+		A2D643F1713352D07CD45E5F /* vspdatamodel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vspdatamodel.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/model/vspdatamodel.cpp; sourceTree = "<absolute>"; };
+		A452466312EDD0735F9CC419 /* vscmainwindow.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = vscmainwindow.ui; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/vscmainwindow.ui; sourceTree = "<absolute>"; };
+		A534B826F3B8DA46481CBCA3 /* vspui.qrc */ = {isa = PBXFileReference; lastKnownFileType = text; name = vspui.qrc; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/vspui.qrc; sourceTree = "<absolute>"; };
+		A59C183123450BF1BB49DD0B /* vspui_en_US.ts */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = vspui_en_US.ts; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/vspui_en_US.ts; sourceTree = "<absolute>"; };
+		A7181A59C07D1DCFFCA96BC1 /* moc_vspabstractpage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_vspabstractpage.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/moc_vspabstractpage.cpp; sourceTree = "<absolute>"; };
+		A87846AD1E8E6E75C79A708B /* pglinklist.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pglinklist.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pglinklist.cpp; sourceTree = "<absolute>"; };
+		AA7A62F7AC27340EB40659F6 /* vspdriverclient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vspdriverclient.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/driver/vspdriverclient.h; sourceTree = "<absolute>"; };
+		B3B4EE30B2E3FDFB093235AB /* vspserialio.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vspserialio.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/serialio/vspserialio.cpp; sourceTree = "<absolute>"; };
+		B7F47100B3FA3D60482FE344 /* moc_pgchecks.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_pgchecks.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/moc_pgchecks.cpp; sourceTree = "<absolute>"; };
+		B9B8BC5175233E3BBA0376CC /* vspabstractpage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vspabstractpage.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/vspabstractpage.cpp; sourceTree = "<absolute>"; };
+		B9F34737B4E0BBBF8B515132 /* moc_pgtrace.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_pgtrace.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/moc_pgtrace.cpp; sourceTree = "<absolute>"; };
+		BA35D7302D93CA1D25D1C7E1 /* ui_pgspcreate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_pgspcreate.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/ui_pgspcreate.h; sourceTree = "<absolute>"; };
+		BE2936287533CAB4E9E926AE /* pgconnect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pgconnect.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pgconnect.h; sourceTree = "<absolute>"; };
+		C10EE14A3BA6F1D06D78E3A8 /* .qmake.stash */ = {isa = PBXFileReference; lastKnownFileType = text; name = .qmake.stash; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/.qmake.stash; sourceTree = "<absolute>"; };
+		C1DAE4978C5BADCF56BE1E50 /* VSPClientUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VSPClientUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1FE11D67DB09609ED031605 /* pgtrace.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pgtrace.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pgtrace.cpp; sourceTree = "<absolute>"; };
+		C23E6421671605FED1FD581D /* pgportlist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pgportlist.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pgportlist.h; sourceTree = "<absolute>"; };
+		C6542D6EEE0BB2F0ED2A55E4 /* QtConcurrent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtConcurrent.framework; path = /Users/beschric/Qt/5.15.2/clang_64/lib/QtConcurrent.framework; sourceTree = "<absolute>"; };
+		C6E03F99226B9CFA30654B18 /* qmake_qmake_qm_files.qrc */ = {isa = PBXFileReference; lastKnownFileType = text; name = qmake_qmake_qm_files.qrc; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/qmake_qmake_qm_files.qrc; sourceTree = "<absolute>"; };
+		CBE43632E17FDE4D8C9700B3 /* vscmainwindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vscmainwindow.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/vscmainwindow.cpp; sourceTree = "<absolute>"; };
+		CCF3624A8DBF61E3F264FC20 /* vsctheme.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vsctheme.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/themes/vsctheme.h; sourceTree = "<absolute>"; };
+		CCF8617BD6CA66CDBEF0A597 /* pgconnect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pgconnect.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pgconnect.cpp; sourceTree = "<absolute>"; };
+		D33739413D5574A67C3C144B /* ui_pglkremove.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_pglkremove.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/ui_pglkremove.h; sourceTree = "<absolute>"; };
 		D4B32C2222F82AC56BADEB21 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
-		D5B0B9DD8E7E036C31DB6186 /* pgtrace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pgtrace.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pgtrace.h; sourceTree = "<absolute>"; };
-		D98E5581D8B8769DBB86AFE9 /* pglkremove.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pglkremove.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pglkremove.h; sourceTree = "<absolute>"; };
-		D9DB7235658D7EDC5E87DA69 /* pglinklist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pglinklist.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pglinklist.h; sourceTree = "<absolute>"; };
-		DD81A0B4E8E15A44B92CB61A /* vspdatamodel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vspdatamodel.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/model/vspdatamodel.cpp; sourceTree = "<absolute>"; };
-		E5CA72E73B1CDB5CEFAF6ECF /* ui_pglkremove.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_pglkremove.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/ui_pglkremove.h; sourceTree = "<absolute>"; };
-		E678471ED45ACD85E5260746 /* VSPClientUI.pro */ = {isa = PBXFileReference; lastKnownFileType = text; name = VSPClientUI.pro; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/VSPClientUI.pro; sourceTree = "<absolute>"; };
-		EAAE5E0DC7412EC664710AAD /* themes.pri */ = {isa = PBXFileReference; lastKnownFileType = text; name = themes.pri; path = /Users/beschric/tests/VSPDriver/VSPClientUI/themes/themes.pri; sourceTree = "<absolute>"; };
-		EAC486F72E3CC88D8C034F10 /* QtSerialBus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtSerialBus.framework; path = /Users/beschric/Qt/6.8.2/macos/lib/QtSerialBus.framework; sourceTree = "<absolute>"; };
-		EC18FF9EF9598C499851D486 /* pgchecks.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = pgchecks.ui; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pgchecks.ui; sourceTree = "<absolute>"; };
-		ED8A494F1632F11FA3838791 /* QtConcurrent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtConcurrent.framework; path = /Users/beschric/Qt/6.8.2/macos/lib/QtConcurrent.framework; sourceTree = "<absolute>"; };
-		EEC8648E2090B2C5C888C836 /* pgspremove.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pgspremove.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pgspremove.cpp; sourceTree = "<absolute>"; };
-		F21D429DD0795C827D35B561 /* ui_pgtrace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_pgtrace.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/ui_pgtrace.h; sourceTree = "<absolute>"; };
-		F2B89125F6F4181E5291CA07 /* moc_pglinklist.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_pglinklist.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/moc_pglinklist.cpp; sourceTree = "<absolute>"; };
-		F38F1573AD02CFA96EDC028F /* moc_vsctheme.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_vsctheme.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/moc_vsctheme.cpp; sourceTree = "<absolute>"; };
-		F6608EBAF4903DFA64717926 /* ui_vscmainwindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_vscmainwindow.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/ui_vscmainwindow.h; sourceTree = "<absolute>"; };
-		F87458F6129066119C1CA5D5 /* pglkcreate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pglkcreate.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/ui/pglkcreate.h; sourceTree = "<absolute>"; };
-		FA8B6EF9ACB34A5E70D4A900 /* ui_pgspremove.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_pgspremove.h; path = /Users/beschric/tests/VSPDriver/VSPClientUI/xcode/ui_pgspremove.h; sourceTree = "<absolute>"; };
-		FBF974B84E0B80B5391CAB48 /* driver.pri */ = {isa = PBXFileReference; lastKnownFileType = text; name = driver.pri; path = /Users/beschric/tests/VSPDriver/VSPClientUI/driver/driver.pri; sourceTree = "<absolute>"; };
-		FC2642E8DBC2E97977BB667E /* vsctheme.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vsctheme.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/themes/vsctheme.cpp; sourceTree = "<absolute>"; };
-		FC901E0D82F948F20372243F /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = /Users/beschric/tests/VSPDriver/VSPClientUI/assets/en.lproj/InfoPlist.strings; sourceTree = "<absolute>"; };
-		FDCE47F106534D1F7844841A /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = /Users/beschric/tests/VSPDriver/VSPClientUI/main.cpp; sourceTree = "<absolute>"; };
+		D67D30D4E0C3C68F6D6A21B9 /* vspsession.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vspsession.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/session/vspsession.cpp; sourceTree = "<absolute>"; };
+		E0E84A14E32F1899E56B8B37 /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/assets/en.lproj/InfoPlist.strings; sourceTree = "<absolute>"; };
+		E4D121890DD223FBD3CBED75 /* pglinklist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pglinklist.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pglinklist.h; sourceTree = "<absolute>"; };
+		E6A60B32426CBB1EEF873C08 /* vspserialio.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = vspserialio.ui; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/serialio/vspserialio.ui; sourceTree = "<absolute>"; };
+		E7DB3A25075DEFFFB0BB6AE2 /* moc_pglinklist.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_pglinklist.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/moc_pglinklist.cpp; sourceTree = "<absolute>"; };
+		E875688FF308CFD3DC86E93D /* pglkcreate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pglkcreate.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pglkcreate.cpp; sourceTree = "<absolute>"; };
+		E9F1CD7DB8116B6D4FF8E801 /* pgportlist.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pgportlist.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/pgportlist.cpp; sourceTree = "<absolute>"; };
+		EE09DDC2A65E00BEE80A7EE4 /* moc_vspdatamodel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_vspdatamodel.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/moc_vspdatamodel.cpp; sourceTree = "<absolute>"; };
+		EE3D564D714B2E869D375859 /* QtXml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtXml.framework; path = /Users/beschric/Qt/5.15.2/clang_64/lib/QtXml.framework; sourceTree = "<absolute>"; };
+		F34DD53A6E9EAA77ABFF64CB /* moc_vspsession.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_vspsession.cpp; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/moc_vspsession.cpp; sourceTree = "<absolute>"; };
+		F799B9AD456D2FD37E3F7BE8 /* ui.pri */ = {isa = PBXFileReference; lastKnownFileType = text; name = ui.pri; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/ui/ui.pri; sourceTree = "<absolute>"; };
+		FB573AAA8AA5FFF8026F357B /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/assets/de.lproj/InfoPlist.strings; sourceTree = "<absolute>"; };
+		FBE40F4DC8988FF0A2DC6630 /* ui_pgportlist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_pgportlist.h; path = /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode/ui_pgportlist.h; sourceTree = "<absolute>"; };
+		FD5F7CD27F010830914BB745 /* QtMacExtras.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtMacExtras.framework; path = /Users/beschric/Qt/5.15.2/clang_64/lib/QtMacExtras.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,22 +263,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FE15CE0308F7DF67A1E309C0 /* QtWidgets.framework in Link Binary With Libraries */,
-				B76AB4C2367E1C2856C90D53 /* QtGui.framework in Link Binary With Libraries */,
+				22D7058DD233DA54A2314BDB /* QtWidgets.framework in Link Binary With Libraries */,
+				1B61607D496009760196E901 /* QtMacExtras.framework in Link Binary With Libraries */,
+				407AB1EF1F8186896A504098 /* QtGui.framework in Link Binary With Libraries */,
 				F2A75ACAC9DF6A3F4E5711E7 /* AppKit.framework in Link Binary With Libraries */,
-				61EEC397DC8556BF8C4E36A7 /* ImageIO.framework in Link Binary With Libraries */,
 				B3FE8FAC746D3D5BB24FA398 /* Metal.framework in Link Binary With Libraries */,
-				1B29CC44EC5F9B2617D73AD1 /* QtSerialBus.framework in Link Binary With Libraries */,
-				4BC1A60CF2D5C00A3DF7122F /* QtNetwork.framework in Link Binary With Libraries */,
-				EB9B97E72C24CCE9691A858A /* QtConcurrent.framework in Link Binary With Libraries */,
-				50DE12BA4F1806D8DAC5478A /* QtSerialPort.framework in Link Binary With Libraries */,
-				5EDFE04616702FDDDD555CAD /* QtXml.framework in Link Binary With Libraries */,
-				8962C4EB830DB9EE70572552 /* QtCore.framework in Link Binary With Libraries */,
-				8D267F2E4776F0ECA2F49DC8 /* IOKit.framework in Link Binary With Libraries */,
+				529ECA2A40065C609FA309BF /* QtNetwork.framework in Link Binary With Libraries */,
+				B522A5890938DDDE0118894B /* QtConcurrent.framework in Link Binary With Libraries */,
+				81ACB0990D1F8589820AED89 /* QtSerialBus.framework in Link Binary With Libraries */,
+				39B0C5B1945FEA40EB6B2B57 /* QtSerialPort.framework in Link Binary With Libraries */,
+				4AA7F5D377CDE9056938F1CF /* QtXml.framework in Link Binary With Libraries */,
+				1EA1F9F6E8BE34997A2CED9E /* QtCore.framework in Link Binary With Libraries */,
 				A99B2AA0F9CBBDD12BA126A4 /* DiskArbitration.framework in Link Binary With Libraries */,
-				F30795E5207D73289814C47C /* UniformTypeIdentifiers.framework in Link Binary With Libraries */,
-				E45E51A644D5FC9F942ECE55 /* AGL.framework in Link Binary With Libraries */,
+				8D267F2E4776F0ECA2F49DC8 /* IOKit.framework in Link Binary With Libraries */,
 				8771A8C96E9C391044035D99 /* OpenGL.framework in Link Binary With Libraries */,
+				E45E51A644D5FC9F942ECE55 /* AGL.framework in Link Binary With Libraries */,
 			);
 			name = "Link Binary With Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -302,8 +297,8 @@
 		1E787E9E7DB10CDCD7826E5F /* xcode */ = {
 			isa = PBXGroup;
 			children = (
-				E678471ED45ACD85E5260746 /* VSPClientUI.pro */,
-				A39DBA992EA5623B810646DC /* .qmake.stash */,
+				A10805602B9DCCA445EA2156 /* VSPClientUI.pro */,
+				C10EE14A3BA6F1D06D78E3A8 /* .qmake.stash */,
 			);
 			name = xcode;
 			sourceTree = "<group>";
@@ -311,7 +306,7 @@
 		1F94377DDCE7806A5B4AFCB9 /* serialio */ = {
 			isa = PBXGroup;
 			children = (
-				60867EDB73BE3FA0737923D9 /* serialio.pri */,
+				7A5871EFD7D27FA5EA955DBB /* serialio.pri */,
 			);
 			name = serialio;
 			sourceTree = "<group>";
@@ -327,7 +322,7 @@
 		282F7AC65943288CBFAB548C /* xcode */ = {
 			isa = PBXGroup;
 			children = (
-				33DC904D54B8261D209E32C8 /* qmake_qmake_qm_files.qrc */,
+				C6E03F99226B9CFA30654B18 /* qmake_qmake_qm_files.qrc */,
 			);
 			name = xcode;
 			sourceTree = "<group>";
@@ -335,7 +330,7 @@
 		297B5FCA7BCA2D82005246A2 /* session */ = {
 			isa = PBXGroup;
 			children = (
-				232EE9189FA68ABA4681E779 /* session.pri */,
+				2EF421CAFE1189237CCAC6EE /* session.pri */,
 			);
 			name = session;
 			sourceTree = "<group>";
@@ -349,8 +344,8 @@
 				F146F0EB097287F1B0E6B4F2 /* themes */,
 				52533187307923CEBA2907E7 /* session */,
 				34FBBF35D049CB9403C9ECF0 /* ui */,
-				FDCE47F106534D1F7844841A /* main.cpp */,
-				310FDF95D0901F4A1DB369AD /* vspversion.mm */,
+				7AE68FEFC6B163BEA81090B1 /* main.cpp */,
+				A253D6FC7014CB2FF0EFA968 /* vspversion.mm */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -358,28 +353,28 @@
 		34FBBF35D049CB9403C9ECF0 /* ui */ = {
 			isa = PBXGroup;
 			children = (
-				60D1D6EA2448F703A8E49FF9 /* pgchecks.cpp */,
-				C2E662D393DF99706375A3B7 /* pgconnect.cpp */,
-				C1CFCA71B2515BD5C127199F /* pglinklist.cpp */,
-				15A253075FF127EEFCB70793 /* pglkcreate.cpp */,
-				6A470C9CC83BFCEB734B0621 /* pglkremove.cpp */,
-				91D2FD968696AC3083EB4639 /* pgportlist.cpp */,
-				66AACB607530B444997E16C7 /* pgspcreate.cpp */,
-				EEC8648E2090B2C5C888C836 /* pgspremove.cpp */,
-				8C0BACB67D85AE8228D95781 /* pgtrace.cpp */,
-				BF36D191F1F9AC1200EA80F5 /* vscmainwindow.cpp */,
-				ACE85C1FAD10D7AA6FA288B7 /* vspabstractpage.cpp */,
-				6790A4BDB6C5C527A33D23D6 /* pgchecks.h */,
-				3BA538797E0213D4018CA20A /* pgconnect.h */,
-				D9DB7235658D7EDC5E87DA69 /* pglinklist.h */,
-				F87458F6129066119C1CA5D5 /* pglkcreate.h */,
-				D98E5581D8B8769DBB86AFE9 /* pglkremove.h */,
-				0F2BE6C8C8B089667E291B1B /* pgportlist.h */,
-				31B66ED923E6989A050434F3 /* pgspcreate.h */,
-				2D889E367B12C89D866E61C8 /* pgspremove.h */,
-				D5B0B9DD8E7E036C31DB6186 /* pgtrace.h */,
-				7146DFBB73D61170E0A6F045 /* vscmainwindow.h */,
-				B4B87B3E590091B1DFEACEB3 /* vspabstractpage.h */,
+				9639660531CEB1DA46858E07 /* pgchecks.cpp */,
+				CCF8617BD6CA66CDBEF0A597 /* pgconnect.cpp */,
+				A87846AD1E8E6E75C79A708B /* pglinklist.cpp */,
+				E875688FF308CFD3DC86E93D /* pglkcreate.cpp */,
+				4A36CC182DBD487662595AAB /* pglkremove.cpp */,
+				E9F1CD7DB8116B6D4FF8E801 /* pgportlist.cpp */,
+				31B6A7788601BC533AAFC418 /* pgspcreate.cpp */,
+				0E9D99E24E8AA6D65F29F388 /* pgspremove.cpp */,
+				C1FE11D67DB09609ED031605 /* pgtrace.cpp */,
+				CBE43632E17FDE4D8C9700B3 /* vscmainwindow.cpp */,
+				B9B8BC5175233E3BBA0376CC /* vspabstractpage.cpp */,
+				95C6C311E42A72B4AEE97BC0 /* pgchecks.h */,
+				BE2936287533CAB4E9E926AE /* pgconnect.h */,
+				E4D121890DD223FBD3CBED75 /* pglinklist.h */,
+				766C211A0379771D317BE6AC /* pglkcreate.h */,
+				992FCB896502344520E445CC /* pglkremove.h */,
+				C23E6421671605FED1FD581D /* pgportlist.h */,
+				86390F02CF4F348E7E41FD91 /* pgspcreate.h */,
+				48C2547B60AE2AEFCC0BD0F1 /* pgspremove.h */,
+				70F72AF5D1C38F9AFE3BAB1D /* pgtrace.h */,
+				9ED2EAC67CA3EC83BF3E4A4E /* vscmainwindow.h */,
+				2462FD367653971DEC85D92F /* vspabstractpage.h */,
 			);
 			name = ui;
 			sourceTree = "<group>";
@@ -387,8 +382,8 @@
 		52533187307923CEBA2907E7 /* session */ = {
 			isa = PBXGroup;
 			children = (
-				583ADEC33CAB5A2019DC2D20 /* vspsession.cpp */,
-				CD9397314B022B8B2CDAB2F5 /* vspsession.h */,
+				D67D30D4E0C3C68F6D6A21B9 /* vspsession.cpp */,
+				64E01D6C4A1A0B724A30B30C /* vspsession.h */,
 			);
 			name = session;
 			sourceTree = "<group>";
@@ -396,7 +391,7 @@
 		6B0BD5F187D259B357CC9FBF /* serialio */ = {
 			isa = PBXGroup;
 			children = (
-				AC2E29EA742247BE11103F2F /* vspserialio.ui */,
+				E6A60B32426CBB1EEF873C08 /* vspserialio.ui */,
 			);
 			name = serialio;
 			sourceTree = "<group>";
@@ -405,13 +400,14 @@
 			isa = PBXGroup;
 			children = (
 				1E787E9E7DB10CDCD7826E5F /* xcode */,
+				939C465E748EFEE35F71C20B /* qt_plugin_qsqlmysql.pri */,
 				F1D1F80C94E27780AD558A3D /* driver */,
 				F7ACF05B8B1895A17B61D412 /* model */,
 				1F94377DDCE7806A5B4AFCB9 /* serialio */,
 				C3FD8E5146FA1A6CA360BDC4 /* themes */,
 				297B5FCA7BCA2D82005246A2 /* session */,
 				97B76B1EEC49905774B59F5B /* ui */,
-				A09359E71C0046F8C38235E9 /* VSPClientUI.pro */,
+				31228AF126831860F8374590 /* VSPClientUI.pro */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -419,8 +415,8 @@
 		84B18791063E3AAD7B3740AA /* driver */ = {
 			isa = PBXGroup;
 			children = (
-				C15B0EE2F4F6C0D4254ACAD1 /* vspdriverclient.cpp */,
-				9864BC2836E1F5B583EA8165 /* vspdriverclient.h */,
+				658FAB2FFAC9BFA17563F8E6 /* vspdriverclient.cpp */,
+				AA7A62F7AC27340EB40659F6 /* vspdriverclient.h */,
 			);
 			name = driver;
 			sourceTree = "<group>";
@@ -428,13 +424,13 @@
 		858FCAB0EB1F29CF8B07677C /* Bundle Data */ = {
 			isa = PBXGroup;
 			children = (
-				B99AFEBEDD4DDBA690CC4A88 /* LICENSE */,
-				FC901E0D82F948F20372243F /* InfoPlist.strings */,
-				A9A5A240664A771613685015 /* vspui_en_US.qm */,
-				3725C04434C38BF1E0E4D8BC /* InfoPlist.strings */,
-				6C17434A746012642769AE6E /* vspui_de_DE.qm */,
-				6E50EFA3B21891CA3B959203 /* vspclient.icns */,
-				92918E4DFA0091E8FA5013B6 /* vspclient_512x512.png */,
+				1247BF375E0E3D71F66B1623 /* LICENSE */,
+				E0E84A14E32F1899E56B8B37 /* InfoPlist.strings */,
+				6D2765900D4E013351DA70AA /* vspui_en_US.qm */,
+				FB573AAA8AA5FFF8026F357B /* InfoPlist.strings */,
+				35B839C49DC02650D74EA9AF /* vspui_de_DE.qm */,
+				77662C5730DD63FB2C7D36F1 /* vspclient.icns */,
+				978A1D785EFB021B58E78396 /* vspclient_512x512.png */,
 			);
 			name = "Bundle Data";
 			sourceTree = "<group>";
@@ -442,7 +438,7 @@
 		87DF60DE337FB58864343E39 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				BD07F996BABDA09D78F17715 /* vspui.qrc */,
+				A534B826F3B8DA46481CBCA3 /* vspui.qrc */,
 				282F7AC65943288CBFAB548C /* xcode */,
 			);
 			name = Resources;
@@ -451,8 +447,8 @@
 		8F35EA053E3F6379461B8678 /* Sources [lrelease] */ = {
 			isa = PBXGroup;
 			children = (
-				3863829DFBFCCEAFABAA48B1 /* vspui_en_US.ts */,
-				CEF99A138472D28217EC3368 /* vspui_de_DE.ts */,
+				A59C183123450BF1BB49DD0B /* vspui_en_US.ts */,
+				00E951DF337A391246BA5A9C /* vspui_de_DE.ts */,
 			);
 			name = "Sources [lrelease]";
 			sourceTree = "<group>";
@@ -460,7 +456,7 @@
 		97B76B1EEC49905774B59F5B /* ui */ = {
 			isa = PBXGroup;
 			children = (
-				9FDE7AC959CCD39C04F2EF3F /* ui.pri */,
+				F799B9AD456D2FD37E3F7BE8 /* ui.pri */,
 			);
 			name = ui;
 			sourceTree = "<group>";
@@ -468,27 +464,21 @@
 		AF39DD055C3EF8226FBE929D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				88F12FEC2DCDBEB100E0486A /* EventKit.framework */,
-				88F12FEA2DCDBE7A00E0486A /* Contacts.framework */,
-				88F12FE72DCDBE6F00E0486A /* CoreBluetooth.framework */,
-				88F12FE62DCDBE6F00E0486A /* IOBluetooth.framework */,
-				88F12FE42DCDBE4B00E0486A /* AVFoundation.framework */,
-				3C84D068EE758BA7519FF6D8 /* QtWidgets.framework */,
-				591B0FAD797BF739B16D29D1 /* QtGui.framework */,
+				7A8AA80DF75B0CE6E9FC9106 /* QtWidgets.framework */,
+				FD5F7CD27F010830914BB745 /* QtMacExtras.framework */,
+				07A507402E075C1B214F8369 /* QtGui.framework */,
 				723F90793B2C195E2CCB2233 /* AppKit.framework */,
-				3A8EF9C62A8D4790CBB89CEA /* ImageIO.framework */,
 				1B2543FCC48E9436F21C4F63 /* Metal.framework */,
-				EAC486F72E3CC88D8C034F10 /* QtSerialBus.framework */,
-				B6AC75DD12BEF0E1059577FF /* QtNetwork.framework */,
-				ED8A494F1632F11FA3838791 /* QtConcurrent.framework */,
-				7BC5B279BA7405AFCD29A067 /* QtSerialPort.framework */,
-				9FEDF2B655670C7474D7A53F /* QtXml.framework */,
-				BD747897CFB017582170C5BF /* QtCore.framework */,
-				A1A67BEAA744704B29168D39 /* IOKit.framework */,
+				9D3DCFAD84B8F52FBC513D3B /* QtNetwork.framework */,
+				C6542D6EEE0BB2F0ED2A55E4 /* QtConcurrent.framework */,
+				9103AA162915BBF1B315FE99 /* QtSerialBus.framework */,
+				0D62750E60C25930C0D98648 /* QtSerialPort.framework */,
+				EE3D564D714B2E869D375859 /* QtXml.framework */,
+				0B196B8EE2BEE9FC651C21D1 /* QtCore.framework */,
 				2B774D8E4178765CE52EAAF5 /* DiskArbitration.framework */,
-				5F9A4B2B3FF5EC87C57CF6B4 /* UniformTypeIdentifiers.framework */,
-				8D9815BDB5BD9F90D2BC05C5 /* AGL.framework */,
+				A1A67BEAA744704B29168D39 /* IOKit.framework */,
 				D4B32C2222F82AC56BADEB21 /* OpenGL.framework */,
+				8D9815BDB5BD9F90D2BC05C5 /* AGL.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -496,43 +486,51 @@
 		B2533707CE6EC41A80600D40 /* xcode */ = {
 			isa = PBXGroup;
 			children = (
-				7F51E1AA13D2645F27437EEE /* qrc_vspui.cpp */,
-				CA98AA260A02F81438FE6162 /* qrc_qmake_qmake_qm_files.cpp */,
-				31F95B796A7B53E851F9E008 /* moc_vspdriverclient.cpp */,
-				22D2B516EC2290B2DF1CFD8A /* moc_vspdatamodel.cpp */,
-				912EFA67AB6F00A360144B68 /* moc_vspserialio.cpp */,
-				F38F1573AD02CFA96EDC028F /* moc_vsctheme.cpp */,
-				01704E9DACFE2200208FAF74 /* moc_vspsession.cpp */,
-				C88BB468ED2A469D28E6E539 /* moc_pgchecks.cpp */,
-				702B35ACFEC5AA62231CD95F /* moc_pgconnect.cpp */,
-				F2B89125F6F4181E5291CA07 /* moc_pglinklist.cpp */,
-				7410A769B1CA8C6B23A068A5 /* moc_pglkcreate.cpp */,
-				3CE715569C30B39AA42DED3B /* moc_pglkremove.cpp */,
-				AC3C7A408D01B5A8AB5C5D3C /* moc_pgportlist.cpp */,
-				BFAC9B9A405AB6D771F5E8C5 /* moc_pgspcreate.cpp */,
-				0D0CF8E04264751F99A1FAFD /* moc_pgspremove.cpp */,
-				7C12743393A0A7F4D48AA420 /* moc_pgtrace.cpp */,
-				002126C39F5E2A39EB592945 /* moc_vscmainwindow.cpp */,
-				C7D8B39527BD44F64D7ABED7 /* moc_vspabstractpage.cpp */,
-				A724D0C6AECDCF844EAF2FDE /* ui_vspserialio.h */,
-				48E29C8B7925E7FF83B8A394 /* ui_pgchecks.h */,
-				C5B1C558BF7EE0B84F9E6078 /* ui_pgconnect.h */,
-				4CBEC2B2D6EC45650963A456 /* ui_pglinklist.h */,
-				62BB452E14126EB7CC872BFB /* ui_pglkcreate.h */,
-				E5CA72E73B1CDB5CEFAF6ECF /* ui_pglkremove.h */,
-				33C4378847875690862E2730 /* ui_pgportlist.h */,
-				6FD3AEB2A243C4A09692E50B /* ui_pgspcreate.h */,
-				FA8B6EF9ACB34A5E70D4A900 /* ui_pgspremove.h */,
-				F21D429DD0795C827D35B561 /* ui_pgtrace.h */,
-				F6608EBAF4903DFA64717926 /* ui_vscmainwindow.h */,
+				2784A388C79449BF120891AB /* qrc_vspui.cpp */,
+				16E5AA15E00A399E3B9CB79B /* qrc_qmake_qmake_qm_files.cpp */,
+				1C57E10EFCD37143A09EC53C /* moc_vspdriverclient.cpp */,
+				EE09DDC2A65E00BEE80A7EE4 /* moc_vspdatamodel.cpp */,
+				03CEDE9595696FCC79CA7140 /* moc_vspserialio.cpp */,
+				09986D98568E571CA44332D9 /* moc_vsctheme.cpp */,
+				F34DD53A6E9EAA77ABFF64CB /* moc_vspsession.cpp */,
+				B7F47100B3FA3D60482FE344 /* moc_pgchecks.cpp */,
+				3EFD50188F1388D9183DB31E /* moc_pgconnect.cpp */,
+				E7DB3A25075DEFFFB0BB6AE2 /* moc_pglinklist.cpp */,
+				0735666D410201FBB43398DD /* moc_pglkcreate.cpp */,
+				44341AFCAEBBCA0C73705A41 /* moc_pglkremove.cpp */,
+				0624F1D1F2E4ED0793357ABD /* moc_pgportlist.cpp */,
+				1F0CE162B2F0E552B7FB726C /* moc_pgspcreate.cpp */,
+				17B2B9D64769DAFD71DA320E /* moc_pgspremove.cpp */,
+				B9F34737B4E0BBBF8B515132 /* moc_pgtrace.cpp */,
+				30DD822FC33C8675EC7143D5 /* moc_vscmainwindow.cpp */,
+				A7181A59C07D1DCFFCA96BC1 /* moc_vspabstractpage.cpp */,
+				9A034818E974099258DDBE87 /* ui_vspserialio.h */,
+				3AAC4A38FBC21D12B86F87A6 /* ui_pgchecks.h */,
+				2B1FAB1036A5193135BCA4E4 /* ui_pgconnect.h */,
+				972E7EC58663747C4B0B99F8 /* ui_pglinklist.h */,
+				586EC51F7DED1D5044C981B9 /* ui_pglkcreate.h */,
+				D33739413D5574A67C3C144B /* ui_pglkremove.h */,
+				FBE40F4DC8988FF0A2DC6630 /* ui_pgportlist.h */,
+				BA35D7302D93CA1D25D1C7E1 /* ui_pgspcreate.h */,
+				8979A7CC47D2D3DBAD9DDF04 /* ui_pgspremove.h */,
+				9AB93E7FA18E1229A4D0A292 /* ui_pgtrace.h */,
+				6061381D158DCC90178D1651 /* ui_vscmainwindow.h */,
 			);
 			name = xcode;
+			sourceTree = "<group>";
+		};
+		B8254625CFD509ED2A24A166 /* Sources [moc_predefs] */ = {
+			isa = PBXGroup;
+			children = (
+				3AF1A262A121543C1B627F57 /* dummy.cpp */,
+			);
+			name = "Sources [moc_predefs]";
 			sourceTree = "<group>";
 		};
 		C3FD8E5146FA1A6CA360BDC4 /* themes */ = {
 			isa = PBXGroup;
 			children = (
-				EAAE5E0DC7412EC664710AAD /* themes.pri */,
+				072112A0A4D8D0FCCC2AF3E1 /* themes.pri */,
 			);
 			name = themes;
 			sourceTree = "<group>";
@@ -540,8 +538,8 @@
 		D6AAD20325154B7C5C311EED /* model */ = {
 			isa = PBXGroup;
 			children = (
-				DD81A0B4E8E15A44B92CB61A /* vspdatamodel.cpp */,
-				0C0F89C87C96308CB6475D04 /* vspdatamodel.h */,
+				A2D643F1713352D07CD45E5F /* vspdatamodel.cpp */,
+				7A67CD283EA499BE60FBA66B /* vspdatamodel.h */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -553,6 +551,7 @@
 				25B08E2869634E9BCBA333A2 /* Generated Sources */,
 				8F35EA053E3F6379461B8678 /* Sources [lrelease] */,
 				87DF60DE337FB58864343E39 /* Resources */,
+				B8254625CFD509ED2A24A166 /* Sources [moc_predefs] */,
 				12E908B8A1C3C07C115504F5 /* Sources [uic] */,
 				74B182DB50CB5611B5C1C297 /* Supporting Files */,
 				AF39DD055C3EF8226FBE929D /* Frameworks */,
@@ -565,16 +564,16 @@
 		F027E420C02C9CC7A06A0901 /* ui */ = {
 			isa = PBXGroup;
 			children = (
-				EC18FF9EF9598C499851D486 /* pgchecks.ui */,
-				559EEE51CC5E0B7D3DA5CCC7 /* pgconnect.ui */,
-				C461FF17230196466A29AB2C /* pglinklist.ui */,
-				BFC1181C8CD43161CEBE8AE7 /* pglkcreate.ui */,
-				1187A09F7FC78421CF83BDA9 /* pglkremove.ui */,
-				1918E02D1E64E0A10DC6FE29 /* pgportlist.ui */,
-				216681ECD7CE99D167FE2B4D /* pgspcreate.ui */,
-				C495DA2FD33C7B3576D70612 /* pgspremove.ui */,
-				B4A5F81A15B07CB98EF39E14 /* pgtrace.ui */,
-				2F75DDD3D417F70E655C4350 /* vscmainwindow.ui */,
+				4E48031A2CB03CA83397AD5F /* pgchecks.ui */,
+				8263D6C334723111163A631D /* pgconnect.ui */,
+				3F8E9F9490F312782D6E6972 /* pglinklist.ui */,
+				86727F261D737F66DDBC2F07 /* pglkcreate.ui */,
+				95774B4ECD817698D8048988 /* pglkremove.ui */,
+				75D915ABB724B839B6FDEFD4 /* pgportlist.ui */,
+				A2A91DA8A8958313377FD65C /* pgspcreate.ui */,
+				3B279EF20721AA60572A2C90 /* pgspremove.ui */,
+				008051C42AC0323C6B9A0062 /* pgtrace.ui */,
+				A452466312EDD0735F9CC419 /* vscmainwindow.ui */,
 			);
 			name = ui;
 			sourceTree = "<group>";
@@ -582,8 +581,8 @@
 		F146F0EB097287F1B0E6B4F2 /* themes */ = {
 			isa = PBXGroup;
 			children = (
-				FC2642E8DBC2E97977BB667E /* vsctheme.cpp */,
-				BEEF1F3371B793C8688D5EDE /* vsctheme.h */,
+				51ECCD2491FDB71271BDC888 /* vsctheme.cpp */,
+				CCF3624A8DBF61E3F264FC20 /* vsctheme.h */,
 			);
 			name = themes;
 			sourceTree = "<group>";
@@ -591,7 +590,7 @@
 		F1D1F80C94E27780AD558A3D /* driver */ = {
 			isa = PBXGroup;
 			children = (
-				FBF974B84E0B80B5391CAB48 /* driver.pri */,
+				0F942895ABB33B16700CAAC0 /* driver.pri */,
 			);
 			name = driver;
 			sourceTree = "<group>";
@@ -599,7 +598,7 @@
 		F7ACF05B8B1895A17B61D412 /* model */ = {
 			isa = PBXGroup;
 			children = (
-				D173DB799F95BF0FDE70E0F1 /* model.pri */,
+				598961311B4A6BDB84862AF4 /* model.pri */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -607,8 +606,8 @@
 		FA74C4D35AF5FE89ABD34F2C /* serialio */ = {
 			isa = PBXGroup;
 			children = (
-				1E45623617E183844C5D8FA6 /* vspserialio.cpp */,
-				2936206FC215C89CAC817BAB /* vspserialio.h */,
+				B3B4EE30B2E3FDFB093235AB /* vspserialio.cpp */,
+				8BFF1DC5B9ECB9A8F0DC4105 /* vspserialio.h */,
 			);
 			name = serialio;
 			sourceTree = "<group>";
@@ -616,7 +615,7 @@
 		FE0A091FDBFB3E9C31B7A1BD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3A46F7945D715ACF512622F3 /* VSPClientUI.framework */,
+				C1DAE4978C5BADCF56BE1E50 /* VSPClientUI.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -624,7 +623,7 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5BFE4744010248731FA6929D /* VSPClientUI */ = {
+		424D6912C9EA59B8F234BBD5 /* VSPClientUI */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6CC3B5D2136C7CD6A5CF5A59 /* Build configuration list for PBXNativeTarget "VSPClientUI" */;
 			buildPhases = (
@@ -639,11 +638,11 @@
 			buildRules = (
 			);
 			dependencies = (
-				0FE452C69D34FA0FA3604C1E /* PBXTargetDependency */,
+				EC49CC84BF62A4E253631F46 /* PBXTargetDependency */,
 			);
 			name = VSPClientUI;
 			productName = VSPClientUI;
-			productReference = 3A46F7945D715ACF512622F3 /* VSPClientUI.framework */;
+			productReference = C1DAE4978C5BADCF56BE1E50 /* VSPClientUI.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -652,8 +651,14 @@
 		6DB9C3763D02B1415CD9D565 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1630;
+				TargetAttributes = {
+					424D6912C9EA59B8F234BBD5 = {
+						DevelopmentTeam = 83NQU389JN;
+					};
+					CC735009E7BBBB175DD3A4C4 = {
+						DevelopmentTeam = 83NQU389JN;
+					};
+				};
 			};
 			buildConfigurationList = DAC4C1AA5EDEA1C85E9CA5E6 /* Build configuration list for PBXProject "VSPClientUI" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -668,8 +673,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5BFE4744010248731FA6929D /* VSPClientUI */,
-				7CA06C207FF151F0C1E3BF15 /* Qt Preprocess */,
+				424D6912C9EA59B8F234BBD5 /* VSPClientUI */,
+				CC735009E7BBBB175DD3A4C4 /* Qt Preprocess */,
 			);
 		};
 /* End PBXProject section */
@@ -682,14 +687,14 @@
 			);
 			inputPaths = (
 				"$(OBJECT_FILE_DIR_$(CURRENT_VARIANT))/x86_64/",
-				"$(OBJECT_FILE_DIR_$(CURRENT_VARIANT))/arm64/",
 			);
 			name = "Qt Prelink";
 			outputPaths = (
+				"$(LINK_FILE_LIST_$(CURRENT_VARIANT)_x86_64)-out",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/Users/beschric/tests/VSPDriver/VSPClientUI/makelocales.sh /Users/beschric/tests/VSPDriver/VSPClientUI\n";
+			shellScript = "/Users/beschric/EoF/VSPDriver/VSPClientUI/makelocales.sh /Users/beschric/EoF/VSPDriver/VSPClientUI\n";
 			showEnvVarsInLog = 0;
 		};
 		5E618435888B9D49F8540165 /* Qt Qmake */ = {
@@ -697,92 +702,21 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-			);
 			name = "Qt Qmake";
-			outputPaths = (
-			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "make -C /Users/beschric/tests/VSPDriver/VSPClientUI/xcode -f VSPClientUI.xcodeproj/qt_makeqmake.mak";
+			shellScript = "make -C /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode -f VSPClientUI.xcodeproj/qt_makeqmake.mak";
 			showEnvVarsInLog = 0;
 		};
 		7EF0942E79C014DCEC8976BC /* Qt Preprocessors */ = {
 			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				../vspui_en_US.ts,
-				../vspui_de_DE.ts,
-				../vspui.qrc,
-				qmake_qmake_qm_files.qrc,
-				../driver/vspdriverclient.h,
-				../model/vspdatamodel.h,
-				../serialio/vspserialio.h,
-				../themes/vsctheme.h,
-				../session/vspsession.h,
-				../ui/pgchecks.h,
-				../ui/pgconnect.h,
-				../ui/pglinklist.h,
-				../ui/pglkcreate.h,
-				../ui/pglkremove.h,
-				../ui/pgportlist.h,
-				../ui/pgspcreate.h,
-				../ui/pgspremove.h,
-				../ui/pgtrace.h,
-				../ui/vscmainwindow.h,
-				../ui/vspabstractpage.h,
-				../serialio/vspserialio.ui,
-				../ui/pgchecks.ui,
-				../ui/pgconnect.ui,
-				../ui/pglinklist.ui,
-				../ui/pglkcreate.ui,
-				../ui/pglkremove.ui,
-				../ui/pgportlist.ui,
-				../ui/pgspcreate.ui,
-				../ui/pgspremove.ui,
-				../ui/pgtrace.ui,
-				../ui/vscmainwindow.ui,
-			);
 			name = "Qt Preprocessors";
-			outputPaths = (
-				.qm/vspui_en_US.qm,
-				.qm/vspui_de_DE.qm,
-				qrc_vspui.cpp,
-				qrc_qmake_qmake_qm_files.cpp,
-				moc_vspdriverclient.cpp,
-				moc_vspdatamodel.cpp,
-				moc_vspserialio.cpp,
-				moc_vsctheme.cpp,
-				moc_vspsession.cpp,
-				moc_pgchecks.cpp,
-				moc_pgconnect.cpp,
-				moc_pglinklist.cpp,
-				moc_pglkcreate.cpp,
-				moc_pglkremove.cpp,
-				moc_pgportlist.cpp,
-				moc_pgspcreate.cpp,
-				moc_pgspremove.cpp,
-				moc_pgtrace.cpp,
-				moc_vscmainwindow.cpp,
-				moc_vspabstractpage.cpp,
-				ui_vspserialio.h,
-				ui_pgchecks.h,
-				ui_pgconnect.h,
-				ui_pglinklist.h,
-				ui_pglkcreate.h,
-				ui_pglkremove.h,
-				ui_pgportlist.h,
-				ui_pgspcreate.h,
-				ui_pgspremove.h,
-				ui_pgtrace.h,
-				ui_vscmainwindow.h,
-			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "make -C /Users/beschric/tests/VSPDriver/VSPClientUI/xcode -f VSPClientUI.xcodeproj/qt_preprocess.mak\n";
+			shellScript = "make -C /Users/beschric/EoF/VSPDriver/VSPClientUI/xcode -f VSPClientUI.xcodeproj/qt_preprocess.mak";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -792,42 +726,43 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				764228C54AAE3C7224407D66 /* vspdriverclient.cpp in Compile Sources */,
-				16A647F26A6E2264DA9EF01C /* vspdatamodel.cpp in Compile Sources */,
-				E0255DCCA64D5CD5C351DAD0 /* vspserialio.cpp in Compile Sources */,
-				C33BF17B24F62D09674826C5 /* vsctheme.cpp in Compile Sources */,
-				89FBBD79ED6008FFAB881983 /* vspsession.cpp in Compile Sources */,
-				F2923574885F9E8040CEB7E7 /* pgchecks.cpp in Compile Sources */,
-				5750AB6F658153FCA462607A /* pgconnect.cpp in Compile Sources */,
-				AC02BC983EA2853640C86535 /* pglinklist.cpp in Compile Sources */,
-				8EC0E2499DDA3B9B2820197D /* pglkcreate.cpp in Compile Sources */,
-				8DA5AB2C9EBF6C9FFEEFB7F4 /* pglkremove.cpp in Compile Sources */,
-				12E6C7413EC502A2CF7BFF20 /* pgportlist.cpp in Compile Sources */,
-				5C70ECE93F5C36E33B171AB0 /* pgspcreate.cpp in Compile Sources */,
-				E1A83B5A3DE8E63AFC3C60D8 /* pgspremove.cpp in Compile Sources */,
-				512B60D3DB4B9DCDBECBDCCF /* pgtrace.cpp in Compile Sources */,
-				3AD8A41FB4168F8FCB8644AD /* vscmainwindow.cpp in Compile Sources */,
-				B4F1A89435A11CF5F3DD20B3 /* vspabstractpage.cpp in Compile Sources */,
-				C2C986C62540F2D9DD78A991 /* main.cpp in Compile Sources */,
-				EC76AF9853348D0FD0003DF0 /* vspversion.mm in Compile Sources */,
-				CA61087C2769BE42BC753F2A /* qrc_vspui.cpp in Compile Sources */,
-				7BB15C3F1A5AE962D2A02C0D /* qrc_qmake_qmake_qm_files.cpp in Compile Sources */,
-				9A3470F0D279ABE83EC011E4 /* moc_vspdriverclient.cpp in Compile Sources */,
-				42A9EF467DE33628C55C6856 /* moc_vspdatamodel.cpp in Compile Sources */,
-				D31BF037884A58EBC47D9C26 /* moc_vspserialio.cpp in Compile Sources */,
-				0E528948416AC9A2195B2861 /* moc_vsctheme.cpp in Compile Sources */,
-				E655B89CB270E7CA8AE8ABA2 /* moc_vspsession.cpp in Compile Sources */,
-				CD2A76F54CD8DE9970A07426 /* moc_pgchecks.cpp in Compile Sources */,
-				542271716E42A0CE2D95FF6A /* moc_pgconnect.cpp in Compile Sources */,
-				8FC2D8C401B1FE05313BAD3E /* moc_pglinklist.cpp in Compile Sources */,
-				BD8058C82E7815458655B157 /* moc_pglkcreate.cpp in Compile Sources */,
-				124B3BDC9EC11D6B5DFFCABA /* moc_pglkremove.cpp in Compile Sources */,
-				313D06F4B952558FF888CD27 /* moc_pgportlist.cpp in Compile Sources */,
-				51E0183689C63571AAF7482A /* moc_pgspcreate.cpp in Compile Sources */,
-				079DDC6AE4EDFC91FC8A17DC /* moc_pgspremove.cpp in Compile Sources */,
-				B1994C8C8C8A9E230CBDB444 /* moc_pgtrace.cpp in Compile Sources */,
-				679032E91879666794E9CD5C /* moc_vscmainwindow.cpp in Compile Sources */,
-				7DB0C591AE47C0A91FF679BE /* moc_vspabstractpage.cpp in Compile Sources */,
+				454EA302BFDB803EF0720DA5 /* vspdriverclient.cpp in Compile Sources */,
+				A2E28CC67973E975AE3FAAA1 /* vspdatamodel.cpp in Compile Sources */,
+				F9D154CA0F25535BFE9DAAE0 /* vspserialio.cpp in Compile Sources */,
+				AF7E70CA357B511ADCFBC664 /* vsctheme.cpp in Compile Sources */,
+				7C518884F4D1CEAA3BA14937 /* vspsession.cpp in Compile Sources */,
+				8AC99D0C2635CDFA47C809F8 /* pgchecks.cpp in Compile Sources */,
+				338F017D82E6B6BE164640DE /* pgconnect.cpp in Compile Sources */,
+				552CB962A48F7BAB5C625A46 /* pglinklist.cpp in Compile Sources */,
+				D06CB3BBD4F09BB72F7FE086 /* pglkcreate.cpp in Compile Sources */,
+				4AC53185930A5C1571723684 /* pglkremove.cpp in Compile Sources */,
+				FB2B805516F9C012F9DB0796 /* pgportlist.cpp in Compile Sources */,
+				17CCBFC2101956BD85E2BA12 /* pgspcreate.cpp in Compile Sources */,
+				5A5197BF2D22335C61EE310F /* pgspremove.cpp in Compile Sources */,
+				866B72D05B08C23B9BD8B0D8 /* pgtrace.cpp in Compile Sources */,
+				D03AF269D5CE2D6B115FAEE6 /* vscmainwindow.cpp in Compile Sources */,
+				CAFD27FB0D5EACE4F0D3EC08 /* vspabstractpage.cpp in Compile Sources */,
+				9C6EDBDF14697E8A5847DAE0 /* main.cpp in Compile Sources */,
+				DFEE505CC32849DAF8CAAA43 /* vspversion.mm in Compile Sources */,
+				6A4ACADC329F27C1699D28E2 /* qrc_vspui.cpp in Compile Sources */,
+				86D765975E6B4457B962DDD3 /* qrc_qmake_qmake_qm_files.cpp in Compile Sources */,
+				791C2AE71E837E3D8729328B /* moc_vspdriverclient.cpp in Compile Sources */,
+				ACA0286DA427E214EE456576 /* moc_vspdatamodel.cpp in Compile Sources */,
+				776EB38D873ED15F3BB4C751 /* moc_vspserialio.cpp in Compile Sources */,
+				C86CD36828D0270D14F4486F /* moc_vsctheme.cpp in Compile Sources */,
+				927F5F177F33AD4497E192BA /* moc_vspsession.cpp in Compile Sources */,
+				972919334FB56FDFF92D3B9D /* moc_pgchecks.cpp in Compile Sources */,
+				9B3C4D60DB786A49760B84E6 /* moc_pgconnect.cpp in Compile Sources */,
+				D2E51C67BB13CB0CBC80A652 /* moc_pglinklist.cpp in Compile Sources */,
+				42AB70619CDCFF043B531880 /* moc_pglkcreate.cpp in Compile Sources */,
+				9137EBA337C46CCEB2F53CD4 /* moc_pglkremove.cpp in Compile Sources */,
+				4EAF28C9373DDE1B4B578431 /* moc_pgportlist.cpp in Compile Sources */,
+				4AF2F19D96C2543A9A6B5389 /* moc_pgspcreate.cpp in Compile Sources */,
+				585490CCA3E3712B41299705 /* moc_pgspremove.cpp in Compile Sources */,
+				14C526DDC28AF33596A64B3D /* moc_pgtrace.cpp in Compile Sources */,
+				C3A897400B071A51A7B300A2 /* moc_vscmainwindow.cpp in Compile Sources */,
+				591C3775A55A4FA96DB3386C /* moc_vspabstractpage.cpp in Compile Sources */,
+				CCAFAE0F730531560A5E1F40 /* dummy.cpp in Compile Sources */,
 			);
 			name = "Compile Sources";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -835,10 +770,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0FE452C69D34FA0FA3604C1E /* PBXTargetDependency */ = {
+		EC49CC84BF62A4E253631F46 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7CA06C207FF151F0C1E3BF15 /* Qt Preprocess */;
-			targetProxy = 88F12FDC2DCDBB6800E0486A /* PBXContainerItemProxy */;
+			target = CC735009E7BBBB175DD3A4C4 /* Qt Preprocess */;
+			targetProxy = 887847602DCDEDFA0081FC7F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -847,51 +782,22 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
-				"ARCHS[sdk=macosx*]" = (
-					x86_64,
-					arm64,
-				);
+				ARCHS = x86_64;
+				"ARCHS[sdk=macosx*]" = x86_64;
 				CC = /Applications/Development/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 83NQU389JN;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0.0;
 				ENABLE_BITCODE = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					/Users/beschric/Qt/6.8.2/macos/lib,
-					/Users/beschric/Qt/6.8.2/macos/lib,
+					/Users/beschric/Qt/5.15.2/clang_64/lib,
+					/Users/beschric/Qt/5.15.2/clang_64/lib,
 					../../VSPController/xcode/Release,
 					../../VSPSetup/xcode/Release,
 				);
 				FRAMEWORK_VERSION = A;
-				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					../../VSPClientUI,
 					.,
@@ -903,27 +809,26 @@
 					../themes,
 					../session,
 					../ui,
-					../../../../Qt/6.8.2/macos/lib/QtWidgets.framework/Headers,
-					../../../../Qt/6.8.2/macos/lib/QtGui.framework/Headers,
-					../../../../Qt/6.8.2/macos/lib/QtSerialBus.framework/Headers,
-					../../../../Qt/6.8.2/macos/lib/QtNetwork.framework/Headers,
-					../../../../Qt/6.8.2/macos/lib/QtConcurrent.framework/Headers,
-					../../../../Qt/6.8.2/macos/lib/QtSerialPort.framework/Headers,
-					../../../../Qt/6.8.2/macos/lib/QtXml.framework/Headers,
-					../../../../Qt/6.8.2/macos/lib/QtCore.framework/Headers,
+					../../../../Qt/5.15.2/clang_64/lib/QtWidgets.framework/Headers,
+					../../../../Qt/5.15.2/clang_64/lib/QtMacExtras.framework/Headers,
+					../../../../Qt/5.15.2/clang_64/lib/QtGui.framework/Headers,
+					../../../../Qt/5.15.2/clang_64/lib/QtNetwork.framework/Headers,
+					../../../../Qt/5.15.2/clang_64/lib/QtConcurrent.framework/Headers,
+					../../../../Qt/5.15.2/clang_64/lib/QtSerialBus.framework/Headers,
+					../../../../Qt/5.15.2/clang_64/lib/QtSerialPort.framework/Headers,
+					../../../../Qt/5.15.2/clang_64/lib/QtXml.framework/Headers,
+					../../../../Qt/5.15.2/clang_64/lib/QtCore.framework/Headers,
 					.,
 					/Applications/Development/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/OpenGL.framework/Headers,
 					/Applications/Development/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/AGL.framework/Headers/,
 					.,
-					/Applications/Development/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/OpenGL.framework/Headers,
-					/Applications/Development/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/AGL.framework/Headers/,
-					"../../../../Qt/6.8.2/macos/mkspecs/macx-clang",
+					"../../../../Qt/5.15.2/clang_64/mkspecs/macx-clang",
 				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "";
 				LDPLUSPLUS = "/Applications/Development/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++";
 				LIBRARY_SEARCH_PATHS = (
-					/Users/beschric/Qt/6.8.2/macos/lib,
+					/Users/beschric/Qt/5.15.2/clang_64/lib,
 					/System/Library/Frameworks/,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.2;
@@ -939,10 +844,11 @@
 					"-DVSPCLIENT_LIBRARY",
 					"-DQT_NO_DEBUG",
 					"-DQT_WIDGETS_LIB",
+					"-DQT_MACEXTRAS_LIB",
 					"-DQT_GUI_LIB",
-					"-DQT_SERIALBUS_LIB",
 					"-DQT_NETWORK_LIB",
 					"-DQT_CONCURRENT_LIB",
+					"-DQT_SERIALBUS_LIB",
 					"-DQT_SERIALPORT_LIB",
 					"-DQT_XML_LIB",
 					"-DQT_CORE_LIB",
@@ -955,7 +861,7 @@
 					"-funwind-tables",
 					"-ggdb3",
 					"-O2",
-					"-std=gnu++2a",
+					"-std=gnu++11",
 					"-Wall",
 					"-Wextra",
 					"-fPIC",
@@ -964,10 +870,11 @@
 					"-DVSPCLIENT_LIBRARY",
 					"-DQT_NO_DEBUG",
 					"-DQT_WIDGETS_LIB",
+					"-DQT_MACEXTRAS_LIB",
 					"-DQT_GUI_LIB",
-					"-DQT_SERIALBUS_LIB",
 					"-DQT_NETWORK_LIB",
 					"-DQT_CONCURRENT_LIB",
+					"-DQT_SERIALBUS_LIB",
 					"-DQT_SERIALPORT_LIB",
 					"-DQT_XML_LIB",
 					"-DQT_CORE_LIB",
@@ -977,7 +884,7 @@
 					"-headerpad_max_install_names",
 					"-Wl,-rpath,@executable_path/../Frameworks",
 					"-Wl,-rpath,@loader_path/Frameworks",
-					"-Wl,-rpath,/Users/beschric/Qt/6.8.2/macos/lib",
+					"-Wl,-rpath,/Users/beschric/Qt/5.15.2/clang_64/lib",
 					"-single_module",
 					"-dynamiclib",
 					"-compatibility_version",
@@ -985,7 +892,7 @@
 					"-current_version",
 					1.0.0,
 					"-Wl,-install_name,@executable_path/../Frameworks/VSPClientUI.framework/Versions/A/VSPClientUI",
-					"-F/Users/beschric/Qt/6.8.2/macos/lib",
+					"-F/Users/beschric/Qt/5.15.2/clang_64/lib",
 					"-dead_strip",
 					"-liconv",
 					"-F../../VSPController/xcode/Release",
@@ -1010,53 +917,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
-				"ARCHS[sdk=macosx*]" = (
-					x86_64,
-					arm64,
-				);
+				ARCHS = x86_64;
+				"ARCHS[sdk=macosx*]" = x86_64;
 				CC = /Applications/Development/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 83NQU389JN;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
 				DYLIB_CURRENT_VERSION = 1.0.0;
 				ENABLE_BITCODE = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					/Users/beschric/Qt/6.8.2/macos/lib,
-					/Users/beschric/Qt/6.8.2/macos/lib,
+					/Users/beschric/Qt/5.15.2/clang_64/lib,
+					/Users/beschric/Qt/5.15.2/clang_64/lib,
 					../../VSPController/xcode/Release,
 					../../VSPSetup/xcode/Release,
 				);
 				FRAMEWORK_VERSION = A;
-				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					../../VSPClientUI,
 					.,
@@ -1068,27 +945,26 @@
 					../themes,
 					../session,
 					../ui,
-					../../../../Qt/6.8.2/macos/lib/QtWidgets.framework/Headers,
-					../../../../Qt/6.8.2/macos/lib/QtGui.framework/Headers,
-					../../../../Qt/6.8.2/macos/lib/QtSerialBus.framework/Headers,
-					../../../../Qt/6.8.2/macos/lib/QtNetwork.framework/Headers,
-					../../../../Qt/6.8.2/macos/lib/QtConcurrent.framework/Headers,
-					../../../../Qt/6.8.2/macos/lib/QtSerialPort.framework/Headers,
-					../../../../Qt/6.8.2/macos/lib/QtXml.framework/Headers,
-					../../../../Qt/6.8.2/macos/lib/QtCore.framework/Headers,
+					../../../../Qt/5.15.2/clang_64/lib/QtWidgets.framework/Headers,
+					../../../../Qt/5.15.2/clang_64/lib/QtMacExtras.framework/Headers,
+					../../../../Qt/5.15.2/clang_64/lib/QtGui.framework/Headers,
+					../../../../Qt/5.15.2/clang_64/lib/QtNetwork.framework/Headers,
+					../../../../Qt/5.15.2/clang_64/lib/QtConcurrent.framework/Headers,
+					../../../../Qt/5.15.2/clang_64/lib/QtSerialBus.framework/Headers,
+					../../../../Qt/5.15.2/clang_64/lib/QtSerialPort.framework/Headers,
+					../../../../Qt/5.15.2/clang_64/lib/QtXml.framework/Headers,
+					../../../../Qt/5.15.2/clang_64/lib/QtCore.framework/Headers,
 					.,
 					/Applications/Development/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/OpenGL.framework/Headers,
 					/Applications/Development/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/AGL.framework/Headers/,
 					.,
-					/Applications/Development/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/OpenGL.framework/Headers,
-					/Applications/Development/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/AGL.framework/Headers/,
-					"../../../../Qt/6.8.2/macos/mkspecs/macx-clang",
+					"../../../../Qt/5.15.2/clang_64/mkspecs/macx-clang",
 				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "";
 				LDPLUSPLUS = "/Applications/Development/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++";
 				LIBRARY_SEARCH_PATHS = (
-					/Users/beschric/Qt/6.8.2/macos/lib,
+					/Users/beschric/Qt/5.15.2/clang_64/lib,
 					/System/Library/Frameworks/,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.2;
@@ -1105,10 +981,11 @@
 					"-DVSPCLIENT_LIBRARY",
 					"-DQT_NO_DEBUG",
 					"-DQT_WIDGETS_LIB",
+					"-DQT_MACEXTRAS_LIB",
 					"-DQT_GUI_LIB",
-					"-DQT_SERIALBUS_LIB",
 					"-DQT_NETWORK_LIB",
 					"-DQT_CONCURRENT_LIB",
+					"-DQT_SERIALBUS_LIB",
 					"-DQT_SERIALPORT_LIB",
 					"-DQT_XML_LIB",
 					"-DQT_CORE_LIB",
@@ -1121,7 +998,7 @@
 					"-funwind-tables",
 					"-ggdb3",
 					"-O2",
-					"-std=gnu++2a",
+					"-std=gnu++11",
 					"-Wall",
 					"-Wextra",
 					"-fPIC",
@@ -1130,10 +1007,11 @@
 					"-DVSPCLIENT_LIBRARY",
 					"-DQT_NO_DEBUG",
 					"-DQT_WIDGETS_LIB",
+					"-DQT_MACEXTRAS_LIB",
 					"-DQT_GUI_LIB",
-					"-DQT_SERIALBUS_LIB",
 					"-DQT_NETWORK_LIB",
 					"-DQT_CONCURRENT_LIB",
+					"-DQT_SERIALBUS_LIB",
 					"-DQT_SERIALPORT_LIB",
 					"-DQT_XML_LIB",
 					"-DQT_CORE_LIB",
@@ -1143,7 +1021,7 @@
 					"-headerpad_max_install_names",
 					"-Wl,-rpath,@executable_path/../Frameworks",
 					"-Wl,-rpath,@loader_path/Frameworks",
-					"-Wl,-rpath,/Users/beschric/Qt/6.8.2/macos/lib",
+					"-Wl,-rpath,/Users/beschric/Qt/5.15.2/clang_64/lib",
 					"-single_module",
 					"-dynamiclib",
 					"-compatibility_version",
@@ -1151,7 +1029,7 @@
 					"-current_version",
 					1.0.0,
 					"-Wl,-install_name,@executable_path/../Frameworks/VSPClientUI.framework/Versions/A/VSPClientUI",
-					"-F/Users/beschric/Qt/6.8.2/macos/lib",
+					"-F/Users/beschric/Qt/5.15.2/clang_64/lib",
 					"-dead_strip",
 					"-liconv",
 					"-F../../VSPController/xcode/Release",
@@ -1176,15 +1054,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
-				"ARCHS[sdk=macosx*]" = (
-					x86_64,
-					arm64,
-				);
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				"ARCHS[sdk=macosx*]" = x86_64;
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
-				"DEVELOPMENT_TEAM[sdk=macosx*]" = 83NQU389JN;
+				DEVELOPMENT_TEAM = 83NQU389JN;
 				ENABLE_BITCODE = NO;
 				LIBRARY_STYLE = DYNAMIC;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.eof.tools.${PRODUCT_NAME:rfc1034identifier}";
@@ -1201,15 +1073,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
-				"ARCHS[sdk=macosx*]" = (
-					x86_64,
-					arm64,
-				);
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				"ARCHS[sdk=macosx*]" = x86_64;
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
-				"DEVELOPMENT_TEAM[sdk=macosx*]" = 83NQU389JN;
+				DEVELOPMENT_TEAM = 83NQU389JN;
 				ENABLE_BITCODE = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				LIBRARY_STYLE = DYNAMIC;
