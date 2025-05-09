@@ -16,7 +16,7 @@
 	<false/>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>$(TeamIdentifierPrefix)org.eof.apps</string>
+		<string>group.org.eof.apps</string>
 	</array>
 	<key>com.apple.security.device.bluetooth</key>
 	<true/>

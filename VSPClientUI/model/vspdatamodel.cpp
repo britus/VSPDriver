@@ -19,7 +19,7 @@ QModelIndex VSPDataModel::parent(const QModelIndex& index) const
 int VSPDataModel::rowCount(const QModelIndex& parent) const
 {
     Q_UNUSED(parent);
-    return m_records.size();
+    return (int) m_records.size();
 }
 
 int VSPDataModel::columnCount(const QModelIndex& parent) const

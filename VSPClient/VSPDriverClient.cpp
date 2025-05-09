@@ -31,14 +31,12 @@ bool isQt5() {
 
 // MARK: Wrap into QT app
 bool QT_StartApplication() {
-    char* argv[] = {};
-
 #if defined(__arm64) || defined(VSP_x86_64)
+    char* argv[] = {};
     return qt_main(0, argv);
 #else
     return KERN_INVALID_CAPABILITY;
 #endif
-
 }
 
 } // extern "C"

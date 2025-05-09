@@ -231,7 +231,7 @@ static inline kern_return_t readTTYProperties(VSPSerialPort* self)
 {
     IOReturn ret;
     
-    VSPLog(LOG_PREFIX, "readTTYProperties called.\n");
+    //VSPLog(LOG_PREFIX, "readTTYProperties called.\n");
     
     ret = getProperty(self, "IOTTYBaseName", self->ivars->m_portBaseName, sizeof(IOPropertyName)-1);
     if (ret != kIOReturnSuccess) {

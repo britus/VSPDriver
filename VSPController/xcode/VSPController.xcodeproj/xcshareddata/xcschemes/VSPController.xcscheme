@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0610"
+   LastUpgradeVersion = "1630"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "455826097BA7DDAEB1846DF6"
+               BlueprintIdentifier = "7AF3C4C6213BD51B76C2CF21"
                BuildableName = "VSPController.framework"
                BlueprintName = "VSPController"
                ReferencedContainer = "container:VSPController.xcodeproj">
@@ -31,7 +31,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "455826097BA7DDAEB1846DF6"
+            BlueprintIdentifier = "7AF3C4C6213BD51B76C2CF21"
             BuildableName = "VSPController.framework"
             BlueprintName = "VSPController"
             ReferencedContainer = "container:VSPController.xcodeproj">
@@ -73,7 +73,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "455826097BA7DDAEB1846DF6"
+            BlueprintIdentifier = "7AF3C4C6213BD51B76C2CF21"
             BuildableName = "VSPController.framework"
             BlueprintName = "VSPController"
             ReferencedContainer = "container:VSPController.xcodeproj">
@@ -97,7 +97,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "455826097BA7DDAEB1846DF6"
+            BlueprintIdentifier = "7AF3C4C6213BD51B76C2CF21"
             BuildableName = "VSPController.framework"
             BlueprintName = "VSPController"
             ReferencedContainer = "container:VSPController.xcodeproj">

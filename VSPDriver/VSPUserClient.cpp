@@ -496,7 +496,7 @@ kern_return_t VSPUserClient::scheduleEvent(void* reference, IOUserClientMethodAr
 kern_return_t VSPUserClient::prepareResponse(void* reference, IOUserClientMethodArguments* arguments)
 {
     const TVSPControllerData* response = reinterpret_cast<TVSPControllerData*>(reference);
-    IOAddressSegment ucmdseg = {};
+    //IOAddressSegment ucmdseg = {};
     IOMemoryMap* outputMap = nullptr;
     uint8_t* outputPtr;
     void* evData;
