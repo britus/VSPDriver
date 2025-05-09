@@ -50,11 +50,6 @@
 		7C9E0995FEB2441EB4B9FC6D /* LICENSE in Copy 'LICENSE' Files to Bundle */ = {isa = PBXBuildFile; fileRef = B99AFEBEDD4DDBA690CC4A88 /* LICENSE */; };
 		7DB0C591AE47C0A91FF679BE /* moc_vspabstractpage.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = C7D8B39527BD44F64D7ABED7 /* moc_vspabstractpage.cpp */; settings = {ATTRIBUTES = (); }; };
 		8771A8C96E9C391044035D99 /* OpenGL.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = D4B32C2222F82AC56BADEB21 /* OpenGL.framework */; };
-		88F12FE52DCDBE4B00E0486A /* AVFoundation.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 88F12FE42DCDBE4B00E0486A /* AVFoundation.framework */; };
-		88F12FE82DCDBE6F00E0486A /* IOBluetooth.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 88F12FE62DCDBE6F00E0486A /* IOBluetooth.framework */; };
-		88F12FE92DCDBE6F00E0486A /* CoreBluetooth.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 88F12FE72DCDBE6F00E0486A /* CoreBluetooth.framework */; };
-		88F12FEB2DCDBE7A00E0486A /* Contacts.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 88F12FEA2DCDBE7A00E0486A /* Contacts.framework */; };
-		88F12FED2DCDBEB100E0486A /* EventKit.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 88F12FEC2DCDBEB100E0486A /* EventKit.framework */; };
 		8962C4EB830DB9EE70572552 /* QtCore.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = BD747897CFB017582170C5BF /* QtCore.framework */; };
 		89FBBD79ED6008FFAB881983 /* vspsession.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 583ADEC33CAB5A2019DC2D20 /* vspsession.cpp */; settings = {ATTRIBUTES = (); }; };
 		8D267F2E4776F0ECA2F49DC8 /* IOKit.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = A1A67BEAA744704B29168D39 /* IOKit.framework */; };
@@ -273,22 +268,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE15CE0308F7DF67A1E309C0 /* QtWidgets.framework in Link Binary With Libraries */,
-				88F12FEB2DCDBE7A00E0486A /* Contacts.framework in Link Binary With Libraries */,
 				B76AB4C2367E1C2856C90D53 /* QtGui.framework in Link Binary With Libraries */,
 				F2A75ACAC9DF6A3F4E5711E7 /* AppKit.framework in Link Binary With Libraries */,
 				61EEC397DC8556BF8C4E36A7 /* ImageIO.framework in Link Binary With Libraries */,
 				B3FE8FAC746D3D5BB24FA398 /* Metal.framework in Link Binary With Libraries */,
-				88F12FE92DCDBE6F00E0486A /* CoreBluetooth.framework in Link Binary With Libraries */,
 				1B29CC44EC5F9B2617D73AD1 /* QtSerialBus.framework in Link Binary With Libraries */,
 				4BC1A60CF2D5C00A3DF7122F /* QtNetwork.framework in Link Binary With Libraries */,
 				EB9B97E72C24CCE9691A858A /* QtConcurrent.framework in Link Binary With Libraries */,
 				50DE12BA4F1806D8DAC5478A /* QtSerialPort.framework in Link Binary With Libraries */,
 				5EDFE04616702FDDDD555CAD /* QtXml.framework in Link Binary With Libraries */,
 				8962C4EB830DB9EE70572552 /* QtCore.framework in Link Binary With Libraries */,
-				88F12FE52DCDBE4B00E0486A /* AVFoundation.framework in Link Binary With Libraries */,
 				8D267F2E4776F0ECA2F49DC8 /* IOKit.framework in Link Binary With Libraries */,
-				88F12FE82DCDBE6F00E0486A /* IOBluetooth.framework in Link Binary With Libraries */,
-				88F12FED2DCDBEB100E0486A /* EventKit.framework in Link Binary With Libraries */,
 				A99B2AA0F9CBBDD12BA126A4 /* DiskArbitration.framework in Link Binary With Libraries */,
 				F30795E5207D73289814C47C /* UniformTypeIdentifiers.framework in Link Binary With Libraries */,
 				E45E51A644D5FC9F942ECE55 /* AGL.framework in Link Binary With Libraries */,
@@ -1191,8 +1181,10 @@
 					arm64,
 				);
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 83NQU389JN;
 				ENABLE_BITCODE = NO;
 				LIBRARY_STYLE = DYNAMIC;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.eof.tools.${PRODUCT_NAME:rfc1034identifier}";
@@ -1214,8 +1206,10 @@
 					arm64,
 				);
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 83NQU389JN;
 				ENABLE_BITCODE = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				LIBRARY_STYLE = DYNAMIC;

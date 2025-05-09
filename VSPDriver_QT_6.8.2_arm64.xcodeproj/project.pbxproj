@@ -74,156 +74,22 @@
 		88B40D602D4B666700DFE7C5 /* VSPDriver.iig in Sources */ = {isa = PBXBuildFile; fileRef = 88B40D5F2D4B666700DFE7C5 /* VSPDriver.iig */; };
 		88B47EC82D59B30600868CA5 /* VSPUserClient.iig in Sources */ = {isa = PBXBuildFile; fileRef = 884F6EC42D59A58D0066353A /* VSPUserClient.iig */; };
 		88B47ECA2D59B43800868CA5 /* VSPController.h in Headers */ = {isa = PBXBuildFile; fileRef = 88B47EC92D59B43800868CA5 /* VSPController.h */; };
-		88B500A12DCDB7C1005E9FF3 /* libqdarwinbluetoothpermission.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B5002F2DCDB7C0005E9FF3 /* libqdarwinbluetoothpermission.a */; };
-		88B500A22DCDB7C1005E9FF3 /* QDarwinCameraPermissionPlugin_init.cpp.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B500262DCDB7C0005E9FF3 /* QDarwinCameraPermissionPlugin_init.cpp.o */; };
-		88B500A32DCDB7C1005E9FF3 /* QDarwinLocationPermissionPlugin_init.cpp.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B5002A2DCDB7C0005E9FF3 /* QDarwinLocationPermissionPlugin_init.cpp.o */; };
-		88B500A42DCDB7C1005E9FF3 /* libqdarwincamerapermission.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B500332DCDB7C0005E9FF3 /* libqdarwincamerapermission.a */; };
-		88B500A52DCDB7C1005E9FF3 /* libqdarwinmicrophonepermission.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B500392DCDB7C0005E9FF3 /* libqdarwinmicrophonepermission.a */; };
-		88B500A62DCDB7C1005E9FF3 /* libqdarwinlocationpermission.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B500372DCDB7C0005E9FF3 /* libqdarwinlocationpermission.a */; };
-		88B500A72DCDB7C1005E9FF3 /* libqdarwincontactspermission.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B500352DCDB7C0005E9FF3 /* libqdarwincontactspermission.a */; };
-		88B500A82DCDB7C1005E9FF3 /* libqdarwincalendarpermission.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B500312DCDB7C0005E9FF3 /* libqdarwincalendarpermission.a */; };
-		88B500A92DCDB7C1005E9FF3 /* QDarwinBluetoothPermissionPlugin_init.cpp.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B500222DCDB7C0005E9FF3 /* QDarwinBluetoothPermissionPlugin_init.cpp.o */; };
-		88B500AA2DCDB7C1005E9FF3 /* QDarwinMicrophonePermissionPlugin_init.cpp.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B5002C2DCDB7C0005E9FF3 /* QDarwinMicrophonePermissionPlugin_init.cpp.o */; };
-		88B500AB2DCDB7C1005E9FF3 /* QDarwinContactsPermissionPlugin_init.cpp.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B500282DCDB7C0005E9FF3 /* QDarwinContactsPermissionPlugin_init.cpp.o */; };
-		88B500AC2DCDB7C1005E9FF3 /* QDarwinCalendarPermissionPlugin_init.cpp.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B500242DCDB7C0005E9FF3 /* QDarwinCalendarPermissionPlugin_init.cpp.o */; };
-		88B500AD2DCDB7C1005E9FF3 /* libqgif.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5000D2DCDB7C0005E9FF3 /* libqgif.dylib.dSYM */; };
-		88B500AE2DCDB7C1005E9FF3 /* libqopensslbackend.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500972DCDB7C0005E9FF3 /* libqopensslbackend.dylib.dSYM */; };
-		88B500AF2DCDB7C1005E9FF3 /* libdarwinmediaplugin.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5001A2DCDB7C0005E9FF3 /* libdarwinmediaplugin.dylib */; };
-		88B500B02DCDB7C1005E9FF3 /* libqicns.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5000E2DCDB7C0005E9FF3 /* libqicns.dylib.dSYM */; };
 		88B500B12DCDB7C1005E9FF3 /* libqoffscreen.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500432DCDB7C0005E9FF3 /* libqoffscreen.dylib */; };
-		88B500B22DCDB7C1005E9FF3 /* libqmldbg_debugger.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500542DCDB7C0005E9FF3 /* libqmldbg_debugger.dylib.dSYM */; };
-		88B500B32DCDB7C1005E9FF3 /* libqtsensors_generic.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5007E2DCDB7C0005E9FF3 /* libqtsensors_generic.dylib */; };
-		88B500B42DCDB7C1005E9FF3 /* libqsqlodbc.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500852DCDB7C0005E9FF3 /* libqsqlodbc.dylib */; };
 		88B500B52DCDB7C1005E9FF3 /* libqtpeakcanbus.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5FFEC2DCDB7C0005E9FF3 /* libqtpeakcanbus.dylib */; };
-		88B500B62DCDB7C1005E9FF3 /* libqmllsquickplugin.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500512DCDB7C0005E9FF3 /* libqmllsquickplugin.dylib.dSYM */; };
-		88B500B72DCDB7C1005E9FF3 /* libgltfsceneexport.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500762DCDB7C0005E9FF3 /* libgltfsceneexport.dylib */; };
-		88B500B82DCDB7C1005E9FF3 /* libquicklintplugin.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5004E2DCDB7C0005E9FF3 /* libquicklintplugin.dylib.dSYM */; };
-		88B500B92DCDB7C1005E9FF3 /* libqwbmp.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500172DCDB7C0005E9FF3 /* libqwbmp.dylib.dSYM */; };
 		88B500BA2DCDB7C1005E9FF3 /* libqtvirtualcanbus.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5FFF02DCDB7C0005E9FF3 /* libqtvirtualcanbus.dylib */; };
-		88B500BB2DCDB7C1005E9FF3 /* libqttinycanbus.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5FFEF2DCDB7C0005E9FF3 /* libqttinycanbus.dylib.dSYM */; };
-		88B500BC2DCDB7C1005E9FF3 /* libqsecuretransportbackend.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500992DCDB7C0005E9FF3 /* libqsecuretransportbackend.dylib.dSYM */; };
-		88B500BD2DCDB7C1005E9FF3 /* libqwebengineview.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5FFF52DCDB7C0005E9FF3 /* libqwebengineview.dylib */; };
 		88B500BE2DCDB7C1005E9FF3 /* libqopensslbackend.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500962DCDB7C0005E9FF3 /* libqopensslbackend.dylib */; };
-		88B500BF2DCDB7C1005E9FF3 /* libqtgeoservices_osm.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500042DCDB7C0005E9FF3 /* libqtgeoservices_osm.dylib */; };
-		88B500C02DCDB7C1005E9FF3 /* libqsqlodbc.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500862DCDB7C0005E9FF3 /* libqsqlodbc.dylib.dSYM */; };
-		88B500C12DCDB7C1005E9FF3 /* libqico.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5000F2DCDB7C0005E9FF3 /* libqico.dylib.dSYM */; };
 		88B500C22DCDB7C1005E9FF3 /* libqmacstyle.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5008A2DCDB7C0005E9FF3 /* libqmacstyle.dylib */; };
-		88B500C32DCDB7C1005E9FF3 /* librhirenderer.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5006E2DCDB7C0005E9FF3 /* librhirenderer.dylib */; };
-		88B500C42DCDB7C1005E9FF3 /* libqtgeoservices_itemsoverlay.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500022DCDB7C0005E9FF3 /* libqtgeoservices_itemsoverlay.dylib */; };
-		88B500C52DCDB7C1005E9FF3 /* libdefaultgeometryloader.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5FFFE2DCDB7C0005E9FF3 /* libdefaultgeometryloader.dylib.dSYM */; };
-		88B500C62DCDB7C1005E9FF3 /* libgltfsceneimport.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500782DCDB7C0005E9FF3 /* libgltfsceneimport.dylib */; };
-		88B500C72DCDB7C1005E9FF3 /* libqdarwinlocationpermission.prl in Resources */ = {isa = PBXBuildFile; fileRef = 88B500382DCDB7C0005E9FF3 /* libqdarwinlocationpermission.prl */; };
-		88B500C82DCDB7C1005E9FF3 /* libqtexttospeech_mock.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5008E2DCDB7C0005E9FF3 /* libqtexttospeech_mock.dylib.dSYM */; };
-		88B500C92DCDB7C1005E9FF3 /* libassimp.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5FFE72DCDB7C0005E9FF3 /* libassimp.dylib */; };
-		88B500CA2DCDB7C1005E9FF3 /* libqmldbg_debugger.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500532DCDB7C0005E9FF3 /* libqmldbg_debugger.dylib */; };
-		88B500CB2DCDB7C1005E9FF3 /* libassimpsceneimport.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500752DCDB7C0005E9FF3 /* libassimpsceneimport.dylib.dSYM */; };
-		88B500CC2DCDB7C1005E9FF3 /* libqjpeg.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500102DCDB7C0005E9FF3 /* libqjpeg.dylib.dSYM */; };
-		88B500CD2DCDB7C1005E9FF3 /* libqtwebview_webengine.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5009E2DCDB7C0005E9FF3 /* libqtwebview_webengine.dylib.dSYM */; };
-		88B500CE2DCDB7C1005E9FF3 /* libqtexttospeech_speech_macos.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5008F2DCDB7C0005E9FF3 /* libqtexttospeech_speech_macos.dylib */; };
-		88B500CF2DCDB7C1005E9FF3 /* libqmldbg_nativedebugger.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5005E2DCDB7C0005E9FF3 /* libqmldbg_nativedebugger.dylib.dSYM */; };
-		88B500D02DCDB7C1005E9FF3 /* libqscnetworkreachability.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500202DCDB7C0005E9FF3 /* libqscnetworkreachability.dylib.dSYM */; };
-		88B500D12DCDB7C1005E9FF3 /* libqmldbg_nativedebugger.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5005D2DCDB7C0005E9FF3 /* libqmldbg_nativedebugger.dylib */; };
-		88B500D22DCDB7C1005E9FF3 /* libqtwebview_webengine.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5009D2DCDB7C0005E9FF3 /* libqtwebview_webengine.dylib */; };
-		88B500D32DCDB7C1005E9FF3 /* libqtexttospeech_speech_macos.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500902DCDB7C0005E9FF3 /* libqtexttospeech_speech_macos.dylib.dSYM */; };
-		88B500D42DCDB7C1005E9FF3 /* libassimpsceneimport.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500742DCDB7C0005E9FF3 /* libassimpsceneimport.dylib */; };
-		88B500D52DCDB7C1005E9FF3 /* librhirenderer.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5006F2DCDB7C0005E9FF3 /* librhirenderer.dylib.dSYM */; };
 		88B500D62DCDB7C1005E9FF3 /* libqcertonlybackend.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500942DCDB7C0005E9FF3 /* libqcertonlybackend.dylib */; };
-		88B500D72DCDB7C1005E9FF3 /* libqsqlmimer.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500832DCDB7C0005E9FF3 /* libqsqlmimer.dylib */; };
-		88B500D82DCDB7C1005E9FF3 /* libqpdf.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500132DCDB7C0005E9FF3 /* libqpdf.dylib.dSYM */; };
-		88B500D92DCDB7C1005E9FF3 /* libqtposition_cl.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500472DCDB7C0005E9FF3 /* libqtposition_cl.dylib.dSYM */; };
-		88B500DA2DCDB7C1005E9FF3 /* libqtiff.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500162DCDB7C0005E9FF3 /* libqtiff.dylib.dSYM */; };
-		88B500DB2DCDB7C1005E9FF3 /* libqmldbg_messages.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500592DCDB7C0005E9FF3 /* libqmldbg_messages.dylib */; };
 		88B500DC2DCDB7C1005E9FF3 /* libqtvirtualkeyboardplugin.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5003C2DCDB7C0005E9FF3 /* libqtvirtualkeyboardplugin.dylib */; };
-		88B500DD2DCDB7C1005E9FF3 /* libqtga.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500152DCDB7C0005E9FF3 /* libqtga.dylib.dSYM */; };
-		88B500DE2DCDB7C1005E9FF3 /* libqmldbg_quick3dprofiler.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500642DCDB7C0005E9FF3 /* libqmldbg_quick3dprofiler.dylib.dSYM */; };
-		88B500DF2DCDB7C1005E9FF3 /* libqdarwinbluetoothpermission.prl in Resources */ = {isa = PBXBuildFile; fileRef = 88B500302DCDB7C0005E9FF3 /* libqdarwinbluetoothpermission.prl */; };
-		88B500E02DCDB7C1005E9FF3 /* libqtpeakcanbus.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5FFED2DCDB7C0005E9FF3 /* libqtpeakcanbus.dylib.dSYM */; };
-		88B500E12DCDB7C1005E9FF3 /* libqmldbg_server.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500682DCDB7C0005E9FF3 /* libqmldbg_server.dylib.dSYM */; };
-		88B500E22DCDB7C1005E9FF3 /* libqwebp.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500182DCDB7C0005E9FF3 /* libqwebp.dylib.dSYM */; };
-		88B500E32DCDB7C1005E9FF3 /* libqmldbg_native.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5005C2DCDB7C0005E9FF3 /* libqmldbg_native.dylib.dSYM */; };
-		88B500E42DCDB7C1005E9FF3 /* libhelpplugin.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500082DCDB7C0005E9FF3 /* libhelpplugin.dylib.dSYM */; };
-		88B500E52DCDB7C1005E9FF3 /* libqmldbg_inspector.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500552DCDB7C0005E9FF3 /* libqmldbg_inspector.dylib */; };
 		88B500E62DCDB7C1005E9FF3 /* libqminimal.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500412DCDB7C0005E9FF3 /* libqminimal.dylib */; };
-		88B500E72DCDB7C1005E9FF3 /* libqquickwidget.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5FFF32DCDB7C0005E9FF3 /* libqquickwidget.dylib */; };
-		88B500E82DCDB7C1005E9FF3 /* libqtpassthrucanbus.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5FFEB2DCDB7C0005E9FF3 /* libqtpassthrucanbus.dylib.dSYM */; };
-		88B500E92DCDB7C1005E9FF3 /* libscene2d.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500712DCDB7C0005E9FF3 /* libscene2d.dylib */; };
-		88B500EA2DCDB7C1005E9FF3 /* libqmldbg_native.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5005B2DCDB7C0005E9FF3 /* libqmldbg_native.dylib */; };
 		88B500EB2DCDB7C1005E9FF3 /* libqtuiotouchplugin.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5FFFA2DCDB7C0005E9FF3 /* libqtuiotouchplugin.dylib */; };
-		88B500EC2DCDB7C1005E9FF3 /* libqtposition_positionpoll.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5004A2DCDB7C0005E9FF3 /* libqtposition_positionpoll.dylib */; };
 		88B500ED2DCDB7C1005E9FF3 /* libqsecuretransportbackend.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500982DCDB7C0005E9FF3 /* libqsecuretransportbackend.dylib */; };
-		88B500EE2DCDB7C1005E9FF3 /* libqsqlmimer.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500842DCDB7C0005E9FF3 /* libqsqlmimer.dylib.dSYM */; };
-		88B500EF2DCDB7C1005E9FF3 /* libhelpplugin.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500072DCDB7C0005E9FF3 /* libhelpplugin.dylib */; };
-		88B500F02DCDB7C1005E9FF3 /* libqtwebview_darwin.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5009C2DCDB7C0005E9FF3 /* libqtwebview_darwin.dylib.dSYM */; };
-		88B500F12DCDB7C1005E9FF3 /* libqcertonlybackend.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500952DCDB7C0005E9FF3 /* libqcertonlybackend.dylib.dSYM */; };
-		88B500F22DCDB7C1005E9FF3 /* libdefaultgeometryloader.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5FFFD2DCDB7C0005E9FF3 /* libdefaultgeometryloader.dylib */; };
-		88B500F32DCDB7C1005E9FF3 /* libqwebengineview.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5FFF62DCDB7C0005E9FF3 /* libqwebengineview.dylib.dSYM */; };
-		88B500F42DCDB7C1005E9FF3 /* libqsvgicon.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5000B2DCDB7C0005E9FF3 /* libqsvgicon.dylib.dSYM */; };
-		88B500F52DCDB7C1005E9FF3 /* libqdarwinmicrophonepermission.prl in Resources */ = {isa = PBXBuildFile; fileRef = 88B5003A2DCDB7C0005E9FF3 /* libqdarwinmicrophonepermission.prl */; };
-		88B500F62DCDB7C1005E9FF3 /* libqtvirtualkeyboardplugin.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5003D2DCDB7C0005E9FF3 /* libqtvirtualkeyboardplugin.dylib.dSYM */; };
-		88B500F72DCDB7C1005E9FF3 /* libqmldbg_profiler.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500622DCDB7C0005E9FF3 /* libqmldbg_profiler.dylib.dSYM */; };
-		88B500F82DCDB7C1005E9FF3 /* libqquickwidget.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5FFF42DCDB7C0005E9FF3 /* libqquickwidget.dylib.dSYM */; };
-		88B500F92DCDB7C1005E9FF3 /* libffmpegmediaplugin.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5001D2DCDB7C0005E9FF3 /* libffmpegmediaplugin.dylib.dSYM */; };
-		88B500FA2DCDB7C1005E9FF3 /* libqscxmlecmascriptdatamodel.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5007B2DCDB7C0005E9FF3 /* libqscxmlecmascriptdatamodel.dylib */; };
-		88B500FB2DCDB7C1005E9FF3 /* libqmldbg_profiler.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500612DCDB7C0005E9FF3 /* libqmldbg_profiler.dylib */; };
-		88B500FC2DCDB7C1005E9FF3 /* libqtuiotouchplugin.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5FFFB2DCDB7C0005E9FF3 /* libqtuiotouchplugin.dylib.dSYM */; };
-		88B500FD2DCDB7C1005E9FF3 /* libqtexttospeech_speechdarwin.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500912DCDB7C0005E9FF3 /* libqtexttospeech_speechdarwin.dylib */; };
-		88B500FE2DCDB7C1005E9FF3 /* libqscxmlecmascriptdatamodel.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5007C2DCDB7C0005E9FF3 /* libqscxmlecmascriptdatamodel.dylib.dSYM */; };
-		88B500FF2DCDB7C1005E9FF3 /* libdarwinmediaplugin.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5001B2DCDB7C0005E9FF3 /* libdarwinmediaplugin.dylib.dSYM */; };
-		88B501002DCDB7C1005E9FF3 /* libqtposition_cl.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500462DCDB7C0005E9FF3 /* libqtposition_cl.dylib */; };
-		88B501012DCDB7C1005E9FF3 /* libqdarwincamerapermission.prl in Resources */ = {isa = PBXBuildFile; fileRef = 88B500342DCDB7C0005E9FF3 /* libqdarwincamerapermission.prl */; };
-		88B501022DCDB7C1005E9FF3 /* libqmldbg_quick3dprofiler.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500632DCDB7C0005E9FF3 /* libqmldbg_quick3dprofiler.dylib */; };
-		88B501032DCDB7C1005E9FF3 /* libqtexttospeech_mock.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5008D2DCDB7C0005E9FF3 /* libqtexttospeech_mock.dylib */; };
-		88B501042DCDB7C1005E9FF3 /* libassimp.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5FFE82DCDB7C0005E9FF3 /* libassimp.dylib.dSYM */; };
-		88B501052DCDB7C1005E9FF3 /* libqmldbg_messages.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5005A2DCDB7C0005E9FF3 /* libqmldbg_messages.dylib.dSYM */; };
-		88B501062DCDB7C1005E9FF3 /* libqmldbg_local.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500582DCDB7C0005E9FF3 /* libqmldbg_local.dylib.dSYM */; };
-		88B501072DCDB7C1005E9FF3 /* libqtposition_positionpoll.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5004B2DCDB7C0005E9FF3 /* libqtposition_positionpoll.dylib.dSYM */; };
-		88B501082DCDB7C1005E9FF3 /* libqmllsquickplugin.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500502DCDB7C0005E9FF3 /* libqmllsquickplugin.dylib */; };
-		88B501092DCDB7C1005E9FF3 /* libgltfsceneexport.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500772DCDB7C0005E9FF3 /* libgltfsceneexport.dylib.dSYM */; };
-		88B5010A2DCDB7C1005E9FF3 /* libopenglrenderer.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5006C2DCDB7C0005E9FF3 /* libopenglrenderer.dylib */; };
-		88B5010B2DCDB7C1005E9FF3 /* libgltfsceneimport.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500792DCDB7C0005E9FF3 /* libgltfsceneimport.dylib.dSYM */; };
-		88B5010C2DCDB7C1005E9FF3 /* libqmacstyle.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5008B2DCDB7C0005E9FF3 /* libqmacstyle.dylib.dSYM */; };
-		88B5010D2DCDB7C1005E9FF3 /* libffmpegmediaplugin.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5001C2DCDB7C0005E9FF3 /* libffmpegmediaplugin.dylib */; };
-		88B5010E2DCDB7C1005E9FF3 /* libqmldbg_tcp.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5006A2DCDB7C0005E9FF3 /* libqmldbg_tcp.dylib.dSYM */; };
 		88B5010F2DCDB7C1005E9FF3 /* libqinsighttracker.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5FFF82DCDB7C0005E9FF3 /* libqinsighttracker.dylib */; };
-		88B501102DCDB7C1005E9FF3 /* libqmldbg_inspector.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500562DCDB7C0005E9FF3 /* libqmldbg_inspector.dylib.dSYM */; };
-		88B501112DCDB7C1005E9FF3 /* libqsqlpsql.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500882DCDB7C0005E9FF3 /* libqsqlpsql.dylib.dSYM */; };
 		88B501122DCDB7C1005E9FF3 /* libqttinycanbus.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5FFEE2DCDB7C0005E9FF3 /* libqttinycanbus.dylib */; };
-		88B501132DCDB7C1005E9FF3 /* libscene2d.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500722DCDB7C0005E9FF3 /* libscene2d.dylib.dSYM */; };
-		88B501142DCDB7C1005E9FF3 /* libqtsensors_generic.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5007F2DCDB7C0005E9FF3 /* libqtsensors_generic.dylib.dSYM */; };
-		88B501152DCDB7C1005E9FF3 /* libqoffscreen.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500442DCDB7C0005E9FF3 /* libqoffscreen.dylib.dSYM */; };
-		88B501162DCDB7C1005E9FF3 /* libqmldbg_local.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500572DCDB7C0005E9FF3 /* libqmldbg_local.dylib */; };
-		88B501172DCDB7C1005E9FF3 /* libgltfgeometryloader.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5FFFF2DCDB7C0005E9FF3 /* libgltfgeometryloader.dylib */; };
-		88B501182DCDB7C1005E9FF3 /* libqdarwincontactspermission.prl in Resources */ = {isa = PBXBuildFile; fileRef = 88B500362DCDB7C0005E9FF3 /* libqdarwincontactspermission.prl */; };
-		88B501192DCDB7C1005E9FF3 /* libqmldbg_quickprofiler.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500652DCDB7C0005E9FF3 /* libqmldbg_quickprofiler.dylib */; };
-		88B5011A2DCDB7C1005E9FF3 /* libqtposition_nmea.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500492DCDB7C0005E9FF3 /* libqtposition_nmea.dylib.dSYM */; };
-		88B5011B2DCDB7C1005E9FF3 /* libquicklintplugin.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5004D2DCDB7C0005E9FF3 /* libquicklintplugin.dylib */; };
-		88B5011C2DCDB7C1005E9FF3 /* libqtwebview_darwin.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5009B2DCDB7C0005E9FF3 /* libqtwebview_darwin.dylib */; };
-		88B5011D2DCDB7C1005E9FF3 /* libqinsighttracker.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5FFF92DCDB7C0005E9FF3 /* libqinsighttracker.dylib.dSYM */; };
-		88B5011E2DCDB7C1005E9FF3 /* libgltfgeometryloader.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500002DCDB7C0005E9FF3 /* libgltfgeometryloader.dylib.dSYM */; };
-		88B5011F2DCDB7C1005E9FF3 /* libqsqlpsql.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500872DCDB7C0005E9FF3 /* libqsqlpsql.dylib */; };
-		88B501202DCDB7C1005E9FF3 /* libqtexttospeech_speechdarwin.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500922DCDB7C0005E9FF3 /* libqtexttospeech_speechdarwin.dylib.dSYM */; };
 		88B501212DCDB7C1005E9FF3 /* libqcocoa.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5003F2DCDB7C0005E9FF3 /* libqcocoa.dylib */; };
 		88B501222DCDB7C1005E9FF3 /* libqsvgicon.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5000A2DCDB7C0005E9FF3 /* libqsvgicon.dylib */; };
-		88B501232DCDB7C1005E9FF3 /* libopenglrenderer.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5006D2DCDB7C0005E9FF3 /* libopenglrenderer.dylib.dSYM */; };
-		88B501242DCDB7C1005E9FF3 /* libqtgeoservices_osm.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500052DCDB7C0005E9FF3 /* libqtgeoservices_osm.dylib.dSYM */; };
-		88B501252DCDB7C1005E9FF3 /* libqcocoa.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500402DCDB7C0005E9FF3 /* libqcocoa.dylib.dSYM */; };
-		88B501262DCDB7C1005E9FF3 /* libqsvg.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500142DCDB7C0005E9FF3 /* libqsvg.dylib.dSYM */; };
-		88B501272DCDB7C1005E9FF3 /* libqmldbg_preview.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500602DCDB7C0005E9FF3 /* libqmldbg_preview.dylib.dSYM */; };
-		88B501282DCDB7C1005E9FF3 /* libqmldbg_quickprofiler.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500662DCDB7C0005E9FF3 /* libqmldbg_quickprofiler.dylib.dSYM */; };
-		88B501292DCDB7C1005E9FF3 /* libqmacjp2.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500122DCDB7C0005E9FF3 /* libqmacjp2.dylib.dSYM */; };
-		88B5012A2DCDB7C1005E9FF3 /* libqsqlite.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500822DCDB7C0005E9FF3 /* libqsqlite.dylib.dSYM */; };
-		88B5012B2DCDB7C1005E9FF3 /* libqtgeoservices_itemsoverlay.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500032DCDB7C0005E9FF3 /* libqtgeoservices_itemsoverlay.dylib.dSYM */; };
-		88B5012C2DCDB7C1005E9FF3 /* libqminimal.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500422DCDB7C0005E9FF3 /* libqminimal.dylib.dSYM */; };
-		88B5012D2DCDB7C1005E9FF3 /* libqdarwincalendarpermission.prl in Resources */ = {isa = PBXBuildFile; fileRef = 88B500322DCDB7C0005E9FF3 /* libqdarwincalendarpermission.prl */; };
-		88B5012E2DCDB7C1005E9FF3 /* libqsqlite.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500812DCDB7C0005E9FF3 /* libqsqlite.dylib */; };
-		88B5012F2DCDB7C1005E9FF3 /* libqtposition_nmea.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500482DCDB7C0005E9FF3 /* libqtposition_nmea.dylib */; };
-		88B501302DCDB7C1005E9FF3 /* libqmldbg_tcp.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500692DCDB7C0005E9FF3 /* libqmldbg_tcp.dylib */; };
 		88B501312DCDB7C1005E9FF3 /* libqscnetworkreachability.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5001F2DCDB7C0005E9FF3 /* libqscnetworkreachability.dylib */; };
-		88B501322DCDB7C1005E9FF3 /* libqmacheif.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B500112DCDB7C0005E9FF3 /* libqmacheif.dylib.dSYM */; };
-		88B501332DCDB7C1005E9FF3 /* libqmldbg_server.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B500672DCDB7C0005E9FF3 /* libqmldbg_server.dylib */; };
 		88B501342DCDB7C1005E9FF3 /* libqtpassthrucanbus.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5FFEA2DCDB7C0005E9FF3 /* libqtpassthrucanbus.dylib */; };
-		88B501352DCDB7C1005E9FF3 /* libqtvirtualcanbus.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 88B5FFF12DCDB7C0005E9FF3 /* libqtvirtualcanbus.dylib.dSYM */; };
-		88B501362DCDB7C1005E9FF3 /* libqmldbg_preview.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 88B5005F2DCDB7C0005E9FF3 /* libqmldbg_preview.dylib */; };
 		88B501372DCDB7DF005E9FF3 /* libqtpassthrucanbus.dylib in Copy QT Plugins - canbus */ = {isa = PBXBuildFile; fileRef = 88B5FFEA2DCDB7C0005E9FF3 /* libqtpassthrucanbus.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		88B501382DCDB7DF005E9FF3 /* libqtpeakcanbus.dylib in Copy QT Plugins - canbus */ = {isa = PBXBuildFile; fileRef = 88B5FFEC2DCDB7C0005E9FF3 /* libqtpeakcanbus.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		88B501392DCDB7DF005E9FF3 /* libqttinycanbus.dylib in Copy QT Plugins - canbus */ = {isa = PBXBuildFile; fileRef = 88B5FFEE2DCDB7C0005E9FF3 /* libqttinycanbus.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -264,11 +130,6 @@
 		88B501682DCDB94C005E9FF3 /* libqsecuretransportbackend.dylib in Copy QT Plugins - tls */ = {isa = PBXBuildFile; fileRef = 88B500982DCDB7C0005E9FF3 /* libqsecuretransportbackend.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		88BEFD842D4BCF8900CD40E6 /* org.eof.tools.VSPDriver.dext in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 88B40D572D4B666700DFE7C5 /* org.eof.tools.VSPDriver.dext */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		88DA7BA92D532C6800C8F759 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 88DA7BA72D532C6700C8F759 /* LICENSE */; };
-		88F12FE32DCDBE3500E0486A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88F12FDF2DCDBE3500E0486A /* AVFoundation.framework */; };
-		88F12FEF2DCDBEC900E0486A /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88F12FEE2DCDBEC900E0486A /* EventKit.framework */; };
-		88F12FF12DCDBECE00E0486A /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88F12FF02DCDBECE00E0486A /* Contacts.framework */; };
-		88F12FF42DCDBED600E0486A /* IOBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88F12FF22DCDBED600E0486A /* IOBluetooth.framework */; };
-		88F12FF52DCDBED600E0486A /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88F12FF32DCDBED600E0486A /* CoreBluetooth.framework */; };
 		88F5D93D2D59E85B007A6E1F /* VSPInstallApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F5D93C2D59E85B007A6E1F /* VSPInstallApp.swift */; };
 		88F5D9402D59E933007A6E1F /* VSPDriverClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88F5D93F2D59E933007A6E1F /* VSPDriverClient.cpp */; };
 /* End PBXBuildFile section */
@@ -544,135 +405,16 @@
 		88B40D612D4B666700DFE7C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88B40D702D4B85ED00DFE7C5 /* VSPDriver.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VSPDriver.entitlements; sourceTree = "<group>"; };
 		88B47EC92D59B43800868CA5 /* VSPController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VSPController.h; sourceTree = "<group>"; };
-		88B500002DCDB7C0005E9FF3 /* libgltfgeometryloader.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libgltfgeometryloader.dylib.dSYM; sourceTree = "<group>"; };
-		88B500022DCDB7C0005E9FF3 /* libqtgeoservices_itemsoverlay.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqtgeoservices_itemsoverlay.dylib; sourceTree = "<group>"; };
-		88B500032DCDB7C0005E9FF3 /* libqtgeoservices_itemsoverlay.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtgeoservices_itemsoverlay.dylib.dSYM; sourceTree = "<group>"; };
-		88B500042DCDB7C0005E9FF3 /* libqtgeoservices_osm.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqtgeoservices_osm.dylib; sourceTree = "<group>"; };
-		88B500052DCDB7C0005E9FF3 /* libqtgeoservices_osm.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtgeoservices_osm.dylib.dSYM; sourceTree = "<group>"; };
-		88B500072DCDB7C0005E9FF3 /* libhelpplugin.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libhelpplugin.dylib; sourceTree = "<group>"; };
-		88B500082DCDB7C0005E9FF3 /* libhelpplugin.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libhelpplugin.dylib.dSYM; sourceTree = "<group>"; };
 		88B5000A2DCDB7C0005E9FF3 /* libqsvgicon.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqsvgicon.dylib; sourceTree = "<group>"; };
-		88B5000B2DCDB7C0005E9FF3 /* libqsvgicon.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqsvgicon.dylib.dSYM; sourceTree = "<group>"; };
-		88B5000D2DCDB7C0005E9FF3 /* libqgif.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqgif.dylib.dSYM; sourceTree = "<group>"; };
-		88B5000E2DCDB7C0005E9FF3 /* libqicns.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqicns.dylib.dSYM; sourceTree = "<group>"; };
-		88B5000F2DCDB7C0005E9FF3 /* libqico.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqico.dylib.dSYM; sourceTree = "<group>"; };
-		88B500102DCDB7C0005E9FF3 /* libqjpeg.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqjpeg.dylib.dSYM; sourceTree = "<group>"; };
-		88B500112DCDB7C0005E9FF3 /* libqmacheif.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqmacheif.dylib.dSYM; sourceTree = "<group>"; };
-		88B500122DCDB7C0005E9FF3 /* libqmacjp2.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqmacjp2.dylib.dSYM; sourceTree = "<group>"; };
-		88B500132DCDB7C0005E9FF3 /* libqpdf.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqpdf.dylib.dSYM; sourceTree = "<group>"; };
-		88B500142DCDB7C0005E9FF3 /* libqsvg.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqsvg.dylib.dSYM; sourceTree = "<group>"; };
-		88B500152DCDB7C0005E9FF3 /* libqtga.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtga.dylib.dSYM; sourceTree = "<group>"; };
-		88B500162DCDB7C0005E9FF3 /* libqtiff.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtiff.dylib.dSYM; sourceTree = "<group>"; };
-		88B500172DCDB7C0005E9FF3 /* libqwbmp.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqwbmp.dylib.dSYM; sourceTree = "<group>"; };
-		88B500182DCDB7C0005E9FF3 /* libqwebp.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqwebp.dylib.dSYM; sourceTree = "<group>"; };
-		88B5001A2DCDB7C0005E9FF3 /* libdarwinmediaplugin.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libdarwinmediaplugin.dylib; sourceTree = "<group>"; };
-		88B5001B2DCDB7C0005E9FF3 /* libdarwinmediaplugin.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libdarwinmediaplugin.dylib.dSYM; sourceTree = "<group>"; };
-		88B5001C2DCDB7C0005E9FF3 /* libffmpegmediaplugin.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libffmpegmediaplugin.dylib; sourceTree = "<group>"; };
-		88B5001D2DCDB7C0005E9FF3 /* libffmpegmediaplugin.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libffmpegmediaplugin.dylib.dSYM; sourceTree = "<group>"; };
 		88B5001F2DCDB7C0005E9FF3 /* libqscnetworkreachability.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqscnetworkreachability.dylib; sourceTree = "<group>"; };
-		88B500202DCDB7C0005E9FF3 /* libqscnetworkreachability.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqscnetworkreachability.dylib.dSYM; sourceTree = "<group>"; };
-		88B500222DCDB7C0005E9FF3 /* QDarwinBluetoothPermissionPlugin_init.cpp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = QDarwinBluetoothPermissionPlugin_init.cpp.o; sourceTree = "<group>"; };
-		88B500242DCDB7C0005E9FF3 /* QDarwinCalendarPermissionPlugin_init.cpp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = QDarwinCalendarPermissionPlugin_init.cpp.o; sourceTree = "<group>"; };
-		88B500262DCDB7C0005E9FF3 /* QDarwinCameraPermissionPlugin_init.cpp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = QDarwinCameraPermissionPlugin_init.cpp.o; sourceTree = "<group>"; };
-		88B500282DCDB7C0005E9FF3 /* QDarwinContactsPermissionPlugin_init.cpp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = QDarwinContactsPermissionPlugin_init.cpp.o; sourceTree = "<group>"; };
-		88B5002A2DCDB7C0005E9FF3 /* QDarwinLocationPermissionPlugin_init.cpp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = QDarwinLocationPermissionPlugin_init.cpp.o; sourceTree = "<group>"; };
-		88B5002C2DCDB7C0005E9FF3 /* QDarwinMicrophonePermissionPlugin_init.cpp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = QDarwinMicrophonePermissionPlugin_init.cpp.o; sourceTree = "<group>"; };
-		88B5002F2DCDB7C0005E9FF3 /* libqdarwinbluetoothpermission.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libqdarwinbluetoothpermission.a; sourceTree = "<group>"; };
-		88B500302DCDB7C0005E9FF3 /* libqdarwinbluetoothpermission.prl */ = {isa = PBXFileReference; lastKnownFileType = text; path = libqdarwinbluetoothpermission.prl; sourceTree = "<group>"; };
-		88B500312DCDB7C0005E9FF3 /* libqdarwincalendarpermission.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libqdarwincalendarpermission.a; sourceTree = "<group>"; };
-		88B500322DCDB7C0005E9FF3 /* libqdarwincalendarpermission.prl */ = {isa = PBXFileReference; lastKnownFileType = text; path = libqdarwincalendarpermission.prl; sourceTree = "<group>"; };
-		88B500332DCDB7C0005E9FF3 /* libqdarwincamerapermission.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libqdarwincamerapermission.a; sourceTree = "<group>"; };
-		88B500342DCDB7C0005E9FF3 /* libqdarwincamerapermission.prl */ = {isa = PBXFileReference; lastKnownFileType = text; path = libqdarwincamerapermission.prl; sourceTree = "<group>"; };
-		88B500352DCDB7C0005E9FF3 /* libqdarwincontactspermission.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libqdarwincontactspermission.a; sourceTree = "<group>"; };
-		88B500362DCDB7C0005E9FF3 /* libqdarwincontactspermission.prl */ = {isa = PBXFileReference; lastKnownFileType = text; path = libqdarwincontactspermission.prl; sourceTree = "<group>"; };
-		88B500372DCDB7C0005E9FF3 /* libqdarwinlocationpermission.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libqdarwinlocationpermission.a; sourceTree = "<group>"; };
-		88B500382DCDB7C0005E9FF3 /* libqdarwinlocationpermission.prl */ = {isa = PBXFileReference; lastKnownFileType = text; path = libqdarwinlocationpermission.prl; sourceTree = "<group>"; };
-		88B500392DCDB7C0005E9FF3 /* libqdarwinmicrophonepermission.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libqdarwinmicrophonepermission.a; sourceTree = "<group>"; };
-		88B5003A2DCDB7C0005E9FF3 /* libqdarwinmicrophonepermission.prl */ = {isa = PBXFileReference; lastKnownFileType = text; path = libqdarwinmicrophonepermission.prl; sourceTree = "<group>"; };
 		88B5003C2DCDB7C0005E9FF3 /* libqtvirtualkeyboardplugin.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqtvirtualkeyboardplugin.dylib; sourceTree = "<group>"; };
-		88B5003D2DCDB7C0005E9FF3 /* libqtvirtualkeyboardplugin.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtvirtualkeyboardplugin.dylib.dSYM; sourceTree = "<group>"; };
 		88B5003F2DCDB7C0005E9FF3 /* libqcocoa.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqcocoa.dylib; sourceTree = "<group>"; };
-		88B500402DCDB7C0005E9FF3 /* libqcocoa.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqcocoa.dylib.dSYM; sourceTree = "<group>"; };
 		88B500412DCDB7C0005E9FF3 /* libqminimal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqminimal.dylib; sourceTree = "<group>"; };
-		88B500422DCDB7C0005E9FF3 /* libqminimal.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqminimal.dylib.dSYM; sourceTree = "<group>"; };
 		88B500432DCDB7C0005E9FF3 /* libqoffscreen.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqoffscreen.dylib; sourceTree = "<group>"; };
-		88B500442DCDB7C0005E9FF3 /* libqoffscreen.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqoffscreen.dylib.dSYM; sourceTree = "<group>"; };
-		88B500462DCDB7C0005E9FF3 /* libqtposition_cl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqtposition_cl.dylib; sourceTree = "<group>"; };
-		88B500472DCDB7C0005E9FF3 /* libqtposition_cl.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtposition_cl.dylib.dSYM; sourceTree = "<group>"; };
-		88B500482DCDB7C0005E9FF3 /* libqtposition_nmea.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqtposition_nmea.dylib; sourceTree = "<group>"; };
-		88B500492DCDB7C0005E9FF3 /* libqtposition_nmea.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtposition_nmea.dylib.dSYM; sourceTree = "<group>"; };
-		88B5004A2DCDB7C0005E9FF3 /* libqtposition_positionpoll.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqtposition_positionpoll.dylib; sourceTree = "<group>"; };
-		88B5004B2DCDB7C0005E9FF3 /* libqtposition_positionpoll.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtposition_positionpoll.dylib.dSYM; sourceTree = "<group>"; };
-		88B5004D2DCDB7C0005E9FF3 /* libquicklintplugin.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libquicklintplugin.dylib; sourceTree = "<group>"; };
-		88B5004E2DCDB7C0005E9FF3 /* libquicklintplugin.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libquicklintplugin.dylib.dSYM; sourceTree = "<group>"; };
-		88B500502DCDB7C0005E9FF3 /* libqmllsquickplugin.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqmllsquickplugin.dylib; sourceTree = "<group>"; };
-		88B500512DCDB7C0005E9FF3 /* libqmllsquickplugin.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqmllsquickplugin.dylib.dSYM; sourceTree = "<group>"; };
-		88B500532DCDB7C0005E9FF3 /* libqmldbg_debugger.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqmldbg_debugger.dylib; sourceTree = "<group>"; };
-		88B500542DCDB7C0005E9FF3 /* libqmldbg_debugger.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqmldbg_debugger.dylib.dSYM; sourceTree = "<group>"; };
-		88B500552DCDB7C0005E9FF3 /* libqmldbg_inspector.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqmldbg_inspector.dylib; sourceTree = "<group>"; };
-		88B500562DCDB7C0005E9FF3 /* libqmldbg_inspector.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqmldbg_inspector.dylib.dSYM; sourceTree = "<group>"; };
-		88B500572DCDB7C0005E9FF3 /* libqmldbg_local.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqmldbg_local.dylib; sourceTree = "<group>"; };
-		88B500582DCDB7C0005E9FF3 /* libqmldbg_local.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqmldbg_local.dylib.dSYM; sourceTree = "<group>"; };
-		88B500592DCDB7C0005E9FF3 /* libqmldbg_messages.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqmldbg_messages.dylib; sourceTree = "<group>"; };
-		88B5005A2DCDB7C0005E9FF3 /* libqmldbg_messages.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqmldbg_messages.dylib.dSYM; sourceTree = "<group>"; };
-		88B5005B2DCDB7C0005E9FF3 /* libqmldbg_native.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqmldbg_native.dylib; sourceTree = "<group>"; };
-		88B5005C2DCDB7C0005E9FF3 /* libqmldbg_native.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqmldbg_native.dylib.dSYM; sourceTree = "<group>"; };
-		88B5005D2DCDB7C0005E9FF3 /* libqmldbg_nativedebugger.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqmldbg_nativedebugger.dylib; sourceTree = "<group>"; };
-		88B5005E2DCDB7C0005E9FF3 /* libqmldbg_nativedebugger.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqmldbg_nativedebugger.dylib.dSYM; sourceTree = "<group>"; };
-		88B5005F2DCDB7C0005E9FF3 /* libqmldbg_preview.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqmldbg_preview.dylib; sourceTree = "<group>"; };
-		88B500602DCDB7C0005E9FF3 /* libqmldbg_preview.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqmldbg_preview.dylib.dSYM; sourceTree = "<group>"; };
-		88B500612DCDB7C0005E9FF3 /* libqmldbg_profiler.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqmldbg_profiler.dylib; sourceTree = "<group>"; };
-		88B500622DCDB7C0005E9FF3 /* libqmldbg_profiler.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqmldbg_profiler.dylib.dSYM; sourceTree = "<group>"; };
-		88B500632DCDB7C0005E9FF3 /* libqmldbg_quick3dprofiler.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqmldbg_quick3dprofiler.dylib; sourceTree = "<group>"; };
-		88B500642DCDB7C0005E9FF3 /* libqmldbg_quick3dprofiler.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqmldbg_quick3dprofiler.dylib.dSYM; sourceTree = "<group>"; };
-		88B500652DCDB7C0005E9FF3 /* libqmldbg_quickprofiler.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqmldbg_quickprofiler.dylib; sourceTree = "<group>"; };
-		88B500662DCDB7C0005E9FF3 /* libqmldbg_quickprofiler.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqmldbg_quickprofiler.dylib.dSYM; sourceTree = "<group>"; };
-		88B500672DCDB7C0005E9FF3 /* libqmldbg_server.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqmldbg_server.dylib; sourceTree = "<group>"; };
-		88B500682DCDB7C0005E9FF3 /* libqmldbg_server.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqmldbg_server.dylib.dSYM; sourceTree = "<group>"; };
-		88B500692DCDB7C0005E9FF3 /* libqmldbg_tcp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqmldbg_tcp.dylib; sourceTree = "<group>"; };
-		88B5006A2DCDB7C0005E9FF3 /* libqmldbg_tcp.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqmldbg_tcp.dylib.dSYM; sourceTree = "<group>"; };
-		88B5006C2DCDB7C0005E9FF3 /* libopenglrenderer.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libopenglrenderer.dylib; sourceTree = "<group>"; };
-		88B5006D2DCDB7C0005E9FF3 /* libopenglrenderer.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libopenglrenderer.dylib.dSYM; sourceTree = "<group>"; };
-		88B5006E2DCDB7C0005E9FF3 /* librhirenderer.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = librhirenderer.dylib; sourceTree = "<group>"; };
-		88B5006F2DCDB7C0005E9FF3 /* librhirenderer.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = librhirenderer.dylib.dSYM; sourceTree = "<group>"; };
-		88B500712DCDB7C0005E9FF3 /* libscene2d.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libscene2d.dylib; sourceTree = "<group>"; };
-		88B500722DCDB7C0005E9FF3 /* libscene2d.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libscene2d.dylib.dSYM; sourceTree = "<group>"; };
-		88B500742DCDB7C0005E9FF3 /* libassimpsceneimport.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libassimpsceneimport.dylib; sourceTree = "<group>"; };
-		88B500752DCDB7C0005E9FF3 /* libassimpsceneimport.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libassimpsceneimport.dylib.dSYM; sourceTree = "<group>"; };
-		88B500762DCDB7C0005E9FF3 /* libgltfsceneexport.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libgltfsceneexport.dylib; sourceTree = "<group>"; };
-		88B500772DCDB7C0005E9FF3 /* libgltfsceneexport.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libgltfsceneexport.dylib.dSYM; sourceTree = "<group>"; };
-		88B500782DCDB7C0005E9FF3 /* libgltfsceneimport.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libgltfsceneimport.dylib; sourceTree = "<group>"; };
-		88B500792DCDB7C0005E9FF3 /* libgltfsceneimport.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libgltfsceneimport.dylib.dSYM; sourceTree = "<group>"; };
-		88B5007B2DCDB7C0005E9FF3 /* libqscxmlecmascriptdatamodel.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqscxmlecmascriptdatamodel.dylib; sourceTree = "<group>"; };
-		88B5007C2DCDB7C0005E9FF3 /* libqscxmlecmascriptdatamodel.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqscxmlecmascriptdatamodel.dylib.dSYM; sourceTree = "<group>"; };
-		88B5007E2DCDB7C0005E9FF3 /* libqtsensors_generic.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqtsensors_generic.dylib; sourceTree = "<group>"; };
-		88B5007F2DCDB7C0005E9FF3 /* libqtsensors_generic.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtsensors_generic.dylib.dSYM; sourceTree = "<group>"; };
-		88B500812DCDB7C0005E9FF3 /* libqsqlite.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqsqlite.dylib; sourceTree = "<group>"; };
-		88B500822DCDB7C0005E9FF3 /* libqsqlite.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqsqlite.dylib.dSYM; sourceTree = "<group>"; };
-		88B500832DCDB7C0005E9FF3 /* libqsqlmimer.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqsqlmimer.dylib; sourceTree = "<group>"; };
-		88B500842DCDB7C0005E9FF3 /* libqsqlmimer.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqsqlmimer.dylib.dSYM; sourceTree = "<group>"; };
-		88B500852DCDB7C0005E9FF3 /* libqsqlodbc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqsqlodbc.dylib; sourceTree = "<group>"; };
-		88B500862DCDB7C0005E9FF3 /* libqsqlodbc.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqsqlodbc.dylib.dSYM; sourceTree = "<group>"; };
-		88B500872DCDB7C0005E9FF3 /* libqsqlpsql.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqsqlpsql.dylib; sourceTree = "<group>"; };
-		88B500882DCDB7C0005E9FF3 /* libqsqlpsql.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqsqlpsql.dylib.dSYM; sourceTree = "<group>"; };
 		88B5008A2DCDB7C0005E9FF3 /* libqmacstyle.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqmacstyle.dylib; sourceTree = "<group>"; };
-		88B5008B2DCDB7C0005E9FF3 /* libqmacstyle.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqmacstyle.dylib.dSYM; sourceTree = "<group>"; };
-		88B5008D2DCDB7C0005E9FF3 /* libqtexttospeech_mock.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqtexttospeech_mock.dylib; sourceTree = "<group>"; };
-		88B5008E2DCDB7C0005E9FF3 /* libqtexttospeech_mock.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtexttospeech_mock.dylib.dSYM; sourceTree = "<group>"; };
-		88B5008F2DCDB7C0005E9FF3 /* libqtexttospeech_speech_macos.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqtexttospeech_speech_macos.dylib; sourceTree = "<group>"; };
-		88B500902DCDB7C0005E9FF3 /* libqtexttospeech_speech_macos.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtexttospeech_speech_macos.dylib.dSYM; sourceTree = "<group>"; };
-		88B500912DCDB7C0005E9FF3 /* libqtexttospeech_speechdarwin.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqtexttospeech_speechdarwin.dylib; sourceTree = "<group>"; };
-		88B500922DCDB7C0005E9FF3 /* libqtexttospeech_speechdarwin.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtexttospeech_speechdarwin.dylib.dSYM; sourceTree = "<group>"; };
 		88B500942DCDB7C0005E9FF3 /* libqcertonlybackend.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqcertonlybackend.dylib; sourceTree = "<group>"; };
-		88B500952DCDB7C0005E9FF3 /* libqcertonlybackend.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqcertonlybackend.dylib.dSYM; sourceTree = "<group>"; };
 		88B500962DCDB7C0005E9FF3 /* libqopensslbackend.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqopensslbackend.dylib; sourceTree = "<group>"; };
-		88B500972DCDB7C0005E9FF3 /* libqopensslbackend.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqopensslbackend.dylib.dSYM; sourceTree = "<group>"; };
 		88B500982DCDB7C0005E9FF3 /* libqsecuretransportbackend.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqsecuretransportbackend.dylib; sourceTree = "<group>"; };
-		88B500992DCDB7C0005E9FF3 /* libqsecuretransportbackend.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqsecuretransportbackend.dylib.dSYM; sourceTree = "<group>"; };
-		88B5009B2DCDB7C0005E9FF3 /* libqtwebview_darwin.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqtwebview_darwin.dylib; sourceTree = "<group>"; };
-		88B5009C2DCDB7C0005E9FF3 /* libqtwebview_darwin.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtwebview_darwin.dylib.dSYM; sourceTree = "<group>"; };
-		88B5009D2DCDB7C0005E9FF3 /* libqtwebview_webengine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqtwebview_webengine.dylib; sourceTree = "<group>"; };
-		88B5009E2DCDB7C0005E9FF3 /* libqtwebview_webengine.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtwebview_webengine.dylib.dSYM; sourceTree = "<group>"; };
 		88B5013C2DCDB8C6005E9FF3 /* libqgif.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqgif.dylib; sourceTree = "<group>"; };
 		88B5013D2DCDB8C6005E9FF3 /* libqicns.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqicns.dylib; sourceTree = "<group>"; };
 		88B5013E2DCDB8C6005E9FF3 /* libqico.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqico.dylib; sourceTree = "<group>"; };
@@ -685,27 +427,12 @@
 		88B501452DCDB8C6005E9FF3 /* libqtiff.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqtiff.dylib; sourceTree = "<group>"; };
 		88B501462DCDB8C6005E9FF3 /* libqwbmp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqwbmp.dylib; sourceTree = "<group>"; };
 		88B501472DCDB8C6005E9FF3 /* libqwebp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqwebp.dylib; sourceTree = "<group>"; };
-		88B5FFE72DCDB7C0005E9FF3 /* libassimp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libassimp.dylib; sourceTree = "<group>"; };
-		88B5FFE82DCDB7C0005E9FF3 /* libassimp.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libassimp.dylib.dSYM; sourceTree = "<group>"; };
 		88B5FFEA2DCDB7C0005E9FF3 /* libqtpassthrucanbus.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqtpassthrucanbus.dylib; sourceTree = "<group>"; };
-		88B5FFEB2DCDB7C0005E9FF3 /* libqtpassthrucanbus.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtpassthrucanbus.dylib.dSYM; sourceTree = "<group>"; };
 		88B5FFEC2DCDB7C0005E9FF3 /* libqtpeakcanbus.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqtpeakcanbus.dylib; sourceTree = "<group>"; };
-		88B5FFED2DCDB7C0005E9FF3 /* libqtpeakcanbus.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtpeakcanbus.dylib.dSYM; sourceTree = "<group>"; };
 		88B5FFEE2DCDB7C0005E9FF3 /* libqttinycanbus.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqttinycanbus.dylib; sourceTree = "<group>"; };
-		88B5FFEF2DCDB7C0005E9FF3 /* libqttinycanbus.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqttinycanbus.dylib.dSYM; sourceTree = "<group>"; };
 		88B5FFF02DCDB7C0005E9FF3 /* libqtvirtualcanbus.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqtvirtualcanbus.dylib; sourceTree = "<group>"; };
-		88B5FFF12DCDB7C0005E9FF3 /* libqtvirtualcanbus.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtvirtualcanbus.dylib.dSYM; sourceTree = "<group>"; };
-		88B5FFF32DCDB7C0005E9FF3 /* libqquickwidget.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqquickwidget.dylib; sourceTree = "<group>"; };
-		88B5FFF42DCDB7C0005E9FF3 /* libqquickwidget.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqquickwidget.dylib.dSYM; sourceTree = "<group>"; };
-		88B5FFF52DCDB7C0005E9FF3 /* libqwebengineview.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqwebengineview.dylib; sourceTree = "<group>"; };
-		88B5FFF62DCDB7C0005E9FF3 /* libqwebengineview.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqwebengineview.dylib.dSYM; sourceTree = "<group>"; };
 		88B5FFF82DCDB7C0005E9FF3 /* libqinsighttracker.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqinsighttracker.dylib; sourceTree = "<group>"; };
-		88B5FFF92DCDB7C0005E9FF3 /* libqinsighttracker.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqinsighttracker.dylib.dSYM; sourceTree = "<group>"; };
 		88B5FFFA2DCDB7C0005E9FF3 /* libqtuiotouchplugin.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqtuiotouchplugin.dylib; sourceTree = "<group>"; };
-		88B5FFFB2DCDB7C0005E9FF3 /* libqtuiotouchplugin.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtuiotouchplugin.dylib.dSYM; sourceTree = "<group>"; };
-		88B5FFFD2DCDB7C0005E9FF3 /* libdefaultgeometryloader.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libdefaultgeometryloader.dylib; sourceTree = "<group>"; };
-		88B5FFFE2DCDB7C0005E9FF3 /* libdefaultgeometryloader.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libdefaultgeometryloader.dylib.dSYM; sourceTree = "<group>"; };
-		88B5FFFF2DCDB7C0005E9FF3 /* libgltfgeometryloader.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libgltfgeometryloader.dylib; sourceTree = "<group>"; };
 		88D46EBC2D639B6C00D58D8A /* klog.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = klog.sh; sourceTree = "<group>"; };
 		88DA7BA62D532C6700C8F759 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		88DA7BA72D532C6700C8F759 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -723,11 +450,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88F12FF42DCDBED600E0486A /* IOBluetooth.framework in Frameworks */,
-				88F12FF52DCDBED600E0486A /* CoreBluetooth.framework in Frameworks */,
-				88F12FF12DCDBECE00E0486A /* Contacts.framework in Frameworks */,
-				88F12FEF2DCDBEC900E0486A /* EventKit.framework in Frameworks */,
-				88F12FE32DCDBE3500E0486A /* AVFoundation.framework in Frameworks */,
 				886B509A2D805199007BE2EC /* VSPClientUI.framework in Frameworks */,
 				886B50992D805196007BE2EC /* VSPController.framework in Frameworks */,
 				886B50982D805192007BE2EC /* VSPSetup.framework in Frameworks */,
@@ -741,18 +463,6 @@
 				883C30352D6EDEB20029BE30 /* QtSvg.framework in Frameworks */,
 				883C30332D6EDEB20029BE30 /* QtSerialBus.framework in Frameworks */,
 				883C30152D6EDEB20029BE30 /* QtQmlMeta.framework in Frameworks */,
-				88B500A12DCDB7C1005E9FF3 /* libqdarwinbluetoothpermission.a in Frameworks */,
-				88B500A22DCDB7C1005E9FF3 /* QDarwinCameraPermissionPlugin_init.cpp.o in Frameworks */,
-				88B500A32DCDB7C1005E9FF3 /* QDarwinLocationPermissionPlugin_init.cpp.o in Frameworks */,
-				88B500A42DCDB7C1005E9FF3 /* libqdarwincamerapermission.a in Frameworks */,
-				88B500A52DCDB7C1005E9FF3 /* libqdarwinmicrophonepermission.a in Frameworks */,
-				88B500A62DCDB7C1005E9FF3 /* libqdarwinlocationpermission.a in Frameworks */,
-				88B500A72DCDB7C1005E9FF3 /* libqdarwincontactspermission.a in Frameworks */,
-				88B500A82DCDB7C1005E9FF3 /* libqdarwincalendarpermission.a in Frameworks */,
-				88B500A92DCDB7C1005E9FF3 /* QDarwinBluetoothPermissionPlugin_init.cpp.o in Frameworks */,
-				88B500AA2DCDB7C1005E9FF3 /* QDarwinMicrophonePermissionPlugin_init.cpp.o in Frameworks */,
-				88B500AB2DCDB7C1005E9FF3 /* QDarwinContactsPermissionPlugin_init.cpp.o in Frameworks */,
-				88B500AC2DCDB7C1005E9FF3 /* QDarwinCalendarPermissionPlugin_init.cpp.o in Frameworks */,
 				883C302F2D6EDEB20029BE30 /* QtCore.framework in Frameworks */,
 				883C30212D6EDEB20029BE30 /* QtNetwork.framework in Frameworks */,
 				883C301F2D6EDEB20029BE30 /* QtConcurrent.framework in Frameworks */,
@@ -950,42 +660,10 @@
 			path = VSPDriver;
 			sourceTree = "<group>";
 		};
-		88B500012DCDB7C0005E9FF3 /* geometryloaders */ = {
-			isa = PBXGroup;
-			children = (
-				88B5FFFD2DCDB7C0005E9FF3 /* libdefaultgeometryloader.dylib */,
-				88B5FFFE2DCDB7C0005E9FF3 /* libdefaultgeometryloader.dylib.dSYM */,
-				88B5FFFF2DCDB7C0005E9FF3 /* libgltfgeometryloader.dylib */,
-				88B500002DCDB7C0005E9FF3 /* libgltfgeometryloader.dylib.dSYM */,
-			);
-			path = geometryloaders;
-			sourceTree = "<group>";
-		};
-		88B500062DCDB7C0005E9FF3 /* geoservices */ = {
-			isa = PBXGroup;
-			children = (
-				88B500022DCDB7C0005E9FF3 /* libqtgeoservices_itemsoverlay.dylib */,
-				88B500032DCDB7C0005E9FF3 /* libqtgeoservices_itemsoverlay.dylib.dSYM */,
-				88B500042DCDB7C0005E9FF3 /* libqtgeoservices_osm.dylib */,
-				88B500052DCDB7C0005E9FF3 /* libqtgeoservices_osm.dylib.dSYM */,
-			);
-			path = geoservices;
-			sourceTree = "<group>";
-		};
-		88B500092DCDB7C0005E9FF3 /* help */ = {
-			isa = PBXGroup;
-			children = (
-				88B500072DCDB7C0005E9FF3 /* libhelpplugin.dylib */,
-				88B500082DCDB7C0005E9FF3 /* libhelpplugin.dylib.dSYM */,
-			);
-			path = help;
-			sourceTree = "<group>";
-		};
 		88B5000C2DCDB7C0005E9FF3 /* iconengines */ = {
 			isa = PBXGroup;
 			children = (
 				88B5000A2DCDB7C0005E9FF3 /* libqsvgicon.dylib */,
-				88B5000B2DCDB7C0005E9FF3 /* libqsvgicon.dylib.dSYM */,
 			);
 			path = iconengines;
 			sourceTree = "<group>";
@@ -1005,128 +683,22 @@
 				88B501452DCDB8C6005E9FF3 /* libqtiff.dylib */,
 				88B501462DCDB8C6005E9FF3 /* libqwbmp.dylib */,
 				88B501472DCDB8C6005E9FF3 /* libqwebp.dylib */,
-				88B5000D2DCDB7C0005E9FF3 /* libqgif.dylib.dSYM */,
-				88B5000E2DCDB7C0005E9FF3 /* libqicns.dylib.dSYM */,
-				88B5000F2DCDB7C0005E9FF3 /* libqico.dylib.dSYM */,
-				88B500102DCDB7C0005E9FF3 /* libqjpeg.dylib.dSYM */,
-				88B500112DCDB7C0005E9FF3 /* libqmacheif.dylib.dSYM */,
-				88B500122DCDB7C0005E9FF3 /* libqmacjp2.dylib.dSYM */,
-				88B500132DCDB7C0005E9FF3 /* libqpdf.dylib.dSYM */,
-				88B500142DCDB7C0005E9FF3 /* libqsvg.dylib.dSYM */,
-				88B500152DCDB7C0005E9FF3 /* libqtga.dylib.dSYM */,
-				88B500162DCDB7C0005E9FF3 /* libqtiff.dylib.dSYM */,
-				88B500172DCDB7C0005E9FF3 /* libqwbmp.dylib.dSYM */,
-				88B500182DCDB7C0005E9FF3 /* libqwebp.dylib.dSYM */,
 			);
 			path = imageformats;
-			sourceTree = "<group>";
-		};
-		88B5001E2DCDB7C0005E9FF3 /* multimedia */ = {
-			isa = PBXGroup;
-			children = (
-				88B5001A2DCDB7C0005E9FF3 /* libdarwinmediaplugin.dylib */,
-				88B5001B2DCDB7C0005E9FF3 /* libdarwinmediaplugin.dylib.dSYM */,
-				88B5001C2DCDB7C0005E9FF3 /* libffmpegmediaplugin.dylib */,
-				88B5001D2DCDB7C0005E9FF3 /* libffmpegmediaplugin.dylib.dSYM */,
-			);
-			path = multimedia;
 			sourceTree = "<group>";
 		};
 		88B500212DCDB7C0005E9FF3 /* networkinformation */ = {
 			isa = PBXGroup;
 			children = (
 				88B5001F2DCDB7C0005E9FF3 /* libqscnetworkreachability.dylib */,
-				88B500202DCDB7C0005E9FF3 /* libqscnetworkreachability.dylib.dSYM */,
 			);
 			path = networkinformation;
-			sourceTree = "<group>";
-		};
-		88B500232DCDB7C0005E9FF3 /* QDarwinBluetoothPermissionPlugin_init */ = {
-			isa = PBXGroup;
-			children = (
-				88B500222DCDB7C0005E9FF3 /* QDarwinBluetoothPermissionPlugin_init.cpp.o */,
-			);
-			path = QDarwinBluetoothPermissionPlugin_init;
-			sourceTree = "<group>";
-		};
-		88B500252DCDB7C0005E9FF3 /* QDarwinCalendarPermissionPlugin_init */ = {
-			isa = PBXGroup;
-			children = (
-				88B500242DCDB7C0005E9FF3 /* QDarwinCalendarPermissionPlugin_init.cpp.o */,
-			);
-			path = QDarwinCalendarPermissionPlugin_init;
-			sourceTree = "<group>";
-		};
-		88B500272DCDB7C0005E9FF3 /* QDarwinCameraPermissionPlugin_init */ = {
-			isa = PBXGroup;
-			children = (
-				88B500262DCDB7C0005E9FF3 /* QDarwinCameraPermissionPlugin_init.cpp.o */,
-			);
-			path = QDarwinCameraPermissionPlugin_init;
-			sourceTree = "<group>";
-		};
-		88B500292DCDB7C0005E9FF3 /* QDarwinContactsPermissionPlugin_init */ = {
-			isa = PBXGroup;
-			children = (
-				88B500282DCDB7C0005E9FF3 /* QDarwinContactsPermissionPlugin_init.cpp.o */,
-			);
-			path = QDarwinContactsPermissionPlugin_init;
-			sourceTree = "<group>";
-		};
-		88B5002B2DCDB7C0005E9FF3 /* QDarwinLocationPermissionPlugin_init */ = {
-			isa = PBXGroup;
-			children = (
-				88B5002A2DCDB7C0005E9FF3 /* QDarwinLocationPermissionPlugin_init.cpp.o */,
-			);
-			path = QDarwinLocationPermissionPlugin_init;
-			sourceTree = "<group>";
-		};
-		88B5002D2DCDB7C0005E9FF3 /* QDarwinMicrophonePermissionPlugin_init */ = {
-			isa = PBXGroup;
-			children = (
-				88B5002C2DCDB7C0005E9FF3 /* QDarwinMicrophonePermissionPlugin_init.cpp.o */,
-			);
-			path = QDarwinMicrophonePermissionPlugin_init;
-			sourceTree = "<group>";
-		};
-		88B5002E2DCDB7C0005E9FF3 /* objects-RelWithDebInfo */ = {
-			isa = PBXGroup;
-			children = (
-				88B500232DCDB7C0005E9FF3 /* QDarwinBluetoothPermissionPlugin_init */,
-				88B500252DCDB7C0005E9FF3 /* QDarwinCalendarPermissionPlugin_init */,
-				88B500272DCDB7C0005E9FF3 /* QDarwinCameraPermissionPlugin_init */,
-				88B500292DCDB7C0005E9FF3 /* QDarwinContactsPermissionPlugin_init */,
-				88B5002B2DCDB7C0005E9FF3 /* QDarwinLocationPermissionPlugin_init */,
-				88B5002D2DCDB7C0005E9FF3 /* QDarwinMicrophonePermissionPlugin_init */,
-			);
-			path = "objects-RelWithDebInfo";
-			sourceTree = "<group>";
-		};
-		88B5003B2DCDB7C0005E9FF3 /* permissions */ = {
-			isa = PBXGroup;
-			children = (
-				88B5002E2DCDB7C0005E9FF3 /* objects-RelWithDebInfo */,
-				88B5002F2DCDB7C0005E9FF3 /* libqdarwinbluetoothpermission.a */,
-				88B500302DCDB7C0005E9FF3 /* libqdarwinbluetoothpermission.prl */,
-				88B500312DCDB7C0005E9FF3 /* libqdarwincalendarpermission.a */,
-				88B500322DCDB7C0005E9FF3 /* libqdarwincalendarpermission.prl */,
-				88B500332DCDB7C0005E9FF3 /* libqdarwincamerapermission.a */,
-				88B500342DCDB7C0005E9FF3 /* libqdarwincamerapermission.prl */,
-				88B500352DCDB7C0005E9FF3 /* libqdarwincontactspermission.a */,
-				88B500362DCDB7C0005E9FF3 /* libqdarwincontactspermission.prl */,
-				88B500372DCDB7C0005E9FF3 /* libqdarwinlocationpermission.a */,
-				88B500382DCDB7C0005E9FF3 /* libqdarwinlocationpermission.prl */,
-				88B500392DCDB7C0005E9FF3 /* libqdarwinmicrophonepermission.a */,
-				88B5003A2DCDB7C0005E9FF3 /* libqdarwinmicrophonepermission.prl */,
-			);
-			path = permissions;
 			sourceTree = "<group>";
 		};
 		88B5003E2DCDB7C0005E9FF3 /* platforminputcontexts */ = {
 			isa = PBXGroup;
 			children = (
 				88B5003C2DCDB7C0005E9FF3 /* libqtvirtualkeyboardplugin.dylib */,
-				88B5003D2DCDB7C0005E9FF3 /* libqtvirtualkeyboardplugin.dylib.dSYM */,
 			);
 			path = platforminputcontexts;
 			sourceTree = "<group>";
@@ -1135,220 +707,42 @@
 			isa = PBXGroup;
 			children = (
 				88B5003F2DCDB7C0005E9FF3 /* libqcocoa.dylib */,
-				88B500402DCDB7C0005E9FF3 /* libqcocoa.dylib.dSYM */,
 				88B500412DCDB7C0005E9FF3 /* libqminimal.dylib */,
-				88B500422DCDB7C0005E9FF3 /* libqminimal.dylib.dSYM */,
 				88B500432DCDB7C0005E9FF3 /* libqoffscreen.dylib */,
-				88B500442DCDB7C0005E9FF3 /* libqoffscreen.dylib.dSYM */,
 			);
 			path = platforms;
-			sourceTree = "<group>";
-		};
-		88B5004C2DCDB7C0005E9FF3 /* position */ = {
-			isa = PBXGroup;
-			children = (
-				88B500462DCDB7C0005E9FF3 /* libqtposition_cl.dylib */,
-				88B500472DCDB7C0005E9FF3 /* libqtposition_cl.dylib.dSYM */,
-				88B500482DCDB7C0005E9FF3 /* libqtposition_nmea.dylib */,
-				88B500492DCDB7C0005E9FF3 /* libqtposition_nmea.dylib.dSYM */,
-				88B5004A2DCDB7C0005E9FF3 /* libqtposition_positionpoll.dylib */,
-				88B5004B2DCDB7C0005E9FF3 /* libqtposition_positionpoll.dylib.dSYM */,
-			);
-			path = position;
-			sourceTree = "<group>";
-		};
-		88B5004F2DCDB7C0005E9FF3 /* qmllint */ = {
-			isa = PBXGroup;
-			children = (
-				88B5004D2DCDB7C0005E9FF3 /* libquicklintplugin.dylib */,
-				88B5004E2DCDB7C0005E9FF3 /* libquicklintplugin.dylib.dSYM */,
-			);
-			path = qmllint;
-			sourceTree = "<group>";
-		};
-		88B500522DCDB7C0005E9FF3 /* qmlls */ = {
-			isa = PBXGroup;
-			children = (
-				88B500502DCDB7C0005E9FF3 /* libqmllsquickplugin.dylib */,
-				88B500512DCDB7C0005E9FF3 /* libqmllsquickplugin.dylib.dSYM */,
-			);
-			path = qmlls;
-			sourceTree = "<group>";
-		};
-		88B5006B2DCDB7C0005E9FF3 /* qmltooling */ = {
-			isa = PBXGroup;
-			children = (
-				88B500532DCDB7C0005E9FF3 /* libqmldbg_debugger.dylib */,
-				88B500542DCDB7C0005E9FF3 /* libqmldbg_debugger.dylib.dSYM */,
-				88B500552DCDB7C0005E9FF3 /* libqmldbg_inspector.dylib */,
-				88B500562DCDB7C0005E9FF3 /* libqmldbg_inspector.dylib.dSYM */,
-				88B500572DCDB7C0005E9FF3 /* libqmldbg_local.dylib */,
-				88B500582DCDB7C0005E9FF3 /* libqmldbg_local.dylib.dSYM */,
-				88B500592DCDB7C0005E9FF3 /* libqmldbg_messages.dylib */,
-				88B5005A2DCDB7C0005E9FF3 /* libqmldbg_messages.dylib.dSYM */,
-				88B5005B2DCDB7C0005E9FF3 /* libqmldbg_native.dylib */,
-				88B5005C2DCDB7C0005E9FF3 /* libqmldbg_native.dylib.dSYM */,
-				88B5005D2DCDB7C0005E9FF3 /* libqmldbg_nativedebugger.dylib */,
-				88B5005E2DCDB7C0005E9FF3 /* libqmldbg_nativedebugger.dylib.dSYM */,
-				88B5005F2DCDB7C0005E9FF3 /* libqmldbg_preview.dylib */,
-				88B500602DCDB7C0005E9FF3 /* libqmldbg_preview.dylib.dSYM */,
-				88B500612DCDB7C0005E9FF3 /* libqmldbg_profiler.dylib */,
-				88B500622DCDB7C0005E9FF3 /* libqmldbg_profiler.dylib.dSYM */,
-				88B500632DCDB7C0005E9FF3 /* libqmldbg_quick3dprofiler.dylib */,
-				88B500642DCDB7C0005E9FF3 /* libqmldbg_quick3dprofiler.dylib.dSYM */,
-				88B500652DCDB7C0005E9FF3 /* libqmldbg_quickprofiler.dylib */,
-				88B500662DCDB7C0005E9FF3 /* libqmldbg_quickprofiler.dylib.dSYM */,
-				88B500672DCDB7C0005E9FF3 /* libqmldbg_server.dylib */,
-				88B500682DCDB7C0005E9FF3 /* libqmldbg_server.dylib.dSYM */,
-				88B500692DCDB7C0005E9FF3 /* libqmldbg_tcp.dylib */,
-				88B5006A2DCDB7C0005E9FF3 /* libqmldbg_tcp.dylib.dSYM */,
-			);
-			path = qmltooling;
-			sourceTree = "<group>";
-		};
-		88B500702DCDB7C0005E9FF3 /* renderers */ = {
-			isa = PBXGroup;
-			children = (
-				88B5006C2DCDB7C0005E9FF3 /* libopenglrenderer.dylib */,
-				88B5006D2DCDB7C0005E9FF3 /* libopenglrenderer.dylib.dSYM */,
-				88B5006E2DCDB7C0005E9FF3 /* librhirenderer.dylib */,
-				88B5006F2DCDB7C0005E9FF3 /* librhirenderer.dylib.dSYM */,
-			);
-			path = renderers;
-			sourceTree = "<group>";
-		};
-		88B500732DCDB7C0005E9FF3 /* renderplugins */ = {
-			isa = PBXGroup;
-			children = (
-				88B500712DCDB7C0005E9FF3 /* libscene2d.dylib */,
-				88B500722DCDB7C0005E9FF3 /* libscene2d.dylib.dSYM */,
-			);
-			path = renderplugins;
-			sourceTree = "<group>";
-		};
-		88B5007A2DCDB7C0005E9FF3 /* sceneparsers */ = {
-			isa = PBXGroup;
-			children = (
-				88B500742DCDB7C0005E9FF3 /* libassimpsceneimport.dylib */,
-				88B500752DCDB7C0005E9FF3 /* libassimpsceneimport.dylib.dSYM */,
-				88B500762DCDB7C0005E9FF3 /* libgltfsceneexport.dylib */,
-				88B500772DCDB7C0005E9FF3 /* libgltfsceneexport.dylib.dSYM */,
-				88B500782DCDB7C0005E9FF3 /* libgltfsceneimport.dylib */,
-				88B500792DCDB7C0005E9FF3 /* libgltfsceneimport.dylib.dSYM */,
-			);
-			path = sceneparsers;
-			sourceTree = "<group>";
-		};
-		88B5007D2DCDB7C0005E9FF3 /* scxmldatamodel */ = {
-			isa = PBXGroup;
-			children = (
-				88B5007B2DCDB7C0005E9FF3 /* libqscxmlecmascriptdatamodel.dylib */,
-				88B5007C2DCDB7C0005E9FF3 /* libqscxmlecmascriptdatamodel.dylib.dSYM */,
-			);
-			path = scxmldatamodel;
-			sourceTree = "<group>";
-		};
-		88B500802DCDB7C0005E9FF3 /* sensors */ = {
-			isa = PBXGroup;
-			children = (
-				88B5007E2DCDB7C0005E9FF3 /* libqtsensors_generic.dylib */,
-				88B5007F2DCDB7C0005E9FF3 /* libqtsensors_generic.dylib.dSYM */,
-			);
-			path = sensors;
-			sourceTree = "<group>";
-		};
-		88B500892DCDB7C0005E9FF3 /* sqldrivers */ = {
-			isa = PBXGroup;
-			children = (
-				88B500812DCDB7C0005E9FF3 /* libqsqlite.dylib */,
-				88B500822DCDB7C0005E9FF3 /* libqsqlite.dylib.dSYM */,
-				88B500832DCDB7C0005E9FF3 /* libqsqlmimer.dylib */,
-				88B500842DCDB7C0005E9FF3 /* libqsqlmimer.dylib.dSYM */,
-				88B500852DCDB7C0005E9FF3 /* libqsqlodbc.dylib */,
-				88B500862DCDB7C0005E9FF3 /* libqsqlodbc.dylib.dSYM */,
-				88B500872DCDB7C0005E9FF3 /* libqsqlpsql.dylib */,
-				88B500882DCDB7C0005E9FF3 /* libqsqlpsql.dylib.dSYM */,
-			);
-			path = sqldrivers;
 			sourceTree = "<group>";
 		};
 		88B5008C2DCDB7C0005E9FF3 /* styles */ = {
 			isa = PBXGroup;
 			children = (
 				88B5008A2DCDB7C0005E9FF3 /* libqmacstyle.dylib */,
-				88B5008B2DCDB7C0005E9FF3 /* libqmacstyle.dylib.dSYM */,
 			);
 			path = styles;
-			sourceTree = "<group>";
-		};
-		88B500932DCDB7C0005E9FF3 /* texttospeech */ = {
-			isa = PBXGroup;
-			children = (
-				88B5008D2DCDB7C0005E9FF3 /* libqtexttospeech_mock.dylib */,
-				88B5008E2DCDB7C0005E9FF3 /* libqtexttospeech_mock.dylib.dSYM */,
-				88B5008F2DCDB7C0005E9FF3 /* libqtexttospeech_speech_macos.dylib */,
-				88B500902DCDB7C0005E9FF3 /* libqtexttospeech_speech_macos.dylib.dSYM */,
-				88B500912DCDB7C0005E9FF3 /* libqtexttospeech_speechdarwin.dylib */,
-				88B500922DCDB7C0005E9FF3 /* libqtexttospeech_speechdarwin.dylib.dSYM */,
-			);
-			path = texttospeech;
 			sourceTree = "<group>";
 		};
 		88B5009A2DCDB7C0005E9FF3 /* tls */ = {
 			isa = PBXGroup;
 			children = (
 				88B500942DCDB7C0005E9FF3 /* libqcertonlybackend.dylib */,
-				88B500952DCDB7C0005E9FF3 /* libqcertonlybackend.dylib.dSYM */,
 				88B500962DCDB7C0005E9FF3 /* libqopensslbackend.dylib */,
-				88B500972DCDB7C0005E9FF3 /* libqopensslbackend.dylib.dSYM */,
 				88B500982DCDB7C0005E9FF3 /* libqsecuretransportbackend.dylib */,
-				88B500992DCDB7C0005E9FF3 /* libqsecuretransportbackend.dylib.dSYM */,
 			);
 			path = tls;
-			sourceTree = "<group>";
-		};
-		88B5009F2DCDB7C0005E9FF3 /* webview */ = {
-			isa = PBXGroup;
-			children = (
-				88B5009B2DCDB7C0005E9FF3 /* libqtwebview_darwin.dylib */,
-				88B5009C2DCDB7C0005E9FF3 /* libqtwebview_darwin.dylib.dSYM */,
-				88B5009D2DCDB7C0005E9FF3 /* libqtwebview_webengine.dylib */,
-				88B5009E2DCDB7C0005E9FF3 /* libqtwebview_webengine.dylib.dSYM */,
-			);
-			path = webview;
 			sourceTree = "<group>";
 		};
 		88B500A02DCDB7C0005E9FF3 /* plugins */ = {
 			isa = PBXGroup;
 			children = (
-				88B5FFE92DCDB7C0005E9FF3 /* assetimporters */,
 				88B5FFF22DCDB7C0005E9FF3 /* canbus */,
-				88B5FFF72DCDB7C0005E9FF3 /* designer */,
 				88B5FFFC2DCDB7C0005E9FF3 /* generic */,
-				88B500012DCDB7C0005E9FF3 /* geometryloaders */,
-				88B500062DCDB7C0005E9FF3 /* geoservices */,
-				88B500092DCDB7C0005E9FF3 /* help */,
 				88B5000C2DCDB7C0005E9FF3 /* iconengines */,
 				88B500192DCDB7C0005E9FF3 /* imageformats */,
-				88B5001E2DCDB7C0005E9FF3 /* multimedia */,
 				88B500212DCDB7C0005E9FF3 /* networkinformation */,
-				88B5003B2DCDB7C0005E9FF3 /* permissions */,
 				88B5003E2DCDB7C0005E9FF3 /* platforminputcontexts */,
 				88B500452DCDB7C0005E9FF3 /* platforms */,
-				88B5004C2DCDB7C0005E9FF3 /* position */,
-				88B5004F2DCDB7C0005E9FF3 /* qmllint */,
-				88B500522DCDB7C0005E9FF3 /* qmlls */,
-				88B5006B2DCDB7C0005E9FF3 /* qmltooling */,
-				88B500702DCDB7C0005E9FF3 /* renderers */,
-				88B500732DCDB7C0005E9FF3 /* renderplugins */,
-				88B5007A2DCDB7C0005E9FF3 /* sceneparsers */,
-				88B5007D2DCDB7C0005E9FF3 /* scxmldatamodel */,
-				88B500802DCDB7C0005E9FF3 /* sensors */,
-				88B500892DCDB7C0005E9FF3 /* sqldrivers */,
 				88B5008C2DCDB7C0005E9FF3 /* styles */,
-				88B500932DCDB7C0005E9FF3 /* texttospeech */,
 				88B5009A2DCDB7C0005E9FF3 /* tls */,
-				88B5009F2DCDB7C0005E9FF3 /* webview */,
 			);
 			path = plugins;
 			sourceTree = "<group>";
@@ -1361,48 +755,22 @@
 			path = "QT-6.8.2";
 			sourceTree = "<group>";
 		};
-		88B5FFE92DCDB7C0005E9FF3 /* assetimporters */ = {
-			isa = PBXGroup;
-			children = (
-				88B5FFE72DCDB7C0005E9FF3 /* libassimp.dylib */,
-				88B5FFE82DCDB7C0005E9FF3 /* libassimp.dylib.dSYM */,
-			);
-			path = assetimporters;
-			sourceTree = "<group>";
-		};
 		88B5FFF22DCDB7C0005E9FF3 /* canbus */ = {
 			isa = PBXGroup;
 			children = (
 				88B5FFEA2DCDB7C0005E9FF3 /* libqtpassthrucanbus.dylib */,
-				88B5FFEB2DCDB7C0005E9FF3 /* libqtpassthrucanbus.dylib.dSYM */,
 				88B5FFEC2DCDB7C0005E9FF3 /* libqtpeakcanbus.dylib */,
-				88B5FFED2DCDB7C0005E9FF3 /* libqtpeakcanbus.dylib.dSYM */,
 				88B5FFEE2DCDB7C0005E9FF3 /* libqttinycanbus.dylib */,
-				88B5FFEF2DCDB7C0005E9FF3 /* libqttinycanbus.dylib.dSYM */,
 				88B5FFF02DCDB7C0005E9FF3 /* libqtvirtualcanbus.dylib */,
-				88B5FFF12DCDB7C0005E9FF3 /* libqtvirtualcanbus.dylib.dSYM */,
 			);
 			path = canbus;
-			sourceTree = "<group>";
-		};
-		88B5FFF72DCDB7C0005E9FF3 /* designer */ = {
-			isa = PBXGroup;
-			children = (
-				88B5FFF32DCDB7C0005E9FF3 /* libqquickwidget.dylib */,
-				88B5FFF42DCDB7C0005E9FF3 /* libqquickwidget.dylib.dSYM */,
-				88B5FFF52DCDB7C0005E9FF3 /* libqwebengineview.dylib */,
-				88B5FFF62DCDB7C0005E9FF3 /* libqwebengineview.dylib.dSYM */,
-			);
-			path = designer;
 			sourceTree = "<group>";
 		};
 		88B5FFFC2DCDB7C0005E9FF3 /* generic */ = {
 			isa = PBXGroup;
 			children = (
 				88B5FFF82DCDB7C0005E9FF3 /* libqinsighttracker.dylib */,
-				88B5FFF92DCDB7C0005E9FF3 /* libqinsighttracker.dylib.dSYM */,
 				88B5FFFA2DCDB7C0005E9FF3 /* libqtuiotouchplugin.dylib */,
-				88B5FFFB2DCDB7C0005E9FF3 /* libqtuiotouchplugin.dylib.dSYM */,
 			);
 			path = generic;
 			sourceTree = "<group>";
@@ -1561,99 +929,16 @@
 				88698B922D76DDD70008EF6B /* vspclient_128x128.png in Resources */,
 				88698B932D76DDD70008EF6B /* vspclient_256x256@2x.png in Resources */,
 				88698B942D76DDD70008EF6B /* vspclient_512x512@2x.png in Resources */,
-				88B500AD2DCDB7C1005E9FF3 /* libqgif.dylib.dSYM in Resources */,
-				88B500AE2DCDB7C1005E9FF3 /* libqopensslbackend.dylib.dSYM in Resources */,
-				88B500AF2DCDB7C1005E9FF3 /* libdarwinmediaplugin.dylib in Resources */,
-				88B500B02DCDB7C1005E9FF3 /* libqicns.dylib.dSYM in Resources */,
 				88B500B12DCDB7C1005E9FF3 /* libqoffscreen.dylib in Resources */,
-				88B500B22DCDB7C1005E9FF3 /* libqmldbg_debugger.dylib.dSYM in Resources */,
-				88B500B32DCDB7C1005E9FF3 /* libqtsensors_generic.dylib in Resources */,
-				88B500B42DCDB7C1005E9FF3 /* libqsqlodbc.dylib in Resources */,
 				88B500B52DCDB7C1005E9FF3 /* libqtpeakcanbus.dylib in Resources */,
-				88B500B62DCDB7C1005E9FF3 /* libqmllsquickplugin.dylib.dSYM in Resources */,
-				88B500B72DCDB7C1005E9FF3 /* libgltfsceneexport.dylib in Resources */,
-				88B500B82DCDB7C1005E9FF3 /* libquicklintplugin.dylib.dSYM in Resources */,
-				88B500B92DCDB7C1005E9FF3 /* libqwbmp.dylib.dSYM in Resources */,
 				88B500BA2DCDB7C1005E9FF3 /* libqtvirtualcanbus.dylib in Resources */,
-				88B500BB2DCDB7C1005E9FF3 /* libqttinycanbus.dylib.dSYM in Resources */,
-				88B500BC2DCDB7C1005E9FF3 /* libqsecuretransportbackend.dylib.dSYM in Resources */,
-				88B500BD2DCDB7C1005E9FF3 /* libqwebengineview.dylib in Resources */,
 				88B500BE2DCDB7C1005E9FF3 /* libqopensslbackend.dylib in Resources */,
-				88B500BF2DCDB7C1005E9FF3 /* libqtgeoservices_osm.dylib in Resources */,
-				88B500C02DCDB7C1005E9FF3 /* libqsqlodbc.dylib.dSYM in Resources */,
-				88B500C12DCDB7C1005E9FF3 /* libqico.dylib.dSYM in Resources */,
 				88B500C22DCDB7C1005E9FF3 /* libqmacstyle.dylib in Resources */,
-				88B500C32DCDB7C1005E9FF3 /* librhirenderer.dylib in Resources */,
-				88B500C42DCDB7C1005E9FF3 /* libqtgeoservices_itemsoverlay.dylib in Resources */,
-				88B500C52DCDB7C1005E9FF3 /* libdefaultgeometryloader.dylib.dSYM in Resources */,
-				88B500C62DCDB7C1005E9FF3 /* libgltfsceneimport.dylib in Resources */,
-				88B500C72DCDB7C1005E9FF3 /* libqdarwinlocationpermission.prl in Resources */,
-				88B500C82DCDB7C1005E9FF3 /* libqtexttospeech_mock.dylib.dSYM in Resources */,
-				88B500C92DCDB7C1005E9FF3 /* libassimp.dylib in Resources */,
-				88B500CA2DCDB7C1005E9FF3 /* libqmldbg_debugger.dylib in Resources */,
-				88B500CB2DCDB7C1005E9FF3 /* libassimpsceneimport.dylib.dSYM in Resources */,
-				88B500CC2DCDB7C1005E9FF3 /* libqjpeg.dylib.dSYM in Resources */,
-				88B500CD2DCDB7C1005E9FF3 /* libqtwebview_webengine.dylib.dSYM in Resources */,
-				88B500CE2DCDB7C1005E9FF3 /* libqtexttospeech_speech_macos.dylib in Resources */,
-				88B500CF2DCDB7C1005E9FF3 /* libqmldbg_nativedebugger.dylib.dSYM in Resources */,
-				88B500D02DCDB7C1005E9FF3 /* libqscnetworkreachability.dylib.dSYM in Resources */,
-				88B500D12DCDB7C1005E9FF3 /* libqmldbg_nativedebugger.dylib in Resources */,
-				88B500D22DCDB7C1005E9FF3 /* libqtwebview_webengine.dylib in Resources */,
-				88B500D32DCDB7C1005E9FF3 /* libqtexttospeech_speech_macos.dylib.dSYM in Resources */,
-				88B500D42DCDB7C1005E9FF3 /* libassimpsceneimport.dylib in Resources */,
-				88B500D52DCDB7C1005E9FF3 /* librhirenderer.dylib.dSYM in Resources */,
 				88B500D62DCDB7C1005E9FF3 /* libqcertonlybackend.dylib in Resources */,
-				88B500D72DCDB7C1005E9FF3 /* libqsqlmimer.dylib in Resources */,
-				88B500D82DCDB7C1005E9FF3 /* libqpdf.dylib.dSYM in Resources */,
-				88B500D92DCDB7C1005E9FF3 /* libqtposition_cl.dylib.dSYM in Resources */,
-				88B500DA2DCDB7C1005E9FF3 /* libqtiff.dylib.dSYM in Resources */,
-				88B500DB2DCDB7C1005E9FF3 /* libqmldbg_messages.dylib in Resources */,
 				88B500DC2DCDB7C1005E9FF3 /* libqtvirtualkeyboardplugin.dylib in Resources */,
-				88B500DD2DCDB7C1005E9FF3 /* libqtga.dylib.dSYM in Resources */,
-				88B500DE2DCDB7C1005E9FF3 /* libqmldbg_quick3dprofiler.dylib.dSYM in Resources */,
-				88B500DF2DCDB7C1005E9FF3 /* libqdarwinbluetoothpermission.prl in Resources */,
-				88B500E02DCDB7C1005E9FF3 /* libqtpeakcanbus.dylib.dSYM in Resources */,
-				88B500E12DCDB7C1005E9FF3 /* libqmldbg_server.dylib.dSYM in Resources */,
-				88B500E22DCDB7C1005E9FF3 /* libqwebp.dylib.dSYM in Resources */,
-				88B500E32DCDB7C1005E9FF3 /* libqmldbg_native.dylib.dSYM in Resources */,
-				88B500E42DCDB7C1005E9FF3 /* libhelpplugin.dylib.dSYM in Resources */,
-				88B500E52DCDB7C1005E9FF3 /* libqmldbg_inspector.dylib in Resources */,
 				88B500E62DCDB7C1005E9FF3 /* libqminimal.dylib in Resources */,
-				88B500E72DCDB7C1005E9FF3 /* libqquickwidget.dylib in Resources */,
-				88B500E82DCDB7C1005E9FF3 /* libqtpassthrucanbus.dylib.dSYM in Resources */,
-				88B500E92DCDB7C1005E9FF3 /* libscene2d.dylib in Resources */,
-				88B500EA2DCDB7C1005E9FF3 /* libqmldbg_native.dylib in Resources */,
 				88B500EB2DCDB7C1005E9FF3 /* libqtuiotouchplugin.dylib in Resources */,
-				88B500EC2DCDB7C1005E9FF3 /* libqtposition_positionpoll.dylib in Resources */,
 				88B500ED2DCDB7C1005E9FF3 /* libqsecuretransportbackend.dylib in Resources */,
-				88B500EE2DCDB7C1005E9FF3 /* libqsqlmimer.dylib.dSYM in Resources */,
-				88B500EF2DCDB7C1005E9FF3 /* libhelpplugin.dylib in Resources */,
-				88B500F02DCDB7C1005E9FF3 /* libqtwebview_darwin.dylib.dSYM in Resources */,
-				88B500F12DCDB7C1005E9FF3 /* libqcertonlybackend.dylib.dSYM in Resources */,
-				88B500F22DCDB7C1005E9FF3 /* libdefaultgeometryloader.dylib in Resources */,
-				88B500F32DCDB7C1005E9FF3 /* libqwebengineview.dylib.dSYM in Resources */,
-				88B500F42DCDB7C1005E9FF3 /* libqsvgicon.dylib.dSYM in Resources */,
-				88B500F52DCDB7C1005E9FF3 /* libqdarwinmicrophonepermission.prl in Resources */,
-				88B500F62DCDB7C1005E9FF3 /* libqtvirtualkeyboardplugin.dylib.dSYM in Resources */,
-				88B500F72DCDB7C1005E9FF3 /* libqmldbg_profiler.dylib.dSYM in Resources */,
-				88B500F82DCDB7C1005E9FF3 /* libqquickwidget.dylib.dSYM in Resources */,
-				88B500F92DCDB7C1005E9FF3 /* libffmpegmediaplugin.dylib.dSYM in Resources */,
-				88B500FA2DCDB7C1005E9FF3 /* libqscxmlecmascriptdatamodel.dylib in Resources */,
-				88B500FB2DCDB7C1005E9FF3 /* libqmldbg_profiler.dylib in Resources */,
-				88B500FC2DCDB7C1005E9FF3 /* libqtuiotouchplugin.dylib.dSYM in Resources */,
-				88B500FD2DCDB7C1005E9FF3 /* libqtexttospeech_speechdarwin.dylib in Resources */,
-				88B500FE2DCDB7C1005E9FF3 /* libqscxmlecmascriptdatamodel.dylib.dSYM in Resources */,
-				88B500FF2DCDB7C1005E9FF3 /* libdarwinmediaplugin.dylib.dSYM in Resources */,
-				88B501002DCDB7C1005E9FF3 /* libqtposition_cl.dylib in Resources */,
-				88B501012DCDB7C1005E9FF3 /* libqdarwincamerapermission.prl in Resources */,
-				88B501022DCDB7C1005E9FF3 /* libqmldbg_quick3dprofiler.dylib in Resources */,
-				88B501032DCDB7C1005E9FF3 /* libqtexttospeech_mock.dylib in Resources */,
-				88B501042DCDB7C1005E9FF3 /* libassimp.dylib.dSYM in Resources */,
-				88B501052DCDB7C1005E9FF3 /* libqmldbg_messages.dylib.dSYM in Resources */,
-				88B501062DCDB7C1005E9FF3 /* libqmldbg_local.dylib.dSYM in Resources */,
-				88B501072DCDB7C1005E9FF3 /* libqtposition_positionpoll.dylib.dSYM in Resources */,
-				88B501082DCDB7C1005E9FF3 /* libqmllsquickplugin.dylib in Resources */,
-				88B501092DCDB7C1005E9FF3 /* libgltfsceneexport.dylib.dSYM in Resources */,
 				88B501482DCDB8C6005E9FF3 /* libqicns.dylib in Resources */,
 				88B501492DCDB8C6005E9FF3 /* libqmacjp2.dylib in Resources */,
 				88B5014A2DCDB8C6005E9FF3 /* libqsvg.dylib in Resources */,
@@ -1666,51 +951,12 @@
 				88B501512DCDB8C6005E9FF3 /* libqwbmp.dylib in Resources */,
 				88B501522DCDB8C6005E9FF3 /* libqico.dylib in Resources */,
 				88B501532DCDB8C6005E9FF3 /* libqpdf.dylib in Resources */,
-				88B5010A2DCDB7C1005E9FF3 /* libopenglrenderer.dylib in Resources */,
-				88B5010B2DCDB7C1005E9FF3 /* libgltfsceneimport.dylib.dSYM in Resources */,
-				88B5010C2DCDB7C1005E9FF3 /* libqmacstyle.dylib.dSYM in Resources */,
-				88B5010D2DCDB7C1005E9FF3 /* libffmpegmediaplugin.dylib in Resources */,
-				88B5010E2DCDB7C1005E9FF3 /* libqmldbg_tcp.dylib.dSYM in Resources */,
 				88B5010F2DCDB7C1005E9FF3 /* libqinsighttracker.dylib in Resources */,
-				88B501102DCDB7C1005E9FF3 /* libqmldbg_inspector.dylib.dSYM in Resources */,
-				88B501112DCDB7C1005E9FF3 /* libqsqlpsql.dylib.dSYM in Resources */,
 				88B501122DCDB7C1005E9FF3 /* libqttinycanbus.dylib in Resources */,
-				88B501132DCDB7C1005E9FF3 /* libscene2d.dylib.dSYM in Resources */,
-				88B501142DCDB7C1005E9FF3 /* libqtsensors_generic.dylib.dSYM in Resources */,
-				88B501152DCDB7C1005E9FF3 /* libqoffscreen.dylib.dSYM in Resources */,
-				88B501162DCDB7C1005E9FF3 /* libqmldbg_local.dylib in Resources */,
-				88B501172DCDB7C1005E9FF3 /* libgltfgeometryloader.dylib in Resources */,
-				88B501182DCDB7C1005E9FF3 /* libqdarwincontactspermission.prl in Resources */,
-				88B501192DCDB7C1005E9FF3 /* libqmldbg_quickprofiler.dylib in Resources */,
-				88B5011A2DCDB7C1005E9FF3 /* libqtposition_nmea.dylib.dSYM in Resources */,
-				88B5011B2DCDB7C1005E9FF3 /* libquicklintplugin.dylib in Resources */,
-				88B5011C2DCDB7C1005E9FF3 /* libqtwebview_darwin.dylib in Resources */,
-				88B5011D2DCDB7C1005E9FF3 /* libqinsighttracker.dylib.dSYM in Resources */,
-				88B5011E2DCDB7C1005E9FF3 /* libgltfgeometryloader.dylib.dSYM in Resources */,
-				88B5011F2DCDB7C1005E9FF3 /* libqsqlpsql.dylib in Resources */,
-				88B501202DCDB7C1005E9FF3 /* libqtexttospeech_speechdarwin.dylib.dSYM in Resources */,
 				88B501212DCDB7C1005E9FF3 /* libqcocoa.dylib in Resources */,
 				88B501222DCDB7C1005E9FF3 /* libqsvgicon.dylib in Resources */,
-				88B501232DCDB7C1005E9FF3 /* libopenglrenderer.dylib.dSYM in Resources */,
-				88B501242DCDB7C1005E9FF3 /* libqtgeoservices_osm.dylib.dSYM in Resources */,
-				88B501252DCDB7C1005E9FF3 /* libqcocoa.dylib.dSYM in Resources */,
-				88B501262DCDB7C1005E9FF3 /* libqsvg.dylib.dSYM in Resources */,
-				88B501272DCDB7C1005E9FF3 /* libqmldbg_preview.dylib.dSYM in Resources */,
-				88B501282DCDB7C1005E9FF3 /* libqmldbg_quickprofiler.dylib.dSYM in Resources */,
-				88B501292DCDB7C1005E9FF3 /* libqmacjp2.dylib.dSYM in Resources */,
-				88B5012A2DCDB7C1005E9FF3 /* libqsqlite.dylib.dSYM in Resources */,
-				88B5012B2DCDB7C1005E9FF3 /* libqtgeoservices_itemsoverlay.dylib.dSYM in Resources */,
-				88B5012C2DCDB7C1005E9FF3 /* libqminimal.dylib.dSYM in Resources */,
-				88B5012D2DCDB7C1005E9FF3 /* libqdarwincalendarpermission.prl in Resources */,
-				88B5012E2DCDB7C1005E9FF3 /* libqsqlite.dylib in Resources */,
-				88B5012F2DCDB7C1005E9FF3 /* libqtposition_nmea.dylib in Resources */,
-				88B501302DCDB7C1005E9FF3 /* libqmldbg_tcp.dylib in Resources */,
 				88B501312DCDB7C1005E9FF3 /* libqscnetworkreachability.dylib in Resources */,
-				88B501322DCDB7C1005E9FF3 /* libqmacheif.dylib.dSYM in Resources */,
-				88B501332DCDB7C1005E9FF3 /* libqmldbg_server.dylib in Resources */,
 				88B501342DCDB7C1005E9FF3 /* libqtpassthrucanbus.dylib in Resources */,
-				88B501352DCDB7C1005E9FF3 /* libqtvirtualcanbus.dylib.dSYM in Resources */,
-				88B501362DCDB7C1005E9FF3 /* libqmldbg_preview.dylib in Resources */,
 				88698B952D76DDD70008EF6B /* vspclient_32x32.png in Resources */,
 				88698B962D76DDD70008EF6B /* vspclient_32x32@2x.png in Resources */,
 				88698B972D76DDD70008EF6B /* vspclient_256x256.png in Resources */,
