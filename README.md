@@ -68,7 +68,7 @@ $> csrutil disable
 ### Enable the protection on the machine.
 
 ```
-$> csrutil disable
+$> csrutil enable
 ```
 
 ### Clear the existing configuration.
