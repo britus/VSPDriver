@@ -445,6 +445,13 @@ bool VSPControllerPriv::UserClientSetup(void* refcon)
 
     fprintf(stderr, "[VSPCTL] UserClientSetup() ref=0x%llx\n", (uint64_t) refcon);
 
+    // sane check DEXT class name!
+    if (!strlen(m_dextClassName)) {
+        ReportError(kIOReturnError, "DEXT Identifier is emptry, but required!");
+        UserClientTeardown();
+        return false;
+    }
+    
     m_runLoop = CFRunLoopGetCurrent();
     if (m_runLoop == NULL) {
         ReportError(kIOReturnError, "Failed to initialize run loop.");
@@ -478,17 +485,11 @@ bool VSPControllerPriv::UserClientSetup(void* refcon)
         return false;
     }
 
-    // Establish our notifications in the run loop, so we can get callbacks.
-    CFRunLoopAddSource(m_runLoop, m_runLoopSource, kCFRunLoopDefaultMode);
-
-    if (!strlen(m_dextClassName)) {
-        ReportError(kIOReturnError, "DEXT Identifier is emptry, but required!");
-        UserClientTeardown();
-        return false;
-    }
-
     fprintf(stdout, "[VSPCTL] Lookup DEXT identifier: %s\n", m_dextClassName);
 
+    // Establish our notifications in the run loop, so we can get callbacks.
+    CFRunLoopAddSource(m_runLoop, m_runLoopSource, kCFRunLoopDefaultMode);
+    
     /// - Tag: SetUpMatchingNotification
     CFMutableDictionaryRef matchingDictionary = IOServiceNameMatching(m_dextClassName);
     if (matchingDictionary == NULL) {
