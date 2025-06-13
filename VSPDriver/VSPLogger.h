@@ -11,6 +11,10 @@
 #include <os/log.h>
 #include <DriverKit/IOLib.h>
 
+#ifndef DEBUG
+#define DEBUG
+#endif
+
 // This log to makes it easier to parse out individual logs from the driver,
 // since all logs will be prefixed with the same word/phrase. DriverKit logging
 // has no logging levels; some developers might want to prefix errors differently

@@ -496,7 +496,6 @@ kern_return_t VSPUserClient::scheduleEvent(void* reference, IOUserClientMethodAr
 kern_return_t VSPUserClient::prepareResponse(void* reference, IOUserClientMethodArguments* arguments)
 {
     const TVSPControllerData* response = reinterpret_cast<TVSPControllerData*>(reference);
-    //IOAddressSegment ucmdseg = {};
     IOMemoryMap* outputMap = nullptr;
     uint8_t* outputPtr;
     void* evData;
@@ -524,6 +523,7 @@ kern_return_t VSPUserClient::prepareResponse(void* reference, IOUserClientMethod
     {
         VSPLog(LOG_PREFIX, "prepareResponse: using arguments->structureOutputDescriptor\n");
 
+        // need at least minimum of VSP_UCD_SIZE as output size
         if (VSP_UCD_SIZE > arguments->structureOutputMaximumSize)
         {
             VSPErr(LOG_PREFIX,
@@ -541,7 +541,7 @@ kern_return_t VSPUserClient::prepareResponse(void* reference, IOUserClientMethod
             outputPtr = (uint8_t*) outputMap->GetAddress();
             length    = outputMap->GetLength();
             
-            VSPLog(LOG_PREFIX, "prepareResponse: UC share result to UC. length: %lld addr: 0x%llx\n",
+            VSPLog(LOG_PREFIX, "prepareResponse: Share result to UC. length: %lld addr: 0x%llx\n",
                    length, (uint64_t) outputPtr);
             
             // Copy the data from response record over
@@ -573,6 +573,9 @@ kern_return_t VSPUserClient::prepareResponse(void* reference, IOUserClientMethod
     // if the action object doesn't belong to the current process.
     if ((evData = ivars->m_eventAction->GetReference()) != nullptr) {
         memcpy(evData, response, VSP_UCD_SIZE);
+    }
+    else {
+        VSPErr(LOG_PREFIX, "prepareResponse: Event action data does not belong current process!\n");
     }
     
     VSPLog(LOG_PREFIX, "prepareResponse finish.\n");

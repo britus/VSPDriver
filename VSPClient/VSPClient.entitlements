@@ -13,7 +13,7 @@
 	<key>com.apple.developer.system-extension.install</key>
 	<true/>
 	<key>com.apple.security.app-sandbox</key>
-	<false/>
+	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
 		<string>group.org.eof.apps</string>
