@@ -61,7 +61,6 @@ VSPUserClient::name(OSObject* target, void* reference, IOUserClientMethodArgumen
 }
 
 #ifdef DEBUG
-#define VSP_DUMP_DATA(data) dump_ctrl_data(data)
 static inline void dump_ctrl_data(const TVSPControllerData* data)
 {
     VSPLog(LOG_PREFIX, "Data ------------------------------------------\n");
@@ -84,6 +83,7 @@ static inline void dump_ctrl_data(const TVSPControllerData* data)
                ((uint8_t)((data->links.list[i]) & 0xffL)));
     }
 }
+#define VSP_DUMP_DATA(data) dump_ctrl_data(data)
 #else
 #define VSP_DUMP_DATA(data)
 #endif
@@ -631,6 +631,24 @@ inline static IOReturn toRequest(IOUserClientMethodArguments* arguments, TVSPCon
 }
 
 // --------------------------------------------------------------------
+// Prepare default response object based on request object
+//
+inline static IOReturn toResponse(const TVSPControllerData* request, TVSPControllerData* response)
+{
+    if (!request) {
+        return kIOReturnBadArgument;
+    }
+    if (!response) {
+        return kIOReturnBadArgument;
+    }
+    response->context = vspContextResult;
+    response->command = request->command;
+    response->status.code = kIOReturnSuccess;
+    response->status.flags= MAGIC_CONTROL;
+    return kIOReturnSuccess;
+}
+
+// --------------------------------------------------------------------
 // MARK: Static External Handlers
 // --------------------------------------------------------------------
 
@@ -651,13 +669,15 @@ kern_return_t VSPUserClient::restoreSession(void* reference, IOUserClientMethodA
 
     VSPLog(LOG_PREFIX, "restoreSession called.\n");
 
-    set_ctlr_status(&response, kIOReturnSuccess, MAGIC_CONTROL);
-
     if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xee00ee00);
         goto finish;
     }
-    
+    if ((ret = toResponse(&request, &response)) != kIOReturnSuccess) {
+        set_ctlr_status(&response, ret, 0xee00ee01);
+        goto finish;
+    }
+
     pfh = ((request.parameter.flags >> 8) & 0xffL);
     pfl = (request.parameter.flags & 0xffL);
     if ((pfh & 0xff) != 0xff || (pfl & 0x08) != 0x08) {
@@ -702,10 +722,12 @@ kern_return_t VSPUserClient::getStatus(void* reference, IOUserClientMethodArgume
 
     VSPLog(LOG_PREFIX, "getStatus called.\n");
     
-    set_ctlr_status(&response, kIOReturnSuccess, MAGIC_CONTROL);
-
     if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xee00ee00);
+        goto finish;
+    }
+    if ((ret = toResponse(&request, &response)) != kIOReturnSuccess) {
+        set_ctlr_status(&response, ret, 0xee00ee01);
         goto finish;
     }
 
@@ -744,13 +766,15 @@ kern_return_t VSPUserClient::createPort(void* reference, IOUserClientMethodArgum
     
     VSPLog(LOG_PREFIX, "createPort called.\n");
 
-    set_ctlr_status(&response, kIOReturnSuccess, MAGIC_CONTROL);
-
     if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xee00ee00);
         goto finish;
     }
-   
+    if ((ret = toResponse(&request, &response)) != kIOReturnSuccess) {
+        set_ctlr_status(&response, ret, 0xee00ee01);
+        goto finish;
+    }
+
     // extract magic from parameter flags
     if (request.ports.count == sizeof(TVSPPortParameters)) {
         if (request.parameter.flags & 0xff01) {
@@ -783,10 +807,12 @@ kern_return_t VSPUserClient::removePort(void* reference, IOUserClientMethodArgum
 
     VSPLog(LOG_PREFIX, "removePort called.\n");
 
-    set_ctlr_status(&response, kIOReturnSuccess, MAGIC_CONTROL);
-
     if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xee00ee00);
+        goto finish;
+    }
+    if ((ret = toResponse(&request, &response)) != kIOReturnSuccess) {
+        set_ctlr_status(&response, ret, 0xee00ee01);
         goto finish;
     }
 
@@ -815,10 +841,12 @@ kern_return_t VSPUserClient::getPortList(void* reference, IOUserClientMethodArgu
 
     VSPLog(LOG_PREFIX, "getPortList called.\n");
 
-    set_ctlr_status(&response, kIOReturnSuccess, MAGIC_CONTROL);
-
     if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xee00ee00);
+        goto finish;
+    }
+    if ((ret = toResponse(&request, &response)) != kIOReturnSuccess) {
+        set_ctlr_status(&response, ret, 0xee00ee01);
         goto finish;
     }
 
@@ -868,10 +896,12 @@ kern_return_t VSPUserClient::getLinkList(void* reference, IOUserClientMethodArgu
 
     VSPLog(LOG_PREFIX, "getLinkList called.\n");
 
-    set_ctlr_status(&response, kIOReturnSuccess, MAGIC_CONTROL);
-
     if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xee00ee00);
+        goto finish;
+    }
+    if ((ret = toResponse(&request, &response)) != kIOReturnSuccess) {
+        set_ctlr_status(&response, ret, 0xee00ee01);
         goto finish;
     }
 
@@ -923,10 +953,12 @@ kern_return_t VSPUserClient::linkPorts(void* reference, IOUserClientMethodArgume
 
     VSPLog(LOG_PREFIX, "linkPorts called.\n");
 
-    set_ctlr_status(&response, kIOReturnSuccess, MAGIC_CONTROL);
-
     if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xee00ee00);
+        goto finish;
+    }
+    if ((ret = toResponse(&request, &response)) != kIOReturnSuccess) {
+        set_ctlr_status(&response, ret, 0xee00ee01);
         goto finish;
     }
 
@@ -968,10 +1000,12 @@ kern_return_t VSPUserClient::unlinkPorts(void* reference, IOUserClientMethodArgu
 
     VSPLog(LOG_PREFIX, "unlinkPorts called.\n");
     
-    set_ctlr_status(&response, kIOReturnSuccess, MAGIC_CONTROL);
-
     if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xee00ee00);
+        goto finish;
+    }
+    if ((ret = toResponse(&request, &response)) != kIOReturnSuccess) {
+        set_ctlr_status(&response, ret, 0xee00ee01);
         goto finish;
     }
 
@@ -1018,10 +1052,12 @@ kern_return_t VSPUserClient::enableChecks(void* reference, IOUserClientMethodArg
 
     VSPLog(LOG_PREFIX, "enableChecks called.\n");
 
-    set_ctlr_status(&response, kIOReturnSuccess, MAGIC_CONTROL);
-
     if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xee00ee00);
+        goto finish;
+    }
+    if ((ret = toResponse(&request, &response)) != kIOReturnSuccess) {
+        set_ctlr_status(&response, ret, 0xee00ee01);
         goto finish;
     }
 
@@ -1057,10 +1093,12 @@ kern_return_t VSPUserClient::enableTrace(void* reference, IOUserClientMethodArgu
     
     VSPLog(LOG_PREFIX, "enableTrace called.\n");
 
-    set_ctlr_status(&response, kIOReturnSuccess, MAGIC_CONTROL);
-
     if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xee00ee00);
+        goto finish;
+    }
+    if ((ret = toResponse(&request, &response)) != kIOReturnSuccess) {
+        set_ctlr_status(&response, ret, 0xee00ee01);
         goto finish;
     }
 

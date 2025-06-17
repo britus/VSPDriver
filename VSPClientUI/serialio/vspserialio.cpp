@@ -8,6 +8,9 @@
 #include <QStandardPaths>
 #include <QThread>
 #include <QTimer>
+#include <QScrollBar>
+#include <QTextBlock>
+#include <QTextDocument>
 #include <vspserialio.h>
 
 Q_DECLARE_METATYPE(QSerialPortInfo)
@@ -524,25 +527,6 @@ inline void VSPSerialIO::initComboFlowCtrl(QComboBox* cbx, QComboBox* link)
 #endif
 }
 
-void VSPSerialIO::on_btnSendFile_clicked()
-{
-    QFileDialog d;
-    d.setWindowTitle(qApp->applicationDisplayName());
-    d.setDirectory(QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
-    d.setNameFilters(QStringList() << "*.txt" << "*");
-    d.setAcceptMode(QFileDialog::AcceptMode::AcceptOpen);
-    d.setFileMode(QFileDialog::FileMode::ExistingFile);
-    d.setViewMode(QFileDialog::ViewMode::Detail);
-    d.setDefaultSuffix(".txt");
-    d.setOption(QFileDialog::Option::ReadOnly);
-    if (d.exec() == QFileDialog::Accepted) {
-        QStringList files = d.selectedFiles();
-        if (!files.isEmpty()) {
-            sendFile(files.at(0));
-        }
-    }
-}
-
 inline void VSPSerialIO::sendFile(const QString& fileName)
 {
     if (!m_port->isOpen()) {
@@ -633,63 +617,47 @@ inline void VSPSerialIO::disconnectPort()
     }
 }
 
-void VSPSerialIO::on_btnConnect_clicked()
+inline void VSPSerialIO::appendLogLine(const QByteArray& line)
 {
-    if (!m_port) {
-        m_port = new QSerialPort(ui->cbxComPort->currentData().value<QSerialPortInfo>(), this);
-        m_port->setDataBits(ui->cbxDataBits->currentData().value<QSerialPort::DataBits>());
-        m_port->setStopBits(ui->cbxStopBits->currentData().value<QSerialPort::StopBits>());
-        m_port->setParity(ui->cbxParity->currentData().value<QSerialPort::Parity>());
-        m_port->setFlowControl(ui->cbxFlowControl->currentData().value<QSerialPort::FlowControl>());
-        connect(m_port, &QSerialPort::errorOccurred, this, &VSPSerialIO::onPortErrorOccured);
-        connect(m_port, &QSerialPort::bytesWritten, this, &VSPSerialIO::onPortBytesWritten);
-        connect(m_port, &QSerialPort::aboutToClose, this, &VSPSerialIO::onPortClosed);
-        connect(m_port, &QSerialPort::readyRead, this, &VSPSerialIO::onPortReadyRead);
-        connect(m_port, &QSerialPort::dataTerminalReadyChanged, this, &VSPSerialIO::onDTRChanged);
-        connect(m_port, &QSerialPort::requestToSendChanged, this, &VSPSerialIO::onRTSChanged);
-        connect(m_port, &QSerialPort::breakEnabledChanged, this, &VSPSerialIO::onBreakChanged);
-        connect(m_port, &QSerialPort::destroyed, this, [this](QObject*) {
-            m_port = nullptr;
-        });
-    }
+#if 0
+    QScrollBar *horScrollBar = ui->txInputView->horizontalScrollBar();
+    QScrollBar *verScrollBar = ui->txInputView->verticalScrollBar();
+#endif
 
-    if (!m_port->isOpen()) {
-        connectPort();
-    }
-    else {
-        disconnectPort();
-    }
-}
+    QString buffer = ui->txInputView->toPlainText();
+    buffer += line;
 
-void VSPSerialIO::on_edOutputLine_textEdited(const QString&)
-{
-}
+    //ui->txInputView->setPlainText(buffer);
 
-void VSPSerialIO::on_btnSendLine_clicked()
-{
-    if (!m_port)
-        return;
-
-    QByteArray endings[7] = {"\r\n", "\n", "\r", "$", "|", ":", ";"};
-    QByteArray out = ui->edOutputLine->text().toUtf8();
-
-    int index = ui->cbxLineEnding->currentIndex();
-    if (index > -1 && index < 7) {
-        out.append(endings[index]);
-    }
-
-    if (m_port && m_port->isOpen()) {
-        ui->txInputView->setPlainText(">: " + out);
-
-        qDebug("VSPSerialIO[%s]: <SND> %s", qPrintable(m_port->portName()), qPrintable(out.toHex()));
-
-        if (m_port->write(out) != out.length()) {
-            m_port->close();
+    QTextDocument *doc;
+    if ((doc = ui->txInputView->document())) {
+        if (doc->lineCount() > 256) {
+            QTextBlock firstBlock = doc->findBlockByLineNumber(1);
+            if (firstBlock.isValid()) {
+                QTextCursor cursor(firstBlock);
+                cursor.select(QTextCursor::BlockUnderCursor);
+                cursor.removeSelectedText();
+            }
+            //doc->clear();
         }
+
+        doc->setPlainText(buffer);
+
+        QTextCursor cursor = ui->txInputView->textCursor();
+        cursor.movePosition(QTextCursor::End);
+        cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, doc->lineCount());
+        ui->txInputView->setTextCursor(cursor);
+
+#if 0
+        // Scrolls to the bottom
+        verScrollBar->setValue(verScrollBar->maximum());
+        // scroll to the left
+        horScrollBar->setValue(0);
+#endif
     }
 }
 
-void VSPSerialIO::looperLooper()
+inline void VSPSerialIO::looperLooper()
 {
     const QString chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 
@@ -725,6 +693,81 @@ void VSPSerialIO::looperLooper()
     });
     m_looper->setObjectName("looper");
     m_looper->start(QThread::NormalPriority);
+}
+
+void VSPSerialIO::on_btnConnect_clicked()
+{
+    if (!m_port) {
+        m_port = new QSerialPort(ui->cbxComPort->currentData().value<QSerialPortInfo>(), this);
+        m_port->setDataBits(ui->cbxDataBits->currentData().value<QSerialPort::DataBits>());
+        m_port->setStopBits(ui->cbxStopBits->currentData().value<QSerialPort::StopBits>());
+        m_port->setParity(ui->cbxParity->currentData().value<QSerialPort::Parity>());
+        m_port->setFlowControl(ui->cbxFlowControl->currentData().value<QSerialPort::FlowControl>());
+        connect(m_port, &QSerialPort::errorOccurred, this, &VSPSerialIO::onPortErrorOccured);
+        connect(m_port, &QSerialPort::bytesWritten, this, &VSPSerialIO::onPortBytesWritten);
+        connect(m_port, &QSerialPort::aboutToClose, this, &VSPSerialIO::onPortClosed);
+        connect(m_port, &QSerialPort::readyRead, this, &VSPSerialIO::onPortReadyRead);
+        connect(m_port, &QSerialPort::dataTerminalReadyChanged, this, &VSPSerialIO::onDTRChanged);
+        connect(m_port, &QSerialPort::requestToSendChanged, this, &VSPSerialIO::onRTSChanged);
+        connect(m_port, &QSerialPort::breakEnabledChanged, this, &VSPSerialIO::onBreakChanged);
+        connect(m_port, &QSerialPort::destroyed, this, [this](QObject*) {
+            m_port = nullptr;
+        });
+    }
+
+    if (!m_port->isOpen()) {
+        connectPort();
+    }
+    else {
+        disconnectPort();
+    }
+}
+
+void VSPSerialIO::on_edOutputLine_textEdited(const QString&)
+{
+}
+
+void VSPSerialIO::on_btnSendFile_clicked()
+{
+    QFileDialog d;
+    d.setWindowTitle(qApp->applicationDisplayName());
+    d.setDirectory(QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
+    d.setNameFilters(QStringList() << "*.txt" << "*");
+    d.setAcceptMode(QFileDialog::AcceptMode::AcceptOpen);
+    d.setFileMode(QFileDialog::FileMode::ExistingFile);
+    d.setViewMode(QFileDialog::ViewMode::Detail);
+    d.setDefaultSuffix(".txt");
+    d.setOption(QFileDialog::Option::ReadOnly);
+    if (d.exec() == QFileDialog::Accepted) {
+        QStringList files = d.selectedFiles();
+        if (!files.isEmpty()) {
+            sendFile(files.at(0));
+        }
+    }
+}
+
+void VSPSerialIO::on_btnSendLine_clicked()
+{
+    if (!m_port)
+        return;
+
+    QByteArray endings[7] = {"\r\n", "\n", "\r", "$", "|", ":", ";"};
+    QByteArray out = ui->edOutputLine->text().toUtf8();
+
+    int index = ui->cbxLineEnding->currentIndex();
+    if (index > -1 && index < 7) {
+        out.append(endings[index]);
+    }
+
+    if (m_port && m_port->isOpen()) {
+        appendLogLine(">: " + out);
+
+        qDebug("VSPSerialIO[%s]: <SND> %s", qPrintable(m_port->portName()), qPrintable(out.toHex()));
+
+        if (m_port->write(out) != out.length()) {
+            m_port->close();
+        }
+    }
 }
 
 void VSPSerialIO::on_btnLooper_clicked()
@@ -798,10 +841,8 @@ void VSPSerialIO::onPortReadyRead()
 
     qDebug("VSPSerialIO[%s]: <RCV> %s", qPrintable(m_port->portName()), qPrintable(inbuf.toHex()));
 
-    QString buffer = ui->txInputView->toPlainText();
-    buffer += "<: " + inbuf;
-    ui->txInputView->setPlainText(buffer);
-}
+    appendLogLine("<: " + inbuf);
+ }
 
 void VSPSerialIO::onPortClosed()
 {

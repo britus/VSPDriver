@@ -47,6 +47,7 @@ private:
     inline void initComboStopBits(QComboBox* cbx, QComboBox* link = nullptr);
     inline void initComboParity(QComboBox* cbx, QComboBox* link = nullptr);
     inline void initComboFlowCtrl(QComboBox* cbx, QComboBox* link = nullptr);
+    inline void appendLogLine(const QByteArray& line);
     inline void connectPort();
     inline void disconnectPort();
     inline void looperLooper();

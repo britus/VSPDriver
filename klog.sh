@@ -1,2 +1,8 @@
-sudo log $1 --style compact --color always \
-	--backtrace --debug --info --process 0 
+#!/bin/sh
+
+## Watch VSPDriver activity by log stream
+#filter="'VSPDriver|VSPUserClient|VSPSerialPort'"
+filter="grep VSP"
+sudo log stream --level debug --color always --style compact \
+  --predicate 'process == "kernel"' | ${filter}
+#'VSPDriver|VSPUserClient|VSPSerialPort'

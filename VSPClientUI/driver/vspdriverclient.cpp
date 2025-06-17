@@ -85,8 +85,15 @@ void VSPDriverClient::OnDataReady(const TVSPControllerData& data)
     text << tr("Port count.....: ") << Qt::dec << data.ports.count << Qt::endl;
     text << tr("Link count.....: ") << Qt::dec << data.links.count << Qt::endl;
 
-    if (data.ports.count) {
+    if (data.command == vspControlRemovePort || data.ports.count) {
         m_portList.resetModel();
+    }
+
+    if (data.command == vspControlUnlinkPorts || data.links.count) {
+        m_linkList.resetModel();
+    }
+
+    if (data.ports.count) {
         for (uint i = 0; i < data.ports.count; i++) {
             TVSPPortListItem pli = data.ports.list[i];
             QString name = strlen(pli.name) == 0 //
@@ -97,14 +104,8 @@ void VSPDriverClient::OnDataReady(const TVSPControllerData& data)
             continue;
         }
     }
-    else if (data.command == vspControlRemovePort) {
-        if (m_portList.rowCount() > 0) {
-            m_portList.resetModel();
-        }
-    }
 
     if (data.links.count) {
-        m_linkList.resetModel();
         for (uint i = 0; i < data.links.count; i++) {
             const uint8_t _lid = (data.links.list[i] >> 16) & 0x000000ff;
             const uint8_t _src = (data.links.list[i] >> 8) & 0x000000ff;
@@ -131,11 +132,6 @@ void VSPDriverClient::OnDataReady(const TVSPControllerData& data)
                 p1,
                 p2}));
             continue;
-        }
-    }
-    else if (data.command == vspControlUnlinkPorts) {
-        if (m_linkList.rowCount() > 0) {
-            m_linkList.resetModel();
         }
     }
 
