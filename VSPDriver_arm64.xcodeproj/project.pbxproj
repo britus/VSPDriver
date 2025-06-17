@@ -297,7 +297,6 @@
 		88B40D612D4B666700DFE7C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88B40D702D4B85ED00DFE7C5 /* VSPDriver.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VSPDriver.entitlements; sourceTree = "<group>"; };
 		88B47EC92D59B43800868CA5 /* VSPController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VSPController.h; sourceTree = "<group>"; };
-		88D46EBC2D639B6C00D58D8A /* klog.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = klog.sh; sourceTree = "<group>"; };
 		88DA7BA62D532C6700C8F759 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		88DA7BA72D532C6700C8F759 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		88F12FDF2DCDBE3500E0486A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -801,7 +800,6 @@
 				88AEEFF62D5233D4007F2A4C /* IOReg-Outline.md */,
 				88DA7BA62D532C6700C8F759 /* README.md */,
 				88AB34E92D64937300260D19 /* make.sh */,
-				88D46EBC2D639B6C00D58D8A /* klog.sh */,
 				88B40D592D4B666700DFE7C5 /* Frameworks */,
 				88B40D582D4B666700DFE7C5 /* Products */,
 			);
