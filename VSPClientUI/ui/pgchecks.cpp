@@ -63,3 +63,4 @@ void PGChecks::update(TVSPControlCommand command, VSPPortListModel* portModel, V
     ui->cbPorts->setEnabled(enab);
     ui->btnUpdate->setEnabled(enab);
 }
+

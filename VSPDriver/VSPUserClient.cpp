@@ -1074,6 +1074,11 @@ kern_return_t VSPUserClient::enableTrace(void* reference, IOUserClientMethodArgu
     }
     
     portItem.port->setTraceFlags(flags);
+
+    if (flags) {
+        VSPLog(LOG_PREFIX, "enableTrace traces enabled on port: %d\n", //
+               portItem.port->getPortIdentifier());
+    }
     
     VSPLog(LOG_PREFIX, "enableTrace finish.\n");
 

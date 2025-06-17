@@ -92,6 +92,9 @@ LIBS += -liconv
 LIBS += -F../../VSPController/xcode/Release -framework VSPController
 LIBS += -F../../VSPSetup/xcode/Release      -framework VSPSetup
 
+LIBS += -F../../VSPController/build         -framework VSPController
+LIBS += -F../../VSPSetup/build              -framework VSPSetup
+
 # Update translation files
 LOC_QM_FILES.depends = $$TRANSLATIONS
 LOC_QM_FILES.files = $$TRANSLATIONS

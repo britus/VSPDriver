@@ -1,6 +1,9 @@
 # Build
 /build/
 
+# Sub modules
+*/build/
+
 # Xcode stuff
 */xcuserdata/
 */project.xcworkspace/xcuserdata/
