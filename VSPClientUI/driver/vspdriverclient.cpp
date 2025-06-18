@@ -100,7 +100,7 @@ void VSPDriverClient::OnDataReady(const TVSPControllerData& data)
                               ? tr("Port %1").arg(pli.id)
                               : tr("%1").arg(pli.name);
             text << "Port item......: " << pli.id << " " << name << Qt::endl;
-            m_portList.append(VSPDataModel::TPortItem({pli.id, name}));
+            m_portList.append(VSPDataModel::TPortItem({pli.id, name, pli.flags}));
             continue;
         }
     }
@@ -130,7 +130,7 @@ void VSPDriverClient::OnDataReady(const TVSPControllerData& data)
                {_lid, //
                 tr("Port Link %1 %2").arg(_lid).arg(name),
                 p1,
-                p2}));
+                p2, 0}));
             continue;
         }
     }

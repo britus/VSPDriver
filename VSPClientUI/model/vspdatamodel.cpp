@@ -245,6 +245,16 @@ inline static bool __setId(quint8* id, const QString& value)
     return true;
 }
 
+inline static bool __setFlags(quint64* flags, const QString& value)
+{
+    bool ok;
+    (*flags) = value.toULong(&ok);
+    if (!ok) {
+        return false;
+    }
+    return true;
+}
+
 inline static bool __setName(QString* name, const QString& value)
 {
     (*name) = value;
@@ -283,6 +293,12 @@ bool VSPPortListModel::load(const QString& group, QSettings* settings)
                     }
                     break;
                 }
+                case 2: {
+                    if (!__setFlags(&p.flags, items[j])) {
+                        goto error_exit;
+                    }
+                    break;
+                }
             }
         }
         append(p);
@@ -303,7 +319,8 @@ void VSPPortListModel::save(const QString& group, QSettings* settings)
     for (quint8 i = 0; i < m_records.size(); i++) {
         const VSPDataModel::TDataRecord r = m_records.at(i);
         const QString key = QStringLiteral("port_%1").arg(i);
-        const QString value = QStringLiteral("%1|%2").arg(r.port.id).arg(r.port.name);
+        const QString value = QStringLiteral("%1|%2|%3") //
+                                  .arg(r.port.id).arg(r.port.name).arg(r.port.flags);
         settings->setValue(key, value);
     }
     settings->endGroup();
@@ -362,6 +379,12 @@ bool VSPLinkListModel::load(const QString& group, QSettings* settings)
                     }
                     break;
                 }
+                case 6: {
+                    if (!__setFlags(&l.flags, items[j])) {
+                        goto error_exit;
+                    }
+                    break;
+                }
             }
         }
         append(l);
@@ -382,13 +405,14 @@ void VSPLinkListModel::save(const QString& group, QSettings* settings)
     for (quint8 i = 0; i < m_records.size(); i++) {
         const VSPDataModel::TDataRecord r = m_records.at(i);
         const QString key = QStringLiteral("link_%1").arg(i);
-        const QString value = QStringLiteral("%1|%2|%3|%4|%5|%6") //
+        const QString value = QStringLiteral("%1|%2|%3|%4|%5|%6|%7") //
                                  .arg(r.link.id)
                                  .arg(r.link.name)
                                  .arg(r.link.source.id)
                                  .arg(r.link.source.name)
                                  .arg(r.link.target.id)
-                                 .arg(r.link.target.name);
+                                 .arg(r.link.target.name)
+                                 .arg(r.link.flags);
         settings->setValue(key, value);
     }
     settings->endGroup();

@@ -17,8 +17,8 @@ if [ "${ARCH}" == "arm64" ] ; then
     XC_PROJECT=VSPDriver_arm64.xcodeproj
 fi
 
-xcodebuild -arch `uname -m` -project ${XC_PROJECT} 
+#xcodebuild -arch `uname -m` -project ${XC_PROJECT} 
 #xcodebuild -arch `uname -m` -project ${XC_PROJECT} -scheme VSPClient
-xcodebuild -arch `uname -m` -project ${XC_PROJECT} -target VSPClient
 #xcodebuild -arch `uname -m` -project ${XC_PROJECT} -alltargets
+xcodebuild -arch `uname -m` -project ${XC_PROJECT} -target VSPClient
 

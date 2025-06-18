@@ -619,11 +619,6 @@ inline void VSPSerialIO::disconnectPort()
 
 inline void VSPSerialIO::appendLogLine(const QByteArray& line)
 {
-#if 0
-    QScrollBar *horScrollBar = ui->txInputView->horizontalScrollBar();
-    QScrollBar *verScrollBar = ui->txInputView->verticalScrollBar();
-#endif
-
     QString buffer = ui->txInputView->toPlainText();
     buffer += line;
 
@@ -647,13 +642,6 @@ inline void VSPSerialIO::appendLogLine(const QByteArray& line)
         cursor.movePosition(QTextCursor::End);
         cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, doc->lineCount());
         ui->txInputView->setTextCursor(cursor);
-
-#if 0
-        // Scrolls to the bottom
-        verScrollBar->setValue(verScrollBar->maximum());
-        // scroll to the left
-        horScrollBar->setValue(0);
-#endif
     }
 }
 

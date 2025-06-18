@@ -45,10 +45,6 @@ namespace VSPController {
 #define MAX_PORT_LINKS 16
 #define MAX_PORT_NAME 64
 
-#ifndef VSP_UCD_SIZE
-#define VSP_UCD_SIZE sizeof(TVSPControllerData)
-#endif
-
 typedef enum {
     vspContextPing   = 0x01,
     vspContextPort   = 0x02,
@@ -80,8 +76,9 @@ typedef struct {
 } TVSPPortParameters;
 
 typedef struct {
-    uint8_t id;
-    char    name[MAX_PORT_NAME];
+    uint8_t  id;
+    uint64_t flags;
+    char     name[MAX_PORT_NAME];
 } TVSPPortListItem;
 
 typedef struct {
@@ -122,6 +119,10 @@ typedef struct {
     } links;
     
 } TVSPControllerData;
+
+#ifndef VSP_UCD_SIZE
+#define VSP_UCD_SIZE sizeof(TVSPControllerData)
+#endif
 
 } /* namespace: VSPController */
 

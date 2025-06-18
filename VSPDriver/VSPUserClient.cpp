@@ -1072,8 +1072,6 @@ kern_return_t VSPUserClient::enableChecks(void* reference, IOUserClientMethodArg
     
     portItem.port->setParameterChecks(flags);
 
-    VSPLog(LOG_PREFIX, "enableChecks finish.\n");
-
 finish:
     return scheduleEvent(&response, arguments);
 }
@@ -1087,7 +1085,7 @@ kern_return_t VSPUserClient::enableTrace(void* reference, IOUserClientMethodArgu
     kern_return_t ret;
     TVSPControllerData response = {};
     TVSPControllerData request = {};
-    TVSPPortItem portItem = {};
+    TVSPPortItem item = {};
     uint8_t portId;
     uint64_t flags;
     
@@ -1105,20 +1103,22 @@ kern_return_t VSPUserClient::enableTrace(void* reference, IOUserClientMethodArgu
     flags = request.parameter.flags;
     portId = request.parameter.link.source;
     
-    ret = ivars->m_parent->getPortById(portId, &portItem, sizeof(TVSPPortItem));
+    ret = ivars->m_parent->getPortById(portId, &item, sizeof(TVSPPortItem));
     if (ret != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xaa000001);
         goto finish;
     }
-    
-    portItem.port->setTraceFlags(flags);
 
-    if (flags) {
-        VSPLog(LOG_PREFIX, "enableTrace traces enabled on port: %d\n", //
-               portItem.port->getPortIdentifier());
-    }
+    VSPLog(LOG_PREFIX, "enableTrace flags: 0x%llx port: %d\n", //
+           flags, item.port->getPortIdentifier());
+
+    // Keep the flags in the structure
+    item.flags = flags;
     
-    VSPLog(LOG_PREFIX, "enableTrace finish.\n");
+    // Update port object instance
+    if (item.port) {
+        item.port->setTraceFlags(flags);
+    }
 
 finish:
     return scheduleEvent(&response, arguments);

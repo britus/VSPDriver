@@ -52,6 +52,7 @@ typedef enum {
 
 typedef struct {
     uint8_t id;
+    uint64_t flags;
     char name[MAX_PORT_NAME];
 } TVSPPortListItem;
 

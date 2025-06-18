@@ -20,6 +20,7 @@ public:
     typedef struct {
         quint8 id;
         QString name;
+        quint64 flags;
     } TPortItem;
 
     typedef struct {
@@ -27,13 +28,14 @@ public:
         QString name;
         TPortItem source;
         TPortItem target;
+        quint64 flags;
     } TPortLink;
 
     typedef struct {
         TDataType type;
         TPortItem port;
         TPortLink link;
-        quint32 flags;
+        quint64 flags;
     } TDataRecord;
 
     explicit VSPDataModel(QObject* parent = nullptr);

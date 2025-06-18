@@ -518,8 +518,7 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count, vo
         return kIOReturnNoSpace;
     }
     
-    for (uint8_t i = 0, items = 0; i < MAX_SERIAL_PORTS && items < count; i++)
-    {
+    for (uint8_t i = 0, items = 0; i < MAX_SERIAL_PORTS && items < count; i++) {
         /* skip entries that already in use */
         if (ivars->m_ports[i].id || ivars->m_ports[i].port) {
             continue;
@@ -552,7 +551,10 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count, vo
             TVSPPortParameters* pp = reinterpret_cast<TVSPPortParameters*>(params);
             if (pp->baudRate && pp->dataBits) {
                 ivars->m_ports[i].port->HwProgramUART( //
-                    pp->baudRate, pp->dataBits, pp->stopBits, pp->flowCtrl);
+                    pp->baudRate,   //
+                    pp->dataBits,   //
+                    pp->stopBits,   //
+                    pp->flowCtrl);
             }
         }
         
@@ -600,8 +602,7 @@ kern_return_t VSPDriver::removePort(uint8_t portId)
     }
     
     // Find given port in port list
-    for (uint8_t i = 0; i < MAX_SERIAL_PORTS; i++)
-    {
+    for (uint8_t i = 0; i < MAX_SERIAL_PORTS; i++) {
         if (ivars->m_ports[i].id == portId) {
             VSPLog(LOG_PREFIX, "removePort: Shutdown serial port #%d\n",
                    ivars->m_ports[i].id);
@@ -632,7 +633,6 @@ kern_return_t VSPDriver::portsInLinkList(uint8_t sourceId, uint8_t targetId)
 {
     // Check port id's in existing links
     for (uint8_t i = 0; i < MAX_PORT_LINKS; i++) {
-        
         // skip empty entries
         if (!ivars->m_links[i].id) {
             continue;
@@ -664,7 +664,6 @@ kern_return_t VSPDriver::portsAssigned(uint8_t sourceId, uint8_t targetId)
     
     // check serial port list
     for (uint8_t i = 0; i < MAX_SERIAL_PORTS; i++) {
-        
         // skip empty entries
         if (!ivars->m_ports[i].id || !ivars->m_ports[i].port) {
             continue;
@@ -743,7 +742,6 @@ kern_return_t VSPDriver::createPortLink(uint8_t sourceId, uint8_t targetId, void
     
     // Create new port link
     for (uint8_t i = 0, _id = 1; i < MAX_PORT_LINKS; i++, _id++) {
-        
         // skip entries already in use
         if (ivars->m_links[i].id) {
             continue;

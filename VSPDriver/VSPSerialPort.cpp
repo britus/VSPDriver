@@ -1033,9 +1033,11 @@ void VSPSerialPort::setPortItem(VSPDriver* parent, void* data)
         return;
     }
     
+    // Link parent to this instance
+    ivars->m_parent = parent;
+
     // Save instance for VSP controller
     TVSPPortItem* item = (TVSPPortItem*) data;
-    ivars->m_parent = parent;
     item->id        = ivars->m_portId;
     item->port      = this;
     item->flags     = 0x00;
