@@ -565,9 +565,7 @@ kern_return_t IMPL(VSPSerialPort, DisconnectQueues)
 }
 
 // --------------------------------------------------------------------
-// TxDataAvailable_Impl()
-// TX data ready to read from m_txqbmd segment
-
+// Update OS serial port interface fields
 static inline void update_txqbmd(struct VSPSerialPort_IVars* ivars)
 {
     // We reserve 1K size from the capacity from t_txqbmd.
@@ -583,6 +581,9 @@ static inline void update_txqbmd(struct VSPSerialPort_IVars* ivars)
     }
 }
 
+// --------------------------------------------------------------------
+// TxDataAvailable_Impl()
+// TX data ready to read from m_txqbmd segment
 void IMPL(VSPSerialPort, TxDataAvailable)
 {
     IOReturn ret = kIOReturnSuccess;
