@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
     QApplication::setAttribute(Qt::AA_UseDesktopOpenGL, true);
     QApplication::setAttribute(Qt::AA_Use96Dpi, true);
     QApplication::setDesktopSettingsAware(true);
-
+ 
     // --
     QApplication a(argc, argv);
     QApplication::setOrganizationName(QStringLiteral("EoF Software Labs"));

@@ -81,21 +81,21 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		09DF0938A1728BD4E073F7D3 /* vspcontrollerpriv.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vspcontrollerpriv.hpp; path = /Users/Bjoern.Eschrich/EoF/VSPDriver/VSPController/xcode/vspcontrollerpriv.hpp; sourceTree = "<absolute>"; };
-		0EB85867FA7C0B37D30DA814 /* vspcontroller.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vspcontroller.cpp; path = /Users/Bjoern.Eschrich/EoF/VSPDriver/VSPController/vspcontroller.cpp; sourceTree = "<absolute>"; };
+		09DF0938A1728BD4E073F7D3 /* vspcontrollerpriv.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vspcontrollerpriv.hpp; path = /Users/eofmc/EoF/VSPDriver/VSPController/xcode/vspcontrollerpriv.hpp; sourceTree = "<absolute>"; };
+		0EB85867FA7C0B37D30DA814 /* vspcontroller.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vspcontroller.cpp; path = /Users/eofmc/EoF/VSPDriver/VSPController/vspcontroller.cpp; sourceTree = "<absolute>"; };
 		4D765E1B1EA6C757220C63E7 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
-		544C0B724BF08231D6E09CA2 /* .qmake.stash */ = {isa = PBXFileReference; lastKnownFileType = text; name = .qmake.stash; path = /Users/Bjoern.Eschrich/EoF/VSPDriver/VSPController/xcode/.qmake.stash; sourceTree = "<absolute>"; };
+		544C0B724BF08231D6E09CA2 /* .qmake.stash */ = {isa = PBXFileReference; lastKnownFileType = text; name = .qmake.stash; path = /Users/eofmc/EoF/VSPDriver/VSPController/xcode/.qmake.stash; sourceTree = "<absolute>"; };
 		600D9CE0C795F9EB46263A6D /* VSPController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VSPController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		75AC078872CF75A0D24ED820 /* vspcontroller.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = vspcontroller.hpp; path = /Users/Bjoern.Eschrich/EoF/VSPDriver/VSPController/vspcontroller.hpp; sourceTree = "<absolute>"; };
-		821617F599282C75413E9FEA /* vspcontroller.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vspcontroller.hpp; path = /Users/Bjoern.Eschrich/EoF/VSPDriver/VSPController/xcode/vspcontroller.hpp; sourceTree = "<absolute>"; };
-		8CD6345D764A0613F288BC28 /* vspcontrollerpriv.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = vspcontrollerpriv.hpp; path = /Users/Bjoern.Eschrich/EoF/VSPDriver/VSPController/vspcontrollerpriv.hpp; sourceTree = "<absolute>"; };
-		978B112FF525377A2B1D8DAC /* vspcontroller.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = vspcontroller.icns; path = /Users/Bjoern.Eschrich/EoF/VSPDriver/VSPController/vspcontroller.icns; sourceTree = "<absolute>"; };
+		75AC078872CF75A0D24ED820 /* vspcontroller.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = vspcontroller.hpp; path = /Users/eofmc/EoF/VSPDriver/VSPController/vspcontroller.hpp; sourceTree = "<absolute>"; };
+		821617F599282C75413E9FEA /* vspcontroller.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vspcontroller.hpp; path = /Users/eofmc/EoF/VSPDriver/VSPController/xcode/vspcontroller.hpp; sourceTree = "<absolute>"; };
+		8CD6345D764A0613F288BC28 /* vspcontrollerpriv.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = vspcontrollerpriv.hpp; path = /Users/eofmc/EoF/VSPDriver/VSPController/vspcontrollerpriv.hpp; sourceTree = "<absolute>"; };
+		978B112FF525377A2B1D8DAC /* vspcontroller.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = vspcontroller.icns; path = /Users/eofmc/EoF/VSPDriver/VSPController/vspcontroller.icns; sourceTree = "<absolute>"; };
 		A1A67BEAA744704B29168D39 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
-		A6A7FEEFE1CC913BC64E72AA /* vspcontroller_global.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vspcontroller_global.h; path = /Users/Bjoern.Eschrich/EoF/VSPDriver/VSPController/xcode/vspcontroller_global.h; sourceTree = "<absolute>"; };
-		CE6C90E093B348B8E15A575A /* vspcontroller_global.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vspcontroller_global.h; path = /Users/Bjoern.Eschrich/EoF/VSPDriver/VSPController/vspcontroller_global.h; sourceTree = "<absolute>"; };
-		E8F14673D1A67F602E882CA0 /* VSPController.pro */ = {isa = PBXFileReference; lastKnownFileType = text; name = VSPController.pro; path = /Users/Bjoern.Eschrich/EoF/VSPDriver/VSPController/xcode/VSPController.pro; sourceTree = "<absolute>"; };
-		E9BE92A6ABE764C28A44B685 /* VSPController.pro */ = {isa = PBXFileReference; lastKnownFileType = text; name = VSPController.pro; path = /Users/Bjoern.Eschrich/EoF/VSPDriver/VSPController/VSPController.pro; sourceTree = "<absolute>"; };
-		FDC81E14FF0B523C4EF4ADA7 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = /Users/Bjoern.Eschrich/EoF/VSPDriver/VSPController/LICENSE; sourceTree = "<absolute>"; };
+		A6A7FEEFE1CC913BC64E72AA /* vspcontroller_global.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vspcontroller_global.h; path = /Users/eofmc/EoF/VSPDriver/VSPController/xcode/vspcontroller_global.h; sourceTree = "<absolute>"; };
+		CE6C90E093B348B8E15A575A /* vspcontroller_global.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vspcontroller_global.h; path = /Users/eofmc/EoF/VSPDriver/VSPController/vspcontroller_global.h; sourceTree = "<absolute>"; };
+		E8F14673D1A67F602E882CA0 /* VSPController.pro */ = {isa = PBXFileReference; lastKnownFileType = text; name = VSPController.pro; path = /Users/eofmc/EoF/VSPDriver/VSPController/xcode/VSPController.pro; sourceTree = "<absolute>"; };
+		E9BE92A6ABE764C28A44B685 /* VSPController.pro */ = {isa = PBXFileReference; lastKnownFileType = text; name = VSPController.pro; path = /Users/eofmc/EoF/VSPDriver/VSPController/VSPController.pro; sourceTree = "<absolute>"; };
+		FDC81E14FF0B523C4EF4ADA7 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = /Users/eofmc/EoF/VSPDriver/VSPController/LICENSE; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,6 +219,7 @@
 		6DB9C3763D02B1415CD9D565 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 			};
 			buildConfigurationList = DAC4C1AA5EDEA1C85E9CA5E6 /* Build configuration list for PBXProject "VSPController" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -252,7 +253,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "make -C /Users/Bjoern.Eschrich/EoF/VSPDriver/VSPController/xcode -f VSPController.xcodeproj/qt_makeqmake.mak";
+			shellScript = "make -C ${HOME}/EoF/VSPDriver/VSPController/xcode -f VSPController.xcodeproj/qt_makeqmake.mak\n";
 			showEnvVarsInLog = 0;
 		};
 		7EF0942E79C014DCEC8976BC /* Qt Preprocessors */ = {
@@ -268,7 +269,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "make -C /Users/Bjoern.Eschrich/EoF/VSPDriver/VSPController/xcode -f VSPController.xcodeproj/qt_preprocess.mak";
+			shellScript = "make -C ${HOME}/EoF/VSPDriver/VSPController/xcode -f VSPController.xcodeproj/qt_preprocess.mak\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -365,11 +366,12 @@
 					"-dead_strip",
 					"-liconv",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPController;
 				PRODUCT_NAME = VSPController;
 				QMAKE_FULL_VERSION = 1.0.0;
 				QMAKE_PKGINFO_TYPEINFO = "????";
 				QMAKE_SHORT_VERSION = 1.0;
+				QTDIR = "$(HOME)/Qt/6.9.1/macos";
 				QT_LIBRARY_SUFFIX = "";
 				SDKROOT = macosx;
 				SYMROOT = "$(PROJECT_DIR)";
@@ -449,11 +451,12 @@
 					"-dead_strip",
 					"-liconv",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPController;
 				PRODUCT_NAME = VSPController;
 				QMAKE_FULL_VERSION = 1.0.0;
 				QMAKE_PKGINFO_TYPEINFO = "????";
 				QMAKE_SHORT_VERSION = 1.0;
+				QTDIR = "$(HOME)/Qt/6.9.1/macos";
 				QT_LIBRARY_SUFFIX = "";
 				SDKROOT = macosx;
 				SYMROOT = "$(PROJECT_DIR)";
@@ -470,15 +473,20 @@
 					arm64,
 				);
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = "$(SOURCE_ROOT)/../Info.plist";
 				LIBRARY_STYLE = DYNAMIC;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPController;
 				PRODUCT_NAME = VSPController;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				QMAKE_FULL_VERSION = 1.0.0;
 				QMAKE_PKGINFO_TYPEINFO = "????";
 				QMAKE_SHORT_VERSION = 1.0;
+				QTDIR = "$(HOME)/Qt/6.9.1/macos";
 				QT_LIBRARY_SUFFIX = "";
 				SDKROOT = macosx;
 			};
@@ -494,17 +502,22 @@
 					arm64,
 				);
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				ENABLE_BITCODE = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "$(SOURCE_ROOT)/../Info.plist";
 				LIBRARY_STYLE = DYNAMIC;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPController;
 				PRODUCT_NAME = VSPController;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				QMAKE_FULL_VERSION = 1.0.0;
 				QMAKE_PKGINFO_TYPEINFO = "????";
 				QMAKE_SHORT_VERSION = 1.0;
+				QTDIR = "$(HOME)/Qt/6.9.1/macos";
 				QT_LIBRARY_SUFFIX = "";
 				SDKROOT = macosx;
 			};

@@ -32,9 +32,24 @@ To build this project you have to do:
 ### Build the VSPDriver project with all frameworks inside
 
 - run bootstrap.sh first to create dependecies to your QT frameworks
-- If you want to build for older macOS and open workspace vsp_qt5_x68_64.xcworkspace
-- If you want to build for newer macOS and open workspace vsp_qt6_arm64.xcworkspace
 
+```
+# Type a script or drag a script file from your workspace to insert its path.
+# This scriptlet is only for Xcode custom build script in Build Phase
+if [ "x${BUILT_PRODUCTS_DIR}" == "x" ] ; then
+    echo "Paste the script into Xcode Build Phase - custom build script, or"
+    echo "set QTDIR=<where your QT arch root>"
+    echo "set PROJECT_ROOT=`pwd`"
+    echo 'set BUILT_PRODUCTS_DIR=${PROJECT_ROOT}/build/xcode/<Debug|Release>'
+    echo 'set PLUGINS_FOLDER_PATH=DRFXBuilder.app/Contents/PlugIns'
+    exit 1
+fi
+echo "--- INSTALL QT-PLUGINS ---"
+mkdir -p ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}
+cp -vR ${QTDIR}/PlugIns/* ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/
+rm -fR ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/permissions
+rm -fR ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/*/*.dSYM
+```
 ### Entitlements, signing and security checks
 
 You should use your own bundle IDs in targets VSPDriver and VSPClient.

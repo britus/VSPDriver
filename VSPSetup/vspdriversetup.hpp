@@ -12,15 +12,15 @@
 class VSPSETUP_EXPORT VSPDriverSetup
 {
 public:
-    VSPDriverSetup(const char* dextBundleId);
+    VSPDriverSetup(const char *dextBundleId);
     void activateDriver();
     void deactivateDriver();
 
     // override this methods to get events
-    virtual void OnDidFailWithError(uint64_t /*code*/, const char* /*message*/);
-    virtual void OnDidFinishWithResult(uint64_t /*code*/, const char* /*message*/);
+    virtual void OnDidFailWithError(uint64_t /*code*/, const char * /*message*/);
+    virtual void OnDidFinishWithResult(uint64_t /*code*/, const char * /*message*/);
     virtual void OnNeedsUserApproval();
 
 private:
-    void* _loader; // Opaque pointer to Objective-C object
+    void *_loader; // Opaque pointer to Objective-C object
 };
