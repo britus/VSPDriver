@@ -209,7 +209,7 @@ bool VSPUserClient::init()
     VSPLog(LOG_PREFIX, "init called.\n");
     
     if (!(result = super::init())) {
-        VSPErr(LOG_PREFIX, "free (super) falsed. result=%d\n", result);
+        VSPErr(LOG_PREFIX, "init (super) falsed. result=%d\n", result);
         goto finish;
     }
     

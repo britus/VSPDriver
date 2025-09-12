@@ -186,9 +186,9 @@
 		F7E7127C2E4D79F30054D8D5 /* QtQuickParticles.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711E72E4D79F30054D8D5 /* QtQuickParticles.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F7E7127D2E4D79F30054D8D5 /* QtQuickTemplates2.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711E82E4D79F30054D8D5 /* QtQuickTemplates2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F7E7127E2E4D79F30054D8D5 /* QtPdfWidgets.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711E92E4D79F30054D8D5 /* QtPdfWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712852E4D7EAA0054D8D5 /* libqcocoa.dylib in Copy QT Platform Plugins */ = {isa = PBXBuildFile; fileRef = F7E712812E4D7EA90054D8D5 /* libqcocoa.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		F7E712862E4D7EAA0054D8D5 /* libqoffscreen.dylib in Copy QT Platform Plugins */ = {isa = PBXBuildFile; fileRef = F7E712822E4D7EAA0054D8D5 /* libqoffscreen.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		F7E712872E4D7EAA0054D8D5 /* libqminimal.dylib in Copy QT Platform Plugins */ = {isa = PBXBuildFile; fileRef = F7E712832E4D7EAA0054D8D5 /* libqminimal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		F7E712852E4D7EAA0054D8D5 /* libqcocoa.dylib in -- 01 -- Copy QT Platform Plugins */ = {isa = PBXBuildFile; fileRef = F7E712812E4D7EA90054D8D5 /* libqcocoa.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		F7E712862E4D7EAA0054D8D5 /* libqoffscreen.dylib in -- 01 -- Copy QT Platform Plugins */ = {isa = PBXBuildFile; fileRef = F7E712822E4D7EAA0054D8D5 /* libqoffscreen.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		F7E712872E4D7EAA0054D8D5 /* libqminimal.dylib in -- 01 -- Copy QT Platform Plugins */ = {isa = PBXBuildFile; fileRef = F7E712832E4D7EAA0054D8D5 /* libqminimal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -408,17 +408,17 @@
 			name = "Embed Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F7E7127F2E4D7E180054D8D5 /* Copy QT Platform Plugins */ = {
+		F7E7127F2E4D7E180054D8D5 /* -- 01 -- Copy QT Platform Plugins */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = platforms;
 			dstSubfolderSpec = 13;
 			files = (
-				F7E712852E4D7EAA0054D8D5 /* libqcocoa.dylib in Copy QT Platform Plugins */,
-				F7E712862E4D7EAA0054D8D5 /* libqoffscreen.dylib in Copy QT Platform Plugins */,
-				F7E712872E4D7EAA0054D8D5 /* libqminimal.dylib in Copy QT Platform Plugins */,
+				F7E712852E4D7EAA0054D8D5 /* libqcocoa.dylib in -- 01 -- Copy QT Platform Plugins */,
+				F7E712862E4D7EAA0054D8D5 /* libqoffscreen.dylib in -- 01 -- Copy QT Platform Plugins */,
+				F7E712872E4D7EAA0054D8D5 /* libqminimal.dylib in -- 01 -- Copy QT Platform Plugins */,
 			);
-			name = "Copy QT Platform Plugins";
+			name = "-- 01 -- Copy QT Platform Plugins";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -972,8 +972,8 @@
 				8869B5072D627FCD002643D9 /* Embed Libraries */,
 				880539E62D4BAFBD00E55104 /* Resources */,
 				750497EB2DFBFCD300FF32D5 /* Copy VSP Driver DEXT */,
-				F745DF9A2E46B68B004C0C7E /* --- COPY QT PLUGINS --- */,
-				F7E7127F2E4D7E180054D8D5 /* Copy QT Platform Plugins */,
+				F745DF9A2E46B68B004C0C7E /* -- 00 -- COPY QT PLUGINS --- */,
+				F7E7127F2E4D7E180054D8D5 /* -- 01 -- Copy QT Platform Plugins */,
 			);
 			buildRules = (
 			);
@@ -1120,7 +1120,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		F745DF9A2E46B68B004C0C7E /* --- COPY QT PLUGINS --- */ = {
+		F745DF9A2E46B68B004C0C7E /* -- 00 -- COPY QT PLUGINS --- */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -1130,14 +1130,14 @@
 			);
 			inputPaths = (
 			);
-			name = "--- COPY QT PLUGINS ---";
+			name = "-- 00 -- COPY QT PLUGINS ---";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# This scriptlet is only for Xcode custom build script in Build Phase\nif [ \"x${BUILT_PRODUCTS_DIR}\" == \"x\" ] ; then\n    echo \"Paste the script into Xcode Build Phase - custom build script, or\"\n    echo \"set QTDIR=<where your QT arch root>\"\n    echo \"set PROJECT_ROOT=`pwd`\"\n    echo 'set BUILT_PRODUCTS_DIR=${PROJECT_ROOT}/build/xcode/<Debug|Release>'\n    echo 'set PLUGINS_FOLDER_PATH=DRFXBuilder.app/Contents/PlugIns'\n    exit 1\nfi\necho \"--- INSTALL QT-PLUGINS ---\"\nmkdir -p ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}\ncp -vR ${QTDIR}/PlugIns/* ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/\nrm -fR ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/permissions\nrm -fR ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/*/*.dSYM\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# This scriptlet is only for Xcode custom build script in Build Phase\nif [ \"x${BUILT_PRODUCTS_DIR}\" == \"x\" ] ; then\n    echo \"Paste the script into Xcode Build Phase - custom build script, or\"\n    echo \"set QTDIR=<where your QT arch root>\"\n    echo \"set PROJECT_ROOT=`pwd`\"\n    echo 'set BUILT_PRODUCTS_DIR=${PROJECT_ROOT}/build/xcode/<Debug|Release>'\n    echo 'set PLUGINS_FOLDER_PATH=DRFXBuilder.app/Contents/PlugIns'\n    exit 1\nfi\necho \"--- INSTALL QT-PLUGINS ---\"\nmkdir -p ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}\ncp -vR ${QTDIR}/PlugIns/* ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/\n# AppStore unsupported stuff\nrm -fR ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/permissions\nrm -fR ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/sqldrivers\nrm -fR ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/*/*.dSYM\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1216,7 +1216,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 39;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1278,7 +1278,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 39;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1526,7 +1526,7 @@
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 39;
 				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1561,7 +1561,7 @@
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 39;
 				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				FRAMEWORK_SEARCH_PATHS = (

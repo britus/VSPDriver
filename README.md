@@ -47,7 +47,9 @@ fi
 echo "--- INSTALL QT-PLUGINS ---"
 mkdir -p ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}
 cp -vR ${QTDIR}/PlugIns/* ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/
+# AppStore unsupported stuff
 rm -fR ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/permissions
+rm -fR ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/sqldrivers
 rm -fR ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/*/*.dSYM
 ```
 ### Entitlements, signing and security checks
