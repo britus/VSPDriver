@@ -1061,8 +1061,9 @@ kern_return_t VSPUserClient::enableChecks(void* reference, IOUserClientMethodArg
         goto finish;
     }
 
-    flags = request.parameter.flags;
     portId = request.parameter.link.source;
+    flags = request.parameter.flags;
+    flags &= ~portId;
     
     ret = ivars->m_parent->getPortById(portId, &portItem, sizeof(TVSPPortItem));
     if (ret != kIOReturnSuccess) {
@@ -1100,9 +1101,10 @@ kern_return_t VSPUserClient::enableTrace(void* reference, IOUserClientMethodArgu
         goto finish;
     }
 
-    flags = request.parameter.flags;
     portId = request.parameter.link.source;
-    
+    flags = request.parameter.flags;
+    flags &= ~portId;
+
     ret = ivars->m_parent->getPortById(portId, &item, sizeof(TVSPPortItem));
     if (ret != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xaa000001);
