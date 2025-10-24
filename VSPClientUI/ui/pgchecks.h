@@ -7,29 +7,30 @@
 // ********************************************************************
 #pragma once
 
-#include <QPushButton>
-#include <QWidget>
 #include <vspabstractpage.h>
 #include <vspdatamodel.h>
 #include <vspdriverclient.h>
+#include <QPushButton>
+#include <QWidget>
 
 namespace Ui {
 class PGChecks;
 }
 
-class PGChecks: public VSPAbstractPage
+class PGChecks : public VSPAbstractPage
 {
     Q_OBJECT
 
 public:
-    explicit PGChecks(QWidget* parent = nullptr);
+    explicit PGChecks(QWidget *parent = nullptr);
     ~PGChecks();
 
-    void update(TVSPControlCommand command, VSPPortListModel* portModel, VSPLinkListModel* linkModel) override;
+    void update(TVSPControlCommand command, VSPPortListModel *portModel, VSPLinkListModel *linkModel) override;
 
 protected:
     void onActionExecute() override;
 
 private:
-    Ui::PGChecks* ui;
+    Ui::PGChecks *ui;
+    int m_lastIndex;
 };

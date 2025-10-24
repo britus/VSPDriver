@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1640"
+   LastUpgradeVersion = "0610"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "878B097E357DCE03CBAB35D0"
+               BlueprintIdentifier = "617B98012BFE23494E393905"
                BuildableName = "VSPClientUI.framework"
                BlueprintName = "VSPClientUI"
                ReferencedContainer = "container:VSPClientUI.xcodeproj">
@@ -31,7 +31,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "878B097E357DCE03CBAB35D0"
+            BlueprintIdentifier = "617B98012BFE23494E393905"
             BuildableName = "VSPClientUI.framework"
             BlueprintName = "VSPClientUI"
             ReferencedContainer = "container:VSPClientUI.xcodeproj">
@@ -73,7 +73,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "878B097E357DCE03CBAB35D0"
+            BlueprintIdentifier = "617B98012BFE23494E393905"
             BuildableName = "VSPClientUI.framework"
             BlueprintName = "VSPClientUI"
             ReferencedContainer = "container:VSPClientUI.xcodeproj">
@@ -97,7 +97,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "878B097E357DCE03CBAB35D0"
+            BlueprintIdentifier = "617B98012BFE23494E393905"
             BuildableName = "VSPClientUI.framework"
             BlueprintName = "VSPClientUI"
             ReferencedContainer = "container:VSPClientUI.xcodeproj">

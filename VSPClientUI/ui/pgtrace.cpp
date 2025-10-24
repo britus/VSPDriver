@@ -8,14 +8,30 @@
 #include "ui_pgtrace.h"
 #include <pgtrace.h>
 #include <vspabstractpage.h>
+#include <vspcontroller.hpp>
+#include <QComboBox>
 
-PGTrace::PGTrace(QWidget* parent)
+PGTrace::PGTrace(QWidget *parent)
     : VSPAbstractPage(parent)
     , ui(new Ui::PGTrace)
+    , m_lastIndex(0)
 {
     ui->setupUi(this);
-
+    ui->cbPorts->setEnabled(false);
+    ui->btnUpdate->setEnabled(false);
+    ui->pnlOptions->setEnabled(false);
     connectButton(ui->btnUpdate);
+    connect(ui->cbPorts, &QComboBox::currentIndexChanged, this, [this](int index) { //
+        QVariant v = ui->cbPorts->itemData(index, Qt::UserRole);
+        if (v.isNull() || !v.isValid()) {
+            return;
+        }
+        VSPDataModel::TPortItem p = v.value<VSPDataModel::TPortItem>();
+        ui->cbxTraceRX->setChecked(p.flags & TRACE_PORT_RX);
+        ui->cbxTraceTX->setChecked(p.flags & TRACE_PORT_TX);
+        ui->cbxTraceCmd->setChecked(p.flags & TRACE_PORT_IO);
+        m_lastIndex = index;
+    });
 }
 
 PGTrace::~PGTrace()
@@ -25,24 +41,23 @@ PGTrace::~PGTrace()
 
 void PGTrace::onActionExecute()
 {
-    quint32 flags = 0;
+    quint64 flags = 0;
     if (ui->cbxTraceRX->isChecked())
-        flags |= 0x1;
+        flags |= TRACE_PORT_RX;
     if (ui->cbxTraceTX->isChecked())
-        flags |= 0x2;
+        flags |= TRACE_PORT_TX;
     if (ui->cbxTraceCmd->isChecked())
-        flags |= 0x4;
+        flags |= TRACE_PORT_IO;
 
     VSPDataModel::TPortItem port = {};
     if (ui->cbPorts->currentIndex() >= 0) {
         port = ui->cbPorts->currentData().value<VSPDataModel::TPortItem>();
+        quint64 params = (flags | port.id);
+        emit VSPAbstractPage::execute(vspControlEnableChecks, QVariant::fromValue(params));
     }
-    quint64 params = (flags << 16) | port.id;
-
-    emit VSPAbstractPage::execute(vspControlEnableChecks, QVariant::fromValue(params));
 }
 
-void PGTrace::update(TVSPControlCommand command, VSPPortListModel* portModel, VSPLinkListModel* linkModel)
+void PGTrace::update(TVSPControlCommand command, VSPPortListModel *portModel, VSPLinkListModel *linkModel)
 {
     const QIcon icon1(":/vspclient_1");
 
@@ -55,7 +70,10 @@ void PGTrace::update(TVSPControlCommand command, VSPPortListModel* portModel, VS
         ui->cbPorts->addItem(icon1, r.port.name, QVariant::fromValue(r.port));
     }
 
-    bool enab = ui->cbPorts->count() > 0;
-    ui->cbPorts->setEnabled(enab);
-    ui->btnUpdate->setEnabled(enab);
+    if (ui->cbPorts->count() > 0) {
+        emit ui->cbPorts->currentIndexChanged(m_lastIndex);
+        ui->pnlOptions->setEnabled(true);
+        ui->cbPorts->setEnabled(true);
+        ui->btnUpdate->setEnabled(true);
+    }
 }

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		E3782768C2B3E957E31B2E66 /* Qt Preprocess */ = {
+		9867D58F16BD8E41CB8E55CB /* Qt Preprocess */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 6CC3B5D2136C7CD6A5CF5A59 /* Build configuration list for PBXNativeTarget "VSPSetup" */;
 			buildPhases = (
@@ -22,29 +22,24 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		0D9A67CA623A9944063B587A /* vspdriversetup.mm in Compile Sources */ = {isa = PBXBuildFile; fileRef = 9D41A6A9996867C7733E92A1 /* vspdriversetup.mm */; settings = {ATTRIBUTES = (); }; };
-		0DDF37414C98F70ED64DAAC9 /* vsploadermodel.m in Compile Sources */ = {isa = PBXBuildFile; fileRef = BD7B2D3DDB493340E82CA8CA /* vsploadermodel.m */; settings = {ATTRIBUTES = (); }; };
-		11B325578C97B476B9FCC7BE /* vspsetup.h in Copy 'FRAMEWORK_HEADERS' Files to Bundle */ = {isa = PBXBuildFile; fileRef = AF7B64E6EAC1C6030E6B819B /* vspsetup.h */; };
+		127BC5215AB3508A3E535BB1 /* LICENSE in Copy 'LICENSE' Files to Bundle */ = {isa = PBXBuildFile; fileRef = 0B5C67BD226BA116AAAF43F2 /* LICENSE */; };
 		193F398CD8150D22F3BB6D8D /* SystemExtensions.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 79FE1737900191137056A27E /* SystemExtensions.framework */; };
-		40A59876506418F87E13D876 /* vspsetup.icns in Copy 'icons' Files to Bundle */ = {isa = PBXBuildFile; fileRef = 663FF1CE32045D7AE6461514 /* vspsetup.icns */; };
-		4AF78FD0336FB85286141EF8 /* vspsetup_global.h in Copy 'FRAMEWORK_HEADERS' Files to Bundle */ = {isa = PBXBuildFile; fileRef = A5CCAF21DDFA6B58517603B7 /* vspsetup_global.h */; };
-		50D8305D39085EA7D20F519A /* vsploadermodel.h in Copy 'FRAMEWORK_HEADERS' Files to Bundle */ = {isa = PBXBuildFile; fileRef = 1D86F40745D9702119BDD3AF /* vsploadermodel.h */; };
-		7BE13D44470D072AE3A89F6D /* LICENSE in Copy 'LICENSE' Files to Bundle */ = {isa = PBXBuildFile; fileRef = 1F0B9B01E24A0F2CF0C46501 /* LICENSE */; };
-		80A947E11A4B671E188093EA /* vspdriversetup.hpp in Copy 'FRAMEWORK_HEADERS' Files to Bundle */ = {isa = PBXBuildFile; fileRef = 2BF5FF74852EF2174093D0F9 /* vspdriversetup.hpp */; };
+		2F126BD49153E2560FD5883D /* vsploadermodel.m in Compile Sources */ = {isa = PBXBuildFile; fileRef = F27A9DE481A8FB099DA8A189 /* vsploadermodel.m */; settings = {ATTRIBUTES = (); }; };
+		322DF911C87A22604A2850F1 /* vspsetup.icns in Copy 'icons' Files to Bundle */ = {isa = PBXBuildFile; fileRef = 283AAB28CE861B5BF9013D66 /* vspsetup.icns */; };
 		8D267F2E4776F0ECA2F49DC8 /* IOKit.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = A1A67BEAA744704B29168D39 /* IOKit.framework */; };
-		91A03C3E3D6A894A6BD2AD93 /* vspsmloader.m in Compile Sources */ = {isa = PBXBuildFile; fileRef = 432299EF56681AB3146BC4CA /* vspsmloader.m */; settings = {ATTRIBUTES = (); }; };
+		B5ECA07A0FCE49EE604AC5A6 /* vspsmloader.m in Compile Sources */ = {isa = PBXBuildFile; fileRef = 2D7ADB2F6EB3572F84526889 /* vspsmloader.m */; settings = {ATTRIBUTES = (); }; };
 		D4639595C3BCF2A39D88DF6E /* SystemConfiguration.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = FF5BDAB0076F3391B219EA52 /* SystemConfiguration.framework */; };
-		EB6C73BEBF9CB25D1B30BEB1 /* vspsmloader.h in Copy 'FRAMEWORK_HEADERS' Files to Bundle */ = {isa = PBXBuildFile; fileRef = 6A79E70554800591A8001E4A /* vspsmloader.h */; };
 		F26454630C80841CBDCFE1CA /* Foundation.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = FCC237CA5AD60B9BA4447615 /* Foundation.framework */; };
 		F8B465CE34D8DF87AAE95913 /* CoreFoundation.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 4D765E1B1EA6C757220C63E7 /* CoreFoundation.framework */; };
+		FF05C29735B5078F37813B64 /* vspdriversetup.mm in Compile Sources */ = {isa = PBXBuildFile; fileRef = 47713816AB1DF2275A69FCB1 /* vspdriversetup.mm */; settings = {ATTRIBUTES = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		754A751C2E01AB3A00F6881B /* PBXContainerItemProxy */ = {
+		F79BA8202EAB87BE0051F2DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6DB9C3763D02B1415CD9D565 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = E3782768C2B3E957E31B2E66;
+			remoteGlobalIDString = 9867D58F16BD8E41CB8E55CB;
 			remoteInfo = "Qt Preprocess";
 		};
 /* End PBXContainerItemProxy section */
@@ -56,11 +51,6 @@
 			dstPath = Headers;
 			dstSubfolderSpec = 1;
 			files = (
-				4AF78FD0336FB85286141EF8 /* vspsetup_global.h in Copy 'FRAMEWORK_HEADERS' Files to Bundle */,
-				80A947E11A4B671E188093EA /* vspdriversetup.hpp in Copy 'FRAMEWORK_HEADERS' Files to Bundle */,
-				50D8305D39085EA7D20F519A /* vsploadermodel.h in Copy 'FRAMEWORK_HEADERS' Files to Bundle */,
-				EB6C73BEBF9CB25D1B30BEB1 /* vspsmloader.h in Copy 'FRAMEWORK_HEADERS' Files to Bundle */,
-				11B325578C97B476B9FCC7BE /* vspsetup.h in Copy 'FRAMEWORK_HEADERS' Files to Bundle */,
 			);
 			name = "Copy 'FRAMEWORK_HEADERS' Files to Bundle";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -71,7 +61,7 @@
 			dstPath = Resources;
 			dstSubfolderSpec = 1;
 			files = (
-				40A59876506418F87E13D876 /* vspsetup.icns in Copy 'icons' Files to Bundle */,
+				322DF911C87A22604A2850F1 /* vspsetup.icns in Copy 'icons' Files to Bundle */,
 			);
 			name = "Copy 'icons' Files to Bundle";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -82,7 +72,7 @@
 			dstPath = Resources;
 			dstSubfolderSpec = 1;
 			files = (
-				7BE13D44470D072AE3A89F6D /* LICENSE in Copy 'LICENSE' Files to Bundle */,
+				127BC5215AB3508A3E535BB1 /* LICENSE in Copy 'LICENSE' Files to Bundle */,
 			);
 			name = "Copy 'LICENSE' Files to Bundle";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -90,23 +80,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1D86F40745D9702119BDD3AF /* vsploadermodel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vsploadermodel.h; path = /Users/eofmc/EoF/VSPDriver/VSPSetup/vsploadermodel.h; sourceTree = "<absolute>"; };
-		1F0B9B01E24A0F2CF0C46501 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = /Users/eofmc/EoF/VSPDriver/VSPSetup/LICENSE; sourceTree = "<absolute>"; };
-		2BF5FF74852EF2174093D0F9 /* vspdriversetup.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = vspdriversetup.hpp; path = /Users/eofmc/EoF/VSPDriver/VSPSetup/vspdriversetup.hpp; sourceTree = "<absolute>"; };
-		432299EF56681AB3146BC4CA /* vspsmloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = vspsmloader.m; path = /Users/eofmc/EoF/VSPDriver/VSPSetup/vspsmloader.m; sourceTree = "<absolute>"; };
+		0B5C67BD226BA116AAAF43F2 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = /Users/eofmc/EoF/VSPDriver/VSPSetup/LICENSE; sourceTree = "<absolute>"; };
+		283AAB28CE861B5BF9013D66 /* vspsetup.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = vspsetup.icns; path = /Users/eofmc/EoF/VSPDriver/VSPSetup/vspsetup.icns; sourceTree = "<absolute>"; };
+		2D7ADB2F6EB3572F84526889 /* vspsmloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = vspsmloader.m; path = /Users/eofmc/EoF/VSPDriver/VSPSetup/vspsmloader.m; sourceTree = "<absolute>"; };
+		47713816AB1DF2275A69FCB1 /* vspdriversetup.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = vspdriversetup.mm; path = /Users/eofmc/EoF/VSPDriver/VSPSetup/vspdriversetup.mm; sourceTree = "<absolute>"; };
 		4D765E1B1EA6C757220C63E7 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
-		663FF1CE32045D7AE6461514 /* vspsetup.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = vspsetup.icns; path = /Users/eofmc/EoF/VSPDriver/VSPSetup/vspsetup.icns; sourceTree = "<absolute>"; };
-		6A79E70554800591A8001E4A /* vspsmloader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vspsmloader.h; path = /Users/eofmc/EoF/VSPDriver/VSPSetup/vspsmloader.h; sourceTree = "<absolute>"; };
-		7600109D4BC81DAA51E5537E /* .qmake.stash */ = {isa = PBXFileReference; lastKnownFileType = text; name = .qmake.stash; path = /Users/eofmc/EoF/VSPDriver/VSPSetup/xcode/.qmake.stash; sourceTree = "<absolute>"; };
+		5B617C73983C85F86DA8EC4D /* vspsetup_global.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vspsetup_global.h; path = /Users/eofmc/EoF/VSPDriver/VSPSetup/vspsetup_global.h; sourceTree = "<absolute>"; };
+		70D4ACE1598905D92F869504 /* VSPSetup.pro */ = {isa = PBXFileReference; lastKnownFileType = text; name = VSPSetup.pro; path = /Users/eofmc/EoF/VSPDriver/VSPSetup/xcode/VSPSetup.pro; sourceTree = "<absolute>"; };
 		79FE1737900191137056A27E /* SystemExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemExtensions.framework; path = /System/Library/Frameworks/SystemExtensions.framework; sourceTree = "<absolute>"; };
-		9D41A6A9996867C7733E92A1 /* vspdriversetup.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = vspdriversetup.mm; path = /Users/eofmc/EoF/VSPDriver/VSPSetup/vspdriversetup.mm; sourceTree = "<absolute>"; };
+		887D9896A3AAFE401317208E /* VSPSetup.pro */ = {isa = PBXFileReference; lastKnownFileType = text; name = VSPSetup.pro; path = /Users/eofmc/EoF/VSPDriver/VSPSetup/VSPSetup.pro; sourceTree = "<absolute>"; };
 		A1A67BEAA744704B29168D39 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
-		A5CCAF21DDFA6B58517603B7 /* vspsetup_global.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vspsetup_global.h; path = /Users/eofmc/EoF/VSPDriver/VSPSetup/vspsetup_global.h; sourceTree = "<absolute>"; };
-		AF7B64E6EAC1C6030E6B819B /* vspsetup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = vspsetup.h; path = /Users/eofmc/EoF/VSPDriver/VSPSetup/vspsetup.h; sourceTree = "<absolute>"; };
-		B7B17107F7A5382D9B6B00AF /* VSPSetup.pro */ = {isa = PBXFileReference; lastKnownFileType = text; name = VSPSetup.pro; path = /Users/eofmc/EoF/VSPDriver/VSPSetup/xcode/VSPSetup.pro; sourceTree = "<absolute>"; };
-		BD7B2D3DDB493340E82CA8CA /* vsploadermodel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = vsploadermodel.m; path = /Users/eofmc/EoF/VSPDriver/VSPSetup/vsploadermodel.m; sourceTree = "<absolute>"; };
-		EE2A4CD9B9B7204E80822FE7 /* VSPSetup.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VSPSetup.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F4BF90731944CD60D41DEAE1 /* VSPSetup.pro */ = {isa = PBXFileReference; lastKnownFileType = text; name = VSPSetup.pro; path = /Users/eofmc/EoF/VSPDriver/VSPSetup/VSPSetup.pro; sourceTree = "<absolute>"; };
+		E10721C581C20806CB29DC7E /* VSPSetup.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VSPSetup.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F27A9DE481A8FB099DA8A189 /* vsploadermodel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = vsploadermodel.m; path = /Users/eofmc/EoF/VSPDriver/VSPSetup/vsploadermodel.m; sourceTree = "<absolute>"; };
 		FCC237CA5AD60B9BA4447615 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		FF5BDAB0076F3391B219EA52 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -131,8 +116,7 @@
 		1E787E9E7DB10CDCD7826E5F /* xcode */ = {
 			isa = PBXGroup;
 			children = (
-				B7B17107F7A5382D9B6B00AF /* VSPSetup.pro */,
-				7600109D4BC81DAA51E5537E /* .qmake.stash */,
+				70D4ACE1598905D92F869504 /* VSPSetup.pro */,
 			);
 			name = xcode;
 			sourceTree = "<group>";
@@ -140,9 +124,10 @@
 		2EB56BE3C2D93CDAB0C52E67 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				BD7B2D3DDB493340E82CA8CA /* vsploadermodel.m */,
-				432299EF56681AB3146BC4CA /* vspsmloader.m */,
-				9D41A6A9996867C7733E92A1 /* vspdriversetup.mm */,
+				F27A9DE481A8FB099DA8A189 /* vsploadermodel.m */,
+				2D7ADB2F6EB3572F84526889 /* vspsmloader.m */,
+				47713816AB1DF2275A69FCB1 /* vspdriversetup.mm */,
+				5B617C73983C85F86DA8EC4D /* vspsetup_global.h */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -151,7 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				1E787E9E7DB10CDCD7826E5F /* xcode */,
-				F4BF90731944CD60D41DEAE1 /* VSPSetup.pro */,
+				887D9896A3AAFE401317208E /* VSPSetup.pro */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -159,13 +144,8 @@
 		858FCAB0EB1F29CF8B07677C /* Bundle Data */ = {
 			isa = PBXGroup;
 			children = (
-				A5CCAF21DDFA6B58517603B7 /* vspsetup_global.h */,
-				2BF5FF74852EF2174093D0F9 /* vspdriversetup.hpp */,
-				1D86F40745D9702119BDD3AF /* vsploadermodel.h */,
-				6A79E70554800591A8001E4A /* vspsmloader.h */,
-				AF7B64E6EAC1C6030E6B819B /* vspsetup.h */,
-				1F0B9B01E24A0F2CF0C46501 /* LICENSE */,
-				663FF1CE32045D7AE6461514 /* vspsetup.icns */,
+				0B5C67BD226BA116AAAF43F2 /* LICENSE */,
+				283AAB28CE861B5BF9013D66 /* vspsetup.icns */,
 			);
 			name = "Bundle Data";
 			sourceTree = "<group>";
@@ -197,7 +177,7 @@
 		FE0A091FDBFB3E9C31B7A1BD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EE2A4CD9B9B7204E80822FE7 /* VSPSetup.framework */,
+				E10721C581C20806CB29DC7E /* VSPSetup.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -205,7 +185,7 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BA4CAC41205C9B966CB5498A /* VSPSetup */ = {
+		83A42217B8BF57161E7DD4FF /* VSPSetup */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6CC3B5D2136C7CD6A5CF5A59 /* Build configuration list for PBXNativeTarget "VSPSetup" */;
 			buildPhases = (
@@ -218,11 +198,11 @@
 			buildRules = (
 			);
 			dependencies = (
-				AEEC0AB7CD63A311C6419D66 /* PBXTargetDependency */,
+				F2795AD760A6EDFA58880DA7 /* PBXTargetDependency */,
 			);
 			name = VSPSetup;
 			productName = VSPSetup;
-			productReference = EE2A4CD9B9B7204E80822FE7 /* VSPSetup.framework */;
+			productReference = E10721C581C20806CB29DC7E /* VSPSetup.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -231,7 +211,6 @@
 		6DB9C3763D02B1415CD9D565 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = YES;
 			};
 			buildConfigurationList = DAC4C1AA5EDEA1C85E9CA5E6 /* Build configuration list for PBXProject "VSPSetup" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -246,8 +225,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BA4CAC41205C9B966CB5498A /* VSPSetup */,
-				E3782768C2B3E957E31B2E66 /* Qt Preprocess */,
+				83A42217B8BF57161E7DD4FF /* VSPSetup */,
+				9867D58F16BD8E41CB8E55CB /* Qt Preprocess */,
 			);
 		};
 /* End PBXProject section */
@@ -265,7 +244,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "make -C ${HOME}/EoF/VSPDriver/VSPSetup/xcode -f VSPSetup.xcodeproj/qt_makeqmake.mak\n";
+			shellScript = "make -C /Users/eofmc/EoF/VSPDriver/VSPSetup/xcode -f VSPSetup.xcodeproj/qt_makeqmake.mak";
 			showEnvVarsInLog = 0;
 		};
 		7EF0942E79C014DCEC8976BC /* Qt Preprocessors */ = {
@@ -281,7 +260,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "make -C ${HOME}/EoF/VSPDriver/VSPSetup/xcode -f VSPSetup.xcodeproj/qt_preprocess.mak\n";
+			shellScript = "make -C /Users/eofmc/EoF/VSPDriver/VSPSetup/xcode -f VSPSetup.xcodeproj/qt_preprocess.mak";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -291,9 +270,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0DDF37414C98F70ED64DAAC9 /* vsploadermodel.m in Compile Sources */,
-				91A03C3E3D6A894A6BD2AD93 /* vspsmloader.m in Compile Sources */,
-				0D9A67CA623A9944063B587A /* vspdriversetup.mm in Compile Sources */,
+				2F126BD49153E2560FD5883D /* vsploadermodel.m in Compile Sources */,
+				B5ECA07A0FCE49EE604AC5A6 /* vspsmloader.m in Compile Sources */,
+				FF05C29735B5078F37813B64 /* vspdriversetup.mm in Compile Sources */,
 			);
 			name = "Compile Sources";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -301,10 +280,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		AEEC0AB7CD63A311C6419D66 /* PBXTargetDependency */ = {
+		F2795AD760A6EDFA58880DA7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E3782768C2B3E957E31B2E66 /* Qt Preprocess */;
-			targetProxy = 754A751C2E01AB3A00F6881B /* PBXContainerItemProxy */;
+			target = 9867D58F16BD8E41CB8E55CB /* Qt Preprocess */;
+			targetProxy = F79BA8202EAB87BE0051F2DC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -321,7 +300,7 @@
 					x86_64,
 					arm64,
 				);
-				CC = /Library/Developer/CommandLineTools/usr/bin/clang;
+				CC = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
@@ -334,16 +313,16 @@
 					../../VSPSetup,
 					.,
 					../../VSPSetup,
-					"$(HOME)/Qt/6.9.1/macos/mkspecs/macx-clang",
+					"../../../../Qt/6.10.0/macos/mkspecs/macx-clang",
 				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "";
-				LDPLUSPLUS = "/Library/Developer/CommandLineTools/usr/bin/clang++";
+				LDPLUSPLUS = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++";
 				LIBRARY_SEARCH_PATHS = /System/Library/Frameworks/;
-				MACOSX_DEPLOYMENT_TARGET = 12.2;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				OTHER_CFLAGS = (
 					"-pipe",
-					"-mmacosx-version-min=12.2",
+					"-mmacosx-version-min=13.5",
 					"-O2",
 					"-Wall",
 					"-Wextra",
@@ -354,7 +333,7 @@
 				OTHER_CPLUSPLUSFLAGS = (
 					"-pipe",
 					"-stdlib=libc++",
-					"-mmacosx-version-min=12.2",
+					"-mmacosx-version-min=13.5",
 					"-fno-omit-frame-pointer",
 					"-funwind-tables",
 					"-ggdb3",
@@ -381,14 +360,13 @@
 					"-dead_strip",
 					"-liconv",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPSetup;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.eof.tools.RoccatTyon.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = VSPSetup;
 				QMAKE_FULL_VERSION = 1.0.0;
 				QMAKE_PKGINFO_TYPEINFO = "????";
 				QMAKE_SHORT_VERSION = 1.0;
-				QTDIR = "$(HOME)/Qt/6.9.1/macos";
 				QT_LIBRARY_SUFFIX = "";
-				SDKROOT = macosx;
+				SDKROOT = macosx26.0;
 				SYMROOT = "$(PROJECT_DIR)";
 			};
 			name = Release;
@@ -405,7 +383,7 @@
 					x86_64,
 					arm64,
 				);
-				CC = /Library/Developer/CommandLineTools/usr/bin/clang;
+				CC = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
@@ -419,17 +397,17 @@
 					../../VSPSetup,
 					.,
 					../../VSPSetup,
-					"../../../../Qt/6.9.1/macos/mkspecs/macx-clang",
+					"../../../../Qt/6.10.0/macos/mkspecs/macx-clang",
 				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "";
-				LDPLUSPLUS = "/Library/Developer/CommandLineTools/usr/bin/clang++";
+				LDPLUSPLUS = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++";
 				LIBRARY_SEARCH_PATHS = /System/Library/Frameworks/;
-				MACOSX_DEPLOYMENT_TARGET = 12.2;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-pipe",
-					"-mmacosx-version-min=12.2",
+					"-mmacosx-version-min=13.5",
 					"-O2",
 					"-Wall",
 					"-Wextra",
@@ -440,7 +418,7 @@
 				OTHER_CPLUSPLUSFLAGS = (
 					"-pipe",
 					"-stdlib=libc++",
-					"-mmacosx-version-min=12.2",
+					"-mmacosx-version-min=13.5",
 					"-fno-omit-frame-pointer",
 					"-funwind-tables",
 					"-ggdb3",
@@ -467,14 +445,13 @@
 					"-dead_strip",
 					"-liconv",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPSetup;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.eof.tools.RoccatTyon.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = VSPSetup;
 				QMAKE_FULL_VERSION = 1.0.0;
 				QMAKE_PKGINFO_TYPEINFO = "????";
 				QMAKE_SHORT_VERSION = 1.0;
-				QTDIR = "$(HOME)/Qt/6.9.1/macos";
 				QT_LIBRARY_SUFFIX = "";
-				SDKROOT = macosx;
+				SDKROOT = macosx26.0;
 				SYMROOT = "$(PROJECT_DIR)";
 			};
 			name = Debug;
@@ -482,58 +459,46 @@
 		6666AA5E688052234F6758D8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				"ARCHS[sdk=macosx*]" = (
 					x86_64,
 					arm64,
 				);
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = "$(SOURCE_ROOT)/../Info.plist";
 				LIBRARY_STYLE = DYNAMIC;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPSetup;
 				PRODUCT_NAME = VSPSetup;
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				QMAKE_FULL_VERSION = 1.0.0;
 				QMAKE_PKGINFO_TYPEINFO = "????";
 				QMAKE_SHORT_VERSION = 1.0;
-				QTDIR = "$(HOME)/Qt/6.9.1/macos";
 				QT_LIBRARY_SUFFIX = "";
-				SDKROOT = macosx;
+				SDKROOT = macosx26.0;
 			};
 			name = Release;
 		};
 		77418F46922677BB04ED38DD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				"ARCHS[sdk=macosx*]" = (
 					x86_64,
 					arm64,
 				);
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				ENABLE_BITCODE = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				INFOPLIST_FILE = "$(SOURCE_ROOT)/../Info.plist";
 				LIBRARY_STYLE = DYNAMIC;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPSetup;
 				PRODUCT_NAME = VSPSetup;
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				QMAKE_FULL_VERSION = 1.0.0;
 				QMAKE_PKGINFO_TYPEINFO = "????";
 				QMAKE_SHORT_VERSION = 1.0;
-				QTDIR = "$(HOME)/Qt/6.9.1/macos";
 				QT_LIBRARY_SUFFIX = "";
-				SDKROOT = macosx;
+				SDKROOT = macosx26.0;
 			};
 			name = Debug;
 		};

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1640"
+   LastUpgradeVersion = "0610"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BA4CAC41205C9B966CB5498A"
+               BlueprintIdentifier = "83A42217B8BF57161E7DD4FF"
                BuildableName = "VSPSetup.framework"
                BlueprintName = "VSPSetup"
                ReferencedContainer = "container:VSPSetup.xcodeproj">
@@ -31,7 +31,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "BA4CAC41205C9B966CB5498A"
+            BlueprintIdentifier = "83A42217B8BF57161E7DD4FF"
             BuildableName = "VSPSetup.framework"
             BlueprintName = "VSPSetup"
             ReferencedContainer = "container:VSPSetup.xcodeproj">
@@ -73,7 +73,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "BA4CAC41205C9B966CB5498A"
+            BlueprintIdentifier = "83A42217B8BF57161E7DD4FF"
             BuildableName = "VSPSetup.framework"
             BlueprintName = "VSPSetup"
             ReferencedContainer = "container:VSPSetup.xcodeproj">
@@ -97,7 +97,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "BA4CAC41205C9B966CB5498A"
+            BlueprintIdentifier = "83A42217B8BF57161E7DD4FF"
             BuildableName = "VSPSetup.framework"
             BlueprintName = "VSPSetup"
             ReferencedContainer = "container:VSPSetup.xcodeproj">
