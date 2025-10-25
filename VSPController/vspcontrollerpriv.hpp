@@ -66,7 +66,7 @@ private:
 
     // set DEXT driver class name specified by DEXT's Info.plist
     // section IOKitPersonalities
-    inline bool SetDextIdentifier(const char *name);
+    inline bool SetDextClassName(const char *name);
     inline bool UserClientSetup(void *refcon);
     inline void UserClientTeardown(void);
     inline bool DoAsyncCall(TVSPControllerData *input);

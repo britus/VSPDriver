@@ -151,7 +151,7 @@ public:
     bool UnlinkPorts(const uint8_t source, const uint8_t target);
     bool EnableChecks(const uint8_t port, const uint64_t flags = 0);
     bool EnableTrace(const uint8_t port, const uint64_t flags = 0);
-    bool SetDextIdentifier(const char *name);
+    bool SetDextClassName(const char *name);
     bool SendData(const TVSPControllerData &data);
     const TVSPSystemError GetSystemError(int error) const;
 

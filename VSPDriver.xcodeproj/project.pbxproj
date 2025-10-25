@@ -46,54 +46,6 @@
 		88F5D9402D59E933007A6E1F /* VSPDriverClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88F5D93F2D59E933007A6E1F /* VSPDriverClient.cpp */; };
 		F75E46EA2E46DB6900632BF4 /* qt.conf in Resources */ = {isa = PBXBuildFile; fileRef = F75E46E92E46DB6300632BF4 /* qt.conf */; };
 		F79BA82E2EAB8F590051F2DC /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F79BA82D2EAB8F590051F2DC /* AppKit.framework */; };
-		F7CF332E2EAB96CC000F8397 /* libqminimal.dylib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33292EAB96CC000F8397 /* libqminimal.dylib */; };
-		F7CF332F2EAB96CC000F8397 /* libqoffscreen.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = F7CF332C2EAB96CC000F8397 /* libqoffscreen.dylib.dSYM */; };
-		F7CF33302EAB96CC000F8397 /* libqoffscreen.dylib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF332B2EAB96CC000F8397 /* libqoffscreen.dylib */; };
-		F7CF33312EAB96CC000F8397 /* libqminimal.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = F7CF332A2EAB96CC000F8397 /* libqminimal.dylib.dSYM */; };
-		F7CF33322EAB96CC000F8397 /* libqcocoa.dylib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33272EAB96CC000F8397 /* libqcocoa.dylib */; };
-		F7CF33332EAB96CC000F8397 /* libqcocoa.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33282EAB96CC000F8397 /* libqcocoa.dylib.dSYM */; };
-		F7CF33372EAB96E1000F8397 /* libqtsensors_generic.dylib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33342EAB96E1000F8397 /* libqtsensors_generic.dylib */; };
-		F7CF33382EAB96E1000F8397 /* libqtsensors_generic.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33352EAB96E1000F8397 /* libqtsensors_generic.dylib.dSYM */; };
-		F7CF333C2EAB96F7000F8397 /* libqapplenetworkinformation.dylib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33392EAB96F7000F8397 /* libqapplenetworkinformation.dylib */; };
-		F7CF333D2EAB96F7000F8397 /* libqapplenetworkinformation.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = F7CF333A2EAB96F7000F8397 /* libqapplenetworkinformation.dylib.dSYM */; };
-		F7CF33412EAB9701000F8397 /* libqmacstyle.dylib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF333E2EAB9701000F8397 /* libqmacstyle.dylib */; };
-		F7CF33422EAB9701000F8397 /* libqmacstyle.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = F7CF333F2EAB9701000F8397 /* libqmacstyle.dylib.dSYM */; };
-		F7CF334A2EAB970B000F8397 /* libqcertonlybackend.dylib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33432EAB970B000F8397 /* libqcertonlybackend.dylib */; };
-		F7CF334B2EAB970B000F8397 /* libqopensslbackend.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33462EAB970B000F8397 /* libqopensslbackend.dylib.dSYM */; };
-		F7CF334C2EAB970B000F8397 /* libqcertonlybackend.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33442EAB970B000F8397 /* libqcertonlybackend.dylib.dSYM */; };
-		F7CF334D2EAB970B000F8397 /* libqsecuretransportbackend.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33482EAB970B000F8397 /* libqsecuretransportbackend.dylib.dSYM */; };
-		F7CF334E2EAB970B000F8397 /* libqopensslbackend.dylib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33452EAB970B000F8397 /* libqopensslbackend.dylib */; };
-		F7CF334F2EAB970B000F8397 /* libqsecuretransportbackend.dylib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33472EAB970B000F8397 /* libqsecuretransportbackend.dylib */; };
-		F7CF33532EAB9728000F8397 /* libqsvgicon.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33512EAB9728000F8397 /* libqsvgicon.dylib.dSYM */; };
-		F7CF33542EAB9728000F8397 /* libqsvgicon.dylib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33502EAB9728000F8397 /* libqsvgicon.dylib */; };
-		F7CF336E2EAB9734000F8397 /* libqwebp.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = F7CF336C2EAB9734000F8397 /* libqwebp.dylib.dSYM */; };
-		F7CF336F2EAB9734000F8397 /* libqgif.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33562EAB9734000F8397 /* libqgif.dylib.dSYM */; };
-		F7CF33702EAB9734000F8397 /* libqicns.dylib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33572EAB9734000F8397 /* libqicns.dylib */; };
-		F7CF33712EAB9734000F8397 /* libqpdf.dylib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33612EAB9734000F8397 /* libqpdf.dylib */; };
-		F7CF33722EAB9734000F8397 /* libqpdf.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33622EAB9734000F8397 /* libqpdf.dylib.dSYM */; };
-		F7CF33732EAB9734000F8397 /* libqwbmp.dylib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33692EAB9734000F8397 /* libqwbmp.dylib */; };
-		F7CF33742EAB9734000F8397 /* libqwebp.dylib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF336B2EAB9734000F8397 /* libqwebp.dylib */; };
-		F7CF33752EAB9734000F8397 /* libqtiff.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33682EAB9734000F8397 /* libqtiff.dylib.dSYM */; };
-		F7CF33762EAB9734000F8397 /* libqicns.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33582EAB9734000F8397 /* libqicns.dylib.dSYM */; };
-		F7CF33772EAB9734000F8397 /* libqtiff.dylib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33672EAB9734000F8397 /* libqtiff.dylib */; };
-		F7CF33782EAB9734000F8397 /* libqgif.dylib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33552EAB9734000F8397 /* libqgif.dylib */; };
-		F7CF33792EAB9734000F8397 /* libqmacheif.dylib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF335D2EAB9734000F8397 /* libqmacheif.dylib */; };
-		F7CF337A2EAB9734000F8397 /* libqjpeg.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = F7CF335C2EAB9734000F8397 /* libqjpeg.dylib.dSYM */; };
-		F7CF337B2EAB9734000F8397 /* libqwbmp.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = F7CF336A2EAB9734000F8397 /* libqwbmp.dylib.dSYM */; };
-		F7CF337C2EAB9734000F8397 /* libqtga.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33662EAB9734000F8397 /* libqtga.dylib.dSYM */; };
-		F7CF337D2EAB9734000F8397 /* libqsvg.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33642EAB9734000F8397 /* libqsvg.dylib.dSYM */; };
-		F7CF337E2EAB9734000F8397 /* libqico.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = F7CF335A2EAB9734000F8397 /* libqico.dylib.dSYM */; };
-		F7CF337F2EAB9734000F8397 /* libqjpeg.dylib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF335B2EAB9734000F8397 /* libqjpeg.dylib */; };
-		F7CF33802EAB9734000F8397 /* libqsvg.dylib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33632EAB9734000F8397 /* libqsvg.dylib */; };
-		F7CF33812EAB9734000F8397 /* libqico.dylib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33592EAB9734000F8397 /* libqico.dylib */; };
-		F7CF33822EAB9734000F8397 /* libqmacjp2.dylib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF335F2EAB9734000F8397 /* libqmacjp2.dylib */; };
-		F7CF33832EAB9734000F8397 /* libqmacjp2.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33602EAB9734000F8397 /* libqmacjp2.dylib.dSYM */; };
-		F7CF33842EAB9734000F8397 /* libqmacheif.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = F7CF335E2EAB9734000F8397 /* libqmacheif.dylib.dSYM */; };
-		F7CF33852EAB9734000F8397 /* libqtga.dylib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33652EAB9734000F8397 /* libqtga.dylib */; };
-		F7CF33892EAB9747000F8397 /* libqapplenetworkinformation.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33872EAB9747000F8397 /* libqapplenetworkinformation.dylib.dSYM */; };
-		F7CF338A2EAB9747000F8397 /* libqapplenetworkinformation.dylib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF33862EAB9747000F8397 /* libqapplenetworkinformation.dylib */; };
-		F7CF338E2EAB9762000F8397 /* libqtvirtualkeyboardplugin.dylib in Resources */ = {isa = PBXBuildFile; fileRef = F7CF338B2EAB9762000F8397 /* libqtvirtualkeyboardplugin.dylib */; };
-		F7CF338F2EAB9762000F8397 /* libqtvirtualkeyboardplugin.dylib.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = F7CF338C2EAB9762000F8397 /* libqtvirtualkeyboardplugin.dylib.dSYM */; };
 		F7CF33B22EAB9937000F8397 /* QtConcurrent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33922EAB9849000F8397 /* QtConcurrent.framework */; };
 		F7CF33B32EAB9937000F8397 /* QtConcurrent.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF33922EAB9849000F8397 /* QtConcurrent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F7CF33B42EAB9939000F8397 /* QtCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33902EAB983B000F8397 /* QtCore.framework */; };
@@ -929,64 +881,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7CF332E2EAB96CC000F8397 /* libqminimal.dylib in Resources */,
-				F7CF332F2EAB96CC000F8397 /* libqoffscreen.dylib.dSYM in Resources */,
-				F7CF33302EAB96CC000F8397 /* libqoffscreen.dylib in Resources */,
-				F7CF33312EAB96CC000F8397 /* libqminimal.dylib.dSYM in Resources */,
-				F7CF33322EAB96CC000F8397 /* libqcocoa.dylib in Resources */,
-				F7CF33332EAB96CC000F8397 /* libqcocoa.dylib.dSYM in Resources */,
-				F7CF336E2EAB9734000F8397 /* libqwebp.dylib.dSYM in Resources */,
-				F7CF336F2EAB9734000F8397 /* libqgif.dylib.dSYM in Resources */,
-				F7CF33892EAB9747000F8397 /* libqapplenetworkinformation.dylib.dSYM in Resources */,
-				F7CF338A2EAB9747000F8397 /* libqapplenetworkinformation.dylib in Resources */,
-				F7CF33702EAB9734000F8397 /* libqicns.dylib in Resources */,
-				F7CF33712EAB9734000F8397 /* libqpdf.dylib in Resources */,
-				F7CF33722EAB9734000F8397 /* libqpdf.dylib.dSYM in Resources */,
-				F7CF33732EAB9734000F8397 /* libqwbmp.dylib in Resources */,
-				F7CF33742EAB9734000F8397 /* libqwebp.dylib in Resources */,
-				F7CF33752EAB9734000F8397 /* libqtiff.dylib.dSYM in Resources */,
-				F7CF33762EAB9734000F8397 /* libqicns.dylib.dSYM in Resources */,
-				F7CF33772EAB9734000F8397 /* libqtiff.dylib in Resources */,
-				F7CF33782EAB9734000F8397 /* libqgif.dylib in Resources */,
-				F7CF33792EAB9734000F8397 /* libqmacheif.dylib in Resources */,
-				F7CF337A2EAB9734000F8397 /* libqjpeg.dylib.dSYM in Resources */,
-				F7CF337B2EAB9734000F8397 /* libqwbmp.dylib.dSYM in Resources */,
-				F7CF337C2EAB9734000F8397 /* libqtga.dylib.dSYM in Resources */,
-				F7CF337D2EAB9734000F8397 /* libqsvg.dylib.dSYM in Resources */,
-				F7CF337E2EAB9734000F8397 /* libqico.dylib.dSYM in Resources */,
-				F7CF337F2EAB9734000F8397 /* libqjpeg.dylib in Resources */,
-				F7CF33802EAB9734000F8397 /* libqsvg.dylib in Resources */,
-				F7CF33812EAB9734000F8397 /* libqico.dylib in Resources */,
-				F7CF33822EAB9734000F8397 /* libqmacjp2.dylib in Resources */,
-				F7CF33832EAB9734000F8397 /* libqmacjp2.dylib.dSYM in Resources */,
-				F7CF33842EAB9734000F8397 /* libqmacheif.dylib.dSYM in Resources */,
-				F7CF33852EAB9734000F8397 /* libqtga.dylib in Resources */,
-				F7CF33372EAB96E1000F8397 /* libqtsensors_generic.dylib in Resources */,
-				F7CF33382EAB96E1000F8397 /* libqtsensors_generic.dylib.dSYM in Resources */,
-				F7CF334A2EAB970B000F8397 /* libqcertonlybackend.dylib in Resources */,
-				F7CF334B2EAB970B000F8397 /* libqopensslbackend.dylib.dSYM in Resources */,
-				F7CF334C2EAB970B000F8397 /* libqcertonlybackend.dylib.dSYM in Resources */,
-				F7CF334D2EAB970B000F8397 /* libqsecuretransportbackend.dylib.dSYM in Resources */,
-				F7CF334E2EAB970B000F8397 /* libqopensslbackend.dylib in Resources */,
-				F7CF334F2EAB970B000F8397 /* libqsecuretransportbackend.dylib in Resources */,
 				88698B912D76DDD70008EF6B /* vspclient_16x16@2x.png in Resources */,
 				88698B922D76DDD70008EF6B /* vspclient_128x128.png in Resources */,
 				88698B932D76DDD70008EF6B /* vspclient_256x256@2x.png in Resources */,
 				88698B942D76DDD70008EF6B /* vspclient_512x512@2x.png in Resources */,
-				F7CF333C2EAB96F7000F8397 /* libqapplenetworkinformation.dylib in Resources */,
-				F7CF333D2EAB96F7000F8397 /* libqapplenetworkinformation.dylib.dSYM in Resources */,
 				88698B952D76DDD70008EF6B /* vspclient_32x32.png in Resources */,
 				88698B962D76DDD70008EF6B /* vspclient_32x32@2x.png in Resources */,
-				F7CF33532EAB9728000F8397 /* libqsvgicon.dylib.dSYM in Resources */,
-				F7CF33542EAB9728000F8397 /* libqsvgicon.dylib in Resources */,
 				88698B972D76DDD70008EF6B /* vspclient_256x256.png in Resources */,
 				88698B982D76DDD70008EF6B /* vspclient_128x128@2x.png in Resources */,
 				88698B992D76DDD70008EF6B /* vspclient_512x512.png in Resources */,
-				F7CF338E2EAB9762000F8397 /* libqtvirtualkeyboardplugin.dylib in Resources */,
-				F7CF338F2EAB9762000F8397 /* libqtvirtualkeyboardplugin.dylib.dSYM in Resources */,
 				88698B9A2D76DDD70008EF6B /* vspclient_16x16.png in Resources */,
-				F7CF33412EAB9701000F8397 /* libqmacstyle.dylib in Resources */,
-				F7CF33422EAB9701000F8397 /* libqmacstyle.dylib.dSYM in Resources */,
 				88DA7BA92D532C6800C8F759 /* LICENSE in Resources */,
 				880539ED2D4BAFBF00E55104 /* Assets.xcassets in Resources */,
 				F75E46EA2E46DB6900632BF4 /* qt.conf in Resources */,
@@ -1101,10 +1005,20 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 52;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = YES;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_USER_SELECTED_FILES = readwrite;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1163,10 +1077,20 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 52;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = YES;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_USER_SELECTED_FILES = readwrite;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1411,8 +1335,8 @@
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 40;
-				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
+				CURRENT_PROJECT_VERSION = 52;
+				DRIVERKIT_DEPLOYMENT_TARGET = 23.6;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1446,8 +1370,8 @@
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 40;
-				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
+				CURRENT_PROJECT_VERSION = 52;
+				DRIVERKIT_DEPLOYMENT_TARGET = 23.6;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

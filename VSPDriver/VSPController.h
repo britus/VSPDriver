@@ -32,17 +32,30 @@ class VSPSerialPort;
 #define CHECK_PARITY    BIT(22)
 #define CHECK_FLOWCTRL  BIT(23)
 
-typedef struct {
-    VSPSerialPort* port;        // object instance
-    uint8_t        id;          // port item id
-    uint64_t       flags;       // Trace and check flags
-} TVSPPortItem;
+extern "C" {
+    typedef struct {
+        VSPSerialPort* port;        // object instance
+        uint8_t        id;          // port item id
+        uint64_t       flags;       // Trace and check flags
+    } TVSPPortItem;
 
-typedef struct {
-    TVSPPortItem source;        // first port
-    TVSPPortItem target;        // second port
-    uint8_t      id;            // link item id
-} TVSPLinkItem;
+    typedef struct {
+        TVSPPortItem source;        // first port
+        TVSPPortItem target;        // second port
+        uint8_t      id;            // link item id
+    } TVSPLinkItem;
+    
+    #pragma pack(push,1)
+    typedef struct {
+        uint32_t id;                // message identifier
+        char     message[1024];     // message buffer
+    } TSharedMessage;
+    #pragma pack(pop)
+}
+
+#define SHARED_QUEUE_ALIGNMENT 1
+#define SHARED_QUEUE_SIZE      (64 * 1024)  // 64 KB
+#define ENTRY_MAX_PAYLOAD      sizeof(TSharedMessage)
 
 // --------------------------------------------------------
 // used by VSPUserClient
@@ -135,4 +148,4 @@ typedef struct {
 
 } /* namespace: VSPController */
 
-#endif /* VSPClientCommands_h */
+#endif // !VSPController_h

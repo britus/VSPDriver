@@ -200,7 +200,9 @@ void VSCMainWindow::onSetupFinishWithResult(quint64 code, const char *message)
     showNotification(2750, ui->textBrowser->toPlainText());
 
     if (status == 0 && !m_vsp->IsConnected() && state == 0xf100) {
-        QTimer::singleShot(1600, this, [this]() { connectDriver(); });
+        QTimer::singleShot(1600, this, [this]() { //
+            connectDriver();
+        });
     } else {
         onComplete();
     }
@@ -471,9 +473,10 @@ void VSCMainWindow::onActionExecute(const TVSPControlCommand command, const QVar
         }
         case vspControlEnableChecks: {
             quint64 value = data.toUInt();
-            quint8 portId = value & 0x00ffL;
+            quint8 portId = value & 0xffL;
+            quint64 flags = value & ~portId;
             if (!m_demoMode) {
-                if (!m_vsp->EnableChecks(portId, value)) {
+                if (!m_vsp->EnableChecks(portId, flags)) {
                     goto error_exit;
                 }
             } else {
@@ -487,9 +490,10 @@ void VSCMainWindow::onActionExecute(const TVSPControlCommand command, const QVar
         }
         case vspControlEnableTrace: {
             quint64 value = data.toUInt();
-            quint8 portId = value & 0x00ffL;
+            quint8 portId = value & 0xffL;
+            quint64 flags = value & ~portId;
             if (!m_demoMode) {
-                if (!m_vsp->EnableTrace(portId, value)) {
+                if (!m_vsp->EnableTrace(portId, flags)) {
                     goto error_exit;
                 }
             } else {
@@ -814,18 +818,6 @@ inline void VSCMainWindow::connectUiEvents()
     connect(qApp, &QApplication::saveStateRequest, this, &VSCMainWindow::onSaveSession, Qt::DirectConnection);
     connect(qApp, &QApplication::aboutToQuit, this, &VSCMainWindow::onAppQuit, Qt::DirectConnection);
 
-#if 0
-    connect(qApp, &QGuiApplication::applicationStateChanged, this, [this](Qt::ApplicationState state) {
-        if (state != Qt::ApplicationActive) {
-            // dummy
-            QTimer::singleShot(1000, this, [this]() {
-                if (this->hasFocus()) {
-                }
-            });
-        }
-    });
-#endif
-
     const QList<VSPAbstractPage *> pages = m_buttonMap.values();
     foreach (auto page, pages) {
         connect(page, &VSPAbstractPage::execute, this, &VSCMainWindow::onActionExecute);
@@ -851,8 +843,8 @@ inline void VSCMainWindow::connectUiEvents()
 // VSP Driver Controller part
 inline void VSCMainWindow::createVspController()
 {
-    QByteArray dextBundleId("org.eof.tools.VSPDriver");
-    QByteArray dextClassName("VSPDriver");
+    QByteArray dextClassName = "VSPDriver";
+    QByteArray dextBundleId = "org.eof.tools.VSPDriver";
 
     m_vsp = new VSPDriverClient(dextBundleId, dextClassName, &m_session, this);
     connect(m_vsp, &VSPDriverClient::didFailWithError, this, &VSCMainWindow::onSetupFailWithError);

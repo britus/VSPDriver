@@ -14,6 +14,8 @@
 #include <Availability.h>
 #include <DriverKit/IOService.iig>
 #include <DriverKit/IOUserClient.iig>
+#include <DriverKit/IOBufferMemoryDescriptor.iig>
+#include <DriverKit/IODataQueueDispatchSource.iig>
 #include <DriverKit/IOTimerDispatchSource.iig>
 
 class VSPDriver;

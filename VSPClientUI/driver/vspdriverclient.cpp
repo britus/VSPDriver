@@ -99,7 +99,7 @@ void VSPDriverClient::OnDataReady(const TVSPControllerData& data)
             QString name = strlen(pli.name) == 0 //
                               ? tr("Port %1").arg(pli.id)
                               : tr("%1").arg(pli.name);
-            text << "Port item......: " << pli.id << " " << name << Qt::endl;
+            text << "Port item......: " << pli.id << " " << name << " flags=" << Qt::hex << pli.flags << Qt::endl;
             m_portList.append(VSPDataModel::TPortItem({pli.id, name, pli.flags}));
             continue;
         }

@@ -84,9 +84,9 @@ bool VSPController::EnableTrace(const uint8_t port, const uint64_t flags)
     return p->EnableTrace(port, flags);
 }
 
-bool VSPController::SetDextIdentifier(const char *name)
+bool VSPController::SetDextClassName(const char *name)
 {
-    return p->SetDextIdentifier(name);
+    return p->SetDextClassName(name);
 }
 
 bool VSPController::SendData(const TVSPControllerData &data)
@@ -145,10 +145,23 @@ static inline void PrintStruct(const char *ctx, const TVSPControllerData *ptr)
         fprintf(stdout, "\t.ppl.targetId = %u,\n", ptr->parameter.link.target);
         fprintf(stdout, "\t.status.code = %u,\n", ptr->status.code);
         fprintf(stdout, "\t.status.flags = 0x%llx,\n", ptr->status.flags);
+        if (ptr->ports.count) {
+            for (uint8_t i = 0; i < ptr->ports.count; i++) {
+                fprintf(stdout, "\t.port = %d flags = 0x%llx,\n", //
+                        ptr->ports.list[i].id,
+                        ptr->ports.list[i].flags);
+            }
+        }
+        if (ptr->links.count) {
+            for (uint8_t i = 0; i < ptr->links.count; i++) {
+                fprintf(stdout, "\t.link = %d link = 0x%llx,\n", //
+                        i, ptr->links.list[i]);
+            }
+        }
         fprintf(stdout, "}\n");
     }
 }
-#endif
+#endif // VSP_DEBUG
 
 static void DeviceAdded(void *refcon, io_iterator_t iterator)
 {
@@ -239,7 +252,7 @@ VSPControllerPriv::VSPControllerPriv(const char *dextClassName, VSPController *p
     , m_drv(IO_OBJECT_NULL)
     , m_vspResponse(NULL)
 {
-    SetDextIdentifier(dextClassName);
+    SetDextClassName(dextClassName);
 }
 
 VSPControllerPriv::~VSPControllerPriv()
@@ -403,9 +416,9 @@ const char *VSPControllerPriv::DevicePath() const
 //     <string>VSPDriver</string>
 // </array>
 //
-inline bool VSPControllerPriv::SetDextIdentifier(const char *name)
+inline bool VSPControllerPriv::SetDextClassName(const char *name)
 {
-    fprintf(stdout, "[VSPCTL] Using DEXT identifier: %s\n", name);
+    fprintf(stdout, "[VSPCTL] Using DEXT class name: %s\n", name);
 
     if (name && strlen(name) < sizeof(TDextIdentifier)) {
         strncpy(m_dextClassName, name, sizeof(TDextIdentifier));
@@ -442,14 +455,14 @@ bool VSPControllerPriv::UserClientSetup(void *refcon)
 {
     kern_return_t ret = kIOReturnSuccess;
 
-    fprintf(stderr, "[VSPCTL] UserClientSetup() ref=0x%llx\n", (uint64_t) refcon);
-
     // sane check DEXT class name!
     if (!strlen(m_dextClassName)) {
         ReportError(kIOReturnError, "DEXT Identifier is emptry, but required!");
         UserClientTeardown();
         return false;
     }
+
+    fprintf(stderr, "[VSPCTL] UserClientSetup() ref=0x%llx clsName=%s\n", (uint64_t) refcon, m_dextClassName);
 
     m_runLoop = CFRunLoopGetCurrent();
     if (m_runLoop == NULL) {
