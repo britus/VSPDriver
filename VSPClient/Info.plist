@@ -2,60 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>$(DEVELOPMENT_LANGUAGE)</string>
-	<key>CFBundleExecutable</key>
-	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-	<key>CFBundleName</key>
-	<string>$(PRODUCT_NAME)</string>
-	<key>CFBundleDisplayName</key>
-	<string>Virtual Serial Port Controller</string>
-	<key>CFBundlePackageType</key>
-	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
-	<key>LSMinimumSystemVersion</key>
-	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2025 by EoF Software Labs</string>
-	<key>LSUIPresentationMode</key>
-	<integer>0</integer>
-	<key>LSVisibleInClassic</key>
-	<true/>
-	<key>NSHighResolutionCapable</key>
-	<true/>
-	<key>NSPrefPaneIconFile</key>
-	<string>vspclient.icns</string>
-	<key>NSSupportsSuddenTermination</key>
-	<true/>
-	<key>NSDocumentsFolderUsageDescription</key>
-	<string>Permit Virtual Serial Port to send, write or save files.</string>
-	<key>NSDownloadsFolderUsageDescription</key>
-	<string>Permit Virtual Serial Port to send, write or save files.</string>
-	<key>NSDesktopFolderUsageDescription</key>
-	<string>Permit Virtual Serial Port to send, write or save files.</string>
-	<key>OSBundleUsageDescription</key>
-	<string>Permit VSP Controller to manage virtual serial ports.</string>
-	<key>NSNetworkVolumesUsageDescription</key>
-	<string>Permit Virtual Serial Port to write data to network volume path.</string>
-	<key>NSUserNotificationsUsageDescription</key>
-	<string>Shows informative messages about the state of the VSP driver.</string>
-	<key>NSLocalNetworkUsageDescription</key>
-	<string>Permit VPS Controller to redirect data from serial port to a network connection.</string>
-	<key>UILaunchImageFile</key>
-	<string>vspclient_512x512.png</string>
 	<key>CFBundleIconFile</key>
 	<string>vspclient.icns</string>
-	<key>UIPrerenderedIcon</key>
-	<false/>
-	<key>LSUIElement</key>
-	<false/>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
-	<key>NOTE</key>
-	<string>Copyright © 2025 by EoF Software Labs</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -67,5 +15,25 @@
 			</array>
 		</dict>
 	</array>
+	<key>LSMinimumSystemVersion</key>
+	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+	<key>LSUIPresentationMode</key>
+	<integer>0</integer>
+	<key>LSVisibleInClassic</key>
+	<true/>
+	<key>NOTE</key>
+	<string>Copyright © 2025 by EoF Software Labs</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>NSPrefPaneIconFile</key>
+	<string>vspclient.icns</string>
+	<key>NSSupportsSuddenTermination</key>
+	<true/>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>Shows informative messages about the state of the VSP driver.</string>
+	<key>UILaunchImageFile</key>
+	<string>vspclient_512x512.png</string>
+	<key>UIPrerenderedIcon</key>
+	<false/>
 </dict>
 </plist>

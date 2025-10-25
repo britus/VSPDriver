@@ -5,9 +5,9 @@
 // Copyright © 2024 Apple Inc. (some copied parts)
 // SPDX-License-Identifier: MIT
 // ********************************************************************
-#import <stdio.h>
 #import <Foundation/Foundation.h>
 #import <SystemExtensions/SystemExtensions.h>
+#import <stdio.h>
 #import <vsploadermodel.h>
 #import <vspdriversetup.hpp>
 

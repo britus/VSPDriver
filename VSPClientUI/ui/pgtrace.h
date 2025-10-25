@@ -7,29 +7,30 @@
 // ********************************************************************
 #pragma once
 
-#include <QPushButton>
-#include <QWidget>
 #include <vspabstractpage.h>
 #include <vspdatamodel.h>
 #include <vspdriverclient.h>
+#include <QPushButton>
+#include <QWidget>
 
 namespace Ui {
 class PGTrace;
 }
 
-class PGTrace: public VSPAbstractPage
+class PGTrace : public VSPAbstractPage
 {
     Q_OBJECT
 
 public:
-    explicit PGTrace(QWidget* parent = nullptr);
+    explicit PGTrace(QWidget *parent = nullptr);
     ~PGTrace();
 
-    void update(TVSPControlCommand command, VSPPortListModel* portModel, VSPLinkListModel* linkModel) override;
+    void update(TVSPControlCommand command, VSPPortListModel *portModel, VSPLinkListModel *linkModel) override;
 
 protected:
     void onActionExecute() override;
 
 private:
-    Ui::PGTrace* ui;
+    Ui::PGTrace *ui;
+    int m_lastIndex;
 };

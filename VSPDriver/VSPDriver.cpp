@@ -12,20 +12,29 @@
 #include <time.h>
 #include <math.h>
 
+#include <DriverKit/OSBundle.h>
+#include <DriverKit/OSString.h>
+#include <DriverKit/OSNumber.h>
+#include <DriverKit/OSBoolean.h>
+#include <DriverKit/OSArray.h>
+#include <DriverKit/OSSet.h>
+#include <DriverKit/OSOrderedSet.h>
+#include <DriverKit/OSPtr.h>
+#include <DriverKit/OSData.h>
+#include <DriverKit/OSDictionary.h>
+#include <DriverKit/OSCollection.h>
+#include <DriverKit/OSCollections.h>
 #include <DriverKit/IOLib.h>
 #include <DriverKit/IOTypes.h>
 #include <DriverKit/IOService.h>
-#include <DriverKit/IOUserClient.h>
-#include <DriverKit/OSDictionary.h>
-#include <DriverKit/OSData.h>
-#include <DriverKit/OSString.h>
-#include <DriverKit/OSNumber.h>
-#include <DriverKit/OSArray.h>
-#include <DriverKit/OSAction.h>
-#include <DriverKit/OSSharedPtr.h>
 #include <DriverKit/IOMemoryMap.h>
+#include <DriverKit/IOMemoryDescriptor.h>
+#include <DriverKit/IOBufferMemoryDescriptor.h>
 #include <DriverKit/IODispatchQueue.h>
 #include <DriverKit/IODispatchSource.h>
+
+#include <DriverKit/IODataQueueDispatchSource.h>
+#include <DriverKit/IOInterruptDispatchSource.h>
 #include <DriverKit/IOTimerDispatchSource.h>
 #include <DriverKit/IOServiceNotificationDispatchSource.h>
 #include <DriverKit/IOServiceStateNotificationDispatchSource.h>
@@ -46,11 +55,11 @@ using namespace VSPController;
 
 // Driver instance state resource
 struct VSPDriver_IVars {
-    uint8_t          m_portCount      = 0;       // number of allocated serial ports
-    TVSPPortItem*    m_ports    = nullptr; // list of allocated serial ports
-    uint8_t          m_linkCount  = 0;       // number of serial port links
-    TVSPLinkItem*    m_links      = nullptr; // list of serial port links
-    IODispatchQueue* m_dispQueue      = nullptr; // default dispatch queue
+    uint8_t m_portCount = 0;                // number of allocated serial ports
+    TVSPPortItem* m_ports = nullptr;        // list of allocated serial ports
+    uint8_t m_linkCount = 0;                // number of serial port links
+    TVSPLinkItem* m_links = nullptr;        // list of serial port links
+    IODispatchQueue* m_serviceQueue = nullptr; // default dispatch queue
 };
 
 // --------------------------------------------------------------------
@@ -134,12 +143,12 @@ kern_return_t IMPL(VSPDriver, Start)
         return ret;
     }
     
-    ret = CopyDispatchQueue(kIOServiceDefaultQueueName, &ivars->m_dispQueue);
+    ret = CopyDispatchQueue(kIOServiceDefaultQueueName, &ivars->m_serviceQueue);
     if (ret != kIOReturnSuccess) {
         VSPErr(LOG_PREFIX, "Start: Copy dispatch queue failed. code=%x\n", ret);
         return ret;
     }
-    
+
     // Create 4 serial port instances with each IOSerialBSDClient as a child instance
     if ((ret = CreateSerialPort(provider, 4)) != kIOReturnSuccess) {
         goto finish;
@@ -174,8 +183,8 @@ kern_return_t IMPL(VSPDriver, Stop)
             removePort(ivars->m_ports[i].id);
         }
     }
-
-    OSSafeReleaseNULL(ivars->m_dispQueue);
+    
+    OSSafeReleaseNULL(ivars->m_serviceQueue);
 
     // service instance (Apple style super call)
     if ((ret= Stop(provider, SUPERDISPATCH)) != kIOReturnSuccess) {
@@ -335,7 +344,6 @@ kern_return_t VSPDriver::getPortList(void* list, uint8_t count)
     TVSPPortListItem* items = (TVSPPortListItem*) list;
     VSPSerialPort* port;
     IOPropertyName name;
-    uint8_t id;
     
     if (!list) {
         return kIOReturnBadArgument;
@@ -346,12 +354,17 @@ kern_return_t VSPDriver::getPortList(void* list, uint8_t count)
     }
     
     for(uint8_t i = 0, j = 0; i < MAX_SERIAL_PORTS && j < count; i++) {
-        if ((id = ivars->m_ports[i].id) && (port = ivars->m_ports[i].port)) {
+        if (ivars->m_ports[i].id && (port = ivars->m_ports[i].port)) {
+            items[j].id = ivars->m_ports[i].id;
             if (port->getDeviceName(name, sizeof(IOPropertyName)) != kIOReturnSuccess) {
                 continue;
             }
+            if (port->getFlags(&ivars->m_ports[i].flags) != kIOReturnSuccess) {
+                continue;
+            }
+            items[j].id = ivars->m_ports[i].id;
+            items[j].flags = ivars->m_ports[i].flags;
             strncpy(items[j].name, name, MAX_PORT_NAME);
-            items[j].id = id;
             j++;
         }
     }

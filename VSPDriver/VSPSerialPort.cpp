@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <cstring>
 #include <time.h>
 #include <math.h>
 
@@ -54,7 +55,6 @@ using namespace driverkit::serial;
 #define LOG_PREFIX "VSPSerialPort"
 
 #define kVSPTTYBaseName "vsp"
-#define kRxDataQueueName "rxDataQueue"
 
 #ifndef IOLockFreeNULL
 #define IOLockFreeNULL(l) { if (NULL != (l)) { IOLockFree(l); (l) = NULL; } }
@@ -135,16 +135,16 @@ struct VSPSerialPort_IVars {
     
     IOBufferMemoryDescriptor* m_rxqbmd;             // VSP RX queue memory descriptor
     IOAddressSegment m_rxseg = {};                  // VSP RX buffer segment
-     
+    
     // Serial port interface
     uint32_t m_errorState = 0;
     uint32_t m_hwStatus = 0;
     uint32_t m_hwMCR = 0;
     uint32_t m_hwLatency = 25;
-
+    
     TUartParameters m_uartParams = {};              // set by TTY client and VSPUserClient
     THwFlowControl m_hwFlowControl = {};            // set by TTY client and VSPUserClient
-
+    
     uint64_t m_paramChecks = 0;                     // flags for TTY parameter checks
     uint64_t m_traceFlags = 0;                      // flags for runtime tracing
     
@@ -298,8 +298,10 @@ kern_return_t IMPL(VSPSerialPort, Start)
         goto error_exit;
     }
     
-    readTTYProperties(this);
-    
+    if (readTTYProperties(this) != kIOReturnSuccess) {
+        goto error_exit;
+    }
+
     VSPLog(LOG_PREFIX, "Start: Port started successfully.\n");
     return kIOReturnSuccess;
     
@@ -623,7 +625,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     for (uint64_t i = 0; i < size; i++) {
         VSPLog(LOG_PREFIX, "TxDataAvailable: buffer[%02lld]=0x%02x %c\n", i, buffer[i], buffer[i]);
     }
-#endif
+#endif // DEBUG
     
     // Is this port assigned to a port link?
     if (ivars->m_portLinkId) {
@@ -1095,6 +1097,7 @@ uint8_t VSPSerialPort::getPortLinkIdentifier()
 //
 void VSPSerialPort::setTraceFlags(uint64_t flags)
 {
+    VSPLog(LOG_PREFIX, "setTraceFlags flags=%llx\n", flags);
     ivars->m_traceFlags = flags;
 }
 
@@ -1103,6 +1106,7 @@ void VSPSerialPort::setTraceFlags(uint64_t flags)
 //
 void VSPSerialPort::setParameterChecks(uint64_t flags)
 {
+    VSPLog(LOG_PREFIX, "setParameterChecks flags=%llx\n", flags);
     ivars->m_paramChecks = flags;
 }
 
@@ -1200,7 +1204,7 @@ kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, cons
         VSPLog(LOG_PREFIX, "sendResponse: buffer[%02lld]=0x%02x %c\n", i,
                mdbuffer[i], mdbuffer[i]);
     }
-#endif
+#endif // DEBUG
     
     // Update RX producer index
     ivars->m_spi->rxPI = size;
@@ -1215,6 +1219,19 @@ kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, cons
     this->RxDataAvailable_Impl();
 
     VSPLog(LOG_PREFIX, "sendResponse: complete.\n");
+    return kIOReturnSuccess;
+}
+
+// --------------------------------------------------------------------
+// Return TTY base name with device number.
+//
+kern_return_t VSPSerialPort::getFlags(uint64_t* flags)
+{
+    if (!flags) {
+        return kIOReturnBadArgument;
+    }
+    
+    (*flags) = (ivars->m_traceFlags | ivars->m_paramChecks);
     return kIOReturnSuccess;
 }
 

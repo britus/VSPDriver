@@ -13,19 +13,19 @@
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QMacToolBar>
 #endif
+#include <vscmainwindow.h>
+#include <vspabstractpage.h>
+#include <vspserialio.h>
 #include <QMenu>
 #include <QMessageBox>
 #include <QMovie>
 #include <QSplitter>
 #include <QTimer>
 #include <QWindow>
-#include <vscmainwindow.h>
-#include <vspabstractpage.h>
-#include <vspserialio.h>
 
 #define COPYRIGHT "Copyright © 2025 by EoF Software Labs"
 
-VSCMainWindow::VSCMainWindow(QWidget* parent)
+VSCMainWindow::VSCMainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::VSCMainWindow)
     , m_vsp(nullptr)
@@ -47,7 +47,7 @@ VSCMainWindow::VSCMainWindow(QWidget* parent)
     m_buttonMap[ui->btn08Traces] = ui->pg08Traces;
     m_buttonMap[ui->btn09Connect] = ui->pg09Connect;
 
-    QSplitter* splitter = new QSplitter(Qt::Vertical, ui->pnlContent);
+    QSplitter *splitter = new QSplitter(Qt::Vertical, ui->pnlContent);
     ui->pnlContent->layout()->addWidget(splitter);
     splitter->addWidget(ui->stackedWidget);
     splitter->addWidget(ui->groupBox);
@@ -76,7 +76,7 @@ VSCMainWindow::~VSCMainWindow()
     delete ui;
 }
 
-void VSCMainWindow::closeEvent(QCloseEvent* event)
+void VSCMainWindow::closeEvent(QCloseEvent *event)
 {
     // save current driver state
     m_vsp->saveDriverSession();
@@ -88,13 +88,13 @@ void VSCMainWindow::closeEvent(QCloseEvent* event)
     QMainWindow::closeEvent(event);
 }
 
-void VSCMainWindow::resizeEvent(QResizeEvent* event)
+void VSCMainWindow::resizeEvent(QResizeEvent *event)
 {
     QMainWindow::resizeEvent(event);
     updateOverlayGeometry();
 }
 
-void VSCMainWindow::changeEvent(QEvent* event)
+void VSCMainWindow::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
         ui->retranslateUi(this);
@@ -112,14 +112,14 @@ void VSCMainWindow::onAppQuit()
     m_vsp->saveDriverSession();
 }
 
-void VSCMainWindow::onSaveSession(QSessionManager& manager)
+void VSCMainWindow::onSaveSession(QSessionManager &manager)
 {
     qDebug("[CTRLUI] onSaveSession(): isp2=%d", manager.isPhase2());
 
     m_vsp->saveDriverSession();
 }
 
-void VSCMainWindow::onCommitSession(QSessionManager& manager)
+void VSCMainWindow::onCommitSession(QSessionManager &manager)
 {
     qDebug("[CTRLUI] onCommitSession(): isp2=%d", manager.isPhase2());
 
@@ -129,11 +129,10 @@ void VSCMainWindow::onCommitSession(QSessionManager& manager)
         return;
     }
 
-    int ret = QMessageBox::question(
-       this,
-       qApp->applicationDisplayName(), //
-       tr("Do you want to quit now?"),
-       QMessageBox::Yes | QMessageBox::Discard | QMessageBox::Cancel);
+    int ret = QMessageBox::question(this,
+                                    qApp->applicationDisplayName(), //
+                                    tr("Do you want to quit now?"),
+                                    QMessageBox::Yes | QMessageBox::Discard | QMessageBox::Cancel);
 
     switch (ret) {
         case QMessageBox::Yes: {
@@ -158,7 +157,7 @@ void VSCMainWindow::onCommitSession(QSessionManager& manager)
     }
 }
 
-void VSCMainWindow::onSetupFailWithError(quint64 code, const char* message)
+void VSCMainWindow::onSetupFailWithError(quint64 code, const char *message)
 {
     qDebug("[CTRLUI] onSetupFailWithError(): code=0x%llx msg=%s", code, message);
 
@@ -172,26 +171,24 @@ void VSCMainWindow::onSetupFailWithError(quint64 code, const char* message)
     onComplete();
 }
 
-void VSCMainWindow::onSetupFinishWithResult(quint64 code, const char* message)
+void VSCMainWindow::onSetupFinishWithResult(quint64 code, const char *message)
 {
     QString text;
     quint16 status = (code & 0x0000ffff);
     quint16 state = ((code >> 16) & 0x0000ffff);
 
-    qDebug(
-       "[CTRLUI] onSetupFinishWithResult(): code=0x%llx status=0x%x state=0x%x msg=%s", //
-       code,
-       status,
-       state,
-       message);
+    qDebug("[CTRLUI] onSetupFinishWithResult(): code=0x%llx status=0x%x state=0x%x msg=%s", //
+           code,
+           status,
+           state,
+           message);
 
     if (status == 12) {
         text = tr("Wait for user approval.");
-    }
-    else {
+    } else {
         text = status == 0 //
-                  ? ""
-                  : tr("Status: 0x") + QString::number(code, 16);
+                   ? ""
+                   : tr("Status: 0x") + QString::number(code, 16);
         text = tr("%1 %2").arg(message, text).trimmed();
     }
 
@@ -203,11 +200,10 @@ void VSCMainWindow::onSetupFinishWithResult(quint64 code, const char* message)
     showNotification(2750, ui->textBrowser->toPlainText());
 
     if (status == 0 && !m_vsp->IsConnected() && state == 0xf100) {
-        QTimer::singleShot(1600, this, [this]() {
+        QTimer::singleShot(1600, this, [this]() { //
             connectDriver();
         });
-    }
-    else {
+    } else {
         onComplete();
     }
 }
@@ -239,9 +235,7 @@ void VSCMainWindow::onClientConnected()
     onComplete();
 
     if (!m_demoMode) {
-        QTimer::singleShot(25, this, [this]() {
-            m_vsp->GetStatus();
-        });
+        QTimer::singleShot(25, this, [this]() { m_vsp->GetStatus(); });
     }
 }
 
@@ -262,7 +256,7 @@ void VSCMainWindow::onClientDisconnected()
     onComplete();
 }
 
-void VSCMainWindow::onClientError(const VSPClient::TVSPSystemError& error, const QString& message)
+void VSCMainWindow::onClientError(const VSPClient::TVSPSystemError &error, const QString &message)
 {
     qDebug("[CTRLUI] onClientError() error=0x%x msg=%s", error.code, qPrintable(message));
 
@@ -285,8 +279,7 @@ void VSCMainWindow::onClientError(const VSPClient::TVSPSystemError& error, const
         QTimer::singleShot(50, this, [this, text]() {
             if (windowIcon().isNull()) {
                 m_box.setIcon(QMessageBox::Critical);
-            }
-            else {
+            } else {
                 m_box.setIconPixmap(windowIcon().pixmap(QSize(48, 48)));
             }
             m_box.setWindowTitle(windowTitle());
@@ -297,7 +290,7 @@ void VSCMainWindow::onClientError(const VSPClient::TVSPSystemError& error, const
     }
 }
 
-void VSCMainWindow::onUpdateStatusLog(const QByteArray& message)
+void VSCMainWindow::onUpdateStatusLog(const QByteArray &message)
 {
     qDebug("[CTRLUI] onUpdateStatusLog(): %s", qPrintable(message));
 
@@ -308,28 +301,28 @@ void VSCMainWindow::onUpdateStatusLog(const QByteArray& message)
 void VSCMainWindow::onUpdateButtons(bool enabled)
 {
     qDebug("[CTRLUI] onUpdateButtons(): enabled=%d", enabled);
-    const QList<QPushButton*> buttons = //
-       QList<QPushButton*>()            //
-       << ui->btn01SPCreate             //
-       << ui->btn02SPRemove             //
-       << ui->btn03LKCreate             //
-       << ui->btn04LKRemove             //
-       << ui->btn05PortList             //
-       << ui->btn06LinkList             //
-       << ui->btn07Checks               //
-       << ui->btn08Traces               //
-       << ui->btn11SerialIO;
+    const QList<QPushButton *> buttons = //
+        QList<QPushButton *>()           //
+        << ui->btn01SPCreate             //
+        << ui->btn02SPRemove             //
+        << ui->btn03LKCreate             //
+        << ui->btn04LKRemove             //
+        << ui->btn05PortList             //
+        << ui->btn06LinkList             //
+        << ui->btn07Checks               //
+        << ui->btn08Traces               //
+        << ui->btn11SerialIO;
     foreach (auto button, buttons) {
         button->setEnabled(enabled);
     }
 }
 
-void VSCMainWindow::onCommandResult(TVSPControlCommand command, VSPPortListModel* portModel, VSPLinkListModel* linkModel)
+void VSCMainWindow::onCommandResult(TVSPControlCommand command, VSPPortListModel *portModel, VSPLinkListModel *linkModel)
 {
     qDebug("[CTRLUI] onCommandResult(): cmd=%d", command);
 
-    VSPAbstractPage* page;
-    if ((page = dynamic_cast<VSPAbstractPage*>(ui->stackedWidget->currentWidget())) == nullptr) {
+    VSPAbstractPage *page;
+    if ((page = dynamic_cast<VSPAbstractPage *>(ui->stackedWidget->currentWidget())) == nullptr) {
         return;
     }
 
@@ -344,15 +337,15 @@ void VSCMainWindow::onComplete()
 
 void VSCMainWindow::onSelectPage()
 {
-    QPushButton* button;
+    QPushButton *button;
 
-    if (!(button = dynamic_cast<QPushButton*>(sender()))) {
+    if (!(button = dynamic_cast<QPushButton *>(sender()))) {
         return;
     }
 
     qDebug("[CTRLUI] onSelectPage(): button=%s", qPrintable(button->text()));
 
-    VSPAbstractPage* page;
+    VSPAbstractPage *page;
     if (!(page = m_buttonMap[button])) {
         return;
     }
@@ -368,7 +361,7 @@ void VSCMainWindow::onSelectPage()
     button->setFocus(Qt::TabFocusReason);
 }
 
-void VSCMainWindow::onActionExecute(const TVSPControlCommand command, const QVariant& data)
+void VSCMainWindow::onActionExecute(const TVSPControlCommand command, const QVariant &data)
 {
     qDebug("[CTRLUI] onActionExecute(): cmd=%d", command);
 
@@ -383,8 +376,7 @@ void VSCMainWindow::onActionExecute(const TVSPControlCommand command, const QVar
                 if (!m_vsp->GetStatus()) {
                     goto error_exit;
                 }
-            }
-            else {
+            } else {
                 QTimer::singleShot(700, this, [this, command]() {
                     onCommandResult(command, m_vsp->portList(), m_vsp->linkList());
                     onComplete();
@@ -398,8 +390,7 @@ void VSCMainWindow::onActionExecute(const TVSPControlCommand command, const QVar
                 if (!m_vsp->CreatePort(&p)) {
                     goto error_exit;
                 }
-            }
-            else {
+            } else {
                 QTimer::singleShot(700, this, [this]() {
                     m_vsp->createDemoPort();
                     showDemoMessage(tr("Virtual demo port created."));
@@ -413,8 +404,7 @@ void VSCMainWindow::onActionExecute(const TVSPControlCommand command, const QVar
                 if (!m_vsp->RemovePort(p.id)) {
                     goto error_exit;
                 }
-            }
-            else {
+            } else {
                 QTimer::singleShot(700, this, [this, p]() {
                     m_vsp->removeDemoPort(p.id);
                     showDemoMessage(tr("Virtual demo port removed."));
@@ -425,17 +415,15 @@ void VSCMainWindow::onActionExecute(const TVSPControlCommand command, const QVar
         case vspControlLinkPorts: {
             VSPDataModel::TPortLink link = data.value<VSPDataModel::TPortLink>();
             if (link.source.id == link.target.id) {
-                onClientError(
-                   {0xbe, 0x04, 0x02}, //
-                   tr("\n\nYou cannot link same ports together. Any unlinked port is in loopback mode by default."));
+                onClientError({0xbe, 0x04, 0x02}, //
+                              tr("\n\nYou cannot link same ports together. Any unlinked port is in loopback mode by default."));
                 goto error_exit;
             }
             if (!m_demoMode) {
                 if (!m_vsp->LinkPorts(link.source.id, link.target.id)) {
                     goto error_exit;
                 }
-            }
-            else {
+            } else {
                 QTimer::singleShot(700, this, [this, link]() {
                     m_vsp->createDemoLink(link.source.id, link.target.id);
                     showDemoMessage(tr("Demo port link created."));
@@ -449,8 +437,7 @@ void VSCMainWindow::onActionExecute(const TVSPControlCommand command, const QVar
                 if (!m_vsp->UnlinkPorts(link.source.id, link.target.id)) {
                     goto error_exit;
                 }
-            }
-            else {
+            } else {
                 QTimer::singleShot(700, this, [this, link]() {
                     m_vsp->removeDemoLink(link.source.id, link.target.id);
                     showDemoMessage(tr("Demo port link removed."));
@@ -463,8 +450,7 @@ void VSCMainWindow::onActionExecute(const TVSPControlCommand command, const QVar
                 if (!m_vsp->GetPortList()) {
                     goto error_exit;
                 }
-            }
-            else {
+            } else {
                 QTimer::singleShot(700, this, [this, command]() {
                     onCommandResult(command, m_vsp->portList(), m_vsp->linkList());
                     onComplete();
@@ -477,8 +463,7 @@ void VSCMainWindow::onActionExecute(const TVSPControlCommand command, const QVar
                 if (!m_vsp->GetLinkList()) {
                     goto error_exit;
                 }
-            }
-            else {
+            } else {
                 QTimer::singleShot(700, this, [this, command]() {
                     onCommandResult(command, m_vsp->portList(), m_vsp->linkList());
                     onComplete();
@@ -487,15 +472,14 @@ void VSCMainWindow::onActionExecute(const TVSPControlCommand command, const QVar
             break;
         }
         case vspControlEnableChecks: {
-            quint32 value = data.toUInt();
-            quint8 portId = value & 0x00ffL;
-            value = (value >> 16) & 0xffffL;
+            quint64 value = data.toUInt();
+            quint8 portId = value & 0xffL;
+            quint64 flags = value & ~portId;
             if (!m_demoMode) {
-                if (!m_vsp->EnableChecks(portId, value)) {
+                if (!m_vsp->EnableChecks(portId, flags)) {
                     goto error_exit;
                 }
-            }
-            else {
+            } else {
                 QTimer::singleShot(700, this, [this, command]() {
                     onCommandResult(command, m_vsp->portList(), m_vsp->linkList());
                     onComplete();
@@ -505,15 +489,14 @@ void VSCMainWindow::onActionExecute(const TVSPControlCommand command, const QVar
             break;
         }
         case vspControlEnableTrace: {
-            quint32 value = data.toUInt();
-            quint8 portId = value & 0x00ffL;
-            value = (value >> 16) & 0xffffL;
+            quint64 value = data.toUInt();
+            quint8 portId = value & 0xffL;
+            quint64 flags = value & ~portId;
             if (!m_demoMode) {
-                if (!m_vsp->EnableTrace(portId, value)) {
+                if (!m_vsp->EnableTrace(portId, flags)) {
                     goto error_exit;
                 }
-            }
-            else {
+            } else {
                 QTimer::singleShot(700, this, [this, command]() {
                     onCommandResult(command, m_vsp->portList(), m_vsp->linkList());
                     onComplete();
@@ -566,13 +549,13 @@ void VSCMainWindow::updateOverlayGeometry()
         return;
     }
 
-    QWidget* overlay;
-    if (!(overlay = v.value<QWidget*>())) {
+    QWidget *overlay;
+    if (!(overlay = v.value<QWidget *>())) {
         return;
     }
 
-    QLabel* gifLabel;
-    if (overlay->children().isEmpty() || !(gifLabel = dynamic_cast<QLabel*>(overlay->children().at(0)))) {
+    QLabel *gifLabel;
+    if (overlay->children().isEmpty() || !(gifLabel = dynamic_cast<QLabel *>(overlay->children().at(0)))) {
         return;
     }
 
@@ -628,9 +611,9 @@ inline bool VSCMainWindow::connectDriver()
 
 inline void VSCMainWindow::resetDefaultButtons()
 {
-    QPushButton* b;
+    QPushButton *b;
     foreach (auto o, ui->pnlButtons->children()) {
-        if ((b = dynamic_cast<QPushButton*>(o))) {
+        if ((b = dynamic_cast<QPushButton *>(o))) {
             if (b->autoDefault()) {
                 b->setAutoDefault(false);
             }
@@ -641,7 +624,7 @@ inline void VSCMainWindow::resetDefaultButtons()
     }
 }
 
-inline void VSCMainWindow::setDefaultButton(QPushButton* button, bool isDefault)
+inline void VSCMainWindow::setDefaultButton(QPushButton *button, bool isDefault)
 {
     resetDefaultButtons();
 
@@ -649,14 +632,13 @@ inline void VSCMainWindow::setDefaultButton(QPushButton* button, bool isDefault)
     button->setDefault(isDefault);
 }
 
-inline void VSCMainWindow::showDemoMessage(const QString& message)
+inline void VSCMainWindow::showDemoMessage(const QString &message)
 {
     if (m_demoMode) {
         QTimer::singleShot(50, this, [this, message]() {
             if (windowIcon().isNull()) {
                 m_box.setIcon(QMessageBox::Information);
-            }
-            else {
+            } else {
                 m_box.setIconPixmap(windowIcon().pixmap(QSize(32, 32)));
             }
             m_box.setWindowTitle(windowTitle());
@@ -667,26 +649,25 @@ inline void VSCMainWindow::showDemoMessage(const QString& message)
     }
 }
 
-inline void VSCMainWindow::showNotification(int ms, const QString& text)
+inline void VSCMainWindow::showNotification(int ms, const QString &text)
 {
     if (QSystemTrayIcon::supportsMessages()) {
         stIcon.showMessage( //
-           qApp->applicationDisplayName(),
-           tr(COPYRIGHT) + "\n\n" + text,
-           QSystemTrayIcon::NoIcon /* stIcon.icon()*/,
-           ms);
+            qApp->applicationDisplayName(),
+            tr(COPYRIGHT) + "\n\n" + text,
+            QSystemTrayIcon::NoIcon /* stIcon.icon()*/,
+            ms);
     }
 }
 
 inline void VSCMainWindow::showAboutBox()
 {
     showNotification(5000, tr("Version %1").arg(qApp->applicationVersion()));
-    QMessageBox::about(
-       this,
-       qApp->applicationName(),                //
-       qApp->applicationDisplayName() + "\n\n" //
-          + tr(COPYRIGHT) + "\n\n"             //
-          + tr("Version %1").arg(qApp->applicationVersion()));
+    QMessageBox::about(this,
+                       qApp->applicationName(),                //
+                       qApp->applicationDisplayName() + "\n\n" //
+                           + tr(COPYRIGHT) + "\n\n"            //
+                           + tr("Version %1").arg(qApp->applicationVersion()));
 }
 
 inline void VSCMainWindow::setupSystemTray()
@@ -701,13 +682,11 @@ inline void VSCMainWindow::setupSystemTray()
         // setWindowState(Qt::WindowState::WindowActive);
     });
 
-    QMenu* menu = new QMenu(this);
-    QAction* a;
+    QMenu *menu = new QMenu(this);
+    QAction *a;
 
     a = new QAction(stIcon.icon(), tr("About..."));
-    connect(a, &QAction::triggered, this, [this]() {
-        showAboutBox();
-    });
+    connect(a, &QAction::triggered, this, [this]() { showAboutBox(); });
     menu->addAction(a);
 
     a = new QAction(stIcon.icon(), tr("Open Controller"));
@@ -719,7 +698,7 @@ inline void VSCMainWindow::setupSystemTray()
     menu->addAction(a);
     a = new QAction(stIcon.icon(), tr("Open Serial I/O"));
     connect(a, &QAction::triggered, this, [this]() {
-        VSPSerialIO* d = new VSPSerialIO(this);
+        VSPSerialIO *d = new VSPSerialIO(this);
         d->setVisible(true);
         d->raise();
     });
@@ -727,9 +706,7 @@ inline void VSCMainWindow::setupSystemTray()
     menu->addSeparator();
 
     a = new QAction(stIcon.icon(), tr("Close"));
-    connect(a, &QAction::triggered, this, [this]() {
-        qApp->postEvent(this, new QCloseEvent());
-    });
+    connect(a, &QAction::triggered, this, [this]() { qApp->postEvent(this, new QCloseEvent()); });
     menu->addAction(a);
 
     stIcon.setContextMenu(menu);
@@ -738,8 +715,8 @@ inline void VSCMainWindow::setupSystemTray()
 
 inline void VSCMainWindow::showOverlay()
 {
-    QWidget* overlay;
-    QLabel* gifLabel;
+    QWidget *overlay;
+    QLabel *gifLabel;
 
     qDebug("[CTRLUI] showOverlay()");
 
@@ -751,21 +728,21 @@ inline void VSCMainWindow::showOverlay()
 
     // 80% transparent
     overlay->setStyleSheet( //
-       "background-color: rgba(0, 0, 0, 51); "
-       "border-color: rgb(252, 115, 9); "
-       "border-style: solid; "
-       "border-width: 1px; "
-       "border-radius: 7px;");
+        "background-color: rgba(0, 0, 0, 51); "
+        "border-color: rgb(252, 115, 9); "
+        "border-style: solid; "
+        "border-width: 1px; "
+        "border-radius: 7px;");
     setProperty("overlay", QVariant::fromValue(overlay));
 
     // GIF-Label erstellen
     gifLabel = new QLabel(overlay);
-    QMovie* movie = new QMovie(":/progress1", QByteArray(), this);
+    QMovie *movie = new QMovie(":/progress1", QByteArray(), this);
     gifLabel->setMovie(movie);
     movie->start();
 
     // Overlay-Größe anpassen
-    QTimer* resizer = new QTimer(this);
+    QTimer *resizer = new QTimer(this);
     connect(resizer, &QTimer::timeout, this, &VSCMainWindow::updateOverlayGeometry);
     resizer->setSingleShot(true);
     resizer->start(20);
@@ -785,8 +762,8 @@ inline void VSCMainWindow::removeOverlay()
 
     qDebug("[CTRLUI] removeOverlay()");
 
-    QWidget* overlay;
-    if (!(overlay = v.value<QWidget*>())) {
+    QWidget *overlay;
+    if (!(overlay = v.value<QWidget *>())) {
         return;
     }
 
@@ -800,44 +777,36 @@ inline void VSCMainWindow::removeOverlay()
 
 inline void VSCMainWindow::addToolbarAndMenus()
 {
-    QAction* a;
+    QAction *a;
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     // ---------
     QIcon tbicon(":/vspclient_2");
-    QMacToolBar* toolBar = new QMacToolBar(this);
-    QMacToolBarItem* item = toolBar->addItem(tbicon, tr("About"));
-    connect(item, &QMacToolBarItem::activated, this, [this]() {
-        showAboutBox();
-    });
+    QMacToolBar *toolBar = new QMacToolBar(this);
+    QMacToolBarItem *item = toolBar->addItem(tbicon, tr("About"));
+    connect(item, &QMacToolBarItem::activated, this, [this]() { showAboutBox(); });
     toolBar->attachToWindow(this->windowHandle());
 #endif
 
     // ---------
     if (this->menuBar()) {
-        QMenu* appMenu = new QMenu(this);
+        QMenu *appMenu = new QMenu(this);
         a = appMenu->addAction(tr("About..."));
         a->setMenuRole(QAction::ApplicationSpecificRole);
-        connect(a, &QAction::triggered, this, [this]() {
-            showAboutBox();
-        });
+        connect(a, &QAction::triggered, this, [this]() { showAboutBox(); });
         appMenu->addSeparator();
         this->menuBar()->addMenu(appMenu);
     }
 
     // ---------
-    PopupMenu* menu = new PopupMenu(ui->toolButton, this);
+    PopupMenu *menu = new PopupMenu(ui->toolButton, this);
 
     a = new QAction(tr("Activate VSP Driver"));
-    connect(a, &QAction::triggered, this, [this]() {
-        m_vsp->activateDriver();
-    });
+    connect(a, &QAction::triggered, this, [this]() { m_vsp->activateDriver(); });
     menu->addAction(a);
 
     a = new QAction(tr("Deactivate VSP Driver"));
-    connect(a, &QAction::triggered, this, [this]() {
-        m_vsp->deactivateDriver();
-    });
+    connect(a, &QAction::triggered, this, [this]() { m_vsp->deactivateDriver(); });
     menu->addAction(a);
 
     ui->toolButton->setMenu(menu);
@@ -849,24 +818,12 @@ inline void VSCMainWindow::connectUiEvents()
     connect(qApp, &QApplication::saveStateRequest, this, &VSCMainWindow::onSaveSession, Qt::DirectConnection);
     connect(qApp, &QApplication::aboutToQuit, this, &VSCMainWindow::onAppQuit, Qt::DirectConnection);
 
-#if 0
-    connect(qApp, &QGuiApplication::applicationStateChanged, this, [this](Qt::ApplicationState state) {
-        if (state != Qt::ApplicationActive) {
-            // dummy
-            QTimer::singleShot(1000, this, [this]() {
-                if (this->hasFocus()) {
-                }
-            });
-        }
-    });
-#endif
-
-    const QList<VSPAbstractPage*> pages = m_buttonMap.values();
+    const QList<VSPAbstractPage *> pages = m_buttonMap.values();
     foreach (auto page, pages) {
         connect(page, &VSPAbstractPage::execute, this, &VSCMainWindow::onActionExecute);
     }
 
-    const QList<QPushButton*> buttons = m_buttonMap.keys();
+    const QList<QPushButton *> buttons = m_buttonMap.keys();
     foreach (auto button, buttons) {
         connect(button, &QPushButton::clicked, this, &VSCMainWindow::onSelectPage);
     }
@@ -876,7 +833,7 @@ inline void VSCMainWindow::connectUiEvents()
     connect(ui->pg09Connect, &PGConnect::uninstallDriver, this, &VSCMainWindow::onActionUninstall);
 
     connect(ui->btn11SerialIO, &QPushButton::clicked, this, [this]() {
-        VSPSerialIO* d = new VSPSerialIO(this);
+        VSPSerialIO *d = new VSPSerialIO(this);
         d->setVisible(true);
         d->raise();
     });
@@ -886,8 +843,8 @@ inline void VSCMainWindow::connectUiEvents()
 // VSP Driver Controller part
 inline void VSCMainWindow::createVspController()
 {
-    QByteArray dextBundleId("org.eof.tools.VSPDriver");
-    QByteArray dextClassName("VSPDriver");
+    QByteArray dextClassName = "VSPDriver";
+    QByteArray dextBundleId = "org.eof.tools.VSPDriver";
 
     m_vsp = new VSPDriverClient(dextBundleId, dextClassName, &m_session, this);
     connect(m_vsp, &VSPDriverClient::didFailWithError, this, &VSCMainWindow::onSetupFailWithError);
@@ -913,13 +870,12 @@ inline void VSCMainWindow::connectVspController()
 
 // ------------------------------------------------------------------
 
-PopupMenu::PopupMenu(QWidget* target, QWidget* parent)
+PopupMenu::PopupMenu(QWidget *target, QWidget *parent)
     : QMenu(parent)
     , w(target)
-{
-}
+{}
 
-void PopupMenu::showEvent(QShowEvent* event)
+void PopupMenu::showEvent(QShowEvent *event)
 {
     // QPoint p = this->pos();
     // QRect geo = w->geometry();

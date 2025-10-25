@@ -14,28 +14,30 @@ CONFIG += global_init_link_order
 CONFIG += lib_version_first
 CONFIG += lib_bundle
 CONFIG += create_prl
+CONFIG += objective_c
 
 # disables all the APIs deprecated before Qt 6.0.0
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
 DEFINES += VSPCONTROLLER_LIBRARY
 
 SOURCES += \
-	vspcontroller.cpp
+    vspcontroller.cpp
 
 HEADERS += \
-	vspcontroller.hpp \
-	vspcontroller_global.h \
-	vspcontrollerpriv.hpp
+    vspcontroller.hpp \
+    vspcontroller_global.h \
+    vspcontrollerpriv.hpp
 
 DISTFILES += \
-	LICENSE
+    LICENSE
 
 QMAKE_PROJECT_NAME = $${TARGET}
 
-QMAKE_MACOSX_DEPLOYMENT_TARGET = 12.2
+QMAKE_MAC_SDK = macosx26.0
+QMAKE_MACOSX_DEPLOYMENT_TARGET = 13.5
 
-QMAKE_CFLAGS += -mmacosx-version-min=12.2
-QMAKE_CXXFLAGS += -mmacosx-version-min=12.2
+QMAKE_CFLAGS += -mmacosx-version-min=$$QMAKE_MACOSX_DEPLOYMENT_TARGET
+QMAKE_CXXFLAGS += -mmacosx-version-min=$$QMAKE_MACOSX_DEPLOYMENT_TARGET
 QMAKE_CXXFLAGS += -fno-omit-frame-pointer
 QMAKE_CXXFLAGS += -funwind-tables
 
@@ -43,7 +45,7 @@ release {
 #	QMAKE_LFLAGS += -s
 }
 debug {
-	QMAKE_CXXFLAGS += -ggdb3
+    QMAKE_CXXFLAGS += -ggdb3
 }
 
 #otool -L
@@ -55,7 +57,6 @@ LIBS += -liconv
 QMAKE_FRAMEWORK_BUNDLE_NAME = $${TARGET}
 QMAKE_FRAMEWORK_VERSION = A
 QMAKE_BUNDLE_EXTENSION = .framework
-#QMAKE_INFO_PLIST = $$PWD/Info.plist
 
 # Important for the App with embedded framework
 QMAKE_LFLAGS_SONAME = -Wl,-install_name,@executable_path/../Frameworks/

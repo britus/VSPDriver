@@ -44,151 +44,63 @@
 		88DA7BA92D532C6800C8F759 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 88DA7BA72D532C6700C8F759 /* LICENSE */; };
 		88F5D93D2D59E85B007A6E1F /* VSPInstallApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F5D93C2D59E85B007A6E1F /* VSPInstallApp.swift */; };
 		88F5D9402D59E933007A6E1F /* VSPDriverClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88F5D93F2D59E933007A6E1F /* VSPDriverClient.cpp */; };
-		F75E456D2E46D77B00632BF4 /* QtSql.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F75E456C2E46D77B00632BF4 /* QtSql.framework */; };
 		F75E46EA2E46DB6900632BF4 /* qt.conf in Resources */ = {isa = PBXBuildFile; fileRef = F75E46E92E46DB6300632BF4 /* qt.conf */; };
-		F7E711EA2E4D79F30054D8D5 /* QtDesignerComponents.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711552E4D79ED0054D8D5 /* QtDesignerComponents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E711EB2E4D79F30054D8D5 /* QtQuickControls2Material.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711562E4D79ED0054D8D5 /* QtQuickControls2Material.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E711ED2E4D79F30054D8D5 /* QtStateMachine.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711582E4D79ED0054D8D5 /* QtStateMachine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E711EE2E4D79F30054D8D5 /* QtQuick3DEffects.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711592E4D79ED0054D8D5 /* QtQuick3DEffects.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E711EF2E4D79F30054D8D5 /* QtGraphsWidgets.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7115A2E4D79ED0054D8D5 /* QtGraphsWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E711F12E4D79F30054D8D5 /* QtQuickControls2Universal.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7115C2E4D79ED0054D8D5 /* QtQuickControls2Universal.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E711F22E4D79F30054D8D5 /* QtLocation.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7115D2E4D79ED0054D8D5 /* QtLocation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E711F32E4D79F30054D8D5 /* QtQuick3DGlslParser.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7115E2E4D79ED0054D8D5 /* QtQuick3DGlslParser.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E711F52E4D79F30054D8D5 /* QtQuick3DXr.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711602E4D79ED0054D8D5 /* QtQuick3DXr.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E711F62E4D79F30054D8D5 /* QtGrpcQuick.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711612E4D79ED0054D8D5 /* QtGrpcQuick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E711F72E4D79F30054D8D5 /* QtHttpServer.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711622E4D79ED0054D8D5 /* QtHttpServer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E711F82E4D79F30054D8D5 /* QtQmlNetwork.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711632E4D79ED0054D8D5 /* QtQmlNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E711F92E4D79F30054D8D5 /* QtCore.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711642E4D79ED0054D8D5 /* QtCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E711FA2E4D79F30054D8D5 /* QtOpenGL.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711652E4D79ED0054D8D5 /* QtOpenGL.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E711FB2E4D79F30054D8D5 /* QtRemoteObjectsQml.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711662E4D79ED0054D8D5 /* QtRemoteObjectsQml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E711FC2E4D79F30054D8D5 /* QtPositioning.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711672E4D79ED0054D8D5 /* QtPositioning.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E711FD2E4D79F30054D8D5 /* QtQuickEffects.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711682E4D79ED0054D8D5 /* QtQuickEffects.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E711FE2E4D79F30054D8D5 /* Qt3DQuick.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711692E4D79ED0054D8D5 /* Qt3DQuick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E711FF2E4D79F30054D8D5 /* QtQuickControls2UniversalStyleImpl.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7116A2E4D79ED0054D8D5 /* QtQuickControls2UniversalStyleImpl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712002E4D79F30054D8D5 /* QtQuick3DUtils.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7116B2E4D79ED0054D8D5 /* QtQuick3DUtils.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712012E4D79F30054D8D5 /* QtSerialPort.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7116C2E4D79ED0054D8D5 /* QtSerialPort.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712022E4D79F30054D8D5 /* QtQuickControls2.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7116D2E4D79EE0054D8D5 /* QtQuickControls2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712042E4D79F30054D8D5 /* QtQuickLayouts.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7116F2E4D79EE0054D8D5 /* QtQuickLayouts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712052E4D79F30054D8D5 /* QtVirtualKeyboard.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711702E4D79EE0054D8D5 /* QtVirtualKeyboard.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712062E4D79F30054D8D5 /* QtStateMachineQml.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711712E4D79EE0054D8D5 /* QtStateMachineQml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712072E4D79F30054D8D5 /* QtQuick3DAssetUtils.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711722E4D79EE0054D8D5 /* QtQuick3DAssetUtils.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712082E4D79F30054D8D5 /* QtScxml.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711732E4D79EE0054D8D5 /* QtScxml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712092E4D79F30054D8D5 /* QtTextToSpeech.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711742E4D79EE0054D8D5 /* QtTextToSpeech.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7120A2E4D79F30054D8D5 /* QtQuickControls2Impl.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711752E4D79EE0054D8D5 /* QtQuickControls2Impl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7120B2E4D79F30054D8D5 /* QtLabsQmlModels.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711762E4D79EE0054D8D5 /* QtLabsQmlModels.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7120C2E4D79F30054D8D5 /* QtQmlModels.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711772E4D79EE0054D8D5 /* QtQmlModels.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7120E2E4D79F30054D8D5 /* Qt3DQuickInput.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711792E4D79EE0054D8D5 /* Qt3DQuickInput.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7120F2E4D79F30054D8D5 /* QtRemoteObjects.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7117A2E4D79EE0054D8D5 /* QtRemoteObjects.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712102E4D79F30054D8D5 /* QtQuickVectorImageGenerator.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7117B2E4D79EE0054D8D5 /* QtQuickVectorImageGenerator.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712112E4D79F30054D8D5 /* QtUiTools.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7117C2E4D79EE0054D8D5 /* QtUiTools.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712122E4D79F30054D8D5 /* QtDataVisualizationQml.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7117D2E4D79EE0054D8D5 /* QtDataVisualizationQml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712132E4D79F30054D8D5 /* Qt3DCore.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7117E2E4D79EE0054D8D5 /* Qt3DCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712142E4D79F30054D8D5 /* QtQuickTimelineBlendTrees.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7117F2E4D79EE0054D8D5 /* QtQuickTimelineBlendTrees.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712152E4D79F30054D8D5 /* Qt3DLogic.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711802E4D79EE0054D8D5 /* Qt3DLogic.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712162E4D79F30054D8D5 /* QtLabsSettings.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711812E4D79EE0054D8D5 /* QtLabsSettings.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712172E4D79F30054D8D5 /* Qt3DQuickScene2D.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711822E4D79EE0054D8D5 /* Qt3DQuickScene2D.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712182E4D79F30054D8D5 /* QtQuickControls2BasicStyleImpl.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711832E4D79EF0054D8D5 /* QtQuickControls2BasicStyleImpl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712192E4D79F30054D8D5 /* QtQuickControls2Fusion.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711842E4D79EF0054D8D5 /* QtQuickControls2Fusion.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7121A2E4D79F30054D8D5 /* Qt3DAnimation.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711852E4D79EF0054D8D5 /* Qt3DAnimation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7121B2E4D79F30054D8D5 /* QtQuickControls2FusionStyleImpl.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711862E4D79EF0054D8D5 /* QtQuickControls2FusionStyleImpl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7121C2E4D79F30054D8D5 /* QtQuickControls2Imagine.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711872E4D79EF0054D8D5 /* QtQuickControls2Imagine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7121D2E4D79F30054D8D5 /* Qt3DRender.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711882E4D79EF0054D8D5 /* Qt3DRender.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7121E2E4D79F30054D8D5 /* QtVirtualKeyboardQml.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711892E4D79EF0054D8D5 /* QtVirtualKeyboardQml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7121F2E4D79F30054D8D5 /* QtQuick3DPhysicsHelpers.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7118A2E4D79EF0054D8D5 /* QtQuick3DPhysicsHelpers.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712202E4D79F30054D8D5 /* QtNetworkAuth.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7118B2E4D79EF0054D8D5 /* QtNetworkAuth.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712212E4D79F30054D8D5 /* QtQuickControls2ImagineStyleImpl.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7118C2E4D79EF0054D8D5 /* QtQuickControls2ImagineStyleImpl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712222E4D79F30054D8D5 /* QtLabsFolderListModel.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7118D2E4D79EF0054D8D5 /* QtLabsFolderListModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712232E4D79F30054D8D5 /* QtXml.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7118E2E4D79EF0054D8D5 /* QtXml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712242E4D79F30054D8D5 /* Qt3DQuickRender.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7118F2E4D79EF0054D8D5 /* Qt3DQuickRender.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712252E4D79F30054D8D5 /* QtQuick3DHelpersImpl.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711902E4D79EF0054D8D5 /* QtQuick3DHelpersImpl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712262E4D79F30054D8D5 /* QtQuick.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711912E4D79EF0054D8D5 /* QtQuick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712272E4D79F30054D8D5 /* QtQuickControls2MaterialStyleImpl.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711922E4D79EF0054D8D5 /* QtQuickControls2MaterialStyleImpl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712282E4D79F30054D8D5 /* QtVirtualKeyboardSettings.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711932E4D79EF0054D8D5 /* QtVirtualKeyboardSettings.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712292E4D79F30054D8D5 /* QtCore5Compat.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711942E4D79EF0054D8D5 /* QtCore5Compat.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7122A2E4D79F30054D8D5 /* QtProtobuf.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711952E4D79EF0054D8D5 /* QtProtobuf.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7122B2E4D79F30054D8D5 /* QtGui.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711962E4D79EF0054D8D5 /* QtGui.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7122C2E4D79F30054D8D5 /* QtDBus.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711972E4D79EF0054D8D5 /* QtDBus.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7122D2E4D79F30054D8D5 /* QtBodymovin.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711982E4D79F00054D8D5 /* QtBodymovin.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7122E2E4D79F30054D8D5 /* QtQuickControls2MacOSStyleImpl.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711992E4D79F00054D8D5 /* QtQuickControls2MacOSStyleImpl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7122F2E4D79F30054D8D5 /* QtQuickDialogs2Utils.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7119A2E4D79F00054D8D5 /* QtQuickDialogs2Utils.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712302E4D79F30054D8D5 /* QtQmlMeta.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7119B2E4D79F00054D8D5 /* QtQmlMeta.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712312E4D79F30054D8D5 /* QtInsightTrackerQml.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7119C2E4D79F00054D8D5 /* QtInsightTrackerQml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712332E4D79F30054D8D5 /* Qt3DExtras.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7119E2E4D79F00054D8D5 /* Qt3DExtras.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712342E4D79F30054D8D5 /* QtQuickDialogs2.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E7119F2E4D79F00054D8D5 /* QtQuickDialogs2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712352E4D79F30054D8D5 /* QtSerialBus.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711A02E4D79F00054D8D5 /* QtSerialBus.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712362E4D79F30054D8D5 /* Qt3DQuickExtras.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711A12E4D79F00054D8D5 /* Qt3DQuickExtras.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712372E4D79F30054D8D5 /* QtQuick3DAssetImport.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711A22E4D79F00054D8D5 /* QtQuick3DAssetImport.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712382E4D79F30054D8D5 /* QtCharts.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711A32E4D79F00054D8D5 /* QtCharts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712392E4D79F30054D8D5 /* QtScxmlQml.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711A42E4D79F00054D8D5 /* QtScxmlQml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7123A2E4D79F30054D8D5 /* QtTest.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711A52E4D79F00054D8D5 /* QtTest.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7123B2E4D79F30054D8D5 /* Qt3DInput.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711A62E4D79F00054D8D5 /* Qt3DInput.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7123C2E4D79F30054D8D5 /* QtQmlCompiler.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711A72E4D79F00054D8D5 /* QtQmlCompiler.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7123D2E4D79F30054D8D5 /* QtQuick3DIblBaker.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711A82E4D79F00054D8D5 /* QtQuick3DIblBaker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7123E2E4D79F30054D8D5 /* QtDesigner.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711A92E4D79F00054D8D5 /* QtDesigner.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7123F2E4D79F30054D8D5 /* QtQuick3DRuntimeRender.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711AA2E4D79F00054D8D5 /* QtQuick3DRuntimeRender.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712402E4D79F30054D8D5 /* QtPdfQuick.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711AB2E4D79F00054D8D5 /* QtPdfQuick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712412E4D79F30054D8D5 /* QtQuick3DSpatialAudio.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711AC2E4D79F00054D8D5 /* QtQuick3DSpatialAudio.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712422E4D79F30054D8D5 /* QtGraphs.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711AD2E4D79F00054D8D5 /* QtGraphs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712432E4D79F30054D8D5 /* QtProtobufWellKnownTypes.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711AE2E4D79F00054D8D5 /* QtProtobufWellKnownTypes.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712442E4D79F30054D8D5 /* QtQuick3DPhysics.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711AF2E4D79F00054D8D5 /* QtQuick3DPhysics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712452E4D79F30054D8D5 /* QtSpatialAudio.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711B02E4D79F10054D8D5 /* QtSpatialAudio.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712462E4D79F30054D8D5 /* Qt3DQuickAnimation.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711B12E4D79F10054D8D5 /* Qt3DQuickAnimation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712472E4D79F30054D8D5 /* QtMultimediaWidgets.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711B22E4D79F10054D8D5 /* QtMultimediaWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712482E4D79F30054D8D5 /* QtQuickControls2IOSStyleImpl.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711B32E4D79F10054D8D5 /* QtQuickControls2IOSStyleImpl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712492E4D79F30054D8D5 /* QtQml.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711B42E4D79F10054D8D5 /* QtQml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7124A2E4D79F30054D8D5 /* QtHelp.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711B52E4D79F10054D8D5 /* QtHelp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7124B2E4D79F30054D8D5 /* QtProtobufQtCoreTypes.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711B62E4D79F10054D8D5 /* QtProtobufQtCoreTypes.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7124C2E4D79F30054D8D5 /* QtQuickTest.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711B72E4D79F10054D8D5 /* QtQuickTest.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7124D2E4D79F30054D8D5 /* QtQuickDialogs2QuickImpl.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711B82E4D79F10054D8D5 /* QtQuickDialogs2QuickImpl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7124E2E4D79F30054D8D5 /* Qt3DQuickLogic.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711B92E4D79F10054D8D5 /* Qt3DQuickLogic.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7124F2E4D79F30054D8D5 /* QtSensors.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711BA2E4D79F10054D8D5 /* QtSensors.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712502E4D79F30054D8D5 /* QtDataVisualization.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711BB2E4D79F10054D8D5 /* QtDataVisualization.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712512E4D79F30054D8D5 /* QtMultimediaQuick.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711BC2E4D79F10054D8D5 /* QtMultimediaQuick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712522E4D79F30054D8D5 /* QtLabsSharedImage.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711BD2E4D79F10054D8D5 /* QtLabsSharedImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712532E4D79F30054D8D5 /* QtOpenGLWidgets.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711BE2E4D79F10054D8D5 /* QtOpenGLWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712542E4D79F30054D8D5 /* QtQuickShapes.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711BF2E4D79F10054D8D5 /* QtQuickShapes.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712552E4D79F30054D8D5 /* QtQuickVectorImage.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711C02E4D79F10054D8D5 /* QtQuickVectorImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712562E4D79F30054D8D5 /* QtQuickControls2Basic.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711C12E4D79F10054D8D5 /* QtQuickControls2Basic.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712572E4D79F30054D8D5 /* QtQuick3D.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711C22E4D79F10054D8D5 /* QtQuick3D.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712582E4D79F30054D8D5 /* QtQuick3DParticleEffects.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711C32E4D79F10054D8D5 /* QtQuick3DParticleEffects.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7125A2E4D79F30054D8D5 /* QtQmlWorkerScript.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711C52E4D79F20054D8D5 /* QtQmlWorkerScript.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7125B2E4D79F30054D8D5 /* QtQuick3DParticles.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711C62E4D79F20054D8D5 /* QtQuick3DParticles.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7125C2E4D79F30054D8D5 /* QtMultimedia.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711C72E4D79F20054D8D5 /* QtMultimedia.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7125D2E4D79F30054D8D5 /* QtChartsQml.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711C82E4D79F20054D8D5 /* QtChartsQml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7125E2E4D79F30054D8D5 /* QtQuickWidgets.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711C92E4D79F20054D8D5 /* QtQuickWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7125F2E4D79F30054D8D5 /* QtQmlLocalStorage.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711CA2E4D79F20054D8D5 /* QtQmlLocalStorage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712602E4D79F30054D8D5 /* QtNetwork.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711CB2E4D79F20054D8D5 /* QtNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712612E4D79F30054D8D5 /* QtQuickTimeline.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711CC2E4D79F20054D8D5 /* QtQuickTimeline.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712622E4D79F30054D8D5 /* QtQuickControls2FluentWinUI3StyleImpl.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711CD2E4D79F20054D8D5 /* QtQuickControls2FluentWinUI3StyleImpl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712632E4D79F30054D8D5 /* QtSvgWidgets.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711CE2E4D79F20054D8D5 /* QtSvgWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712642E4D79F30054D8D5 /* QtWidgets.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711CF2E4D79F20054D8D5 /* QtWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712652E4D79F30054D8D5 /* QtLabsWavefrontMesh.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711D02E4D79F20054D8D5 /* QtLabsWavefrontMesh.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712662E4D79F30054D8D5 /* QtPositioningQuick.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711D12E4D79F20054D8D5 /* QtPositioningQuick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712672E4D79F30054D8D5 /* QtConcurrent.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711D22E4D79F20054D8D5 /* QtConcurrent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712682E4D79F30054D8D5 /* QtInsightTracker.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711D32E4D79F20054D8D5 /* QtInsightTracker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712692E4D79F30054D8D5 /* QtSvg.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711D42E4D79F20054D8D5 /* QtSvg.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7126A2E4D79F30054D8D5 /* QtNfc.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711D52E4D79F20054D8D5 /* QtNfc.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7126B2E4D79F30054D8D5 /* QtSensorsQuick.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711D62E4D79F20054D8D5 /* QtSensorsQuick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7126C2E4D79F30054D8D5 /* QtQmlXmlListModel.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711D72E4D79F20054D8D5 /* QtQmlXmlListModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7126D2E4D79F30054D8D5 /* QtPrintSupport.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711D82E4D79F20054D8D5 /* QtPrintSupport.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7126E2E4D79F30054D8D5 /* QtShaderTools.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711D92E4D79F20054D8D5 /* QtShaderTools.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7126F2E4D79F30054D8D5 /* QtProtobufQtGuiTypes.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711DA2E4D79F30054D8D5 /* QtProtobufQtGuiTypes.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712702E4D79F30054D8D5 /* QtProtobufQuick.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711DB2E4D79F30054D8D5 /* QtProtobufQuick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712712E4D79F30054D8D5 /* QtBluetooth.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711DC2E4D79F30054D8D5 /* QtBluetooth.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712722E4D79F30054D8D5 /* Qt3DQuickScene3D.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711DD2E4D79F30054D8D5 /* Qt3DQuickScene3D.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712732E4D79F30054D8D5 /* QtPdf.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711DE2E4D79F30054D8D5 /* QtPdf.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712742E4D79F30054D8D5 /* QtQuick3DHelpers.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711DF2E4D79F30054D8D5 /* QtQuick3DHelpers.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712752E4D79F30054D8D5 /* QtLabsAnimation.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711E02E4D79F30054D8D5 /* QtLabsAnimation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712762E4D79F30054D8D5 /* QtSql.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711E12E4D79F30054D8D5 /* QtSql.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712772E4D79F30054D8D5 /* QtGrpc.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711E22E4D79F30054D8D5 /* QtGrpc.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7127A2E4D79F30054D8D5 /* QtLabsPlatform.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711E52E4D79F30054D8D5 /* QtLabsPlatform.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7127B2E4D79F30054D8D5 /* QtQmlCore.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711E62E4D79F30054D8D5 /* QtQmlCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7127C2E4D79F30054D8D5 /* QtQuickParticles.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711E72E4D79F30054D8D5 /* QtQuickParticles.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7127D2E4D79F30054D8D5 /* QtQuickTemplates2.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711E82E4D79F30054D8D5 /* QtQuickTemplates2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E7127E2E4D79F30054D8D5 /* QtPdfWidgets.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7E711E92E4D79F30054D8D5 /* QtPdfWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F7E712852E4D7EAA0054D8D5 /* libqcocoa.dylib in Copy QT Platform Plugins */ = {isa = PBXBuildFile; fileRef = F7E712812E4D7EA90054D8D5 /* libqcocoa.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		F7E712862E4D7EAA0054D8D5 /* libqoffscreen.dylib in Copy QT Platform Plugins */ = {isa = PBXBuildFile; fileRef = F7E712822E4D7EAA0054D8D5 /* libqoffscreen.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		F7E712872E4D7EAA0054D8D5 /* libqminimal.dylib in Copy QT Platform Plugins */ = {isa = PBXBuildFile; fileRef = F7E712832E4D7EAA0054D8D5 /* libqminimal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		F79BA82E2EAB8F590051F2DC /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F79BA82D2EAB8F590051F2DC /* AppKit.framework */; };
+		F7CF33B22EAB9937000F8397 /* QtConcurrent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33922EAB9849000F8397 /* QtConcurrent.framework */; };
+		F7CF33B32EAB9937000F8397 /* QtConcurrent.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF33922EAB9849000F8397 /* QtConcurrent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33B42EAB9939000F8397 /* QtCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33902EAB983B000F8397 /* QtCore.framework */; };
+		F7CF33B52EAB9939000F8397 /* QtCore.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF33902EAB983B000F8397 /* QtCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33B62EAB993B000F8397 /* QtCore5Compat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33942EAB984F000F8397 /* QtCore5Compat.framework */; };
+		F7CF33B72EAB993B000F8397 /* QtCore5Compat.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF33942EAB984F000F8397 /* QtCore5Compat.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33B82EAB993D000F8397 /* QtDBus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33962EAB985A000F8397 /* QtDBus.framework */; };
+		F7CF33B92EAB993D000F8397 /* QtDBus.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF33962EAB985A000F8397 /* QtDBus.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33BA2EAB993E000F8397 /* QtGraphs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33982EAB9865000F8397 /* QtGraphs.framework */; };
+		F7CF33BB2EAB993E000F8397 /* QtGraphs.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF33982EAB9865000F8397 /* QtGraphs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33BC2EAB9940000F8397 /* QtGui.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF339A2EAB986E000F8397 /* QtGui.framework */; };
+		F7CF33BD2EAB9940000F8397 /* QtGui.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF339A2EAB986E000F8397 /* QtGui.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33BE2EAB9942000F8397 /* QtNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF339C2EAB987B000F8397 /* QtNetwork.framework */; };
+		F7CF33BF2EAB9942000F8397 /* QtNetwork.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF339C2EAB987B000F8397 /* QtNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33C02EAB9943000F8397 /* QtNetworkAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF339E2EAB9881000F8397 /* QtNetworkAuth.framework */; };
+		F7CF33C12EAB9943000F8397 /* QtNetworkAuth.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF339E2EAB9881000F8397 /* QtNetworkAuth.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33C22EAB9945000F8397 /* QtOpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33A02EAB9888000F8397 /* QtOpenGL.framework */; };
+		F7CF33C32EAB9945000F8397 /* QtOpenGL.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF33A02EAB9888000F8397 /* QtOpenGL.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33C42EAB9946000F8397 /* QtQml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33A22EAB9893000F8397 /* QtQml.framework */; };
+		F7CF33C52EAB9946000F8397 /* QtQml.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF33A22EAB9893000F8397 /* QtQml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33C62EAB9948000F8397 /* QtQmlCompiler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33A42EAB989B000F8397 /* QtQmlCompiler.framework */; };
+		F7CF33C72EAB9948000F8397 /* QtQmlCompiler.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF33A42EAB989B000F8397 /* QtQmlCompiler.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33C82EAB994A000F8397 /* QtQmlCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33A62EAB98A3000F8397 /* QtQmlCore.framework */; };
+		F7CF33C92EAB994A000F8397 /* QtQmlCore.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF33A62EAB98A3000F8397 /* QtQmlCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33CA2EAB994C000F8397 /* QtQmlMeta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33A82EAB98AB000F8397 /* QtQmlMeta.framework */; };
+		F7CF33CB2EAB994C000F8397 /* QtQmlMeta.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF33A82EAB98AB000F8397 /* QtQmlMeta.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33CC2EAB994D000F8397 /* QtQmlModels.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33AA2EAB98B3000F8397 /* QtQmlModels.framework */; };
+		F7CF33CD2EAB994D000F8397 /* QtQmlModels.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF33AA2EAB98B3000F8397 /* QtQmlModels.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33CE2EAB994F000F8397 /* QtSensors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33AC2EAB98CA000F8397 /* QtSensors.framework */; };
+		F7CF33CF2EAB994F000F8397 /* QtSensors.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF33AC2EAB98CA000F8397 /* QtSensors.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33D02EAB9951000F8397 /* QtSerialBus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33AE2EAB98DA000F8397 /* QtSerialBus.framework */; };
+		F7CF33D12EAB9951000F8397 /* QtSerialBus.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF33AE2EAB98DA000F8397 /* QtSerialBus.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33D22EAB9953000F8397 /* QtSerialPort.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33B02EAB98E3000F8397 /* QtSerialPort.framework */; };
+		F7CF33D32EAB9953000F8397 /* QtSerialPort.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF33B02EAB98E3000F8397 /* QtSerialPort.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33D82EAB9AFB000F8397 /* QtXml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33D42EAB9AAB000F8397 /* QtXml.framework */; };
+		F7CF33D92EAB9AFB000F8397 /* QtXml.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF33D42EAB9AAB000F8397 /* QtXml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33DA2EAB9AFD000F8397 /* QtWidgets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33D62EAB9AB2000F8397 /* QtWidgets.framework */; };
+		F7CF33DB2EAB9AFD000F8397 /* QtWidgets.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF33D62EAB9AB2000F8397 /* QtWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33DE2EAB9B2E000F8397 /* QtQmlWorkerScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33DC2EAB9B2C000F8397 /* QtQmlWorkerScript.framework */; };
+		F7CF33DF2EAB9B2F000F8397 /* QtQmlWorkerScript.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF33DC2EAB9B2C000F8397 /* QtQmlWorkerScript.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33E22EAB9B4C000F8397 /* QtQuickShapes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33E02EAB9B49000F8397 /* QtQuickShapes.framework */; };
+		F7CF33E32EAB9B4C000F8397 /* QtQuickShapes.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF33E02EAB9B49000F8397 /* QtQuickShapes.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33E62EAB9B6D000F8397 /* QtQuick3D.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33E42EAB9B66000F8397 /* QtQuick3D.framework */; };
+		F7CF33E72EAB9B6D000F8397 /* QtQuick3D.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF33E42EAB9B66000F8397 /* QtQuick3D.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33EA2EAB9B86000F8397 /* QtQuick3DRuntimeRender.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33E82EAB9B83000F8397 /* QtQuick3DRuntimeRender.framework */; };
+		F7CF33EB2EAB9B86000F8397 /* QtQuick3DRuntimeRender.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF33E82EAB9B83000F8397 /* QtQuick3DRuntimeRender.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33EE2EAB9BA6000F8397 /* QtShaderTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33EC2EAB9BA1000F8397 /* QtShaderTools.framework */; };
+		F7CF33EF2EAB9BA6000F8397 /* QtShaderTools.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF33EC2EAB9BA1000F8397 /* QtShaderTools.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33F22EAB9BC3000F8397 /* QtQuick3DUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33F02EAB9BC0000F8397 /* QtQuick3DUtils.framework */; };
+		F7CF33F32EAB9BC4000F8397 /* QtQuick3DUtils.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF33F02EAB9BC0000F8397 /* QtQuick3DUtils.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33F62EAB9BDA000F8397 /* QtQuick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CF33F42EAB9BD6000F8397 /* QtQuick.framework */; };
+		F7CF33F72EAB9BDA000F8397 /* QtQuick.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = F7CF33F42EAB9BD6000F8397 /* QtQuick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F7CF33F82EAB9C27000F8397 /* libqcocoa.dylib in -- 01 -- Copy QT Platform Plugins */ = {isa = PBXBuildFile; fileRef = F7CF33272EAB96CC000F8397 /* libqcocoa.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		F7CF33F92EAB9C2B000F8397 /* libqminimal.dylib in -- 01 -- Copy QT Platform Plugins */ = {isa = PBXBuildFile; fileRef = F7CF33292EAB96CC000F8397 /* libqminimal.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		F7CF33FA2EAB9C2F000F8397 /* libqoffscreen.dylib in -- 01 -- Copy QT Platform Plugins */ = {isa = PBXBuildFile; fileRef = F7CF332B2EAB96CC000F8397 /* libqoffscreen.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -224,21 +136,21 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 886B50842D805141007BE2EC /* VSPSetup.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = BA4CAC41205C9B966CB5498A;
+			remoteGlobalIDString = 83A42217B8BF57161E7DD4FF;
 			remoteInfo = VSPSetup;
 		};
 		886B50942D805178007BE2EC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 886B507D2D805115007BE2EC /* VSPController.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 6440C3D75D1634369A890855;
+			remoteGlobalIDString = A9FE87750FE27A5BC376A7F4;
 			remoteInfo = VSPController;
 		};
 		886B50962D80517C007BE2EC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 886B508B2D805161007BE2EC /* VSPClientUI.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 878B097E357DCE03CBAB35D0;
+			remoteGlobalIDString = 617B98012BFE23494E393905;
 			remoteInfo = VSPClientUI;
 		};
 /* End PBXContainerItemProxy section */
@@ -261,164 +173,50 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F7E711EA2E4D79F30054D8D5 /* QtDesignerComponents.framework in Embed Libraries */,
-				F7E711EB2E4D79F30054D8D5 /* QtQuickControls2Material.framework in Embed Libraries */,
-				F7E711ED2E4D79F30054D8D5 /* QtStateMachine.framework in Embed Libraries */,
-				F7E711EE2E4D79F30054D8D5 /* QtQuick3DEffects.framework in Embed Libraries */,
-				F7E711EF2E4D79F30054D8D5 /* QtGraphsWidgets.framework in Embed Libraries */,
-				F7E711F12E4D79F30054D8D5 /* QtQuickControls2Universal.framework in Embed Libraries */,
-				F7E711F22E4D79F30054D8D5 /* QtLocation.framework in Embed Libraries */,
-				F7E711F32E4D79F30054D8D5 /* QtQuick3DGlslParser.framework in Embed Libraries */,
-				F7E711F52E4D79F30054D8D5 /* QtQuick3DXr.framework in Embed Libraries */,
-				F7E711F62E4D79F30054D8D5 /* QtGrpcQuick.framework in Embed Libraries */,
-				F7E711F72E4D79F30054D8D5 /* QtHttpServer.framework in Embed Libraries */,
-				F7E711F82E4D79F30054D8D5 /* QtQmlNetwork.framework in Embed Libraries */,
-				F7E711F92E4D79F30054D8D5 /* QtCore.framework in Embed Libraries */,
-				F7E711FA2E4D79F30054D8D5 /* QtOpenGL.framework in Embed Libraries */,
-				F7E711FB2E4D79F30054D8D5 /* QtRemoteObjectsQml.framework in Embed Libraries */,
-				F7E711FC2E4D79F30054D8D5 /* QtPositioning.framework in Embed Libraries */,
-				F7E711FD2E4D79F30054D8D5 /* QtQuickEffects.framework in Embed Libraries */,
-				F7E711FE2E4D79F30054D8D5 /* Qt3DQuick.framework in Embed Libraries */,
-				F7E711FF2E4D79F30054D8D5 /* QtQuickControls2UniversalStyleImpl.framework in Embed Libraries */,
-				F7E712002E4D79F30054D8D5 /* QtQuick3DUtils.framework in Embed Libraries */,
-				F7E712012E4D79F30054D8D5 /* QtSerialPort.framework in Embed Libraries */,
-				F7E712022E4D79F30054D8D5 /* QtQuickControls2.framework in Embed Libraries */,
-				F7E712042E4D79F30054D8D5 /* QtQuickLayouts.framework in Embed Libraries */,
-				F7E712052E4D79F30054D8D5 /* QtVirtualKeyboard.framework in Embed Libraries */,
-				F7E712062E4D79F30054D8D5 /* QtStateMachineQml.framework in Embed Libraries */,
-				F7E712072E4D79F30054D8D5 /* QtQuick3DAssetUtils.framework in Embed Libraries */,
-				F7E712082E4D79F30054D8D5 /* QtScxml.framework in Embed Libraries */,
-				F7E712092E4D79F30054D8D5 /* QtTextToSpeech.framework in Embed Libraries */,
-				F7E7120A2E4D79F30054D8D5 /* QtQuickControls2Impl.framework in Embed Libraries */,
-				F7E7120B2E4D79F30054D8D5 /* QtLabsQmlModels.framework in Embed Libraries */,
-				F7E7120C2E4D79F30054D8D5 /* QtQmlModels.framework in Embed Libraries */,
-				F7E7120E2E4D79F30054D8D5 /* Qt3DQuickInput.framework in Embed Libraries */,
-				F7E7120F2E4D79F30054D8D5 /* QtRemoteObjects.framework in Embed Libraries */,
-				F7E712102E4D79F30054D8D5 /* QtQuickVectorImageGenerator.framework in Embed Libraries */,
-				F7E712112E4D79F30054D8D5 /* QtUiTools.framework in Embed Libraries */,
-				F7E712122E4D79F30054D8D5 /* QtDataVisualizationQml.framework in Embed Libraries */,
-				F7E712132E4D79F30054D8D5 /* Qt3DCore.framework in Embed Libraries */,
-				F7E712142E4D79F30054D8D5 /* QtQuickTimelineBlendTrees.framework in Embed Libraries */,
-				F7E712152E4D79F30054D8D5 /* Qt3DLogic.framework in Embed Libraries */,
-				F7E712162E4D79F30054D8D5 /* QtLabsSettings.framework in Embed Libraries */,
-				F7E712172E4D79F30054D8D5 /* Qt3DQuickScene2D.framework in Embed Libraries */,
-				F7E712182E4D79F30054D8D5 /* QtQuickControls2BasicStyleImpl.framework in Embed Libraries */,
-				F7E712192E4D79F30054D8D5 /* QtQuickControls2Fusion.framework in Embed Libraries */,
-				F7E7121A2E4D79F30054D8D5 /* Qt3DAnimation.framework in Embed Libraries */,
-				F7E7121B2E4D79F30054D8D5 /* QtQuickControls2FusionStyleImpl.framework in Embed Libraries */,
-				F7E7121C2E4D79F30054D8D5 /* QtQuickControls2Imagine.framework in Embed Libraries */,
-				F7E7121D2E4D79F30054D8D5 /* Qt3DRender.framework in Embed Libraries */,
-				F7E7121E2E4D79F30054D8D5 /* QtVirtualKeyboardQml.framework in Embed Libraries */,
-				F7E7121F2E4D79F30054D8D5 /* QtQuick3DPhysicsHelpers.framework in Embed Libraries */,
-				F7E712202E4D79F30054D8D5 /* QtNetworkAuth.framework in Embed Libraries */,
-				F7E712212E4D79F30054D8D5 /* QtQuickControls2ImagineStyleImpl.framework in Embed Libraries */,
-				F7E712222E4D79F30054D8D5 /* QtLabsFolderListModel.framework in Embed Libraries */,
-				F7E712232E4D79F30054D8D5 /* QtXml.framework in Embed Libraries */,
-				F7E712242E4D79F30054D8D5 /* Qt3DQuickRender.framework in Embed Libraries */,
-				F7E712252E4D79F30054D8D5 /* QtQuick3DHelpersImpl.framework in Embed Libraries */,
-				F7E712262E4D79F30054D8D5 /* QtQuick.framework in Embed Libraries */,
-				F7E712272E4D79F30054D8D5 /* QtQuickControls2MaterialStyleImpl.framework in Embed Libraries */,
-				F7E712282E4D79F30054D8D5 /* QtVirtualKeyboardSettings.framework in Embed Libraries */,
-				F7E712292E4D79F30054D8D5 /* QtCore5Compat.framework in Embed Libraries */,
-				F7E7122A2E4D79F30054D8D5 /* QtProtobuf.framework in Embed Libraries */,
-				F7E7122B2E4D79F30054D8D5 /* QtGui.framework in Embed Libraries */,
-				F7E7122C2E4D79F30054D8D5 /* QtDBus.framework in Embed Libraries */,
-				F7E7122D2E4D79F30054D8D5 /* QtBodymovin.framework in Embed Libraries */,
-				F7E7122E2E4D79F30054D8D5 /* QtQuickControls2MacOSStyleImpl.framework in Embed Libraries */,
-				F7E7122F2E4D79F30054D8D5 /* QtQuickDialogs2Utils.framework in Embed Libraries */,
-				F7E712302E4D79F30054D8D5 /* QtQmlMeta.framework in Embed Libraries */,
-				F7E712312E4D79F30054D8D5 /* QtInsightTrackerQml.framework in Embed Libraries */,
-				F7E712332E4D79F30054D8D5 /* Qt3DExtras.framework in Embed Libraries */,
-				F7E712342E4D79F30054D8D5 /* QtQuickDialogs2.framework in Embed Libraries */,
-				F7E712352E4D79F30054D8D5 /* QtSerialBus.framework in Embed Libraries */,
-				F7E712362E4D79F30054D8D5 /* Qt3DQuickExtras.framework in Embed Libraries */,
-				F7E712372E4D79F30054D8D5 /* QtQuick3DAssetImport.framework in Embed Libraries */,
-				F7E712382E4D79F30054D8D5 /* QtCharts.framework in Embed Libraries */,
-				F7E712392E4D79F30054D8D5 /* QtScxmlQml.framework in Embed Libraries */,
-				F7E7123A2E4D79F30054D8D5 /* QtTest.framework in Embed Libraries */,
-				F7E7123B2E4D79F30054D8D5 /* Qt3DInput.framework in Embed Libraries */,
-				F7E7123C2E4D79F30054D8D5 /* QtQmlCompiler.framework in Embed Libraries */,
-				F7E7123D2E4D79F30054D8D5 /* QtQuick3DIblBaker.framework in Embed Libraries */,
-				F7E7123E2E4D79F30054D8D5 /* QtDesigner.framework in Embed Libraries */,
-				F7E7123F2E4D79F30054D8D5 /* QtQuick3DRuntimeRender.framework in Embed Libraries */,
-				F7E712402E4D79F30054D8D5 /* QtPdfQuick.framework in Embed Libraries */,
-				F7E712412E4D79F30054D8D5 /* QtQuick3DSpatialAudio.framework in Embed Libraries */,
-				F7E712422E4D79F30054D8D5 /* QtGraphs.framework in Embed Libraries */,
-				F7E712432E4D79F30054D8D5 /* QtProtobufWellKnownTypes.framework in Embed Libraries */,
-				F7E712442E4D79F30054D8D5 /* QtQuick3DPhysics.framework in Embed Libraries */,
-				F7E712452E4D79F30054D8D5 /* QtSpatialAudio.framework in Embed Libraries */,
-				F7E712462E4D79F30054D8D5 /* Qt3DQuickAnimation.framework in Embed Libraries */,
-				F7E712472E4D79F30054D8D5 /* QtMultimediaWidgets.framework in Embed Libraries */,
-				F7E712482E4D79F30054D8D5 /* QtQuickControls2IOSStyleImpl.framework in Embed Libraries */,
-				F7E712492E4D79F30054D8D5 /* QtQml.framework in Embed Libraries */,
-				F7E7124A2E4D79F30054D8D5 /* QtHelp.framework in Embed Libraries */,
-				F7E7124B2E4D79F30054D8D5 /* QtProtobufQtCoreTypes.framework in Embed Libraries */,
-				F7E7124C2E4D79F30054D8D5 /* QtQuickTest.framework in Embed Libraries */,
-				F7E7124D2E4D79F30054D8D5 /* QtQuickDialogs2QuickImpl.framework in Embed Libraries */,
-				F7E7124E2E4D79F30054D8D5 /* Qt3DQuickLogic.framework in Embed Libraries */,
-				F7E7124F2E4D79F30054D8D5 /* QtSensors.framework in Embed Libraries */,
-				F7E712502E4D79F30054D8D5 /* QtDataVisualization.framework in Embed Libraries */,
-				F7E712512E4D79F30054D8D5 /* QtMultimediaQuick.framework in Embed Libraries */,
-				F7E712522E4D79F30054D8D5 /* QtLabsSharedImage.framework in Embed Libraries */,
-				F7E712532E4D79F30054D8D5 /* QtOpenGLWidgets.framework in Embed Libraries */,
-				F7E712542E4D79F30054D8D5 /* QtQuickShapes.framework in Embed Libraries */,
-				F7E712552E4D79F30054D8D5 /* QtQuickVectorImage.framework in Embed Libraries */,
-				F7E712562E4D79F30054D8D5 /* QtQuickControls2Basic.framework in Embed Libraries */,
-				F7E712572E4D79F30054D8D5 /* QtQuick3D.framework in Embed Libraries */,
-				F7E712582E4D79F30054D8D5 /* QtQuick3DParticleEffects.framework in Embed Libraries */,
-				F7E7125A2E4D79F30054D8D5 /* QtQmlWorkerScript.framework in Embed Libraries */,
-				F7E7125B2E4D79F30054D8D5 /* QtQuick3DParticles.framework in Embed Libraries */,
-				F7E7125C2E4D79F30054D8D5 /* QtMultimedia.framework in Embed Libraries */,
-				F7E7125D2E4D79F30054D8D5 /* QtChartsQml.framework in Embed Libraries */,
-				F7E7125E2E4D79F30054D8D5 /* QtQuickWidgets.framework in Embed Libraries */,
-				F7E7125F2E4D79F30054D8D5 /* QtQmlLocalStorage.framework in Embed Libraries */,
-				F7E712602E4D79F30054D8D5 /* QtNetwork.framework in Embed Libraries */,
-				F7E712612E4D79F30054D8D5 /* QtQuickTimeline.framework in Embed Libraries */,
-				F7E712622E4D79F30054D8D5 /* QtQuickControls2FluentWinUI3StyleImpl.framework in Embed Libraries */,
-				F7E712632E4D79F30054D8D5 /* QtSvgWidgets.framework in Embed Libraries */,
-				F7E712642E4D79F30054D8D5 /* QtWidgets.framework in Embed Libraries */,
-				F7E712652E4D79F30054D8D5 /* QtLabsWavefrontMesh.framework in Embed Libraries */,
-				F7E712662E4D79F30054D8D5 /* QtPositioningQuick.framework in Embed Libraries */,
-				F7E712672E4D79F30054D8D5 /* QtConcurrent.framework in Embed Libraries */,
-				F7E712682E4D79F30054D8D5 /* QtInsightTracker.framework in Embed Libraries */,
-				F7E712692E4D79F30054D8D5 /* QtSvg.framework in Embed Libraries */,
-				F7E7126A2E4D79F30054D8D5 /* QtNfc.framework in Embed Libraries */,
-				F7E7126B2E4D79F30054D8D5 /* QtSensorsQuick.framework in Embed Libraries */,
-				F7E7126C2E4D79F30054D8D5 /* QtQmlXmlListModel.framework in Embed Libraries */,
-				F7E7126D2E4D79F30054D8D5 /* QtPrintSupport.framework in Embed Libraries */,
-				F7E7126E2E4D79F30054D8D5 /* QtShaderTools.framework in Embed Libraries */,
-				F7E7126F2E4D79F30054D8D5 /* QtProtobufQtGuiTypes.framework in Embed Libraries */,
-				F7E712702E4D79F30054D8D5 /* QtProtobufQuick.framework in Embed Libraries */,
-				F7E712712E4D79F30054D8D5 /* QtBluetooth.framework in Embed Libraries */,
-				F7E712722E4D79F30054D8D5 /* Qt3DQuickScene3D.framework in Embed Libraries */,
-				F7E712732E4D79F30054D8D5 /* QtPdf.framework in Embed Libraries */,
-				F7E712742E4D79F30054D8D5 /* QtQuick3DHelpers.framework in Embed Libraries */,
-				F7E712752E4D79F30054D8D5 /* QtLabsAnimation.framework in Embed Libraries */,
-				F7E712762E4D79F30054D8D5 /* QtSql.framework in Embed Libraries */,
-				F7E712772E4D79F30054D8D5 /* QtGrpc.framework in Embed Libraries */,
-				F7E7127A2E4D79F30054D8D5 /* QtLabsPlatform.framework in Embed Libraries */,
-				F7E7127B2E4D79F30054D8D5 /* QtQmlCore.framework in Embed Libraries */,
-				F7E7127C2E4D79F30054D8D5 /* QtQuickParticles.framework in Embed Libraries */,
-				F7E7127D2E4D79F30054D8D5 /* QtQuickTemplates2.framework in Embed Libraries */,
-				F7E7127E2E4D79F30054D8D5 /* QtPdfWidgets.framework in Embed Libraries */,
+				F7CF33C32EAB9945000F8397 /* QtOpenGL.framework in Embed Libraries */,
+				F7CF33E72EAB9B6D000F8397 /* QtQuick3D.framework in Embed Libraries */,
+				F7CF33BB2EAB993E000F8397 /* QtGraphs.framework in Embed Libraries */,
+				F7CF33B52EAB9939000F8397 /* QtCore.framework in Embed Libraries */,
+				F7CF33DB2EAB9AFD000F8397 /* QtWidgets.framework in Embed Libraries */,
+				F7CF33BF2EAB9942000F8397 /* QtNetwork.framework in Embed Libraries */,
+				F7CF33F72EAB9BDA000F8397 /* QtQuick.framework in Embed Libraries */,
+				F7CF33D12EAB9951000F8397 /* QtSerialBus.framework in Embed Libraries */,
+				F7CF33C12EAB9943000F8397 /* QtNetworkAuth.framework in Embed Libraries */,
+				F7CF33CB2EAB994C000F8397 /* QtQmlMeta.framework in Embed Libraries */,
+				F7CF33D92EAB9AFB000F8397 /* QtXml.framework in Embed Libraries */,
 				886B509D2D8051C5007BE2EC /* VSPClientUI.framework in Embed Libraries */,
+				F7CF33B92EAB993D000F8397 /* QtDBus.framework in Embed Libraries */,
+				F7CF33B72EAB993B000F8397 /* QtCore5Compat.framework in Embed Libraries */,
+				F7CF33BD2EAB9940000F8397 /* QtGui.framework in Embed Libraries */,
+				F7CF33EB2EAB9B86000F8397 /* QtQuick3DRuntimeRender.framework in Embed Libraries */,
+				F7CF33C92EAB994A000F8397 /* QtQmlCore.framework in Embed Libraries */,
+				F7CF33EF2EAB9BA6000F8397 /* QtShaderTools.framework in Embed Libraries */,
 				886B509C2D8051C0007BE2EC /* VSPController.framework in Embed Libraries */,
+				F7CF33B32EAB9937000F8397 /* QtConcurrent.framework in Embed Libraries */,
+				F7CF33CF2EAB994F000F8397 /* QtSensors.framework in Embed Libraries */,
+				F7CF33E32EAB9B4C000F8397 /* QtQuickShapes.framework in Embed Libraries */,
+				F7CF33CD2EAB994D000F8397 /* QtQmlModels.framework in Embed Libraries */,
+				F7CF33F32EAB9BC4000F8397 /* QtQuick3DUtils.framework in Embed Libraries */,
+				F7CF33D32EAB9953000F8397 /* QtSerialPort.framework in Embed Libraries */,
+				F7CF33C52EAB9946000F8397 /* QtQml.framework in Embed Libraries */,
 				886B509B2D8051B7007BE2EC /* VSPSetup.framework in Embed Libraries */,
+				F7CF33DF2EAB9B2F000F8397 /* QtQmlWorkerScript.framework in Embed Libraries */,
+				F7CF33C72EAB9948000F8397 /* QtQmlCompiler.framework in Embed Libraries */,
 			);
 			name = "Embed Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F7E7127F2E4D7E180054D8D5 /* Copy QT Platform Plugins */ = {
+		F7E7127F2E4D7E180054D8D5 /* -- 01 -- Copy QT Platform Plugins */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = platforms;
 			dstSubfolderSpec = 13;
 			files = (
-				F7E712852E4D7EAA0054D8D5 /* libqcocoa.dylib in Copy QT Platform Plugins */,
-				F7E712862E4D7EAA0054D8D5 /* libqoffscreen.dylib in Copy QT Platform Plugins */,
-				F7E712872E4D7EAA0054D8D5 /* libqminimal.dylib in Copy QT Platform Plugins */,
+				F7CF33F82EAB9C27000F8397 /* libqcocoa.dylib in -- 01 -- Copy QT Platform Plugins */,
+				F7CF33F92EAB9C2B000F8397 /* libqminimal.dylib in -- 01 -- Copy QT Platform Plugins */,
+				F7CF33FA2EAB9C2F000F8397 /* libqoffscreen.dylib in -- 01 -- Copy QT Platform Plugins */,
 			);
-			name = "Copy QT Platform Plugins";
+			name = "-- 01 -- Copy QT Platform Plugins";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -479,152 +277,82 @@
 		88F12FF32DCDBED600E0486A /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		88F5D93C2D59E85B007A6E1F /* VSPInstallApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSPInstallApp.swift; sourceTree = "<group>"; };
 		88F5D93F2D59E933007A6E1F /* VSPDriverClient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VSPDriverClient.cpp; sourceTree = "<group>"; };
-		F75E456C2E46D77B00632BF4 /* QtSql.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtSql.framework; path = ../../Qt/6.9.1/macos/lib/QtSql.framework; sourceTree = "<group>"; };
 		F75E46E92E46DB6300632BF4 /* qt.conf */ = {isa = PBXFileReference; lastKnownFileType = text; path = qt.conf; sourceTree = "<group>"; };
-		F7E711552E4D79ED0054D8D5 /* QtDesignerComponents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtDesignerComponents.framework; path = ../../Qt/6.9.1/macos/lib/QtDesignerComponents.framework; sourceTree = "<group>"; };
-		F7E711562E4D79ED0054D8D5 /* QtQuickControls2Material.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickControls2Material.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickControls2Material.framework; sourceTree = "<group>"; };
-		F7E711582E4D79ED0054D8D5 /* QtStateMachine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtStateMachine.framework; path = ../../Qt/6.9.1/macos/lib/QtStateMachine.framework; sourceTree = "<group>"; };
-		F7E711592E4D79ED0054D8D5 /* QtQuick3DEffects.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuick3DEffects.framework; path = ../../Qt/6.9.1/macos/lib/QtQuick3DEffects.framework; sourceTree = "<group>"; };
-		F7E7115A2E4D79ED0054D8D5 /* QtGraphsWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGraphsWidgets.framework; path = ../../Qt/6.9.1/macos/lib/QtGraphsWidgets.framework; sourceTree = "<group>"; };
-		F7E7115C2E4D79ED0054D8D5 /* QtQuickControls2Universal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickControls2Universal.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickControls2Universal.framework; sourceTree = "<group>"; };
-		F7E7115D2E4D79ED0054D8D5 /* QtLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtLocation.framework; path = ../../Qt/6.9.1/macos/lib/QtLocation.framework; sourceTree = "<group>"; };
-		F7E7115E2E4D79ED0054D8D5 /* QtQuick3DGlslParser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuick3DGlslParser.framework; path = ../../Qt/6.9.1/macos/lib/QtQuick3DGlslParser.framework; sourceTree = "<group>"; };
-		F7E711602E4D79ED0054D8D5 /* QtQuick3DXr.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuick3DXr.framework; path = ../../Qt/6.9.1/macos/lib/QtQuick3DXr.framework; sourceTree = "<group>"; };
-		F7E711612E4D79ED0054D8D5 /* QtGrpcQuick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGrpcQuick.framework; path = ../../Qt/6.9.1/macos/lib/QtGrpcQuick.framework; sourceTree = "<group>"; };
-		F7E711622E4D79ED0054D8D5 /* QtHttpServer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtHttpServer.framework; path = ../../Qt/6.9.1/macos/lib/QtHttpServer.framework; sourceTree = "<group>"; };
-		F7E711632E4D79ED0054D8D5 /* QtQmlNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQmlNetwork.framework; path = ../../Qt/6.9.1/macos/lib/QtQmlNetwork.framework; sourceTree = "<group>"; };
-		F7E711642E4D79ED0054D8D5 /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = ../../Qt/6.9.1/macos/lib/QtCore.framework; sourceTree = "<group>"; };
-		F7E711652E4D79ED0054D8D5 /* QtOpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtOpenGL.framework; path = ../../Qt/6.9.1/macos/lib/QtOpenGL.framework; sourceTree = "<group>"; };
-		F7E711662E4D79ED0054D8D5 /* QtRemoteObjectsQml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtRemoteObjectsQml.framework; path = ../../Qt/6.9.1/macos/lib/QtRemoteObjectsQml.framework; sourceTree = "<group>"; };
-		F7E711672E4D79ED0054D8D5 /* QtPositioning.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtPositioning.framework; path = ../../Qt/6.9.1/macos/lib/QtPositioning.framework; sourceTree = "<group>"; };
-		F7E711682E4D79ED0054D8D5 /* QtQuickEffects.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickEffects.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickEffects.framework; sourceTree = "<group>"; };
-		F7E711692E4D79ED0054D8D5 /* Qt3DQuick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Qt3DQuick.framework; path = ../../Qt/6.9.1/macos/lib/Qt3DQuick.framework; sourceTree = "<group>"; };
-		F7E7116A2E4D79ED0054D8D5 /* QtQuickControls2UniversalStyleImpl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickControls2UniversalStyleImpl.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickControls2UniversalStyleImpl.framework; sourceTree = "<group>"; };
-		F7E7116B2E4D79ED0054D8D5 /* QtQuick3DUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuick3DUtils.framework; path = ../../Qt/6.9.1/macos/lib/QtQuick3DUtils.framework; sourceTree = "<group>"; };
-		F7E7116C2E4D79ED0054D8D5 /* QtSerialPort.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtSerialPort.framework; path = ../../Qt/6.9.1/macos/lib/QtSerialPort.framework; sourceTree = "<group>"; };
-		F7E7116D2E4D79EE0054D8D5 /* QtQuickControls2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickControls2.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickControls2.framework; sourceTree = "<group>"; };
-		F7E7116F2E4D79EE0054D8D5 /* QtQuickLayouts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickLayouts.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickLayouts.framework; sourceTree = "<group>"; };
-		F7E711702E4D79EE0054D8D5 /* QtVirtualKeyboard.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtVirtualKeyboard.framework; path = ../../Qt/6.9.1/macos/lib/QtVirtualKeyboard.framework; sourceTree = "<group>"; };
-		F7E711712E4D79EE0054D8D5 /* QtStateMachineQml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtStateMachineQml.framework; path = ../../Qt/6.9.1/macos/lib/QtStateMachineQml.framework; sourceTree = "<group>"; };
-		F7E711722E4D79EE0054D8D5 /* QtQuick3DAssetUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuick3DAssetUtils.framework; path = ../../Qt/6.9.1/macos/lib/QtQuick3DAssetUtils.framework; sourceTree = "<group>"; };
-		F7E711732E4D79EE0054D8D5 /* QtScxml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtScxml.framework; path = ../../Qt/6.9.1/macos/lib/QtScxml.framework; sourceTree = "<group>"; };
-		F7E711742E4D79EE0054D8D5 /* QtTextToSpeech.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtTextToSpeech.framework; path = ../../Qt/6.9.1/macos/lib/QtTextToSpeech.framework; sourceTree = "<group>"; };
-		F7E711752E4D79EE0054D8D5 /* QtQuickControls2Impl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickControls2Impl.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickControls2Impl.framework; sourceTree = "<group>"; };
-		F7E711762E4D79EE0054D8D5 /* QtLabsQmlModels.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtLabsQmlModels.framework; path = ../../Qt/6.9.1/macos/lib/QtLabsQmlModels.framework; sourceTree = "<group>"; };
-		F7E711772E4D79EE0054D8D5 /* QtQmlModels.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQmlModels.framework; path = ../../Qt/6.9.1/macos/lib/QtQmlModels.framework; sourceTree = "<group>"; };
-		F7E711792E4D79EE0054D8D5 /* Qt3DQuickInput.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Qt3DQuickInput.framework; path = ../../Qt/6.9.1/macos/lib/Qt3DQuickInput.framework; sourceTree = "<group>"; };
-		F7E7117A2E4D79EE0054D8D5 /* QtRemoteObjects.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtRemoteObjects.framework; path = ../../Qt/6.9.1/macos/lib/QtRemoteObjects.framework; sourceTree = "<group>"; };
-		F7E7117B2E4D79EE0054D8D5 /* QtQuickVectorImageGenerator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickVectorImageGenerator.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickVectorImageGenerator.framework; sourceTree = "<group>"; };
-		F7E7117C2E4D79EE0054D8D5 /* QtUiTools.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtUiTools.framework; path = ../../Qt/6.9.1/macos/lib/QtUiTools.framework; sourceTree = "<group>"; };
-		F7E7117D2E4D79EE0054D8D5 /* QtDataVisualizationQml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtDataVisualizationQml.framework; path = ../../Qt/6.9.1/macos/lib/QtDataVisualizationQml.framework; sourceTree = "<group>"; };
-		F7E7117E2E4D79EE0054D8D5 /* Qt3DCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Qt3DCore.framework; path = ../../Qt/6.9.1/macos/lib/Qt3DCore.framework; sourceTree = "<group>"; };
-		F7E7117F2E4D79EE0054D8D5 /* QtQuickTimelineBlendTrees.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickTimelineBlendTrees.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickTimelineBlendTrees.framework; sourceTree = "<group>"; };
-		F7E711802E4D79EE0054D8D5 /* Qt3DLogic.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Qt3DLogic.framework; path = ../../Qt/6.9.1/macos/lib/Qt3DLogic.framework; sourceTree = "<group>"; };
-		F7E711812E4D79EE0054D8D5 /* QtLabsSettings.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtLabsSettings.framework; path = ../../Qt/6.9.1/macos/lib/QtLabsSettings.framework; sourceTree = "<group>"; };
-		F7E711822E4D79EE0054D8D5 /* Qt3DQuickScene2D.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Qt3DQuickScene2D.framework; path = ../../Qt/6.9.1/macos/lib/Qt3DQuickScene2D.framework; sourceTree = "<group>"; };
-		F7E711832E4D79EF0054D8D5 /* QtQuickControls2BasicStyleImpl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickControls2BasicStyleImpl.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickControls2BasicStyleImpl.framework; sourceTree = "<group>"; };
-		F7E711842E4D79EF0054D8D5 /* QtQuickControls2Fusion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickControls2Fusion.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickControls2Fusion.framework; sourceTree = "<group>"; };
-		F7E711852E4D79EF0054D8D5 /* Qt3DAnimation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Qt3DAnimation.framework; path = ../../Qt/6.9.1/macos/lib/Qt3DAnimation.framework; sourceTree = "<group>"; };
-		F7E711862E4D79EF0054D8D5 /* QtQuickControls2FusionStyleImpl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickControls2FusionStyleImpl.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickControls2FusionStyleImpl.framework; sourceTree = "<group>"; };
-		F7E711872E4D79EF0054D8D5 /* QtQuickControls2Imagine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickControls2Imagine.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickControls2Imagine.framework; sourceTree = "<group>"; };
-		F7E711882E4D79EF0054D8D5 /* Qt3DRender.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Qt3DRender.framework; path = ../../Qt/6.9.1/macos/lib/Qt3DRender.framework; sourceTree = "<group>"; };
-		F7E711892E4D79EF0054D8D5 /* QtVirtualKeyboardQml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtVirtualKeyboardQml.framework; path = ../../Qt/6.9.1/macos/lib/QtVirtualKeyboardQml.framework; sourceTree = "<group>"; };
-		F7E7118A2E4D79EF0054D8D5 /* QtQuick3DPhysicsHelpers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuick3DPhysicsHelpers.framework; path = ../../Qt/6.9.1/macos/lib/QtQuick3DPhysicsHelpers.framework; sourceTree = "<group>"; };
-		F7E7118B2E4D79EF0054D8D5 /* QtNetworkAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtNetworkAuth.framework; path = ../../Qt/6.9.1/macos/lib/QtNetworkAuth.framework; sourceTree = "<group>"; };
-		F7E7118C2E4D79EF0054D8D5 /* QtQuickControls2ImagineStyleImpl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickControls2ImagineStyleImpl.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickControls2ImagineStyleImpl.framework; sourceTree = "<group>"; };
-		F7E7118D2E4D79EF0054D8D5 /* QtLabsFolderListModel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtLabsFolderListModel.framework; path = ../../Qt/6.9.1/macos/lib/QtLabsFolderListModel.framework; sourceTree = "<group>"; };
-		F7E7118E2E4D79EF0054D8D5 /* QtXml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtXml.framework; path = ../../Qt/6.9.1/macos/lib/QtXml.framework; sourceTree = "<group>"; };
-		F7E7118F2E4D79EF0054D8D5 /* Qt3DQuickRender.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Qt3DQuickRender.framework; path = ../../Qt/6.9.1/macos/lib/Qt3DQuickRender.framework; sourceTree = "<group>"; };
-		F7E711902E4D79EF0054D8D5 /* QtQuick3DHelpersImpl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuick3DHelpersImpl.framework; path = ../../Qt/6.9.1/macos/lib/QtQuick3DHelpersImpl.framework; sourceTree = "<group>"; };
-		F7E711912E4D79EF0054D8D5 /* QtQuick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuick.framework; path = ../../Qt/6.9.1/macos/lib/QtQuick.framework; sourceTree = "<group>"; };
-		F7E711922E4D79EF0054D8D5 /* QtQuickControls2MaterialStyleImpl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickControls2MaterialStyleImpl.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickControls2MaterialStyleImpl.framework; sourceTree = "<group>"; };
-		F7E711932E4D79EF0054D8D5 /* QtVirtualKeyboardSettings.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtVirtualKeyboardSettings.framework; path = ../../Qt/6.9.1/macos/lib/QtVirtualKeyboardSettings.framework; sourceTree = "<group>"; };
-		F7E711942E4D79EF0054D8D5 /* QtCore5Compat.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore5Compat.framework; path = ../../Qt/6.9.1/macos/lib/QtCore5Compat.framework; sourceTree = "<group>"; };
-		F7E711952E4D79EF0054D8D5 /* QtProtobuf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtProtobuf.framework; path = ../../Qt/6.9.1/macos/lib/QtProtobuf.framework; sourceTree = "<group>"; };
-		F7E711962E4D79EF0054D8D5 /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = ../../Qt/6.9.1/macos/lib/QtGui.framework; sourceTree = "<group>"; };
-		F7E711972E4D79EF0054D8D5 /* QtDBus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtDBus.framework; path = ../../Qt/6.9.1/macos/lib/QtDBus.framework; sourceTree = "<group>"; };
-		F7E711982E4D79F00054D8D5 /* QtBodymovin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtBodymovin.framework; path = ../../Qt/6.9.1/macos/lib/QtBodymovin.framework; sourceTree = "<group>"; };
-		F7E711992E4D79F00054D8D5 /* QtQuickControls2MacOSStyleImpl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickControls2MacOSStyleImpl.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickControls2MacOSStyleImpl.framework; sourceTree = "<group>"; };
-		F7E7119A2E4D79F00054D8D5 /* QtQuickDialogs2Utils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickDialogs2Utils.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickDialogs2Utils.framework; sourceTree = "<group>"; };
-		F7E7119B2E4D79F00054D8D5 /* QtQmlMeta.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQmlMeta.framework; path = ../../Qt/6.9.1/macos/lib/QtQmlMeta.framework; sourceTree = "<group>"; };
-		F7E7119C2E4D79F00054D8D5 /* QtInsightTrackerQml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtInsightTrackerQml.framework; path = ../../Qt/6.9.1/macos/lib/QtInsightTrackerQml.framework; sourceTree = "<group>"; };
-		F7E7119E2E4D79F00054D8D5 /* Qt3DExtras.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Qt3DExtras.framework; path = ../../Qt/6.9.1/macos/lib/Qt3DExtras.framework; sourceTree = "<group>"; };
-		F7E7119F2E4D79F00054D8D5 /* QtQuickDialogs2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickDialogs2.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickDialogs2.framework; sourceTree = "<group>"; };
-		F7E711A02E4D79F00054D8D5 /* QtSerialBus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtSerialBus.framework; path = ../../Qt/6.9.1/macos/lib/QtSerialBus.framework; sourceTree = "<group>"; };
-		F7E711A12E4D79F00054D8D5 /* Qt3DQuickExtras.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Qt3DQuickExtras.framework; path = ../../Qt/6.9.1/macos/lib/Qt3DQuickExtras.framework; sourceTree = "<group>"; };
-		F7E711A22E4D79F00054D8D5 /* QtQuick3DAssetImport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuick3DAssetImport.framework; path = ../../Qt/6.9.1/macos/lib/QtQuick3DAssetImport.framework; sourceTree = "<group>"; };
-		F7E711A32E4D79F00054D8D5 /* QtCharts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCharts.framework; path = ../../Qt/6.9.1/macos/lib/QtCharts.framework; sourceTree = "<group>"; };
-		F7E711A42E4D79F00054D8D5 /* QtScxmlQml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtScxmlQml.framework; path = ../../Qt/6.9.1/macos/lib/QtScxmlQml.framework; sourceTree = "<group>"; };
-		F7E711A52E4D79F00054D8D5 /* QtTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtTest.framework; path = ../../Qt/6.9.1/macos/lib/QtTest.framework; sourceTree = "<group>"; };
-		F7E711A62E4D79F00054D8D5 /* Qt3DInput.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Qt3DInput.framework; path = ../../Qt/6.9.1/macos/lib/Qt3DInput.framework; sourceTree = "<group>"; };
-		F7E711A72E4D79F00054D8D5 /* QtQmlCompiler.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQmlCompiler.framework; path = ../../Qt/6.9.1/macos/lib/QtQmlCompiler.framework; sourceTree = "<group>"; };
-		F7E711A82E4D79F00054D8D5 /* QtQuick3DIblBaker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuick3DIblBaker.framework; path = ../../Qt/6.9.1/macos/lib/QtQuick3DIblBaker.framework; sourceTree = "<group>"; };
-		F7E711A92E4D79F00054D8D5 /* QtDesigner.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtDesigner.framework; path = ../../Qt/6.9.1/macos/lib/QtDesigner.framework; sourceTree = "<group>"; };
-		F7E711AA2E4D79F00054D8D5 /* QtQuick3DRuntimeRender.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuick3DRuntimeRender.framework; path = ../../Qt/6.9.1/macos/lib/QtQuick3DRuntimeRender.framework; sourceTree = "<group>"; };
-		F7E711AB2E4D79F00054D8D5 /* QtPdfQuick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtPdfQuick.framework; path = ../../Qt/6.9.1/macos/lib/QtPdfQuick.framework; sourceTree = "<group>"; };
-		F7E711AC2E4D79F00054D8D5 /* QtQuick3DSpatialAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuick3DSpatialAudio.framework; path = ../../Qt/6.9.1/macos/lib/QtQuick3DSpatialAudio.framework; sourceTree = "<group>"; };
-		F7E711AD2E4D79F00054D8D5 /* QtGraphs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGraphs.framework; path = ../../Qt/6.9.1/macos/lib/QtGraphs.framework; sourceTree = "<group>"; };
-		F7E711AE2E4D79F00054D8D5 /* QtProtobufWellKnownTypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtProtobufWellKnownTypes.framework; path = ../../Qt/6.9.1/macos/lib/QtProtobufWellKnownTypes.framework; sourceTree = "<group>"; };
-		F7E711AF2E4D79F00054D8D5 /* QtQuick3DPhysics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuick3DPhysics.framework; path = ../../Qt/6.9.1/macos/lib/QtQuick3DPhysics.framework; sourceTree = "<group>"; };
-		F7E711B02E4D79F10054D8D5 /* QtSpatialAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtSpatialAudio.framework; path = ../../Qt/6.9.1/macos/lib/QtSpatialAudio.framework; sourceTree = "<group>"; };
-		F7E711B12E4D79F10054D8D5 /* Qt3DQuickAnimation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Qt3DQuickAnimation.framework; path = ../../Qt/6.9.1/macos/lib/Qt3DQuickAnimation.framework; sourceTree = "<group>"; };
-		F7E711B22E4D79F10054D8D5 /* QtMultimediaWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtMultimediaWidgets.framework; path = ../../Qt/6.9.1/macos/lib/QtMultimediaWidgets.framework; sourceTree = "<group>"; };
-		F7E711B32E4D79F10054D8D5 /* QtQuickControls2IOSStyleImpl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickControls2IOSStyleImpl.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickControls2IOSStyleImpl.framework; sourceTree = "<group>"; };
-		F7E711B42E4D79F10054D8D5 /* QtQml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQml.framework; path = ../../Qt/6.9.1/macos/lib/QtQml.framework; sourceTree = "<group>"; };
-		F7E711B52E4D79F10054D8D5 /* QtHelp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtHelp.framework; path = ../../Qt/6.9.1/macos/lib/QtHelp.framework; sourceTree = "<group>"; };
-		F7E711B62E4D79F10054D8D5 /* QtProtobufQtCoreTypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtProtobufQtCoreTypes.framework; path = ../../Qt/6.9.1/macos/lib/QtProtobufQtCoreTypes.framework; sourceTree = "<group>"; };
-		F7E711B72E4D79F10054D8D5 /* QtQuickTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickTest.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickTest.framework; sourceTree = "<group>"; };
-		F7E711B82E4D79F10054D8D5 /* QtQuickDialogs2QuickImpl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickDialogs2QuickImpl.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickDialogs2QuickImpl.framework; sourceTree = "<group>"; };
-		F7E711B92E4D79F10054D8D5 /* Qt3DQuickLogic.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Qt3DQuickLogic.framework; path = ../../Qt/6.9.1/macos/lib/Qt3DQuickLogic.framework; sourceTree = "<group>"; };
-		F7E711BA2E4D79F10054D8D5 /* QtSensors.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtSensors.framework; path = ../../Qt/6.9.1/macos/lib/QtSensors.framework; sourceTree = "<group>"; };
-		F7E711BB2E4D79F10054D8D5 /* QtDataVisualization.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtDataVisualization.framework; path = ../../Qt/6.9.1/macos/lib/QtDataVisualization.framework; sourceTree = "<group>"; };
-		F7E711BC2E4D79F10054D8D5 /* QtMultimediaQuick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtMultimediaQuick.framework; path = ../../Qt/6.9.1/macos/lib/QtMultimediaQuick.framework; sourceTree = "<group>"; };
-		F7E711BD2E4D79F10054D8D5 /* QtLabsSharedImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtLabsSharedImage.framework; path = ../../Qt/6.9.1/macos/lib/QtLabsSharedImage.framework; sourceTree = "<group>"; };
-		F7E711BE2E4D79F10054D8D5 /* QtOpenGLWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtOpenGLWidgets.framework; path = ../../Qt/6.9.1/macos/lib/QtOpenGLWidgets.framework; sourceTree = "<group>"; };
-		F7E711BF2E4D79F10054D8D5 /* QtQuickShapes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickShapes.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickShapes.framework; sourceTree = "<group>"; };
-		F7E711C02E4D79F10054D8D5 /* QtQuickVectorImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickVectorImage.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickVectorImage.framework; sourceTree = "<group>"; };
-		F7E711C12E4D79F10054D8D5 /* QtQuickControls2Basic.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickControls2Basic.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickControls2Basic.framework; sourceTree = "<group>"; };
-		F7E711C22E4D79F10054D8D5 /* QtQuick3D.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuick3D.framework; path = ../../Qt/6.9.1/macos/lib/QtQuick3D.framework; sourceTree = "<group>"; };
-		F7E711C32E4D79F10054D8D5 /* QtQuick3DParticleEffects.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuick3DParticleEffects.framework; path = ../../Qt/6.9.1/macos/lib/QtQuick3DParticleEffects.framework; sourceTree = "<group>"; };
-		F7E711C52E4D79F20054D8D5 /* QtQmlWorkerScript.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQmlWorkerScript.framework; path = ../../Qt/6.9.1/macos/lib/QtQmlWorkerScript.framework; sourceTree = "<group>"; };
-		F7E711C62E4D79F20054D8D5 /* QtQuick3DParticles.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuick3DParticles.framework; path = ../../Qt/6.9.1/macos/lib/QtQuick3DParticles.framework; sourceTree = "<group>"; };
-		F7E711C72E4D79F20054D8D5 /* QtMultimedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtMultimedia.framework; path = ../../Qt/6.9.1/macos/lib/QtMultimedia.framework; sourceTree = "<group>"; };
-		F7E711C82E4D79F20054D8D5 /* QtChartsQml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtChartsQml.framework; path = ../../Qt/6.9.1/macos/lib/QtChartsQml.framework; sourceTree = "<group>"; };
-		F7E711C92E4D79F20054D8D5 /* QtQuickWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickWidgets.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickWidgets.framework; sourceTree = "<group>"; };
-		F7E711CA2E4D79F20054D8D5 /* QtQmlLocalStorage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQmlLocalStorage.framework; path = ../../Qt/6.9.1/macos/lib/QtQmlLocalStorage.framework; sourceTree = "<group>"; };
-		F7E711CB2E4D79F20054D8D5 /* QtNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtNetwork.framework; path = ../../Qt/6.9.1/macos/lib/QtNetwork.framework; sourceTree = "<group>"; };
-		F7E711CC2E4D79F20054D8D5 /* QtQuickTimeline.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickTimeline.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickTimeline.framework; sourceTree = "<group>"; };
-		F7E711CD2E4D79F20054D8D5 /* QtQuickControls2FluentWinUI3StyleImpl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickControls2FluentWinUI3StyleImpl.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickControls2FluentWinUI3StyleImpl.framework; sourceTree = "<group>"; };
-		F7E711CE2E4D79F20054D8D5 /* QtSvgWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtSvgWidgets.framework; path = ../../Qt/6.9.1/macos/lib/QtSvgWidgets.framework; sourceTree = "<group>"; };
-		F7E711CF2E4D79F20054D8D5 /* QtWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtWidgets.framework; path = ../../Qt/6.9.1/macos/lib/QtWidgets.framework; sourceTree = "<group>"; };
-		F7E711D02E4D79F20054D8D5 /* QtLabsWavefrontMesh.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtLabsWavefrontMesh.framework; path = ../../Qt/6.9.1/macos/lib/QtLabsWavefrontMesh.framework; sourceTree = "<group>"; };
-		F7E711D12E4D79F20054D8D5 /* QtPositioningQuick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtPositioningQuick.framework; path = ../../Qt/6.9.1/macos/lib/QtPositioningQuick.framework; sourceTree = "<group>"; };
-		F7E711D22E4D79F20054D8D5 /* QtConcurrent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtConcurrent.framework; path = ../../Qt/6.9.1/macos/lib/QtConcurrent.framework; sourceTree = "<group>"; };
-		F7E711D32E4D79F20054D8D5 /* QtInsightTracker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtInsightTracker.framework; path = ../../Qt/6.9.1/macos/lib/QtInsightTracker.framework; sourceTree = "<group>"; };
-		F7E711D42E4D79F20054D8D5 /* QtSvg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtSvg.framework; path = ../../Qt/6.9.1/macos/lib/QtSvg.framework; sourceTree = "<group>"; };
-		F7E711D52E4D79F20054D8D5 /* QtNfc.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtNfc.framework; path = ../../Qt/6.9.1/macos/lib/QtNfc.framework; sourceTree = "<group>"; };
-		F7E711D62E4D79F20054D8D5 /* QtSensorsQuick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtSensorsQuick.framework; path = ../../Qt/6.9.1/macos/lib/QtSensorsQuick.framework; sourceTree = "<group>"; };
-		F7E711D72E4D79F20054D8D5 /* QtQmlXmlListModel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQmlXmlListModel.framework; path = ../../Qt/6.9.1/macos/lib/QtQmlXmlListModel.framework; sourceTree = "<group>"; };
-		F7E711D82E4D79F20054D8D5 /* QtPrintSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtPrintSupport.framework; path = ../../Qt/6.9.1/macos/lib/QtPrintSupport.framework; sourceTree = "<group>"; };
-		F7E711D92E4D79F20054D8D5 /* QtShaderTools.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtShaderTools.framework; path = ../../Qt/6.9.1/macos/lib/QtShaderTools.framework; sourceTree = "<group>"; };
-		F7E711DA2E4D79F30054D8D5 /* QtProtobufQtGuiTypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtProtobufQtGuiTypes.framework; path = ../../Qt/6.9.1/macos/lib/QtProtobufQtGuiTypes.framework; sourceTree = "<group>"; };
-		F7E711DB2E4D79F30054D8D5 /* QtProtobufQuick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtProtobufQuick.framework; path = ../../Qt/6.9.1/macos/lib/QtProtobufQuick.framework; sourceTree = "<group>"; };
-		F7E711DC2E4D79F30054D8D5 /* QtBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtBluetooth.framework; path = ../../Qt/6.9.1/macos/lib/QtBluetooth.framework; sourceTree = "<group>"; };
-		F7E711DD2E4D79F30054D8D5 /* Qt3DQuickScene3D.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Qt3DQuickScene3D.framework; path = ../../Qt/6.9.1/macos/lib/Qt3DQuickScene3D.framework; sourceTree = "<group>"; };
-		F7E711DE2E4D79F30054D8D5 /* QtPdf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtPdf.framework; path = ../../Qt/6.9.1/macos/lib/QtPdf.framework; sourceTree = "<group>"; };
-		F7E711DF2E4D79F30054D8D5 /* QtQuick3DHelpers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuick3DHelpers.framework; path = ../../Qt/6.9.1/macos/lib/QtQuick3DHelpers.framework; sourceTree = "<group>"; };
-		F7E711E02E4D79F30054D8D5 /* QtLabsAnimation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtLabsAnimation.framework; path = ../../Qt/6.9.1/macos/lib/QtLabsAnimation.framework; sourceTree = "<group>"; };
-		F7E711E12E4D79F30054D8D5 /* QtSql.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtSql.framework; path = ../../Qt/6.9.1/macos/lib/QtSql.framework; sourceTree = "<group>"; };
-		F7E711E22E4D79F30054D8D5 /* QtGrpc.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGrpc.framework; path = ../../Qt/6.9.1/macos/lib/QtGrpc.framework; sourceTree = "<group>"; };
-		F7E711E52E4D79F30054D8D5 /* QtLabsPlatform.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtLabsPlatform.framework; path = ../../Qt/6.9.1/macos/lib/QtLabsPlatform.framework; sourceTree = "<group>"; };
-		F7E711E62E4D79F30054D8D5 /* QtQmlCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQmlCore.framework; path = ../../Qt/6.9.1/macos/lib/QtQmlCore.framework; sourceTree = "<group>"; };
-		F7E711E72E4D79F30054D8D5 /* QtQuickParticles.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickParticles.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickParticles.framework; sourceTree = "<group>"; };
-		F7E711E82E4D79F30054D8D5 /* QtQuickTemplates2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickTemplates2.framework; path = ../../Qt/6.9.1/macos/lib/QtQuickTemplates2.framework; sourceTree = "<group>"; };
-		F7E711E92E4D79F30054D8D5 /* QtPdfWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtPdfWidgets.framework; path = ../../Qt/6.9.1/macos/lib/QtPdfWidgets.framework; sourceTree = "<group>"; };
-		F7E712802E4D7EA90054D8D5 /* lib */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lib; path = ../../Qt/6.9.1/macos/lib; sourceTree = "<group>"; };
-		F7E712812E4D7EA90054D8D5 /* libqcocoa.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqcocoa.dylib; path = ../../Qt/6.9.1/macos/plugins/platforms/libqcocoa.dylib; sourceTree = "<group>"; };
-		F7E712822E4D7EAA0054D8D5 /* libqoffscreen.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqoffscreen.dylib; path = ../../Qt/6.9.1/macos/plugins/platforms/libqoffscreen.dylib; sourceTree = "<group>"; };
-		F7E712832E4D7EAA0054D8D5 /* libqminimal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqminimal.dylib; path = ../../Qt/6.9.1/macos/plugins/platforms/libqminimal.dylib; sourceTree = "<group>"; };
+		F79BA82D2EAB8F590051F2DC /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		F7CF33272EAB96CC000F8397 /* libqcocoa.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqcocoa.dylib; sourceTree = "<group>"; };
+		F7CF33282EAB96CC000F8397 /* libqcocoa.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqcocoa.dylib.dSYM; sourceTree = "<group>"; };
+		F7CF33292EAB96CC000F8397 /* libqminimal.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqminimal.dylib; sourceTree = "<group>"; };
+		F7CF332A2EAB96CC000F8397 /* libqminimal.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqminimal.dylib.dSYM; sourceTree = "<group>"; };
+		F7CF332B2EAB96CC000F8397 /* libqoffscreen.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqoffscreen.dylib; sourceTree = "<group>"; };
+		F7CF332C2EAB96CC000F8397 /* libqoffscreen.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqoffscreen.dylib.dSYM; sourceTree = "<group>"; };
+		F7CF33342EAB96E1000F8397 /* libqtsensors_generic.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqtsensors_generic.dylib; sourceTree = "<group>"; };
+		F7CF33352EAB96E1000F8397 /* libqtsensors_generic.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtsensors_generic.dylib.dSYM; sourceTree = "<group>"; };
+		F7CF33392EAB96F7000F8397 /* libqapplenetworkinformation.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqapplenetworkinformation.dylib; sourceTree = "<group>"; };
+		F7CF333A2EAB96F7000F8397 /* libqapplenetworkinformation.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqapplenetworkinformation.dylib.dSYM; sourceTree = "<group>"; };
+		F7CF333E2EAB9701000F8397 /* libqmacstyle.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqmacstyle.dylib; sourceTree = "<group>"; };
+		F7CF333F2EAB9701000F8397 /* libqmacstyle.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqmacstyle.dylib.dSYM; sourceTree = "<group>"; };
+		F7CF33432EAB970B000F8397 /* libqcertonlybackend.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqcertonlybackend.dylib; sourceTree = "<group>"; };
+		F7CF33442EAB970B000F8397 /* libqcertonlybackend.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqcertonlybackend.dylib.dSYM; sourceTree = "<group>"; };
+		F7CF33452EAB970B000F8397 /* libqopensslbackend.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqopensslbackend.dylib; sourceTree = "<group>"; };
+		F7CF33462EAB970B000F8397 /* libqopensslbackend.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqopensslbackend.dylib.dSYM; sourceTree = "<group>"; };
+		F7CF33472EAB970B000F8397 /* libqsecuretransportbackend.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqsecuretransportbackend.dylib; sourceTree = "<group>"; };
+		F7CF33482EAB970B000F8397 /* libqsecuretransportbackend.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqsecuretransportbackend.dylib.dSYM; sourceTree = "<group>"; };
+		F7CF33502EAB9728000F8397 /* libqsvgicon.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqsvgicon.dylib; sourceTree = "<group>"; };
+		F7CF33512EAB9728000F8397 /* libqsvgicon.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqsvgicon.dylib.dSYM; sourceTree = "<group>"; };
+		F7CF33552EAB9734000F8397 /* libqgif.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqgif.dylib; sourceTree = "<group>"; };
+		F7CF33562EAB9734000F8397 /* libqgif.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqgif.dylib.dSYM; sourceTree = "<group>"; };
+		F7CF33572EAB9734000F8397 /* libqicns.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqicns.dylib; sourceTree = "<group>"; };
+		F7CF33582EAB9734000F8397 /* libqicns.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqicns.dylib.dSYM; sourceTree = "<group>"; };
+		F7CF33592EAB9734000F8397 /* libqico.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqico.dylib; sourceTree = "<group>"; };
+		F7CF335A2EAB9734000F8397 /* libqico.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqico.dylib.dSYM; sourceTree = "<group>"; };
+		F7CF335B2EAB9734000F8397 /* libqjpeg.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqjpeg.dylib; sourceTree = "<group>"; };
+		F7CF335C2EAB9734000F8397 /* libqjpeg.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqjpeg.dylib.dSYM; sourceTree = "<group>"; };
+		F7CF335D2EAB9734000F8397 /* libqmacheif.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqmacheif.dylib; sourceTree = "<group>"; };
+		F7CF335E2EAB9734000F8397 /* libqmacheif.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqmacheif.dylib.dSYM; sourceTree = "<group>"; };
+		F7CF335F2EAB9734000F8397 /* libqmacjp2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqmacjp2.dylib; sourceTree = "<group>"; };
+		F7CF33602EAB9734000F8397 /* libqmacjp2.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqmacjp2.dylib.dSYM; sourceTree = "<group>"; };
+		F7CF33612EAB9734000F8397 /* libqpdf.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqpdf.dylib; sourceTree = "<group>"; };
+		F7CF33622EAB9734000F8397 /* libqpdf.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqpdf.dylib.dSYM; sourceTree = "<group>"; };
+		F7CF33632EAB9734000F8397 /* libqsvg.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqsvg.dylib; sourceTree = "<group>"; };
+		F7CF33642EAB9734000F8397 /* libqsvg.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqsvg.dylib.dSYM; sourceTree = "<group>"; };
+		F7CF33652EAB9734000F8397 /* libqtga.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqtga.dylib; sourceTree = "<group>"; };
+		F7CF33662EAB9734000F8397 /* libqtga.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtga.dylib.dSYM; sourceTree = "<group>"; };
+		F7CF33672EAB9734000F8397 /* libqtiff.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqtiff.dylib; sourceTree = "<group>"; };
+		F7CF33682EAB9734000F8397 /* libqtiff.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtiff.dylib.dSYM; sourceTree = "<group>"; };
+		F7CF33692EAB9734000F8397 /* libqwbmp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqwbmp.dylib; sourceTree = "<group>"; };
+		F7CF336A2EAB9734000F8397 /* libqwbmp.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqwbmp.dylib.dSYM; sourceTree = "<group>"; };
+		F7CF336B2EAB9734000F8397 /* libqwebp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqwebp.dylib; sourceTree = "<group>"; };
+		F7CF336C2EAB9734000F8397 /* libqwebp.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqwebp.dylib.dSYM; sourceTree = "<group>"; };
+		F7CF33862EAB9747000F8397 /* libqapplenetworkinformation.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqapplenetworkinformation.dylib; sourceTree = "<group>"; };
+		F7CF33872EAB9747000F8397 /* libqapplenetworkinformation.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqapplenetworkinformation.dylib.dSYM; sourceTree = "<group>"; };
+		F7CF338B2EAB9762000F8397 /* libqtvirtualkeyboardplugin.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = libqtvirtualkeyboardplugin.dylib; sourceTree = "<group>"; };
+		F7CF338C2EAB9762000F8397 /* libqtvirtualkeyboardplugin.dylib.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = libqtvirtualkeyboardplugin.dylib.dSYM; sourceTree = "<group>"; };
+		F7CF33902EAB983B000F8397 /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtCore.framework; sourceTree = "<absolute>"; };
+		F7CF33922EAB9849000F8397 /* QtConcurrent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtConcurrent.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtConcurrent.framework; sourceTree = "<absolute>"; };
+		F7CF33942EAB984F000F8397 /* QtCore5Compat.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore5Compat.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtCore5Compat.framework; sourceTree = "<absolute>"; };
+		F7CF33962EAB985A000F8397 /* QtDBus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtDBus.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtDBus.framework; sourceTree = "<absolute>"; };
+		F7CF33982EAB9865000F8397 /* QtGraphs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGraphs.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtGraphs.framework; sourceTree = "<absolute>"; };
+		F7CF339A2EAB986E000F8397 /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtGui.framework; sourceTree = "<absolute>"; };
+		F7CF339C2EAB987B000F8397 /* QtNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtNetwork.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtNetwork.framework; sourceTree = "<absolute>"; };
+		F7CF339E2EAB9881000F8397 /* QtNetworkAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtNetworkAuth.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtNetworkAuth.framework; sourceTree = "<absolute>"; };
+		F7CF33A02EAB9888000F8397 /* QtOpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtOpenGL.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtOpenGL.framework; sourceTree = "<absolute>"; };
+		F7CF33A22EAB9893000F8397 /* QtQml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQml.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtQml.framework; sourceTree = "<absolute>"; };
+		F7CF33A42EAB989B000F8397 /* QtQmlCompiler.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQmlCompiler.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtQmlCompiler.framework; sourceTree = "<absolute>"; };
+		F7CF33A62EAB98A3000F8397 /* QtQmlCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQmlCore.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtQmlCore.framework; sourceTree = "<absolute>"; };
+		F7CF33A82EAB98AB000F8397 /* QtQmlMeta.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQmlMeta.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtQmlMeta.framework; sourceTree = "<absolute>"; };
+		F7CF33AA2EAB98B3000F8397 /* QtQmlModels.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQmlModels.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtQmlModels.framework; sourceTree = "<absolute>"; };
+		F7CF33AC2EAB98CA000F8397 /* QtSensors.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtSensors.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtSensors.framework; sourceTree = "<absolute>"; };
+		F7CF33AE2EAB98DA000F8397 /* QtSerialBus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtSerialBus.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtSerialBus.framework; sourceTree = "<absolute>"; };
+		F7CF33B02EAB98E3000F8397 /* QtSerialPort.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtSerialPort.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtSerialPort.framework; sourceTree = "<absolute>"; };
+		F7CF33D42EAB9AAB000F8397 /* QtXml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtXml.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtXml.framework; sourceTree = "<absolute>"; };
+		F7CF33D62EAB9AB2000F8397 /* QtWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtWidgets.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtWidgets.framework; sourceTree = "<absolute>"; };
+		F7CF33DC2EAB9B2C000F8397 /* QtQmlWorkerScript.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQmlWorkerScript.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtQmlWorkerScript.framework; sourceTree = "<absolute>"; };
+		F7CF33E02EAB9B49000F8397 /* QtQuickShapes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuickShapes.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtQuickShapes.framework; sourceTree = "<absolute>"; };
+		F7CF33E42EAB9B66000F8397 /* QtQuick3D.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuick3D.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtQuick3D.framework; sourceTree = "<absolute>"; };
+		F7CF33E82EAB9B83000F8397 /* QtQuick3DRuntimeRender.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuick3DRuntimeRender.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtQuick3DRuntimeRender.framework; sourceTree = "<absolute>"; };
+		F7CF33EC2EAB9BA1000F8397 /* QtShaderTools.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtShaderTools.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtShaderTools.framework; sourceTree = "<absolute>"; };
+		F7CF33F02EAB9BC0000F8397 /* QtQuick3DUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuick3DUtils.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtQuick3DUtils.framework; sourceTree = "<absolute>"; };
+		F7CF33F42EAB9BD6000F8397 /* QtQuick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtQuick.framework; path = /Users/eofmc/Qt/6.10.0/macos/lib/QtQuick.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -632,13 +360,39 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F79BA82E2EAB8F590051F2DC /* AppKit.framework in Frameworks */,
+				F7CF33D82EAB9AFB000F8397 /* QtXml.framework in Frameworks */,
+				F7CF33EA2EAB9B86000F8397 /* QtQuick3DRuntimeRender.framework in Frameworks */,
+				F7CF33F62EAB9BDA000F8397 /* QtQuick.framework in Frameworks */,
 				883C30A32D6F1C610029BE30 /* CoreFoundation.framework in Frameworks */,
 				88878E1A2D7A085F00092D65 /* Foundation.framework in Frameworks */,
 				883C30A22D6F1C550029BE30 /* IOKit.framework in Frameworks */,
+				F7CF33E22EAB9B4C000F8397 /* QtQuickShapes.framework in Frameworks */,
+				F7CF33B42EAB9939000F8397 /* QtCore.framework in Frameworks */,
+				F7CF33BC2EAB9940000F8397 /* QtGui.framework in Frameworks */,
+				F7CF33C22EAB9945000F8397 /* QtOpenGL.framework in Frameworks */,
+				F7CF33CE2EAB994F000F8397 /* QtSensors.framework in Frameworks */,
+				F7CF33BA2EAB993E000F8397 /* QtGraphs.framework in Frameworks */,
+				F7CF33B62EAB993B000F8397 /* QtCore5Compat.framework in Frameworks */,
+				F7CF33D22EAB9953000F8397 /* QtSerialPort.framework in Frameworks */,
+				F7CF33B22EAB9937000F8397 /* QtConcurrent.framework in Frameworks */,
+				F7CF33DA2EAB9AFD000F8397 /* QtWidgets.framework in Frameworks */,
+				F7CF33EE2EAB9BA6000F8397 /* QtShaderTools.framework in Frameworks */,
+				F7CF33B82EAB993D000F8397 /* QtDBus.framework in Frameworks */,
+				F7CF33CA2EAB994C000F8397 /* QtQmlMeta.framework in Frameworks */,
+				F7CF33BE2EAB9942000F8397 /* QtNetwork.framework in Frameworks */,
+				F7CF33C42EAB9946000F8397 /* QtQml.framework in Frameworks */,
+				F7CF33D02EAB9951000F8397 /* QtSerialBus.framework in Frameworks */,
+				F7CF33C02EAB9943000F8397 /* QtNetworkAuth.framework in Frameworks */,
+				F7CF33E62EAB9B6D000F8397 /* QtQuick3D.framework in Frameworks */,
+				F7CF33DE2EAB9B2E000F8397 /* QtQmlWorkerScript.framework in Frameworks */,
+				F7CF33C62EAB9948000F8397 /* QtQmlCompiler.framework in Frameworks */,
+				F7CF33CC2EAB994D000F8397 /* QtQmlModels.framework in Frameworks */,
+				F7CF33C82EAB994A000F8397 /* QtQmlCore.framework in Frameworks */,
 				886B50992D805196007BE2EC /* VSPController.framework in Frameworks */,
 				886B50982D805192007BE2EC /* VSPSetup.framework in Frameworks */,
+				F7CF33F22EAB9BC3000F8397 /* QtQuick3DUtils.framework in Frameworks */,
 				886B509A2D805199007BE2EC /* VSPClientUI.framework in Frameworks */,
-				F75E456D2E46D77B00632BF4 /* QtSql.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -771,7 +525,8 @@
 		88B40D592D4B666700DFE7C5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F75E456C2E46D77B00632BF4 /* QtSql.framework */,
+				F7CF33212EAB968A000F8397 /* QT-6.10 */,
+				F79BA82D2EAB8F590051F2DC /* AppKit.framework */,
 				88F12FF32DCDBED600E0486A /* CoreBluetooth.framework */,
 				88F12FF22DCDBED600E0486A /* IOBluetooth.framework */,
 				88F12FF02DCDBECE00E0486A /* Contacts.framework */,
@@ -783,150 +538,6 @@
 				8854A99E2D5DB1E400C27252 /* CoreFoundation.framework */,
 				75508F732DFB363A006597BD /* SerialDriverKit.framework */,
 				88906F492D4CCACB00E500BB /* DriverKit.framework */,
-				F7E711852E4D79EF0054D8D5 /* Qt3DAnimation.framework */,
-				F7E7117E2E4D79EE0054D8D5 /* Qt3DCore.framework */,
-				F7E7119E2E4D79F00054D8D5 /* Qt3DExtras.framework */,
-				F7E711A62E4D79F00054D8D5 /* Qt3DInput.framework */,
-				F7E711802E4D79EE0054D8D5 /* Qt3DLogic.framework */,
-				F7E711692E4D79ED0054D8D5 /* Qt3DQuick.framework */,
-				F7E711B12E4D79F10054D8D5 /* Qt3DQuickAnimation.framework */,
-				F7E711A12E4D79F00054D8D5 /* Qt3DQuickExtras.framework */,
-				F7E711792E4D79EE0054D8D5 /* Qt3DQuickInput.framework */,
-				F7E711B92E4D79F10054D8D5 /* Qt3DQuickLogic.framework */,
-				F7E7118F2E4D79EF0054D8D5 /* Qt3DQuickRender.framework */,
-				F7E711822E4D79EE0054D8D5 /* Qt3DQuickScene2D.framework */,
-				F7E711DD2E4D79F30054D8D5 /* Qt3DQuickScene3D.framework */,
-				F7E711882E4D79EF0054D8D5 /* Qt3DRender.framework */,
-				F7E711DC2E4D79F30054D8D5 /* QtBluetooth.framework */,
-				F7E711982E4D79F00054D8D5 /* QtBodymovin.framework */,
-				F7E711A32E4D79F00054D8D5 /* QtCharts.framework */,
-				F7E711C82E4D79F20054D8D5 /* QtChartsQml.framework */,
-				F7E711D22E4D79F20054D8D5 /* QtConcurrent.framework */,
-				F7E711642E4D79ED0054D8D5 /* QtCore.framework */,
-				F7E711942E4D79EF0054D8D5 /* QtCore5Compat.framework */,
-				F7E711BB2E4D79F10054D8D5 /* QtDataVisualization.framework */,
-				F7E7117D2E4D79EE0054D8D5 /* QtDataVisualizationQml.framework */,
-				F7E711972E4D79EF0054D8D5 /* QtDBus.framework */,
-				F7E711A92E4D79F00054D8D5 /* QtDesigner.framework */,
-				F7E711552E4D79ED0054D8D5 /* QtDesignerComponents.framework */,
-				F7E711AD2E4D79F00054D8D5 /* QtGraphs.framework */,
-				F7E7115A2E4D79ED0054D8D5 /* QtGraphsWidgets.framework */,
-				F7E711E22E4D79F30054D8D5 /* QtGrpc.framework */,
-				F7E711612E4D79ED0054D8D5 /* QtGrpcQuick.framework */,
-				F7E711962E4D79EF0054D8D5 /* QtGui.framework */,
-				F7E711B52E4D79F10054D8D5 /* QtHelp.framework */,
-				F7E711622E4D79ED0054D8D5 /* QtHttpServer.framework */,
-				F7E711D32E4D79F20054D8D5 /* QtInsightTracker.framework */,
-				F7E7119C2E4D79F00054D8D5 /* QtInsightTrackerQml.framework */,
-				F7E711E02E4D79F30054D8D5 /* QtLabsAnimation.framework */,
-				F7E7118D2E4D79EF0054D8D5 /* QtLabsFolderListModel.framework */,
-				F7E711E52E4D79F30054D8D5 /* QtLabsPlatform.framework */,
-				F7E711762E4D79EE0054D8D5 /* QtLabsQmlModels.framework */,
-				F7E711812E4D79EE0054D8D5 /* QtLabsSettings.framework */,
-				F7E711BD2E4D79F10054D8D5 /* QtLabsSharedImage.framework */,
-				F7E711D02E4D79F20054D8D5 /* QtLabsWavefrontMesh.framework */,
-				F7E7115D2E4D79ED0054D8D5 /* QtLocation.framework */,
-				F7E711C72E4D79F20054D8D5 /* QtMultimedia.framework */,
-				F7E711BC2E4D79F10054D8D5 /* QtMultimediaQuick.framework */,
-				F7E711B22E4D79F10054D8D5 /* QtMultimediaWidgets.framework */,
-				F7E711CB2E4D79F20054D8D5 /* QtNetwork.framework */,
-				F7E7118B2E4D79EF0054D8D5 /* QtNetworkAuth.framework */,
-				F7E711D52E4D79F20054D8D5 /* QtNfc.framework */,
-				F7E711652E4D79ED0054D8D5 /* QtOpenGL.framework */,
-				F7E711BE2E4D79F10054D8D5 /* QtOpenGLWidgets.framework */,
-				F7E711DE2E4D79F30054D8D5 /* QtPdf.framework */,
-				F7E711AB2E4D79F00054D8D5 /* QtPdfQuick.framework */,
-				F7E711E92E4D79F30054D8D5 /* QtPdfWidgets.framework */,
-				F7E711672E4D79ED0054D8D5 /* QtPositioning.framework */,
-				F7E711D12E4D79F20054D8D5 /* QtPositioningQuick.framework */,
-				F7E711D82E4D79F20054D8D5 /* QtPrintSupport.framework */,
-				F7E711952E4D79EF0054D8D5 /* QtProtobuf.framework */,
-				F7E711B62E4D79F10054D8D5 /* QtProtobufQtCoreTypes.framework */,
-				F7E711DA2E4D79F30054D8D5 /* QtProtobufQtGuiTypes.framework */,
-				F7E711DB2E4D79F30054D8D5 /* QtProtobufQuick.framework */,
-				F7E711AE2E4D79F00054D8D5 /* QtProtobufWellKnownTypes.framework */,
-				F7E711B42E4D79F10054D8D5 /* QtQml.framework */,
-				F7E711A72E4D79F00054D8D5 /* QtQmlCompiler.framework */,
-				F7E711E62E4D79F30054D8D5 /* QtQmlCore.framework */,
-				F7E711CA2E4D79F20054D8D5 /* QtQmlLocalStorage.framework */,
-				F7E7119B2E4D79F00054D8D5 /* QtQmlMeta.framework */,
-				F7E711772E4D79EE0054D8D5 /* QtQmlModels.framework */,
-				F7E711632E4D79ED0054D8D5 /* QtQmlNetwork.framework */,
-				F7E711C52E4D79F20054D8D5 /* QtQmlWorkerScript.framework */,
-				F7E711D72E4D79F20054D8D5 /* QtQmlXmlListModel.framework */,
-				F7E711912E4D79EF0054D8D5 /* QtQuick.framework */,
-				F7E711C22E4D79F10054D8D5 /* QtQuick3D.framework */,
-				F7E711A22E4D79F00054D8D5 /* QtQuick3DAssetImport.framework */,
-				F7E711722E4D79EE0054D8D5 /* QtQuick3DAssetUtils.framework */,
-				F7E711592E4D79ED0054D8D5 /* QtQuick3DEffects.framework */,
-				F7E7115E2E4D79ED0054D8D5 /* QtQuick3DGlslParser.framework */,
-				F7E711DF2E4D79F30054D8D5 /* QtQuick3DHelpers.framework */,
-				F7E711902E4D79EF0054D8D5 /* QtQuick3DHelpersImpl.framework */,
-				F7E711A82E4D79F00054D8D5 /* QtQuick3DIblBaker.framework */,
-				F7E711C32E4D79F10054D8D5 /* QtQuick3DParticleEffects.framework */,
-				F7E711C62E4D79F20054D8D5 /* QtQuick3DParticles.framework */,
-				F7E711AF2E4D79F00054D8D5 /* QtQuick3DPhysics.framework */,
-				F7E7118A2E4D79EF0054D8D5 /* QtQuick3DPhysicsHelpers.framework */,
-				F7E711AA2E4D79F00054D8D5 /* QtQuick3DRuntimeRender.framework */,
-				F7E711AC2E4D79F00054D8D5 /* QtQuick3DSpatialAudio.framework */,
-				F7E7116B2E4D79ED0054D8D5 /* QtQuick3DUtils.framework */,
-				F7E711602E4D79ED0054D8D5 /* QtQuick3DXr.framework */,
-				F7E7116D2E4D79EE0054D8D5 /* QtQuickControls2.framework */,
-				F7E711C12E4D79F10054D8D5 /* QtQuickControls2Basic.framework */,
-				F7E711832E4D79EF0054D8D5 /* QtQuickControls2BasicStyleImpl.framework */,
-				F7E711CD2E4D79F20054D8D5 /* QtQuickControls2FluentWinUI3StyleImpl.framework */,
-				F7E711842E4D79EF0054D8D5 /* QtQuickControls2Fusion.framework */,
-				F7E711862E4D79EF0054D8D5 /* QtQuickControls2FusionStyleImpl.framework */,
-				F7E711872E4D79EF0054D8D5 /* QtQuickControls2Imagine.framework */,
-				F7E7118C2E4D79EF0054D8D5 /* QtQuickControls2ImagineStyleImpl.framework */,
-				F7E711752E4D79EE0054D8D5 /* QtQuickControls2Impl.framework */,
-				F7E711B32E4D79F10054D8D5 /* QtQuickControls2IOSStyleImpl.framework */,
-				F7E711992E4D79F00054D8D5 /* QtQuickControls2MacOSStyleImpl.framework */,
-				F7E711562E4D79ED0054D8D5 /* QtQuickControls2Material.framework */,
-				F7E711922E4D79EF0054D8D5 /* QtQuickControls2MaterialStyleImpl.framework */,
-				F7E7115C2E4D79ED0054D8D5 /* QtQuickControls2Universal.framework */,
-				F7E7116A2E4D79ED0054D8D5 /* QtQuickControls2UniversalStyleImpl.framework */,
-				F7E7119F2E4D79F00054D8D5 /* QtQuickDialogs2.framework */,
-				F7E711B82E4D79F10054D8D5 /* QtQuickDialogs2QuickImpl.framework */,
-				F7E7119A2E4D79F00054D8D5 /* QtQuickDialogs2Utils.framework */,
-				F7E711682E4D79ED0054D8D5 /* QtQuickEffects.framework */,
-				F7E7116F2E4D79EE0054D8D5 /* QtQuickLayouts.framework */,
-				F7E711E72E4D79F30054D8D5 /* QtQuickParticles.framework */,
-				F7E711BF2E4D79F10054D8D5 /* QtQuickShapes.framework */,
-				F7E711E82E4D79F30054D8D5 /* QtQuickTemplates2.framework */,
-				F7E711B72E4D79F10054D8D5 /* QtQuickTest.framework */,
-				F7E711CC2E4D79F20054D8D5 /* QtQuickTimeline.framework */,
-				F7E7117F2E4D79EE0054D8D5 /* QtQuickTimelineBlendTrees.framework */,
-				F7E711C02E4D79F10054D8D5 /* QtQuickVectorImage.framework */,
-				F7E7117B2E4D79EE0054D8D5 /* QtQuickVectorImageGenerator.framework */,
-				F7E711C92E4D79F20054D8D5 /* QtQuickWidgets.framework */,
-				F7E7117A2E4D79EE0054D8D5 /* QtRemoteObjects.framework */,
-				F7E711662E4D79ED0054D8D5 /* QtRemoteObjectsQml.framework */,
-				F7E711732E4D79EE0054D8D5 /* QtScxml.framework */,
-				F7E711A42E4D79F00054D8D5 /* QtScxmlQml.framework */,
-				F7E711BA2E4D79F10054D8D5 /* QtSensors.framework */,
-				F7E711D62E4D79F20054D8D5 /* QtSensorsQuick.framework */,
-				F7E711A02E4D79F00054D8D5 /* QtSerialBus.framework */,
-				F7E7116C2E4D79ED0054D8D5 /* QtSerialPort.framework */,
-				F7E711D92E4D79F20054D8D5 /* QtShaderTools.framework */,
-				F7E711B02E4D79F10054D8D5 /* QtSpatialAudio.framework */,
-				F7E711E12E4D79F30054D8D5 /* QtSql.framework */,
-				F7E711582E4D79ED0054D8D5 /* QtStateMachine.framework */,
-				F7E711712E4D79EE0054D8D5 /* QtStateMachineQml.framework */,
-				F7E711D42E4D79F20054D8D5 /* QtSvg.framework */,
-				F7E711CE2E4D79F20054D8D5 /* QtSvgWidgets.framework */,
-				F7E711A52E4D79F00054D8D5 /* QtTest.framework */,
-				F7E711742E4D79EE0054D8D5 /* QtTextToSpeech.framework */,
-				F7E7117C2E4D79EE0054D8D5 /* QtUiTools.framework */,
-				F7E711702E4D79EE0054D8D5 /* QtVirtualKeyboard.framework */,
-				F7E711892E4D79EF0054D8D5 /* QtVirtualKeyboardQml.framework */,
-				F7E711932E4D79EF0054D8D5 /* QtVirtualKeyboardSettings.framework */,
-				F7E711CF2E4D79F20054D8D5 /* QtWidgets.framework */,
-				F7E7118E2E4D79EF0054D8D5 /* QtXml.framework */,
-				F7E712812E4D7EA90054D8D5 /* libqcocoa.dylib */,
-				F7E712832E4D7EAA0054D8D5 /* libqminimal.dylib */,
-				F7E712822E4D7EAA0054D8D5 /* libqoffscreen.dylib */,
-				F7E712802E4D7EA90054D8D5 /* lib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -947,6 +558,184 @@
 			);
 			path = VSPDriver;
 			sourceTree = "<group>";
+		};
+		F7CF33212EAB968A000F8397 /* QT-6.10 */ = {
+			isa = PBXGroup;
+			children = (
+				F7CF33262EAB96B6000F8397 /* PlugIns */,
+				F7CF33252EAB96AC000F8397 /* LIB */,
+			);
+			path = "QT-6.10";
+			sourceTree = "<group>";
+		};
+		F7CF33252EAB96AC000F8397 /* LIB */ = {
+			isa = PBXGroup;
+			children = (
+				F7CF339E2EAB9881000F8397 /* QtNetworkAuth.framework */,
+				F7CF33902EAB983B000F8397 /* QtCore.framework */,
+				F7CF33922EAB9849000F8397 /* QtConcurrent.framework */,
+				F7CF33942EAB984F000F8397 /* QtCore5Compat.framework */,
+				F7CF33962EAB985A000F8397 /* QtDBus.framework */,
+				F7CF33982EAB9865000F8397 /* QtGraphs.framework */,
+				F7CF339A2EAB986E000F8397 /* QtGui.framework */,
+				F7CF339C2EAB987B000F8397 /* QtNetwork.framework */,
+				F7CF33A02EAB9888000F8397 /* QtOpenGL.framework */,
+				F7CF33A22EAB9893000F8397 /* QtQml.framework */,
+				F7CF33A42EAB989B000F8397 /* QtQmlCompiler.framework */,
+				F7CF33A62EAB98A3000F8397 /* QtQmlCore.framework */,
+				F7CF33A82EAB98AB000F8397 /* QtQmlMeta.framework */,
+				F7CF33AA2EAB98B3000F8397 /* QtQmlModels.framework */,
+				F7CF33AC2EAB98CA000F8397 /* QtSensors.framework */,
+				F7CF33AE2EAB98DA000F8397 /* QtSerialBus.framework */,
+				F7CF33B02EAB98E3000F8397 /* QtSerialPort.framework */,
+				F7CF33D42EAB9AAB000F8397 /* QtXml.framework */,
+				F7CF33D62EAB9AB2000F8397 /* QtWidgets.framework */,
+				F7CF33DC2EAB9B2C000F8397 /* QtQmlWorkerScript.framework */,
+				F7CF33E02EAB9B49000F8397 /* QtQuickShapes.framework */,
+				F7CF33E42EAB9B66000F8397 /* QtQuick3D.framework */,
+				F7CF33E82EAB9B83000F8397 /* QtQuick3DRuntimeRender.framework */,
+				F7CF33EC2EAB9BA1000F8397 /* QtShaderTools.framework */,
+				F7CF33F02EAB9BC0000F8397 /* QtQuick3DUtils.framework */,
+				F7CF33F42EAB9BD6000F8397 /* QtQuick.framework */,
+			);
+			path = LIB;
+			sourceTree = "<group>";
+		};
+		F7CF33262EAB96B6000F8397 /* PlugIns */ = {
+			isa = PBXGroup;
+			children = (
+				F7CF332D2EAB96CC000F8397 /* platforms */,
+				F7CF33362EAB96E1000F8397 /* sensors */,
+				F7CF333B2EAB96F7000F8397 /* networkinformation */,
+				F7CF33402EAB9701000F8397 /* styles */,
+				F7CF33492EAB970B000F8397 /* tls */,
+				F7CF33522EAB9728000F8397 /* iconengines */,
+				F7CF336D2EAB9734000F8397 /* imageformats */,
+				F7CF33882EAB9747000F8397 /* networkinformation */,
+				F7CF338D2EAB9762000F8397 /* platforminputcontexts */,
+			);
+			path = PlugIns;
+			sourceTree = "<group>";
+		};
+		F7CF332D2EAB96CC000F8397 /* platforms */ = {
+			isa = PBXGroup;
+			children = (
+				F7CF33272EAB96CC000F8397 /* libqcocoa.dylib */,
+				F7CF33282EAB96CC000F8397 /* libqcocoa.dylib.dSYM */,
+				F7CF33292EAB96CC000F8397 /* libqminimal.dylib */,
+				F7CF332A2EAB96CC000F8397 /* libqminimal.dylib.dSYM */,
+				F7CF332B2EAB96CC000F8397 /* libqoffscreen.dylib */,
+				F7CF332C2EAB96CC000F8397 /* libqoffscreen.dylib.dSYM */,
+			);
+			name = platforms;
+			path = /Users/eofmc/Qt/6.10.0/macos/plugins/platforms;
+			sourceTree = "<absolute>";
+		};
+		F7CF33362EAB96E1000F8397 /* sensors */ = {
+			isa = PBXGroup;
+			children = (
+				F7CF33342EAB96E1000F8397 /* libqtsensors_generic.dylib */,
+				F7CF33352EAB96E1000F8397 /* libqtsensors_generic.dylib.dSYM */,
+			);
+			name = sensors;
+			path = /Users/eofmc/Qt/6.10.0/macos/plugins/sensors;
+			sourceTree = "<absolute>";
+		};
+		F7CF333B2EAB96F7000F8397 /* networkinformation */ = {
+			isa = PBXGroup;
+			children = (
+				F7CF33392EAB96F7000F8397 /* libqapplenetworkinformation.dylib */,
+				F7CF333A2EAB96F7000F8397 /* libqapplenetworkinformation.dylib.dSYM */,
+			);
+			name = networkinformation;
+			path = /Users/eofmc/Qt/6.10.0/macos/plugins/networkinformation;
+			sourceTree = "<absolute>";
+		};
+		F7CF33402EAB9701000F8397 /* styles */ = {
+			isa = PBXGroup;
+			children = (
+				F7CF333E2EAB9701000F8397 /* libqmacstyle.dylib */,
+				F7CF333F2EAB9701000F8397 /* libqmacstyle.dylib.dSYM */,
+			);
+			name = styles;
+			path = /Users/eofmc/Qt/6.10.0/macos/plugins/styles;
+			sourceTree = "<absolute>";
+		};
+		F7CF33492EAB970B000F8397 /* tls */ = {
+			isa = PBXGroup;
+			children = (
+				F7CF33432EAB970B000F8397 /* libqcertonlybackend.dylib */,
+				F7CF33442EAB970B000F8397 /* libqcertonlybackend.dylib.dSYM */,
+				F7CF33452EAB970B000F8397 /* libqopensslbackend.dylib */,
+				F7CF33462EAB970B000F8397 /* libqopensslbackend.dylib.dSYM */,
+				F7CF33472EAB970B000F8397 /* libqsecuretransportbackend.dylib */,
+				F7CF33482EAB970B000F8397 /* libqsecuretransportbackend.dylib.dSYM */,
+			);
+			name = tls;
+			path = /Users/eofmc/Qt/6.10.0/macos/plugins/tls;
+			sourceTree = "<absolute>";
+		};
+		F7CF33522EAB9728000F8397 /* iconengines */ = {
+			isa = PBXGroup;
+			children = (
+				F7CF33502EAB9728000F8397 /* libqsvgicon.dylib */,
+				F7CF33512EAB9728000F8397 /* libqsvgicon.dylib.dSYM */,
+			);
+			name = iconengines;
+			path = /Users/eofmc/Qt/6.10.0/macos/plugins/iconengines;
+			sourceTree = "<absolute>";
+		};
+		F7CF336D2EAB9734000F8397 /* imageformats */ = {
+			isa = PBXGroup;
+			children = (
+				F7CF33552EAB9734000F8397 /* libqgif.dylib */,
+				F7CF33562EAB9734000F8397 /* libqgif.dylib.dSYM */,
+				F7CF33572EAB9734000F8397 /* libqicns.dylib */,
+				F7CF33582EAB9734000F8397 /* libqicns.dylib.dSYM */,
+				F7CF33592EAB9734000F8397 /* libqico.dylib */,
+				F7CF335A2EAB9734000F8397 /* libqico.dylib.dSYM */,
+				F7CF335B2EAB9734000F8397 /* libqjpeg.dylib */,
+				F7CF335C2EAB9734000F8397 /* libqjpeg.dylib.dSYM */,
+				F7CF335D2EAB9734000F8397 /* libqmacheif.dylib */,
+				F7CF335E2EAB9734000F8397 /* libqmacheif.dylib.dSYM */,
+				F7CF335F2EAB9734000F8397 /* libqmacjp2.dylib */,
+				F7CF33602EAB9734000F8397 /* libqmacjp2.dylib.dSYM */,
+				F7CF33612EAB9734000F8397 /* libqpdf.dylib */,
+				F7CF33622EAB9734000F8397 /* libqpdf.dylib.dSYM */,
+				F7CF33632EAB9734000F8397 /* libqsvg.dylib */,
+				F7CF33642EAB9734000F8397 /* libqsvg.dylib.dSYM */,
+				F7CF33652EAB9734000F8397 /* libqtga.dylib */,
+				F7CF33662EAB9734000F8397 /* libqtga.dylib.dSYM */,
+				F7CF33672EAB9734000F8397 /* libqtiff.dylib */,
+				F7CF33682EAB9734000F8397 /* libqtiff.dylib.dSYM */,
+				F7CF33692EAB9734000F8397 /* libqwbmp.dylib */,
+				F7CF336A2EAB9734000F8397 /* libqwbmp.dylib.dSYM */,
+				F7CF336B2EAB9734000F8397 /* libqwebp.dylib */,
+				F7CF336C2EAB9734000F8397 /* libqwebp.dylib.dSYM */,
+			);
+			name = imageformats;
+			path = /Users/eofmc/Qt/6.10.0/macos/plugins/imageformats;
+			sourceTree = "<absolute>";
+		};
+		F7CF33882EAB9747000F8397 /* networkinformation */ = {
+			isa = PBXGroup;
+			children = (
+				F7CF33862EAB9747000F8397 /* libqapplenetworkinformation.dylib */,
+				F7CF33872EAB9747000F8397 /* libqapplenetworkinformation.dylib.dSYM */,
+			);
+			name = networkinformation;
+			path = /Users/eofmc/Qt/6.10.0/macos/plugins/networkinformation;
+			sourceTree = "<absolute>";
+		};
+		F7CF338D2EAB9762000F8397 /* platforminputcontexts */ = {
+			isa = PBXGroup;
+			children = (
+				F7CF338B2EAB9762000F8397 /* libqtvirtualkeyboardplugin.dylib */,
+				F7CF338C2EAB9762000F8397 /* libqtvirtualkeyboardplugin.dylib.dSYM */,
+			);
+			name = platforminputcontexts;
+			path = /Users/eofmc/Qt/6.10.0/macos/plugins/platforminputcontexts;
+			sourceTree = "<absolute>";
 		};
 /* End PBXGroup section */
 
@@ -972,8 +761,8 @@
 				8869B5072D627FCD002643D9 /* Embed Libraries */,
 				880539E62D4BAFBD00E55104 /* Resources */,
 				750497EB2DFBFCD300FF32D5 /* Copy VSP Driver DEXT */,
-				F745DF9A2E46B68B004C0C7E /* --- COPY QT PLUGINS --- */,
-				F7E7127F2E4D7E180054D8D5 /* Copy QT Platform Plugins */,
+				F745DF9A2E46B68B004C0C7E /* -- 00 -- COPY QT PLUGINS --- */,
+				F7E7127F2E4D7E180054D8D5 /* -- 01 -- Copy QT Platform Plugins */,
 			);
 			buildRules = (
 			);
@@ -1120,7 +909,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		F745DF9A2E46B68B004C0C7E /* --- COPY QT PLUGINS --- */ = {
+		F745DF9A2E46B68B004C0C7E /* -- 00 -- COPY QT PLUGINS --- */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -1130,14 +919,14 @@
 			);
 			inputPaths = (
 			);
-			name = "--- COPY QT PLUGINS ---";
+			name = "-- 00 -- COPY QT PLUGINS ---";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# This scriptlet is only for Xcode custom build script in Build Phase\nif [ \"x${BUILT_PRODUCTS_DIR}\" == \"x\" ] ; then\n    echo \"Paste the script into Xcode Build Phase - custom build script, or\"\n    echo \"set QTDIR=<where your QT arch root>\"\n    echo \"set PROJECT_ROOT=`pwd`\"\n    echo 'set BUILT_PRODUCTS_DIR=${PROJECT_ROOT}/build/xcode/<Debug|Release>'\n    echo 'set PLUGINS_FOLDER_PATH=DRFXBuilder.app/Contents/PlugIns'\n    exit 1\nfi\necho \"--- INSTALL QT-PLUGINS ---\"\nmkdir -p ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}\ncp -vR ${QTDIR}/PlugIns/* ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/\nrm -fR ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/permissions\nrm -fR ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/*/*.dSYM\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# This scriptlet is only for Xcode custom build script in Build Phase\nif [ \"x${BUILT_PRODUCTS_DIR}\" == \"x\" ] ; then\n    echo \"Paste the script into Xcode Build Phase - custom build script, or\"\n    echo \"set QTDIR=<where your QT arch root>\"\n    echo \"set PROJECT_ROOT=`pwd`\"\n    echo 'set BUILT_PRODUCTS_DIR=${PROJECT_ROOT}/build/xcode/<Debug|Release>'\n    echo 'set PLUGINS_FOLDER_PATH=DRFXBuilder.app/Contents/PlugIns'\n    exit 1\nfi\necho \"--- INSTALL QT-PLUGINS ---\"\nmkdir -p ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}\ncp -vR ${QTDIR}/PlugIns/* ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/\n# AppStore unsupported stuff\nrm -fR ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/permissions\nrm -fR ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/sqldrivers\nrm -fR ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/*/*.dSYM\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1216,10 +1005,20 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 53;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = YES;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_USER_SELECTED_FILES = readwrite;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1234,25 +1033,30 @@
 				);
 				INFOPLIST_FILE = VSPClient/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Virtual Serial Port Controller";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSDesktopFolderUsageDescription = "Require acces to file for VSP test.";
-				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "Require acces to file for VSP test.";
-				INFOPLIST_KEY_NSDownloadsFolderUsageDescription = "Require acces to file for VSP test.";
+				INFOPLIST_KEY_LSUIElement = NO;
+				INFOPLIST_KEY_NSDesktopFolderUsageDescription = "Permit Virtual Serial Port to send, write or save files.";
+				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "Permit Virtual Serial Port to send, write or save files.";
+				INFOPLIST_KEY_NSDownloadsFolderUsageDescription = "Permit Virtual Serial Port to send, write or save files.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 by EoF Software Labs";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Permit VPS Controller to redirect data from serial port to a network connection.";
+				INFOPLIST_KEY_NSNetworkVolumesUsageDescription = "Permit Virtual Serial Port to write data to network volume path.";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
-				INFOPLIST_KEY_OSBundleUsageDescription = "Required to Control the Virtual Serial Port links";
+				INFOPLIST_KEY_NSSystemExtensionUsageDescription = "Permit Virtual Serial Port to install a driver to provide virtual serial ports.";
+				INFOPLIST_KEY_OSBundleUsageDescription = "Permit VSP Controller to manage virtual serial ports.";
 				LIBRARY_SEARCH_PATHS = (
 					"$(SDKROOT)/usr/lib/system",
 					"$(PROJECT_DIR)",
 					"$(QTDIR)/plugins/permissions",
+					"$(QTDIR)/lib",
 					"$(inherited)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.2;
-				MARKETING_VERSION = 1.9;
+				MARKETING_VERSION = 1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				QTDIR = "$(HOME)/Qt/6.9.1/macos";
 				REEXPORTED_LIBRARY_PATHS = "";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = macosx;
@@ -1278,10 +1082,20 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 53;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = YES;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_USER_SELECTED_FILES = readwrite;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1296,25 +1110,30 @@
 				);
 				INFOPLIST_FILE = VSPClient/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Virtual Serial Port Controller";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSDesktopFolderUsageDescription = "Require acces to file for VSP test.";
-				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "Require acces to file for VSP test.";
-				INFOPLIST_KEY_NSDownloadsFolderUsageDescription = "Require acces to file for VSP test.";
+				INFOPLIST_KEY_LSUIElement = NO;
+				INFOPLIST_KEY_NSDesktopFolderUsageDescription = "Permit Virtual Serial Port to send, write or save files.";
+				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "Permit Virtual Serial Port to send, write or save files.";
+				INFOPLIST_KEY_NSDownloadsFolderUsageDescription = "Permit Virtual Serial Port to send, write or save files.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 by EoF Software Labs";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Permit VPS Controller to redirect data from serial port to a network connection.";
+				INFOPLIST_KEY_NSNetworkVolumesUsageDescription = "Permit Virtual Serial Port to write data to network volume path.";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
-				INFOPLIST_KEY_OSBundleUsageDescription = "Required to Control the Virtual Serial Port links";
+				INFOPLIST_KEY_NSSystemExtensionUsageDescription = "Permit Virtual Serial Port to install a driver to provide virtual serial ports.";
+				INFOPLIST_KEY_OSBundleUsageDescription = "Permit VSP Controller to manage virtual serial ports.";
 				LIBRARY_SEARCH_PATHS = (
 					"$(SDKROOT)/usr/lib/system",
 					"$(PROJECT_DIR)",
 					"$(QTDIR)/plugins/permissions",
+					"$(QTDIR)/lib",
 					"$(inherited)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.2;
-				MARKETING_VERSION = 1.9;
+				MARKETING_VERSION = 1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				QTDIR = "$(HOME)/Qt/6.9.1/macos";
 				REEXPORTED_LIBRARY_PATHS = "";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = macosx;
@@ -1526,8 +1345,8 @@
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
-				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
+				CURRENT_PROJECT_VERSION = 53;
+				DRIVERKIT_DEPLOYMENT_TARGET = 23.6;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1537,12 +1356,12 @@
 				INFOPLIST_FILE = VSPDriver/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Virtual Serial Port Driver";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 by EoF Software Labs";
-				INFOPLIST_KEY_OSBundleUsageDescription = "Provide virtual serial port";
+				INFOPLIST_KEY_OSBundleUsageDescription = "System extension provides a driver that manages virtual serial ports";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/System/DriverKit/usr/lib/system",
 				);
-				MARKETING_VERSION = 1.9;
+				MARKETING_VERSION = 1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPDriver;
 				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1561,8 +1380,8 @@
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
-				DRIVERKIT_DEPLOYMENT_TARGET = 21.6;
+				CURRENT_PROJECT_VERSION = 53;
+				DRIVERKIT_DEPLOYMENT_TARGET = 23.6;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1572,12 +1391,12 @@
 				INFOPLIST_FILE = VSPDriver/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Virtual Serial Port Driver";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 by EoF Software Labs";
-				INFOPLIST_KEY_OSBundleUsageDescription = "Provide virtual serial port";
+				INFOPLIST_KEY_OSBundleUsageDescription = "System extension provides a driver that manages virtual serial ports";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/System/DriverKit/usr/lib/system",
 				);
-				MARKETING_VERSION = 1.9;
+				MARKETING_VERSION = 1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPDriver;
 				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

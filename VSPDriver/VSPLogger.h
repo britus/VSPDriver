@@ -26,7 +26,7 @@
 #else
 #define VSPLog(prefix, fmt, ...)
 #endif
-#endif
+#endif // !VSPLog
 
 #define VSPErr(prefix, fmt, ...)   os_log(OS_LOG_DEFAULT, "[" prefix "]: " fmt, ##__VA_ARGS__)
 #define VSPTrace(prefix, fmt, ...) os_log(OS_LOG_DEFAULT, "[" prefix "]: " fmt, ##__VA_ARGS__)

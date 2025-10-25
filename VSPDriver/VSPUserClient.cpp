@@ -73,7 +73,8 @@ static inline void dump_ctrl_data(const TVSPControllerData* data)
     VSPLog(LOG_PREFIX, "Data.p.portlink.target: %d\n", data->parameter.link.target);
     VSPLog(LOG_PREFIX, "Data.ports.count......: %d\n", data->ports.count);
     for (uint8_t i = 0; i < data->ports.count && i < MAX_SERIAL_PORTS; i++) {
-        VSPLog(LOG_PREFIX, "\tPort item #%d: %d\n", i, data->ports.list[i].id);
+        VSPLog(LOG_PREFIX, "\tPort item #%d: %d flags=%llx\n", i, //
+               data->ports.list[i].id, data->ports.list[i].flags);
     }
     VSPLog(LOG_PREFIX, "Data.links.count......: %d\n", data->links.count);
     for (uint8_t i = 0; i < data->links.count && i < MAX_SERIAL_PORTS; i++) {
@@ -88,12 +89,14 @@ static inline void dump_ctrl_data(const TVSPControllerData* data)
 #define VSP_DUMP_DATA(data)
 #endif
 
+#define kVSPUserClientQueueId "VSPUserClient.uc.disp.queue"
+
 struct VSPUserClient_IVars {
     IOService* m_provider = nullptr;
     VSPDriver* m_parent = nullptr;
-    IODispatchQueue* m_eventQueue = nullptr;
-    IOTimerDispatchSource* m_eventSource = nullptr;
-    OSAction* m_eventAction = nullptr;
+    IODispatchQueue* m_evQueue = nullptr;
+    IOTimerDispatchSource* m_evSource = nullptr;
+    OSAction* m_evAction = nullptr;
     OSAction* m_cbAction = nullptr;
     TVSPControllerData m_response = {};
 };
@@ -209,7 +212,7 @@ bool VSPUserClient::init()
     VSPLog(LOG_PREFIX, "init called.\n");
     
     if (!(result = super::init())) {
-        VSPErr(LOG_PREFIX, "free (super) falsed. result=%d\n", result);
+        VSPErr(LOG_PREFIX, "init (super) falsed. result=%d\n", result);
         goto finish;
     }
     
@@ -245,7 +248,7 @@ void VSPUserClient::free()
 kern_return_t IMPL(VSPUserClient, Start)
 {
     kern_return_t ret;
-    
+
     VSPLog(LOG_PREFIX, "Start: called.\n");
     
     // sane check our driver instance vars
@@ -261,42 +264,49 @@ kern_return_t IMPL(VSPUserClient, Start)
         return ret;
     }
     
-    ret = IODispatchQueue::Create("kVSPUserClientQueue", 0, 0, &ivars->m_eventQueue);
+    ret = IODispatchQueue::Create(kVSPUserClientQueueId, 0, 0, &ivars->m_evQueue);
     if (ret != kIOReturnSuccess)
     {
-        VSPErr(LOG_PREFIX, "Start() - Failed to create dispatch queue with error: 0x%08x.", ret);
+        VSPErr(LOG_PREFIX, "Start: IODispatchQueue::Create failed with error: 0x%08x.", ret);
         return ret;
     }
     
-    ret = IOTimerDispatchSource::Create(ivars->m_eventQueue, &ivars->m_eventSource);
+    ret = IOTimerDispatchSource::Create(ivars->m_evQueue, &ivars->m_evSource);
     if (ret != kIOReturnSuccess)
     {
-        VSPErr(LOG_PREFIX, "Start() - Failed to create dispatch source with error: 0x%08x.", ret);
-        return ret;
+        VSPErr(LOG_PREFIX, "Start: IOTimerDispatchSource::Create failed with error: 0x%08x.", ret);
+        goto error_exit;
     }
     
-    ret = CreateActionAsyncCallback(VSP_UCD_SIZE, &ivars->m_eventAction);
+    ret = CreateActionAsyncCallback(VSP_UCD_SIZE, &ivars->m_evAction);
     if (ret != kIOReturnSuccess)
     {
-        VSPErr(LOG_PREFIX, "Start() - Failed to create action for simulated async event with error: 0x%08x.", ret);
-        return ret;
+        VSPErr(LOG_PREFIX, "Start: CreateActionAsyncCallback failed with error: 0x%08x.", ret);
+        goto error_exit;
     }
     
-    ret = ivars->m_eventSource->SetHandler(ivars->m_eventAction);
+    ret = ivars->m_evSource->SetHandler(ivars->m_evAction);
     if (ret != kIOReturnSuccess)
     {
-        VSPErr(LOG_PREFIX, "Start() - Failed to assign simulated action to handler with error: 0x%08x.", ret);
-        return ret;
+        VSPErr(LOG_PREFIX, "Start: Failed to assign action to handler with error: 0x%08x.", ret);
+        goto error_exit;
+    }
+    
+    // --
+    // Register driver instance to IOReg
+    if ((ret = RegisterService()) != kIOReturnSuccess) {
+        VSPErr(LOG_PREFIX, "Start: RegisterService failed. code=%x\n", ret);
+        goto error_exit;
     }
 
-    ret = RegisterService();
-    if (ret != kIOReturnSuccess)
-    {
-        VSPErr(LOG_PREFIX, "Start() - Failed to register service with error: 0x%08x.", ret);
-        return ret;
-    }
-    
     VSPLog(LOG_PREFIX, "User client successfully started.\n");
+    return kIOReturnSuccess;
+    
+error_exit:
+    OSSafeReleaseNULL(ivars->m_evAction);
+    OSSafeReleaseNULL(ivars->m_evSource);
+    OSSafeReleaseNULL(ivars->m_evQueue);
+
     return ret;
 }
 
@@ -309,9 +319,9 @@ kern_return_t IMPL(VSPUserClient, Stop)
     
     VSPLog(LOG_PREFIX, "Stop called.\n");
     
-    OSSafeReleaseNULL(ivars->m_eventAction);
-    OSSafeReleaseNULL(ivars->m_eventSource);
-    OSSafeReleaseNULL(ivars->m_eventQueue);
+    OSSafeReleaseNULL(ivars->m_evAction);
+    OSSafeReleaseNULL(ivars->m_evSource);
+    OSSafeReleaseNULL(ivars->m_evQueue);
     OSSafeReleaseNULL(ivars->m_cbAction);
 
     // service instance (Apple style super call)
@@ -471,26 +481,6 @@ void VSPUserClient::unlinkParent()
 }
 
 // --------------------------------------------------------------------
-// Dispatch async event
-kern_return_t VSPUserClient::scheduleEvent(void* reference, IOUserClientMethodArguments* arguments)
-{
-    TVSPControllerData* response = (TVSPControllerData*) reference;
-    IOReturn ret;
- 
-    VSPLog(LOG_PREFIX, "scheduleEvent called.\n");
-    
-    if ((ret = prepareResponse(response, arguments)) != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "scheduleEvent: Preprare response failed. code=%x\n", ret);
-        set_ctlr_status(response, ret, 0xea000001);
-    }
-    
-    uint64_t       currentTime = clock_gettime_nsec_np(CLOCK_MONOTONIC_RAW);
-    currentTime               += 1000000;
-    const uint64_t leeway      = 1000000000;
-    return ivars->m_eventSource->WakeAtTime(kIOTimerClockMonotonicRaw, currentTime, leeway);
-}
-
-// --------------------------------------------------------------------
 // Prepares async response
 //
 kern_return_t VSPUserClient::prepareResponse(void* reference, IOUserClientMethodArguments* arguments)
@@ -571,7 +561,7 @@ kern_return_t VSPUserClient::prepareResponse(void* reference, IOUserClientMethod
     
     // Fill event data with response. It action GetReference() returns NULL
     // if the action object doesn't belong to the current process.
-    if ((evData = ivars->m_eventAction->GetReference()) != nullptr) {
+    if ((evData = ivars->m_evAction->GetReference()) != nullptr) {
         memcpy(evData, response, VSP_UCD_SIZE);
     }
     else {
@@ -580,6 +570,26 @@ kern_return_t VSPUserClient::prepareResponse(void* reference, IOUserClientMethod
     
     VSPLog(LOG_PREFIX, "prepareResponse finish.\n");
     return kIOReturnSuccess;
+}
+
+// --------------------------------------------------------------------
+// Dispatch async event
+kern_return_t VSPUserClient::scheduleEvent(void* reference, IOUserClientMethodArguments* arguments)
+{
+    TVSPControllerData* response = (TVSPControllerData*) reference;
+    IOReturn ret;
+ 
+    VSPLog(LOG_PREFIX, "scheduleEvent called.\n");
+    
+    if ((ret = prepareResponse(response, arguments)) != kIOReturnSuccess) {
+        VSPErr(LOG_PREFIX, "scheduleEvent: Preprare response failed. code=%x\n", ret);
+        set_ctlr_status(response, ret, 0xea000001);
+    }
+    
+    uint64_t       currentTime = clock_gettime_nsec_np(CLOCK_MONOTONIC_RAW);
+    currentTime               += 1000000;
+    const uint64_t leeway      = 1000000000;
+    return ivars->m_evSource->WakeAtTime(kIOTimerClockMonotonicRaw, currentTime, leeway);
 }
 
 // --------------------------------------------------------------------
@@ -1046,7 +1056,7 @@ kern_return_t VSPUserClient::enableChecks(void* reference, IOUserClientMethodArg
     kern_return_t ret;
     TVSPControllerData response = {};
     TVSPControllerData request = {};
-    TVSPPortItem portItem = {};
+    TVSPPortItem item = {};
     uint8_t portId;
     uint64_t flags;
 
@@ -1054,25 +1064,32 @@ kern_return_t VSPUserClient::enableChecks(void* reference, IOUserClientMethodArg
 
     if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xee00ee00);
-        goto finish;
+        goto error;
     }
     if ((ret = toResponse(&request, &response)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xee00ee01);
-        goto finish;
+        goto error;
     }
 
-    flags = request.parameter.flags;
     portId = request.parameter.link.source;
+    flags = request.parameter.flags;
+    flags &= ~portId;
     
-    ret = ivars->m_parent->getPortById(portId, &portItem, sizeof(TVSPPortItem));
-    if (ret != kIOReturnSuccess) {
+    ret = ivars->m_parent->getPortById(portId, &item, sizeof(TVSPPortItem));
+    if (ret != kIOReturnSuccess || !item.port) {
         set_ctlr_status(&response, ret, 0xaa000001);
-        goto finish;
+        goto error;
     }
     
-    portItem.port->setParameterChecks(flags);
+    VSPLog(LOG_PREFIX, "enableChecks flags: 0x%llx port: %d\n", //
+           flags, item.port->getPortIdentifier());
+ 
+    item.port->setParameterChecks(flags);
+    
+    // return updated port
+    return getPortList(reference, arguments);
 
-finish:
+error:
     return scheduleEvent(&response, arguments);
 }
 
@@ -1093,33 +1110,32 @@ kern_return_t VSPUserClient::enableTrace(void* reference, IOUserClientMethodArgu
 
     if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xee00ee00);
-        goto finish;
+        goto error;
     }
     if ((ret = toResponse(&request, &response)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xee00ee01);
-        goto finish;
+        goto error;
     }
 
-    flags = request.parameter.flags;
     portId = request.parameter.link.source;
-    
+    flags = request.parameter.flags;
+    flags &= ~portId;
+
     ret = ivars->m_parent->getPortById(portId, &item, sizeof(TVSPPortItem));
-    if (ret != kIOReturnSuccess) {
+    if (ret != kIOReturnSuccess || !item.port) {
         set_ctlr_status(&response, ret, 0xaa000001);
-        goto finish;
+        goto error;
     }
 
     VSPLog(LOG_PREFIX, "enableTrace flags: 0x%llx port: %d\n", //
            flags, item.port->getPortIdentifier());
 
     // Keep the flags in the structure
-    item.flags = flags;
-    
-    // Update port object instance
-    if (item.port) {
-        item.port->setTraceFlags(flags);
-    }
+    item.port->setTraceFlags(flags);
 
-finish:
+    // return updated port
+    return getPortList(reference, arguments);
+    
+error:
     return scheduleEvent(&response, arguments);
 }

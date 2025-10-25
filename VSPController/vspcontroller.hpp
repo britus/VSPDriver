@@ -19,14 +19,27 @@ extern "C" {
 
 namespace VSPClient {
 
-#define MAGIC_CONTROL    0xBE6605250000L
+#define MAGIC_CONTROL 0xBE6605250000L
 #define MAX_SERIAL_PORTS 16
-#define MAX_PORT_LINKS   16
-#define MAX_PORT_NAME    64
+#define MAX_PORT_LINKS 16
+#define MAX_PORT_NAME 64
 
 #ifndef VSP_UCD_SIZE
 #define VSP_UCD_SIZE sizeof(TVSPControllerData)
 #endif
+
+#ifndef BIT
+#define BIT(x) (1 << x)
+#endif
+
+#define TRACE_PORT_RX BIT(16)
+#define TRACE_PORT_TX BIT(17)
+#define TRACE_PORT_IO BIT(18)
+#define CHECK_BAUD BIT(19)
+#define CHECK_DATA_SIZE BIT(20)
+#define CHECK_STOP_BITS BIT(21)
+#define CHECK_PARITY BIT(22)
+#define CHECK_FLOWCTRL BIT(23)
 
 typedef enum {
     vspContextPing = 0x01,
@@ -50,13 +63,15 @@ typedef enum {
     vspLastCommand,
 } TVSPControlCommand;
 
-typedef struct {
+typedef struct
+{
     uint8_t id;
     uint64_t flags;
     char name[MAX_PORT_NAME];
 } TVSPPortListItem;
 
-typedef struct {
+typedef struct
+{
     uint32_t baudRate;
     uint8_t dataBits;
     uint8_t stopBits;
@@ -64,7 +79,8 @@ typedef struct {
     uint8_t flowCtrl;
 } TVSPPortParameters;
 
-typedef struct {
+typedef struct
+{
     /* In whitch context calld */
     uint8_t context;
 
@@ -72,38 +88,44 @@ typedef struct {
     uint8_t command;
 
     /* Command status response */
-    struct Status {
+    struct Status
+    {
         uint32_t code;
         uint64_t flags;
     } status;
 
     /* Command parameters */
-    struct Parameter {
+    struct Parameter
+    {
         /* parameter flags */
         uint64_t flags;
 
         /* port link parameters */
-        struct PortLink {
+        struct PortLink
+        {
             uint8_t source;
             uint8_t target;
         } link;
     } parameter;
 
     /* Available serial ports */
-    struct PortList {
+    struct PortList
+    {
         uint8_t count;
         TVSPPortListItem list[MAX_SERIAL_PORTS];
     } ports;
 
     /* Available serial port links */
-    struct LinkList {
+    struct LinkList
+    {
         uint8_t count;
         uint64_t list[MAX_PORT_LINKS];
     } links;
 
 } TVSPControllerData;
 
-typedef struct {
+typedef struct
+{
     int system;
     int sub;
     int code;
@@ -114,38 +136,38 @@ class VSPControllerPriv;
 class VSPCONTROLLER_EXPORT VSPController
 {
 public:
-    explicit VSPController(const char* dextClassName);
+    explicit VSPController(const char *dextClassName);
     ~VSPController();
     bool ConnectDriver();
-    const char* DeviceName() const;
-    const char* DevicePath() const;
+    const char *DeviceName() const;
+    const char *DevicePath() const;
     bool GetStatus();
     bool IsConnected();
-    bool CreatePort(TVSPPortParameters* parameters);
+    bool CreatePort(TVSPPortParameters *parameters);
     bool RemovePort(const uint8_t id);
     bool GetPortList();
     bool GetLinkList();
     bool LinkPorts(const uint8_t source, const uint8_t target);
     bool UnlinkPorts(const uint8_t source, const uint8_t target);
-    bool EnableChecks(const uint8_t port, const uint32_t flags = 0);
-    bool EnableTrace(const uint8_t port, const uint32_t flags = 0);
-    bool SetDextIdentifier(const char* name);
-    bool SendData(const TVSPControllerData& data);
+    bool EnableChecks(const uint8_t port, const uint64_t flags = 0);
+    bool EnableTrace(const uint8_t port, const uint64_t flags = 0);
+    bool SetDextClassName(const char *name);
+    bool SendData(const TVSPControllerData &data);
     const TVSPSystemError GetSystemError(int error) const;
 
 protected:
     friend class VSPControllerPriv;
     virtual int GetConnection();
-    virtual void OnIOUCCallback(int result, void* data, uint32_t size) = 0;
+    virtual void OnIOUCCallback(int result, void *data, uint32_t size) = 0;
     virtual void OnConnected() = 0;
     virtual void OnDisconnected() = 0;
-    virtual void OnErrorOccured(const VSPClient::TVSPSystemError& error, const char* message) = 0;
-    virtual void OnDataReady(const TVSPControllerData& data) = 0;
+    virtual void OnErrorOccured(const VSPClient::TVSPSystemError &error, const char *message) = 0;
+    virtual void OnDataReady(const TVSPControllerData &data) = 0;
 
 private:
-    VSPControllerPriv* p;
+    VSPControllerPriv *p;
 };
 
-} // END namespace
+} // namespace VSPClient
 
 #pragma GCC visibility pop

@@ -74,7 +74,7 @@ public:
     virtual kern_return_t HwProgramMCR(bool dtr, bool rts) override;
     virtual kern_return_t HwProgramLatencyTimer(uint32_t latency) override;
     virtual kern_return_t HwProgramFlowControl(uint32_t arg, uint8_t xon, uint8_t xoff) override;
-     
+
     // ------ [VSPSerialPort inrernals] -------------------------
 
     // Release all resource in IVars
@@ -91,7 +91,10 @@ public:
     // Called by VSPDriver to set port link id
     void setPortLinkIdentifier(uint8_t id) LOCALONLY;
     uint8_t getPortLinkIdentifier() LOCALONLY;
-    
+
+    // Get flags
+    kern_return_t getFlags(uint64_t* flags) LOCALONLY;
+
     // Get our TTY device name
     kern_return_t getDeviceName(char* result, const uint32_t size) LOCALONLY;
     
