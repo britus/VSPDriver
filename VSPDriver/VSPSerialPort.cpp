@@ -98,8 +98,6 @@ IOLockUnlock(ivars->m_lock); \
 #define RMV_BIT(v, b) (v &= ~b)
 #define UPDATE_BIT(v, b, s) if (s) {SET_BIT(v,b);} else {RMV_BIT(v,b);}
 
-#define VSP_MSG_SIZE 1024
-
 // Updated by HwProgramFlowControl
 typedef struct{
     uint32_t arg;
@@ -628,7 +626,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     for (uint64_t i = 0; i < size; i++) {
         VSPLog(LOG_PREFIX, "TxDataAvailable: buffer[%02lld]=0x%02x %c\n", i, buffer[i], buffer[i]);
     }
-#endif
+#endif // DEBUG
     
     // Is this port assigned to a port link?
     if (ivars->m_portLinkId) {
