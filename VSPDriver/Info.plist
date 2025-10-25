@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IOKitPersonalities</key>
+	<dict>
+		<key>VSPDriver</key>
+		<dict>
+			<key>CFBundleIdentifier</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+			<key>CFBundleIdentifierKernel</key>
+			<string>com.apple.kpi.iokit</string>
+			<key>IOClass</key>
+			<string>IOUserService</string>
+			<key>IOMatchCategory</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+			<key>IOProbeScore</key>
+			<integer>0</integer>
+			<key>IOProviderClass</key>
+			<string>IOUserResources</string>
+			<key>IOResourceMatch</key>
+			<string>IOKit</string>
+			<key>IOUserClass</key>
+			<string>VSPDriver</string>
+			<key>IOUserServerName</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+			<key>SerialPortProperties</key>
+			<dict>
+				<key>CFBundleIdentifierKernel</key>
+				<string>com.apple.driver.driverkit.serial</string>
+				<key>HiddenPort</key>
+				<false/>
+				<key>IOClass</key>
+				<string>IOUserSerial</string>
+				<key>IOProviderClass</key>
+				<string>IOSerialStreamSync</string>
+				<key>IOTTYBaseName</key>
+				<string>vsp</string>
+				<key>IOTTYSuffix</key>
+				<string>1</string>
+				<key>IOUserClass</key>
+				<string>VSPSerialPort</string>
+			</dict>
+			<key>UserClientProperties</key>
+			<dict>
+				<key>IOClass</key>
+				<string>IOUserUserClient</string>
+				<key>IOUserClass</key>
+				<string>VSPUserClient</string>
+			</dict>
+		</dict>
+	</dict>
+</dict>
+</plist>
