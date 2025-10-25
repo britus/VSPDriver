@@ -403,7 +403,9 @@ void IMPL(VSPUserClient, AsyncCallback)
     // Debug !!
     VSP_DUMP_DATA(data);
 
-    // Async callback message to user client
+    // Async callback message to user client. This is limited
+    // by IOUserClientAsyncReferenceArray declared as
+    // typedef uint64_t[16] !!! (128 bytes)
     uint64_t* message = IONewZero(uint64_t, 5);
     message[0] = MAGIC_CONTROL;
     message[1] = VSP_UCD_SIZE;
