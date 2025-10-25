@@ -55,7 +55,6 @@ using namespace driverkit::serial;
 #define LOG_PREFIX "VSPSerialPort"
 
 #define kVSPTTYBaseName "vsp"
-#define kRxDataQueueName "rxDataQueue"
 
 #ifndef IOLockFreeNULL
 #define IOLockFreeNULL(l) { if (NULL != (l)) { IOLockFree(l); (l) = NULL; } }

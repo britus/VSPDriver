@@ -52,7 +52,6 @@ using namespace VSPController;
 
 #define kVSPSerialPortProperties "SerialPortProperties"
 #define kVSPContollerProperties  "UserClientProperties"
-#define kVSPMessageQueueId "VSPDriver.msg.queue"
 
 // Driver instance state resource
 struct VSPDriver_IVars {
