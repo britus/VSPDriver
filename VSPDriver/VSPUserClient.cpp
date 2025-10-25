@@ -267,39 +267,38 @@ kern_return_t IMPL(VSPUserClient, Start)
     ret = IODispatchQueue::Create(kVSPUserClientQueueId, 0, 0, &ivars->m_evQueue);
     if (ret != kIOReturnSuccess)
     {
-        VSPErr(LOG_PREFIX, "Start() - IODispatchQueue::Create failed with error: 0x%08x.", ret);
+        VSPErr(LOG_PREFIX, "Start: IODispatchQueue::Create failed with error: 0x%08x.", ret);
         return ret;
     }
     
     ret = IOTimerDispatchSource::Create(ivars->m_evQueue, &ivars->m_evSource);
     if (ret != kIOReturnSuccess)
     {
-        VSPErr(LOG_PREFIX, "Start() - IOTimerDispatchSource::Create failed with error: 0x%08x.", ret);
+        VSPErr(LOG_PREFIX, "Start: IOTimerDispatchSource::Create failed with error: 0x%08x.", ret);
         goto error_exit;
     }
     
     ret = CreateActionAsyncCallback(VSP_UCD_SIZE, &ivars->m_evAction);
     if (ret != kIOReturnSuccess)
     {
-        VSPErr(LOG_PREFIX, "Start() - CreateActionAsyncCallback failed with error: 0x%08x.", ret);
+        VSPErr(LOG_PREFIX, "Start: CreateActionAsyncCallback failed with error: 0x%08x.", ret);
         goto error_exit;
     }
     
     ret = ivars->m_evSource->SetHandler(ivars->m_evAction);
     if (ret != kIOReturnSuccess)
     {
-        VSPErr(LOG_PREFIX, "Start() - Failed to assign action to handler with error: 0x%08x.", ret);
+        VSPErr(LOG_PREFIX, "Start: Failed to assign action to handler with error: 0x%08x.", ret);
         goto error_exit;
     }
     
     // --
-    ret = RegisterService();
-    if (ret != kIOReturnSuccess)
-    {
-        VSPErr(LOG_PREFIX, "Start() - Failed to register service with error: 0x%08x.", ret);
+    // Register driver instance to IOReg
+    if ((ret = RegisterService()) != kIOReturnSuccess) {
+        VSPErr(LOG_PREFIX, "Start: RegisterService failed. code=%x\n", ret);
         goto error_exit;
     }
-    
+
     VSPLog(LOG_PREFIX, "User client successfully started.\n");
     return kIOReturnSuccess;
     
