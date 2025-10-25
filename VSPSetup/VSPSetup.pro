@@ -56,11 +56,6 @@ FRAMEWORK_HEADERS.files = $${OBJECTIVE_HEADERS}
 FRAMEWORK_HEADERS.path = Headers
 QMAKE_BUNDLE_DATA += FRAMEWORK_HEADERS
 
-LICENSE.version = Versions
-LICENSE.files = $$PWD/LICENSE
-LICENSE.path = Resources
-QMAKE_BUNDLE_DATA += LICENSE
-
 icons.version = Versions
 icons.files = $$PWD/vspsetup.icns
 icons.path = Resources
@@ -79,8 +74,6 @@ OBJECTIVE_HEADERS += $$PWD/vspsmloader.h
 OBJECTIVE_HEADERS += $$PWD/vspsetup.h
 
 HEADERS += $$PWD/vspsetup_global.h
-
-DISTFILES += LICENSE
 
 #############################
 #message("Build: $${TARGET}")

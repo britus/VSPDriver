@@ -28,9 +28,6 @@ HEADERS += \
     vspcontroller_global.h \
     vspcontrollerpriv.hpp
 
-DISTFILES += \
-    LICENSE
-
 QMAKE_PROJECT_NAME = $${TARGET}
 
 QMAKE_MAC_SDK = macosx26.0
@@ -65,11 +62,6 @@ FRAMEWORK_HEADERS.version = Versions
 FRAMEWORK_HEADERS.files = $${HEADERS}
 FRAMEWORK_HEADERS.path = Headers
 QMAKE_BUNDLE_DATA += FRAMEWORK_HEADERS
-
-LICENSE.version = Versions
-LICENSE.files = $$PWD/LICENSE
-LICENSE.path = Resources
-QMAKE_BUNDLE_DATA += LICENSE
 
 icons.version = Versions
 icons.files = $$PWD/vspcontroller.icns

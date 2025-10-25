@@ -103,11 +103,6 @@ QMAKE_BUNDLE_EXTENSION = .framework
 # Important for the App with embedded framework
 QMAKE_LFLAGS_SONAME = -Wl,-install_name,@executable_path/../Frameworks/
 
-LICENSE.version = Versions
-LICENSE.files = $$PWD/LICENSE
-LICENSE.path = Resources
-QMAKE_BUNDLE_DATA += LICENSE
-
 translations_en.version = Versions
 translations_en.files = \
     $$PWD/assets/en.lproj/InfoPlist.strings \
@@ -143,9 +138,7 @@ TRANSLATIONS += \
     $$PWD/vspui_de_DE.ts
 
 DISTFILES += \
-    $$PWD/LICENSE \
     $$PWD/README.md \
-    $$PWD/qt-bundle-bugfix.sh \
     $$PWD/VSPClient.entitlements \
     $$PWD/makelocales.sh
 
