@@ -1033,13 +1033,18 @@
 				);
 				INFOPLIST_FILE = VSPClient/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Virtual Serial Port Controller";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSDesktopFolderUsageDescription = "Require acces to file for VSP test.";
-				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "Require acces to file for VSP test.";
-				INFOPLIST_KEY_NSDownloadsFolderUsageDescription = "Require acces to file for VSP test.";
+				INFOPLIST_KEY_LSUIElement = NO;
+				INFOPLIST_KEY_NSDesktopFolderUsageDescription = "Permit Virtual Serial Port to send, write or save files.";
+				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "Permit Virtual Serial Port to send, write or save files.";
+				INFOPLIST_KEY_NSDownloadsFolderUsageDescription = "Permit Virtual Serial Port to send, write or save files.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 by EoF Software Labs";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Permit VPS Controller to redirect data from serial port to a network connection.";
+				INFOPLIST_KEY_NSNetworkVolumesUsageDescription = "Permit Virtual Serial Port to write data to network volume path.";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
-				INFOPLIST_KEY_OSBundleUsageDescription = "Required to Control the Virtual Serial Port links";
+				INFOPLIST_KEY_NSSystemExtensionUsageDescription = "Permit Virtual Serial Port to install a driver to provide virtual serial ports.";
+				INFOPLIST_KEY_OSBundleUsageDescription = "Permit VSP Controller to manage virtual serial ports.";
 				LIBRARY_SEARCH_PATHS = (
 					"$(SDKROOT)/usr/lib/system",
 					"$(PROJECT_DIR)",
@@ -1105,13 +1110,18 @@
 				);
 				INFOPLIST_FILE = VSPClient/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Virtual Serial Port Controller";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSDesktopFolderUsageDescription = "Require acces to file for VSP test.";
-				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "Require acces to file for VSP test.";
-				INFOPLIST_KEY_NSDownloadsFolderUsageDescription = "Require acces to file for VSP test.";
+				INFOPLIST_KEY_LSUIElement = NO;
+				INFOPLIST_KEY_NSDesktopFolderUsageDescription = "Permit Virtual Serial Port to send, write or save files.";
+				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "Permit Virtual Serial Port to send, write or save files.";
+				INFOPLIST_KEY_NSDownloadsFolderUsageDescription = "Permit Virtual Serial Port to send, write or save files.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 by EoF Software Labs";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Permit VPS Controller to redirect data from serial port to a network connection.";
+				INFOPLIST_KEY_NSNetworkVolumesUsageDescription = "Permit Virtual Serial Port to write data to network volume path.";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
-				INFOPLIST_KEY_OSBundleUsageDescription = "Required to Control the Virtual Serial Port links";
+				INFOPLIST_KEY_NSSystemExtensionUsageDescription = "Permit Virtual Serial Port to install a driver to provide virtual serial ports.";
+				INFOPLIST_KEY_OSBundleUsageDescription = "Permit VSP Controller to manage virtual serial ports.";
 				LIBRARY_SEARCH_PATHS = (
 					"$(SDKROOT)/usr/lib/system",
 					"$(PROJECT_DIR)",
@@ -1346,7 +1356,7 @@
 				INFOPLIST_FILE = VSPDriver/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Virtual Serial Port Driver";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 by EoF Software Labs";
-				INFOPLIST_KEY_OSBundleUsageDescription = "Provide virtual serial port";
+				INFOPLIST_KEY_OSBundleUsageDescription = "System extension provides a driver that manages virtual serial ports";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/System/DriverKit/usr/lib/system",
@@ -1381,7 +1391,7 @@
 				INFOPLIST_FILE = VSPDriver/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Virtual Serial Port Driver";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 by EoF Software Labs";
-				INFOPLIST_KEY_OSBundleUsageDescription = "Provide virtual serial port";
+				INFOPLIST_KEY_OSBundleUsageDescription = "System extension provides a driver that manages virtual serial ports";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/System/DriverKit/usr/lib/system",
