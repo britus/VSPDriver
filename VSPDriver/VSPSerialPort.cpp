@@ -1207,7 +1207,7 @@ kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, cons
         VSPLog(LOG_PREFIX, "sendResponse: buffer[%02lld]=0x%02x %c\n", i,
                mdbuffer[i], mdbuffer[i]);
     }
-#endif
+#endif // DEBUG
     
     // Update RX producer index
     ivars->m_spi->rxPI = size;
