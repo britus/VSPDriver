@@ -1,0 +1,103 @@
+// ********************************************************************
+// VSPUserClient.iig - VSP controller object
+//
+// The IOKit Interface Generator file that declares
+// the driver's methods.
+//
+// Copyright © 2025 by EoF Software Labs
+// Copyright © 2024 Apple Inc. (some copied parts)
+// SPDX-License-Identifier: MIT
+// ********************************************************************
+#ifndef VSPUserClient_h
+#define VSPUserClient_h
+
+#include <Availability.h>
+#include <DriverKit/IOService.iig>
+#include <DriverKit/IOUserClient.iig>
+#include <DriverKit/IOBufferMemoryDescriptor.iig>
+#include <DriverKit/IODataQueueDispatchSource.iig>
+#include <DriverKit/IOTimerDispatchSource.iig>
+
+class VSPDriver;
+class VSPUserClient: public IOUserClient
+{
+public:
+    virtual bool init(void) override;
+    virtual void free(void) override;
+    
+    virtual kern_return_t Start(IOService* provider) override;
+    virtual kern_return_t Stop(IOService* provider) override;
+    virtual kern_return_t CopyClientMemoryForType(
+                                                  uint64_t type, uint64_t *options, IOMemoryDescriptor **memory) override;
+    virtual kern_return_t ExternalMethod(uint64_t selector,
+                                         IOUserClientMethodArguments* arguments,
+                                         const IOUserClientMethodDispatch* dispatch,
+                                         OSObject* target,
+                                         void* reference) override;
+    
+    // Timed async callback to user client
+    virtual void AsyncCallback(OSAction* action, uint64_t time) TYPE(IOTimerDispatchSource::TimerOccurred);
+    
+    // -----------------------------------------
+    // VSPDriver related
+    // -----------------------------------------
+    
+    // called by VSPDriver instance
+    void setParent(VSPDriver* parent) LOCALONLY;
+    void unlinkParent() LOCALONLY;
+    
+    // Schedule timed event -> IOTimerDispatchSource::TimerOccurred
+    kern_return_t scheduleEvent(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    
+    // Prepares async response
+    kern_return_t prepareResponse(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    
+    // -----------------------------------------
+    // User client external interface method
+    // entry points and its instance methods
+    // -----------------------------------------
+
+    static
+    kern_return_t exRestoreSession(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    kern_return_t restoreSession(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+
+    static
+    kern_return_t exGetStatus(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    kern_return_t getStatus(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    
+    static
+    kern_return_t exCreatePort(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    kern_return_t createPort(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    
+    static
+    kern_return_t exRemovePort(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    kern_return_t removePort(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    
+    static
+    kern_return_t exGetPortList(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    kern_return_t getPortList(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    kern_return_t getPortListHelper(void* reference) LOCALONLY;
+    
+    static
+    kern_return_t exGetLinkList(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    kern_return_t getLinkList(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    
+    static
+    kern_return_t exLinkPorts(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    kern_return_t linkPorts(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    kern_return_t getLinkListHelper(void* reference) LOCALONLY;
+    
+    static
+    kern_return_t exUnlinkPorts(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    kern_return_t unlinkPorts(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    
+    static
+    kern_return_t exEnableChecks(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    kern_return_t enableChecks(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    
+    static
+    kern_return_t exEnableTrace(OSObject* target, void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+    kern_return_t enableTrace(void* reference, IOUserClientMethodArguments* arguments) LOCALONLY;
+};
+
+#endif /* VSPUserClient_h */

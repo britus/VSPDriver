@@ -1,0 +1,125 @@
+// ********************************************************************
+// VSPSerialPort - VSPSerialPort.iig
+//
+// The IOKit Interface Generator file that declares
+// the driver's methods.
+//
+// Copyright © 2025 by EoF Software Labs
+// Copyright © 2024 Apple Inc. (some copied parts)
+// SPDX-License-Identifier: MIT
+// ********************************************************************
+#ifndef VSPSerialPort_h
+#define VSPSerialPort_h
+
+#include <Availability.h>
+
+#include <DriverKit/OSAction.iig>
+#include <DriverKit/IOService.iig>
+#include <DriverKit/IOMemoryDescriptor.iig>
+#include <DriverKit/IOBufferMemoryDescriptor.iig>
+#include <DriverKit/IODataQueueDispatchSource.iig>
+#include <DriverKit/IOTimerDispatchSource.iig>
+
+#include <SerialDriverKit/IOUserSerial.iig>
+
+class VSPDriver;
+class VSPSerialPort: public IOUserSerial
+{
+public:
+    friend class VSPDriver;
+    
+    // OSObject life cycle
+    virtual bool init(void) override;
+    virtual void free(void) override;
+
+    // IOService life cylce
+    virtual kern_return_t Start(IOService* provider) override;
+    virtual kern_return_t Stop(IOService* provider) override;
+    
+    // For patching IOTTYBaseName and IOTTYSuffix
+    virtual kern_return_t SetProperties(OSDictionary * properties) override;
+    
+    // ------ [IOUserSerial overridden stuff] -------------------------
+
+    /* overridden to set our own MDs for tx/rx */
+    virtual kern_return_t ConnectQueues(
+            IOBufferMemoryDescriptor** ifmd,
+            IOMemoryDescriptor**       rxqmd,
+            IOMemoryDescriptor**       txqmd,
+            IOMemoryDescriptor*        in_rxqmd,
+            IOMemoryDescriptor*        in_txqmd,
+            uint32_t                   in_rxqoffset,
+            uint32_t                   in_txqoffset,
+            uint8_t                    in_rxqlogsz,
+            uint8_t                    in_txqlogsz) override;
+    virtual kern_return_t DisconnectQueues() override;
+
+    virtual void RxDataAvailable() override;
+    virtual void TxDataAvailable() override;
+    virtual void RxFreeSpaceAvailable() override;
+    virtual void TxFreeSpaceAvailable() override;
+
+    virtual kern_return_t SetModemStatus(bool cts, bool dsr, bool ri, bool dcd) override;
+    virtual kern_return_t RxError(bool overrun, bool gotBreak, bool framingError, bool parityError) override;
+    
+    virtual kern_return_t HwActivate() override;
+    virtual kern_return_t HwDeactivate() override;
+    
+    virtual kern_return_t HwResetFIFO(bool tx, bool rx) override;
+    virtual kern_return_t HwSendBreak(bool sendBreak) override;
+    
+    virtual kern_return_t HwGetModemStatus(bool* cts, bool* dsr, bool* ri, bool* dcd) override;
+    virtual kern_return_t HwProgramUART(uint32_t baudRate, uint8_t nDataBits, uint8_t nHalfStopBits, uint8_t parity) override;
+    virtual kern_return_t HwProgramBaudRate(uint32_t baudRate) override;
+    virtual kern_return_t HwProgramMCR(bool dtr, bool rts) override;
+    virtual kern_return_t HwProgramLatencyTimer(uint32_t latency) override;
+    virtual kern_return_t HwProgramFlowControl(uint32_t arg, uint8_t xon, uint8_t xoff) override;
+
+    // ------ [VSPSerialPort inrernals] -------------------------
+
+    // Release all resource in IVars
+    void cleanupResources() LOCALONLY;
+    
+    // Called by VSPDriver to link owner
+    void setPortItem(VSPDriver* parent, void *data) LOCALONLY;
+    void unlinkParent() LOCALONLY;
+    
+    // Called by VSPDriver to set managed port id
+    void setPortIdentifier(uint8_t id) LOCALONLY;
+    uint8_t getPortIdentifier() LOCALONLY;
+    
+    // Called by VSPDriver to set port link id
+    void setPortLinkIdentifier(uint8_t id) LOCALONLY;
+    uint8_t getPortLinkIdentifier() LOCALONLY;
+
+    // Get flags
+    kern_return_t getFlags(uint64_t* flags) LOCALONLY;
+
+    // Get our TTY device name
+    kern_return_t getDeviceName(char* result, const uint32_t size) LOCALONLY;
+    
+    // Routing through port link
+    kern_return_t sendToPortLink(const void* buffer, const uint32_t size) LOCALONLY;
+
+    // Update rxqbmd
+    kern_return_t sendResponse(void* sender, const void* buffer, const uint32_t size) LOCALONLY;
+    
+    // Enable or disable traces
+    void setTraceFlags(uint64_t flags) LOCALONLY;
+    
+    // Enable or disable port parameter checks
+    void setParameterChecks(uint64_t flags) LOCALONLY;
+
+    // internal modem status update
+    void setClearToSend(bool cts) LOCALONLY;
+    void setDataSetReady(bool dsr) LOCALONLY;
+    void setRingIndicator(bool ri) LOCALONLY;
+    void setDataCarrierDetect(bool dcd) LOCALONLY;
+    kern_return_t reportModemStatus() LOCALONLY;
+    
+    // return true if active connection
+    bool isConnected() LOCALONLY;
+};
+
+
+#endif /* VSPSerialPort_h */

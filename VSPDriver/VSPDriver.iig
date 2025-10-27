@@ -1,0 +1,62 @@
+// ********************************************************************
+// VSPDriver - VSPDriver.iig
+//
+// The IOKit Interface Generator file that declares
+// the driver's methods.
+//
+// Copyright © 2025 by EoF Software Labs
+// Copyright © 2024 Apple Inc. (some copied parts)
+// SPDX-License-Identifier: MIT
+// ********************************************************************
+#ifndef VSPDriver_h
+#define VSPDriver_h
+
+#include <Availability.h>
+#include <DriverKit/IOService.iig>
+#include <DriverKit/IOUserClient.iig>
+#include <DriverKit/IODispatchQueue.iig>
+#include <DriverKit/IODispatchSource.iig>
+#include <DriverKit/IOServiceNotificationDispatchSource.iig>
+#include <DriverKit/IOServiceStateNotificationDispatchSource.iig>
+
+class VSPDriver: public IOService
+{
+public:
+    virtual bool init(void) override;
+    virtual void free(void) override;
+    
+    virtual kern_return_t Start(IOService* provider) override;
+    virtual kern_return_t Stop(IOService* provider) override;
+    virtual kern_return_t NewUserClient(uint32_t type, IOUserClient ** userClient) override;
+    
+    // Get IOService state notification
+    virtual void SPReadyEvent(OSAction* action) TYPE(IOServiceNotificationDispatchSource::ServiceNotificationReady);
+    virtual void SPStateEvent(OSAction* action) TYPE(IOServiceStateNotificationDispatchSource::StateNotificationReady);
+    
+    // --
+    kern_return_t CreateSerialPort(IOService* provider, uint8_t count = 1, void* params = NULL, uint64_t flags = 0, uint64_t size = 0) LOCALONLY;
+    kern_return_t CreateUserClient(IOService* provider, IOUserClient ** userClient) LOCALONLY;
+    
+    bool checkPortId(uint8_t id) LOCALONLY;
+    bool checkPortLinkId(uint8_t id) LOCALONLY;
+    
+    kern_return_t getPortCount(uint8_t* count) LOCALONLY;
+    kern_return_t getNextPortId(uint8_t* id) LOCALONLY;
+    kern_return_t getPortList(void* list, uint8_t count) LOCALONLY;
+    kern_return_t getPortLinkList(uint64_t* list, uint8_t count) LOCALONLY;
+    kern_return_t getPortLinkCount(uint8_t* count) LOCALONLY;
+    kern_return_t getPortById(uint8_t id, void* result, const uint32_t size) LOCALONLY;
+    kern_return_t getPortLinkById(uint8_t id, void* link, const uint32_t size) LOCALONLY;
+    kern_return_t getPortLinkByPorts(uint8_t sourceId, uint8_t targetId, void* link, const uint32_t size) LOCALONLY;
+    kern_return_t getPortDeviceName(uint8_t portId, char* result, const uint32_t size) LOCALONLY;
+    kern_return_t portsInLinkList(uint8_t sourceId, uint8_t targetId) LOCALONLY;
+    kern_return_t portsAssigned(uint8_t sourceId, uint8_t targetId) LOCALONLY;
+    
+    kern_return_t createPort(void* params, uint64_t flags, uint64_t size) LOCALONLY;
+    kern_return_t removePort(uint8_t portId) LOCALONLY;
+    
+    kern_return_t createPortLink(uint8_t sourceId, uint8_t targetId, void* link, const uint32_t size) LOCALONLY;
+    kern_return_t removePortLink(uint8_t linkId) LOCALONLY;
+};
+
+#endif /* VSPDriver_h */
