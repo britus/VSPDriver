@@ -14,44 +14,26 @@ This is a macOS DriverKit driver implementation including a user interface App.
 
 ### Log Files and Tester
 
-A look at this [log](https://github.com/britus/VSPDriver/blob/master/VSPDriver-Full.log) shows how the driver ticks with the IOUserClient.
-This [picture](https://github.com/britus/VSPDriver/blob/master/VSPDriver-Tester.jpg) shows the VSP driver in action.
+Create a small script which filter all VSPxxx messages.
+
+```
+#!/bin/sh
+
+## Watch VSPDriver activity by log stream
+filter="VSPDriver|VSPUserClient|VSPSerialPort"
+
+sudo log stream --level debug \
+    --color always \
+    --style compact \
+    --predicate 'process == "kernel"' | egrep ${filter}
+```
 
 ## Notes for DIY
 
 To build this project you have to do:
 
-- Install QT5 latest for Intel based macOS from archive
-- Install QT6 latest for M chip based macOS
-
-- Install the QT framework like
-```
-~/Qt
-```
-
 ### Build the VSPDriver project with all frameworks inside
 
-- run bootstrap.sh first to create dependecies to your QT frameworks
-
-```
-# Type a script or drag a script file from your workspace to insert its path.
-# This scriptlet is only for Xcode custom build script in Build Phase
-if [ "x${BUILT_PRODUCTS_DIR}" == "x" ] ; then
-    echo "Paste the script into Xcode Build Phase - custom build script, or"
-    echo "set QTDIR=<where your QT arch root>"
-    echo "set PROJECT_ROOT=`pwd`"
-    echo 'set BUILT_PRODUCTS_DIR=${PROJECT_ROOT}/build/xcode/<Debug|Release>'
-    echo 'set PLUGINS_FOLDER_PATH=DRFXBuilder.app/Contents/PlugIns'
-    exit 1
-fi
-echo "--- INSTALL QT-PLUGINS ---"
-mkdir -p ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}
-cp -vR ${QTDIR}/PlugIns/* ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/
-# AppStore unsupported stuff
-rm -fR ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/permissions
-rm -fR ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/sqldrivers
-rm -fR ${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/*/*.dSYM
-```
 ### Entitlements, signing and security checks
 
 You should use your own bundle IDs in targets VSPDriver and VSPClient.
@@ -64,7 +46,7 @@ VSPClient.entitlements file.
 
 ### Update source code to install the Dext
 
-Change the the bundle ID in "VSPClientUI/vscmainwindow.cpp" in method "createVspController()".
+Change the the bundle ID in "VSPClient/DriverManager.swift".
 
 ## VSPDriver without any signing and security checks.
 
