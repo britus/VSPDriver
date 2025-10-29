@@ -7,7 +7,7 @@
 import Cocoa
 import SwiftUI
 
-let VIEW_CONTROLLER_ID = "TestSerialViewController"
+let SP_TEST_VIEW_ID = "TestSerialViewController"
 
 class WindowController: NSWindowController {
     @IBOutlet weak var tbSerialPorts: NSToolbarItem!
@@ -24,12 +24,11 @@ class WindowController: NSWindowController {
     // Window size constants Size: 615 × 622
     private let minWindowSize = WindowController.initialSize
     private let preferredWindowSize = WindowController.initialSize
-    internal var resizePopupTimer: Timer?
-    internal var lastShownSize: NSSize?
     
     override func windowDidLoad() {
         NSLog("\(String(describing: self.contentViewController))")
-        tabViewController = ((self.contentViewController as! NSTabViewController) as! TabViewController)
+        tabViewController = ((self.contentViewController //
+                              as! NSTabViewController) as! TabViewController)
         manager.addObserver(self)
         
         // Configure window appearance and behavior
@@ -48,7 +47,7 @@ class WindowController: NSWindowController {
                 }
             }
         }
-   }
+    }
     
     override func windowTitle(forDocumentDisplayName displayName: String) -> String {
         let v : String = UITools.applicationVersion()
@@ -77,10 +76,7 @@ class WindowController: NSWindowController {
         
         // Set minimum size
         window.minSize = minWindowSize
-        
-        // Set maximum size (optional)
-        // window.maxSize = NSSize(width: 2000, height: 1500)
-        
+         
         // Prevent window from being resized below minimum
         window.isRestorable = true
     }
@@ -136,37 +132,6 @@ class WindowController: NSWindowController {
         // setupResizeIndicator()
     }
     
-    // Method to add resize indicator view
-    private func setupResizeIndicator() {
-        guard let window = self.window else { return }
-        
-        // Create a label to show dimensions
-        let dimensionsLabel = NSTextField()
-        dimensionsLabel.isEditable = false
-        dimensionsLabel.isBordered = false
-        dimensionsLabel.backgroundColor = NSColor.black.withAlphaComponent(0.7)
-        dimensionsLabel.textColor = NSColor.white
-        dimensionsLabel.font = NSFont.systemFont(ofSize: 12)
-        dimensionsLabel.stringValue = "Size: \(Int(preferredWindowSize.width)) × \(Int(preferredWindowSize.height))"
-        dimensionsLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        // Add to window content view
-        if let contentView = window.contentView {
-            contentView.addSubview(dimensionsLabel)
-            
-            // Position the label in bottom-right corner
-            NSLayoutConstraint.activate([
-                dimensionsLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-                dimensionsLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
-                dimensionsLabel.widthAnchor.constraint(equalToConstant: 120),
-                dimensionsLabel.heightAnchor.constraint(equalToConstant: 20)
-            ])
-            
-            // Store reference to update later
-            window.delegate = self
-        }
-    }
-    
     // Method to center window on multiple screens (if needed)
     func centerWindowOnMainScreen() {
         guard let window = self.window else { return }
@@ -193,23 +158,6 @@ class WindowController: NSWindowController {
         )
         
         window.setFrame(newFrame, display: true)
-    }
-    
-    // Method to update dimensions label
-    private func updateDimensionsLabel() {
-        guard let window = self.window,
-              let contentView = window.contentView else { return }
-        
-        // Find or create the dimensions label
-        let dimensionsLabel = contentView.subviews.first { view in
-            return view is NSTextField && (view as? NSTextField)?.isEditable == false
-        } as? NSTextField
-        
-        // Update the label with current dimensions
-        let currentSize = window.frame.size
-        if let label = dimensionsLabel {
-            label.stringValue = "Size: \(Int(currentSize.width)) × \(Int(currentSize.height))"
-        }
     }
     
     internal func updateButtons(_ state: Bool)
@@ -239,52 +187,6 @@ class WindowController: NSWindowController {
         // Configure additional window properties
         configureWindowAppearance()
     }
-    
-    // Method to show resize popup with delay (prevents spamming)
-    public func showResizePopupWithDelay() {
-        // Cancel any existing timer
-        resizePopupTimer?.invalidate()
-        // Create a new timer to delay the popup
-        resizePopupTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
-            self.showResizePopup()
-        }
-    }
-    
-    private func showResizePopup() {
-        guard let window = self.window else { return }
-        
-        let currentSize = window.frame.size
-        let width = Int(currentSize.width)
-        let height = Int(currentSize.height)
-        
-        // Only show popup if size has actually changed significantly
-        let currentSizeInt = NSSize(width: width, height: height)
-        
-        if lastShownSize == nil ||
-           abs(lastShownSize!.width - currentSize.width) > 10 ||
-           abs(lastShownSize!.height - currentSize.height) > 10 {
-            
-            let alert = NSAlert()
-            alert.messageText = "Window Resized"
-            alert.informativeText = "Size: \(Int(currentSize.width)) × \(Int(currentSize.height))"
-            alert.alertStyle = .informational
-            alert.addButton(withTitle: "OK")
-            
-            // Add copy button for dimensions
-            alert.addButton(withTitle: "Copy Size")
-            
-            let response = alert.runModal()
-            
-            if response == .alertSecondButtonReturn {
-                // Copy to clipboard
-                let pasteboard = NSPasteboard.general
-                pasteboard.clearContents()
-                pasteboard.setString("Size: \(Int(currentSize.width)) × \(Int(currentSize.height))", forType: .string)
-            }
-            
-            lastShownSize = currentSizeInt
-        }
-    }
 }
 
 // MARK: - NSWindowDelegate Implementation for Enhanced Version
@@ -298,37 +200,34 @@ extension WindowController: NSWindowDelegate {
     }
     
     func windowDidResize(_ notification: Notification) {
-        // Show resize popup with delay to prevent spam
-        // showResizePopupWithDelay()
     }
     
     func windowDidMove(_ notification: Notification) {
-        // Handle window movement if needed
     }
     
     func windowWillClose(_ notification: Notification) {
-        // Cancel timer when window closes
-        resizePopupTimer?.invalidate()
         DisconnectDriver()
     }
 }
 
 extension WindowController: DriverManagerObserver {
     func willLoadDriver() {
-        //
+        NSLog("Loading driver extension...")
     }
     
     func didFinish(withResult code: UInt64, message: String) {
         if code > 0 {
-            UITools.showMessage(message: "Error 0x\(String(code, radix: 16)): \(message).")
+            UITools.showMessage(message: //
+                "Error 0x\(String(code, radix: 16)): \(message).")
         } else {
             UITools.showBasicNotification(body: "\(message).")
             // C bridge async
             DispatchQueue.global(qos: .background).asyncAfter(//
                 deadline: .now() + .milliseconds(100)) {
                 if (!ConnectDriver()) {
-                    UITools.showMessage(message: "\(message),\nbut failed to connect driver." //
-                                        + "\nPlease reboot your computer to complete the setup.")
+                    UITools.showMessage(message://
+                        "\(message),\nbut failed to connect driver." //
+                        + "\nPlease reboot your computer to complete the setup.")
                     self.updateButtons(false)
                 }
             }
@@ -337,7 +236,8 @@ extension WindowController: DriverManagerObserver {
     
     func didFail(withError code: UInt64, message: String) {
         if code > 0 {
-            UITools.showMessage(message: "Error 0x\(String(code, radix: 16)): \(message).")
+            UITools.showMessage(message:
+                "Error 0x\(String(code, radix: 16)): \(message).")
         } else {
             UITools.showMessage(message: "\(message).")
         }
@@ -349,7 +249,8 @@ extension WindowController: DriverManagerObserver {
     
     func didUnload(withStatus code: UInt64, message: String) {
         if code > 0 {
-            UITools.showMessage(message: "Error 0x\(String(code, radix: 16)): \(message).")
+            UITools.showMessage(message:
+                "Error 0x\(String(code, radix: 16)): \(message).")
         } else {
             UITools.showNotificationWithBadge(body: message, badgeCount: 1)
         }
@@ -357,20 +258,23 @@ extension WindowController: DriverManagerObserver {
     
     func controllerConnected() {
         DispatchQueue.main.async {
-            UITools.showNotificationWithBadge(body: "VSP Driver connected", badgeCount: 1)
+            UITools.showNotificationWithBadge(
+                body: "VSP Driver connected", badgeCount: 1)
             GetStatus()
         }
     }
     
     func controllerDisconnected() {
-        UITools.showNotificationWithBadge(body: "VSP Driver disconnected", badgeCount: 1)
+        UITools.showNotificationWithBadge(
+            body: "VSP Driver disconnected", badgeCount: 1)
     }
     
     func logMessageDidAvailable(_ message: String?) {
         guard let msg = message, !msg.isEmpty else {
             return
         }
-        NSLog("˜\(msg)\n")
+        // TODO: Make tool window with message text view
+        NSLog("\(msg)\n")
     }
     
     func driverStatusDidChange(_ status: DriverStatus, code: UInt64, domain: String, message: String) {
@@ -410,62 +314,6 @@ extension WindowController: DriverManagerObserver {
                 break
             default:
                 break
-        }
-    }
-}
-
-// Extension to handle window management
-extension NSApplication {
-    static func showViewControllerFromStoryboardInExistingWindow() {
-        // Get the storyboard
-        let storyboard = NSStoryboard(name: "Main", bundle: nil)
-        
-        // Instantiate the view controller from storyboard
-        let storyboardIdentifier = VIEW_CONTROLLER_ID
-        
-        guard let viewController = storyboard.instantiateController(withIdentifier: storyboardIdentifier) as? NSViewController else {
-            print("Failed to instantiate view controller from storyboard")
-            return
-        }
-        
-        // Get existing window or create new one
-        let windows = NSApp.windows
-        var targetWindow: NSWindow?
-        
-        if !windows.isEmpty {
-            // Use existing window or create new one
-            targetWindow = windows.first
-        } else {
-            // Create new window if no existing ones
-            targetWindow = NSWindow(
-                contentRect: NSMakeRect(100, 100, 400, 300),
-                styleMask: [.titled, .closable, .resizable],
-                backing: .buffered,
-                defer: false
-            )
-            targetWindow?.title = "Storyboard Window"
-        }
-        
-        // Set up the window if it doesn't exist
-        if targetWindow == nil {
-            targetWindow = NSWindow(
-                contentRect: NSMakeRect(100, 100, 400, 300),
-                styleMask: [.titled, .closable, .resizable],
-                backing: .buffered,
-                defer: false
-            )
-            targetWindow?.title = "Storyboard Window"
-        }
-        
-        // Set the view controller's view as content
-        targetWindow?.contentView = viewController.view
-        
-        // Make sure the window is properly configured
-        targetWindow?.makeKeyAndOrderFront(nil)
-        
-        // Ensure the view controller is properly set up
-        if let window = targetWindow {
-            window.makeKeyAndOrderFront(nil)
         }
     }
 }

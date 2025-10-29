@@ -59,26 +59,12 @@ bool GetStatus(void) {
 #define PD_RS232_PARITY_SPACE    5    // Space inserted or expected
 #define PD_RS232_PARITY_ANY    6    // Valid only for RX, means discard parity
 
-bool CreatePort(uint8_t baudRate, uint8_t dataBits, uint8_t stopBits, uint8_t parity, uint8_t flowCtrl) {
+bool CreatePort(uint32_t baudRate, uint8_t dataBits, uint8_t stopBits, uint8_t parity, uint8_t flowCtrl) {
     if (!IsDriverConnected()) {
         return false;
     }
     
-    CVSPPortParameters p= {115200, 8, 2, 0, 0};
-    p.baudRate = baudRate;
-    p.dataBits = dataBits;
-    p.flowCtrl = flowCtrl;
-    switch (stopBits) {
-        case 1:
-            p.stopBits = stopBits;
-            break;
-        case 2:
-            p.stopBits = stopBits;
-            break;
-        default:
-            p.stopBits = 1;
-            break;
-    }
+    CVSPPortParameters p= {baudRate, dataBits, stopBits, 0, flowCtrl};
     switch (parity) {
         case 0:
             p.parity = PD_RS232_PARITY_NONE;

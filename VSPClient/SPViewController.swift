@@ -9,6 +9,7 @@ import Cocoa
 import AppKit
 
 class SPViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, DataModelObserver {
+    
     @IBOutlet weak var tableView: TableView!
     @IBOutlet weak var pnlSerialPort: NSView!
     @IBOutlet weak var cbxBaudRate: ComboBox!
@@ -23,12 +24,7 @@ class SPViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
 
     var hoveredRow: Int = -1
     lazy var hoverButton: NSButton = createHoverButton()
-    
-    private var m_baudRate: UInt8 = 0
-    private var m_dataBits: UInt8 = 0
-    private var m_stopBits: UInt8 = 0
-    private var m_parity: UInt8 = 0
-    private var m_flowCtrl: UInt8 = 0
+    private var parameters: SerialPortParameters = SerialPortParameters()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,34 +90,39 @@ class SPViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
         UITools.populateFlowControlComboBox(cbxFlowCtrl)
     }
 
-    @IBAction func onBaudRateChanged(_ sender: NSComboBox) {
-        if sender.indexOfSelectedItem > -1 {
-            m_baudRate = UInt8(sender.indexOfSelectedItem)
+    @IBAction func onBaudRateChanged(_ sender: ComboBox) {
+        guard let value = UITools.selectedValueFrom(sender) as? UInt32 else {
+            return
         }
+        parameters.baudRate = UInt(value)
     }
     
-    @IBAction func onDataBitsChanged(_ sender: NSComboBox) {
-        if sender.indexOfSelectedItem > -1 {
-            m_dataBits = UInt8(sender.indexOfSelectedItem)
+    @IBAction func onDataBitsChanged(_ sender: ComboBox) {
+        guard let value = UITools.selectedValueFrom(sender) as? UInt8 else {
+            return
         }
+        parameters.dataBits = UInt(value)
     }
     
-    @IBAction func onStopBitsChanged(_ sender: NSComboBox) {
-        if sender.indexOfSelectedItem > -1 {
-            m_stopBits = UInt8(sender.indexOfSelectedItem)
+    @IBAction func onStopBitsChanged(_ sender: ComboBox) {
+        guard let value = UITools.selectedValueFrom(sender) as? UInt8 else {
+            return
         }
+        parameters.stopBits = UInt(value)
     }
     
-    @IBAction func onParityChanged(_ sender: NSComboBox) {
-        if sender.indexOfSelectedItem > -1 {
-            m_parity = UInt8(sender.indexOfSelectedItem)
+    @IBAction func onParityChanged(_ sender: ComboBox) {
+        guard let value = UITools.selectedValueFrom(sender) as? UInt8 else {
+            return
         }
+        parameters.parity = UInt(value)
     }
     
-    @IBAction func onFlowCtrlChanged(_ sender: NSComboBox) {
-        if sender.indexOfSelectedItem > -1 {
-            m_flowCtrl = UInt8(sender.indexOfSelectedItem)
+    @IBAction func onFlowCtrlChanged(_ sender: ComboBox) {
+        guard let value = UITools.selectedValueFrom(sender) as? UInt8 else {
+            return
         }
+        parameters.flowCtrl = UInt(value)
     }
     
     @IBAction func onCreatePort(_ sender: NSButton) {
@@ -133,8 +134,12 @@ class SPViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
         onFlowCtrlChanged(cbxFlowCtrl)
         // C Bridge
         DispatchQueue.global(qos: .background).asyncAfter(//
-            deadline: .now() + .milliseconds(100)) {
-            CreatePort(self.m_baudRate, self.m_dataBits, self.m_stopBits, self.m_parity, self.m_flowCtrl)
+             deadline: .now() + .milliseconds(100)) {
+            CreatePort(UInt32(self.parameters.baudRate),
+                       UInt8(self.parameters.dataBits),
+                       UInt8(self.parameters.stopBits),
+                       UInt8(self.parameters.parity),
+                       UInt8(self.parameters.flowCtrl))
         }
     }
     
@@ -177,7 +182,7 @@ class SPViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
         
         return nil
     }
-    
+
     func dataChanged(_ data: [TDataRecord]?) {
         guard data == data else {
             return
@@ -202,16 +207,6 @@ class SPViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
         menu.addItem(withTitle: "Delete", action: #selector(onDelete(_:)), keyEquivalent: "")
         return menu
     }
-#if false
-    @objc func onLinkTo(_ sender: Any?) {
-        guard hoveredRow >= 0, let record = //
-                model.getRecord(index: hoveredRow, byType: TDataType.PortItem) else {
-            return
-        }
-        // TODO: Link creation dialog
-        print("onLinkTo: \(record)")
-    }
-#endif // false
     @objc func onDelete(_ sender: Any?) {
         guard hoveredRow >= 0, let record : TDataRecord = //
                 model.getRecord(index: hoveredRow, byType: TDataType.PortItem) else {

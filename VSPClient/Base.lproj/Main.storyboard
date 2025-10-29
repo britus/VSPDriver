@@ -798,11 +798,11 @@
             <objects>
                 <viewController title="Serial Ports" storyboardIdentifier="SerialPorts" showSeguePresentationStyle="single" id="ZIW-2U-PMf" customClass="SPViewController" customModule="VSPClient" sceneMemberID="viewController">
                     <view key="view" id="Brs-FA-RsB">
-                        <rect key="frame" x="0.0" y="0.0" width="543" height="293"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="293"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NaG-4e-ZPr">
-                                <rect key="frame" x="18" y="257" width="67" height="16"/>
+                                <rect key="frame" x="18" y="257" width="124" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Serial Port" id="C0f-oz-RV0">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -810,7 +810,7 @@
                                 </textFieldCell>
                             </textField>
                             <customView identifier="pnlSerialPort" translatesAutoresizingMaskIntoConstraints="NO" id="VK7-Iv-MVb">
-                                <rect key="frame" x="20" y="104" width="513" height="145"/>
+                                <rect key="frame" x="20" y="104" width="560" height="145"/>
                                 <subviews>
                                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3Ym-g7-jzE">
                                         <rect key="frame" x="13" y="109" width="67" height="16"/>
@@ -829,7 +829,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sKv-zQ-Pjt">
-                                        <rect key="frame" x="238" y="109" width="82" height="16"/>
+                                        <rect key="frame" x="277" y="109" width="82" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Flow control:" id="hNF-8p-5En">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -837,7 +837,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kYd-Xk-CDh">
-                                        <rect key="frame" x="238" y="79" width="43" height="16"/>
+                                        <rect key="frame" x="277" y="79" width="43" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Parity:" id="hAx-7q-y9r">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -845,9 +845,9 @@
                                         </textFieldCell>
                                     </textField>
                                     <comboBox identifier="cbxBaudRate" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dxb-O5-Jjy" customClass="ComboBox" customModule="VSPClient">
-                                        <rect key="frame" x="87" y="105" width="130" height="23"/>
+                                        <rect key="frame" x="87" y="105" width="187" height="23"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="126" id="t87-E1-nSn"/>
+                                            <constraint firstAttribute="width" constant="183" id="t87-E1-nSn"/>
                                         </constraints>
                                         <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="8" id="kgG-qV-sha">
                                             <font key="font" metaFont="system"/>
@@ -869,7 +869,7 @@
                                         </connections>
                                     </comboBox>
                                     <comboBox identifier="cbxDataBits" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Gra-dV-qtV" customClass="ComboBox" customModule="VSPClient">
-                                        <rect key="frame" x="87" y="75" width="130" height="23"/>
+                                        <rect key="frame" x="87" y="75" width="187" height="23"/>
                                         <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="8sP-th-z6O">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -886,7 +886,7 @@
                                         </connections>
                                     </comboBox>
                                     <comboBox identifier="cbxFlowCtrl" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dGY-0P-4mD" customClass="ComboBox" customModule="VSPClient">
-                                        <rect key="frame" x="325" y="105" width="176" height="23"/>
+                                        <rect key="frame" x="364" y="105" width="179" height="23"/>
                                         <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="GFu-9z-p9B">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -902,7 +902,7 @@
                                         </connections>
                                     </comboBox>
                                     <comboBox identifier="cbxParity" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eqF-dY-Wae" customClass="ComboBox" customModule="VSPClient">
-                                        <rect key="frame" x="325" y="75" width="176" height="23"/>
+                                        <rect key="frame" x="364" y="75" width="179" height="23"/>
                                         <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="zKO-M7-NKW">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -930,7 +930,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <comboBox identifier="cbxStopBits" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GoH-oL-fgz" customClass="ComboBox" customModule="VSPClient">
-                                        <rect key="frame" x="87" y="47" width="130" height="23"/>
+                                        <rect key="frame" x="87" y="47" width="187" height="23"/>
                                         <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="oiP-eL-pWg">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -946,7 +946,7 @@
                                         </connections>
                                     </comboBox>
                                     <button identifier="pbCreatePort" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uHG-UO-3Rg">
-                                        <rect key="frame" x="396" y="21" width="104" height="32"/>
+                                        <rect key="frame" x="443" y="20" width="104" height="32"/>
                                         <buttonCell key="cell" type="push" title="Create Port" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8hw-WL-uAN">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -957,32 +957,32 @@
                                     </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="uHG-UO-3Rg" secondAttribute="bottom" constant="28" id="0pr-sq-oRo"/>
+                                    <constraint firstAttribute="bottom" secondItem="uHG-UO-3Rg" secondAttribute="bottom" constant="27" id="0pr-sq-oRo"/>
                                     <constraint firstItem="Gra-dV-qtV" firstAttribute="trailing" secondItem="GoH-oL-fgz" secondAttribute="trailing" id="19C-A3-YZ5"/>
                                     <constraint firstItem="3Ym-g7-jzE" firstAttribute="baseline" secondItem="dxb-O5-Jjy" secondAttribute="baseline" id="3aM-Xk-9Q2"/>
                                     <constraint firstItem="Gra-dV-qtV" firstAttribute="leading" secondItem="GoH-oL-fgz" secondAttribute="leading" id="5LK-Oc-SfY"/>
                                     <constraint firstItem="dxb-O5-Jjy" firstAttribute="leading" secondItem="3Ym-g7-jzE" secondAttribute="trailing" constant="10" id="68R-eW-nZ8"/>
                                     <constraint firstItem="GoH-oL-fgz" firstAttribute="top" secondItem="Gra-dV-qtV" secondAttribute="bottom" constant="8" symbolic="YES" id="8Q0-dj-qYh"/>
-                                    <constraint firstItem="sKv-zQ-Pjt" firstAttribute="leading" secondItem="dxb-O5-Jjy" secondAttribute="trailing" constant="26" id="C6G-53-dsX"/>
+                                    <constraint firstItem="sKv-zQ-Pjt" firstAttribute="leading" secondItem="dxb-O5-Jjy" secondAttribute="trailing" constant="8" id="C6G-53-dsX"/>
                                     <constraint firstItem="Gra-dV-qtV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="aGf-Yh-KmN" secondAttribute="trailing" constant="8" symbolic="YES" id="HM1-U9-KC4"/>
                                     <constraint firstItem="aGf-Yh-KmN" firstAttribute="leading" secondItem="RL6-YX-gWN" secondAttribute="leading" id="KFk-9u-QcV"/>
                                     <constraint firstItem="3Ym-g7-jzE" firstAttribute="leading" secondItem="VK7-Iv-MVb" secondAttribute="leading" constant="15" id="RHl-if-bcw"/>
-                                    <constraint firstItem="kYd-Xk-CDh" firstAttribute="leading" secondItem="Gra-dV-qtV" secondAttribute="trailing" constant="26" id="RdP-SC-dey"/>
+                                    <constraint firstItem="kYd-Xk-CDh" firstAttribute="leading" secondItem="Gra-dV-qtV" secondAttribute="trailing" constant="8" id="RdP-SC-dey"/>
                                     <constraint firstItem="Gra-dV-qtV" firstAttribute="top" secondItem="dxb-O5-Jjy" secondAttribute="bottom" constant="10" id="Syn-3J-38g"/>
                                     <constraint firstAttribute="trailing" secondItem="uHG-UO-3Rg" secondAttribute="trailing" constant="20" symbolic="YES" id="Vvu-eo-WjQ"/>
                                     <constraint firstItem="dGY-0P-4mD" firstAttribute="leading" secondItem="sKv-zQ-Pjt" secondAttribute="trailing" constant="8" symbolic="YES" id="XPQ-ug-Ixj"/>
                                     <constraint firstItem="uHG-UO-3Rg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="VK7-Iv-MVb" secondAttribute="leading" constant="20" symbolic="YES" id="Y4P-UG-LRe"/>
-                                    <constraint firstItem="uHG-UO-3Rg" firstAttribute="top" secondItem="eqF-dY-Wae" secondAttribute="bottom" constant="29" id="ZfE-rD-74u"/>
+                                    <constraint firstItem="uHG-UO-3Rg" firstAttribute="top" secondItem="eqF-dY-Wae" secondAttribute="bottom" constant="30" id="ZfE-rD-74u"/>
                                     <constraint firstItem="eqF-dY-Wae" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="kYd-Xk-CDh" secondAttribute="trailing" constant="8" symbolic="YES" id="c9N-yx-xL1"/>
                                     <constraint firstItem="dxb-O5-Jjy" firstAttribute="trailing" secondItem="GoH-oL-fgz" secondAttribute="trailing" id="evQ-6E-Au0"/>
-                                    <constraint firstAttribute="trailing" secondItem="dGY-0P-4mD" secondAttribute="trailing" constant="15" id="fxM-qs-tEv"/>
+                                    <constraint firstAttribute="trailing" secondItem="dGY-0P-4mD" secondAttribute="trailing" constant="20" id="fxM-qs-tEv"/>
                                     <constraint firstItem="Gra-dV-qtV" firstAttribute="leading" secondItem="dxb-O5-Jjy" secondAttribute="leading" id="iY8-ES-92Z"/>
                                     <constraint firstItem="3Ym-g7-jzE" firstAttribute="top" secondItem="VK7-Iv-MVb" secondAttribute="top" constant="20" symbolic="YES" id="k0h-zU-hAY"/>
                                     <constraint firstItem="kYd-Xk-CDh" firstAttribute="baseline" secondItem="eqF-dY-Wae" secondAttribute="baseline" id="kLr-TR-GZe"/>
                                     <constraint firstItem="3Ym-g7-jzE" firstAttribute="leading" secondItem="aGf-Yh-KmN" secondAttribute="leading" id="lkl-jZ-rjM"/>
                                     <constraint firstItem="GoH-oL-fgz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="RL6-YX-gWN" secondAttribute="trailing" constant="8" symbolic="YES" id="ngR-zW-sf0"/>
                                     <constraint firstItem="Gra-dV-qtV" firstAttribute="baseline" secondItem="kYd-Xk-CDh" secondAttribute="baseline" id="pG0-mu-sho"/>
-                                    <constraint firstItem="uHG-UO-3Rg" firstAttribute="top" secondItem="eqF-dY-Wae" secondAttribute="bottom" constant="29" id="qdX-fX-9eo"/>
+                                    <constraint firstItem="uHG-UO-3Rg" firstAttribute="top" secondItem="eqF-dY-Wae" secondAttribute="bottom" constant="30" id="qdX-fX-9eo"/>
                                     <constraint firstItem="dxb-O5-Jjy" firstAttribute="baseline" secondItem="sKv-zQ-Pjt" secondAttribute="baseline" id="rcc-6N-cSC"/>
                                     <constraint firstItem="dGY-0P-4mD" firstAttribute="leading" secondItem="eqF-dY-Wae" secondAttribute="leading" id="reP-kc-55I"/>
                                     <constraint firstItem="dGY-0P-4mD" firstAttribute="trailing" secondItem="eqF-dY-Wae" secondAttribute="trailing" id="sC4-9k-G1p"/>
@@ -992,7 +992,7 @@
                                 </constraints>
                             </customView>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ymH-kV-jb9">
-                                <rect key="frame" x="18" y="80" width="93" height="16"/>
+                                <rect key="frame" x="18" y="80" width="150" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Available Ports" id="9cd-M9-qKd">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1000,13 +1000,13 @@
                                 </textFieldCell>
                             </textField>
                             <scrollView identifier="svPortList" autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e6c-di-euW">
-                                <rect key="frame" x="20" y="20" width="503" height="52"/>
+                                <rect key="frame" x="20" y="20" width="560" height="52"/>
                                 <clipView key="contentView" drawsBackground="NO" id="uIG-mz-tCS">
-                                    <rect key="frame" x="1" y="1" width="501" height="50"/>
+                                    <rect key="frame" x="1" y="1" width="558" height="50"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView identifier="tbvPortList" toolTip="List of available virtual ports" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="sequential" selectionHighlightStyle="sourceList" columnReordering="NO" multipleSelection="NO" emptySelection="NO" typeSelect="NO" autosaveName="tbvPortList" rowHeight="24" rowSizeStyle="automatic" headerView="brN-Mi-tlf" viewBased="YES" floatsGroupRows="NO" id="PCD-bJ-CpZ" customClass="TableView" customModule="VSPClient">
-                                            <rect key="frame" x="0.0" y="0.0" width="501" height="24"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="558" height="22"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                             <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1049,7 +1049,7 @@
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                 </tableColumn>
-                                                <tableColumn identifier="tcPortName" editable="NO" width="336" minWidth="40" maxWidth="1000" id="CNI-JH-CrJ">
+                                                <tableColumn identifier="tcPortName" editable="NO" width="393" minWidth="40" maxWidth="1000" id="CNI-JH-CrJ">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Port Name">
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -1062,11 +1062,11 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="Zez-hg-iGL">
-                                                            <rect key="frame" x="149" y="0.0" width="333" height="24"/>
+                                                            <rect key="frame" x="149" y="0.0" width="390" height="24"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Fu8-A2-blV">
-                                                                    <rect key="frame" x="0.0" y="4" width="318" height="16"/>
+                                                                    <rect key="frame" x="0.0" y="4" width="375" height="16"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="xZ9-FK-Gi8">
                                                                         <font key="font" usesAppearanceFont="YES"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1099,13 +1099,13 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <tableHeaderView key="headerView" wantsLayer="YES" id="brN-Mi-tlf">
-                                    <rect key="frame" x="0.0" y="0.0" width="501" height="28"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="558" height="28"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="VK7-Iv-MVb" secondAttribute="trailing" constant="10" id="0wb-ce-jt9"/>
+                            <constraint firstAttribute="trailing" secondItem="VK7-Iv-MVb" secondAttribute="trailing" constant="20" id="0wb-ce-jt9"/>
                             <constraint firstItem="VK7-Iv-MVb" firstAttribute="leading" secondItem="ymH-kV-jb9" secondAttribute="leading" id="20s-6r-2zp"/>
                             <constraint firstItem="ymH-kV-jb9" firstAttribute="top" secondItem="VK7-Iv-MVb" secondAttribute="bottom" constant="8" symbolic="YES" id="4tg-Jt-Jle"/>
                             <constraint firstItem="NaG-4e-ZPr" firstAttribute="leading" secondItem="VK7-Iv-MVb" secondAttribute="leading" id="8ZH-ol-gPM"/>
@@ -1118,7 +1118,7 @@
                             <constraint firstItem="NaG-4e-ZPr" firstAttribute="leading" secondItem="Brs-FA-RsB" secondAttribute="leading" constant="20" symbolic="YES" id="QSA-Ce-iSu"/>
                             <constraint firstAttribute="trailing" secondItem="e6c-di-euW" secondAttribute="trailing" constant="20" symbolic="YES" id="SwR-eF-0k3"/>
                             <constraint firstItem="e6c-di-euW" firstAttribute="top" secondItem="ymH-kV-jb9" secondAttribute="bottom" constant="8" symbolic="YES" id="Swg-5Q-BFH"/>
-                            <constraint firstAttribute="trailing" secondItem="VK7-Iv-MVb" secondAttribute="trailing" constant="10" id="Z0P-Wv-qrG"/>
+                            <constraint firstAttribute="trailing" secondItem="VK7-Iv-MVb" secondAttribute="trailing" constant="20" id="Z0P-Wv-qrG"/>
                             <constraint firstItem="ymH-kV-jb9" firstAttribute="leading" secondItem="Brs-FA-RsB" secondAttribute="leading" constant="20" symbolic="YES" id="aqP-Vc-eIa"/>
                             <constraint firstItem="ymH-kV-jb9" firstAttribute="top" secondItem="VK7-Iv-MVb" secondAttribute="bottom" constant="8" symbolic="YES" id="cuF-Hv-vKr"/>
                             <constraint firstAttribute="trailing" secondItem="NaG-4e-ZPr" secondAttribute="trailing" constant="460" id="dFy-tK-Tfb"/>
@@ -1145,7 +1145,7 @@
                 </viewController>
                 <customObject id="5Bc-4t-byK" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-96" y="1279"/>
+            <point key="canvasLocation" x="-768" y="1302.5"/>
         </scene>
         <!--Port Links-->
         <scene sceneID="sYW-to-Uwo">
@@ -1254,7 +1254,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView identifier="tbvLinkList" toolTip="List of available virtual ports" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="sequential" selectionHighlightStyle="sourceList" columnReordering="NO" multipleSelection="NO" emptySelection="NO" typeSelect="NO" autosaveName="tbvPortList" rowHeight="30" rowSizeStyle="automatic" headerView="Ift-Lb-MjA" viewBased="YES" floatsGroupRows="NO" id="G68-gM-Ydt" customClass="TableView" customModule="VSPClient">
-                                            <rect key="frame" x="0.0" y="0.0" width="423" height="30"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="423" height="20"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                             <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1342,7 +1342,7 @@
                                     <rect key="frame" x="1" y="16" width="423" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.2857142857142857" horizontal="NO" id="Of2-F3-idj">
+                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.44444444444444442" horizontal="NO" id="Of2-F3-idj">
                                     <rect key="frame" x="424" y="29" width="15" height="2"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>

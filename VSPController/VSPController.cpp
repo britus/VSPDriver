@@ -85,24 +85,31 @@ static inline void printStruct(const char *ctx, const CVSPDriverData *ptr)
         BUFFER_APPEND("\t.traces = 0x%llx,\n", ptr->traceFlags);
         BUFFER_APPEND("\t.checks = 0x%llx,\n", ptr->checkFlags);
         BUFFER_APPEND("\t.parameter.flags = 0x%llx,\n", ptr->parameter.flags);
-        BUFFER_APPEND("\t.ppl.sourceId = %u,\n", ptr->parameter.link.source);
-        BUFFER_APPEND("\t.ppl.targetId = %u,\n", ptr->parameter.link.target);
-        BUFFER_APPEND("\t.status.code = 0x%x,\n", ptr->status.code);
-        BUFFER_APPEND("\t.status.flags = 0x%llx,\n", ptr->status.flags);
-        
-        if (ptr->ports.count) {
-            for (uint8_t i = 0; i < ptr->ports.count; i++) {
-                BUFFER_APPEND("\t.port = %d flags = 0x%llx,\n", //
-                        ptr->ports.list[i].id,
-                        ptr->ports.list[i].flags);
+        if ((ptr->parameter.flags & 0xff01) != ptr->parameter.flags) {
+            BUFFER_APPEND("\t.ppl.sourceId = %u,\n", ptr->parameter.link.source);
+            BUFFER_APPEND("\t.ppl.targetId = %u,\n", ptr->parameter.link.target);
+            BUFFER_APPEND("\t.status.code = 0x%x,\n", ptr->status.code);
+            BUFFER_APPEND("\t.status.flags = 0x%llx,\n", ptr->status.flags);
+            if (ptr->ports.count) {
+                for (uint8_t i = 0; i < ptr->ports.count; i++) {
+                    BUFFER_APPEND("\t.port = %d flags = 0x%llx,\n", //
+                            ptr->ports.list[i].id,
+                            ptr->ports.list[i].flags);
+                }
             }
-        }
-        
-        if (ptr->links.count) {
-            for (uint8_t i = 0; i < ptr->links.count; i++) {
-                BUFFER_APPEND("\t.link = %d link = 0x%llx,\n", //
-                        i, ptr->links.list[i]);
+            if (ptr->links.count) {
+                for (uint8_t i = 0; i < ptr->links.count; i++) {
+                    BUFFER_APPEND("\t.link = %d link = 0x%llx,\n", //
+                            i, ptr->links.list[i]);
+                }
             }
+        } else if (ptr->ports.count == sizeof(CVSPPortParameters)) {
+            CVSPPortParameters* p = (CVSPPortParameters*)(ptr->ports.list);
+            BUFFER_APPEND("\t.baudRate = %u,\n", p->baudRate);
+            BUFFER_APPEND("\t.dataBits = %u,\n", p->dataBits);
+            BUFFER_APPEND("\t.stopBits = %u,\n", p->stopBits);
+            BUFFER_APPEND("\t.parity   = %u,\n", p->parity);
+            BUFFER_APPEND("\t.flowCtrl = %u,\n", p->flowCtrl);
         }
         
         BUFFER_APPEND("}\n");
@@ -321,7 +328,7 @@ bool VSPController::CreatePort(CVSPPortParameters *parameters)
 {
     if (!parameters)
         return false;
-
+    
     CVSPDriverData input = {};
     input.context = vspContextPort;
     input.command = vspControlCreatePort;

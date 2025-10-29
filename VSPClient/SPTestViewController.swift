@@ -301,42 +301,42 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
     }
     
     @IBAction func onSerialPortChanged(_ sender: ComboBox) {
-        guard let value = UITools.selectedValueFor(sender) as? String else {
+        guard let value = UITools.selectedValueFrom(sender) as? String else {
             return
         }
         deviceName = value
     }
     
     @IBAction func onBaudRateChanged(_ sender: ComboBox) {
-        guard let value = UITools.selectedValueFor(sender) as? UInt32 else {
+        guard let value = UITools.selectedValueFrom(sender) as? UInt32 else {
             return
         }
         portConfig.baudRate = UInt(value)
     }
     
     @IBAction func onDataBitsChanged(_ sender: ComboBox) {
-        guard let value = UITools.selectedValueFor(sender) as? UInt8 else {
+        guard let value = UITools.selectedValueFrom(sender) as? UInt8 else {
             return
         }
         portConfig.dataBits = UInt(value)
     }
     
     @IBAction func onStopBitsChanged(_ sender: ComboBox) {
-        guard let value = UITools.selectedValueFor(sender) as? UInt8 else {
+        guard let value = UITools.selectedValueFrom(sender) as? UInt8 else {
             return
         }
         portConfig.stopBits = UInt(value)
     }
     
     @IBAction func onParityChanged(_ sender: ComboBox) {
-        guard let value = UITools.selectedValueFor(sender) as? UInt8 else {
+        guard let value = UITools.selectedValueFrom(sender) as? UInt8 else {
             return
         }
         portConfig.parity = UInt(value)
     }
     
     @IBAction func onFlowCtrlChanged(_ sender: ComboBox) {
-        guard let value = UITools.selectedValueFor(sender) as? UInt8 else {
+        guard let value = UITools.selectedValueFrom(sender) as? UInt8 else {
             return
         }
         portConfig.flowCtrl = UInt(value)

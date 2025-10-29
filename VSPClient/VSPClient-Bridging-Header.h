@@ -31,7 +31,7 @@ bool IsDriverConnected(void);
 /**
  *
  */
-bool CreatePort(uint8_t baudRate, uint8_t dataBits, uint8_t stopBits,
+bool CreatePort(uint32_t baudRate, uint8_t dataBits, uint8_t stopBits,
                 uint8_t parity, uint8_t flowCtrl);
 
 /**

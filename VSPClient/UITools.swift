@@ -284,7 +284,7 @@ class UITools {
     }
 
     // Helper method to get selected value from combo box
-    static func selectedValueFor(_ comboBox: ComboBox) -> Any? {
+    static func selectedValueFrom(_ comboBox: ComboBox) -> Any? {
         let index = comboBox.indexOfSelectedItem
         comboBox.selectItem(at: index)
         guard let selectedItem = comboBox.dataObject(forRow: index) else {

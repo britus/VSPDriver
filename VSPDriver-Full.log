@@ -1,0 +1,410 @@
+[174121.532276]: [VSPDriver]: init called.
+[174121.532327]: [VSPDriver]: init finished.
+[174121.532337]: [VSPDriver]: Start: called.
+[174121.532343]: [VSPDriver]: CreateSerialPort: create #4 VSPSerialPort from Info.plist.
+[174121.532367]: [VSPDriver]: CreateSerialPort: Create serial port 1.
+[174121.532568]: [VSPSerialPort]: init called.
+[174121.532666]: [VSPSerialPort]: init finished.
+[174121.532673]: [VSPSerialPort]: Start: called.
+[174121.532739]: [VSPSerialPort]: setupTTYBaseName called.
+[174121.532801]: [VSPSerialPort]: setupTTYBaseName: Unable to set TTY base name. code=-536870212
+[174121.532814]: [VSPSerialPort]: Start: register service.
+[174121.532835]: [VSPSerialPort]: Start: driver started successfully.
+[174121.532858]: [VSPDriver]: CreateSerialPort: check VSPSerialPort type.
+[174121.532864]: [VSPSerialPort]: setParent called.
+[174121.532867]: [VSPSerialPort]: setPortIdentifier id=1.
+[174121.532871]: [VSPDriver]: CreateSerialPort: Create serial port 2.
+[174121.532900]: [VSPSerialPort]: init called.
+[174121.532964]: [VSPSerialPort]: init finished.
+[174121.532971]: [VSPSerialPort]: Start: called.
+[174121.533014]: [VSPSerialPort]: setupTTYBaseName called.
+[174121.533075]: [VSPSerialPort]: setupTTYBaseName: Unable to set TTY base name. code=-536870212
+[174121.533086]: [VSPSerialPort]: Start: register service.
+[174121.533221]: [VSPSerialPort]: Start: driver started successfully.
+[174121.533230]: [VSPDriver]: CreateSerialPort: check VSPSerialPort type.
+[174121.533234]: [VSPSerialPort]: setParent called.
+[174121.533239]: [VSPSerialPort]: setPortIdentifier id=2.
+[174121.533242]: [VSPDriver]: CreateSerialPort: Create serial port 3.
+[174121.533315]: [VSPSerialPort]: init called.
+[174121.533401]: [VSPSerialPort]: init finished.
+[174121.533408]: [VSPSerialPort]: Start: called.
+[174121.533460]: [VSPSerialPort]: setupTTYBaseName called.
+[174121.533520]: [VSPSerialPort]: setupTTYBaseName: Unable to set TTY base name. code=-536870212
+[174121.533534]: [VSPSerialPort]: Start: register service.
+[174121.533619]: [VSPSerialPort]: Start: driver started successfully.
+[174121.533629]: [VSPDriver]: CreateSerialPort: check VSPSerialPort type.
+[174121.533634]: [VSPSerialPort]: setParent called.
+[174121.533638]: [VSPSerialPort]: setPortIdentifier id=3.
+[174121.533642]: [VSPDriver]: CreateSerialPort: Create serial port 4.
+[174121.533677]: [VSPSerialPort]: init called.
+[174121.533750]: [VSPSerialPort]: init finished.
+[174121.533757]: [VSPSerialPort]: Start: called.
+[174121.533822]: [VSPSerialPort]: setupTTYBaseName called.
+[174121.533914]: [VSPSerialPort]: setupTTYBaseName: Unable to set TTY base name. code=-536870212
+[174121.533929]: [VSPSerialPort]: Start: register service.
+[174121.534102]: [VSPSerialPort]: Start: driver started successfully.
+[174121.534112]: [VSPDriver]: CreateSerialPort: check VSPSerialPort type.
+[174121.534117]: [VSPSerialPort]: setParent called.
+[174121.534121]: [VSPSerialPort]: setPortIdentifier id=4.
+[174121.534139]: [VSPDriver]: Start: driver started successfully.
+[174121.534152]: DK: VSPDriver-0x10000870c::start(IOUserResources-0x100000116) ok
+[174593.996521]: [VSPDriver]: NewUserClient called.
+[174593.996721]: [VSPDriver]: CreateUserClient: create VSP user client from Info.plist.
+[174593.996816]: [VSPUserClient]: init called.
+[174593.996866]: [VSPUserClient]: init finished.
+[174593.996871]: [VSPDriver]: CreateUserClient: check VSPUserClient type.
+[174593.997075]: [VSPDriver]: CreateUserClient: success.
+[174593.997080]: [VSPDriver]: NewUserClient finished.
+[174593.997086]: [VSPUserClient]: Start: called.
+[174593.997194]: [VSPUserClient]: User client successfully started.
+[174594.008062]: [VSPUserClient]: CopyClientMemoryForType called. type=1 optionsptr=0x70000c8da208
+[174594.008135]: [VSPUserClient]: CopyClientMemoryForType complete.
+[174594.008351]: [VSPUserClient]: ExternalMethod called. sel=1 arg=0x70000c8d9b28 disp=0x0 tgt=0x0 ref=0x0
+[174594.008362]: [VSPUserClient]: exGetStatus called.
+[174594.008402]: [VSPUserClient]: getStatus called.
+[174594.008406]: [VSPUserClient]: Data ------------------------------------------
+[174594.008413]: [VSPUserClient]: Data.context..........: 2
+[174594.008417]: [VSPUserClient]: Data.command..........: 1
+[174594.008421]: [VSPUserClient]: Data.status.code......: 0
+[174594.008427]: [VSPUserClient]: Data.status.flags.....: 0xbe6605250002
+[174594.008432]: [VSPUserClient]: Data.parameter.flags..: 0x0
+[174594.008436]: [VSPUserClient]: Data.p.portlink.source: 0
+[174594.008441]: [VSPUserClient]: Data.p.portlink.target: 0
+[174594.008445]: [VSPUserClient]: Data.ports.count......: 0
+[174594.008450]: [VSPUserClient]: Data.links.count......: 0
+[174594.008639]: [VSPUserClient]: getStatus finish.
+[174594.008644]: [VSPUserClient]: scheduleEvent called.
+[174594.008647]: [VSPUserClient]: prepareResponse called.
+[174594.008652]: [VSPUserClient]: Data ------------------------------------------
+[174594.008659]: [VSPUserClient]: Data.context..........: 3
+[174594.008663]: [VSPUserClient]: Data.command..........: 1
+[174594.008667]: [VSPUserClient]: Data.status.code......: 0
+[174594.008671]: [VSPUserClient]: Data.status.flags.....: 0xbe6605250000
+[174594.008677]: [VSPUserClient]: Data.parameter.flags..: 0x2
+[174594.008681]: [VSPUserClient]: Data.p.portlink.source: 0
+[174594.008685]: [VSPUserClient]: Data.p.portlink.target: 0
+[174594.008690]: [VSPUserClient]: Data.ports.count......: 4
+[174594.008695]: [VSPUserClient]:     Port item #0: 1
+[174594.008700]: [VSPUserClient]:     Port item #1: 2
+[174594.008704]: [VSPUserClient]:     Port item #2: 3
+[174594.008708]: [VSPUserClient]:     Port item #3: 4
+[174594.008712]: [VSPUserClient]: Data.links.count......: 0
+[174594.008718]: [VSPUserClient]: prepareResponse finish.
+[174594.153812]: [VSPUserClient]: Data ------------------------------------------
+[174594.153827]: [VSPUserClient]: Data.context..........: 3
+[174594.153832]: [VSPUserClient]: Data.command..........: 1
+[174594.153838]: [VSPUserClient]: Data.status.code......: 0
+[174594.153847]: [VSPUserClient]: Data.status.flags.....: 0xbe6605250000
+[174594.153853]: [VSPUserClient]: Data.parameter.flags..: 0x2
+[174594.153858]: [VSPUserClient]: Data.p.portlink.source: 0
+[174594.153863]: [VSPUserClient]: Data.p.portlink.target: 0
+[174594.153868]: [VSPUserClient]: Data.ports.count......: 4
+[174594.153873]: [VSPUserClient]:     Port item #0: 1
+[174594.153878]: [VSPUserClient]:     Port item #1: 2
+[174594.153883]: [VSPUserClient]:     Port item #2: 3
+[174594.153888]: [VSPUserClient]:     Port item #3: 4
+[174594.153892]: [VSPUserClient]: Data.links.count......: 0
+[174594.153910]: [VSPUserClient]: AsyncCallback complete.
+[174598.547235]: [VSPUserClient]: CopyClientMemoryForType called. type=1 optionsptr=0x70000c857208
+[174598.547309]: [VSPUserClient]: CopyClientMemoryForType complete.
+[174598.547497]: [VSPUserClient]: ExternalMethod called. sel=1 arg=0x70000c856b28 disp=0x0 tgt=0x0 ref=0x0
+[174598.547507]: [VSPUserClient]: exGetStatus called.
+[174598.547512]: [VSPUserClient]: getStatus called.
+[174598.547517]: [VSPUserClient]: Data ------------------------------------------
+[174598.547524]: [VSPUserClient]: Data.context..........: 2
+[174598.547529]: [VSPUserClient]: Data.command..........: 1
+[174598.547534]: [VSPUserClient]: Data.status.code......: 0
+[174598.547540]: [VSPUserClient]: Data.status.flags.....: 0xbe6605250002
+[174598.547545]: [VSPUserClient]: Data.parameter.flags..: 0x0
+[174598.547550]: [VSPUserClient]: Data.p.portlink.source: 0
+[174598.547555]: [VSPUserClient]: Data.p.portlink.target: 0
+[174598.547560]: [VSPUserClient]: Data.ports.count......: 0
+[174598.547565]: [VSPUserClient]: Data.links.count......: 0
+[174598.547570]: [VSPUserClient]: getStatus finish.
+[174598.547574]: [VSPUserClient]: scheduleEvent called.
+[174598.547579]: [VSPUserClient]: prepareResponse called.
+[174598.547583]: [VSPUserClient]: Data ------------------------------------------
+[174598.547589]: [VSPUserClient]: Data.context..........: 3
+[174598.547594]: [VSPUserClient]: Data.command..........: 1
+[174598.547599]: [VSPUserClient]: Data.status.code......: 0
+[174598.547604]: [VSPUserClient]: Data.status.flags.....: 0xbe6605250000
+[174598.547609]: [VSPUserClient]: Data.parameter.flags..: 0x2
+[174598.547614]: [VSPUserClient]: Data.p.portlink.source: 0
+[174598.547619]: [VSPUserClient]: Data.p.portlink.target: 0
+[174598.547624]: [VSPUserClient]: Data.ports.count......: 4
+[174598.547635]: [VSPUserClient]:     Port item #0: 1
+[174598.547641]: [VSPUserClient]:     Port item #1: 2
+[174598.547645]: [VSPUserClient]:     Port item #2: 3
+[174598.547650]: [VSPUserClient]:     Port item #3: 4
+[174598.547654]: [VSPUserClient]: Data.links.count......: 0
+[174598.547660]: [VSPUserClient]: prepareResponse finish.
+[174599.149483]: [VSPUserClient]: AsyncCallback called.
+[174599.149495]: [VSPUserClient]: Data ------------------------------------------
+[174599.149509]: [VSPUserClient]: Data.context..........: 3
+[174599.149514]: [VSPUserClient]: Data.command..........: 1
+[174599.149519]: [VSPUserClient]: Data.status.code......: 0
+[174599.149526]: [VSPUserClient]: Data.status.flags.....: 0xbe6605250000
+[174599.149532]: [VSPUserClient]: Data.parameter.flags..: 0x2
+[174599.149537]: [VSPUserClient]: Data.p.portlink.source: 0
+[174599.149542]: [VSPUserClient]: Data.p.portlink.target: 0
+[174599.149546]: [VSPUserClient]: Data.ports.count......: 4
+[174599.149561]: [VSPUserClient]:     Port item #0: 1
+[174599.149566]: [VSPUserClient]:     Port item #1: 2
+[174599.149571]: [VSPUserClient]:     Port item #2: 3
+[174599.149576]: [VSPUserClient]:     Port item #3: 4
+[174599.149580]: [VSPUserClient]: Data.links.count......: 0
+[174599.149598]: [VSPUserClient]: AsyncCallback complete.
+[174601.078491]: [VSPUserClient]: CopyClientMemoryForType called. type=1 optionsptr=0x70000c857208
+[174601.078544]: [VSPUserClient]: CopyClientMemoryForType complete.
+[174601.078683]: [VSPUserClient]: ExternalMethod called. sel=1 arg=0x70000c856b28 disp=0x0 tgt=0x0 ref=0x0
+[174601.078690]: [VSPUserClient]: exGetStatus called.
+[174601.078694]: [VSPUserClient]: getStatus called.
+[174601.078698]: [VSPUserClient]: Data ------------------------------------------
+[174601.078703]: [VSPUserClient]: Data.context..........: 2
+[174601.078706]: [VSPUserClient]: Data.command..........: 1
+[174601.078710]: [VSPUserClient]: Data.status.code......: 0
+[174601.078714]: [VSPUserClient]: Data.status.flags.....: 0xbe6605250002
+[174601.078718]: [VSPUserClient]: Data.parameter.flags..: 0x0
+[174601.078722]: [VSPUserClient]: Data.p.portlink.source: 0
+[174601.078725]: [VSPUserClient]: Data.p.portlink.target: 0
+[174601.078728]: [VSPUserClient]: Data.ports.count......: 0
+[174601.078732]: [VSPUserClient]: Data.links.count......: 0
+[174601.078736]: [VSPUserClient]: getStatus finish.
+[174601.078738]: [VSPUserClient]: scheduleEvent called.
+[174601.078742]: [VSPUserClient]: prepareResponse called.
+[174601.078745]: [VSPUserClient]: Data ------------------------------------------
+[174601.078749]: [VSPUserClient]: Data.context..........: 3
+[174601.078752]: [VSPUserClient]: Data.command..........: 1
+[174601.078755]: [VSPUserClient]: Data.status.code......: 0
+[174601.078759]: [VSPUserClient]: Data.status.flags.....: 0xbe6605250000
+[174601.078763]: [VSPUserClient]: Data.parameter.flags..: 0x2
+[174601.078766]: [VSPUserClient]: Data.p.portlink.source: 0
+[174601.078776]: [VSPUserClient]: Data.p.portlink.target: 0
+[174601.078779]: [VSPUserClient]: Data.ports.count......: 4
+[174601.078783]: [VSPUserClient]:     Port item #0: 1
+[174601.078786]: [VSPUserClient]:     Port item #1: 2
+[174601.078789]: [VSPUserClient]:     Port item #2: 3
+[174601.078792]: [VSPUserClient]:     Port item #3: 4
+[174601.078795]: [VSPUserClient]: Data.links.count......: 0
+[174601.078799]: [VSPUserClient]: prepareResponse finish.
+[174601.714308]: [VSPUserClient]: AsyncCallback called.
+[174601.714317]: [VSPUserClient]: Data ------------------------------------------
+[174601.714327]: [VSPUserClient]: Data.context..........: 3
+[174601.714331]: [VSPUserClient]: Data.command..........: 1
+[174601.714334]: [VSPUserClient]: Data.status.code......: 0
+[174601.714339]: [VSPUserClient]: Data.status.flags.....: 0xbe6605250000
+[174601.714344]: [VSPUserClient]: Data.parameter.flags..: 0x2
+[174601.714347]: [VSPUserClient]: Data.p.portlink.source: 0
+[174601.714351]: [VSPUserClient]: Data.p.portlink.target: 0
+[174601.714354]: [VSPUserClient]: Data.ports.count......: 4
+[174601.714358]: [VSPUserClient]:     Port item #0: 1
+[174601.714361]: [VSPUserClient]:     Port item #1: 2
+[174601.714364]: [VSPUserClient]:     Port item #2: 3
+[174601.714367]: [VSPUserClient]:     Port item #3: 4
+[174601.714370]: [VSPUserClient]: Data.links.count......: 0
+[174601.714383]: [VSPUserClient]: AsyncCallback complete.
+[174604.278871]: [VSPUserClient]: CopyClientMemoryForType called. type=1 optionsptr=0x70000c8da208
+[174604.278924]: [VSPUserClient]: CopyClientMemoryForType complete.
+[174604.279064]: [VSPUserClient]: ExternalMethod called. sel=1 arg=0x70000c8d9b28 disp=0x0 tgt=0x0 ref=0x0
+[174604.279072]: [VSPUserClient]: exGetStatus called.
+[174604.279075]: [VSPUserClient]: getStatus called.
+[174604.279078]: [VSPUserClient]: Data ------------------------------------------
+[174604.279083]: [VSPUserClient]: Data.context..........: 2
+[174604.279087]: [VSPUserClient]: Data.command..........: 1
+[174604.279090]: [VSPUserClient]: Data.status.code......: 0
+[174604.279094]: [VSPUserClient]: Data.status.flags.....: 0xbe6605250002
+[174604.279098]: [VSPUserClient]: Data.parameter.flags..: 0x0
+[174604.279101]: [VSPUserClient]: Data.p.portlink.source: 0
+[174604.279105]: [VSPUserClient]: Data.p.portlink.target: 0
+[174604.279108]: [VSPUserClient]: Data.ports.count......: 0
+[174604.279112]: [VSPUserClient]: Data.links.count......: 0
+[174604.279116]: [VSPUserClient]: getStatus finish.
+[174604.279118]: [VSPUserClient]: scheduleEvent called.
+[174604.279122]: [VSPUserClient]: prepareResponse called.
+[174604.279125]: [VSPUserClient]: Data ------------------------------------------
+[174604.279129]: [VSPUserClient]: Data.context..........: 3
+[174604.279132]: [VSPUserClient]: Data.command..........: 1
+[174604.279135]: [VSPUserClient]: Data.status.code......: 0
+[174604.279145]: [VSPUserClient]: Data.status.flags.....: 0xbe6605250000
+[174604.279149]: [VSPUserClient]: Data.parameter.flags..: 0x2
+[174604.279152]: [VSPUserClient]: Data.p.portlink.source: 0
+[174604.279155]: [VSPUserClient]: Data.p.portlink.target: 0
+[174604.279159]: [VSPUserClient]: Data.ports.count......: 4
+[174604.279162]: [VSPUserClient]:     Port item #0: 1
+[174604.279165]: [VSPUserClient]:     Port item #1: 2
+[174604.279168]: [VSPUserClient]:     Port item #2: 3
+[174604.279171]: [VSPUserClient]:     Port item #3: 4
+[174604.279174]: [VSPUserClient]: Data.links.count......: 0
+[174604.279178]: [VSPUserClient]: prepareResponse finish.
+[174605.149716]: [VSPUserClient]: AsyncCallback called.
+[174605.149727]: [VSPUserClient]: Data ------------------------------------------
+[174605.149739]: [VSPUserClient]: Data.context..........: 3
+[174605.149743]: [VSPUserClient]: Data.command..........: 1
+[174605.149747]: [VSPUserClient]: Data.status.code......: 0
+[174605.149752]: [VSPUserClient]: Data.status.flags.....: 0xbe6605250000
+[174605.149757]: [VSPUserClient]: Data.parameter.flags..: 0x2
+[174605.149760]: [VSPUserClient]: Data.p.portlink.source: 0
+[174605.149764]: [VSPUserClient]: Data.p.portlink.target: 0
+[174605.149768]: [VSPUserClient]: Data.ports.count......: 4
+[174605.149772]: [VSPUserClient]:     Port item #0: 1
+[174605.149776]: [VSPUserClient]:     Port item #1: 2
+[174605.149779]: [VSPUserClient]:     Port item #2: 3
+[174605.149782]: [VSPUserClient]:     Port item #3: 4
+[174605.149785]: [VSPUserClient]: Data.links.count......: 0
+[174605.149800]: [VSPUserClient]: AsyncCallback complete.
+[174609.666796]: [VSPUserClient]: CopyClientMemoryForType called. type=4 optionsptr=0x70000c8da208
+[174609.666844]: [VSPUserClient]: CopyClientMemoryForType complete.
+[174609.667008]: [VSPUserClient]: ExternalMethod called. sel=4 arg=0x70000c8d9b28 disp=0x0 tgt=0x0 ref=0x0
+[174609.668870]: [VSPUserClient]: exLinkPorts called.
+[174609.668875]: [VSPUserClient]: linkPorts called.
+[174609.668879]: [VSPUserClient]: Data ------------------------------------------
+[174609.668885]: [VSPUserClient]: Data.context..........: 2
+[174609.668889]: [VSPUserClient]: Data.command..........: 4
+[174609.668892]: [VSPUserClient]: Data.status.code......: 0
+[174609.668897]: [VSPUserClient]: Data.status.flags.....: 0xbe6605250010
+[174609.668910]: [VSPUserClient]: Data.parameter.flags..: 0x0
+[174609.668914]: [VSPUserClient]: Data.p.portlink.source: 3
+[174609.668917]: [VSPUserClient]: Data.p.portlink.target: 4
+[174609.668920]: [VSPUserClient]: Data.ports.count......: 0
+[174609.668924]: [VSPUserClient]: Data.links.count......: 0
+[174609.668946]: [VSPSerialPort]: setPortLinkIdentifier id=1 at port=3
+[174609.668951]: [VSPSerialPort]: setPortLinkIdentifier id=1 at port=4
+[174609.668961]: [VSPDriver]: createPortLink add linkId=1 with ports 3 <-> 4
+[174609.668992]: [VSPUserClient]: linkPorts finish.
+[174609.668995]: [VSPUserClient]: scheduleEvent called.
+[174609.668998]: [VSPUserClient]: prepareResponse called.
+[174609.669001]: [VSPUserClient]: Data ------------------------------------------
+[174609.669005]: [VSPUserClient]: Data.context..........: 3
+[174609.669009]: [VSPUserClient]: Data.command..........: 4
+[174609.669012]: [VSPUserClient]: Data.status.code......: 0
+[174609.669015]: [VSPUserClient]: Data.status.flags.....: 0xbe6605250000
+[174609.669019]: [VSPUserClient]: Data.parameter.flags..: 0x0
+[174609.669022]: [VSPUserClient]: Data.p.portlink.source: 3
+[174609.669025]: [VSPUserClient]: Data.p.portlink.target: 4
+[174609.669029]: [VSPUserClient]: Data.ports.count......: 4
+[174609.669032]: [VSPUserClient]:     Port item #0: 1
+[174609.669035]: [VSPUserClient]:     Port item #1: 2
+[174609.669038]: [VSPUserClient]:     Port item #2: 3
+[174609.669041]: [VSPUserClient]:     Port item #3: 4
+[174609.669044]: [VSPUserClient]: Data.links.count......: 1
+[174609.669047]: [VSPUserClient]:     Port Link #1: 3 <-> 4
+[174609.669051]: [VSPUserClient]: prepareResponse finish.
+[174610.493955]: [VSPUserClient]: AsyncCallback called.
+[174610.493965]: [VSPUserClient]: Data ------------------------------------------
+[174610.493986]: [VSPUserClient]: Data.context..........: 3
+[174610.493990]: [VSPUserClient]: Data.command..........: 4
+[174610.493993]: [VSPUserClient]: Data.status.code......: 0
+[174610.493998]: [VSPUserClient]: Data.status.flags.....: 0xbe6605250000
+[174610.494002]: [VSPUserClient]: Data.parameter.flags..: 0x0
+[174610.494005]: [VSPUserClient]: Data.p.portlink.source: 3
+[174610.494009]: [VSPUserClient]: Data.p.portlink.target: 4
+[174610.494013]: [VSPUserClient]: Data.ports.count......: 4
+[174610.494017]: [VSPUserClient]:     Port item #0: 1
+[174610.494020]: [VSPUserClient]:     Port item #1: 2
+[174610.494023]: [VSPUserClient]:     Port item #2: 3
+[174610.494025]: [VSPUserClient]:     Port item #3: 4
+[174610.494028]: [VSPUserClient]: Data.links.count......: 1
+[174610.494032]: [VSPUserClient]:     Port Link #1: 3 <-> 4
+[174610.494053]: [VSPUserClient]: AsyncCallback complete.
+[174614.247152]: [VSPUserClient]: CopyClientMemoryForType called. type=1 optionsptr=0x70000c8da208
+[174614.247201]: [VSPUserClient]: CopyClientMemoryForType complete.
+[174614.247385]: [VSPUserClient]: ExternalMethod called. sel=1 arg=0x70000c8d9b28 disp=0x0 tgt=0x0 ref=0x0
+[174614.247393]: [VSPUserClient]: exGetStatus called.
+[174614.247396]: [VSPUserClient]: getStatus called.
+[174614.247400]: [VSPUserClient]: Data ------------------------------------------
+[174614.247404]: [VSPUserClient]: Data.context..........: 2
+[174614.247408]: [VSPUserClient]: Data.command..........: 1
+[174614.247411]: [VSPUserClient]: Data.status.code......: 0
+[174614.247419]: [VSPUserClient]: Data.status.flags.....: 0xbe6605250002
+[174614.247434]: [VSPUserClient]: Data.parameter.flags..: 0x0
+[174614.247437]: [VSPUserClient]: Data.p.portlink.source: 0
+[174614.247440]: [VSPUserClient]: Data.p.portlink.target: 0
+[174614.247444]: [VSPUserClient]: Data.ports.count......: 0
+[174614.247447]: [VSPUserClient]: Data.links.count......: 0
+[174614.247451]: [VSPUserClient]: getStatus finish.
+[174614.247454]: [VSPUserClient]: scheduleEvent called.
+[174614.247457]: [VSPUserClient]: prepareResponse called.
+[174614.247461]: [VSPUserClient]: Data ------------------------------------------
+[174614.247465]: [VSPUserClient]: Data.context..........: 3
+[174614.247468]: [VSPUserClient]: Data.command..........: 1
+[174614.247471]: [VSPUserClient]: Data.status.code......: 0
+[174614.247475]: [VSPUserClient]: Data.status.flags.....: 0xbe6605250000
+[174614.247478]: [VSPUserClient]: Data.parameter.flags..: 0x6
+[174614.247482]: [VSPUserClient]: Data.p.portlink.source: 0
+[174614.247485]: [VSPUserClient]: Data.p.portlink.target: 0
+[174614.247488]: [VSPUserClient]: Data.ports.count......: 4
+[174614.247491]: [VSPUserClient]:     Port item #0: 1
+[174614.247494]: [VSPUserClient]:     Port item #1: 2
+[174614.247497]: [VSPUserClient]:     Port item #2: 3
+[174614.247500]: [VSPUserClient]:     Port item #3: 4
+[174614.247503]: [VSPUserClient]: Data.links.count......: 1
+[174614.247507]: [VSPUserClient]:     Port Link #1: 3 <-> 4
+[174614.247516]: [VSPUserClient]: prepareResponse finish.
+[174615.222840]: [VSPUserClient]: AsyncCallback called.
+[174615.222850]: [VSPUserClient]: Data ------------------------------------------
+[174615.222860]: [VSPUserClient]: Data.context..........: 3
+[174615.222864]: [VSPUserClient]: Data.command..........: 1
+[174615.222868]: [VSPUserClient]: Data.status.code......: 0
+[174615.222873]: [VSPUserClient]: Data.status.flags.....: 0xbe6605250000
+[174615.222877]: [VSPUserClient]: Data.parameter.flags..: 0x6
+[174615.222881]: [VSPUserClient]: Data.p.portlink.source: 0
+[174615.222884]: [VSPUserClient]: Data.p.portlink.target: 0
+[174615.222888]: [VSPUserClient]: Data.ports.count......: 4
+[174615.222893]: [VSPUserClient]:     Port item #0: 1
+[174615.222896]: [VSPUserClient]:     Port item #1: 2
+[174615.222899]: [VSPUserClient]:     Port item #2: 3
+[174615.222902]: [VSPUserClient]:     Port item #3: 4
+[174615.222906]: [VSPUserClient]: Data.links.count......: 1
+[174615.222910]: [VSPUserClient]:     Port Link #1: 3 <-> 4
+[174615.222923]: [VSPUserClient]: AsyncCallback complete.
+[174621.565483]: [VSPUserClient]: CopyClientMemoryForType called. type=1 optionsptr=0x70000c8da208
+[174621.565538]: [VSPUserClient]: CopyClientMemoryForType complete.
+[174621.565731]: [VSPUserClient]: ExternalMethod called. sel=1 arg=0x70000c8d9b28 disp=0x0 tgt=0x0 ref=0x0
+[174621.565740]: [VSPUserClient]: exGetStatus called.
+[174621.565748]: [VSPUserClient]: getStatus called.
+[174621.565753]: [VSPUserClient]: Data ------------------------------------------
+[174621.565758]: [VSPUserClient]: Data.context..........: 2
+[174621.565761]: [VSPUserClient]: Data.command..........: 1
+[174621.565765]: [VSPUserClient]: Data.status.code......: 0
+[174621.565769]: [VSPUserClient]: Data.status.flags.....: 0xbe6605250002
+[174621.565773]: [VSPUserClient]: Data.parameter.flags..: 0x0
+[174621.565776]: [VSPUserClient]: Data.p.portlink.source: 0
+[174621.565780]: [VSPUserClient]: Data.p.portlink.target: 0
+[174621.565783]: [VSPUserClient]: Data.ports.count......: 0
+[174621.565787]: [VSPUserClient]: Data.links.count......: 0
+[174621.565791]: [VSPUserClient]: getStatus finish.
+[174621.565794]: [VSPUserClient]: scheduleEvent called.
+[174621.565797]: [VSPUserClient]: prepareResponse called.
+[174621.565800]: [VSPUserClient]: Data ------------------------------------------
+[174621.565805]: [VSPUserClient]: Data.context..........: 3
+[174621.565808]: [VSPUserClient]: Data.command..........: 1
+[174621.565811]: [VSPUserClient]: Data.status.code......: 0
+[174621.565815]: [VSPUserClient]: Data.status.flags.....: 0xbe6605250000
+[174621.565818]: [VSPUserClient]: Data.parameter.flags..: 0x6
+[174621.565822]: [VSPUserClient]: Data.p.portlink.source: 0
+[174621.565825]: [VSPUserClient]: Data.p.portlink.target: 0
+[174621.565828]: [VSPUserClient]: Data.ports.count......: 4
+[174621.565831]: [VSPUserClient]:     Port item #0: 1
+[174621.565834]: [VSPUserClient]:     Port item #1: 2
+[174621.565837]: [VSPUserClient]:     Port item #2: 3
+[174621.565840]: [VSPUserClient]:     Port item #3: 4
+[174621.565843]: [VSPUserClient]: Data.links.count......: 1
+[174621.565847]: [VSPUserClient]:     Port Link #1: 3 <-> 4
+[174621.565851]: [VSPUserClient]: prepareResponse finish.
+[174622.149739]: [VSPUserClient]: AsyncCallback called.
+[174622.149749]: [VSPUserClient]: Data ------------------------------------------
+[174622.149759]: [VSPUserClient]: Data.context..........: 3
+[174622.149764]: [VSPUserClient]: Data.command..........: 1
+[174622.149767]: [VSPUserClient]: Data.status.code......: 0
+[174622.149772]: [VSPUserClient]: Data.status.flags.....: 0xbe6605250000
+[174622.149777]: [VSPUserClient]: Data.parameter.flags..: 0x6
+[174622.149780]: [VSPUserClient]: Data.p.portlink.source: 0
+[174622.149783]: [VSPUserClient]: Data.p.portlink.target: 0
+[174622.149787]: [VSPUserClient]: Data.ports.count......: 4
+[174622.149791]: [VSPUserClient]:     Port item #0: 1
+[174622.149794]: [VSPUserClient]:     Port item #1: 2
+[174622.149798]: [VSPUserClient]:     Port item #2: 3
+[174622.149800]: [VSPUserClient]:     Port item #3: 4
+[174622.149803]: [VSPUserClient]: Data.links.count......: 1
+[174622.149807]: [VSPUserClient]:     Port Link #1: 3 <-> 4
+[174622.149820]: [VSPUserClient]: AsyncCallback complete.

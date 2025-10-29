@@ -35,18 +35,8 @@ class TabViewController: NSTabViewController {
     override func viewDidDisappear() {
         super.viewDidDisappear()
     }
-    
-    override func willPresentError(_ error: any Error) -> any Error {
-        NSLog("willPresentError: \(String(describing: error))")
-        return error
-    }
-    
-    override func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
-        //NSLog("willSelect: \(String(describing: tabViewItem))")
-    }
-    
+     
     override func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
-        NSLog("didSelect: \(String(describing: tabViewItem))")
         page = tabViewItem
         if (IsDriverConnected()) {
             DispatchQueue.global(qos: .background).asyncAfter(//
@@ -55,7 +45,6 @@ class TabViewController: NSTabViewController {
             }
         }
     }
-        
 }
 
 extension TabViewController: DriverDataObserver {
