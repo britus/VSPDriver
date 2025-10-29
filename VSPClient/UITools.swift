@@ -372,6 +372,7 @@ extension NSTextView {
     func scrollToTextViewEnd() {
         guard let layoutManager = self.layoutManager,
               let textContainer = self.textContainer else { return }
+        let _ : Bool = layoutManager.isProxy() /* fix swift bullshit warning */
         
         // Alternative approach using the text container's actual size
         let contentSize = textContainer.size

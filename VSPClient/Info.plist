@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleIconFile</key>
+	<string>vspclient.icns</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>VSP Driver Setup</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>vspctl</string>
+			</array>
+		</dict>
+	</array>
+	<key>LSMinimumSystemVersion</key>
+	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+	<key>LSUIPresentationMode</key>
+	<integer>0</integer>
+	<key>LSVisibleInClassic</key>
+	<true/>
+	<key>NOTE</key>
+	<string>Copyright © 2025 by EoF Software Labs</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>NSPrefPaneIconFile</key>
+	<string>vspclient.icns</string>
+	<key>NSSupportsSuddenTermination</key>
+	<true/>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>Shows informative messages about the state of the VSP driver.</string>
+	<key>UILaunchImageFile</key>
+	<string>vspclient_512x512.png</string>
+	<key>UIPrerenderedIcon</key>
+	<false/>
+</dict>
+</plist>

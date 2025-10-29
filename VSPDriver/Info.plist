@@ -7,13 +7,13 @@
 		<key>VSPDriver</key>
 		<dict>
 			<key>CFBundleIdentifier</key>
-			<string>org.eof.tools.VSPDriver</string>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 			<key>CFBundleIdentifierKernel</key>
 			<string>com.apple.kpi.iokit</string>
 			<key>IOClass</key>
 			<string>IOUserService</string>
 			<key>IOMatchCategory</key>
-			<string>org.eof.tools.VSPDriver</string>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 			<key>IOProbeScore</key>
 			<integer>0</integer>
 			<key>IOProviderClass</key>
@@ -23,7 +23,7 @@
 			<key>IOUserClass</key>
 			<string>VSPDriver</string>
 			<key>IOUserServerName</key>
-			<string>org.eof.tools.VSPDriver</string>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 			<key>SerialPortProperties</key>
 			<dict>
 				<key>CFBundleIdentifierKernel</key>
