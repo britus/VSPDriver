@@ -26,6 +26,7 @@ class VSPSerialPort;
 #define TRACE_PORT_RX   BIT(16)
 #define TRACE_PORT_TX   BIT(17)
 #define TRACE_PORT_IO   BIT(18)
+
 #define CHECK_BAUD      BIT(19)
 #define CHECK_DATA_SIZE BIT(20)
 #define CHECK_STOP_BITS BIT(21)
@@ -109,6 +110,10 @@ typedef struct {
     
     /* User client command */
     uint8_t command;
+    
+    /* global flags */
+    uint64_t traceFlags;
+    uint64_t checkFlags;
     
     /* Command status response */
     struct Status {

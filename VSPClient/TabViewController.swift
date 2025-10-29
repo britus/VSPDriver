@@ -1,37 +1,33 @@
-//
-//  TabViewController.swift
-//  VCPClient
-//
-//  Created by Björn Eschrich on 26.10.25.
-//
-
+// ********************************************************************
+// VSPClient User Interface
+// Copyright © 2025 by EoF Software Labs
+// Copyright © 2024 Apple Inc. (some copied parts)
+// SPDX-License-Identifier: GPLv3
+// ********************************************************************
 import Cocoa
 import SwiftUI
 
 class TabViewController: NSTabViewController {
     
-    private let manager = DriverManager.shared
     private var isConnected: Bool = false
+    private let manager = DriverManager.shared
+    private var model : DataModel = DataModel.shared
+    private var page : NSTabViewItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // hide stupid tab buttons
         self.tabStyle = .unspecified
-        manager.addObserver(self)
         
-        // C bridge async
-        if (!IsDriverConnected()) {
-            if (!ConnectDriver()) {
-            }
-        }
     }
     
     override func viewDidAppear() {
         super.viewDidAppear()
+        manager.addObserver(self)
     }
     
     override func viewWillDisappear() {
-        DisconnectDriver() // C bridge async
         manager.removeObserver(self)
         super.viewWillDisappear()
     }
@@ -41,104 +37,134 @@ class TabViewController: NSTabViewController {
     }
     
     override func willPresentError(_ error: any Error) -> any Error {
-        NSLog("willSelect: \(String(describing: error))")
+        NSLog("willPresentError: \(String(describing: error))")
         return error
     }
     
     override func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
-        NSLog("willSelect: \(String(describing: tabViewItem))")
+        //NSLog("willSelect: \(String(describing: tabViewItem))")
     }
     
     override func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
         NSLog("didSelect: \(String(describing: tabViewItem))")
-    }
-    
-    @objc func willLoadDriver() {
-        //
-    }
-    
-    @objc func needsUserApproval() {
-        UITools.showBasicNotification(body: "VSP controller wait for your approval.")
-    }
-    
-    @objc func didFinish(withResult code: UInt64, message: String) {
-        UITools.showBasicNotification(body: "Error \(code): \(message).")
-    }
-    
-    @objc func didFail(withError code: UInt64, message: String) {
-        UITools.showBasicNotification(body: "Error \(code): \(message).")
-    }
-    
-    @objc func willUnloadDriver() {
-        DisconnectDriver()
-    }
-    
-    @objc func didUnload(withStatus code: UInt64, message: String) {
-        UITools.showBasicNotification(body: "Error \(code): \(message).")
-    }
-    
-    @objc func controllerConnected() {
-        if (!isConnected) {
-            UITools.showBasicNotification(body: "VSP controller is up and running")
-            view.isHidden = false
-            isConnected = true
-            GetStatus()
+        page = tabViewItem
+        if (IsDriverConnected()) {
+            DispatchQueue.global(qos: .background).asyncAfter(//
+                deadline: .now() + .milliseconds(100)) {
+                GetStatus()
+            }
         }
     }
-    
-    @objc func controllerDisconnected() {
-        if (isConnected) {
-            UITools.showBasicNotification(body: "VSP controller disconnected")
-            isConnected = false
-        }
-    }
-    
-    @objc func dataError(withCode code: UInt64, message: String) {
-        UITools.showBasicNotification(body: "Error \(code): \(message).")
-    }
+        
 }
 
-extension TabViewController: DriverManagerObserver {
-    func driverStatusDidChange(_ status: DriverStatus, code: UInt64, domain: String, message: String) {
-        switch status {
-            case .notLoaded:
-                UITools.showBasicNotification(body: message)
-                break
-            case .loading:
-                willLoadDriver()
-                break
-            case .loaded:
-                didFinish(withResult: code, message: message)
-                break
-            case .unloading:
-                willUnloadDriver()
-                break
-            case .unloaded:
-                didUnload(withStatus: code, message: message)
-                break
-            case .failure:
-                didFail(withError: code, message: message)
-                break
-            case .requiresUserApproval:
-                needsUserApproval()
-                break
-            case .willCompleteAfterReboot:
-                didFail(withError: code, message: message)
-                break
-            case .connected:
-                controllerConnected()
-                break
-            case .disconnected:
-                controllerDisconnected()
-                break
-            case .dataError:
-                dataError(withCode: code, message: message)
-                break
+extension TabViewController: DriverDataObserver {
+    
+    func dataError(withCode code: UInt64, message: String) {
+        if code > 0 {
+            UITools.showMessage(message: "Error \(String(code, radix: 16)): \(message).")
+        } else {
+            UITools.showMessage(message: "\(message).")
         }
     }
     
-    func dataReady(_ data: TVSPControllerData?)
+    func dataDidAvailable(_ data: TVSPControllerData?)
     {
-        UITools.showBasicNotification(body: "Data ready: \(String(describing: data))")
+        //UITools.showBasicNotification(body: "Data ready: \(String(describing: data))")
+        if (data == nil) {
+            UITools.showMessage(message: "Invalid data detected.")
+            return
+        }
+
+        let input : TVSPControllerData = data!
+
+        if input.context == TVSPUserContext.error {
+            switch (input.status.flags) {
+            case 0xfa000001:
+                switch (input.status.code) {
+                    case 0xe0000001:
+                        dataError(withCode: UInt64(input.status.code), //
+                                  message: "Same ports cannot be linked together.")
+                        break
+                    case 0xe00002d5:
+                        dataError(withCode: UInt64(input.status.code), //
+                                  message: "One of the ports is already in use.")
+                        break
+                    case 0xe00002c2:
+                        dataError(withCode: UInt64(input.status.code), //
+                                  message:  "Invalid parameter detected.")
+                        break
+                    case 0xe00002db:
+                        dataError(withCode: UInt64(input.status.code), //
+                                  message: "Maximum of available ports reached.")
+                        break
+                    default:
+                        dataError(withCode: UInt64(input.status.code), //
+                                  message: "Driver Error \(String(format: "0x%llx", input.status.code))")
+                        break
+                }
+                break
+            case 0xfa000000:
+                dataError(withCode: UInt64(input.status.code), //
+                          message: "Driver Error \(String(format: "0x%llx", input.status.code))")
+                break
+            default:
+                if input.status.code > 0 {
+                    dataError(withCode: UInt64(input.status.code), //
+                             message: "Driver Error \(String(format: "0x%llx", input.status.code))")
+                }
+                break
+            }
+            return
+        }
+        
+        if input.context == TVSPUserContext.result {
+            var isModified : Bool = false
+
+            // reset current data model
+            if input.command == TVSPControlCommand.removePort //
+                || input.command == TVSPControlCommand.unlinkPorts //
+                || input.command == TVSPControlCommand.createPort //
+                || input.command == TVSPControlCommand.linkPorts //
+                || input.command == TVSPControlCommand.getStatus {
+                model.removeAll(notyfy: false)
+                if !isModified { isModified = true }
+            }
+                        
+            for i in 0..<input.ports.count {
+                // get driver structure object (Objective-C)
+                let port : TVSPPortListItem = input.ports.items[Int(i)]
+                // create and apend data record to model
+                let record : TDataRecord = TDataRecord()
+                record.type = .PortItem
+                record.flags = 0x00
+                record.port = TPortItem(id: port.portId, name: port.name, flags: port.flags)
+                model.appendRecord(record, notify: false);
+                if !isModified { isModified = true }
+            }
+
+            for i in 0..<input.links.count {
+                // get port link byte encoded
+                let link = input.links.links[Int(i)].uint64Value
+                let _lid = (link >> 16) & 0x000000ff;
+                let _src = (link >> 8) & 0x000000ff;
+                let _tgt = link & 0x000000ff;
+                // create and append data record to model
+                let record : TDataRecord = TDataRecord()
+                record.type = .PortLink
+                record.flags = 0x00
+                record.link = TPortLink(id: UInt8(_lid),
+                            name: "Link: Port \(_src) <=> Port \(_tgt)", //
+                            source: TPortItem(id: UInt8(_src), name: "Port \(_src)", flags: 0), //
+                            target: TPortItem(id: UInt8(_tgt), name: "Port \(_tgt)", flags: 0), //
+                            flags: 0x00)
+                model.appendRecord(record, notify: false);
+                if !isModified { isModified = true }
+            }
+            
+            if (isModified) {
+                model.updated()
+            }
+        }
     }
 }

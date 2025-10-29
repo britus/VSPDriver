@@ -57,6 +57,12 @@ public:
     
     kern_return_t createPortLink(uint8_t sourceId, uint8_t targetId, void* link, const uint32_t size) LOCALONLY;
     kern_return_t removePortLink(uint8_t linkId) LOCALONLY;
+    
+    uint64_t traceFlags() LOCALONLY;
+    void setTraceFlags(uint64_t flags) LOCALONLY;
+    
+    uint64_t checkFlags() LOCALONLY;
+    void setCheckFlags(uint64_t flags) LOCALONLY;
 };
 
 #endif /* VSPDriver_h */

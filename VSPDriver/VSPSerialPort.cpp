@@ -1120,40 +1120,42 @@ kern_return_t VSPSerialPort::sendToPortLink(const void* buffer, const uint32_t s
     IOReturn ret;
     TVSPLinkItem item = {};
     VSPSerialPort* port = nullptr;
-    uint8_t myid = ivars->m_portLinkId;
+    uint8_t myLinkId = ivars->m_portLinkId;
+    uint8_t myPortId = ivars->m_portId;
 
-    VSPLog(LOG_PREFIX, "sendToPortLink called. using linkId=%d\n", myid);
+    VSPLog(LOG_PREFIX, "sendToPortLink called. using linkId=%d myPortId=%d\n", myLinkId, myPortId);
 
-    ret = ivars->m_parent->getPortLinkById(myid, &item, sizeof(TVSPLinkItem));
+    ret = ivars->m_parent->getPortLinkById(myLinkId, &item, sizeof(TVSPLinkItem));
     if (ret != kIOReturnSuccess) {
         VSPErr(LOG_PREFIX, "sendToPortLink: Parent getPortLinkById failed. code=%x\n", ret);
         return ret;
     }
 
-    VSPLog(LOG_PREFIX, "sendToPortLink: got port link.\n");
+    VSPLog(LOG_PREFIX, "sendToPortLink: Have port link. targetId=%d\n", item.target.id);
 
-    if (item.source.id != ivars->m_portId) {
+    if (item.source.id != myPortId) {
         port = item.source.port;
     }
-    else if (item.target.id != ivars->m_portId) {
+    else if (item.target.id != myPortId) {
         port = item.target.port;
     }
     else {
         VSPErr(LOG_PREFIX, "sendToPortLink: Double port IDs detectd! myLinkId=%d myPortId=%d\n",
-               myid, ivars->m_portId);
+               myLinkId, myPortId);
         return kIOReturnInvalid;
     }
     if (!port) {
         VSPErr(LOG_PREFIX, "sendToPortLink: Linked port NULL pointer! myLinkId=%d myPortId=%d\n",
-               myid, ivars->m_portId);
+               myLinkId, ivars->m_portId);
         return kIOReturnInvalid;
     }
    
-    VSPLog(LOG_PREFIX, "sendToPortLink: got portId=%d -> enqueue on target\n",
+    VSPLog(LOG_PREFIX, "sendToPortLink: Enqueue on targetId=%d\n",
            port->getPortIdentifier());
 
     if (!port->isConnected()) {
-        VSPLog(LOG_PREFIX, "sendToPortLink: port is disconnected, skip\n");
+        VSPLog(LOG_PREFIX, "sendToPortLink: Port %d seems to be disconnected, skip\n",
+               port->getPortIdentifier());
         return kIOReturnNotOpen;
     }
     
@@ -1177,7 +1179,7 @@ kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, cons
     uint8_t* mdbuffer;
     
     if (!ivars->m_spi || !ivars->m_rxqbmd || !ivars->m_txqbmd || !ivars->m_hwActivated) {
-        VSPErr(LOG_PREFIX, "sendResponse: Device is closed.\n");
+        VSPErr(LOG_PREFIX, "sendResponse: This device is closed.\n");
         return kIOReturnNotOpen;
     }
 

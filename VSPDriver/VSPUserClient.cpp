@@ -669,7 +669,10 @@ inline static IOReturn toRequest(IOUserClientMethodArguments* arguments, TVSPCon
 // --------------------------------------------------------------------
 // Prepare default response object based on request object
 //
-inline static IOReturn toResponse(const TVSPControllerData* request, TVSPControllerData* response)
+inline static IOReturn toResponse( //
+            struct VSPUserClient_IVars* ivars,  //
+            const TVSPControllerData* request,  //
+                TVSPControllerData* response)
 {
     if (!request) {
         return kIOReturnBadArgument;
@@ -677,10 +680,16 @@ inline static IOReturn toResponse(const TVSPControllerData* request, TVSPControl
     if (!response) {
         return kIOReturnBadArgument;
     }
+    
     response->context = vspContextResult;
     response->command = request->command;
     response->status.code = kIOReturnSuccess;
     response->status.flags= MAGIC_CONTROL;
+    
+    /* global flags */
+    response->traceFlags = ivars->m_parent->traceFlags();
+    response->checkFlags = ivars->m_parent->checkFlags();
+
     return kIOReturnSuccess;
 }
 
@@ -710,7 +719,7 @@ kern_return_t VSPUserClient::restoreSession(void* reference, IOUserClientMethodA
         set_ctlr_status(&response, ret, 0xee00ee00);
         goto finish;
     }
-    if ((ret = toResponse(&request, &response)) != kIOReturnSuccess) {
+    if ((ret = toResponse(ivars, &request, &response)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xee00ee01);
         goto finish;
     }
@@ -764,7 +773,7 @@ kern_return_t VSPUserClient::getStatus(void* reference, IOUserClientMethodArgume
         set_ctlr_status(&response, ret, 0xee00ee00);
         goto finish;
     }
-    if ((ret = toResponse(&request, &response)) != kIOReturnSuccess) {
+    if ((ret = toResponse(ivars, &request, &response)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xee00ee01);
         goto finish;
     }
@@ -808,13 +817,14 @@ kern_return_t VSPUserClient::createPort(void* reference, IOUserClientMethodArgum
         set_ctlr_status(&response, ret, 0xee00ee00);
         goto finish;
     }
-    if ((ret = toResponse(&request, &response)) != kIOReturnSuccess) {
+    if ((ret = toResponse(ivars, &request, &response)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xee00ee01);
         goto finish;
     }
 
     // extract magic from parameter flags
     if (request.ports.count == sizeof(TVSPPortParameters)) {
+        VSPLog(LOG_PREFIX, "createPort with parameters.\n");
         if (request.parameter.flags & 0xff01) {
             memcpy(&params, request.ports.list, sizeof(TVSPPortParameters));
         }
@@ -849,7 +859,7 @@ kern_return_t VSPUserClient::removePort(void* reference, IOUserClientMethodArgum
         set_ctlr_status(&response, ret, 0xee00ee00);
         goto finish;
     }
-    if ((ret = toResponse(&request, &response)) != kIOReturnSuccess) {
+    if ((ret = toResponse(ivars, &request, &response)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xee00ee01);
         goto finish;
     }
@@ -883,7 +893,7 @@ kern_return_t VSPUserClient::getPortList(void* reference, IOUserClientMethodArgu
         set_ctlr_status(&response, ret, 0xee00ee00);
         goto finish;
     }
-    if ((ret = toResponse(&request, &response)) != kIOReturnSuccess) {
+    if ((ret = toResponse(ivars, &request, &response)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xee00ee01);
         goto finish;
     }
@@ -938,7 +948,7 @@ kern_return_t VSPUserClient::getLinkList(void* reference, IOUserClientMethodArgu
         set_ctlr_status(&response, ret, 0xee00ee00);
         goto finish;
     }
-    if ((ret = toResponse(&request, &response)) != kIOReturnSuccess) {
+    if ((ret = toResponse(ivars, &request, &response)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xee00ee01);
         goto finish;
     }
@@ -995,7 +1005,7 @@ kern_return_t VSPUserClient::linkPorts(void* reference, IOUserClientMethodArgume
         set_ctlr_status(&response, ret, 0xee00ee00);
         goto finish;
     }
-    if ((ret = toResponse(&request, &response)) != kIOReturnSuccess) {
+    if ((ret = toResponse(ivars, &request, &response)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xee00ee01);
         goto finish;
     }
@@ -1042,7 +1052,7 @@ kern_return_t VSPUserClient::unlinkPorts(void* reference, IOUserClientMethodArgu
         set_ctlr_status(&response, ret, 0xee00ee00);
         goto finish;
     }
-    if ((ret = toResponse(&request, &response)) != kIOReturnSuccess) {
+    if ((ret = toResponse(ivars, &request, &response)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xee00ee01);
         goto finish;
     }
@@ -1086,7 +1096,6 @@ kern_return_t VSPUserClient::enableChecks(void* reference, IOUserClientMethodArg
     TVSPControllerData request = {};
     TVSPPortItem item = {};
     uint8_t portId;
-    uint64_t flags;
 
     VSPLog(LOG_PREFIX, "enableChecks called.\n");
 
@@ -1094,28 +1103,29 @@ kern_return_t VSPUserClient::enableChecks(void* reference, IOUserClientMethodArg
         set_ctlr_status(&response, ret, 0xee00ee00);
         goto error;
     }
-    if ((ret = toResponse(&request, &response)) != kIOReturnSuccess) {
+    if ((ret = toResponse(ivars, &request, &response)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xee00ee01);
         goto error;
     }
 
     portId = request.parameter.link.source;
-    flags = request.parameter.flags;
-    flags &= ~portId;
-    
-    ret = ivars->m_parent->getPortById(portId, &item, sizeof(TVSPPortItem));
-    if (ret != kIOReturnSuccess || !item.port) {
-        set_ctlr_status(&response, ret, 0xaa000001);
-        goto error;
+    if (portId) {
+        ret = ivars->m_parent->getPortById(portId, &item, sizeof(TVSPPortItem));
+        if (ret != kIOReturnSuccess || !item.port) {
+            set_ctlr_status(&response, ret, 0xaa000001);
+            goto error;
+        }
+        
+        VSPLog(LOG_PREFIX, "setChecks port: %d\n", //
+               item.port->getPortIdentifier());
+        
+        item.port->setParameterChecks(request.checkFlags);
+    }
+    else {
+        ivars->m_parent->setCheckFlags(request.checkFlags);
     }
     
-    VSPLog(LOG_PREFIX, "enableChecks flags: 0x%llx port: %d\n", //
-           flags, item.port->getPortIdentifier());
- 
-    item.port->setParameterChecks(flags);
-    
-    // return updated port
-    return getPortList(reference, arguments);
+    return enableTrace(reference, arguments);
 
 error:
     return scheduleEvent(&response, arguments);
@@ -1132,7 +1142,6 @@ kern_return_t VSPUserClient::enableTrace(void* reference, IOUserClientMethodArgu
     TVSPControllerData request = {};
     TVSPPortItem item = {};
     uint8_t portId;
-    uint64_t flags;
     
     VSPLog(LOG_PREFIX, "enableTrace called.\n");
 
@@ -1140,26 +1149,28 @@ kern_return_t VSPUserClient::enableTrace(void* reference, IOUserClientMethodArgu
         set_ctlr_status(&response, ret, 0xee00ee00);
         goto error;
     }
-    if ((ret = toResponse(&request, &response)) != kIOReturnSuccess) {
+    if ((ret = toResponse(ivars, &request, &response)) != kIOReturnSuccess) {
         set_ctlr_status(&response, ret, 0xee00ee01);
         goto error;
     }
 
     portId = request.parameter.link.source;
-    flags = request.parameter.flags;
-    flags &= ~portId;
-
-    ret = ivars->m_parent->getPortById(portId, &item, sizeof(TVSPPortItem));
-    if (ret != kIOReturnSuccess || !item.port) {
-        set_ctlr_status(&response, ret, 0xaa000001);
-        goto error;
+    if (portId) {
+        ret = ivars->m_parent->getPortById(portId, &item, sizeof(TVSPPortItem));
+        if (ret != kIOReturnSuccess || !item.port) {
+            set_ctlr_status(&response, ret, 0xaa000001);
+            goto error;
+        }
+        
+        VSPLog(LOG_PREFIX, "setTrace port: %d\n", //
+               item.port->getPortIdentifier());
+        
+        // Keep the flags in the structure
+        item.port->setTraceFlags(request.traceFlags);
     }
-
-    VSPLog(LOG_PREFIX, "enableTrace flags: 0x%llx port: %d\n", //
-           flags, item.port->getPortIdentifier());
-
-    // Keep the flags in the structure
-    item.port->setTraceFlags(flags);
+    else {
+        ivars->m_parent->setTraceFlags(request.traceFlags);
+    }
 
     // return updated port
     return getPortList(reference, arguments);

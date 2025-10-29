@@ -1,3 +1,9 @@
+// ********************************************************************
+// VSPClient driver management API
+// Copyright © 2025 by EoF Software Labs
+// Copyright © 2024 Apple Inc. (some copied parts)
+// SPDX-License-Identifier: GPLv3
+// ********************************************************************
 import Foundation
 import SystemExtensions
 import AppKit
@@ -63,7 +69,11 @@ public struct TVSPSystemError {
 
 protocol DriverManagerObserver: AnyObject {
     func driverStatusDidChange(_ status: DriverStatus, code: UInt64, domain: String, message: String)
-    func dataReady(_ data: TVSPControllerData?)
+    func logMessageDidAvailable(_ message: String?)
+}
+
+protocol DriverDataObserver: AnyObject {
+    func dataDidAvailable(_ data: TVSPControllerData?)
 }
 
 final class DriverManager: NSObject, ObservableObject {
@@ -85,7 +95,9 @@ final class DriverManager: NSObject, ObservableObject {
  
     // MARK: - Construction
     
-    private override init() {}
+    private override init() {
+        super.init()
+    }
 
     // MARK: - Observer registration
 
@@ -93,7 +105,15 @@ final class DriverManager: NSObject, ObservableObject {
         observers.add(observer)
     }
 
+    public func addObserver(_ observer: DriverDataObserver) {
+        observers.add(observer)
+    }
+
     public func removeObserver(_ observer: DriverManagerObserver) {
+        observers.remove(observer)
+    }
+
+    public func removeObserver(_ observer: DriverDataObserver) {
         observers.remove(observer)
     }
 
@@ -154,11 +174,17 @@ final class DriverManager: NSObject, ObservableObject {
     
     public func dataReady(_ data: TVSPControllerData?) {
         for observer in observers.allObjects {
-            (observer as? DriverManagerObserver)?
-                .dataReady(data)
+            (observer as? DriverDataObserver)?
+                .dataDidAvailable(data)
         }
     }
-    
+
+    public func logMessage(_ message: String?) {
+        for observer in observers.allObjects {
+            (observer as? DriverManagerObserver)?
+                .logMessageDidAvailable(message)
+        }
+    }
 
     private func notify(_ status: DriverStatus, code: UInt64, domain: String, message: String) {
         self.status = status
@@ -191,22 +217,22 @@ extension DriverManager: OSSystemExtensionRequestDelegate {
             case .completed:
                 if isDriverLoad == true {
                     notify(.loaded, code: 0, domain: errorDomain,//
-                           message: "Driver activated successfully.")
+                           message: "Driver activated successfully")
                 }
                 else if isDriverUnload == true {
                     notify(.unloaded, code: 0, domain: errorDomain,//
-                           message: "Driver deactivated successfully.")
+                           message: "Driver deactivated successfully")
                 }
                 else {
                     notify(.willCompleteAfterReboot, code: 0, domain: errorDomain, //
-                           message: "Please reboot your computer to complete setup.")
+                           message: "Please reboot your computer to complete setup")
                 }
             case .willCompleteAfterReboot:
                 notify(.willCompleteAfterReboot, code: 0, domain: errorDomain, //
-                       message: "A reboot is required to finalize this change.")
+                       message: "A reboot is required to finalize this change")
             @unknown default:
                 notify(.failure, code: 0, domain: errorDomain, //
-                       message: "Unknown system state returned.")
+                       message: "Unknown system state returned")
         }
     }
 
@@ -235,6 +261,10 @@ extension DriverManager: OSSystemExtensionRequestDelegate {
     }
 }
 
+// -----------------------------------------------------------------
+// VSP controller callback interface used in VSPController.cpp
+// -----------------------------------------------------------------
+
 @_silgen_name("SwiftDataReady")
 func SwiftDataReady(_ args: TVSPControllerData?, numArgs: Int32) {
 
@@ -244,11 +274,22 @@ func SwiftDataReady(_ args: TVSPControllerData?, numArgs: Int32) {
         return
     }
     guard numArgs != MemoryLayout<TVSPControllerData>.size else {
-        DriverManager.shared.dataError(0xbe000001, "Unexpected data size")
+        DriverManager.shared.dataError(0xbe000002, "Unexpected data size")
         return
     }
     
     DriverManager.shared.dataReady(args)
+}
+
+@_silgen_name("VSPLogMessage")
+func VSPLogMessage(_ message: NSString?) {
+    // Sanity checks
+    guard let message = message else {
+        DriverManager.shared.dataError(0xbe000010, "Unexpected nil pointer in prarameter args")
+        return
+    }
+    
+    DriverManager.shared.logMessage(String(message))
 }
 
 @_silgen_name("VSPDriverConnected")

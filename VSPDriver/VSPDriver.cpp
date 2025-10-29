@@ -3,7 +3,7 @@
 //
 // Copyright © 2025 by EoF Software Labs
 // Copyright © 2024 Apple Inc. (some copied parts)
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: GPLv3
 // ********************************************************************
 
 // -- OS
@@ -60,6 +60,8 @@ struct VSPDriver_IVars {
     uint8_t m_linkCount = 0;                // number of serial port links
     TVSPLinkItem* m_links = nullptr;        // list of serial port links
     IODispatchQueue* m_serviceQueue = nullptr; // default dispatch queue
+    uint64_t m_traceFlags;
+    uint64_t m_checkFlags;
 };
 
 // --------------------------------------------------------------------
@@ -527,9 +529,9 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count, vo
         
     VSPLog(LOG_PREFIX, "CreateSerialPort: create %d x VSPSerialPort from Info.plist.\n", count);
     
-    if ((ivars->m_portCount + count) >= MAX_SERIAL_PORTS) {
-        VSPErr(LOG_PREFIX, "CreateSerialPort: Maximum of %d serial ports reached.\n",
-               ivars->m_portCount);
+    if ((ivars->m_portCount + count) > MAX_SERIAL_PORTS) {
+        VSPErr(LOG_PREFIX, "CreateSerialPort: Maximum of %d of %d serial ports reached.\n",
+               MAX_SERIAL_PORTS, ivars->m_portCount + count);
         return kIOReturnNoSpace;
     }
     
@@ -559,8 +561,8 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count, vo
         }
 
         // Set 'this' instance as parent and update port item
-        ivars->m_ports[i].port->setParameterChecks(flags & CHECK_MASK);
-        ivars->m_ports[i].port->setTraceFlags(flags & TRACE_MASK);
+        ivars->m_ports[i].port->setParameterChecks(ivars->m_checkFlags & CHECK_MASK);
+        ivars->m_ports[i].port->setTraceFlags(ivars->m_traceFlags & TRACE_MASK);
         ivars->m_ports[i].port->setPortItem(this, &ivars->m_ports[i]);
         
         // Setup user defined serial port parameters
@@ -819,4 +821,24 @@ kern_return_t VSPDriver::removePortLink(uint8_t linkId)
     }
     
     return kIOReturnNotFound;
+}
+
+uint64_t VSPDriver::traceFlags()
+{
+    return ivars->m_traceFlags;
+}
+
+void VSPDriver::setTraceFlags(uint64_t flags)
+{
+    ivars->m_traceFlags = flags;
+}
+
+uint64_t VSPDriver::checkFlags()
+{
+    return ivars->m_checkFlags;
+}
+
+void VSPDriver::setCheckFlags(uint64_t flags)
+{
+    ivars->m_checkFlags = flags;
 }

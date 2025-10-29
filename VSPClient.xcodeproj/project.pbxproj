@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F790D9A02EB0C5140047CEF1 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F790D99F2EB0C5140047CEF1 /* IOKit.framework */; };
 		F7D95F832EAE39BE0093F42B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7D95F822EAE39BE0093F42B /* Assets.xcassets */; };
 		F7D95FEC2EAE58130093F42B /* DriverKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D95FEB2EAE58130093F42B /* DriverKit.framework */; };
 		F7D95FF52EAE58130093F42B /* org.eof.tools.VSPDriver.dext in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = F7D95FE92EAE58130093F42B /* org.eof.tools.VSPDriver.dext */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -38,6 +39,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F790D99F2EB0C5140047CEF1 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		F79415742EAD5F7A004FEA96 /* VSPClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VSPClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7D95F822EAE39BE0093F42B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F7D95FE92EAE58130093F42B /* org.eof.tools.VSPDriver.dext */ = {isa = PBXFileReference; explicitFileType = "wrapper.driver-extension"; includeInIndex = 0; path = org.eof.tools.VSPDriver.dext; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,6 +58,16 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		F790D9982EB0C00A0047CEF1 /* VSPSerialPort */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = VSPSerialPort;
+			sourceTree = "<group>";
+		};
+		F7A010FB2EB0575A00BD3E48 /* VSPController */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = VSPController;
+			sourceTree = "<group>";
+		};
 		F7D95FB32EAE415F0093F42B /* VSPClient */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = VSPClient;
@@ -76,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F790D9A02EB0C5140047CEF1 /* IOKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +108,8 @@
 			isa = PBXGroup;
 			children = (
 				F7D95F822EAE39BE0093F42B /* Assets.xcassets */,
+				F7A010FB2EB0575A00BD3E48 /* VSPController */,
+				F790D9982EB0C00A0047CEF1 /* VSPSerialPort */,
 				F7D95FB32EAE415F0093F42B /* VSPClient */,
 				F7D95FED2EAE58130093F42B /* VSPDriver */,
 				F7D95FEA2EAE58130093F42B /* Frameworks */,
@@ -114,6 +129,7 @@
 		F7D95FEA2EAE58130093F42B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F790D99F2EB0C5140047CEF1 /* IOKit.framework */,
 				F7E35F7C2EAE597E007DDE0B /* SerialDriverKit.framework */,
 				F7D95FEB2EAE58130093F42B /* DriverKit.framework */,
 			);
@@ -148,6 +164,8 @@
 				F7D95FF42EAE58130093F42B /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				F790D9982EB0C00A0047CEF1 /* VSPSerialPort */,
+				F7A010FB2EB0575A00BD3E48 /* VSPController */,
 				F7D95FB32EAE415F0093F42B /* VSPClient */,
 			);
 			name = VSPClient;
@@ -393,7 +411,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 62;
+				CURRENT_PROJECT_VERSION = 70;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -445,7 +463,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 62;
+				CURRENT_PROJECT_VERSION = 70;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -490,7 +508,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 62;
+				CURRENT_PROJECT_VERSION = 70;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				DRIVERKIT_DEPLOYMENT_TARGET = 23.6;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -517,7 +535,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 62;
+				CURRENT_PROJECT_VERSION = 70;
 				DEVELOPMENT_TEAM = 83NQU389JN;
 				DRIVERKIT_DEPLOYMENT_TARGET = 23.6;
 				FRAMEWORK_SEARCH_PATHS = (

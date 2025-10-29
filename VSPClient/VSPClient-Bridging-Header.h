@@ -3,6 +3,8 @@
 // headers that you would like to expose to Swift.
 //
 #import <Foundation/Foundation.h>
+#import "SerialPortParameters.h"
+#import "SerialPort.h"
 #import "VSPControllerData.h"
 #import "VSPConverter.h"
 
@@ -29,7 +31,8 @@ bool IsDriverConnected(void);
 /**
  *
  */
-bool CreatePort(uint8_t baudRate, uint8_t dataBits, uint8_t stopBits, uint8_t parity, uint8_t flowCtrl);
+bool CreatePort(uint8_t baudRate, uint8_t dataBits, uint8_t stopBits,
+                uint8_t parity, uint8_t flowCtrl);
 
 /**
  *
@@ -59,9 +62,4 @@ bool UnlinkPorts(uint8_t source, uint8_t target);
 /**
  *
  */
-bool EnableChecks(uint8_t port, uint64_t flags);
-
-/**
- *
- */
-bool EnableTrace(uint8_t port, uint64_t flags);
+bool EnableChecksAndTrace(uint8_t port, uint64_t checkFlags, uint64_t traceFlags);

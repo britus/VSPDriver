@@ -7,192 +7,192 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F8268A35-EFFE-4D53-A74C-20E21D7D21AE"
-            shouldBeEnabled = "Yes"
+            uuid = "DA1B15F2-3697-4514-9862-0F95126931FE"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VCPClient/WindowController.swift"
+            filePath = "VSPSerialPort/SerialPort.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "windowDidLoad()"
+            startingLineNumber = "322"
+            endingLineNumber = "322"
+            landmarkName = "-connect"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "FE321D77-18FF-4EC2-89C8-F44AE47A31E2"
-            shouldBeEnabled = "Yes"
+            uuid = "5BDF695D-DD10-48CB-A361-29F01BFD4771"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VCPClient/WindowController.swift"
+            filePath = "VSPSerialPort/SerialPort.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
-            landmarkName = "windowDidLoad()"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
+            landmarkName = "-configureSerialPort"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D903FA8B-84FA-4907-8A2E-673C56653776"
-            shouldBeEnabled = "Yes"
+            uuid = "BE8CA0E5-899D-47CB-8231-3C938BDD5ED8"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VCPClient/UITools.swift"
+            filePath = "VSPClient/ComboBox.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "41"
             endingLineNumber = "41"
-            landmarkName = "requestNotificationPermission(completion:)"
+            landmarkName = "init(frame:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C88B3629-BEB4-42E0-94C8-0735A278E1C9"
-            shouldBeEnabled = "Yes"
+            uuid = "635221FB-34D6-4C71-8C5B-89AB17679D90"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VCPClient/UITools.swift"
+            filePath = "VSPClient/ComboBox.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
-            landmarkName = "requestNotificationPermission(completion:)"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
+            landmarkName = "init?(coder:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "08176C92-D7BA-409F-AC08-FFAB10D04EAF"
+            uuid = "2A510297-9FE0-406D-9569-C9103054A70B"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VSPClient/VSPDriverWrapper.mm"
+            filePath = "VSPClient/ComboBox.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "186"
-            endingLineNumber = "186"
-            landmarkName = "doAsyncCallWrapper2(connection, selector, wake_port, reference, referenceCnt, inputStruct, inputStructCnt, outputStruct, outputStructCnt)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "18E4748B-207E-4AA7-8B75-14EA930E98FB"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VSPClient/VSPDriverWrapper.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
-            landmarkName = "doAsyncCallWrapper2(connection, selector, wake_port, reference, referenceCnt, inputStruct, inputStructCnt, outputStruct, outputStructCnt)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "180CDE9E-CF74-47AC-8E66-05049BA45973"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VSPClient/VSPController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "265"
-            endingLineNumber = "265"
-            landmarkName = "-setup"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
+            landmarkName = "comboBox(_:objectValueForItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C7B914F3-DD21-4793-92F6-7A6C100AB850"
+            uuid = "4B315954-171E-48F4-B7EB-4D6D71FE423A"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VSPClient/VSPController.m"
+            filePath = "VSPClient/ComboBox.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "413"
-            endingLineNumber = "413"
-            landmarkName = "deviceAddedCallback(refcon, iterator)"
-            landmarkType = "9">
+            startingLineNumber = "84"
+            endingLineNumber = "84"
+            landmarkName = "comboBox(_:indexOfItemWithStringValue:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "9D8C45D7-7EFE-4C6E-BE73-9A3ACD305A40"
+            uuid = "9C79F21C-E3E5-4DF7-9694-E3199D8D92A8"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VSPClient/VSPController.m"
+            filePath = "VSPClient/ComboBox.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "434"
-            endingLineNumber = "434"
-            landmarkName = "asyncCallback(refcon, msg, size)"
-            landmarkType = "9">
+            startingLineNumber = "97"
+            endingLineNumber = "97"
+            landmarkName = "addItem(withObjectValue:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "163FD8D0-253C-48B4-9B85-3774C22C9A77"
-            shouldBeEnabled = "Yes"
+            uuid = "03DD2F4E-9DD5-48F2-BA8C-4F49B5369883"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VSPClient/VSPController.m"
+            filePath = "VSPSerialPort/SerialPort.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "401"
-            endingLineNumber = "401"
-            landmarkName = "deviceRemovedCallback(refcon, iterator)"
-            landmarkType = "9">
+            startingLineNumber = "345"
+            endingLineNumber = "345"
+            landmarkName = "-connect"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "5C981C2A-A443-455E-9F3A-300C22D2AC7A"
+            uuid = "F3DDF891-082E-44F9-B5F0-BB7D2159A88F"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VSPClient/VSPController.m"
+            filePath = "VSPClient/ComboBox.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
-            landmarkName = "doAsyncCall(connection, machPort, data, controllerRef)"
-            landmarkType = "9">
+            startingLineNumber = "124"
+            endingLineNumber = "124"
+            landmarkName = "itemObjectValue(at:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A480B45C-C291-43CC-A450-E8BA2F141B7B"
+            uuid = "E6784D47-38B2-49B3-AD44-9B767805DD3C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VSPClient/VSPController.m"
+            filePath = "VSPClient/ComboBox.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "314"
-            endingLineNumber = "314"
-            landmarkName = "-getStatus"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
+            landmarkName = "objectValueOfSelectedItem"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "03A1FF70-135D-48D7-BB2A-61D88A0D53C6"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VSPClient/ComboBox.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
+            landmarkName = "dataObject(forRow:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "61B53DF1-BB09-4C3B-BBB2-CCA652DB067D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VSPClient/ComboBox.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "selectItem(withObjectValue:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
