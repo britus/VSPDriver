@@ -5,24 +5,23 @@
 #include <QSize>
 #include <QString>
 
-VSPDataModel::VSPDataModel(QObject* parent)
+VSPDataModel::VSPDataModel(QObject *parent)
     : QAbstractTableModel(parent)
-{
-}
+{}
 
-QModelIndex VSPDataModel::parent(const QModelIndex& index) const
+QModelIndex VSPDataModel::parent(const QModelIndex &index) const
 {
     Q_UNUSED(index);
     return {};
 }
 
-int VSPDataModel::rowCount(const QModelIndex& parent) const
+int VSPDataModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return (int) m_records.size();
 }
 
-int VSPDataModel::columnCount(const QModelIndex& parent) const
+int VSPDataModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     if (dataType() == TDataType::PortItem) {
@@ -66,24 +65,24 @@ QVariant VSPDataModel::headerData(int section, Qt::Orientation orientation, int 
     return QVariant();
 }
 
-bool VSPDataModel::hasChildren(const QModelIndex& parent) const
+bool VSPDataModel::hasChildren(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return false;
 }
 
-bool VSPDataModel::canFetchMore(const QModelIndex& parent) const
+bool VSPDataModel::canFetchMore(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return false;
 }
 
-void VSPDataModel::fetchMore(const QModelIndex& parent)
+void VSPDataModel::fetchMore(const QModelIndex &parent)
 {
     Q_UNUSED(parent);
 }
 
-bool VSPDataModel::removeRows(int row, int count, const QModelIndex& parent)
+bool VSPDataModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
     if (m_records.size() < row + count) {
@@ -97,7 +96,7 @@ bool VSPDataModel::removeRows(int row, int count, const QModelIndex& parent)
     return true;
 }
 
-QVariant VSPDataModel::data(const QModelIndex& index, int role) const
+QVariant VSPDataModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid() || index.row() >= m_records.size()) {
         return QVariant();
@@ -164,7 +163,7 @@ void VSPDataModel::resetModel()
     endResetModel();
 }
 
-void VSPDataModel::append(const TPortItem& port)
+void VSPDataModel::append(const TPortItem &port)
 {
     if (dataType() != TDataType::PortItem)
         return;
@@ -180,7 +179,7 @@ void VSPDataModel::append(const TPortItem& port)
     endResetModel();
 }
 
-void VSPDataModel::append(const TPortLink& link)
+void VSPDataModel::append(const TPortLink &link)
 {
     if (dataType() != TDataType::PortLink)
         return;
@@ -204,7 +203,7 @@ QVariant VSPDataModel::at(int index) const
     return QVariant::fromValue(m_records.at(index));
 }
 
-bool VSPDataModel::loadModel(QSettings* settings)
+bool VSPDataModel::loadModel(QSettings *settings)
 {
     switch (dataType()) {
         case PortItem: {
@@ -219,7 +218,7 @@ bool VSPDataModel::loadModel(QSettings* settings)
     return false;
 }
 
-void VSPDataModel::saveModel(QSettings* settings)
+void VSPDataModel::saveModel(QSettings *settings)
 {
     switch (dataType()) {
         case PortItem: {
@@ -235,7 +234,7 @@ void VSPDataModel::saveModel(QSettings* settings)
 
 // -------------------------------------------
 
-inline static bool __setId(quint8* id, const QString& value)
+inline static bool __setId(quint8 *id, const QString &value)
 {
     bool ok;
     (*id) = value.toUInt(&ok);
@@ -245,7 +244,7 @@ inline static bool __setId(quint8* id, const QString& value)
     return true;
 }
 
-inline static bool __setFlags(quint64* flags, const QString& value)
+inline static bool __setFlags(quint64 *flags, const QString &value)
 {
     bool ok;
     (*flags) = value.toULong(&ok);
@@ -255,7 +254,7 @@ inline static bool __setFlags(quint64* flags, const QString& value)
     return true;
 }
 
-inline static bool __setName(QString* name, const QString& value)
+inline static bool __setName(QString *name, const QString &value)
 {
     (*name) = value;
     if (name->isEmpty()) {
@@ -266,7 +265,7 @@ inline static bool __setName(QString* name, const QString& value)
 
 // -------------------------------------------
 
-bool VSPPortListModel::load(const QString& group, QSettings* settings)
+bool VSPPortListModel::load(const QString &group, QSettings *settings)
 {
     uint count;
     QString value;
@@ -312,15 +311,18 @@ error_exit:
     return false;
 }
 
-void VSPPortListModel::save(const QString& group, QSettings* settings)
+void VSPPortListModel::save(const QString &group, QSettings *settings)
 {
     settings->beginGroup(group);
     settings->setValue("count", m_records.size());
     for (quint8 i = 0; i < m_records.size(); i++) {
         const VSPDataModel::TDataRecord r = m_records.at(i);
         const QString key = QStringLiteral("port_%1").arg(i);
-        const QString value = QStringLiteral("%1|%2|%3") //
-                                  .arg(r.port.id).arg(r.port.name).arg(r.port.flags);
+        const QString value =          //
+            QStringLiteral("%1|%2|%3") //
+                .arg(r.port.id)
+                .arg(r.port.name)
+                .arg(r.port.flags);
         settings->setValue(key, value);
     }
     settings->endGroup();
@@ -328,7 +330,7 @@ void VSPPortListModel::save(const QString& group, QSettings* settings)
 
 // -------------------------------------------
 
-bool VSPLinkListModel::load(const QString& group, QSettings* settings)
+bool VSPLinkListModel::load(const QString &group, QSettings *settings)
 {
     uint count;
     QString value;
@@ -398,7 +400,7 @@ error_exit:
     return false;
 }
 
-void VSPLinkListModel::save(const QString& group, QSettings* settings)
+void VSPLinkListModel::save(const QString &group, QSettings *settings)
 {
     settings->beginGroup(group);
     settings->setValue("count", m_records.size());
@@ -406,13 +408,13 @@ void VSPLinkListModel::save(const QString& group, QSettings* settings)
         const VSPDataModel::TDataRecord r = m_records.at(i);
         const QString key = QStringLiteral("link_%1").arg(i);
         const QString value = QStringLiteral("%1|%2|%3|%4|%5|%6|%7") //
-                                 .arg(r.link.id)
-                                 .arg(r.link.name)
-                                 .arg(r.link.source.id)
-                                 .arg(r.link.source.name)
-                                 .arg(r.link.target.id)
-                                 .arg(r.link.target.name)
-                                 .arg(r.link.flags);
+                                  .arg(r.link.id)
+                                  .arg(r.link.name)
+                                  .arg(r.link.source.id)
+                                  .arg(r.link.source.name)
+                                  .arg(r.link.target.id)
+                                  .arg(r.link.target.name)
+                                  .arg(r.link.flags);
         settings->setValue(key, value);
     }
     settings->endGroup();

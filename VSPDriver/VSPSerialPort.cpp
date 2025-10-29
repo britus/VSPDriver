@@ -120,8 +120,8 @@ struct VSPSerialPort_IVars {
     uint8_t m_portId = 0;                           // port id given by VSPDriver
     uint8_t m_portLinkId = 0;                       // port link id given by VSPDriver
     
-    IOPropertyName m_portSuffix = {};               // the TTY device number
-    IOPropertyName m_portBaseName = {};             // the TTY device name 'vsp'
+    IOPropertyName m_portSuffix = {0};               // the TTY device number
+    IOPropertyName m_portBaseName = {0};             // the TTY device name 'vsp'
     
     IOLock* m_lock = nullptr;                       // for resource locking
     volatile atomic_int m_lockLevel = 0;
@@ -229,20 +229,22 @@ static inline kern_return_t getProperty(VSPSerialPort* self, const char* key, ch
 //
 static inline kern_return_t readTTYProperties(VSPSerialPort* self)
 {
-    IOReturn ret;
+    IOReturn ret = kIOReturnSuccess;
     
     //VSPLog(LOG_PREFIX, "readTTYProperties called.\n");
-    
-    ret = getProperty(self, "IOTTYBaseName", self->ivars->m_portBaseName, sizeof(IOPropertyName)-1);
-    if (ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "readTTYProperties: getProperty(IOTTYBaseName) failed. code=%x", ret);
-        goto finish;
+    if (strlen(self->ivars->m_portBaseName) == 0) {
+        ret = getProperty(self, "IOTTYBaseName", self->ivars->m_portBaseName, sizeof(IOPropertyName)-1);
+        if (ret != kIOReturnSuccess) {
+            VSPErr(LOG_PREFIX, "readTTYProperties: getProperty(IOTTYBaseName) failed. code=%x", ret);
+            goto finish;
+        }
     }
-
-    ret = getProperty(self, "IOTTYSuffix", self->ivars->m_portSuffix, sizeof(IOPropertyName)-1);
-    if (ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "readTTYProperties: getProperty(IOTTYSuffix) failed. code=%x", ret);
-        goto finish;
+    if (strlen(self->ivars->m_portSuffix) == 0) {
+        ret = getProperty(self, "IOTTYSuffix", self->ivars->m_portSuffix, sizeof(IOPropertyName)-1);
+        if (ret != kIOReturnSuccess) {
+            VSPErr(LOG_PREFIX, "readTTYProperties: getProperty(IOTTYSuffix) failed. code=%x", ret);
+            goto finish;
+        }
     }
 
 finish:
@@ -1043,7 +1045,7 @@ void VSPSerialPort::setPortItem(VSPDriver* parent, void* data)
     TVSPPortItem* item = (TVSPPortItem*) data;
     item->id        = ivars->m_portId;
     item->port      = this;
-    item->flags     = 0x00;
+    item->flags     = (ivars->m_paramChecks | ivars->m_traceFlags);
 }
 
 // --------------------------------------------------------------------

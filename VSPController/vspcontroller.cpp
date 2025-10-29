@@ -582,7 +582,7 @@ inline bool VSPControllerPriv::DoAsyncCall(TVSPControllerData *input)
     if (!m_vspResponse) {
         // Instant response of the DEXT user client instance
         // Allocate response IOMemoryDescriptor at driver site
-        // to response data above 128 bytes. This will filled,
+        // to response data above 128 byte limit. This will filled,
         // by DEXT. We must unmap later!
         mach_vm_address_t address = 0;
         mach_vm_size_t size = 0;

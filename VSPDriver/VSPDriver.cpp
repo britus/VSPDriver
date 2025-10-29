@@ -518,8 +518,10 @@ void IMPL(VSPDriver, SPStateEvent)
 // --------------------------------------------------------------------
 // Create given number of VSPSerialPort instances
 //
-kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count, void* params, uint64_t size)
+kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count, void* params, uint64_t flags, uint64_t size)
 {
+    const uint64_t TRACE_MASK = (TRACE_PORT_RX|TRACE_PORT_TX|TRACE_PORT_IO);
+    const uint64_t CHECK_MASK = (CHECK_BAUD|CHECK_PARITY|CHECK_FLOWCTRL|CHECK_DATA_SIZE|CHECK_STOP_BITS);
     kern_return_t ret;
     IOService* service = nullptr;
         
@@ -557,6 +559,8 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count, vo
         }
 
         // Set 'this' instance as parent and update port item
+        ivars->m_ports[i].port->setParameterChecks(flags & CHECK_MASK);
+        ivars->m_ports[i].port->setTraceFlags(flags & TRACE_MASK);
         ivars->m_ports[i].port->setPortItem(this, &ivars->m_ports[i]);
         
         // Setup user defined serial port parameters
@@ -582,9 +586,9 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count, vo
 // --------------------------------------------------------------------
 // Create new VSPSerialPort incstance (called by VSPUserClient)
 //
-kern_return_t VSPDriver::createPort(void* params, uint64_t size)
+kern_return_t VSPDriver::createPort(void* params, uint64_t flags, uint64_t size)
 {
-    return CreateSerialPort(GetProvider(), 1, params, size);
+    return CreateSerialPort(GetProvider(), 1, params, flags, size);
 }
 
 // --------------------------------------------------------------------

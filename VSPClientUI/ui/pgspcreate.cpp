@@ -6,10 +6,10 @@
 // SPDX-License-Identifier: MIT
 // ********************************************************************
 #include "ui_pgspcreate.h"
-#include <QSerialPort>
-#include <QSerialPortInfo>
 #include <pgspcreate.h>
 #include <vspabstractpage.h>
+#include <QSerialPort>
+#include <QSerialPortInfo>
 
 Q_DECLARE_METATYPE(QSerialPortInfo)
 Q_DECLARE_METATYPE(QSerialPort::BaudRate)
@@ -17,7 +17,7 @@ Q_DECLARE_METATYPE(QSerialPort::DataBits)
 Q_DECLARE_METATYPE(QSerialPort::StopBits)
 Q_DECLARE_METATYPE(QSerialPort::Parity)
 
-PGSPCreate::PGSPCreate(QWidget* parent)
+PGSPCreate::PGSPCreate(QWidget *parent)
     : VSPAbstractPage(parent)
     , ui(new Ui::PGSPCreate)
 {
@@ -43,21 +43,21 @@ PGSPCreate::~PGSPCreate()
  * RS232 Parity stuff, used with the DATA_INTEGRITY event
  */
 #define PD_RS232_PARITY_DEFAULT 0 // Valid only for RX, means follow TX
-#define PD_RS232_PARITY_NONE    1 // No Parity bit inserted or expected
-#define PD_RS232_PARITY_ODD     2 // Odd Parity bit inserted or expected
-#define PD_RS232_PARITY_EVEN    3 // Even Parity bit inserted or expected
-#define PD_RS232_PARITY_MARK    4 // Mark inserted or expected
-#define PD_RS232_PARITY_SPACE   5 // Space inserted or expected
-#define PD_RS232_PARITY_ANY     6 // Valid only for RX, means discard parity
+#define PD_RS232_PARITY_NONE 1    // No Parity bit inserted or expected
+#define PD_RS232_PARITY_ODD 2     // Odd Parity bit inserted or expected
+#define PD_RS232_PARITY_EVEN 3    // Even Parity bit inserted or expected
+#define PD_RS232_PARITY_MARK 4    // Mark inserted or expected
+#define PD_RS232_PARITY_SPACE 5   // Space inserted or expected
+#define PD_RS232_PARITY_ANY 6     // Valid only for RX, means discard parity
 
 void PGSPCreate::onActionExecute()
 {
     TVSPPortParameters p = {
-       .baudRate = (uint32_t) this->baudRate(),
-       .dataBits = (uint8_t) this->dataBits(),
-       .stopBits = (uint8_t) this->stopBits(),
-       .parity = PD_RS232_PARITY_NONE,
-       .flowCtrl = (uint8_t) this->flowCtrl(),
+        .baudRate = (uint32_t) this->baudRate(),
+        .dataBits = (uint8_t) this->dataBits(),
+        .stopBits = (uint8_t) this->stopBits(),
+        .parity = PD_RS232_PARITY_NONE,
+        .flowCtrl = (uint8_t) this->flowCtrl(),
     };
 
     // translate QT -> SerialDriverKit
@@ -110,7 +110,7 @@ void PGSPCreate::onActionExecute()
     emit execute(vspControlCreatePort, QVariant::fromValue(p));
 }
 
-void PGSPCreate::update(TVSPControlCommand command, VSPPortListModel* portModel, VSPLinkListModel* linkModel)
+void PGSPCreate::update(TVSPControlCommand command, VSPPortListModel *portModel, VSPLinkListModel *linkModel)
 {
     Q_UNUSED(command);
     Q_UNUSED(portModel);
@@ -162,7 +162,7 @@ QSerialPort::FlowControl PGSPCreate::flowCtrl() const
     return v.value<QSerialPort::FlowControl>();
 }
 
-inline void PGSPCreate::initComboSerialPort(QComboBox* cbx, QComboBox* link)
+inline void PGSPCreate::initComboSerialPort(QComboBox *cbx, QComboBox *link)
 {
     const QIcon icon1(":/vspclient_1");
     const QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
@@ -186,24 +186,25 @@ inline void PGSPCreate::initComboSerialPort(QComboBox* cbx, QComboBox* link)
     }
 }
 
-inline void PGSPCreate::initComboBaudRate(QComboBox* cbx, QComboBox* link)
+inline void PGSPCreate::initComboBaudRate(QComboBox *cbx, QComboBox *link)
 {
     const QIcon icon1(":/vspclient_1");
 
-    typedef struct {
+    typedef struct
+    {
         QString name;
         QSerialPort::BaudRate baud;
     } TBaudRates;
 
     TBaudRates baudRates[8] = {
-       {tr("1200"), QSerialPort::Baud1200},
-       {tr("2400"), QSerialPort::Baud2400},
-       {tr("4800"), QSerialPort::Baud4800},
-       {tr("9600"), QSerialPort::Baud9600},
-       {tr("19200"), QSerialPort::Baud19200},
-       {tr("38400"), QSerialPort::Baud38400},
-       {tr("57600"), QSerialPort::Baud57600},
-       {tr("115200"), QSerialPort::Baud115200},
+        {tr("1200"), QSerialPort::Baud1200},
+        {tr("2400"), QSerialPort::Baud2400},
+        {tr("4800"), QSerialPort::Baud4800},
+        {tr("9600"), QSerialPort::Baud9600},
+        {tr("19200"), QSerialPort::Baud19200},
+        {tr("38400"), QSerialPort::Baud38400},
+        {tr("57600"), QSerialPort::Baud57600},
+        {tr("115200"), QSerialPort::Baud115200},
     };
 
     const int selection = (!link ? 0 : link->currentIndex());
@@ -224,20 +225,21 @@ inline void PGSPCreate::initComboBaudRate(QComboBox* cbx, QComboBox* link)
     }
 }
 
-inline void PGSPCreate::initComboDataBits(QComboBox* cbx, QComboBox* link)
+inline void PGSPCreate::initComboDataBits(QComboBox *cbx, QComboBox *link)
 {
     const QIcon icon1(":/vspclient_1");
 
-    typedef struct {
+    typedef struct
+    {
         QString name;
         QSerialPort::DataBits bits;
     } TDataBits;
 
     TDataBits dataBits[4] = {
-       {tr("5 Bits"), QSerialPort::Data5},
-       {tr("6 Bits"), QSerialPort::Data6},
-       {tr("7 Bits"), QSerialPort::Data7},
-       {tr("8 Bits"), QSerialPort::Data8},
+        {tr("5 Bits"), QSerialPort::Data5},
+        {tr("6 Bits"), QSerialPort::Data6},
+        {tr("7 Bits"), QSerialPort::Data7},
+        {tr("8 Bits"), QSerialPort::Data8},
     };
 
     const int selection = (!link ? 0 : link->currentIndex());
@@ -258,19 +260,20 @@ inline void PGSPCreate::initComboDataBits(QComboBox* cbx, QComboBox* link)
     }
 }
 
-inline void PGSPCreate::initComboStopBits(QComboBox* cbx, QComboBox* link)
+inline void PGSPCreate::initComboStopBits(QComboBox *cbx, QComboBox *link)
 {
     const QIcon icon1(":/vspclient_1");
 
-    typedef struct {
+    typedef struct
+    {
         QString name;
         QSerialPort::StopBits bits;
     } TStopBits;
 
     TStopBits stopBits[3] = {
-       {tr("One Stop"), QSerialPort::OneStop},
-       {tr("One and Half"), QSerialPort::OneAndHalfStop},
-       {tr("Two Stop"), QSerialPort::TwoStop},
+        {tr("One Stop"), QSerialPort::OneStop},
+        {tr("One and Half"), QSerialPort::OneAndHalfStop},
+        {tr("Two Stop"), QSerialPort::TwoStop},
     };
 
     const int selection = (!link ? 0 : link->currentIndex());
@@ -291,21 +294,22 @@ inline void PGSPCreate::initComboStopBits(QComboBox* cbx, QComboBox* link)
     }
 }
 
-inline void PGSPCreate::initComboParity(QComboBox* cbx, QComboBox* link)
+inline void PGSPCreate::initComboParity(QComboBox *cbx, QComboBox *link)
 {
     const QIcon icon1(":/vspclient_1");
 
-    typedef struct {
+    typedef struct
+    {
         QString name;
         QSerialPort::Parity parity;
     } TParity;
 
     TParity parity[5] = {
-       {tr("No Parity"), QSerialPort::NoParity},
-       {tr("Event Parity"), QSerialPort::EvenParity},
-       {tr("Odd Parity"), QSerialPort::OddParity},
-       {tr("Space Parity"), QSerialPort::SpaceParity},
-       {tr("Mark Parity"), QSerialPort::MarkParity},
+        {tr("No Parity"), QSerialPort::NoParity},
+        {tr("Event Parity"), QSerialPort::EvenParity},
+        {tr("Odd Parity"), QSerialPort::OddParity},
+        {tr("Space Parity"), QSerialPort::SpaceParity},
+        {tr("Mark Parity"), QSerialPort::MarkParity},
     };
 
     const int selection = (!link ? 0 : link->currentIndex());
@@ -331,19 +335,20 @@ inline void PGSPCreate::initComboParity(QComboBox* cbx, QComboBox* link)
     }
 }
 
-inline void PGSPCreate::initComboFlowCtrl(QComboBox* cbx, QComboBox* link)
+inline void PGSPCreate::initComboFlowCtrl(QComboBox *cbx, QComboBox *link)
 {
     const QIcon icon1(":/vspclient_1");
 
-    typedef struct {
+    typedef struct
+    {
         QString name;
         QSerialPort::FlowControl flow;
     } TFlowControl;
 
     TFlowControl flowctrl[3] = {
-       {tr("No Flow Control"), QSerialPort::NoFlowControl},
-       {tr("Hardware Control"), QSerialPort::HardwareControl},
-       {tr("Software Control"), QSerialPort::SoftwareControl},
+        {tr("No Flow Control"), QSerialPort::NoFlowControl},
+        {tr("Hardware Control"), QSerialPort::HardwareControl},
+        {tr("xon/xoff Control"), QSerialPort::SoftwareControl},
     };
 
     const int selection = (!link ? 0 : link->currentIndex());

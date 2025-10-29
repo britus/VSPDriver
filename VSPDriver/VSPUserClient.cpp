@@ -678,7 +678,8 @@ kern_return_t VSPUserClient::restoreSession(void* reference, IOUserClientMethodA
     TVSPLinkItem link = {};
     kern_return_t ret;
     uint8_t sid, tid, lid, pfh, pfl;
-
+    uint64_t flg; /*, mk1, mk2;*/
+    
     VSPLog(LOG_PREFIX, "restoreSession called.\n");
 
     if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
@@ -699,8 +700,9 @@ kern_return_t VSPUserClient::restoreSession(void* reference, IOUserClientMethodA
     if (request.ports.count) {
         for (uint8_t i = 0; i < request.ports.count && i < MAX_SERIAL_PORTS; i++) {
             sid = request.ports.list[i].id;
+            flg = request.ports.list[i].flags;
             if (ivars->m_parent->getPortById(sid, &port, psize) == kIOReturnNotFound) {
-                ivars->m_parent->createPort(nullptr, 0);
+                ivars->m_parent->createPort(nullptr, flg, 0);
             }
         }
     }
@@ -794,7 +796,7 @@ kern_return_t VSPUserClient::createPort(void* reference, IOUserClientMethodArgum
         }
     }
     
-    if ((ret = ivars->m_parent->createPort(&params, sizeof(TVSPPortParameters))) != kIOReturnSuccess) {
+    if ((ret = ivars->m_parent->createPort(&params, 0, sizeof(TVSPPortParameters))) != kIOReturnSuccess) {
         VSPErr(LOG_PREFIX, "createPort: Parent createPort failed. code=%x\n", ret);
         set_ctlr_status(&response, ret, 0xfa000001);
     }
