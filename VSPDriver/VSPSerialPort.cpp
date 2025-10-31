@@ -1356,9 +1356,10 @@ static inline void dbg_dump_output(const uint8_t* outptr, uint64_t size)
 kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, const uint64_t sizeIn)
 {
     if (traceFlags() & TRACE_PORT_RX) {
-        VSPLog(LOG_PREFIX, "sendResponse: called.\n");
+        VSPLog(LOG_PREFIX, "sendResponse: called with sizeIn=%llu\n", sizeIn);
     }
 
+    // --- Validation checks ---
     if (!ivars->m_spi || !ivars->m_rxqbmd || !ivars->m_txqbmd || !ivars->m_hwActivated) {
         VSPErr(LOG_PREFIX, "sendResponse: This device is closed.\n");
         return kIOReturnNotOpen;
@@ -1370,195 +1371,171 @@ kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, cons
     }
 
     if (!buffer || !sizeIn) {
-        VSPErr(LOG_PREFIX, "sendResponse: buffer NULL or size zero (EoF), skip.\n");
+        VSPErr(LOG_PREFIX, "sendResponse: buffer NULL or size zero.\n");
         return kIOReturnSuccess;
     }
 
     VSPAquireLock(ivars);
-    setDataSetReady(false);
-    setClearToSend(false);
     
-    if (traceFlags() & TRACE_PORT_RX) {
-        VSPLog(LOG_PREFIX, "sendResponse: start rxPI=%u rxCI=%u sizeIn=%llu\n",
-               ivars->m_spi->rxPI, ivars->m_spi->rxCI, sizeIn);
-    }
-
     IOReturn ret = kIOReturnSuccess;
-    uint64_t size = sizeIn;
     const uint8_t* src = reinterpret_cast<const uint8_t*>(buffer);
-    uint64_t capacity64 = 0;
-    uint64_t rxPI64;
-    uint64_t rxCI64;
-    uint64_t freeSpace;
-    uint64_t actualSize;
+    bool oldBufferAlmostFull;
+    uint64_t bytesToWrite = sizeIn;
+    uint64_t bytesWritten = 0;
     uint64_t usedSpace;
-    bool wasBufferAlmostFull;
-    bool nowHasSpace = false;
-    uint8_t* outptr = NULL;
+    uint64_t freeSpace;
+    uint64_t capacity;
+    uint64_t rxPI;
+    uint64_t rxCI;
+    
 
-    // --- RX buffer base pointer ---
+    // --- Get RX buffer info ---
     uint8_t* base = nullptr;
     if (ivars->m_rxqbmd) {
         ret = ivars->m_rxqbmd->GetAddressRange(&ivars->m_rxseg);
         base = reinterpret_cast<uint8_t*>(ivars->m_rxseg.address);
     }
+    
     if (!base || ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "sendResponse: cannot get RX buffer base pointer (GetBytesNoCopy failed).\n");
+        VSPErr(LOG_PREFIX, "sendResponse: cannot get RX buffer base pointer.\n");
         ret = kIOReturnVMError;
         goto done;
     }
 
-    capacity64 = ivars->m_rxseg.length;
-    rxPI64 = ivars->m_spi->rxPI;
-    rxCI64 = ivars->m_spi->rxCI;
+    capacity = ivars->m_rxseg.length;
+    rxPI = ivars->m_spi->rxPI;
+    rxCI = ivars->m_spi->rxCI;
 
-    if (capacity64 == 0) {
+    if (capacity == 0) {
         VSPErr(LOG_PREFIX, "sendResponse: rx buffer capacity is zero.\n");
         ret = kIOReturnNoSpace;
         goto done;
     }
 
-    if (size > capacity64) {
-        VSPErr(LOG_PREFIX, "sendResponse: size (%llu) > buffer capacity (%llu) -> truncating.\n",
-               (unsigned long long)size, (unsigned long long)capacity64);
-        size = capacity64;
-    }
-
-    if (rxPI64 >= capacity64 || rxCI64 >= capacity64) {
-        VSPErr(LOG_PREFIX, "sendResponse: !! index corruption detected (rxPI=%llu, rxCI=%llu, cap=%llu) -> resetting.\n",
-               (unsigned long long)rxPI64, (unsigned long long)rxCI64, (unsigned long long)capacity64);
-        rxPI64 = rxCI64 = 0;
-        ivars->m_spi->rxPI = 0;
-        ivars->m_spi->rxCI = 0;
-    }
-
     if (traceFlags() & TRACE_PORT_RX) {
-        VSPLog(LOG_PREFIX, "sendResponse: processing rxPI=%llu rxCI=%llu size=%llu capacity=%llu\n",
-               (unsigned long long)rxPI64, (unsigned long long)rxCI64,
-               (unsigned long long)size, (unsigned long long)capacity64);
-    }
-    
-    // Flow-Control Überwachung
-    if (rxPI64 >= rxCI64) {
-        usedSpace = rxPI64 - rxCI64;
-    } else {
-        usedSpace = capacity64 - rxCI64 + rxPI64;
+        VSPLog(LOG_PREFIX, "sendResponse: initial state - rxPI=%llu, rxCI=%llu, capacity=%llu, bytesToWrite=%llu\n",
+               rxPI, rxCI, capacity, bytesToWrite);
     }
 
-    wasBufferAlmostFull = ivars->m_rxBufferAlmostFull;
-    
-   // check buffer
-   if (usedSpace >= ivars->m_rxBufferHighWaterMark) {
-       ivars->m_rxBufferAlmostFull = true;
-       if (traceFlags() & TRACE_PORT_RX) {
-           VSPLog(LOG_PREFIX,
-                  "sendResponse: !! usedSpace=%llu >= HighWaterMark=%d && full\n",
-                  usedSpace, ivars->m_rxBufferHighWaterMark);
-       }
-       // CTS down
-       setClearToSend(false);
-   }
-   // check enought space available
-   else if (usedSpace <= ivars->m_rxBufferLowWaterMark && ivars->m_rxBufferAlmostFull) {
-       ivars->m_rxBufferAlmostFull = false;
-       nowHasSpace = true;
-       if (traceFlags() & TRACE_PORT_RX) {
-           VSPLog(LOG_PREFIX,
-                  "sendResponse: !! usedSpace=%llu <= LowWaterMark=%d && full\n",
-                  usedSpace, ivars->m_rxBufferLowWaterMark);
-       }
-       // CTS up
-       setClearToSend(true);
-   }
-
-    if (rxPI64 >= rxCI64) {
-        freeSpace = capacity64 - (rxPI64 - rxCI64) - 1;
-    } else {
-        freeSpace = rxCI64 - rxPI64 - 1;
-    }
-    
-    actualSize = MIN(size, freeSpace);
-    if (actualSize == 0) {
-        ret = kIOReturnNoSpace;
-        ivars->m_spi->rxCI = 0;
+    // --- Validate indices ---
+    if (rxPI >= capacity || rxCI >= capacity) {
+        VSPErr(LOG_PREFIX, "sendResponse: index corruption detected (rxPI=%llu, rxCI=%llu, cap=%llu) -> resetting.\n",
+               rxPI, rxCI, capacity);
+        rxPI = 0;
+        rxCI = 0;
         ivars->m_spi->rxPI = 0;
-        RxFreeSpaceAvailable();
-        setClearToSend(false);
+        ivars->m_spi->rxCI = 0;
+    }
+
+    // --- Calculate available space ---
+    if (rxPI >= rxCI) {
+        freeSpace = capacity - (rxPI - rxCI);
+    } else {
+        freeSpace = rxCI - rxPI;
+    }
+    
+    // Reserve one byte to distinguish between full and empty
+    if (freeSpace > 0) freeSpace--;
+
+    if (freeSpace == 0) {
+        if (traceFlags() & TRACE_PORT_RX) {
+            VSPLog(LOG_PREFIX, "sendResponse: buffer full, no space available.\n");
+        }
+        ret = kIOReturnNoSpace;
         goto done;
     }
-    
-    // --- Copy data into RX buffer (wrap-around safe) ---
-    if (rxPI64 + actualSize <= capacity64) {
-        // Fits linearly
-        if (traceFlags() & TRACE_PORT_RX) {
-            VSPLog(LOG_PREFIX, "sendResponse: !! fits linearly: rxPI64=%llu rxCI=%u\n",
-                   rxPI64, ivars->m_spi->rxCI);
-        }
-        outptr = (uint8_t*) base + rxPI64;
-        if ((traceFlags() & TRACE_PORT_RX) && (traceFlags() & TRACE_PORT_IO)) {
-            dbg_dump_output(outptr, actualSize);
-        }
-        memcpy(outptr, src, (size_t)actualSize);
-    } else {
-        if (traceFlags() & TRACE_PORT_RX) {
-            VSPLog(LOG_PREFIX, "sendResponse: !! wrap-around: return no space!\n");
-            VSPLog(LOG_PREFIX, "sendResponse: !! wrap-around: rxPI64=%llu rxCI=%u\n",
-                   rxPI64, ivars->m_spi->rxCI);
-        }
-        
-        // Wrap-around notwendig
-        uint64_t firstChunk = capacity64 - rxPI64;
-        uint64_t secondChunk = actualSize - firstChunk;
-        
-        if (traceFlags() & TRACE_PORT_RX) {
-            VSPLog(LOG_PREFIX, "sendResponse: !! wrap-around: rxPI64=%llu firstChunk=%llu secondChunk=%llu freeSpace=%llu\n",
-                   rxPI64, firstChunk, secondChunk, freeSpace);
-        }
-        
-        outptr = (uint8_t*) base + rxPI64;
-        memmove(outptr, src, (size_t)firstChunk);
-        
-        if ((traceFlags() & TRACE_PORT_RX) && (traceFlags() & TRACE_PORT_IO)) {
-            dbg_dump_output(outptr, firstChunk);
-        }
-        
-        if (secondChunk > 0) {
-            memmove(base, src + firstChunk, (size_t)secondChunk);
-            
-            if ((traceFlags() & TRACE_PORT_RX) && (traceFlags() & TRACE_PORT_IO)) {
-                dbg_dump_output(base, secondChunk);
-            }
-        }
-    }
 
-    if ((traceFlags() & TRACE_PORT_RX) && (traceFlags() & TRACE_PORT_IO)) {
-        char dump[512] = {0};
-        char hex[4] = {0};
-        for(int i=0; i < 16; i++) {
-            snprintf(hex, 4, "%02x ", outptr[i]);
-            strlcat(dump, hex, 511);
-        }
-        VSPLog(LOG_PREFIX, "sendResponse: Dump RX buffer start=0x%llx len=%llu\n",
-               (uint64_t)outptr, (unsigned long long)size);
-        VSPLog(LOG_PREFIX, "sendResponse: %{public}s\n", (const char*) dump);
-    }
-    
-    // --- Update producer index ---
-    rxPI64 = (rxPI64 + size) % capacity64;
-    ivars->m_spi->rxPI = static_cast<uint32_t>(rxPI64);
+    bytesToWrite = MIN(bytesToWrite, freeSpace);
 
     if (traceFlags() & TRACE_PORT_RX) {
-        VSPLog(LOG_PREFIX, "sendResponse: complete rxPI=%u rxCI=%u ret=0x%x\n",
-               ivars->m_spi->rxPI, ivars->m_spi->rxCI, ret);
+        VSPLog(LOG_PREFIX, "sendResponse: freeSpace=%llu, bytesToWrite=%llu\n", freeSpace, bytesToWrite);
     }
 
-    // --- Notify OS ---
-    if (actualSize > 0) {
+    // --- Copy data to ring buffer ---
+    if (rxPI + bytesToWrite <= capacity) {
+        // Linear copy - no wrap-around needed
+        if (traceFlags() & TRACE_PORT_RX) {
+            VSPLog(LOG_PREFIX, "sendResponse: linear copy - rxPI=%llu, bytes=%llu\n", rxPI, bytesToWrite);
+        }
+        
+        if ((traceFlags() & TRACE_PORT_RX) && (traceFlags() & TRACE_PORT_IO)) {
+            dbg_dump_output(src, bytesToWrite);
+        }
+        
+        memcpy(base + rxPI, src, bytesToWrite);
+        rxPI += bytesToWrite;
+        bytesWritten = bytesToWrite;
+    } else {
+        // Wrap-around copy
+        uint64_t firstChunk = capacity - rxPI;
+        uint64_t secondChunk = bytesToWrite - firstChunk;
+        
+        if (traceFlags() & TRACE_PORT_RX) {
+            VSPLog(LOG_PREFIX, "sendResponse: wrap-around copy - rxPI=%llu, firstChunk=%llu, secondChunk=%llu\n",
+                   rxPI, firstChunk, secondChunk);
+        }
+        
+        // Copy first chunk to end of buffer
+        if ((traceFlags() & TRACE_PORT_RX) && (traceFlags() & TRACE_PORT_IO)) {
+            dbg_dump_output(src, firstChunk);
+        }
+        memcpy(base + rxPI, src, firstChunk);
+        
+        // Copy second chunk to beginning of buffer
+        if (secondChunk > 0) {
+            if ((traceFlags() & TRACE_PORT_RX) && (traceFlags() & TRACE_PORT_IO)) {
+                dbg_dump_output(src + firstChunk, secondChunk);
+            }
+            memcpy(base, src + firstChunk, secondChunk);
+        }
+        
+        rxPI = secondChunk; // Wrap around
+        bytesWritten = bytesToWrite;
+    }
+
+    // --- Update producer index ---
+    ivars->m_spi->rxPI = static_cast<uint32_t>(rxPI);
+
+    // --- Update flow control state ---
+    if (rxPI >= rxCI) {
+        usedSpace = rxPI - rxCI;
+    } else {
+        usedSpace = capacity - rxCI + rxPI;
+    }
+
+    oldBufferAlmostFull = ivars->m_rxBufferAlmostFull;
+    
+    // Check if buffer is becoming full
+    if (usedSpace >= ivars->m_rxBufferHighWaterMark) {
+        ivars->m_rxBufferAlmostFull = true;
+        setClearToSend(false);
+        if (traceFlags() & TRACE_PORT_RX) {
+            VSPLog(LOG_PREFIX, "sendResponse: buffer almost full - usedSpace=%llu, HighWaterMark=%u\n",
+                   usedSpace, ivars->m_rxBufferHighWaterMark);
+        }
+    }
+    // Check if buffer has space again
+    else if (usedSpace <= ivars->m_rxBufferLowWaterMark && oldBufferAlmostFull) {
+        ivars->m_rxBufferAlmostFull = false;
+        setClearToSend(true);
+        if (traceFlags() & TRACE_PORT_RX) {
+            VSPLog(LOG_PREFIX, "sendResponse: buffer has space - usedSpace=%llu, LowWaterMark=%u\n",
+                   usedSpace, ivars->m_rxBufferLowWaterMark);
+        }
+    }
+
+    if (traceFlags() & TRACE_PORT_RX) {
+        VSPLog(LOG_PREFIX, "sendResponse: final state - rxPI=%u, rxCI=%u, bytesWritten=%llu\n",
+               ivars->m_spi->rxPI, ivars->m_spi->rxCI, bytesWritten);
+    }
+
+    // --- Notify data availability ---
+    if (bytesWritten > 0) {
         setDataSetReady(true);
-        // notify send back to client
         this->RxDataAvailable_Impl();
-        // notify we have space
-        if (wasBufferAlmostFull && nowHasSpace) {
+        
+        // Notify about free space if buffer state changed from full to available
+        if (oldBufferAlmostFull && !ivars->m_rxBufferAlmostFull) {
             RxFreeSpaceAvailable();
         }
     }
@@ -1567,8 +1544,9 @@ done:
     VSPUnlock(ivars);
 
     if (traceFlags() & TRACE_PORT_RX) {
-        VSPLog(LOG_PREFIX, "sendResponse: complete.\n");
+        VSPLog(LOG_PREFIX, "sendResponse: completed with ret=0x%x\n", ret);
     }
 
     return ret;
 }
+
