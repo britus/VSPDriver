@@ -20,7 +20,8 @@ typedef NS_ENUM(uint8_t, TVSPControlCommand) {
     TVSPControlGetLinkList = 7,
     TVSPControlEnableChecks = 8,
     TVSPControlEnableTrace = 9,
-    TVSPControlLastCommand = 10
+    TVSPControlShutdown = 10,
+    TVSPControlLastCommand = 11
 } NS_SWIFT_NAME(TVSPControlCommand);
 
 #endif /* VSPControlCommand_h */

@@ -72,5 +72,10 @@ bool EnableChecks(uint8_t port, uint64_t flags);
  */
 bool EnableTrace(uint8_t port, uint64_t flags);
 
+/**
+ *
+ */
+bool Shutdown();
+
 } // extern "C"
 #endif /* VSPControllerBridge_h */

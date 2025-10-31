@@ -76,18 +76,19 @@ typedef enum {
 } TVSPUserContext;
 
 typedef enum {
-    vspControlPingPong,
-    vspControlGetStatus,
-    vspControlCreatePort,
-    vspControlRemovePort,
-    vspControlLinkPorts,
-    vspControlUnlinkPorts,
-    vspControlGetPortList,
-    vspControlGetLinkList,
-    vspControlEnableChecks,
-    vspControlEnableTrace,
+    vspControlPingPong = 0,
+    vspControlGetStatus = 1,
+    vspControlCreatePort = 2,
+    vspControlRemovePort = 3,
+    vspControlLinkPorts = 4,
+    vspControlUnlinkPorts = 5,
+    vspControlGetPortList = 6,
+    vspControlGetLinkList = 7,
+    vspControlEnableChecks = 8,
+    vspControlEnableTrace = 9,
+    vspControlShutdown = 10,
     // Has to be last
-    vspLastCommand,
+    vspLastCommand = 11,
 } TVSPControlCommand;
 
 typedef struct {

@@ -43,9 +43,9 @@ typedef enum {
     vspControlGetLinkList = 7,
     vspControlEnableChecks = 8,
     vspControlEnableTrace = 9,
-    
+    vspControlShutdown = 10,
     // Has to be last
-    vspLastCommand = 10,
+    vspLastCommand = 11,
 } CVSPControlCommand;
 
 typedef struct

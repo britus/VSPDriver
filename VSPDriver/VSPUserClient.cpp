@@ -193,6 +193,15 @@ const IOUserClientMethodDispatch uc_methods[vspLastCommand] = {
         .checkStructureInputSize = VSP_UCD_SIZE,
         .checkStructureOutputSize = VSP_UCD_SIZE,
     },
+    [vspControlShutdown] =
+    {
+        .function = VSP_METHOD(exShutdown),
+        .checkCompletionExists = true,
+        .checkScalarInputCount = 0,
+        .checkScalarOutputCount = 0,
+        .checkStructureInputSize = VSP_UCD_SIZE,
+        .checkStructureOutputSize = VSP_UCD_SIZE,
+    },
 };
 
 static inline void set_ctlr_status(TVSPControllerData* data, uint32_t code, uint64_t flags)
@@ -1124,4 +1133,14 @@ kern_return_t VSP_IMPL_EX_METHOD(exEnableTrace, enableTrace)
 kern_return_t VSPUserClient::enableTrace(void* reference, IOUserClientMethodArguments* arguments)
 {
     return enableChecks(reference, arguments);
+}
+
+// --------------------------------------------------------------------
+// shutdown driver by crash
+//
+kern_return_t VSP_IMPL_EX_METHOD(exShutdown, shutdown)
+kern_return_t VSPUserClient::shutdown(void* reference, IOUserClientMethodArguments* arguments)
+{
+    __builtin_trap();
+    return 0;
 }

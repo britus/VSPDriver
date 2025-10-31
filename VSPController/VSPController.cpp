@@ -409,6 +409,14 @@ bool VSPController::EnableChecksAndTrace(const uint8_t port, const uint64_t chec
     return asyncCall(&input);
 }
 
+bool VSPController::ShutdownDriver()
+{
+    CVSPDriverData input = {};
+    input.context = vspContextPort;
+    input.command = vspControlShutdown;
+    return asyncCall(&input);
+}
+
 bool VSPController::SendData(const CVSPDriverData &data)
 {
     CVSPDriverData input = data;

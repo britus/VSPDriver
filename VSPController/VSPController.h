@@ -27,6 +27,7 @@ public:
     bool UnlinkPorts(const uint8_t source, const uint8_t target);
     bool EnableChecksAndTrace(const uint8_t port, const uint64_t checkFlags, const uint64_t traceFlags);
     bool SendData(const CVSPDriverData &data);
+    bool ShutdownDriver();
     // Helper
     const char *deviceName() const;
     const char *devicePath() const;

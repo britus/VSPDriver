@@ -27,7 +27,7 @@ class UITools {
     }
 
     // Basic alert with title and message
-    static public func showMessage(message: String, info: String? = nil) {
+    static public func showMessage(message: String, info: String? = nil, withCompletion completion: (() -> Void)? = nil) {
         DispatchQueue.main.async {
             let alert = NSAlert()
             alert.window.title = applicationName()
@@ -35,7 +35,12 @@ class UITools {
             alert.informativeText = ((info?.isEmpty) != nil) ? info! : ""
             alert.alertStyle = .informational
             alert.runModal()
+            completion?()
         }
+    }
+    
+    static public func showMessage(message: String, info: String? = nil) {
+        showMessage(message: message, info: info, withCompletion: nil)
     }
     
     static func showQuestionDialog(_ sender: Any, _ message: String, info: String? = nil) -> Bool {

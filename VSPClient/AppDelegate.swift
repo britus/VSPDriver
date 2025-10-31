@@ -30,6 +30,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         DriverManager.shared.unloadDriver()
     }
     
+    @IBAction func onShutdownDriver(_ sender: Any) {
+        //DriverManager.shared.unloadDriver()
+        UITools.showMessage(message:
+            "Before to continue, open Terminal window and " +
+            "enter following commands:\n\n" +
+            "systemextensionsctl developer on\n" +
+            "systemextensionsctl reset.\n\n" +
+            "Be careful! This command will remove ALL of your system extensions!\n" +
+            "If you have more than Virtual Serial Port Driver, you can " +
+            "Install all other system extensions manually.", info: nil) //
+        {
+            ShutdownDriver();
+            NSApp.terminate(nil)
+        }
+    }
+
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
     }

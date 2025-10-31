@@ -63,3 +63,8 @@ bool UnlinkPorts(uint8_t source, uint8_t target);
  *
  */
 bool EnableChecksAndTrace(uint8_t port, uint64_t checkFlags, uint64_t traceFlags);
+
+/**
+ *
+ */
+bool ShutdownDriver(void);

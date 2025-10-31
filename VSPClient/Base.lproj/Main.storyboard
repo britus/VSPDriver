@@ -72,6 +72,13 @@
                                                 <action selector="onUninstallDriver:" target="Voe-Tx-rLC" id="D67-BY-db6"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="hXz-Va-Vi3"/>
+                                        <menuItem title="Reboot VSP Driver" id="zD8-7n-B8I">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="onShutdownDriver:" target="Voe-Tx-rLC" id="gHo-gT-xfT"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>

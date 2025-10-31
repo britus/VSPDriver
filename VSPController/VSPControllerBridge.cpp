@@ -131,4 +131,12 @@ bool EnableChecksAndTrace(uint8_t port, uint64_t checkFlags, uint64_t traceFlags
     return m_controller->EnableChecksAndTrace(port, checkFlags, traceFlags);
 }
 
+bool ShutdownDriver()
+{
+    if (!IsDriverConnected()) {
+        return false;
+    }
+    return m_controller->ShutdownDriver();
+}
+
 } // extern "C"

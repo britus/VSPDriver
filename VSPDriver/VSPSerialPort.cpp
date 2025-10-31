@@ -1211,59 +1211,60 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     // Lock to ensure thread safety
     VSPAquireLock(ivars);
 
-    if (!ivars->m_spi || !ivars->m_rxqbmd || !ivars->m_txqbmd) {
-        VSPErr(LOG_PREFIX, "TxDataAvailable: Client disconnected.");
+    if (!ivars->m_spi || !ivars->m_txqbmd) {
+        VSPErr(LOG_PREFIX, "TxDataAvailable: SPI or TX memory descriptor is null");
         VSPUnlock(ivars);
         return;
     }
 
+    // Show me indexes be fore manipulate
+    if (traceFlags() & TRACE_PORT_TX) {
+        VSPLog(LOG_PREFIX, "TxDataAvailable: [IOSPI-TX 1] txPI=%u, txCI=%u capacity=%llu",
+               ivars->m_spi->txPI, ivars->m_spi->txCI, ivars->m_txseg.length);
+    }
+
+    /* end reached */
+    if (ivars->m_spi->txPI == ivars->m_spi->txCI) {
+        VSPErr(LOG_PREFIX, "TxDataAvailable: No data to send txPI=%u == txCI=%u capacity=%llu",
+               ivars->m_spi->txPI, ivars->m_spi->txCI, ivars->m_txseg.length);
+        // notify OS space available
+        TxFreeSpaceAvailable();
+        // CTS on
+        setClearToSend(true);
+        VSPUnlock(ivars);
+        return;
+    }
+    
     // We are working
     setClearToSend(false);
-
+  
     const uint8_t* base = reinterpret_cast<uint8_t*>(ivars->m_txseg.address);
     const uint64_t capacity = ivars->m_txseg.length;
     bool dataProcessed = false;
-   
-    uint64_t txPI = ivars->m_spi->txPI;
-    uint64_t txCI = ivars->m_spi->txCI;
-    
-    // Show me indexes be fore manipulate
-    if (traceFlags() & TRACE_PORT_TX) {
-        VSPLog(LOG_PREFIX, "TxDataAvailable: [IOSPI-TX 1] txPI=%llu, txCI=%llu capacity=%llu",
-               txPI, txCI, capacity);
-    }
 
-    /* end reached ??*/
-    if (txPI == txCI) {
-        VSPUnlock(ivars);
-        VSPErr(LOG_PREFIX, "TxDataAvailable: End reached. Reset FIFO...");
-        return;
-    }
-    
-    while (txPI != txCI) {
+    while (ivars->m_spi->txPI != ivars->m_spi->txCI) {
+        const uint64_t txPI = ivars->m_spi->txPI;
+        const uint64_t txCI = ivars->m_spi->txCI;
         uint64_t size = 0;
-        IOReturn ret;
-        
-        // skip if nothing to do
-        if (!txPI) {
-            VSPErr(LOG_PREFIX, "TxDataAvailable: spi->txPI is zero, skip\n");
-            goto finish;
-        }
-
+ 
         if (txPI >= txCI) {
             size = txPI - txCI;      // normal (linear) region
         } else {
             size = capacity - txCI;  // wrapped region
         }
         
-        if (size >= ivars->m_txseg.length) {
-            VSPErr(LOG_PREFIX, "TxDataAvailable: Size overrun! sizeIn=%llu", size);
-            VSPUnlock(ivars);
-            HwResetFIFO(true, false);
-            __builtin_trap();
-            return;
+        // strong sane check
+        if (size > capacity || txCI >= capacity || txPI >= capacity) {
+            VSPErr(LOG_PREFIX, "TxDataAvailable: Index corruption detected - OS BUG? txPI=%llu txCI=%llu size=%llu cap=%llu",
+                   txPI, txCI, size, capacity);
+            // reset consumer and producer
+            ivars->m_spi->txCI = 0;
+            ivars->m_spi->txPI = 0;
+            TxFreeSpaceAvailable();
+            goto finish;
         }
 
+       // get buffer address by offset
         const uint8_t* ktxbuff = base + txCI;
 
         // Show me indexes be fore manipulate
@@ -1274,14 +1275,22 @@ void IMPL(VSPSerialPort, TxDataAvailable)
         
 #ifdef DEBUG // !! Debug ....
         if ((traceFlags() & TRACE_PORT_TX) && (traceFlags() & TRACE_PORT_IO)) {
+            char dump[512] = {0};
+            char hex[4] = {0};
+            for(int i=0; i < 16; i++) {
+                snprintf(hex, 4, "%02x ", ktxbuff[i]);
+                strlcat(dump, hex, 511);
+            }
             VSPLog(LOG_PREFIX, "TxDataAvailable: dump devbuff=0x%llx len=%llu\n", (uint64_t) ktxbuff, size);
-            VSPLog(LOG_PREFIX, "TxDataAvailable: %{public}s\n", (const char*) ktxbuff);
+            VSPLog(LOG_PREFIX, "TxDataAvailable: %{public}s\n", (const char*) dump);
         }
 #endif // DEBUG
 
+#if 1
         // make sure sendResponse can be lock again
         VSPUnlock(ivars);
         
+        IOReturn ret;
         if (ivars->m_portLinkId) {
             ret = sendToPortLink(ktxbuff, size);
         } else {
@@ -1290,21 +1299,23 @@ void IMPL(VSPSerialPort, TxDataAvailable)
         if (ret != kIOReturnSuccess) {
             VSPErr(LOG_PREFIX, "TxDataAvailable: send failed. code=%x\n", ret);
             VSPAquireLock(ivars);
+            // reset consumer and producer
             ivars->m_spi->txCI = 0;
+            ivars->m_spi->txPI = 0;
+            TxFreeSpaceAvailable();
             dataProcessed = false;
-            break;
+            goto finish;
         }
 
         // restore lock
         VSPAquireLock(ivars);
- 
+#endif
+        
         // advance consumer index, make sure it's not
         // disconnected before we can update
         if (ivars->m_spi) {
+            ivars->m_spi->txCI = static_cast<uint32_t>((txCI + size) % capacity);
             dataProcessed = true;
-            txPI = ivars->m_spi->txPI;
-            txCI = (txCI + static_cast<uint32_t>(size)) % capacity;
-            ivars->m_spi->txCI = static_cast<uint32_t>(txCI);
         } else {
             break;
         }
@@ -1361,7 +1372,6 @@ kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, cons
                ivars->m_spi->rxPI, ivars->m_spi->rxCI, sizeIn);
     }
 
-    IOAddressSegment adrseg;
     IOReturn ret = kIOReturnSuccess;
     uint64_t size = sizeIn;
     const uint8_t* src = reinterpret_cast<const uint8_t*>(buffer);
@@ -1377,8 +1387,8 @@ kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, cons
     // --- RX buffer base pointer ---
     uint8_t* base = nullptr;
     if (ivars->m_rxqbmd) {
-        ret = ivars->m_rxqbmd->GetAddressRange(&adrseg);
-        base = reinterpret_cast<uint8_t*>(adrseg.address);
+        ret = ivars->m_rxqbmd->GetAddressRange(&ivars->m_rxseg);
+        base = reinterpret_cast<uint8_t*>(ivars->m_rxseg.address);
     }
     if (!base || ret != kIOReturnSuccess) {
         VSPErr(LOG_PREFIX, "sendResponse: cannot get RX buffer base pointer (GetBytesNoCopy failed).\n");
@@ -1476,7 +1486,7 @@ kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, cons
             VSPLog(LOG_PREFIX, "sendResponse: !! wrap-around: rxPI64=%llu rxCI=%u\n",
                    rxPI64, ivars->m_spi->rxCI);
         }
-#if 0
+#if 1
         // Wrap-around notwendig
         uint64_t firstChunk = capacity64 - rxPI64;
         uint64_t secondChunk = actualSize - firstChunk;
