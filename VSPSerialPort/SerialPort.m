@@ -31,6 +31,29 @@
 @property (nonatomic, strong) NSString *lastErrorMessage;
 @end
 
+// For debug purposes only (O.o)
+void writeReceivedData(NSData* data, size_t bufferSize, NSString* filename) {
+    NSString* homeDirectory = NSHomeDirectory();
+    NSString* filePath = [homeDirectory stringByAppendingPathComponent:filename];
+    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:filePath];
+    if (fileExists) {
+        //NSError* error;
+        NSFileHandle* fileHandle = [NSFileHandle fileHandleForWritingAtPath:filePath];
+        if (fileHandle) {
+            [fileHandle seekToEndOfFile];
+            [fileHandle writeData:data];
+            [fileHandle closeFile];
+        } else {
+            NSLog(@"Failed to open file: %@", filePath);
+        }
+    } else {
+        BOOL success = [data writeToFile:filePath atomically:YES];
+        if (!success) {
+            NSLog(@"Failed to create file: %@", filePath);
+        }
+    }
+}
+
 @implementation SerialPort
 
 - (instancetype)initWithPortPath:(NSString *)portPath {
@@ -595,7 +618,7 @@
         return;
     }
     dispatch_async(self.readerQueue, ^{
-        uint8_t buffer[1024];
+        uint8_t buffer[4096];
         ssize_t bytesRead;
         int flags;
         
@@ -631,6 +654,10 @@
             } else if (bytesRead > 0) {
                 // Data received
                 NSData *data = [NSData dataWithBytes:buffer length:(size_t)bytesRead];
+               
+                // TODO: debug only
+                writeReceivedData(data, bytesRead, @"received.txt");
+                
                 [self notifyDelegateReceivedData:data];
             }
             

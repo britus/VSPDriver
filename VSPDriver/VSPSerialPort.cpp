@@ -1273,7 +1273,6 @@ void IMPL(VSPSerialPort, TxDataAvailable)
                    txPI, txCI, size, ktxbuff);
         }
         
-#ifdef DEBUG // !! Debug ....
         if ((traceFlags() & TRACE_PORT_TX) && (traceFlags() & TRACE_PORT_IO)) {
             char dump[512] = {0};
             char hex[4] = {0};
@@ -1284,9 +1283,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
             VSPLog(LOG_PREFIX, "TxDataAvailable: dump devbuff=0x%llx len=%llu\n", (uint64_t) ktxbuff, size);
             VSPLog(LOG_PREFIX, "TxDataAvailable: %{public}s\n", (const char*) dump);
         }
-#endif // DEBUG
 
-#if 1
         // make sure sendResponse can be lock again
         VSPUnlock(ivars);
         
@@ -1309,7 +1306,6 @@ void IMPL(VSPSerialPort, TxDataAvailable)
 
         // restore lock
         VSPAquireLock(ivars);
-#endif
         
         // advance consumer index, make sure it's not
         // disconnected before we can update
@@ -1338,6 +1334,21 @@ finish:
     
     VSPUnlock(ivars);
 }
+
+#ifdef DEBUG
+static inline void dbg_dump_output(const uint8_t* outptr, uint64_t size)
+{
+    char dump[512] = {0};
+    char hex[4] = {0};
+    for(int i=0; i < 16; i++) {
+        snprintf(hex, 4, "%02x ", outptr[i]);
+        strlcat(dump, hex, 511);
+    }
+    VSPLog(LOG_PREFIX, "sendResponse: Dump RX buffer start=0x%llx len=%llu\n",
+           (uint64_t)outptr, (unsigned long long)size);
+    VSPLog(LOG_PREFIX, "sendResponse: %{public}s\n", (const char*) dump);
+}
+#endif
 
 // --------------------------------------------------------------------
 // Called by TxDataAvailable() or sendToPortLink() to dispatch RX data
@@ -1383,6 +1394,7 @@ kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, cons
     uint64_t usedSpace;
     bool wasBufferAlmostFull;
     bool nowHasSpace = false;
+    uint8_t* outptr = NULL;
 
     // --- RX buffer base pointer ---
     uint8_t* base = nullptr;
@@ -1468,6 +1480,9 @@ kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, cons
     actualSize = MIN(size, freeSpace);
     if (actualSize == 0) {
         ret = kIOReturnNoSpace;
+        ivars->m_spi->rxCI = 0;
+        ivars->m_spi->rxPI = 0;
+        RxFreeSpaceAvailable();
         setClearToSend(false);
         goto done;
     }
@@ -1479,14 +1494,18 @@ kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, cons
             VSPLog(LOG_PREFIX, "sendResponse: !! fits linearly: rxPI64=%llu rxCI=%u\n",
                    rxPI64, ivars->m_spi->rxCI);
         }
-        memcpy(base + rxPI64, src, (size_t)actualSize);
+        outptr = (uint8_t*) base + rxPI64;
+        if ((traceFlags() & TRACE_PORT_RX) && (traceFlags() & TRACE_PORT_IO)) {
+            dbg_dump_output(outptr, actualSize);
+        }
+        memcpy(outptr, src, (size_t)actualSize);
     } else {
         if (traceFlags() & TRACE_PORT_RX) {
             VSPLog(LOG_PREFIX, "sendResponse: !! wrap-around: return no space!\n");
             VSPLog(LOG_PREFIX, "sendResponse: !! wrap-around: rxPI64=%llu rxCI=%u\n",
                    rxPI64, ivars->m_spi->rxCI);
         }
-#if 1
+        
         // Wrap-around notwendig
         uint64_t firstChunk = capacity64 - rxPI64;
         uint64_t secondChunk = actualSize - firstChunk;
@@ -1496,23 +1515,33 @@ kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, cons
                    rxPI64, firstChunk, secondChunk, freeSpace);
         }
         
-        memmove(base + rxPI64, src, (size_t)firstChunk);
+        outptr = (uint8_t*) base + rxPI64;
+        memmove(outptr, src, (size_t)firstChunk);
+        
+        if ((traceFlags() & TRACE_PORT_RX) && (traceFlags() & TRACE_PORT_IO)) {
+            dbg_dump_output(outptr, firstChunk);
+        }
+        
         if (secondChunk > 0) {
             memmove(base, src + firstChunk, (size_t)secondChunk);
+            
+            if ((traceFlags() & TRACE_PORT_RX) && (traceFlags() & TRACE_PORT_IO)) {
+                dbg_dump_output(base, secondChunk);
+            }
         }
-#else
-        setClearToSend(false);
-        ret = kIOReturnNoSpace;
-        goto done;
-#endif
     }
 
-#ifdef DEBUG
     if ((traceFlags() & TRACE_PORT_RX) && (traceFlags() & TRACE_PORT_IO)) {
+        char dump[512] = {0};
+        char hex[4] = {0};
+        for(int i=0; i < 16; i++) {
+            snprintf(hex, 4, "%02x ", outptr[i]);
+            strlcat(dump, hex, 511);
+        }
         VSPLog(LOG_PREFIX, "sendResponse: Dump RX buffer start=0x%llx len=%llu\n",
-               (uint64_t)base, (unsigned long long)size);
+               (uint64_t)outptr, (unsigned long long)size);
+        VSPLog(LOG_PREFIX, "sendResponse: %{public}s\n", (const char*) dump);
     }
-#endif
     
     // --- Update producer index ---
     rxPI64 = (rxPI64 + size) % capacity64;
