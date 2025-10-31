@@ -21,13 +21,14 @@
 #import <errno.h>
 
 @interface SerialPort ()
-@property (nonatomic, assign) int fdPort;
+@property (nonatomic, assign) int fdDevice;
 @property (nonatomic, strong) dispatch_queue_t readerQueue;
 @property (nonatomic, strong) dispatch_queue_t writeQueue;
+@property (nonatomic, strong) dispatch_queue_t pinsigQueue;
+@property (nonatomic, strong) NSLock *portAccessLock;
 @property (nonatomic, strong) NSMutableData *receivedData;
 @property (nonatomic, assign) SerialPortState currentState;
 @property (nonatomic, strong) NSString *lastErrorMessage;
-@property (nonatomic, assign) BOOL isWriting;
 @end
 
 @implementation SerialPort
@@ -43,10 +44,11 @@
         _currentState = SerialPortStateDisconnected;
         _readerQueue = NULL; //dispatch_queue_create("vspReaderQueue", DISPATCH_QUEUE_SERIAL);
         _writeQueue = NULL; //dispatch_queue_create("vspWriterQueue", DISPATCH_QUEUE_SERIAL);
+        _pinsigQueue = NULL;
         _receivedData = [[NSMutableData alloc] init];
-        _isWriting = NO;
+        _portAccessLock = [[NSLock alloc] init];
         _portPath = portPath;
-        _fdPort = -1;
+        _fdDevice = -1;
     }
     return self;
 }
@@ -126,6 +128,7 @@
 
 - (void)fireErrorEvent:(NSError *)error withType:(SerialPortErrorType)errorType {
     [self notifyDelegateError:error withType:errorType];
+    [self disconnect];
 }
 
 - (void)fireConnectError:(NSString *)errorMessage errorType:(SerialPortErrorType)errorType {
@@ -173,7 +176,7 @@
     }
 }
 
-- (void)configureSerialPort {
+- (void)configureSerialPort:(int)fd {
     
     //cc_t vmin = 1;
     //cc_t vtime = 0;
@@ -181,7 +184,7 @@
     struct termios tty;
     memset(&tty, 0, sizeof(tty));
     
-    if (tcgetattr(self.fdPort, &tty) != 0) {
+    if (tcgetattr(fd, &tty) != 0) {
         [self fireConnectError:@"Failed to get terminal attributes"
                              errorType:SerialPortErrorTypeConfigurationFailed];
         [self updateState:SerialPortStateError];
@@ -310,7 +313,7 @@
         tty.c_cflag |= IXON | IXOFF; // Enable XON/XOFF
     }
     
-    if (tcsetattr(self.fdPort, TCSANOW, &tty) != 0) {
+    if (tcsetattr(fd, TCSANOW, &tty) != 0) {
         [self fireConnectError:@"Failed to configure terminal"
                              errorType:SerialPortErrorTypeConfigurationFailed];
         [self updateState:SerialPortStateError];
@@ -318,31 +321,71 @@
     }
 }
 
+// Method to create queues with custom names
+- (dispatch_queue_t)createQueueWithName:(NSString *)baseName
+                                filePath:(NSString *)filePath
+                              attributes:(dispatch_queue_attr_t)attributes {
+    
+    // Generate unique queue name based on base name and device name
+    NSString *devName = [filePath lastPathComponent];
+    NSString *queueName = [NSString stringWithFormat:@"%@_%@", baseName, devName];
+    
+    const char* name = [queueName UTF8String];
+    return dispatch_queue_create(name, attributes);
+}
+
+// Method to get the call-in device path (tty)
+- (NSString *)getCallInPath:(NSString *)filePath {
+    // Extract the basename and replace "cu." with "tty."
+    NSString *basename = [filePath lastPathComponent];
+    if ([basename hasPrefix:@"cu."]) {
+        return [NSString stringWithFormat:@"%@/tty%@",
+                [filePath stringByDeletingLastPathComponent],
+                [basename substringFromIndex:3]];
+    }
+    return filePath;
+}
+
+// Method to get the call-out device path (cu)
+- (NSString *)getCallOutPath:(NSString *)filePath {
+    // Extract the basename and replace "tty." with "cu."
+    NSString *basename = [filePath lastPathComponent];
+    if ([basename hasPrefix:@"tty."]) {
+        return [NSString stringWithFormat:@"%@/cu.%@",
+                [filePath stringByDeletingLastPathComponent],
+                [basename substringFromIndex:4]];
+    }
+    return filePath;
+}
+
 - (BOOL)connect {
     if (self.currentState == SerialPortStateConnected) {
         return YES;
     }
     
-    if (self.fdPort != -1) {
+    if (self.fdDevice != -1) {
         [self fireConnectError:@"Port already open"
-                             errorType:SerialPortErrorTypeAlreadyOpen];
+                     errorType:SerialPortErrorTypeAlreadyOpen];
         return NO;
     }
     
-
-    const char *portPath = [self.portPath UTF8String];
-    char readerQueueName[1024];
-    char writerQueueName[1024];
-
-    // Create queue names with port path included
-    snprintf(readerQueueName, sizeof(readerQueueName)-1, "vspReaderQueue_%s", portPath);
-    snprintf(writerQueueName, sizeof(writerQueueName)-1, "vspWriterQueue_%s", portPath);
-    _readerQueue = dispatch_queue_create(readerQueueName, DISPATCH_QUEUE_SERIAL);
-    _writeQueue = dispatch_queue_create(writerQueueName, DISPATCH_QUEUE_SERIAL);
-
-    int fdflags = (O_RDWR /*| O_NOCTTY*/ | O_NONBLOCK);
+    // Create queues with port name included
+    self.pinsigQueue = [self createQueueWithName:@"vsp.psq"
+                                    filePath:self.portPath
+                                  attributes:DISPATCH_QUEUE_CONCURRENT];
+    self.readerQueue = [self createQueueWithName:@"vsp.rdq"
+                                    filePath:self.portPath
+                                  attributes:DISPATCH_QUEUE_CONCURRENT];
+    self.writeQueue = [self createQueueWithName:@"vsp.wrq"
+                                    filePath:self.portPath
+                                  attributes:DISPATCH_QUEUE_SERIAL];
     
-    if ((self.fdPort = open(portPath, fdflags)) == -1) {
+    /* default blocking mode. Reader queue set to
+     * non blocking for each read */
+    const int fdflags = (O_RDWR | O_NOCTTY);
+    const char *_devpath = [self.portPath UTF8String];
+    
+    if ((self.fdDevice = open(_devpath, fdflags)) == -1) {
         NSError *error = [self createErrorWithCode:errno
                                              message:[NSString stringWithUTF8String:strerror(errno)]
                                             errorType:(errno == EACCES) ? SerialPortErrorTypePermissionDenied :
@@ -356,8 +399,9 @@
         return NO;
     }
     
-    [self configureSerialPort];
+    [self configureSerialPort:self.fdDevice];
     [self updateState:SerialPortStateConnected];
+    [self monitorPinoutSignals];
     [self startReading];
     
     return YES;
@@ -365,12 +409,125 @@
 
 - (void)disconnect {
     [self updateState:SerialPortStateDisconnecting];
-    if (self.fdPort != -1) {
-        close(self.fdPort);
-        self.fdPort = -1;
+    
+    /* dispatch_release() not available in ARC mode */
+#if 0
+    if (self.readerQueue != NULL) {
+        dispatch_release(self.readerQueue);
     }
+    if (self.writeQueue != NULL) {
+        dispatch_release(self.writeQueue);
+    }
+    if (self.pinsigQueue != NULL) {
+        dispatch_release(self.pinsigQueue);
+    }
+#endif // 0
+    
+    if (self.fdDevice != -1) {
+        close(self.fdDevice);
+        self.fdDevice = -1;
+    }
+    
     [self updateState:SerialPortStateDisconnected];
 }
+
+- (void)sendFileAtPath:(NSString *)filePath
+            chunkSize:(NSUInteger)chunkSize
+           completion:(void (^)(BOOL success, NSError *error))completion {
+
+    if (!self.writeQueue) {
+        NSError *error = [self createErrorWithCode:EINVAL
+                  message:[NSString stringWithUTF8String:strerror(errno)]
+                errorType:SerialPortErrorTypeNoQueue];
+        [self fireErrorEvent:error withType:SerialPortErrorTypeNoQueue];
+        if (completion) {
+            completion(NO, error);
+        }
+        return;
+    }
+
+    NSLog(@"Send file %@ chunkSize=%lu", filePath, (unsigned long)chunkSize);
+
+    NSData *fileData = [NSData dataWithContentsOfFile:filePath];
+    if (!fileData) {
+        NSLog(@"Failed to read file at path: %@", filePath);
+        NSError *error = [self createErrorWithCode:EINVAL
+                                           message:@"File name required."
+                                         errorType:SerialPortErrorTypeNotFound];
+        if (completion) {
+            completion(NO, error);
+        }
+        return;
+    }
+    
+    dispatch_async(self.writeQueue, ^{
+        const uint8_t *bytes = (const uint8_t *)[fileData bytes];
+        NSUInteger totalLength = [fileData length];
+        
+        if (self.fdDevice == -1 || self.currentState != SerialPortStateConnected) {
+            NSError *error = [self createErrorWithCode:ENOTCONN
+                                               message:@"Port not connected"
+                                             errorType:SerialPortErrorTypeWriteFailed];
+            [self fireErrorEvent:error withType:SerialPortErrorTypeWriteFailed];
+            if (completion) {
+                completion(NO, error);
+            }
+            return;
+        }
+                  
+        for (NSUInteger i = 0; i < totalLength; i += chunkSize) {
+            if (self.fdDevice < 0 || self.currentState != SerialPortStateConnected) {
+                break;
+            }
+
+            NSUInteger length = MIN(chunkSize, totalLength - i);
+            NSData *data = [NSData dataWithBytes:bytes + i length:length];
+            const uint8_t *bytes = [data bytes];
+            size_t buflen = [data length];
+
+            // Acquire read lock before accessing fdPort
+            [self.portAccessLock lock];
+
+            ssize_t written = write(self.fdDevice, bytes, buflen);
+
+            [self.portAccessLock unlock];
+            
+            if (written < 0) {
+                NSError *error = [self
+                            createErrorWithCode:errno
+                                        message:[NSString stringWithUTF8String:strerror(errno)]
+                                      errorType:SerialPortErrorTypeWriteFailed];
+                [self fireErrorEvent:error withType:SerialPortErrorTypeWriteFailed];
+                if (completion) {
+                    completion(NO, error);
+                }
+                return;
+            }
+            
+            if (written != (ssize_t)length) {
+                NSError *error = [self
+                            createErrorWithCode:EBADF
+                                        message:@"Partial write occurred"
+                                      errorType:SerialPortErrorTypeWriteFailed];
+#if 0
+                [self fireErrorEvent:error withType:SerialPortErrorTypeWriteFailed];
+                return;
+#else
+                NSLog(@"Write error? written=%zd < length=%lu", written, (unsigned long)length);
+#endif // 0
+                if (completion) {
+                    completion(NO, error);
+                }
+                return;
+            }
+            
+        } // for
+        if (completion) {
+            completion(YES, NULL);
+        }
+    });
+}
+
 
 - (BOOL)sendData:(NSData *)data {
     __block BOOL success = NO;
@@ -384,20 +541,23 @@
     }
 
     dispatch_sync(self.writeQueue, ^{
-        if (self.fdPort == -1 || self.currentState != SerialPortStateConnected) {
+      
+        // Acquire read lock before accessing fdPort
+        [self.portAccessLock lock];
+        
+        if (self.fdDevice == -1 || self.currentState != SerialPortStateConnected) {
             NSError *error = [self createErrorWithCode:ENOTCONN
                                                message:@"Port not connected"
                                              errorType:SerialPortErrorTypeWriteFailed];
             [self fireErrorEvent:error withType:SerialPortErrorTypeWriteFailed];
+            [self.portAccessLock unlock];
             return;
         }
-        
-        self.isWriting = YES;
         
         const uint8_t *bytes = [data bytes];
         size_t length = [data length];
         
-        ssize_t written = write(self.fdPort, bytes, length);
+        ssize_t written = write(self.fdDevice, bytes, length);
         
         if (written < 0) {
             NSError *error = [self
@@ -405,7 +565,7 @@
                                     message:[NSString stringWithUTF8String:strerror(errno)]
                                   errorType:SerialPortErrorTypeWriteFailed];
             [self fireErrorEvent:error withType:SerialPortErrorTypeWriteFailed];
-            self.isWriting = NO;
+            [self.portAccessLock unlock];
             return;
         }
         
@@ -415,12 +575,12 @@
                                     message:@"Partial write occurred"
                                   errorType:SerialPortErrorTypeWriteFailed];
             [self fireErrorEvent:error withType:SerialPortErrorTypeWriteFailed];
-            self.isWriting = NO;
+            [self.portAccessLock unlock];
             return;
         }
-        
-        self.isWriting = NO;
+
         success = YES;
+        [self.portAccessLock unlock];
     });
       
     return success;
@@ -437,14 +597,21 @@
     dispatch_async(self.readerQueue, ^{
         uint8_t buffer[1024];
         ssize_t bytesRead;
+        int flags;
         
-        while (self.fdPort != -1 && self.currentState == SerialPortStateConnected) {
-            if (!self.isWriting) {
-                bytesRead = read(self.fdPort, buffer, sizeof(buffer));
-            } else {
-                bytesRead = 0;
-            }
+        while (self.fdDevice != -1 && self.currentState == SerialPortStateConnected) {
             
+            // Acquire read lock before accessing fdPort
+            [self.portAccessLock lock];
+            flags = fcntl(self.fdDevice, F_GETFL, 0);
+            fcntl(self.fdDevice, F_SETFL, flags | O_NONBLOCK);
+            
+            bytesRead = read(self.fdDevice, buffer, sizeof(buffer));
+
+            flags = fcntl(self.fdDevice, F_GETFL, 0);
+            fcntl(self.fdDevice, F_SETFL, flags & ~O_NONBLOCK);
+            [self.portAccessLock unlock];
+
             if (bytesRead < 0) {
                 // Handle read error
                 if (errno == EAGAIN || errno == EWOULDBLOCK) {
@@ -466,6 +633,8 @@
                 NSData *data = [NSData dataWithBytes:buffer length:(size_t)bytesRead];
                 [self notifyDelegateReceivedData:data];
             }
+            
+            [NSThread sleepForTimeInterval:0.25]; // Poll
         }
         
         // If we exit the loop, disconnect
@@ -508,42 +677,34 @@
     }
 }
 
-- (void)sendFileAtPath:(NSString *)filePath chunkSize:(NSUInteger)chunkSize {
-    NSData *fileData = [NSData dataWithContentsOfFile:filePath];
-    if (!fileData) {
-        NSLog(@"Failed to read file at path: %@", filePath);
-        return;
-    }
-
-    const uint8_t *bytes = (const uint8_t *)[fileData bytes];
-    NSUInteger totalLength = [fileData length];
-
-    for (NSUInteger i = 0; i < totalLength; i += chunkSize) {
-        NSUInteger length = MIN(chunkSize, totalLength - i);
-        NSData *chunk = [NSData dataWithBytes:bytes + i length:length];
-        // Assuming you have a sendData method to send the chunk
-        [self sendData:chunk]; // This should be implemented in your class
-    }
-}
-
 - (void)monitorPinoutSignals {
-    int status;
-    while (self.currentState == SerialPortStateConnected) {
-        if (ioctl(self.fdPort, TIOCMGET, &status) == 0) {
-            BOOL DCD = (status & TIOCM_CAR);
-            BOOL DTR = (status & TIOCM_DTR);
-            BOOL DSR = (status & TIOCM_DSR);
-            BOOL RTS = (status & TIOCM_RTS);
-            BOOL CTS = (status & TIOCM_CTS);
-            BOOL RI = (status & TIOCM_RI);
-
-            // Notify delegate
-            if ([self.delegate respondsToSelector:@selector(serialPort:didUpdatePinoutSignals:DTR:DSR:RTS:CTS:RI:)]) {
-                [self.delegate serialPort:self didUpdatePinoutSignals:DCD DTR:DTR DSR:DSR RTS:RTS CTS:CTS RI:RI];
+    dispatch_async(self.pinsigQueue, ^{
+        int ret, status;
+        while (self.fdDevice != -1 && self.currentState == SerialPortStateConnected) {
+            
+            // Acquire read lock before accessing fdPort
+            [self.portAccessLock lock];
+            ret = ioctl(self.fdDevice, TIOCMGET, &status);
+            [self.portAccessLock unlock];
+            
+            if (ret == 0) {
+                BOOL DCD = (status & TIOCM_CAR);
+                BOOL DTR = (status & TIOCM_DTR);
+                BOOL DSR = (status & TIOCM_DSR);
+                BOOL RTS = (status & TIOCM_RTS);
+                BOOL CTS = (status & TIOCM_CTS);
+                BOOL RI = (status & TIOCM_RI);
+                if ([self.delegate respondsToSelector:@selector(serialPort:didUpdatePinoutSignals:DTR:DSR:RTS:CTS:RI:)]) {
+                    [self.delegate serialPort:self didUpdatePinoutSignals:DCD DTR:DTR DSR:DSR RTS:RTS CTS:CTS RI:RI];
+                } else {
+                    NSLog(@"No pinout signal delegate. Terminate pinout signal monitor.");
+                    break; // stop
+                }
             }
+            
+            [NSThread sleepForTimeInterval:0.5]; // Poll every 500ms
         }
-        [NSThread sleepForTimeInterval:0.5]; // Poll every 500ms
-    }
+    });
 }
 
 // Notification methods

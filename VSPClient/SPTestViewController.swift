@@ -50,6 +50,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
         edTextField.isEnabled = false
         edTextField.delegate = self
         txLogView.string = ""
+        txLogView.setLineWrapping(false)
         
         // find available serial port devices (IOReg access)
         populateSerialPorts()
@@ -264,6 +265,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
     }
 
     @IBAction func onOpenPort(_ sender: NSButton) {
+        txLogView.string = ""
         connectToSerialPort()
     }
     
@@ -273,17 +275,84 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
     }
     
     @IBAction func onSendFile(_ sender: NSButton) {
-        logMessage(">: onSendFile not implemented")
-        //serialPort?.send(String("").data(using: .utf8)!)
+        let openPanel = NSOpenPanel()
+        
+        // Basic configuration
+        openPanel.canChooseFiles = true
+        openPanel.canChooseDirectories = false
+        openPanel.allowsMultipleSelection = false
+        
+        // Show panel and handle response
+        if openPanel.runModal() == .OK {
+            if let fileURL = openPanel.url {
+                #if false
+                let fileManager = FileManager.default
+                do {
+                    let attributes = try fileManager.attributesOfItem(atPath: fileURL.path)
+                    if let fileSize = attributes[.size] as? NSNumber {
+                        // 1 KB = 1024 bytes
+                        let maxKb = UInt64(16 * 1024)
+                        if fileSize.uint64Value >= maxKb {
+                            let msg = 
+                              "Files larger than or equal to 16 KB cannot "
+                            + "be transferred. MacOS limits this in the DriverKit sandbox."
+                            UITools.showMessage(message: msg)
+                            return
+                        }
+                    }
+                } catch {
+                    logMessage("Error getting file size: \(error)")
+                    return
+                }
+                #endif
+                logMessage(">: Send file \(fileURL.path)")
+                pbIoSendFile.isEnabled = false
+                serialPort?.sendFile(atPath: fileURL.path, chunkSize: 512, completion:{_,_ in
+                    DispatchQueue.main.async {
+                        self.pbIoSendFile.isEnabled = true
+                        self.serialPort?.disconnect();
+                        self.connectToSerialPort();
+                    }
+                })
+            }
+        }
     }
     
     @IBAction func onSendText(_ sender: NSButton) {
+        if textToSend.isEmpty {
+            textToSend = edTextField.stringValue
+        }
         let text = textToSend + "\r\n"
         logMessage(">: \(text)")
         serialPort?.send(text.data(using: .utf8)!)
     }
     
     @IBAction func onRunLooper(_ sender: NSButton) {
+        if !isLooperRunning && serialPort != nil {
+            pbIoLooper.title = "LOOPING!"
+            var length = edTextField.stringValue.count
+            if length == 0 {
+                length = 16
+            }
+            DispatchQueue.global().async {
+                let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+                self.isLooperRunning = true
+                while self.isLooperRunning {
+                    var buffer : String = ""
+                    for _ in 0..<length {
+                        let randomIndex = Int.random(in: 0..<chars.count)
+                        let char = chars[chars.index(chars.startIndex, offsetBy: randomIndex)]
+                        buffer.append(char)
+                    }
+                    Thread.sleep(forTimeInterval: 1.500) // 1.5 seconds
+                    self.serialPort?.send(buffer.data(using: .utf8)!)
+                    self.logMessage(">: \(buffer)")
+                }
+            }
+        } else {
+            isLooperRunning = false
+            pbIoLooper.title = "Loop"
+        }
     }
     
     // This method is called when the user presses Enter or Return
@@ -340,5 +409,12 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
             return
         }
         portConfig.flowCtrl = UInt(value)
+    }
+}
+
+extension SPTestViewController: NSOpenSavePanelDelegate {
+    func panel(_ sender: Any, shouldEnable url: URL) -> Bool {
+        // Filter out system files if needed
+        return !url.path.startsWith(".")
     }
 }

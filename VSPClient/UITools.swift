@@ -331,7 +331,7 @@ extension NSMutableAttributedString {
 }
 
 extension NSTextView {
-    func scrollToEndOfTextView() {
+    public func scrollToEndOfTextView() {
         guard let textContainer = self.textContainer else { return }
         
         // Get the text container's size
@@ -341,7 +341,7 @@ extension NSTextView {
         self.scroll(NSPoint(x: 0, y: contentSize.height))
     }
 
-    func scrollToBottomOfTextView() {
+    public func scrollToBottomOfTextView() {
         guard let textContainer = self.textContainer else { return }
         
         // Get the content size
@@ -355,7 +355,7 @@ extension NSTextView {
     }
 
     // Method 5: Complete solution with proper handling
-    func scrollToTextEnd() {
+    public func scrollToTextEnd() {
         guard let textStorage = self.textStorage else { return }
          
          // Get the range of the last character
@@ -369,7 +369,7 @@ extension NSTextView {
          }
     }
     
-    func scrollToTextViewEnd() {
+    public func scrollToTextViewEnd() {
         guard let layoutManager = self.layoutManager,
               let textContainer = self.textContainer else { return }
         let _ : Bool = layoutManager.isProxy() /* fix swift bullshit warning */
@@ -400,7 +400,7 @@ extension NSTextView {
     ///   - textColor: Foreground color (text color)
     ///   - fontName: Font name (e.g., "Menlo", "Monaco")
     ///   - fontSize: Font size
-    func setText(_ text: String,
+    public func setText(_ text: String,
                    backgroundColor: NSColor = .clear,
                    textColor: NSColor = .white,
                    fontName: String = "Menlo",
@@ -418,6 +418,32 @@ extension NSTextView {
         
         // Set the attributed string to the text view
         self.textStorage?.setAttributedString(attributedString)
+    }
+    
+    public func setLineWrapping(_ enable: Bool) {
+        if enable {
+            /// Matching width is also important here.
+            guard let sz = self.enclosingScrollView?.contentSize else { //
+                return
+            }
+            self.frame = CGRect(x: 0, y: 0, width: sz.width, height: 0)
+            self.textContainer?.containerSize = CGSize(width: sz.width, height: CGFloat.greatestFiniteMagnitude)
+            self.textContainer?.widthTracksTextView = true
+        }
+        else {
+            self.isVerticallyResizable = true
+            self.isHorizontallyResizable = true
+            self.enclosingScrollView?.autoresizingMask = [
+                NSView.AutoresizingMask.width,
+                NSView.AutoresizingMask.height]
+            self.autoresizingMask = [
+                NSView.AutoresizingMask.width,
+                NSView.AutoresizingMask.height]
+            self.textContainer?.widthTracksTextView = true
+            self.textContainer?.containerSize = CGSize(
+                width: CGFloat.greatestFiniteMagnitude,
+                height: CGFloat.greatestFiniteMagnitude)
+        }
     }
 }
 

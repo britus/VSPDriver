@@ -113,7 +113,6 @@
 		884F6EC62D59A5C90066353A /* VSPUserClient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VSPUserClient.cpp; sourceTree = "<group>"; };
 		8854A99E2D5DB1E400C27252 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		885DE9332D5E82CD00CFECEE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		88667D6A2D53474900DFA26E /* VSPDriver-Full.log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "VSPDriver-Full.log"; sourceTree = "<group>"; };
 		88698B872D76DDD70008EF6B /* vspclient_16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_16x16.png; sourceTree = "<group>"; };
 		88698B882D76DDD70008EF6B /* vspclient_16x16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vspclient_16x16@2x.png"; sourceTree = "<group>"; };
 		88698B892D76DDD70008EF6B /* vspclient_32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vspclient_32x32.png; sourceTree = "<group>"; };
@@ -135,8 +134,6 @@
 		88A671312D68DDE000CE4E12 /* vspclient.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = vspclient.icns; sourceTree = "<group>"; };
 		88A671452D68DDE000CE4E12 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		88A671462D68DDE000CE4E12 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		88AB34E92D64937300260D19 /* make.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = make.sh; sourceTree = "<group>"; };
-		88AB34EA2D64937300260D19 /* VSPDriver-PortLink.log */ = {isa = PBXFileReference; lastKnownFileType = text; path = "VSPDriver-PortLink.log"; sourceTree = "<group>"; };
 		88AEEFF62D5233D4007F2A4C /* IOReg-Outline.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "IOReg-Outline.md"; sourceTree = "<group>"; };
 		88B40D572D4B666700DFE7C5 /* org.eof.tools.VSPDriver.dext */ = {isa = PBXFileReference; explicitFileType = "wrapper.driver-extension"; includeInIndex = 0; path = org.eof.tools.VSPDriver.dext; sourceTree = BUILT_PRODUCTS_DIR; };
 		88B40D5D2D4B666700DFE7C5 /* VSPDriver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VSPDriver.cpp; sourceTree = "<group>"; };
@@ -229,7 +226,6 @@
 		880539E92D4BAFBD00E55104 /* VSPClient */ = {
 			isa = PBXGroup;
 			children = (
-				F76A60AA2EB2812D004DF0C7 /* Main.storyboard */,
 				F77B0EDB2EB27DEA000FA9A7 /* AppDelegate.swift */,
 				F77B0EDC2EB27DEA000FA9A7 /* Application.swift */,
 				F77B0EDD2EB27DEA000FA9A7 /* ComboBox.swift */,
@@ -245,6 +241,7 @@
 				F77B0EE72EB27DEA000FA9A7 /* TabViewItem.swift */,
 				F77B0EE82EB27DEA000FA9A7 /* UITools.swift */,
 				F77B0EE92EB27DEA000FA9A7 /* WindowController.swift */,
+				F76A60AA2EB2812D004DF0C7 /* Main.storyboard */,
 				880539EC2D4BAFBF00E55104 /* Assets.xcassets */,
 				88A671482D68DDE000CE4E12 /* Resources */,
 				880539F12D4BAFBF00E55104 /* VSPClient.entitlements */,
@@ -307,11 +304,8 @@
 				F77B0ECE2EB27DA7000FA9A7 /* VSPController */,
 				88B40D5C2D4B666700DFE7C5 /* VSPDriver */,
 				88DA7BA72D532C6700C8F759 /* LICENSE */,
-				88AB34EA2D64937300260D19 /* VSPDriver-PortLink.log */,
-				88667D6A2D53474900DFA26E /* VSPDriver-Full.log */,
 				88AEEFF62D5233D4007F2A4C /* IOReg-Outline.md */,
 				88DA7BA62D532C6700C8F759 /* README.md */,
-				88AB34E92D64937300260D19 /* make.sh */,
 				88B40D592D4B666700DFE7C5 /* Frameworks */,
 				88B40D582D4B666700DFE7C5 /* Products */,
 			);
@@ -630,7 +624,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 80;
+				CURRENT_PROJECT_VERSION = 121;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -708,7 +702,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 80;
+				CURRENT_PROJECT_VERSION = 121;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -974,7 +968,7 @@
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 80;
+				CURRENT_PROJECT_VERSION = 121;
 				DRIVERKIT_DEPLOYMENT_TARGET = 23.6;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1009,7 +1003,7 @@
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 80;
+				CURRENT_PROJECT_VERSION = 121;
 				DRIVERKIT_DEPLOYMENT_TARGET = 23.6;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1046,7 +1040,7 @@
 				880539F42D4BAFBF00E55104 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		88B40D512D4B666700DFE7C5 /* Build configuration list for PBXProject "VSPDriver" */ = {
 			isa = XCConfigurationList;
@@ -1055,7 +1049,7 @@
 				88B40D632D4B666700DFE7C5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		88B40D642D4B666700DFE7C5 /* Build configuration list for PBXNativeTarget "VSPDriver" */ = {
 			isa = XCConfigurationList;
@@ -1064,7 +1058,7 @@
 				88B40D662D4B666700DFE7C5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

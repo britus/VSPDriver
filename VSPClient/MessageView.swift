@@ -26,6 +26,7 @@ class MessageView: NSViewController, DriverDataObserver {
     override func viewDidLoad() {
         super.viewDidLoad()
         msgProxy = MessageProxy(parent: self, manager: manager)
+        txLogView.setLineWrapping(false)
     }
     
     override func viewWillAppear() {

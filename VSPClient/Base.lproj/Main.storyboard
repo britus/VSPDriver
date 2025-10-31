@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="24128" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24128"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -1006,7 +1007,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView identifier="tbvPortList" toolTip="List of available virtual ports" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="sequential" selectionHighlightStyle="sourceList" columnReordering="NO" multipleSelection="NO" emptySelection="NO" typeSelect="NO" autosaveName="tbvPortList" rowHeight="24" rowSizeStyle="automatic" headerView="brN-Mi-tlf" viewBased="YES" floatsGroupRows="NO" id="PCD-bJ-CpZ" customClass="TableView" customModule="VSPClient">
-                                            <rect key="frame" x="0.0" y="0.0" width="558" height="22"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="558" height="24"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                             <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1254,7 +1255,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView identifier="tbvLinkList" toolTip="List of available virtual ports" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="sequential" selectionHighlightStyle="sourceList" columnReordering="NO" multipleSelection="NO" emptySelection="NO" typeSelect="NO" autosaveName="tbvPortList" rowHeight="30" rowSizeStyle="automatic" headerView="Ift-Lb-MjA" viewBased="YES" floatsGroupRows="NO" id="G68-gM-Ydt" customClass="TableView" customModule="VSPClient">
-                                            <rect key="frame" x="0.0" y="0.0" width="423" height="20"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="423" height="30"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                             <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1342,7 +1343,7 @@
                                     <rect key="frame" x="1" y="16" width="423" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.44444444444444442" horizontal="NO" id="Of2-F3-idj">
+                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.2857142857142857" horizontal="NO" id="Of2-F3-idj">
                                     <rect key="frame" x="424" y="29" width="15" height="2"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
@@ -1513,13 +1514,13 @@
                                     </constraints>
                                 </view>
                             </box>
-                            <scrollView identifier="txLogView" borderType="line" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" translatesAutoresizingMaskIntoConstraints="NO" id="Tuh-Qa-9aP">
+                            <scrollView identifier="txLogView" borderType="line" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" horizontalScrollElasticity="allowed" verticalScrollElasticity="allowed" translatesAutoresizingMaskIntoConstraints="NO" id="Tuh-Qa-9aP">
                                 <rect key="frame" x="20" y="20" width="503" height="205"/>
                                 <clipView key="contentView" drawsBackground="NO" id="wUQ-xR-HuT">
                                     <rect key="frame" x="1" y="1" width="501" height="203"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textView wantsLayer="YES" importsGraphics="NO" richText="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="q3x-u4-Qrr">
+                                        <textView wantsLayer="YES" editable="NO" importsGraphics="NO" verticallyResizable="YES" selectionGranularity="word" findStyle="bar" allowsDocumentBackgroundColorChange="YES" id="q3x-u4-Qrr">
                                             <rect key="frame" x="0.0" y="0.0" width="501" height="203"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -1530,11 +1531,11 @@
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="IJj-bZ-Gjp">
-                                    <rect key="frame" x="0.0" y="190" width="488" height="15"/>
+                                    <rect key="frame" x="1" y="189" width="486" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="CfM-g8-niC">
-                                    <rect key="frame" x="488" y="0.0" width="15" height="190"/>
+                                    <rect key="frame" x="487" y="1" width="15" height="188"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
@@ -1725,8 +1726,8 @@
                                         </connections>
                                     </comboBox>
                                     <button identifier="pbOpenPort" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uSv-hu-j3w">
-                                        <rect key="frame" x="363" y="13" width="67" height="32"/>
-                                        <buttonCell key="cell" type="push" title="Open" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="MTg-Zz-Ibq">
+                                        <rect key="frame" x="310" y="13" width="86" height="32"/>
+                                        <buttonCell key="cell" type="push" title="Connect" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="MTg-Zz-Ibq">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1735,8 +1736,8 @@
                                         </connections>
                                     </button>
                                     <button identifier="pbClosePort" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3Z1-NC-hXa">
-                                        <rect key="frame" x="431" y="13" width="69" height="32"/>
-                                        <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="EUo-Jd-WBe">
+                                        <rect key="frame" x="397" y="13" width="103" height="32"/>
+                                        <buttonCell key="cell" type="push" title="Disconnect" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="EUo-Jd-WBe">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1833,7 +1834,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField identifier="edTestMessage" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pN8-n1-dsm">
-                                            <rect key="frame" x="90" y="286" width="317" height="20"/>
+                                            <rect key="frame" x="90" y="286" width="253" height="20"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="FnS-jl-axT">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1844,18 +1845,19 @@
                                             </connections>
                                         </textField>
                                         <button identifier="pbLooper" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3DR-4b-Gyb">
-                                            <rect key="frame" x="422" y="13" width="65" height="32"/>
-                                            <buttonCell key="cell" type="push" title="Loop" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bNh-gn-jKR">
+                                            <rect key="frame" x="400" y="13" width="87" height="32"/>
+                                            <buttonCell key="cell" type="push" title="Loop" bezelStyle="rounded" imagePosition="leading" alignment="left" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bNh-gn-jKR">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
+                                                <imageReference key="image" image="point.forward.to.point.capsulepath" catalog="system" symbolScale="medium"/>
                                             </buttonCell>
                                             <connections>
                                                 <action selector="onRunLooper:" target="oDf-uy-sA9" id="UYz-NR-Eaq"/>
                                             </connections>
                                         </button>
                                         <button identifier="pbSendFile" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f7J-Sh-Skw">
-                                            <rect key="frame" x="452" y="279" width="46" height="32"/>
-                                            <buttonCell key="cell" type="push" title="..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="apk-M9-83j">
+                                            <rect key="frame" x="426" y="279" width="72" height="32"/>
+                                            <buttonCell key="cell" type="push" title="File" bezelStyle="rounded" image="text.document.fill" catalog="system" imagePosition="leading" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="apk-M9-83j">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -1864,8 +1866,8 @@
                                             </connections>
                                         </button>
                                         <button identifier="pbSendText" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hJT-IE-umo">
-                                            <rect key="frame" x="408" y="279" width="46" height="32"/>
-                                            <buttonCell key="cell" type="push" title="..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="US5-dx-9UZ">
+                                            <rect key="frame" x="344" y="279" width="84" height="32"/>
+                                            <buttonCell key="cell" type="push" title="Send" bezelStyle="rounded" image="transmission" catalog="system" imagePosition="leading" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="US5-dx-9UZ">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -1879,7 +1881,7 @@
                                                 <rect key="frame" x="1" y="1" width="469" height="216"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <textView wantsLayer="YES" editable="NO" importsGraphics="NO" verticallyResizable="YES" usesFontPanel="YES" spellingCorrection="YES" smartInsertDelete="YES" id="4ZW-Xm-0U4">
+                                                    <textView wantsLayer="YES" editable="NO" importsGraphics="NO" verticallyResizable="YES" usesFontPanel="YES" selectionGranularity="word" findStyle="bar" allowsDocumentBackgroundColorChange="YES" id="4ZW-Xm-0U4">
                                                         <rect key="frame" x="0.0" y="0.0" width="469" height="216"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <color key="textColor" name="selectedMenuItemTextColor" catalog="System" colorSpace="catalog"/>
@@ -1980,6 +1982,9 @@
         <image name="cable.connector.horizontal" catalog="system" width="19" height="7"/>
         <image name="cable.connector.video" catalog="system" width="17" height="16"/>
         <image name="macwindow" catalog="system" width="18" height="14"/>
+        <image name="point.forward.to.point.capsulepath" catalog="system" width="20" height="13"/>
         <image name="rectangle.connected.to.line.below" catalog="system" width="15" height="16"/>
+        <image name="text.document.fill" catalog="system" width="14" height="16"/>
+        <image name="transmission" catalog="system" width="17" height="17"/>
     </resources>
 </document>

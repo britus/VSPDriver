@@ -361,11 +361,8 @@ kern_return_t VSPDriver::getPortList(void* list, uint8_t count)
             if (port->getDeviceName(name, sizeof(IOPropertyName)) != kIOReturnSuccess) {
                 continue;
             }
-            if (port->getFlags(&ivars->m_ports[i].flags) != kIOReturnSuccess) {
-                continue;
-            }
             items[j].id = ivars->m_ports[i].id;
-            items[j].flags = ivars->m_ports[i].flags;
+            items[j].flags = (port->traceFlags() | port->checkFlags());
             strncpy(items[j].name, name, MAX_PORT_NAME);
             j++;
         }
@@ -561,8 +558,6 @@ kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count, vo
         }
 
         // Set 'this' instance as parent and update port item
-        ivars->m_ports[i].port->setParameterChecks(ivars->m_checkFlags & CHECK_MASK);
-        ivars->m_ports[i].port->setTraceFlags(ivars->m_traceFlags & TRACE_MASK);
         ivars->m_ports[i].port->setPortItem(this, &ivars->m_ports[i]);
         
         // Setup user defined serial port parameters

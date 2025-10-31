@@ -1108,73 +1108,20 @@ kern_return_t VSPUserClient::enableChecks(void* reference, IOUserClientMethodArg
         goto error;
     }
 
-    portId = request.parameter.link.source;
-    if (portId) {
-        ret = ivars->m_parent->getPortById(portId, &item, sizeof(TVSPPortItem));
-        if (ret != kIOReturnSuccess || !item.port) {
-            set_ctlr_status(&response, ret, 0xaa000001);
-            goto error;
-        }
-        
-        VSPLog(LOG_PREFIX, "setChecks port: %d\n", //
-               item.port->getPortIdentifier());
-        
-        item.port->setParameterChecks(request.checkFlags);
-    }
-    else {
-        ivars->m_parent->setCheckFlags(request.checkFlags);
-    }
-    
-    return enableTrace(reference, arguments);
+    ivars->m_parent->setCheckFlags(request.checkFlags);
+    ivars->m_parent->setTraceFlags(request.traceFlags);
+
+    return getPortList(reference, arguments);
 
 error:
     return scheduleEvent(&response, arguments);
 }
 
 // --------------------------------------------------------------------
-// Enable serial port protocol trace
+// deprecated, wrap to enableChecks() function
 //
 kern_return_t VSP_IMPL_EX_METHOD(exEnableTrace, enableTrace)
 kern_return_t VSPUserClient::enableTrace(void* reference, IOUserClientMethodArguments* arguments)
 {
-    kern_return_t ret;
-    TVSPControllerData response = {};
-    TVSPControllerData request = {};
-    TVSPPortItem item = {};
-    uint8_t portId;
-    
-    VSPLog(LOG_PREFIX, "enableTrace called.\n");
-
-    if ((ret = toRequest(arguments, &request)) != kIOReturnSuccess) {
-        set_ctlr_status(&response, ret, 0xee00ee00);
-        goto error;
-    }
-    if ((ret = toResponse(ivars, &request, &response)) != kIOReturnSuccess) {
-        set_ctlr_status(&response, ret, 0xee00ee01);
-        goto error;
-    }
-
-    portId = request.parameter.link.source;
-    if (portId) {
-        ret = ivars->m_parent->getPortById(portId, &item, sizeof(TVSPPortItem));
-        if (ret != kIOReturnSuccess || !item.port) {
-            set_ctlr_status(&response, ret, 0xaa000001);
-            goto error;
-        }
-        
-        VSPLog(LOG_PREFIX, "setTrace port: %d\n", //
-               item.port->getPortIdentifier());
-        
-        // Keep the flags in the structure
-        item.port->setTraceFlags(request.traceFlags);
-    }
-    else {
-        ivars->m_parent->setTraceFlags(request.traceFlags);
-    }
-
-    // return updated port
-    return getPortList(reference, arguments);
-    
-error:
-    return scheduleEvent(&response, arguments);
+    return enableChecks(reference, arguments);
 }

@@ -92,24 +92,18 @@ public:
     void setPortLinkIdentifier(uint8_t id) LOCALONLY;
     uint8_t getPortLinkIdentifier() LOCALONLY;
 
-    // Get flags
-    kern_return_t getFlags(uint64_t* flags) LOCALONLY;
-
     // Get our TTY device name
     kern_return_t getDeviceName(char* result, const uint32_t size) LOCALONLY;
     
     // Routing through port link
-    kern_return_t sendToPortLink(const void* buffer, const uint32_t size) LOCALONLY;
+    kern_return_t sendToPortLink(const void* buffer, const uint64_t size) LOCALONLY;
 
     // Update rxqbmd
-    kern_return_t sendResponse(void* sender, const void* buffer, const uint32_t size) LOCALONLY;
+    kern_return_t sendResponse(void* sender, const void* buffer, const uint64_t size) LOCALONLY;
     
-    // Enable or disable traces
-    void setTraceFlags(uint64_t flags) LOCALONLY;
+    uint64_t traceFlags() LOCALONLY;
+    uint64_t checkFlags() LOCALONLY;
     
-    // Enable or disable port parameter checks
-    void setParameterChecks(uint64_t flags) LOCALONLY;
-
     // internal modem status update
     void setClearToSend(bool cts) LOCALONLY;
     void setDataSetReady(bool dsr) LOCALONLY;
