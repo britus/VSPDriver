@@ -26,19 +26,117 @@ class UITools {
         Bundle.main.infoDictionary?["CFBundleVersion"] as! String
     }
 
-    // Basic alert with title and message
-    static public func showMessage(message: String, info: String? = nil, withCompletion completion: (() -> Void)? = nil) {
-        DispatchQueue.main.async {
-            let alert = NSAlert()
-            alert.window.title = applicationName()
-            alert.messageText = message
-            alert.informativeText = ((info?.isEmpty) != nil) ? info! : ""
-            alert.alertStyle = .informational
-            alert.runModal()
-            completion?()
+    class CustomAlertViewController: NSViewController {
+        let messageLabel = NSTextField()
+        let buttonStackView = NSStackView()
+
+        let width = 280
+        let height = 160
+        var titleText: String = ""
+        var messageText: String = ""
+        var completion: (() -> Void)?
+        
+        init(title: String, message: String, completion: (() -> Void)? = nil) {
+            self.titleText = title
+            self.messageText = message
+            self.completion = completion
+            super.init(nibName: nil, bundle: nil)
+        }
+        
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+
+        override func loadView() {
+            self.view = NSView(frame: NSRect(x: 0, y: 0, width: width, height: height))
+            self.preferredContentSize = self.view.frame.size
+        }
+        
+        override func viewDidLoad() {
+            super.viewDidLoad()
+
+            // Message Label
+            messageLabel.isEditable = false
+            messageLabel.isBordered = false
+            messageLabel.backgroundColor = .clear
+            messageLabel.stringValue = messageText
+            messageLabel.font = NSFont.boldSystemFont(ofSize: 14)
+            messageLabel.alignment = .left
+            messageLabel.isSelectable = false
+            messageLabel.lineBreakMode = .byWordWrapping
+            messageLabel.maximumNumberOfLines = 0 // max
+            messageLabel.isSelectable = true
+            messageLabel.cell?.isScrollable = true
+            messageLabel.allowsDefaultTighteningForTruncation = true
+
+            // Buttons
+            let okButton = NSButton(title: "OK", target: self, //
+                                    action: #selector(okButtonClicked))
+            
+            buttonStackView.orientation = .horizontal
+            buttonStackView.distribution = .fillEqually
+            buttonStackView.addView(okButton, in: .trailing)
+            
+            let mainStackView = NSStackView(views: [messageLabel, buttonStackView])
+            mainStackView.orientation = .vertical
+            mainStackView.distribution = .fill
+            mainStackView.spacing = 15
+            
+            self.view.addSubview(mainStackView)
+            
+            // Constraints
+            mainStackView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                mainStackView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 20),
+                mainStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
+                mainStackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
+                mainStackView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -20)
+            ])
+            
+            updateLayout()
+        }
+        
+        override func viewWillAppear() {
+            super.viewWillAppear()
+            self.view.window?.title = self.titleText
+        }
+        
+        func updateLayout() {
+            self.view.window?.layoutIfNeeded()
+        }
+        
+        @objc func okButtonClicked() {
+            NSApp.mainWindow?.contentViewController?.dismiss(self)
+            DispatchQueue.main.async {
+                self.completion?()
+            }
         }
     }
     
+    static func showAlert( //
+            title: String,
+            message: String,
+            window: NSWindow? = nil,
+            completion: (() -> Void)? = nil)
+    {
+        let vcAlert = CustomAlertViewController( //
+            title: title, message: message, completion: completion)
+        //NSApp.mainWindow?.contentViewController?.presentAsModalWindow(vcAlert)
+        NSApp.mainWindow?.contentViewController?.presentAsSheet(vcAlert)
+    }
+    
+    // Show alert dialog async
+    static public func showMessage(message: String, info: String? = nil, withCompletion completion: (() -> Void)? = nil) {
+        var text: String = message
+        DispatchQueue.main.async {
+            if let infoText = info {
+                text += "\n\(infoText)"
+            }
+            showAlert(title: applicationName(), message: text, completion: completion)
+        }
+    }
+    
+    // Show alert dialog async
     static public func showMessage(message: String, info: String? = nil) {
         showMessage(message: message, info: info, withCompletion: nil)
     }

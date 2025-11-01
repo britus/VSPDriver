@@ -244,7 +244,7 @@ extension DriverManager: OSSystemExtensionRequestDelegate {
     internal func requestNeedsUserApproval(_ request: OSSystemExtensionRequest) {
         notify(.requiresUserApproval, code: 0, domain: errorDomain,
                message: "User must approve in System Settings " //
-               + "→ Privacy & Security.\n\(request.identifier)")
+               + "→ Privacy & Security\nfollowing driver extension:\n\nVirtual Serial Port Driver")
     }
 
     internal func request(

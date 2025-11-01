@@ -76,7 +76,10 @@ public:
     virtual kern_return_t HwProgramFlowControl(uint32_t arg, uint8_t xon, uint8_t xoff) override;
 
     // ------ [VSPSerialPort inrernals] -------------------------
-
+    
+    virtual void ResponseAvailable(OSAction *action)
+                   TYPE(IODataQueueDispatchSource::DataAvailable);
+    
     // Release all resource in IVars
     void cleanupResources() LOCALONLY;
     

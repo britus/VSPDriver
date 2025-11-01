@@ -24,6 +24,9 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
     @IBOutlet weak var pbIoSendFile: NSButton!
     @IBOutlet weak var edTextField: NSTextField!
     @IBOutlet weak var txLogView: NSTextView!
+    @IBOutlet weak var edAutoTextLen: NSTextField!
+    @IBOutlet weak var cbxSendTextAddCR: NSButton!
+    @IBOutlet weak var cbxSendTextAddLF: NSButton!
     
     struct SerialPortPinouts {
         var DCD: Bool = false
@@ -40,6 +43,9 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
     private var isLooperRunning: Bool = false
     private var deviceName: String = ""
     private var textToSend: String = ""
+    private var autoTextLen: String = "16"
+    private var isAddCrEnabled: Bool = true
+    private var isAddLfEnabled: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +55,11 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
         pbPortClose.isEnabled = false
         edTextField.isEnabled = false
         edTextField.delegate = self
+        edAutoTextLen.isEditable = false
+        cbxSendTextAddCR.isEnabled = false
+        cbxSendTextAddCR.state = .on
+        cbxSendTextAddLF.isEnabled = false
+        cbxSendTextAddLF.state = .on
         txLogView.string = ""
         txLogView.setLineWrapping(false)
         
@@ -158,10 +169,13 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
             self.logMessage("Error \(String(describing: error))")
             self.pbPortOpen.isEnabled = true
             self.pbPortClose.isEnabled = false
-            self.edTextField.isEnabled = true
-            self.pbIoLooper.isEnabled = true
-            self.pbIoSendFile.isEnabled = true
-            self.pbIoSendText.isEnabled = true
+            self.edTextField.isEnabled = false
+            self.pbIoLooper.isEnabled = false
+            self.pbIoSendFile.isEnabled = false
+            self.pbIoSendText.isEnabled = false
+            self.edAutoTextLen.isEditable = false
+            self.cbxSendTextAddCR.isEnabled = false
+            self.cbxSendTextAddLF.isEnabled = false
         }
     }
 
@@ -174,6 +188,9 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
             self.pbIoLooper.isEnabled = true
             self.pbIoSendFile.isEnabled = true
             self.pbIoSendText.isEnabled = true
+            self.edAutoTextLen.isEditable = true
+            self.cbxSendTextAddCR.isEnabled = true
+            self.cbxSendTextAddLF.isEnabled = true
         }
     }
 
@@ -187,6 +204,9 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
             self.pbIoLooper.isEnabled = false
             self.pbIoSendFile.isEnabled = false
             self.pbIoSendText.isEnabled = false
+            self.edAutoTextLen.isEditable = false
+            self.cbxSendTextAddCR.isEnabled = false
+            self.cbxSendTextAddLF.isEnabled = false
         }
     }
 
@@ -199,6 +219,9 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
             self.pbIoLooper.isEnabled = false
             self.pbIoSendFile.isEnabled = false
             self.pbIoSendText.isEnabled = false
+            self.edAutoTextLen.isEditable = false
+            self.cbxSendTextAddCR.isEnabled = false
+            self.cbxSendTextAddLF.isEnabled = false
         }
     }
     
@@ -293,9 +316,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
                         // 1 KB = 1024 bytes
                         let maxKb = UInt64(16 * 1024)
                         if fileSize.uint64Value >= maxKb {
-                            let msg = 
-                              "Files larger than or equal to 16 KB cannot "
-                            + "be transferred. MacOS limits this in the DriverKit sandbox."
+                            let msg = "Files larger than or equal to 16 KByte cannot be transferred."
                             UITools.showMessage(message: msg)
                             return
                         }
@@ -322,7 +343,13 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
         if textToSend.isEmpty {
             textToSend = edTextField.stringValue
         }
-        let text = textToSend + "\r\n"
+        var text = textToSend
+        if (!text.contains("\r") && isAddCrEnabled) {
+            text += "\r"
+        }
+        if (!text.endsWith("\n") && isAddLfEnabled) {
+            text += "\n"
+        }
         logMessage(">: \(text)")
         serialPort?.send(text.data(using: .utf8)!)
     }
@@ -365,6 +392,18 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
         }
     }
 
+    @IBAction func onTextLengthChanged(_ sender: NSTextField) {
+        autoTextLen = sender.stringValue
+    }
+    
+    @IBAction func onSendTextAddCR(_ sender: NSButton) {
+        isAddCrEnabled = (sender.state == .on)
+    }
+    
+    @IBAction func onSendTextAddLF(_ sender: NSButton) {
+        isAddLfEnabled = (sender.state == .on)
+    }
+    
     @IBAction func onTextChanged(_ sender: NSTextField) {
         textToSend = edTextField.stringValue
     }

@@ -1103,8 +1103,8 @@ kern_return_t VSPUserClient::enableChecks(void* reference, IOUserClientMethodArg
     kern_return_t ret;
     TVSPControllerData response = {};
     TVSPControllerData request = {};
-    TVSPPortItem item = {};
-    uint8_t portId;
+    //TVSPPortItem item = {};
+    //uint8_t portId;
 
     VSPLog(LOG_PREFIX, "enableChecks called.\n");
 

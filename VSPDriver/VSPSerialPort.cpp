@@ -23,10 +23,12 @@
 #include <DriverKit/OSSet.h>
 #include <DriverKit/OSOrderedSet.h>
 #include <DriverKit/OSPtr.h>
+#include <DriverKit/OSSharedPtr.h>
 #include <DriverKit/OSData.h>
 #include <DriverKit/OSDictionary.h>
 #include <DriverKit/OSCollection.h>
 #include <DriverKit/OSCollections.h>
+#include <DriverKit/OSAction.h>
 #include <DriverKit/IOLib.h>
 #include <DriverKit/IOTypes.h>
 #include <DriverKit/IOService.h>
@@ -145,7 +147,9 @@ struct VSPSerialPort_IVars {
     uint32_t m_hwStatus = 0;
     uint32_t m_hwMCR = 0;
     uint32_t m_hwLatency = 25;
-    
+
+    bool m_hwActivated = false;                     // set by OS to activate SP hardware
+
     TUartParameters m_uartParams = {};              // set by TTY client and VSPUserClient
     THwFlowControl m_hwFlowControl = {};            // set by TTY client and VSPUserClient
     
@@ -154,7 +158,17 @@ struct VSPSerialPort_IVars {
     uint32_t m_rxBufferHighWaterMark = 0;           // i.e. 80% capacity
     uint32_t m_rxBufferLowWaterMark = 0;            // i.e. 20% capacity
 
-    bool m_hwActivated = false;                     // set by OS to activate SP hardware
+    // Shared TX data dispatch source for sendResponse()
+    IODispatchQueue* m_responseQueue = NULL;
+#if 0
+    IODataQueueDispatchSource* m_dqdsResponse = NULL;
+    OSAction* m_respAction = NULL;
+#endif
+};
+
+struct TResponseActionInfo {
+    IOBufferMemoryDescriptor* bmd = NULL;
+    VSPSerialPort* self = NULL;
 };
 
 // --------------------------------------------------------------------
@@ -271,7 +285,9 @@ finish:
 //
 kern_return_t IMPL(VSPSerialPort, Start)
 {
+    // The size of the queue in bytes.
     kern_return_t ret;
+    char queueId[255];
 
     VSPLog(LOG_PREFIX, "Start: called.\n");
     
@@ -306,7 +322,40 @@ kern_return_t IMPL(VSPSerialPort, Start)
     ivars->m_uartParams.nHalfStopBits = 2;
     ivars->m_uartParams.nDataBits = 8;
     ivars->m_uartParams.parity = PD_RS232_PARITY_DEFAULT;
+    
+    // --
+    // Create internal data dispatching for sendResponse() action
+    // --
+    snprintf(queueId, 251, "VSPSerialPort.queue.%s%s", //
+             ivars->m_portBaseName, ivars->m_portSuffix);
+ 
+    ret = IODispatchQueue::Create(queueId, 0, 0, &ivars->m_responseQueue);
+    if (ret != kIOReturnSuccess)
+    {
+        VSPErr(LOG_PREFIX, "Start: IODispatchQueue::Create failed with error: 0x%08x.", ret);
+        goto error_exit;
+    }
+    
+#if 0
+    ret = IODataQueueDispatchSource::Create( //
+                            sizeof(TResponseActionInfo),
+                            ivars->m_responseQueue,
+                            &ivars->m_dqdsResponse);
+    if (ret != kIOReturnSuccess || !ivars->m_dqdsResponse) {
+        VSPErr(LOG_PREFIX, "Start: Invalid RX action memory segment.\n");
+        goto error_exit;
+    }
 
+    ret = CreateActionResponseAvailable(sizeof(TResponseActionInfo), &ivars->m_respAction);
+    if (ret != kIOReturnSuccess) {
+        VSPErr(LOG_PREFIX, "Start: Failed to allocate response action object.\n");
+        goto error_exit;
+    }
+    ivars->m_dqdsResponse->SetDataAvailableHandler(ivars->m_respAction);
+#endif
+    
+    // --
+    
     VSPLog(LOG_PREFIX, "Start: register service.\n");
     
     // Register driver instance to IOReg
@@ -424,6 +473,12 @@ void VSPSerialPort::cleanupResources()
     ivars->m_portId = 0;
     ivars->m_portLinkId = 0;
 
+    VSPLog(LOG_PREFIX, "cleanupResources removing ivars->m_rcvqds\n");
+#if 0
+    OSSafeReleaseNULL(ivars->m_dqdsResponse);
+    OSSafeReleaseNULL(ivars->m_respAction);
+#endif
+    OSSafeReleaseNULL(ivars->m_responseQueue);
     IOLockFreeNULL(ivars->m_lock);
 }
 
@@ -525,7 +580,7 @@ kern_return_t IMPL(VSPSerialPort, ConnectQueues)
         VSPErr(LOG_PREFIX, "ConnectQueues: Unable to get RX-MD segment. code=%x\n", ret);
         goto error_exit;
     }
-
+    
     // Get the address segment of the SerialPortInterface (shared space with kernel)
     if ((ret = (*ifmd)->GetAddressRange(&ifseg)) != kIOReturnSuccess) {
         VSPErr(LOG_PREFIX, "ConnectQueues: IF GetAddressRange failed. code=%x\n", ret);
@@ -1198,6 +1253,48 @@ kern_return_t VSPSerialPort::sendToPortLink(const void* buffer, const uint64_t s
     return kIOReturnSuccess;
 }
 
+static void dispatchResponse(void* context)
+{
+    TResponseActionInfo* ctx = reinterpret_cast<TResponseActionInfo*>(context);
+    
+    if (ctx->self->traceFlags() & TRACE_PORT_RX) {
+        VSPLog(LOG_PREFIX, "dispatchResponse called. ctx=%p\n", ctx);
+    }
+        
+    if (ctx->self->traceFlags() & TRACE_PORT_RX) {
+        VSPLog(LOG_PREFIX, "dispatchResponse: ctx->bmd=%p\n", ctx->bmd);
+    }
+
+    IOAddressSegment seg = {};
+    IOReturn ret = ctx->bmd->GetAddressRange(&seg);
+    if (ret != kIOReturnSuccess) {
+        VSPErr(LOG_PREFIX, "dispatchResponse: Failed to get memory descriptor segment.\n");
+        return;
+    }
+
+    void* buffer = reinterpret_cast<void*>(seg.address);
+    // call response routing if available
+    if (ctx->self->ivars->m_portLinkId) {
+        ret = ctx->self->sendToPortLink(buffer, seg.length);
+    } else {
+        ret = ctx->self->sendResponse(ctx->self, buffer, seg.length);
+    }
+    if (ret != kIOReturnSuccess) {
+        if (ret == kIOReturnNoSpace) {
+            VSPErr(LOG_PREFIX, "dispatchResponse: sendResponse failed. No rxbmd-buffer space! ret=0x%x\n", ret);
+        } else {
+            VSPErr(LOG_PREFIX, "dispatchResponse: sendResponse failed with error. ret=0x%x\n", ret);
+        }
+    }
+    
+    if (ctx->self->traceFlags() & TRACE_PORT_RX) {
+        VSPLog(LOG_PREFIX, "dispatchResponse: cleanup resources.");
+    }
+    
+    OSSafeReleaseNULL(ctx->bmd);
+    IOSafeDeleteNULL(ctx, TResponseActionInfo, 1);
+}
+
 // --------------------------------------------------------------------
 // TxDataAvailable_Impl()
 // TX data ready to read from m_txqbmd segment
@@ -1225,7 +1322,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
 
     /* end reached */
     if (ivars->m_spi->txPI == ivars->m_spi->txCI) {
-        VSPErr(LOG_PREFIX, "TxDataAvailable: No data to send txPI=%u == txCI=%u capacity=%llu",
+        VSPErr(LOG_PREFIX, "TxDataAvailable: No data to send? OS-BUG? txPI=%u == txCI=%u capacity=%llu",
                ivars->m_spi->txPI, ivars->m_spi->txCI, ivars->m_txseg.length);
         // notify OS space available
         TxFreeSpaceAvailable();
@@ -1241,10 +1338,15 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     const uint8_t* base = reinterpret_cast<uint8_t*>(ivars->m_txseg.address);
     const uint64_t capacity = ivars->m_txseg.length;
     bool dataProcessed = false;
+    IOReturn ret;
 
     while (ivars->m_spi->txPI != ivars->m_spi->txCI) {
         const uint64_t txPI = ivars->m_spi->txPI;
         const uint64_t txCI = ivars->m_spi->txCI;
+        //TResponseActionInfo* actionRef = NULL;
+        IOBufferMemoryDescriptor* bmdResponse = NULL;
+        IOAddressSegment segResponse = {};
+        void* respbuff = NULL;
         uint64_t size = 0;
  
         if (txPI >= txCI) {
@@ -1255,7 +1357,9 @@ void IMPL(VSPSerialPort, TxDataAvailable)
         
         // strong sane check
         if (size > capacity || txCI >= capacity || txPI >= capacity) {
-            VSPErr(LOG_PREFIX, "TxDataAvailable: Index corruption detected - OS BUG? txPI=%llu txCI=%llu size=%llu cap=%llu",
+            VSPErr(LOG_PREFIX,
+                   "TxDataAvailable: Index corruption detected - "
+                   "OS BUG? txPI=%llu txCI=%llu size=%llu cap=%llu",
                    txPI, txCI, size, capacity);
             // reset consumer and producer
             ivars->m_spi->txCI = 0;
@@ -1283,11 +1387,11 @@ void IMPL(VSPSerialPort, TxDataAvailable)
             VSPLog(LOG_PREFIX, "TxDataAvailable: dump devbuff=0x%llx len=%llu\n", (uint64_t) ktxbuff, size);
             VSPLog(LOG_PREFIX, "TxDataAvailable: %{public}s\n", (const char*) dump);
         }
-
+#if 0
         // make sure sendResponse can be lock again
         VSPUnlock(ivars);
         
-        IOReturn ret;
+        // call response routing if available
         if (ivars->m_portLinkId) {
             ret = sendToPortLink(ktxbuff, size);
         } else {
@@ -1303,10 +1407,64 @@ void IMPL(VSPSerialPort, TxDataAvailable)
             dataProcessed = false;
             goto finish;
         }
-
+        
         // restore lock
         VSPAquireLock(ivars);
+#else
+        ret = IOBufferMemoryDescriptor::Create(kIOMemoryDirectionInOut, size, 0, &bmdResponse);
+        if (ret != kIOReturnSuccess || !bmdResponse) {
+            VSPErr(LOG_PREFIX, "TxDataAvailable: Failed to allocate RX action memory descriptor.\n");
+            goto not_routed;
+        }
+
+        // 3) Den Buffer per GetAddressRange freischalten und die Daten hinein kopieren.
+        //    (GetAddressRange führt typischerweise einen Kerneltrip durch; prüfen auf Erfolg.)
+        ret = bmdResponse->GetAddressRange(&segResponse);
+        if (ret != kIOReturnSuccess) {
+            VSPErr(LOG_PREFIX, "TxDataAvailable: Failed to get RX action memory segment.\n");
+            OSSafeReleaseNULL(bmdResponse);
+            goto not_routed;
+        }
+
+        // Sanity-Check
+        if (segResponse.address == 0 || segResponse.length < size) {
+            VSPErr(LOG_PREFIX, "TxDataAvailable: Invalid RX action memory segment.\n");
+            OSSafeReleaseNULL(bmdResponse);
+            goto not_routed;
+        }
         
+        // Copy available TX data block to RX action memory descriptor
+        respbuff = reinterpret_cast<void*>(segResponse.address);
+        memcpy(respbuff, ktxbuff, size);
+ 
+#if 0
+        actionRef = reinterpret_cast<TResponseActionInfo*>(ivars->m_respAction->GetReference());
+        actionRef->bmd = bmdResponse;
+        actionRef->self = this;
+        ivars->m_respAction->retain();
+
+        ivars->m_dqdsResponse->Enqueue(sizeof(TResponseActionInfo), ^(void *data, size_t dataSize) {
+            VSPLog(LOG_PREFIX, "TxDataAvailable: m_dqdsResponse->Enqueue: ^{} data=%p size=%zu", data, dataSize);
+            if (!data) {
+                VSPErr(LOG_PREFIX, "m_dqdsResponse->Enqueue: Invalid data size detected.\n");
+            }
+            if (dataSize != sizeof(TResponseActionInfo)) {
+                VSPErr(LOG_PREFIX, "m_dqdsResponse->Enqueue: Invalid data size detected.\n");
+            }
+        });
+        
+#endif
+        TResponseActionInfo* ractx;
+        ractx = IONewZero(TResponseActionInfo, 1);
+        ractx->bmd = bmdResponse;
+        ractx->self = this;
+
+        ivars->m_responseQueue->DispatchAsync_f(ractx, dispatchResponse);
+
+    not_routed:
+
+#endif // --
+    
         // advance consumer index, make sure it's not
         // disconnected before we can update
         if (ivars->m_spi) {
@@ -1335,6 +1493,55 @@ finish:
     VSPUnlock(ivars);
 }
 
+// --------------------------------------------------------------------
+// ResponseAvailable_IMPL(OSAction* action)
+// Event raised by IODataDispatchSource::DataAvailable() event
+//
+void IMPL(VSPSerialPort, ResponseAvailable)
+{
+#if 0
+    if (traceFlags() & TRACE_PORT_RX) {
+        VSPLog(LOG_PREFIX, "ResponseAvailable called. action=%p\n", action);
+    }
+    
+    if (!action) {
+        VSPErr(LOG_PREFIX, "ResponseAvailable: Event action NULL pointer!");
+        return;
+    }
+    
+    void* data = reinterpret_cast<TResponseActionInfo*>(action->GetReference());
+    
+    if (traceFlags() & TRACE_PORT_RX) {
+        VSPLog(LOG_PREFIX, "ResponseAvailable: action.reference=%p\n", data);
+    }
+
+    TResponseActionInfo* info = (TResponseActionInfo*) data;
+    
+    if (traceFlags() & TRACE_PORT_RX) {
+        VSPLog(LOG_PREFIX, "ResponseAvailable: info.bmd=%p\n", info->bmd);
+    }
+
+    IOAddressSegment seg = {};
+    IOReturn ret = info->bmd->GetAddressRange(&seg);
+    if (ret != kIOReturnSuccess) {
+        VSPErr(LOG_PREFIX, "ResponseAvailable: Failed to get memory descriptor segment.\n");
+        return;
+    }
+    
+    void* buffer = reinterpret_cast<void*>(seg.address);
+    ret = this->sendResponse(this, buffer, seg.length);
+    if (ret != kIOReturnSuccess) {
+        VSPErr(LOG_PREFIX, "ResponseAvailable: sendResponse failed with error. ret=0x%x\n", ret);
+    }
+    
+    if (traceFlags() & TRACE_PORT_RX) {
+        VSPLog(LOG_PREFIX, "ResponseAvailable: cleanup resources.");
+    }
+    
+    OSSafeReleaseNULL(info->bmd);
+#endif
+}
+
 #ifdef DEBUG
 static inline void dbg_dump_output(const uint8_t* outptr, uint64_t size)
 {
@@ -1353,6 +1560,7 @@ static inline void dbg_dump_output(const uint8_t* outptr, uint64_t size)
 // --------------------------------------------------------------------
 // Called by TxDataAvailable() or sendToPortLink() to dispatch RX data
 //
+#define RX_FULL_ALGO
 kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, const uint64_t sizeIn)
 {
     if (traceFlags() & TRACE_PORT_RX) {
@@ -1379,16 +1587,17 @@ kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, cons
     
     IOReturn ret = kIOReturnSuccess;
     const uint8_t* src = reinterpret_cast<const uint8_t*>(buffer);
-    bool oldBufferAlmostFull;
     uint64_t bytesToWrite = sizeIn;
+#ifdef RX_FULL_ALGO
     uint64_t bytesWritten = 0;
     uint64_t usedSpace;
     uint64_t freeSpace;
+    bool oldBufferAlmostFull;
+#endif
     uint64_t capacity;
     uint64_t rxPI;
     uint64_t rxCI;
     
-
     // --- Get RX buffer info ---
     uint8_t* base = nullptr;
     if (ivars->m_rxqbmd) {
@@ -1417,6 +1626,7 @@ kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, cons
                rxPI, rxCI, capacity, bytesToWrite);
     }
 
+#ifdef RX_FULL_ALGO
     // --- Validate indices ---
     if (rxPI >= capacity || rxCI >= capacity) {
         VSPErr(LOG_PREFIX, "sendResponse: index corruption detected (rxPI=%llu, rxCI=%llu, cap=%llu) -> resetting.\n",
@@ -1439,7 +1649,8 @@ kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, cons
 
     if (freeSpace == 0) {
         if (traceFlags() & TRACE_PORT_RX) {
-            VSPLog(LOG_PREFIX, "sendResponse: buffer full, no space available.\n");
+            VSPErr(LOG_PREFIX, "sendResponse: buffer full, no space available. rxPI=%llu, rxCI=%llu cap=%llu\n",
+                   rxPI, rxCI, capacity);
         }
         ret = kIOReturnNoSpace;
         goto done;
@@ -1489,8 +1700,8 @@ kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, cons
             memcpy(base, src + firstChunk, secondChunk);
         }
         
-        rxPI = secondChunk; // Wrap around
         bytesWritten = bytesToWrite;
+        rxPI = secondChunk; // Wrap around
     }
 
     // --- Update producer index ---
@@ -1510,7 +1721,7 @@ kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, cons
         ivars->m_rxBufferAlmostFull = true;
         setClearToSend(false);
         if (traceFlags() & TRACE_PORT_RX) {
-            VSPLog(LOG_PREFIX, "sendResponse: buffer almost full - usedSpace=%llu, HighWaterMark=%u\n",
+            VSPErr(LOG_PREFIX, "sendResponse: buffer almost full - usedSpace=%llu, HighWaterMark=%u\n",
                    usedSpace, ivars->m_rxBufferHighWaterMark);
         }
     }
@@ -1539,7 +1750,20 @@ kern_return_t VSPSerialPort::sendResponse(void* sender, const void* buffer, cons
             RxFreeSpaceAvailable();
         }
     }
-
+#else
+    setClearToSend(false);
+    
+    memcpy(base, src, bytesToWrite);
+    ivars->m_spi->rxPI = static_cast<uint32_t>(bytesToWrite);
+    ivars->m_spi->rxCI = 0;
+    
+    setDataSetReady(true);
+    setClearToSend(true);
+    
+    RxDataAvailable();
+    RxFreeSpaceAvailable();
+#endif
+    
 done:
     VSPUnlock(ivars);
 
@@ -1549,4 +1773,8 @@ done:
 
     return ret;
 }
+#undef RX_FULL_ALGO
 
+/*
+ * TODO: https://chat.deepseek.com/share/m5bfy7kgwri4gf577m
+ */

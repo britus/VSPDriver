@@ -29,6 +29,7 @@ class WindowController: NSWindowController {
         NSLog("\(String(describing: self.contentViewController))")
         tabViewController = ((self.contentViewController //
                               as! NSTabViewController) as! TabViewController)
+        tabViewController?.view.isHidden = true
         manager.addObserver(self)
         
         // Configure window appearance and behavior
@@ -280,37 +281,67 @@ extension WindowController: DriverManagerObserver {
     func driverStatusDidChange(_ status: DriverStatus, code: UInt64, domain: String, message: String) {
         switch status {
             case .notLoaded:
-                UITools.showBasicNotification(body: message)
+                DispatchQueue.main.async {
+                    self.tabViewController?.view.isHidden = true
+                    UITools.showBasicNotification(body: message)
+                }
                 break
             case .loading:
-                willLoadDriver()
+                DispatchQueue.main.async {
+                    self.willLoadDriver()
+                }
                 break
             case .loaded:
-                didFinish(withResult: code, message: message)
+                DispatchQueue.main.async {
+                    self.tabViewController?.view.isHidden = true
+                    self.didFinish(withResult: code, message: message)
+                }
                 break
             case .unloading:
-                willUnloadDriver()
+                DispatchQueue.main.async {
+                    self.willUnloadDriver()
+                }
                 break
             case .unloaded:
-                didUnload(withStatus: code, message: message)
+                DispatchQueue.main.async {
+                    self.tabViewController?.view.isHidden = true
+                    self.didUnload(withStatus: code, message: message)
+                }
                 break
             case .failure:
-                didFail(withError: code, message: message)
+                DispatchQueue.main.async {
+                    self.tabViewController?.view.isHidden = true
+                    self.didFail(withError: code, message: message)
+                }
                 break
             case .requiresUserApproval:
-                UITools.showMessage(message: message)
+                DispatchQueue.main.async {
+                    self.tabViewController?.view.isHidden = true
+                    UITools.showMessage(message: message)
+                }
                 break
             case .willCompleteAfterReboot:
-                didFail(withError: code, message: message)
+                DispatchQueue.main.async {
+                    self.tabViewController?.view.isHidden = true
+                    self.didFail(withError: code, message: message)
+                }
                 break
             case .connected:
-                controllerConnected()
+                DispatchQueue.main.async {
+                    self.tabViewController?.view.isHidden = false
+                    self.controllerConnected()
+                }
                 break
             case .disconnected:
-                controllerDisconnected()
+                DispatchQueue.main.async {
+                    self.tabViewController?.view.isHidden = true
+                    self.controllerDisconnected()
+                }
                 break
             case .dataError:
-                didFail(withError: code, message: message)
+                DispatchQueue.main.async {
+                    self.didFail(withError: code, message: message)
+                }
                 break
             default:
                 break

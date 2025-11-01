@@ -519,8 +519,8 @@ void IMPL(VSPDriver, SPStateEvent)
 //
 kern_return_t VSPDriver::CreateSerialPort(IOService* provider, uint8_t count, void* params, uint64_t flags, uint64_t size)
 {
-    const uint64_t TRACE_MASK = (TRACE_PORT_RX|TRACE_PORT_TX|TRACE_PORT_IO);
-    const uint64_t CHECK_MASK = (CHECK_BAUD|CHECK_PARITY|CHECK_FLOWCTRL|CHECK_DATA_SIZE|CHECK_STOP_BITS);
+    //const uint64_t TRACE_MASK = (TRACE_PORT_RX|TRACE_PORT_TX|TRACE_PORT_IO);
+    //const uint64_t CHECK_MASK = (CHECK_BAUD|CHECK_PARITY|CHECK_FLOWCTRL|CHECK_DATA_SIZE|CHECK_STOP_BITS);
     kern_return_t ret;
     IOService* service = nullptr;
         
