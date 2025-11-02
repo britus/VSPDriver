@@ -1141,6 +1141,8 @@ kern_return_t VSPUserClient::enableTrace(void* reference, IOUserClientMethodArgu
 kern_return_t VSP_IMPL_EX_METHOD(exShutdown, shutdown)
 kern_return_t VSPUserClient::shutdown(void* reference, IOUserClientMethodArguments* arguments)
 {
+    // KILL driver - no other way!
     __builtin_trap();
-    return 0;
+    
+    return kIOReturnAborted;
 }

@@ -62,24 +62,6 @@ using namespace driverkit::serial;
 #define IOLockFreeNULL(l) { if (NULL != (l)) { IOLockFree(l); (l) = NULL; } }
 #endif
 
-#define VSPAquireLock(ivars) \
-{ \
-++ivars->m_lockLevel; \
-if (traceFlags() & TRACE_PORT_IO) { \
-VSPLog(LOG_PREFIX, "=> lock level=%d this=0x%llx", ivars->m_lockLevel, (uint64_t) this); \
-} \
-IOLockLock(ivars->m_lock); \
-}
-
-#define VSPUnlock(ivars) \
-{ \
-if (traceFlags() & TRACE_PORT_IO) { \
-VSPLog(LOG_PREFIX, "<= lock level=%d this=0x%llx", ivars->m_lockLevel, (uint64_t) this); \
-} \
---ivars->m_lockLevel; \
-IOLockUnlock(ivars->m_lock); \
-}
-
 #ifndef BIT
 #define BIT(b) (1 << b)
 #endif
@@ -149,8 +131,6 @@ struct VSPSerialPort_IVars {
     uint32_t m_hwMCR = 0;
     uint32_t m_hwLatency = 25;
 
-    bool m_hwActivated = false;                     // set by OS to activate SP hardware
-
     TUartParameters m_uartParams = {};              // set by TTY client and VSPUserClient
     THwFlowControl m_hwFlowControl = {};            // set by TTY client and VSPUserClient
 
@@ -164,6 +144,24 @@ struct TResponseActionInfo {
     uint64_t bytesToTop = 0;
     VSPSerialPort* self = NULL;
 };
+
+
+static inline void VSPAquireLock(VSPSerialPort_IVars* ivars)
+{
+    if (!ivars->m_lockLevel) {
+        if (IOLockTryLock(ivars->m_lock)) {
+            ++ivars->m_lockLevel;
+        }
+    }
+}
+
+static inline void VSPUnlock(VSPSerialPort_IVars* ivars)
+{
+    if (ivars->m_lockLevel) {
+        --ivars->m_lockLevel;
+        IOLockUnlock(ivars->m_lock);
+    }
+}
 
 // --------------------------------------------------------------------
 // Called by TxDataAvailable() or sendToPortLink() to dispatch RX data
@@ -460,7 +458,7 @@ void VSPSerialPort::cleanupResources()
 
 bool VSPSerialPort::isConnected()
 {
-    return (ivars->m_txqbmd && ivars->m_rxqbmd && ivars->m_hwActivated);
+    return (ivars->m_txqbmd && ivars->m_rxqbmd && ivars->m_spi);
 }
 
 // ====================================================================
@@ -602,14 +600,6 @@ kern_return_t IMPL(VSPSerialPort, DisconnectQueues)
     // Lock to ensure thread safety
     VSPAquireLock(ivars);
 
-    // stopping...
-    ivars->m_hwActivated = false;
-
-    // Reset modem status
-    setDataCarrierDetect(false);
-    setDataSetReady(false);
-    setClearToSend(false);
-
     // reset SPI pointer from OS
     ivars->m_spi = nullptr;
     
@@ -624,8 +614,6 @@ kern_return_t IMPL(VSPSerialPort, DisconnectQueues)
     // unlock before HwDeactivate, prevent race condition
     VSPUnlock(ivars);
  
-    HwDeactivate(SUPERDISPATCH);
-
     ret = DisconnectQueues(SUPERDISPATCH);
     if (ret != kIOReturnSuccess) {
         VSPErr(LOG_PREFIX, "super::DisconnectQueues: failed. code=%x\n", ret);
@@ -649,19 +637,19 @@ void IMPL(VSPSerialPort, RxDataAvailable)
 
 // --------------------------------------------------------------------
 // RxFreeSpaceAvailable_Impl()
-// Notification to this instance that RX buffer space is available for
-// your device’s data
+// Notification to this instance that RX buffer space of the OS
+// is available for your device's (this driver) data
 void IMPL(VSPSerialPort, RxFreeSpaceAvailable)
 {
-    if (traceFlags() & TRACE_PORT_IO) {
+    //if (traceFlags() & TRACE_PORT_IO) {
         VSPLog(LOG_PREFIX, "RxFreeSpaceAvailable called.\n");
-    }
+    //}
     
-    if (!IS_BIT(ivars->m_hwStatus, MODEM_STATUS_CTS)) {
-        setClearToSend(true);
-    }
+    //if (!IS_BIT(ivars->m_hwStatus, MODEM_STATUS_CTS)) {
+    //    setClearToSend(true);
+    //}
 
-    RxFreeSpaceAvailable(SUPERDISPATCH);
+    //RxFreeSpaceAvailable(SUPERDISPATCH);
 }
 
 // --------------------------------------------------------------------
@@ -673,6 +661,10 @@ void IMPL(VSPSerialPort, TxFreeSpaceAvailable)
         VSPLog(LOG_PREFIX, "TxFreeSpaceAvailable called.\n");
     }
     
+    if (!IS_BIT(ivars->m_hwStatus, MODEM_STATUS_CTS)) {
+        setClearToSend(true);
+    }
+
     TxFreeSpaceAvailable(SUPERDISPATCH);
 }
 
@@ -726,7 +718,9 @@ kern_return_t VSPSerialPort::getDeviceName(char* result, const uint32_t size)
 void VSPSerialPort::setClearToSend(bool cts)
 {
     if (IS_BIT(ivars->m_hwStatus, MODEM_STATUS_CTS) != cts) {
+        VSPAquireLock(ivars);
         UPDATE_BIT(ivars->m_hwStatus, MODEM_STATUS_CTS, cts);
+        VSPUnlock(ivars);
         reportModemStatus();
     }
 }
@@ -737,7 +731,9 @@ void VSPSerialPort::setClearToSend(bool cts)
 void VSPSerialPort::setDataSetReady(bool dsr)
 {
     if (IS_BIT(ivars->m_hwStatus, MODEM_STATUS_DSR) != dsr) {
+        VSPAquireLock(ivars);
         UPDATE_BIT(ivars->m_hwStatus, MODEM_STATUS_DSR, dsr);
+        VSPUnlock(ivars);
         reportModemStatus();
     }
 }
@@ -748,7 +744,9 @@ void VSPSerialPort::setDataSetReady(bool dsr)
 void VSPSerialPort::setRingIndicator(bool ri)
 {
     if (IS_BIT(ivars->m_hwStatus, MODEM_STATUS_RI) != ri) {
+        VSPAquireLock(ivars);
         UPDATE_BIT(ivars->m_hwStatus, MODEM_STATUS_RI, ri);
+        VSPUnlock(ivars);
         reportModemStatus();
     }
 }
@@ -759,7 +757,9 @@ void VSPSerialPort::setRingIndicator(bool ri)
 void VSPSerialPort::setDataCarrierDetect(bool dcd)
 {
     if (IS_BIT(ivars->m_hwStatus, MODEM_STATUS_DCD) != dcd) {
+        VSPAquireLock(ivars);
         UPDATE_BIT(ivars->m_hwStatus, MODEM_STATUS_DCD, dcd);
+        VSPUnlock(ivars);
         reportModemStatus();
     }
 }
@@ -857,24 +857,10 @@ kern_return_t IMPL(VSPSerialPort, RxError)
 // Called after ConnectQueues() or other reasons
 kern_return_t IMPL(VSPSerialPort, HwActivate)
 {
-    kern_return_t ret = kIOReturnIOError;
-    
-    if (traceFlags() & TRACE_PORT_IO) {
-        VSPLog(LOG_PREFIX, "HwActivate called.\n");
-    }
-    
-    VSPAquireLock(ivars);
-    ivars->m_hwActivated = true;
     setDataCarrierDetect(true);
-    VSPUnlock(ivars);
-    
-    ret = HwActivate(SUPERDISPATCH);
-    if (ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "super::HwActivate failed. code=%x\n", ret);
-        return ret;
-    }
-    
-    return ret;
+    setDataSetReady(false);
+    setClearToSend(false);
+    return kIOReturnSuccess;
 }
 
 // --------------------------------------------------------------------
@@ -882,24 +868,10 @@ kern_return_t IMPL(VSPSerialPort, HwActivate)
 // Called before DisconnectQueues() or other reasons
 kern_return_t IMPL(VSPSerialPort, HwDeactivate)
 {
-    kern_return_t ret = kIOReturnIOError;
-    
-    if (traceFlags() & TRACE_PORT_IO) {
-        VSPLog(LOG_PREFIX, "HwDeactivate called.\n");
-    }
-    
-    VSPAquireLock(ivars);
-    ivars->m_hwActivated = false;
     setDataCarrierDetect(false);
-    VSPUnlock(ivars);
-    
-    ret = HwDeactivate(SUPERDISPATCH);
-    if (ret != kIOReturnSuccess) {
-        VSPErr(LOG_PREFIX, "super::HwDeactivate failed. code=%x\n", ret);
-        return ret;
-    }
-    
-    return ret;
+    setDataSetReady(false);
+    setClearToSend(false);
+    return kIOReturnSuccess;
 }
 
 // --------------------------------------------------------------------
@@ -1102,10 +1074,10 @@ void VSPSerialPort::setPortItem(VSPDriver* parent, void* data)
     ivars->m_parent = parent;
 
     // Save instance for VSP controller
-    TVSPPortItem* item = (TVSPPortItem*) data;
-    item->id        = ivars->m_portId;
-    item->port      = this;
-    item->flags     = (parent->checkFlags() | parent->traceFlags());
+    TVSPPortItem* item = reinterpret_cast<TVSPPortItem*>(data);
+    item->id = ivars->m_portId;
+    item->port = this;
+    item->flags = (parent->checkFlags() | parent->traceFlags());
 }
 
 // --------------------------------------------------------------------
@@ -1185,16 +1157,18 @@ static void dispatchResponse(void* context)
 }
 
 #ifdef DEBUG
-static inline void dbg_dump_buffer(const uint8_t* outptr, uint64_t size)
+static inline void dbg_dump_buffer(const uint8_t* data, uint64_t size)
 {
-    char dump[512] = {0};
     char hex[4] = {0};
-    for(int i=0; i < 16; i++) {
-        snprintf(hex, 4, "%02x ", outptr[i]);
-        strlcat(dump, hex, 511);
+    char dump[1024] = {0};
+
+    for(uint64_t i=0; i < 30 && i < size; i++) {
+        snprintf(hex, 4, "%02x ", data[i]);
+        strlcat(dump, hex, 1023);
     }
-    VSPLog(LOG_PREFIX, "sendResponse: Dump RX buffer start=0x%llx len=%llu\n",
-           (uint64_t)outptr, (unsigned long long)size);
+
+    VSPLog(LOG_PREFIX, "sendResponse: Dump buffer=0x%llx len=%llu\n",
+           (uint64_t)data, (unsigned long long)size);
     VSPLog(LOG_PREFIX, "sendResponse: %{public}s\n", (const char*) dump);
 }
 #endif
@@ -1251,7 +1225,6 @@ void IMPL(VSPSerialPort, TxDataAvailable)
     while (ivars->m_spi->txPI != ivars->m_spi->txCI) {
         const uint64_t txPI = ivars->m_spi->txPI;
         const uint64_t txCI = ivars->m_spi->txCI;
-        //TResponseActionInfo* actionRef = NULL;
         IOBufferMemoryDescriptor* bmdResponse = NULL;
         IOAddressSegment segResponse = {};
         void* respbuff = NULL;
@@ -1266,7 +1239,8 @@ void IMPL(VSPSerialPort, TxDataAvailable)
             size = capacity - txCI;  // wrapped region
             // get bytes left have to load from top
             if (txPI > capacity) {
-                /* txPI incremented above capacity with bytes left value */
+                // txPI incremented above capacity
+                // with bytes left value
                 bytesLeft = txPI - capacity;
             }
             isWrapping = true;
@@ -1294,15 +1268,8 @@ void IMPL(VSPSerialPort, TxDataAvailable)
                    txPI, txCI, size, ktxbuff);
         }
         
-        if ((traceFlags() & TRACE_PORT_TX) && (traceFlags() & TRACE_PORT_IO)) {
-            char dump[512] = {0};
-            char hex[4] = {0};
-            for(int i=0; i < 16; i++) {
-                snprintf(hex, 4, "%02x ", ktxbuff[i]);
-                strlcat(dump, hex, 511);
-            }
-            VSPLog(LOG_PREFIX, "TxDataAvailable: dump devbuff=0x%llx len=%llu\n", (uint64_t) ktxbuff, size);
-            VSPLog(LOG_PREFIX, "TxDataAvailable: %{public}s\n", (const char*) dump);
+        if ((traceFlags() & TRACE_PORT_TX) /*&& (traceFlags() & TRACE_PORT_IO)*/) {
+            dbg_dump_buffer(ktxbuff, size);
         }
 
         ret = IOBufferMemoryDescriptor::Create(kIOMemoryDirectionInOut, size, 0, &bmdResponse);
@@ -1352,6 +1319,7 @@ not_routed:
         
         dataProcessed = true;
         ivars->last_txPI = ivars->m_spi->txPI;
+        
         if (isWrapping && bytesLeft > 0) {
             /* set txPI to point to the last byte from top */
             ivars->m_spi->txPI = static_cast<uint32_t>(bytesLeft);
@@ -1485,19 +1453,16 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
     }
 
     // --- Validation checks ---
-    if (!ivars->m_spi || !ivars->m_rxqbmd || !ivars->m_hwActivated) {
+    if (!isConnected()) {
         VSPErr(LOG_PREFIX, "sendResponse: This device is closed.\n");
-        VSPUnlock(ivars)
         return kIOReturnNotOpen;
     }
     if (!buffer || !sizeIn) {
         VSPErr(LOG_PREFIX, "sendResponse: Buffer NULL or size zero.\n");
-        VSPUnlock(ivars)
         return kIOReturnSuccess;
     }
     if (!ctx->self) {
         VSPErr(LOG_PREFIX, "sendResponse: Context parameter is invalid.\n");
-        VSPUnlock(ivars)
         return kIOReturnBadArgument;
     }
     
@@ -1576,11 +1541,11 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
                    rxPI, rxCI, bytesToWrite, capacity);
         }
         
-        if ((traceFlags() & TRACE_PORT_RX) && (traceFlags() & TRACE_PORT_IO)) {
-            dbg_dump_buffer(src, bytesToWrite);
-        }
-        
         memcpy(base + rxPI, src, bytesToWrite);
+        
+        if ((traceFlags() & TRACE_PORT_RX) && (traceFlags() & TRACE_PORT_IO)) {
+            dbg_dump_buffer(base + rxPI, bytesToWrite);
+        }
 
         bytesWritten = bytesToWrite;
         rxPI += bytesToWrite;
@@ -1594,23 +1559,23 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
             VSPLog(LOG_PREFIX, "sendResponse: [IOSPI-RX-W] rxPI=%llu rxCI=%llu FIRST=%llu SECOND=%llu\n",
                    rxPI, rxCI, firstChunk, secondChunk);
         }
-        
-        if ((traceFlags() & TRACE_PORT_RX) && (traceFlags() & TRACE_PORT_IO)) {
-            dbg_dump_buffer(src, firstChunk);
-        }
 
         // Copy first chunk to end of buffer
         memcpy(base + rxPI, src, firstChunk);
         
+        if ((traceFlags() & TRACE_PORT_RX) /*&& (traceFlags() & TRACE_PORT_IO)*/) {
+            dbg_dump_buffer(base + rxPI, firstChunk);
+        }
+
         // Copy second chunk to beginning of ring buffer
         if (secondChunk > 0) {
-            if ((traceFlags() & TRACE_PORT_RX) && (traceFlags() & TRACE_PORT_IO)) {
-                dbg_dump_buffer(src + firstChunk, secondChunk);
-            }
-            
             // Copy second chunk to top of ring buffer
             memcpy(base, src + firstChunk, secondChunk);
-        }
+  
+            if ((traceFlags() & TRACE_PORT_RX) /*&& (traceFlags() & TRACE_PORT_IO)*/) {
+                dbg_dump_buffer(base, secondChunk);
+            }
+       }
         
         bytesWritten = bytesToWrite;
         rxPI = secondChunk; // Wrap around
@@ -1640,8 +1605,6 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
         setDataSetReady(true);
         // notify OS ready to read from ring buffer
         this->RxDataAvailable_Impl();
-        // notify OS to continue
-        RxFreeSpaceAvailable();
     }
     
 done:
