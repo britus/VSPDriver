@@ -1377,7 +1377,7 @@ not_routed:
         // producer index to top of ring buffer
         if (ivars->m_spi->txCI == 0 && ivars->m_spi->txPI == capacity && bytesLeft == 0) {
             if (traceFlags() & TRACE_PORT_TX) {
-                VSPLog(LOG_PREFIX, "TxDataAvailable: End of buffer, RESET rxPI=%u rxCI=%u size=%llu bytesLeft=%llu",
+                VSPLog(LOG_PREFIX, "TxDataAvailable: End of buffer! (RESETING txPI) rxPI=%u rxCI=%u size=%llu bytesLeft=%llu",
                        ivars->m_spi->txPI, ivars->m_spi->txCI, size, bytesLeft);
             }
             ivars->m_spi->txPI = 0;
@@ -1627,6 +1627,10 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
     // last write to ring buffer reached end. Reset consumer index
     // to top of ring buffer. Prevent index corruption.
     if (ivars->m_spi->rxPI == 0 && (rxCI + bytesWritten) >= capacity) {
+        if (traceFlags() & TRACE_PORT_RX) {
+            VSPLog(LOG_PREFIX, "sendResponse: End of buffer! (RESETTING txCI) rxPI=%u rxCI=%u bytesWritten=%llu\n",
+                   ivars->m_spi->rxPI, ivars->m_spi->rxCI, bytesWritten);
+        }
         ivars->m_spi->rxCI = 0;
     }
 

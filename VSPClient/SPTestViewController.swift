@@ -339,7 +339,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
                 #endif
                 logMessage(">: Send file \(fileURL.path)")
                 pbIoSendFile.isEnabled = false
-                serialPort?.sendFile(atPath: fileURL.path, chunkSize: 512, completion:{_,_ in
+                serialPort?.sendFile(atPath: fileURL.path, chunkSize: 1024, completion:{_,_ in
                     DispatchQueue.main.async {
                         self.pbIoSendFile.isEnabled = true
                         self.serialPort?.disconnect();
