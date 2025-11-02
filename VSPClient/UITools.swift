@@ -433,6 +433,76 @@ extension NSMutableAttributedString {
     }
 }
 
+// MARK: - String numeric conversions
+extension String {
+    /// Trimmed copy used by all conversions.
+    private var trimmed: String {
+        return self.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+    }
+
+    /// Converts the string to an `Int` if possible.
+    var intValue: Int? {
+        return Int(trimmed)
+    }
+
+    /// Converts the string to a `Double` if possible.
+    var doubleValue: Double? {
+        return Double(trimmed)
+    }
+
+    /// Converts the string to a `Float` if possible.
+    var floatValue: Float? {
+        return Float(trimmed)
+    }
+
+    /// Converts the string to an `Int64` if possible.
+    var int64Value: Int64? {
+        return Int64(trimmed)
+    }
+
+    /// Converts the string to an `UInt32` if possible.
+    var uint32Value: UInt32? {
+        return UInt32(trimmed)
+    }
+
+    /// Converts the string to an `UInt32` if possible.
+    var uint64Value: UInt64? {
+        return UInt64(trimmed)
+    }
+
+    /// Converts the string to a `Decimal` if possible.
+    var decimalValue: Decimal? {
+        return Decimal(string: trimmed)
+    }
+
+    /// Detects and converts the string to an `NSNumber` (Int or Double) using a NumberFormatter.
+    /// Returns nil if the string cannot be parsed as a number.
+    var numericValue: NSNumber? {
+        let formatter = NumberFormatter()
+        // use a stable locale to avoid surprises (decimal separators).
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        // allow lenient parsing
+        formatter.isLenient = true
+        return formatter.number(from: trimmed)
+    }
+}
+
+// MARK: - NSAttributedString convenience
+extension NSAttributedString {
+    /// Numeric parsing forwarded from the attributed string's `string` property.
+    var intValue: Int? { return self.string.intValue }
+    var doubleValue: Double? { return self.string.doubleValue }
+    var floatValue: Float? { return self.string.floatValue }
+    var int64Value: Int64? { return self.string.int64Value }
+    var decimalValue: Decimal? { return self.string.decimalValue }
+    var numericValue: NSNumber? { return self.string.numericValue }
+}
+
+// Mutable subclass inherits NSAttributedString implementation
+extension NSMutableAttributedString {
+    // Inherits the NSAttributedString computed properties; these extensions exist so they're discoverable on NSMutableAttributedString too.
+}
+
 extension NSTextView {
     public func scrollToEndOfTextView() {
         guard let textContainer = self.textContainer else { return }

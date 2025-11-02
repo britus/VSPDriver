@@ -43,7 +43,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
     private var isLooperRunning: Bool = false
     private var deviceName: String = ""
     private var textToSend: String = ""
-    private var autoTextLen: String = "16"
+    private var autoTextLen: UInt32 = 16
     private var isAddCrEnabled: Bool = true
     private var isAddLfEnabled: Bool = true
     
@@ -55,7 +55,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
         pbPortClose.isEnabled = false
         edTextField.isEnabled = false
         edTextField.delegate = self
-        edAutoTextLen.isEditable = false
+        edAutoTextLen.isEnabled = false
         cbxSendTextAddCR.isEnabled = false
         cbxSendTextAddCR.state = .on
         cbxSendTextAddLF.isEnabled = false
@@ -63,6 +63,13 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
         txLogView.string = ""
         txLogView.setLineWrapping(false)
         
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .none               // or .currency, .percent, etc.
+        formatter.usesGroupingSeparator = false     // ← disables thousands separators
+        formatter.maximumFractionDigits = 0         // optional, for precision control
+        formatter.minimumFractionDigits = 0
+        edAutoTextLen.formatter = formatter
+
         // find available serial port devices (IOReg access)
         populateSerialPorts()
         
@@ -102,7 +109,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
     private func notifyPinsChanged(_ pins: SerialPortPinouts)
     {
         let text = "DTR:\(pins.DTR) DSR:\(pins.DSR) RTS:\(pins.RTS) CTS:\(pins.CTS) RI:\(pins.RI)"
-        logMessage("SP-PINS: \(text)")
+        logMessage("\(text)")
     }
 
     private func toHexLog(_ data: Data) -> String {
@@ -166,6 +173,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
 
     @objc func serialPortDidError(_ error: any Error, with errorType: SerialPortErrorType) {
         DispatchQueue.main.async {
+            self.isLooperRunning = false
             self.logMessage("Error \(String(describing: error))")
             self.pbPortOpen.isEnabled = true
             self.pbPortClose.isEnabled = false
@@ -173,7 +181,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
             self.pbIoLooper.isEnabled = false
             self.pbIoSendFile.isEnabled = false
             self.pbIoSendText.isEnabled = false
-            self.edAutoTextLen.isEditable = false
+            self.edAutoTextLen.isEnabled = false
             self.cbxSendTextAddCR.isEnabled = false
             self.cbxSendTextAddLF.isEnabled = false
         }
@@ -188,7 +196,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
             self.pbIoLooper.isEnabled = true
             self.pbIoSendFile.isEnabled = true
             self.pbIoSendText.isEnabled = true
-            self.edAutoTextLen.isEditable = true
+            self.edAutoTextLen.isEnabled = true
             self.cbxSendTextAddCR.isEnabled = true
             self.cbxSendTextAddLF.isEnabled = true
         }
@@ -197,6 +205,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
     @objc func serialPortDidDisconnect() {
         print("Serial port disconnected")
         DispatchQueue.main.async {
+            self.isLooperRunning = false
             self.logMessage("Disconnected from serial port.")
             self.pbPortOpen.isEnabled = true
             self.pbPortClose.isEnabled = false
@@ -204,7 +213,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
             self.pbIoLooper.isEnabled = false
             self.pbIoSendFile.isEnabled = false
             self.pbIoSendText.isEnabled = false
-            self.edAutoTextLen.isEditable = false
+            self.edAutoTextLen.isEnabled = false
             self.cbxSendTextAddCR.isEnabled = false
             self.cbxSendTextAddLF.isEnabled = false
         }
@@ -212,6 +221,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
 
     @objc func serialPortDidDisconnect(_ error: (any Error)) {
         DispatchQueue.main.async {
+            self.isLooperRunning = false
             self.logMessage("Error \(String(describing: error))")
             self.pbPortOpen.isEnabled = true
             self.pbPortClose.isEnabled = false
@@ -219,7 +229,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
             self.pbIoLooper.isEnabled = false
             self.pbIoSendFile.isEnabled = false
             self.pbIoSendText.isEnabled = false
-            self.edAutoTextLen.isEditable = false
+            self.edAutoTextLen.isEnabled = false
             self.cbxSendTextAddCR.isEnabled = false
             self.cbxSendTextAddLF.isEnabled = false
         }
@@ -231,6 +241,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
                 self.serialPortDidConnect()
             }
             if state == .disconnected {
+                self.isLooperRunning = false
                 self.serialPortDidDisconnect()
             }
         }
@@ -241,23 +252,23 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
     }
     
     @objc func serialPort(_ port: Any, didChangeBaudRate baudRate: UInt) {
-        logMessage("SP parameter changed. Baud rate: \(baudRate)")
+        logMessage("Parameter changed. Baud rate: \(baudRate)")
     }
     
     @objc func serialPort(_ port: Any, didChangeDataBits dataBits: UInt) {
-        logMessage("SP parameter changed. Data bits: \(dataBits)")
+        logMessage("Parameter changed. Data bits: \(dataBits)")
     }
     
     @objc func serialPort(_ port: Any, didChangeStopBits stopBits: UInt) {
-        logMessage("SP parameter changed. Stop bits: \(stopBits)")
+        logMessage("Parameter changed. Stop bits: \(stopBits)")
     }
     
     @objc func serialPort(_ port: Any, didChangeParity parity: UInt) {
-        logMessage("SP parameter changed. Parity: \(parity)")
+        logMessage("Parameter changed. Parity: \(parity)")
     }
     
     @objc func serialPort(_ port: Any, didChangeFlowControl flowControl: UInt) {
-        logMessage("SP parameter changed. Flow control: \(flowControl)")
+        logMessage("Parameter changed. Flow control: \(flowControl)")
     }
     
     @objc func serialPort(_ port: Any, didUpdatePinoutSignals DCD: Bool, dtr DTR: Bool, dsr DSR: Bool, rts RTS: Bool, cts CTS: Bool, ri RI: Bool) {
@@ -356,29 +367,32 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
     
     @IBAction func onRunLooper(_ sender: NSButton) {
         if !isLooperRunning && serialPort != nil {
-            pbIoLooper.title = "LOOPING!"
-            var length = edTextField.stringValue.count
-            if length == 0 {
-                length = 16
-            }
+            onTextLengthChanged(edAutoTextLen)
             DispatchQueue.global().async {
                 let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
                 self.isLooperRunning = true
-                while self.isLooperRunning {
+                while self.isLooperRunning && self.serialPort != nil {
                     var buffer : String = ""
-                    for _ in 0..<length {
+                    for _ in 0..<self.autoTextLen {
                         let randomIndex = Int.random(in: 0..<chars.count)
                         let char = chars[chars.index(chars.startIndex, offsetBy: randomIndex)]
                         buffer.append(char)
                     }
                     Thread.sleep(forTimeInterval: 1.500) // 1.5 seconds
-                    self.serialPort?.send(buffer.data(using: .utf8)!)
+                    
+                    if (!buffer.contains("\r") && self.isAddCrEnabled) {
+                        buffer += "\r"
+                    }
+                    if (!buffer.endsWith("\n") && self.isAddLfEnabled) {
+                        buffer += "\n"
+                    }
+                    
                     self.logMessage(">: \(buffer)")
+                    self.serialPort?.send(buffer.data(using: .utf8)!)
                 }
             }
         } else {
             isLooperRunning = false
-            pbIoLooper.title = "Loop"
         }
     }
     
@@ -393,7 +407,11 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
     }
 
     @IBAction func onTextLengthChanged(_ sender: NSTextField) {
-        autoTextLen = sender.stringValue
+        guard let value : UInt32 = sender.stringValue.uint32Value, value > 0, value <= UInt32.max else {
+            autoTextLen = 64
+            return
+        }
+        autoTextLen = value
     }
     
     @IBAction func onSendTextAddCR(_ sender: NSButton) {

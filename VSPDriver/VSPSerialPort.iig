@@ -77,9 +77,6 @@ public:
 
     // ------ [VSPSerialPort inrernals] -------------------------
     
-    virtual void ResponseAvailable(OSAction *action)
-                   TYPE(IODataQueueDispatchSource::DataAvailable);
-    
     // Release all resource in IVars
     void cleanupResources() LOCALONLY;
     
@@ -99,10 +96,10 @@ public:
     kern_return_t getDeviceName(char* result, const uint32_t size) LOCALONLY;
     
     // Routing through port link
-    kern_return_t sendToPortLink(const void* buffer, const uint64_t size) LOCALONLY;
+    kern_return_t sendToPortLink(void* ctx, const void* buffer, const uint64_t size) LOCALONLY;
 
     // Update rxqbmd
-    kern_return_t sendResponse(void* sender, const void* buffer, const uint64_t size) LOCALONLY;
+    kern_return_t sendResponse(void* ctx, const void* buffer, const uint64_t size) LOCALONLY;
     
     uint64_t traceFlags() LOCALONLY;
     uint64_t checkFlags() LOCALONLY;
@@ -117,6 +114,5 @@ public:
     // return true if active connection
     bool isConnected() LOCALONLY;
 };
-
 
 #endif /* VSPSerialPort_h */

@@ -544,6 +544,8 @@ void writeReceivedData(NSData* data, size_t bufferSize, NSString* filename) {
                 return;
             }
             
+            [NSThread sleepForTimeInterval:0.5]; // delay
+            
         } // for
         if (completion) {
             completion(YES, NULL);
@@ -579,10 +581,9 @@ void writeReceivedData(NSData* data, size_t bufferSize, NSString* filename) {
         
         const uint8_t *bytes = [data bytes];
         size_t length = [data length];
+        ssize_t written;
         
-        ssize_t written = write(self.fdDevice, bytes, length);
-        
-        if (written < 0) {
+        if ((written = write(self.fdDevice, bytes, length)) < 0) {
             NSError *error = [self
                         createErrorWithCode:errno
                                     message:[NSString stringWithUTF8String:strerror(errno)]
@@ -591,7 +592,6 @@ void writeReceivedData(NSData* data, size_t bufferSize, NSString* filename) {
             [self.portAccessLock unlock];
             return;
         }
-        
         if (written != (ssize_t)length) {
             NSError *error = [self
                         createErrorWithCode:EBADF

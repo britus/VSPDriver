@@ -1830,7 +1830,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mBk-aB-PDV">
-                                            <rect key="frame" x="18" y="309" width="66" height="15"/>
+                                            <rect key="frame" x="18" y="309" width="86" height="15"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="15" id="qZ6-Ph-SaX"/>
                                             </constraints>
@@ -1841,7 +1841,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField identifier="edTestMessage" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pN8-n1-dsm">
-                                            <rect key="frame" x="90" y="304" width="253" height="20"/>
+                                            <rect key="frame" x="110" y="304" width="250" height="20"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="FnS-jl-axT">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1852,8 +1852,8 @@
                                             </connections>
                                         </textField>
                                         <button identifier="pbLooper" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3DR-4b-Gyb">
-                                            <rect key="frame" x="411" y="265" width="87" height="32"/>
-                                            <buttonCell key="cell" type="push" title="Loop" bezelStyle="rounded" imagePosition="leading" alignment="left" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bNh-gn-jKR">
+                                            <rect key="frame" x="448" y="296" width="50" height="32"/>
+                                            <buttonCell key="cell" type="push" alternateTitle="Loop" bezelStyle="rounded" imagePosition="leading" alignment="left" alternateImage="point.forward.to.point.capsulepath.fill" catalog="system" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bNh-gn-jKR">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                                 <imageReference key="image" image="point.forward.to.point.capsulepath" catalog="system" symbolScale="medium"/>
@@ -1863,23 +1863,13 @@
                                             </connections>
                                         </button>
                                         <button identifier="pbSendFile" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f7J-Sh-Skw">
-                                            <rect key="frame" x="426" y="297" width="72" height="32"/>
-                                            <buttonCell key="cell" type="push" title="File" bezelStyle="rounded" image="text.document.fill" catalog="system" imagePosition="leading" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="apk-M9-83j">
+                                            <rect key="frame" x="406" y="296" width="44" height="32"/>
+                                            <buttonCell key="cell" type="push" alternateTitle="Send file..." bezelStyle="rounded" image="text.document.fill" catalog="system" imagePosition="leading" alignment="center" alternateImage="dock.arrow.up.rectangle" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="apk-M9-83j">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
                                                 <action selector="onSendFile:" target="oDf-uy-sA9" id="8sc-iV-qNh"/>
-                                            </connections>
-                                        </button>
-                                        <button identifier="pbSendText" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hJT-IE-umo">
-                                            <rect key="frame" x="344" y="297" width="84" height="32"/>
-                                            <buttonCell key="cell" type="push" title="Send" bezelStyle="rounded" image="transmission" catalog="system" imagePosition="leading" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="US5-dx-9UZ">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="onSendText:" target="oDf-uy-sA9" id="XD6-mO-yNe"/>
                                             </connections>
                                         </button>
                                         <scrollView identifier="txTestLogView" borderType="line" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" translatesAutoresizingMaskIntoConstraints="NO" id="C02-Il-e5t">
@@ -1918,8 +1908,8 @@
                                             </scroller>
                                         </scrollView>
                                         <textField identifier="edAutoTextLen" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="je5-Td-nxU">
-                                            <rect key="frame" x="90" y="273" width="96" height="21"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="64" placeholderString="64" drawsBackground="YES" id="K90-HJ-IXm">
+                                            <rect key="frame" x="110" y="271" width="116" height="21"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" state="on" borderStyle="bezel" alignment="left" title="64" placeholderString="64" drawsBackground="YES" id="K90-HJ-IXm">
                                                 <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="A9T-y3-3tI"/>
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1930,7 +1920,7 @@
                                             </connections>
                                         </textField>
                                         <button identifier="cbxSendTextAddCR" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EX0-ni-LWp">
-                                            <rect key="frame" x="192" y="275" width="72" height="18"/>
+                                            <rect key="frame" x="232" y="273" width="72" height="18"/>
                                             <buttonCell key="cell" type="check" title="Add CR" bezelStyle="regularSquare" imagePosition="left" enabled="NO" state="on" inset="2" id="MD4-Hh-xcw">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -1940,7 +1930,7 @@
                                             </connections>
                                         </button>
                                         <button identifier="cbxSendTextAddLF" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ip5-P1-WPC">
-                                            <rect key="frame" x="270" y="275" width="69" height="18"/>
+                                            <rect key="frame" x="310" y="273" width="69" height="18"/>
                                             <buttonCell key="cell" type="check" title="Add LF" bezelStyle="regularSquare" imagePosition="left" enabled="NO" state="on" inset="2" id="ee5-W9-4p4">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -1950,41 +1940,51 @@
                                             </connections>
                                         </button>
                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GEF-e2-YVE">
-                                            <rect key="frame" x="18" y="276" width="50" height="16"/>
-                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Length:" id="Gxb-KM-xKD">
+                                            <rect key="frame" x="18" y="276" width="86" height="16"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Loop-Length:" id="Gxb-KM-xKD">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
+                                        <button identifier="pbSendText" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hJT-IE-umo">
+                                            <rect key="frame" x="361" y="296" width="47" height="32"/>
+                                            <buttonCell key="cell" type="push" alternateTitle="Send text" bezelStyle="rounded" image="transmission" catalog="system" imagePosition="leading" alignment="center" alternateImage="NSFollowLinkFreestandingTemplate" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="US5-dx-9UZ">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="onSendText:" target="oDf-uy-sA9" id="XD6-mO-yNe"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="GEF-e2-YVE" firstAttribute="leading" secondItem="C02-Il-e5t" secondAttribute="leading" id="0n0-kC-qJ6"/>
                                         <constraint firstItem="EX0-ni-LWp" firstAttribute="baseline" secondItem="ip5-P1-WPC" secondAttribute="baseline" id="5gP-uw-QWr"/>
-                                        <constraint firstItem="pN8-n1-dsm" firstAttribute="baseline" secondItem="hJT-IE-umo" secondAttribute="baseline" id="5l0-ZG-jKG"/>
-                                        <constraint firstItem="ip5-P1-WPC" firstAttribute="top" secondItem="3DR-4b-Gyb" secondAttribute="top" id="6Nh-BB-CtU"/>
+                                        <constraint firstItem="pN8-n1-dsm" firstAttribute="baseline" secondItem="hJT-IE-umo" secondAttribute="baseline" constant="-1" id="5l0-ZG-jKG"/>
+                                        <constraint firstItem="ip5-P1-WPC" firstAttribute="top" secondItem="3DR-4b-Gyb" secondAttribute="top" constant="33" id="6Nh-BB-CtU"/>
                                         <constraint firstItem="mBk-aB-PDV" firstAttribute="top" secondItem="REF-5X-wK4" secondAttribute="top" constant="20" id="7Ff-mr-1Xp"/>
                                         <constraint firstItem="mBk-aB-PDV" firstAttribute="leading" secondItem="GEF-e2-YVE" secondAttribute="leading" id="Ajn-d8-39q"/>
                                         <constraint firstAttribute="bottom" secondItem="C02-Il-e5t" secondAttribute="bottom" constant="20" symbolic="YES" id="GQs-9x-NMA"/>
                                         <constraint firstItem="hJT-IE-umo" firstAttribute="baseline" secondItem="f7J-Sh-Skw" secondAttribute="baseline" id="MK4-dD-HvS"/>
                                         <constraint firstItem="f7J-Sh-Skw" firstAttribute="leading" secondItem="hJT-IE-umo" secondAttribute="trailing" constant="12" symbolic="YES" id="Mv2-uk-anY"/>
                                         <constraint firstItem="je5-Td-nxU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="GEF-e2-YVE" secondAttribute="trailing" constant="8" symbolic="YES" id="OYh-vI-74q"/>
-                                        <constraint firstItem="pN8-n1-dsm" firstAttribute="top" secondItem="hJT-IE-umo" secondAttribute="top" id="Osd-n4-fKE"/>
+                                        <constraint firstItem="pN8-n1-dsm" firstAttribute="top" secondItem="hJT-IE-umo" secondAttribute="top" constant="-1" id="Osd-n4-fKE"/>
                                         <constraint firstItem="ip5-P1-WPC" firstAttribute="leading" secondItem="EX0-ni-LWp" secondAttribute="trailing" constant="8" symbolic="YES" id="QEV-PN-yA4"/>
                                         <constraint firstItem="mBk-aB-PDV" firstAttribute="leading" secondItem="REF-5X-wK4" secondAttribute="leading" constant="20" symbolic="YES" id="R7E-Oh-KQF"/>
                                         <constraint firstItem="f7J-Sh-Skw" firstAttribute="baseline" secondItem="hJT-IE-umo" secondAttribute="firstBaseline" id="RV0-b9-dcs"/>
                                         <constraint firstItem="pN8-n1-dsm" firstAttribute="leading" secondItem="je5-Td-nxU" secondAttribute="leading" id="SqJ-rF-UTD"/>
                                         <constraint firstItem="mBk-aB-PDV" firstAttribute="top" secondItem="pN8-n1-dsm" secondAttribute="top" id="VOu-ou-fG2"/>
-                                        <constraint firstItem="3DR-4b-Gyb" firstAttribute="leading" secondItem="ip5-P1-WPC" secondAttribute="trailing" constant="79" id="VPC-Lk-cMj"/>
-                                        <constraint firstItem="je5-Td-nxU" firstAttribute="top" secondItem="pN8-n1-dsm" secondAttribute="bottom" constant="10" symbolic="YES" id="YFC-oa-VTg"/>
-                                        <constraint firstAttribute="trailing" secondItem="f7J-Sh-Skw" secondAttribute="trailing" constant="20" symbolic="YES" id="YGq-HL-Oqw"/>
-                                        <constraint firstItem="C02-Il-e5t" firstAttribute="top" secondItem="3DR-4b-Gyb" secondAttribute="bottom" constant="20" symbolic="YES" id="Zwi-8F-jHv"/>
+                                        <constraint firstItem="3DR-4b-Gyb" firstAttribute="leading" secondItem="ip5-P1-WPC" secondAttribute="trailing" constant="76" id="VPC-Lk-cMj"/>
+                                        <constraint firstItem="je5-Td-nxU" firstAttribute="top" secondItem="pN8-n1-dsm" secondAttribute="bottom" constant="12" id="YFC-oa-VTg"/>
+                                        <constraint firstAttribute="trailing" secondItem="f7J-Sh-Skw" secondAttribute="trailing" constant="68" id="YGq-HL-Oqw"/>
+                                        <constraint firstItem="C02-Il-e5t" firstAttribute="top" secondItem="3DR-4b-Gyb" secondAttribute="bottom" constant="51" id="Zwi-8F-jHv"/>
                                         <constraint firstItem="GEF-e2-YVE" firstAttribute="top" secondItem="mBk-aB-PDV" secondAttribute="bottom" constant="17" id="a2l-km-6Ur"/>
                                         <constraint firstItem="je5-Td-nxU" firstAttribute="baseline" secondItem="EX0-ni-LWp" secondAttribute="baseline" id="dw4-pT-dQ0"/>
                                         <constraint firstItem="pN8-n1-dsm" firstAttribute="leading" secondItem="mBk-aB-PDV" secondAttribute="trailing" constant="8" symbolic="YES" id="eB9-le-TH0"/>
                                         <constraint firstItem="hJT-IE-umo" firstAttribute="leading" secondItem="pN8-n1-dsm" secondAttribute="trailing" constant="8" symbolic="YES" id="g1o-fc-5AL"/>
                                         <constraint firstItem="3DR-4b-Gyb" firstAttribute="trailing" secondItem="C02-Il-e5t" secondAttribute="trailing" id="sct-Zz-Tu0"/>
-                                        <constraint firstItem="f7J-Sh-Skw" firstAttribute="trailing" secondItem="3DR-4b-Gyb" secondAttribute="trailing" id="uDi-0Y-lH7"/>
+                                        <constraint firstItem="f7J-Sh-Skw" firstAttribute="trailing" secondItem="3DR-4b-Gyb" secondAttribute="trailing" constant="-48" id="uDi-0Y-lH7"/>
                                         <constraint firstItem="EX0-ni-LWp" firstAttribute="leading" secondItem="je5-Td-nxU" secondAttribute="trailing" constant="8" symbolic="YES" id="zbk-YB-3Sz"/>
                                     </constraints>
                                 </view>
@@ -2030,10 +2030,13 @@
         </scene>
     </scenes>
     <resources>
+        <image name="NSFollowLinkFreestandingTemplate" width="20" height="20"/>
         <image name="cable.connector.horizontal" catalog="system" width="19" height="7"/>
         <image name="cable.connector.video" catalog="system" width="17" height="16"/>
+        <image name="dock.arrow.up.rectangle" catalog="system" width="18" height="14"/>
         <image name="macwindow" catalog="system" width="18" height="14"/>
         <image name="point.forward.to.point.capsulepath" catalog="system" width="20" height="13"/>
+        <image name="point.forward.to.point.capsulepath.fill" catalog="system" width="20" height="13"/>
         <image name="rectangle.connected.to.line.below" catalog="system" width="15" height="16"/>
         <image name="text.document.fill" catalog="system" width="14" height="16"/>
         <image name="transmission" catalog="system" width="17" height="17"/>

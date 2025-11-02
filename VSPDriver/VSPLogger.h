@@ -22,13 +22,13 @@
 // log messages only exist when doing a debug build.
 #ifndef VSPLog
 #ifdef DEBUG
-#define VSPLog(prefix, fmt, ...) os_log(OS_LOG_DEFAULT, "[" prefix "]: " fmt, ##__VA_ARGS__)
+#define VSPLog(prefix, fmt, ...) os_log(OS_LOG_DEFAULT, "[" prefix ":D]: " fmt, ##__VA_ARGS__)
 #else
 #define VSPLog(prefix, fmt, ...)
 #endif
 #endif // !VSPLog
 
-#define VSPErr(prefix, fmt, ...)   os_log(OS_LOG_DEFAULT, "[" prefix "]: " fmt, ##__VA_ARGS__)
-#define VSPTrace(prefix, fmt, ...) os_log(OS_LOG_DEFAULT, "[" prefix "]: " fmt, ##__VA_ARGS__)
+#define VSPErr(prefix, fmt, ...)   os_log(OS_LOG_DEFAULT, "[" prefix ":E]: " fmt, ##__VA_ARGS__)
+#define VSPTrace(prefix, fmt, ...) os_log(OS_LOG_DEFAULT, "[" prefix ":T]: " fmt, ##__VA_ARGS__)
 
 #endif /* VSPLogger_h */
