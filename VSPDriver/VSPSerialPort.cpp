@@ -62,10 +62,6 @@ using namespace driverkit::serial;
 #define IOLockFreeNULL(l) { if (NULL != (l)) { IOLockFree(l); (l) = NULL; } }
 #endif
 
-#ifndef BIT
-#define BIT(b) (1 << b)
-#endif
-
 // Updated by SetModemStatus read by HwGetModemStatus
 #define MODEM_STATUS_CTS PD_RS232_S_CTS
 #define MODEM_STATUS_DSR PD_RS232_S_DSR
@@ -79,6 +75,10 @@ using namespace driverkit::serial;
 #define ERROR_STATE_BREAK BIT(2)
 #define ERROR_STATE_FRAME BIT(3)
 #define ERROR_STATE_PARITY BIT(4)
+
+#ifndef BIT
+#define BIT(b) (1 << b)
+#endif
 
 #define IS_BIT(v, b)  ((v & b) == b)
 #define SET_BIT(v, b) (v |= b)
@@ -162,15 +162,6 @@ static inline void VSPUnlock(VSPSerialPort_IVars* ivars)
         --ivars->m_lockLevel;
         IOLockUnlock(ivars->m_lock);
     }
-}
-
-// --------------------------------------------------------------------
-// Called by TxDataAvailable() or sendToPortLink() to dispatch RX data
-//
-template <typename T>
-static inline constexpr const T& MIN(const T& a, const T& b)
-{
-    return (a < b) ? a : b;
 }
 
 // --------------------------------------------------------------------
@@ -323,8 +314,7 @@ kern_return_t IMPL(VSPSerialPort, Start)
              ivars->m_portBaseName, ivars->m_portSuffix);
  
     ret = IODispatchQueue::Create(queueId, 0, 0, &ivars->m_responseQueue);
-    if (ret != kIOReturnSuccess)
-    {
+    if (ret != kIOReturnSuccess) {
         VSPErr(LOG_PREFIX, "Start: IODispatchQueue::Create failed with error: 0x%08x.", ret);
         goto error_exit;
     }
@@ -449,10 +439,7 @@ void VSPSerialPort::cleanupResources()
     ivars->m_portLinkId = 0;
 
     VSPLog(LOG_PREFIX, "cleanupResources removing ivars->m_rcvqds\n");
-#if 0
-    OSSafeReleaseNULL(ivars->m_dqdsResponse);
-    OSSafeReleaseNULL(ivars->m_respAction);
-#endif
+
     OSSafeReleaseNULL(ivars->m_responseQueue);
     IOLockFreeNULL(ivars->m_lock);
 }
@@ -1396,7 +1383,8 @@ finish:
 }
 
 // --------------------------------------------------------------------
-// Called by TxDataAvailable in case of 'port is linked' state
+// Called by response dispatch queue (callback dispatchResponse)
+// in case of 'port is linked' state
 //
 kern_return_t VSPSerialPort::sendToPortLink(void* context, const void* buffer, const uint64_t size)
 {
@@ -1468,12 +1456,10 @@ kern_return_t VSPSerialPort::sendToPortLink(void* context, const void* buffer, c
 }
 
 // --------------------------------------------------------------------
-// Called by TxDataAvailable() or sendToPortLink() to dispatch RX data
+// Called by response dispatch queue (callback dispatchResponse)
 //
 kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, const uint64_t sizeIn)
 {
-    //TResponseActionInfo* ctx = (TResponseActionInfo*)context;
-    
     if (traceFlags() & TRACE_PORT_RX) {
         VSPLog(LOG_PREFIX, "sendResponse: [IOSPI-RX-0] called with sizeIn=%llu\n", sizeIn);
     }
@@ -1491,7 +1477,7 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
     // After wrap-around we have rxPI == rxCI >= capacity.
     // At this point we reset both indexes to second chunk
     // from beginning of the RX ring buffer
-    // rxPI=16816 rxCI=16816 capacity=16384 sizeIn=1051
+    // i.e. rxPI=16816 rxCI=16816 capacity=16384 sizeIn=1051
     if (ivars->m_spi->rxPI >= ivars->m_rxseg.length && ivars->m_spi->rxCI >= ivars->m_rxseg.length) {
         ivars->m_spi->rxPI = static_cast<uint32_t>(ivars->m_spi->rxPI % ivars->m_rxseg.length);
         ivars->m_spi->rxCI = static_cast<uint32_t>(ivars->m_spi->rxPI % ivars->m_rxseg.length);
@@ -1499,7 +1485,6 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
 
     IOReturn ret = kIOReturnSuccess;
     const uint8_t* src = reinterpret_cast<const uint8_t*>(buffer);
-    bool isWrapped = false;
     uint8_t* base = nullptr;
     uint64_t bytesToWrite = sizeIn;
     uint64_t written = 0;
@@ -1552,10 +1537,6 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
             VSPErr(LOG_PREFIX, "sendResponse: Buffer full! rxPI=%llu rxCI=%llu cap=%llu\n",
                    rxPI, rxCI, capacity);
         }
-        // copy to top of ring buffer
-        //memcpy(base, src, sizeIn);
-        //ivars->m_spi->rxPI = static_cast<uint32_t>(sizeIn) % capacity;
-        //ivars->m_spi->rxCI = 0;
         ret = kIOReturnNoSpace;
         goto done;
     }
@@ -1619,25 +1600,12 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
     // points over capacity if wrap-around (buffer overrun). In hope that
     // the kernel use this behavior to get the bytes left from top of the
     // RX ring buffer.
-    //ivars->m_spi->rxPI = static_cast<uint32_t>(rxPI + written) % capacity;
     ivars->m_spi->rxPI = static_cast<uint32_t>(rxPI + written);
     
     if (traceFlags() & TRACE_PORT_RX) {
         VSPLog(LOG_PREFIX, "sendResponse: [IOSPI-RX-4] rxPI=%u rxCI=%u bytesWritten=%llu\n",
                ivars->m_spi->rxPI, ivars->m_spi->rxCI, written);
     }
-
-#if 0
-    // last write to ring buffer reached end. Reset consumer index
-    // to top of ring buffer. Prevent index corruption.
-    if (ivars->m_spi->rxPI == 0 && (rxCI + written) >= capacity) {
-        if (traceFlags() & TRACE_PORT_RX) {
-            VSPLog(LOG_PREFIX, "sendResponse: End of buffer! (RESETTING txCI) rxPI=%u rxCI=%u bytesWritten=%llu\n",
-                   ivars->m_spi->rxPI, ivars->m_spi->rxCI, written);
-        }
-        ivars->m_spi->rxCI = 0;
-    }
-#endif
 
     // --- Notify data availability ---
     if (written > 0) {
