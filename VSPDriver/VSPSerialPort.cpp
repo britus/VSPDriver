@@ -141,7 +141,8 @@ struct VSPSerialPort_IVars {
 struct TResponseActionInfo {
     IOBufferMemoryDescriptor* bmd = NULL;
     bool isWrapping = false;
-    uint64_t bytesToTop = 0;
+    uint64_t txBufferSize = 0;
+    uint64_t txBytesLeft = 0;
     VSPSerialPort* self = NULL;
 };
 
@@ -1141,6 +1142,12 @@ static void dispatchResponse(void* context)
         VSPErr(LOG_PREFIX, "dispatchResponse: Failed to get memory descriptor segment.\n");
         return;
     }
+    if (seg.length != ctx->txBufferSize) {
+        VSPErr(LOG_PREFIX, "dispatchResponse: Invalid buffer size in BMD segment detected.\n");
+        VSPErr(LOG_PREFIX, "dispatchResponse: seg.len=%llu ctx.txSize=%llu ctx.bLeft=%llu ctx.isWrapped=%d",
+               seg.length, ctx->txBufferSize, ctx->txBytesLeft, ctx->isWrapping);
+        return;
+    }
 
     void* buffer = reinterpret_cast<void*>(seg.address);
    
@@ -1227,7 +1234,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
         const uint64_t txCI = ivars->m_spi->txCI;
         IOBufferMemoryDescriptor* bmdResponse = NULL;
         IOAddressSegment segResponse = {};
-        void* respbuff = NULL;
+        uint8_t* respbuff = NULL;
         uint64_t size = 0;
         bool isWrapping = false;
         uint64_t bytesLeft = 0;
@@ -1272,7 +1279,7 @@ void IMPL(VSPSerialPort, TxDataAvailable)
             dbg_dump_buffer(ktxbuff, size);
         }
 
-        ret = IOBufferMemoryDescriptor::Create(kIOMemoryDirectionInOut, size, 0, &bmdResponse);
+        ret = IOBufferMemoryDescriptor::Create(kIOMemoryDirectionInOut, size + bytesLeft, 0, &bmdResponse);
         if (ret != kIOReturnSuccess || !bmdResponse) {
             VSPErr(LOG_PREFIX, "TxDataAvailable: Failed to allocate RX action memory descriptor.\n");
             goto not_routed;
@@ -1286,24 +1293,28 @@ void IMPL(VSPSerialPort, TxDataAvailable)
         }
 
         // Sanity-Check
-        if (segResponse.address == 0 || segResponse.length < size) {
+        if (segResponse.address == 0 || segResponse.length < (size + bytesLeft)) {
             VSPErr(LOG_PREFIX, "TxDataAvailable: Invalid RX action memory segment.\n");
             OSSafeReleaseNULL(bmdResponse);
             goto not_routed;
         }
         
+        respbuff = reinterpret_cast<uint8_t*>(segResponse.address);
+
         // Copy available TX data block to RX action memory descriptor
-        respbuff = reinterpret_cast<void*>(segResponse.address);
         memcpy(respbuff, ktxbuff, size);
+        
+        // if wrapped than copy from ring buffer start
         if (isWrapping && bytesLeft > 0) {
-            memcpy(respbuff, base, bytesLeft);
+            memcpy(respbuff + size, base, bytesLeft);
         }
 
         // Dispatch to response data
         TResponseActionInfo* ractx;
         ractx = IONewZero(TResponseActionInfo, 1);
         ractx->isWrapping = isWrapping;
-        ractx->bytesToTop = bytesLeft;
+        ractx->txBufferSize = (isWrapping ? size + bytesLeft : size);
+        ractx->txBytesLeft = bytesLeft;
         ractx->bmd = bmdResponse;
         ractx->self = this;
 

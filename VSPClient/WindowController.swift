@@ -17,24 +17,25 @@ class WindowController: NSWindowController {
     @IBOutlet weak var toolBar: NSToolbar!
  
     private let manager = DriverManager.shared
-    private weak var tabViewController: TabViewController!
+    private weak var tabView: TabViewController!
     
     private static let initialSize = NSSize(width: 620, height: 450)
     
     // Window size constants Size: 615 × 622
     private let minWindowSize = WindowController.initialSize
     private let preferredWindowSize = WindowController.initialSize
+    private var progress : NSProgressIndicator? = nil
     
     override func windowDidLoad() {
         NSLog("\(String(describing: self.contentViewController))")
-        tabViewController = ((self.contentViewController //
-                              as! NSTabViewController) as! TabViewController)
-        tabViewController?.view.isHidden = true
-        manager.addObserver(self)
-        
-        // Configure window appearance and behavior
+        let vc = self.contentViewController
         configureWindow()
- 
+
+        tabView = (vc as! TabViewController)
+        manager.addObserver(self)
+
+        showProgress()
+
         // Request permission first (required)
         UITools.requestNotificationPermission { granted in
             // this closure run always
@@ -57,15 +58,15 @@ class WindowController: NSWindowController {
     }
     
     @IBAction func onSerialPorts(_ sender: Any) {
-        tabViewController.selectedTabViewItemIndex = 0
+        tabView.selectedTabViewItemIndex = 0
     }
     
     @IBAction func onPortLinks(_ sender: Any) {
-        tabViewController.selectedTabViewItemIndex = 1
+        tabView.selectedTabViewItemIndex = 1
     }
     
     @IBAction func onSMessageView(_ sender: Any) {
-        tabViewController.selectedTabViewItemIndex = 2
+        tabView.selectedTabViewItemIndex = 2
     }
     
     @IBAction func onSerialTest(_ sender: Any) {
@@ -166,7 +167,6 @@ class WindowController: NSWindowController {
         DispatchQueue.main.async {
             self.tbPortLinks.isEnabled = state
             self.tbSerialPorts.isEnabled = state
-            self.tabViewController.tabView.isHidden = !state
         }
     }
     
@@ -217,9 +217,14 @@ extension WindowController: DriverManagerObserver {
     }
     
     func didFinish(withResult code: UInt64, message: String) {
+        hideProgress()
+        
         if code > 0 {
-            UITools.showMessage(message: //
-                "Error 0x\(String(code, radix: 16)): \(message).")
+            UITools.showMessage(
+                message: "Error 0x\(String(code, radix: 16)): \(message).",
+                withCompletion: {
+                    NSApp.terminate(self)
+            })
         } else {
             UITools.showBasicNotification(body: "\(message).")
             // C bridge async
@@ -236,9 +241,14 @@ extension WindowController: DriverManagerObserver {
     }
     
     func didFail(withError code: UInt64, message: String) {
+        hideProgress()
+
         if code > 0 {
-            UITools.showMessage(message:
-                "Error 0x\(String(code, radix: 16)): \(message).")
+            UITools.showMessage(
+                message: "Error 0x\(String(code, radix: 16)): \(message).",
+                withCompletion: {
+                NSApp.terminate(self)
+            })
         } else {
             UITools.showMessage(message: "\(message).")
         }
@@ -250,19 +260,25 @@ extension WindowController: DriverManagerObserver {
     
     func didUnload(withStatus code: UInt64, message: String) {
         if code > 0 {
-            UITools.showMessage(message:
-                "Error 0x\(String(code, radix: 16)): \(message).")
+            UITools.showMessage(
+                message: "Error 0x\(String(code, radix: 16)): \(message).")
         } else {
             UITools.showNotificationWithBadge(body: message, badgeCount: 1)
         }
     }
     
     func controllerConnected() {
-        DispatchQueue.main.async {
-            UITools.showNotificationWithBadge(
-                body: "VSP Driver connected", badgeCount: 1)
+       
+        // C bridge async
+        DispatchQueue.global(qos: .background).asyncAfter(//
+                deadline: .now() + .milliseconds(100)) {
             GetStatus()
         }
+
+        hideProgress()
+
+        UITools.showNotificationWithBadge(
+            body: "VSP Driver connected", badgeCount: 1)
     }
     
     func controllerDisconnected() {
@@ -274,6 +290,7 @@ extension WindowController: DriverManagerObserver {
         guard let msg = message, !msg.isEmpty else {
             return
         }
+        
         // TODO: Make tool window with message text view
         NSLog("\(msg)\n")
     }
@@ -282,7 +299,6 @@ extension WindowController: DriverManagerObserver {
         switch status {
             case .notLoaded:
                 DispatchQueue.main.async {
-                    self.tabViewController?.view.isHidden = true
                     UITools.showBasicNotification(body: message)
                 }
                 break
@@ -293,7 +309,6 @@ extension WindowController: DriverManagerObserver {
                 break
             case .loaded:
                 DispatchQueue.main.async {
-                    self.tabViewController?.view.isHidden = true
                     self.didFinish(withResult: code, message: message)
                 }
                 break
@@ -304,37 +319,35 @@ extension WindowController: DriverManagerObserver {
                 break
             case .unloaded:
                 DispatchQueue.main.async {
-                    self.tabViewController?.view.isHidden = true
                     self.didUnload(withStatus: code, message: message)
                 }
                 break
             case .failure:
                 DispatchQueue.main.async {
-                    self.tabViewController?.view.isHidden = true
                     self.didFail(withError: code, message: message)
                 }
                 break
             case .requiresUserApproval:
                 DispatchQueue.main.async {
-                    self.tabViewController?.view.isHidden = true
-                    UITools.showMessage(message: message)
+                    UITools.showMessage(message: message) {
+                        if !IsDriverConnected() {
+                            NSApp.terminate(self)
+                        }
+                    }
                 }
                 break
             case .willCompleteAfterReboot:
                 DispatchQueue.main.async {
-                    self.tabViewController?.view.isHidden = true
                     self.didFail(withError: code, message: message)
                 }
                 break
             case .connected:
                 DispatchQueue.main.async {
-                    self.tabViewController?.view.isHidden = false
                     self.controllerConnected()
                 }
                 break
             case .disconnected:
                 DispatchQueue.main.async {
-                    self.tabViewController?.view.isHidden = true
                     self.controllerDisconnected()
                 }
                 break

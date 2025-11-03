@@ -369,15 +369,19 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
         if !isLooperRunning && serialPort != nil {
             onTextLengthChanged(edAutoTextLen)
             DispatchQueue.global().async {
-                let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+                let chars: String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+                var index = 0;
                 self.isLooperRunning = true
                 while self.isLooperRunning && self.serialPort != nil {
                     var buffer : String = ""
                     for _ in 0..<self.autoTextLen {
-                        let randomIndex = Int.random(in: 0..<chars.count)
-                        let char = chars[chars.index(chars.startIndex, offsetBy: randomIndex)]
-                        buffer.append(char)
+                        buffer.append(chars[index])
                     }
+                    index += 1
+                    if index >= chars.count {
+                        index = 0
+                    }
+                    
                     Thread.sleep(forTimeInterval: 1.500) // 1.5 seconds
                     
                     if (!buffer.contains("\r") && self.isAddCrEnabled) {

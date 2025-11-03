@@ -10,6 +10,93 @@ import AppKit
 import UserNotifications
 import SwiftUI
 
+private var progressIndicatorKey: UInt8 = 0
+
+// MARK: - NSWindow Extension
+extension NSWindow {
+    
+    private static let progressIndicatorTag = 9999
+    
+    private var progressIndicator: NSProgressIndicator? {
+        get { objc_getAssociatedObject(self, &progressIndicatorKey) as? NSProgressIndicator }
+        set { objc_setAssociatedObject(self, &progressIndicatorKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+    }
+    
+    /// Shows a centered, indeterminate progress indicator on the window
+    func showProgress() {
+        // Avoid duplicates
+        if progressIndicator != nil { return }
+        
+        let indicator = NSProgressIndicator()
+        indicator.style = .spinning
+        indicator.controlSize = .regular
+        indicator.isIndeterminate = true
+        indicator.usesThreadedAnimation = true
+        indicator.startAnimation(nil)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        
+        guard let contentView = self.contentView else { return }
+        contentView.addSubview(indicator)
+        
+        NSLayoutConstraint.activate([
+            indicator.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            indicator.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+        ])
+        
+        self.progressIndicator = indicator
+    }
+    
+    /// Updates a determinate progress indicator’s value.
+    func updateProgress(to value: Double) {
+        guard let indicator = progressIndicator else { return }
+        
+        if indicator.isIndeterminate {
+            indicator.isIndeterminate = false
+            indicator.minValue = 0.0
+            indicator.maxValue = 1.0
+        }
+        indicator.doubleValue = value
+    }
+    
+    /// Hides and removes the progress indicator.
+    func hideProgress() {
+        guard let indicator = progressIndicator else { return }
+        indicator.stopAnimation(nil)
+        indicator.removeFromSuperview()
+        progressIndicator = nil
+    }
+}
+
+// MARK: - NSViewController Extension
+extension NSViewController {
+    func showProgress() {
+        view.window?.showProgress()
+    }
+
+    func updateProgress(to value: Double) {
+        view.window?.updateProgress(to: value)
+    }
+
+    func hideProgress() {
+        view.window?.hideProgress()
+    }
+}
+
+// MARK: - NSWindowController Extension
+extension NSWindowController {
+    func showProgress() {
+        window?.showProgress()
+    }
+
+    func updateProgress(to value: Double) {
+        window?.updateProgress(to: value)
+    }
+
+    func hideProgress() {
+        window?.hideProgress()
+    }
+}
+
 class UITools {
     
     public static var isNotifyGranted: Bool = false
@@ -25,7 +112,7 @@ class UITools {
     static public func applicationBuild() -> String {
         Bundle.main.infoDictionary?["CFBundleVersion"] as! String
     }
-
+    
     class CustomAlertViewController: NSViewController {
         let messageLabel = NSTextField()
         let buttonStackView = NSStackView()
@@ -430,6 +517,26 @@ extension NSMutableAttributedString {
     
     func append(_ value: String) {
         self.append(NSMutableAttributedString(string: value))
+    }
+}
+
+extension StringProtocol {
+    subscript(_ offset: Int)                     -> Element     { self[index(startIndex, offsetBy: offset)] }
+    subscript(_ range: Range<Int>)               -> SubSequence { prefix(range.lowerBound+range.count).suffix(range.count) }
+    subscript(_ range: ClosedRange<Int>)         -> SubSequence { prefix(range.lowerBound+range.count).suffix(range.count) }
+    subscript(_ range: PartialRangeThrough<Int>) -> SubSequence { prefix(range.upperBound.advanced(by: 1)) }
+    subscript(_ range: PartialRangeUpTo<Int>)    -> SubSequence { prefix(range.upperBound) }
+    subscript(_ range: PartialRangeFrom<Int>)    -> SubSequence { suffix(Swift.max(0, count-range.lowerBound)) }
+}
+
+extension LosslessStringConvertible {
+    var string: String { .init(self) }
+}
+
+extension BidirectionalCollection {
+    subscript(safe offset: Int) -> Element? {
+        guard !isEmpty, let i = index(startIndex, offsetBy: offset, limitedBy: index(before: endIndex)) else { return nil }
+        return self[i]
     }
 }
 
