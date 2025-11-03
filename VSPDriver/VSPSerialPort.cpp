@@ -135,6 +135,7 @@ struct VSPSerialPort_IVars {
 
     // TX data dispatch queue for sendResponse()
     IODispatchQueue* m_responseQueue = NULL;
+    uint64_t rx_secondChunk = 0;
 };
 
 struct TResponseActionInfo {
@@ -1487,6 +1488,15 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
         return kIOReturnNotOpen;
     }
     
+    // After wrap-around we have rxPI == rxCI >= capacity.
+    // At this point we reset both indexes to second chunk
+    // from beginning of the RX ring buffer
+    // rxPI=16816 rxCI=16816 capacity=16384 sizeIn=1051
+    if (ivars->m_spi->rxPI >= ivars->m_rxseg.length && ivars->m_spi->rxCI >= ivars->m_rxseg.length) {
+        ivars->m_spi->rxPI = static_cast<uint32_t>(ivars->m_spi->rxPI % ivars->m_rxseg.length);
+        ivars->m_spi->rxCI = static_cast<uint32_t>(ivars->m_spi->rxPI % ivars->m_rxseg.length);
+    }
+
     IOReturn ret = kIOReturnSuccess;
     const uint8_t* src = reinterpret_cast<const uint8_t*>(buffer);
     bool isWrapped = false;
@@ -1593,7 +1603,8 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
         if (secondChunk > 0) {
             // Copy second chunk to top of ring buffer
             memcpy(base, src + firstChunk, secondChunk);
-            isWrapped = true;
+            ivars->rx_secondChunk = secondChunk;
+            //isWrapped = true;
 
             if ((traceFlags() & TRACE_PORT_RX) /*&& (traceFlags() & TRACE_PORT_IO)*/) {
                 dbg_dump_buffer(base, secondChunk);
@@ -1608,7 +1619,8 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
     // points over capacity if wrap-around (buffer overrun). In hope that
     // the kernel use this behavior to get the bytes left from top of the
     // RX ring buffer.
-    ivars->m_spi->rxPI = static_cast<uint32_t>(rxPI + written) % capacity;
+    //ivars->m_spi->rxPI = static_cast<uint32_t>(rxPI + written) % capacity;
+    ivars->m_spi->rxPI = static_cast<uint32_t>(rxPI + written);
     
     if (traceFlags() & TRACE_PORT_RX) {
         VSPLog(LOG_PREFIX, "sendResponse: [IOSPI-RX-4] rxPI=%u rxCI=%u bytesWritten=%llu\n",
@@ -1626,7 +1638,7 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
         ivars->m_spi->rxCI = 0;
     }
 #endif
-    
+
     // --- Notify data availability ---
     if (written > 0) {
         // raise DSR signal
