@@ -1611,29 +1611,22 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
     }
 
     // --- Update producer index ---
-    if (!isWrapped) {
-        ivars->m_spi->rxPI = static_cast<uint32_t>(rxPI) % capacity;
-    }
-    else {
-        ivars->m_spi->rxPI = static_cast<uint32_t>(rxPI); // Set xPI over capacity.
-    }
+    ivars->m_spi->rxPI = static_cast<uint32_t>(rxPI) % capacity;
     
     if (traceFlags() & TRACE_PORT_RX) {
         VSPLog(LOG_PREFIX, "sendResponse: [IOSPI-RX-4] rxPI=%u rxCI=%u bytesWritten=%llu\n",
                ivars->m_spi->rxPI, ivars->m_spi->rxCI, written);
     }
 
-#if 0
     // last write to ring buffer reached end. Reset consumer index
     // to top of ring buffer. Prevent index corruption.
-    if (ivars->m_spi->rxPI == 0 && (rxCI + bytesWritten) >= capacity) {
+    if (ivars->m_spi->rxPI == 0 && (rxCI + written) >= capacity) {
         if (traceFlags() & TRACE_PORT_RX) {
             VSPLog(LOG_PREFIX, "sendResponse: End of buffer! (RESETTING txCI) rxPI=%u rxCI=%u bytesWritten=%llu\n",
-                   ivars->m_spi->rxPI, ivars->m_spi->rxCI, bytesWritten);
+                   ivars->m_spi->rxPI, ivars->m_spi->rxCI, written);
         }
         ivars->m_spi->rxCI = 0;
     }
-#endif
     
     // --- Notify data availability ---
     if (written > 0) {
