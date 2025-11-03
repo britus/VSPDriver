@@ -1495,8 +1495,8 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
     uint64_t written = 0;
     uint64_t freeSpace;
     uint64_t capacity;
-    uint64_t rxPI;
-    uint64_t rxCI;
+    const uint64_t rxPI = ivars->m_spi->rxPI;
+    const uint64_t rxCI = ivars->m_spi->rxCI;
 
     // --- Get RX buffer info ---
     if (ivars->m_rxqbmd) {
@@ -1515,9 +1515,6 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
         ret = kIOReturnNoSpace;
         goto done;
     }
-
-    rxPI = ivars->m_spi->rxPI;
-    rxCI = ivars->m_spi->rxCI;
 
     if (traceFlags() & TRACE_PORT_RX) {
         VSPLog(LOG_PREFIX, "sendResponse: [IOSPI-RX-1] rxPI=%llu rxCI=%llu capacity=%llu sizeIn=%llu\n",
@@ -1553,8 +1550,6 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
         goto done;
     }
 
-    //bytesToWrite = MIN(bytesToWrite, freeSpace);
-
     if (traceFlags() & TRACE_PORT_RX) {
         VSPLog(LOG_PREFIX, "sendResponse: [IOSPI-RX-2] rxPI=%llu rxCI=%llu free=%llu toWrite=%llu cap=%llu\n",
                rxPI, rxCI, freeSpace, bytesToWrite, capacity);
@@ -1576,7 +1571,6 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
         }
         
         written = bytesToWrite;
-        rxPI   += written;
     }
     // Wrap-around copy
     else {
@@ -1607,17 +1601,21 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
         }
         
         written = firstChunk + secondChunk;
-        rxPI   += written;
     }
 
     // --- Update producer index ---
-    ivars->m_spi->rxPI = static_cast<uint32_t>(rxPI) % capacity;
+    // We follow the same logic as in TxDataAvailable. The producer index
+    // points over capacity if wrap-around (buffer overrun). In hope that
+    // the kernel use this behavior to get the bytes left from top of the
+    // RX ring buffer.
+    ivars->m_spi->rxPI = static_cast<uint32_t>(rxPI + written) % capacity;
     
     if (traceFlags() & TRACE_PORT_RX) {
         VSPLog(LOG_PREFIX, "sendResponse: [IOSPI-RX-4] rxPI=%u rxCI=%u bytesWritten=%llu\n",
                ivars->m_spi->rxPI, ivars->m_spi->rxCI, written);
     }
 
+#if 0
     // last write to ring buffer reached end. Reset consumer index
     // to top of ring buffer. Prevent index corruption.
     if (ivars->m_spi->rxPI == 0 && (rxCI + written) >= capacity) {
@@ -1627,6 +1625,7 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
         }
         ivars->m_spi->rxCI = 0;
     }
+#endif
     
     // --- Notify data availability ---
     if (written > 0) {
