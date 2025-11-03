@@ -1,0 +1,350 @@
+2025-11-03 17:05:26.591 Df kernel[0:147824] () [VSPSerialPort:D]: ConnectQueues called
+2025-11-03 17:05:30.045 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:30.045 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:30.045 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=1051 txCI=0 capacity=16384
+2025-11-03 17:05:30.045 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 2] txPI=1051 txCI=0 size=1051 ktxbuff=0x101338000
+2025-11-03 17:05:30.045 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX L] txPI=1051 txCI=0 first=1051 second=0
+2025-11-03 17:05:30.045 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x101344000 len=1051
+2025-11-03 17:05:30.045 Df kernel[0:147824] () [VSPSerialPort:D]: 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41
+2025-11-03 17:05:30.045 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 3] txPI=1051 txCI=1051 read=1051
+2025-11-03 17:05:30.045 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable complete.
+2025-11-03 17:05:30.045 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:30.045 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:30.045 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=1051 txCI=1051 capacity=16384
+2025-11-03 17:05:30.045 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:30.045 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:30.045 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=1051 txCI=1051 capacity=16384
+2025-11-03 17:05:30.045 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:30.045 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:30.045 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=1051 txCI=1051 capacity=16384
+2025-11-03 17:05:31.546 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:31.546 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:31.546 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=2102 txCI=1051 capacity=16384
+2025-11-03 17:05:31.547 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 2] txPI=2102 txCI=1051 size=1051 ktxbuff=0x10133841b
+2025-11-03 17:05:31.547 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX L] txPI=2102 txCI=1051 first=1051 second=0
+2025-11-03 17:05:31.547 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x101344000 len=1051
+2025-11-03 17:05:31.547 Df kernel[0:147824] () [VSPSerialPort:D]: 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
+2025-11-03 17:05:31.547 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 3] txPI=2102 txCI=2102 read=1051
+2025-11-03 17:05:31.547 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable complete.
+2025-11-03 17:05:31.547 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:31.547 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:31.547 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=2102 txCI=2102 capacity=16384
+2025-11-03 17:05:31.547 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:31.547 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:31.547 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=2102 txCI=2102 capacity=16384
+2025-11-03 17:05:31.547 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:31.547 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:31.547 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=2102 txCI=2102 capacity=16384
+2025-11-03 17:05:33.047 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:33.047 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:33.047 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=3153 txCI=2102 capacity=16384
+2025-11-03 17:05:33.047 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 2] txPI=3153 txCI=2102 size=1051 ktxbuff=0x101338836
+2025-11-03 17:05:33.047 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX L] txPI=3153 txCI=2102 first=1051 second=0
+2025-11-03 17:05:33.047 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x101344000 len=1051
+2025-11-03 17:05:33.047 Df kernel[0:147824] () [VSPSerialPort:D]: 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43
+2025-11-03 17:05:33.047 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 3] txPI=3153 txCI=3153 read=1051
+2025-11-03 17:05:33.047 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable complete.
+2025-11-03 17:05:33.048 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:33.048 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:33.048 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=3153 txCI=3153 capacity=16384
+2025-11-03 17:05:33.048 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:33.048 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:33.048 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=3153 txCI=3153 capacity=16384
+2025-11-03 17:05:33.048 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:33.048 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:33.048 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=3153 txCI=3153 capacity=16384
+2025-11-03 17:05:34.552 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:34.552 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:34.552 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=4204 txCI=3153 capacity=16384
+2025-11-03 17:05:34.552 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 2] txPI=4204 txCI=3153 size=1051 ktxbuff=0x101338c51
+2025-11-03 17:05:34.552 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX L] txPI=4204 txCI=3153 first=1051 second=0
+2025-11-03 17:05:34.552 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x101344000 len=1051
+2025-11-03 17:05:34.552 Df kernel[0:147824] () [VSPSerialPort:D]: 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44
+2025-11-03 17:05:34.552 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 3] txPI=4204 txCI=4204 read=1051
+2025-11-03 17:05:34.552 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable complete.
+2025-11-03 17:05:34.552 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:34.552 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:34.552 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=4204 txCI=4204 capacity=16384
+2025-11-03 17:05:34.552 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:34.552 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:34.552 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=4204 txCI=4204 capacity=16384
+2025-11-03 17:05:34.552 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:34.552 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:34.552 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=4204 txCI=4204 capacity=16384
+2025-11-03 17:05:36.052 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:36.052 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:36.052 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=5255 txCI=4204 capacity=16384
+2025-11-03 17:05:36.053 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 2] txPI=5255 txCI=4204 size=1051 ktxbuff=0x10133906c
+2025-11-03 17:05:36.053 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX L] txPI=5255 txCI=4204 first=1051 second=0
+2025-11-03 17:05:36.053 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x101344000 len=1051
+2025-11-03 17:05:36.053 Df kernel[0:147824] () [VSPSerialPort:D]: 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45
+2025-11-03 17:05:36.053 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 3] txPI=5255 txCI=5255 read=1051
+2025-11-03 17:05:36.053 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable complete.
+2025-11-03 17:05:36.053 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:36.053 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:36.053 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=5255 txCI=5255 capacity=16384
+2025-11-03 17:05:36.053 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:36.053 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:36.053 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=5255 txCI=5255 capacity=16384
+2025-11-03 17:05:36.053 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:36.053 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:36.053 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=5255 txCI=5255 capacity=16384
+2025-11-03 17:05:37.556 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:37.556 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:37.556 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=6306 txCI=5255 capacity=16384
+2025-11-03 17:05:37.556 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 2] txPI=6306 txCI=5255 size=1051 ktxbuff=0x101339487
+2025-11-03 17:05:37.556 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX L] txPI=6306 txCI=5255 first=1051 second=0
+2025-11-03 17:05:37.556 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x101344000 len=1051
+2025-11-03 17:05:37.556 Df kernel[0:147824] () [VSPSerialPort:D]: 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46
+2025-11-03 17:05:37.556 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 3] txPI=6306 txCI=6306 read=1051
+2025-11-03 17:05:37.556 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable complete.
+2025-11-03 17:05:37.556 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:37.556 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:37.556 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=6306 txCI=6306 capacity=16384
+2025-11-03 17:05:37.556 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:37.556 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:37.556 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=6306 txCI=6306 capacity=16384
+2025-11-03 17:05:37.556 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:37.556 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:37.556 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=6306 txCI=6306 capacity=16384
+2025-11-03 17:05:39.063 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:39.063 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:39.063 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=7357 txCI=6306 capacity=16384
+2025-11-03 17:05:39.063 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 2] txPI=7357 txCI=6306 size=1051 ktxbuff=0x1013398a2
+2025-11-03 17:05:39.063 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX L] txPI=7357 txCI=6306 first=1051 second=0
+2025-11-03 17:05:39.063 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x101344000 len=1051
+2025-11-03 17:05:39.063 Df kernel[0:147824] () [VSPSerialPort:D]: 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47
+2025-11-03 17:05:39.063 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 3] txPI=7357 txCI=7357 read=1051
+2025-11-03 17:05:39.063 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable complete.
+2025-11-03 17:05:39.063 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:39.063 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:39.063 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=7357 txCI=7357 capacity=16384
+2025-11-03 17:05:39.063 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:39.063 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:39.063 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=7357 txCI=7357 capacity=16384
+2025-11-03 17:05:39.063 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:39.063 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:39.063 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=7357 txCI=7357 capacity=16384
+2025-11-03 17:05:40.570 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:40.570 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:40.570 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=8408 txCI=7357 capacity=16384
+2025-11-03 17:05:40.570 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 2] txPI=8408 txCI=7357 size=1051 ktxbuff=0x101339cbd
+2025-11-03 17:05:40.570 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX L] txPI=8408 txCI=7357 first=1051 second=0
+2025-11-03 17:05:40.570 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x101344000 len=1051
+2025-11-03 17:05:40.570 Df kernel[0:147824] () [VSPSerialPort:D]: 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48
+2025-11-03 17:05:40.570 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 3] txPI=8408 txCI=8408 read=1051
+2025-11-03 17:05:40.570 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable complete.
+2025-11-03 17:05:40.570 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:40.570 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:40.570 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=8408 txCI=8408 capacity=16384
+2025-11-03 17:05:40.570 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:40.570 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:40.570 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=8408 txCI=8408 capacity=16384
+2025-11-03 17:05:40.570 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:40.570 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:40.570 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=8408 txCI=8408 capacity=16384
+2025-11-03 17:05:42.077 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:42.078 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:42.078 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=9459 txCI=8408 capacity=16384
+2025-11-03 17:05:42.078 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 2] txPI=9459 txCI=8408 size=1051 ktxbuff=0x10133a0d8
+2025-11-03 17:05:42.078 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX L] txPI=9459 txCI=8408 first=1051 second=0
+2025-11-03 17:05:42.078 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x101344000 len=1051
+2025-11-03 17:05:42.078 Df kernel[0:147824] () [VSPSerialPort:D]: 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49
+2025-11-03 17:05:42.078 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 3] txPI=9459 txCI=9459 read=1051
+2025-11-03 17:05:42.078 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable complete.
+2025-11-03 17:05:42.078 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:42.078 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:42.078 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=9459 txCI=9459 capacity=16384
+2025-11-03 17:05:42.078 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:42.078 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:42.078 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=9459 txCI=9459 capacity=16384
+2025-11-03 17:05:42.078 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:42.078 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:42.078 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=9459 txCI=9459 capacity=16384
+2025-11-03 17:05:43.580 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:43.580 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:43.580 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=10510 txCI=9459 capacity=16384
+2025-11-03 17:05:43.580 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 2] txPI=10510 txCI=9459 size=1051 ktxbuff=0x10133a4f3
+2025-11-03 17:05:43.580 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX L] txPI=10510 txCI=9459 first=1051 second=0
+2025-11-03 17:05:43.580 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x101344000 len=1051
+2025-11-03 17:05:43.580 Df kernel[0:147824] () [VSPSerialPort:D]: 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a
+2025-11-03 17:05:43.580 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 3] txPI=10510 txCI=10510 read=1051
+2025-11-03 17:05:43.581 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable complete.
+2025-11-03 17:05:43.581 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:43.581 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:43.581 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=10510 txCI=10510 capacity=16384
+2025-11-03 17:05:43.581 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:43.581 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:43.581 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=10510 txCI=10510 capacity=16384
+2025-11-03 17:05:43.581 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:43.581 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:43.581 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=10510 txCI=10510 capacity=16384
+2025-11-03 17:05:45.084 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:45.084 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:45.084 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=11561 txCI=10510 capacity=16384
+2025-11-03 17:05:45.084 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 2] txPI=11561 txCI=10510 size=1051 ktxbuff=0x10133a90e
+2025-11-03 17:05:45.084 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX L] txPI=11561 txCI=10510 first=1051 second=0
+2025-11-03 17:05:45.084 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x101344000 len=1051
+2025-11-03 17:05:45.084 Df kernel[0:147824] () [VSPSerialPort:D]: 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b
+2025-11-03 17:05:45.085 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 3] txPI=11561 txCI=11561 read=1051
+2025-11-03 17:05:45.085 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable complete.
+2025-11-03 17:05:45.085 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:45.085 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:45.085 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=11561 txCI=11561 capacity=16384
+2025-11-03 17:05:45.085 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:45.085 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:45.085 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=11561 txCI=11561 capacity=16384
+2025-11-03 17:05:45.085 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:45.085 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:45.085 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=11561 txCI=11561 capacity=16384
+2025-11-03 17:05:46.591 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:46.591 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:46.591 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=12612 txCI=11561 capacity=16384
+2025-11-03 17:05:46.591 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 2] txPI=12612 txCI=11561 size=1051 ktxbuff=0x10133ad29
+2025-11-03 17:05:46.591 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX L] txPI=12612 txCI=11561 first=1051 second=0
+2025-11-03 17:05:46.591 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x101344000 len=1051
+2025-11-03 17:05:46.591 Df kernel[0:147824] () [VSPSerialPort:D]: 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c
+2025-11-03 17:05:46.591 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 3] txPI=12612 txCI=12612 read=1051
+2025-11-03 17:05:46.591 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable complete.
+2025-11-03 17:05:46.591 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:46.591 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:46.591 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=12612 txCI=12612 capacity=16384
+2025-11-03 17:05:46.591 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:46.591 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:46.591 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=12612 txCI=12612 capacity=16384
+2025-11-03 17:05:46.591 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:46.591 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:46.591 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=12612 txCI=12612 capacity=16384
+2025-11-03 17:05:48.102 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:48.102 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:48.102 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=13663 txCI=12612 capacity=16384
+2025-11-03 17:05:48.102 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 2] txPI=13663 txCI=12612 size=1051 ktxbuff=0x10133b144
+2025-11-03 17:05:48.102 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX L] txPI=13663 txCI=12612 first=1051 second=0
+2025-11-03 17:05:48.102 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x101344000 len=1051
+2025-11-03 17:05:48.102 Df kernel[0:147824] () [VSPSerialPort:D]: 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d
+2025-11-03 17:05:48.102 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 3] txPI=13663 txCI=13663 read=1051
+2025-11-03 17:05:48.102 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable complete.
+2025-11-03 17:05:48.102 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:48.102 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:48.102 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=13663 txCI=13663 capacity=16384
+2025-11-03 17:05:48.102 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:48.102 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:48.102 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=13663 txCI=13663 capacity=16384
+2025-11-03 17:05:48.102 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:48.102 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:48.102 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=13663 txCI=13663 capacity=16384
+2025-11-03 17:05:49.606 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:49.606 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:49.606 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=14714 txCI=13663 capacity=16384
+2025-11-03 17:05:49.606 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 2] txPI=14714 txCI=13663 size=1051 ktxbuff=0x10133b55f
+2025-11-03 17:05:49.606 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX L] txPI=14714 txCI=13663 first=1051 second=0
+2025-11-03 17:05:49.606 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x101344000 len=1051
+2025-11-03 17:05:49.606 Df kernel[0:147824] () [VSPSerialPort:D]: 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e
+2025-11-03 17:05:49.606 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 3] txPI=14714 txCI=14714 read=1051
+2025-11-03 17:05:49.606 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable complete.
+2025-11-03 17:05:49.606 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:49.606 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:49.606 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=14714 txCI=14714 capacity=16384
+2025-11-03 17:05:49.606 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:49.606 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:49.606 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=14714 txCI=14714 capacity=16384
+2025-11-03 17:05:49.606 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:49.606 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:49.606 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=14714 txCI=14714 capacity=16384
+2025-11-03 17:05:51.109 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:51.109 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:51.109 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=15765 txCI=14714 capacity=16384
+2025-11-03 17:05:51.109 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 2] txPI=15765 txCI=14714 size=1051 ktxbuff=0x10133b97a
+2025-11-03 17:05:51.109 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX L] txPI=15765 txCI=14714 first=1051 second=0
+2025-11-03 17:05:51.110 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x101344000 len=1051
+2025-11-03 17:05:51.110 Df kernel[0:147824] () [VSPSerialPort:D]: 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f
+2025-11-03 17:05:51.110 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 3] txPI=15765 txCI=15765 read=1051
+2025-11-03 17:05:51.110 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable complete.
+2025-11-03 17:05:51.110 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:51.110 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:51.110 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=15765 txCI=15765 capacity=16384
+2025-11-03 17:05:51.110 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:51.110 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:51.110 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=15765 txCI=15765 capacity=16384
+2025-11-03 17:05:51.110 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:51.110 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:51.110 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=15765 txCI=15765 capacity=16384
+2025-11-03 17:05:52.612 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:52.612 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:52.612 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=16816 txCI=15765 capacity=16384
+2025-11-03 17:05:52.612 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 2] txPI=16816 txCI=15765 size=619 ktxbuff=0x10133bd95
+2025-11-03 17:05:52.612 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX W] txPI=16816 txCI=15765 first=619 second=432
+2025-11-03 17:05:52.612 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x101344000 len=619
+2025-11-03 17:05:52.612 Df kernel[0:147824] () [VSPSerialPort:D]: 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50
+2025-11-03 17:05:52.612 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x10134426b len=432
+2025-11-03 17:05:52.612 Df kernel[0:147824] () [VSPSerialPort:D]: 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50
+2025-11-03 17:05:52.612 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 3] txPI=432 txCI=432 read=1051
+2025-11-03 17:05:52.612 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable complete.
+2025-11-03 17:05:52.612 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:52.613 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:52.613 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=432 txCI=432 capacity=16384
+2025-11-03 17:05:52.613 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:52.613 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:52.613 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=432 txCI=432 capacity=16384
+2025-11-03 17:05:52.613 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:52.613 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:52.613 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=432 txCI=432 capacity=16384
+2025-11-03 17:05:53.629 Df kernel[0:147824] () [VSPSerialPort:D]: RxFreeSpaceAvailable called.
+2025-11-03 17:05:54.118 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:54.118 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:54.118 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=1483 txCI=432 capacity=16384
+2025-11-03 17:05:54.118 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 2] txPI=1483 txCI=432 size=1051 ktxbuff=0x1013381b0
+2025-11-03 17:05:54.118 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX L] txPI=1483 txCI=432 first=1051 second=0
+2025-11-03 17:05:54.118 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x101344000 len=1051
+2025-11-03 17:05:54.118 Df kernel[0:147824] () [VSPSerialPort:D]: 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51 51
+2025-11-03 17:05:54.118 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 3] txPI=1483 txCI=1483 read=1051
+2025-11-03 17:05:54.118 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable complete.
+2025-11-03 17:05:54.118 Df kernel[0:148051] () [VSPSerialPort:E]: sendResponse: Index corruption detected! rxPI=432 rxCI=22750 sizeIn=1051 cap=16384
+2025-11-03 17:05:54.118 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:54.118 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:54.118 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=1483 txCI=1483 capacity=16384
+2025-11-03 17:05:54.118 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:54.118 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:54.118 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=1483 txCI=1483 capacity=16384
+2025-11-03 17:05:54.118 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:54.118 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:54.118 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=1483 txCI=1483 capacity=16384
+2025-11-03 17:05:55.627 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:55.627 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:55.627 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=2534 txCI=1483 capacity=16384
+2025-11-03 17:05:55.627 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 2] txPI=2534 txCI=1483 size=1051 ktxbuff=0x1013385cb
+2025-11-03 17:05:55.627 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX L] txPI=2534 txCI=1483 first=1051 second=0
+2025-11-03 17:05:55.627 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x101344000 len=1051
+2025-11-03 17:05:55.627 Df kernel[0:147824] () [VSPSerialPort:D]: 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52
+2025-11-03 17:05:55.627 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 3] txPI=2534 txCI=2534 read=1051
+2025-11-03 17:05:55.627 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable complete.
+2025-11-03 17:05:55.627 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:55.627 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:55.627 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=2534 txCI=2534 capacity=16384
+2025-11-03 17:05:55.627 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:55.627 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:55.627 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=2534 txCI=2534 capacity=16384
+2025-11-03 17:05:55.627 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:55.627 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:55.627 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=2534 txCI=2534 capacity=16384
+2025-11-03 17:05:57.133 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:57.133 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:57.133 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=3585 txCI=2534 capacity=16384
+2025-11-03 17:05:57.133 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 2] txPI=3585 txCI=2534 size=1051 ktxbuff=0x1013389e6
+2025-11-03 17:05:57.133 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX L] txPI=3585 txCI=2534 first=1051 second=0
+2025-11-03 17:05:57.133 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x101344000 len=1051
+2025-11-03 17:05:57.133 Df kernel[0:147824] () [VSPSerialPort:D]: 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53
+2025-11-03 17:05:57.133 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 3] txPI=3585 txCI=3585 read=1051
+2025-11-03 17:05:57.133 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable complete.
+2025-11-03 17:05:57.133 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:57.133 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:57.133 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=3585 txCI=3585 capacity=16384
+2025-11-03 17:05:57.133 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:57.133 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:57.133 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=3585 txCI=3585 capacity=16384
+2025-11-03 17:05:57.133 Df kernel[0:147824] () [VSPSerialPort:D]: --------------------------------------------------
+2025-11-03 17:05:57.133 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable called.
+2025-11-03 17:05:57.133 Df kernel[0:147824] () [VSPSerialPort:D]: TxDataAvailable: [IOSPI-TX 1] txPI=3585 txCI=3585 capacity=16384
+2025-11-03 17:05:57.235 Df kernel[0:147824] () [VSPSerialPort:D]: RxFreeSpaceAvailable called.
+2025-11-03 17:05:57.736 Df kernel[0:147824] () [VSPSerialPort:D]: DisconnectQueues called
+

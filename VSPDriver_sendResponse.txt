@@ -1,0 +1,171 @@
+2025-11-03 17:03:39.808 Df kernel[0:147824] () [VSPSerialPort:D]: ConnectQueues called
+2025-11-03 17:03:47.121 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-0] called with sizeIn=1051
+2025-11-03 17:03:47.121 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-1] rxPI=0 rxCI=0 capacity=16384 sizeIn=1051
+2025-11-03 17:03:47.121 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-2] rxPI=0 rxCI=0 free=16384 toWrite=1051 cap=16384
+2025-11-03 17:03:47.121 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-L] rxPI=0 rxCI=0 toWrite=1051 cap=16384
+2025-11-03 17:03:47.121 Df kernel[0:147ae2] () [VSPSerialPort:D]: Dump buffer=0x10096c000 len=1051
+2025-11-03 17:03:47.121 Df kernel[0:147ae2] () [VSPSerialPort:D]: 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41
+2025-11-03 17:03:47.121 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-4] rxPI=1051 rxCI=0 bytesWritten=1051
+2025-11-03 17:03:47.121 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: completed with ret=0x0
+2025-11-03 17:03:48.628 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-0] called with sizeIn=1051
+2025-11-03 17:03:48.628 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-1] rxPI=1051 rxCI=1051 capacity=16384 sizeIn=1051
+2025-11-03 17:03:48.628 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-2] rxPI=1051 rxCI=1051 free=15333 toWrite=1051 cap=16384
+2025-11-03 17:03:48.628 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-L] rxPI=1051 rxCI=1051 toWrite=1051 cap=16384
+2025-11-03 17:03:48.628 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x10096c41b len=1051
+2025-11-03 17:03:48.628 Df kernel[0:147824] () [VSPSerialPort:D]: 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
+2025-11-03 17:03:48.628 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-4] rxPI=2102 rxCI=1051 bytesWritten=1051
+2025-11-03 17:03:48.628 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: completed with ret=0x0
+2025-11-03 17:03:50.132 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-0] called with sizeIn=1051
+2025-11-03 17:03:50.132 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-1] rxPI=2102 rxCI=2102 capacity=16384 sizeIn=1051
+2025-11-03 17:03:50.132 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-2] rxPI=2102 rxCI=2102 free=14282 toWrite=1051 cap=16384
+2025-11-03 17:03:50.132 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-L] rxPI=2102 rxCI=2102 toWrite=1051 cap=16384
+2025-11-03 17:03:50.132 Df kernel[0:147ae2] () [VSPSerialPort:D]: Dump buffer=0x10096c836 len=1051
+2025-11-03 17:03:50.132 Df kernel[0:147ae2] () [VSPSerialPort:D]: 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43 43
+2025-11-03 17:03:50.132 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-4] rxPI=3153 rxCI=2102 bytesWritten=1051
+2025-11-03 17:03:50.132 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: completed with ret=0x0
+2025-11-03 17:03:51.639 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-0] called with sizeIn=1051
+2025-11-03 17:03:51.639 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-1] rxPI=3153 rxCI=3153 capacity=16384 sizeIn=1051
+2025-11-03 17:03:51.639 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-2] rxPI=3153 rxCI=3153 free=13231 toWrite=1051 cap=16384
+2025-11-03 17:03:51.639 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-L] rxPI=3153 rxCI=3153 toWrite=1051 cap=16384
+2025-11-03 17:03:51.639 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x10096cc51 len=1051
+2025-11-03 17:03:51.639 Df kernel[0:147824] () [VSPSerialPort:D]: 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44
+2025-11-03 17:03:51.639 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-4] rxPI=4204 rxCI=3153 bytesWritten=1051
+2025-11-03 17:03:51.639 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: completed with ret=0x0
+2025-11-03 17:03:53.140 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-0] called with sizeIn=1051
+2025-11-03 17:03:53.140 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-1] rxPI=4204 rxCI=4204 capacity=16384 sizeIn=1051
+2025-11-03 17:03:53.140 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-2] rxPI=4204 rxCI=4204 free=12180 toWrite=1051 cap=16384
+2025-11-03 17:03:53.140 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-L] rxPI=4204 rxCI=4204 toWrite=1051 cap=16384
+2025-11-03 17:03:53.140 Df kernel[0:147ae2] () [VSPSerialPort:D]: Dump buffer=0x10096d06c len=1051
+2025-11-03 17:03:53.140 Df kernel[0:147ae2] () [VSPSerialPort:D]: 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45 45
+2025-11-03 17:03:53.140 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-4] rxPI=5255 rxCI=4204 bytesWritten=1051
+2025-11-03 17:03:53.140 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: completed with ret=0x0
+2025-11-03 17:03:54.646 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-0] called with sizeIn=1051
+2025-11-03 17:03:54.646 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-1] rxPI=5255 rxCI=5255 capacity=16384 sizeIn=1051
+2025-11-03 17:03:54.646 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-2] rxPI=5255 rxCI=5255 free=11129 toWrite=1051 cap=16384
+2025-11-03 17:03:54.646 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-L] rxPI=5255 rxCI=5255 toWrite=1051 cap=16384
+2025-11-03 17:03:54.646 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x10096d487 len=1051
+2025-11-03 17:03:54.646 Df kernel[0:147824] () [VSPSerialPort:D]: 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46 46
+2025-11-03 17:03:54.646 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-4] rxPI=6306 rxCI=5255 bytesWritten=1051
+2025-11-03 17:03:54.646 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: completed with ret=0x0
+2025-11-03 17:03:56.154 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-0] called with sizeIn=1051
+2025-11-03 17:03:56.154 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-1] rxPI=6306 rxCI=6306 capacity=16384 sizeIn=1051
+2025-11-03 17:03:56.154 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-2] rxPI=6306 rxCI=6306 free=10078 toWrite=1051 cap=16384
+2025-11-03 17:03:56.154 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-L] rxPI=6306 rxCI=6306 toWrite=1051 cap=16384
+2025-11-03 17:03:56.154 Df kernel[0:147ae2] () [VSPSerialPort:D]: Dump buffer=0x10096d8a2 len=1051
+2025-11-03 17:03:56.154 Df kernel[0:147ae2] () [VSPSerialPort:D]: 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47 47
+2025-11-03 17:03:56.154 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-4] rxPI=7357 rxCI=6306 bytesWritten=1051
+2025-11-03 17:03:56.154 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: completed with ret=0x0
+2025-11-03 17:03:57.659 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-0] called with sizeIn=1051
+2025-11-03 17:03:57.659 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-1] rxPI=7357 rxCI=7357 capacity=16384 sizeIn=1051
+2025-11-03 17:03:57.659 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-2] rxPI=7357 rxCI=7357 free=9027 toWrite=1051 cap=16384
+2025-11-03 17:03:57.659 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-L] rxPI=7357 rxCI=7357 toWrite=1051 cap=16384
+2025-11-03 17:03:57.659 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x10096dcbd len=1051
+2025-11-03 17:03:57.659 Df kernel[0:147824] () [VSPSerialPort:D]: 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48 48
+2025-11-03 17:03:57.659 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-4] rxPI=8408 rxCI=7357 bytesWritten=1051
+2025-11-03 17:03:57.659 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: completed with ret=0x0
+2025-11-03 17:03:59.164 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-0] called with sizeIn=1051
+2025-11-03 17:03:59.164 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-1] rxPI=8408 rxCI=8408 capacity=16384 sizeIn=1051
+2025-11-03 17:03:59.164 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-2] rxPI=8408 rxCI=8408 free=7976 toWrite=1051 cap=16384
+2025-11-03 17:03:59.164 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-L] rxPI=8408 rxCI=8408 toWrite=1051 cap=16384
+2025-11-03 17:03:59.164 Df kernel[0:147ae2] () [VSPSerialPort:D]: Dump buffer=0x10096e0d8 len=1051
+2025-11-03 17:03:59.164 Df kernel[0:147ae2] () [VSPSerialPort:D]: 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49 49
+2025-11-03 17:03:59.164 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-4] rxPI=9459 rxCI=8408 bytesWritten=1051
+2025-11-03 17:03:59.164 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: completed with ret=0x0
+2025-11-03 17:04:00.670 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-0] called with sizeIn=1051
+2025-11-03 17:04:00.670 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-1] rxPI=9459 rxCI=9459 capacity=16384 sizeIn=1051
+2025-11-03 17:04:00.670 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-2] rxPI=9459 rxCI=9459 free=6925 toWrite=1051 cap=16384
+2025-11-03 17:04:00.670 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-L] rxPI=9459 rxCI=9459 toWrite=1051 cap=16384
+2025-11-03 17:04:00.670 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x10096e4f3 len=1051
+2025-11-03 17:04:00.670 Df kernel[0:147824] () [VSPSerialPort:D]: 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a 4a
+2025-11-03 17:04:00.670 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-4] rxPI=10510 rxCI=9459 bytesWritten=1051
+2025-11-03 17:04:00.670 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: completed with ret=0x0
+2025-11-03 17:04:02.173 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-0] called with sizeIn=1051
+2025-11-03 17:04:02.173 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-1] rxPI=10510 rxCI=10510 capacity=16384 sizeIn=1051
+2025-11-03 17:04:02.173 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-2] rxPI=10510 rxCI=10510 free=5874 toWrite=1051 cap=16384
+2025-11-03 17:04:02.173 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-L] rxPI=10510 rxCI=10510 toWrite=1051 cap=16384
+2025-11-03 17:04:02.173 Df kernel[0:147ae2] () [VSPSerialPort:D]: Dump buffer=0x10096e90e len=1051
+2025-11-03 17:04:02.173 Df kernel[0:147ae2] () [VSPSerialPort:D]: 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b 4b
+2025-11-03 17:04:02.173 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-4] rxPI=11561 rxCI=10510 bytesWritten=1051
+2025-11-03 17:04:02.173 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: completed with ret=0x0
+2025-11-03 17:04:03.676 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-0] called with sizeIn=1051
+2025-11-03 17:04:03.676 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-1] rxPI=11561 rxCI=11561 capacity=16384 sizeIn=1051
+2025-11-03 17:04:03.676 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-2] rxPI=11561 rxCI=11561 free=4823 toWrite=1051 cap=16384
+2025-11-03 17:04:03.676 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-L] rxPI=11561 rxCI=11561 toWrite=1051 cap=16384
+2025-11-03 17:04:03.676 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x10096ed29 len=1051
+2025-11-03 17:04:03.676 Df kernel[0:147824] () [VSPSerialPort:D]: 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c 4c
+2025-11-03 17:04:03.676 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-4] rxPI=12612 rxCI=11561 bytesWritten=1051
+2025-11-03 17:04:03.676 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: completed with ret=0x0
+2025-11-03 17:04:05.180 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-0] called with sizeIn=1051
+2025-11-03 17:04:05.180 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-1] rxPI=12612 rxCI=12612 capacity=16384 sizeIn=1051
+2025-11-03 17:04:05.180 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-2] rxPI=12612 rxCI=12612 free=3772 toWrite=1051 cap=16384
+2025-11-03 17:04:05.180 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-L] rxPI=12612 rxCI=12612 toWrite=1051 cap=16384
+2025-11-03 17:04:05.180 Df kernel[0:147ae2] () [VSPSerialPort:D]: Dump buffer=0x10096f144 len=1051
+2025-11-03 17:04:05.180 Df kernel[0:147ae2] () [VSPSerialPort:D]: 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d 4d
+2025-11-03 17:04:05.180 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-4] rxPI=13663 rxCI=12612 bytesWritten=1051
+2025-11-03 17:04:05.180 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: completed with ret=0x0
+2025-11-03 17:04:06.684 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-0] called with sizeIn=1051
+2025-11-03 17:04:06.685 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-1] rxPI=13663 rxCI=13663 capacity=16384 sizeIn=1051
+2025-11-03 17:04:06.685 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-2] rxPI=13663 rxCI=13663 free=2721 toWrite=1051 cap=16384
+2025-11-03 17:04:06.685 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-L] rxPI=13663 rxCI=13663 toWrite=1051 cap=16384
+2025-11-03 17:04:06.685 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x10096f55f len=1051
+2025-11-03 17:04:06.685 Df kernel[0:147824] () [VSPSerialPort:D]: 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e 4e
+2025-11-03 17:04:06.685 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-4] rxPI=14714 rxCI=13663 bytesWritten=1051
+2025-11-03 17:04:06.685 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: completed with ret=0x0
+2025-11-03 17:04:08.190 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-0] called with sizeIn=1051
+2025-11-03 17:04:08.190 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-1] rxPI=14714 rxCI=14714 capacity=16384 sizeIn=1051
+2025-11-03 17:04:08.190 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-2] rxPI=14714 rxCI=14714 free=1670 toWrite=1051 cap=16384
+2025-11-03 17:04:08.190 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-L] rxPI=14714 rxCI=14714 toWrite=1051 cap=16384
+2025-11-03 17:04:08.190 Df kernel[0:147ae2] () [VSPSerialPort:D]: Dump buffer=0x10096f97a len=1051
+2025-11-03 17:04:08.190 Df kernel[0:147ae2] () [VSPSerialPort:D]: 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f 4f
+2025-11-03 17:04:08.190 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-4] rxPI=15765 rxCI=14714 bytesWritten=1051
+2025-11-03 17:04:08.190 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: completed with ret=0x0
+2025-11-03 17:04:09.695 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-0] called with sizeIn=1051
+2025-11-03 17:04:09.695 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-1] rxPI=15765 rxCI=15765 capacity=16384 sizeIn=1051
+2025-11-03 17:04:09.695 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-2] rxPI=15765 rxCI=15765 free=619 toWrite=1051 cap=16384
+2025-11-03 17:04:09.695 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-W] rxPI=15765 rxCI=15765 FIRST=619 SECOND=432
+2025-11-03 17:04:09.695 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x10096fd95 len=619
+2025-11-03 17:04:09.695 Df kernel[0:147824] () [VSPSerialPort:D]: 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50
+2025-11-03 17:04:09.695 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x10096c000 len=432
+2025-11-03 17:04:09.695 Df kernel[0:147824] () [VSPSerialPort:D]: 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50 50
+2025-11-03 17:04:09.695 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-4] rxPI=432 rxCI=15765 bytesWritten=1051
+2025-11-03 17:04:09.695 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: completed with ret=0x0
+2025-11-03 17:04:10.717 Df kernel[0:147824] () [VSPSerialPort:D]: RxFreeSpaceAvailable called.
+2025-11-03 17:04:11.200 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-0] called with sizeIn=1051
+2025-11-03 17:04:11.200 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-1] rxPI=432 rxCI=22905 capacity=16384 sizeIn=1051
+2025-11-03 17:04:11.201 Df kernel[0:147ae2] () [VSPSerialPort:E]: sendResponse: Index corruption detected! rxPI=432 rxCI=22905 sizeIn=1051 cap=16384
+2025-11-03 17:04:11.201 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: completed with ret=0xe0000001
+2025-11-03 17:04:12.710 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-0] called with sizeIn=1051
+2025-11-03 17:04:12.710 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-1] rxPI=0 rxCI=0 capacity=16384 sizeIn=1051
+2025-11-03 17:04:12.710 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-2] rxPI=0 rxCI=0 free=16384 toWrite=1051 cap=16384
+2025-11-03 17:04:12.710 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-L] rxPI=0 rxCI=0 toWrite=1051 cap=16384
+2025-11-03 17:04:12.710 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x10096c000 len=1051
+2025-11-03 17:04:12.710 Df kernel[0:147824] () [VSPSerialPort:D]: 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52 52
+2025-11-03 17:04:12.710 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-4] rxPI=1051 rxCI=0 bytesWritten=1051
+2025-11-03 17:04:12.710 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: completed with ret=0x0
+2025-11-03 17:04:14.216 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-0] called with sizeIn=1051
+2025-11-03 17:04:14.216 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-1] rxPI=1051 rxCI=1051 capacity=16384 sizeIn=1051
+2025-11-03 17:04:14.216 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-2] rxPI=1051 rxCI=1051 free=15333 toWrite=1051 cap=16384
+2025-11-03 17:04:14.216 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-L] rxPI=1051 rxCI=1051 toWrite=1051 cap=16384
+2025-11-03 17:04:14.216 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x10096c41b len=1051
+2025-11-03 17:04:14.216 Df kernel[0:147824] () [VSPSerialPort:D]: 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53 53
+2025-11-03 17:04:14.216 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-4] rxPI=2102 rxCI=1051 bytesWritten=1051
+2025-11-03 17:04:14.216 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: completed with ret=0x0
+2025-11-03 17:04:15.723 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-0] called with sizeIn=1051
+2025-11-03 17:04:15.723 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-1] rxPI=2102 rxCI=2102 capacity=16384 sizeIn=1051
+2025-11-03 17:04:15.723 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-2] rxPI=2102 rxCI=2102 free=14282 toWrite=1051 cap=16384
+2025-11-03 17:04:15.723 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-L] rxPI=2102 rxCI=2102 toWrite=1051 cap=16384
+2025-11-03 17:04:15.723 Df kernel[0:147ae2] () [VSPSerialPort:D]: Dump buffer=0x10096c836 len=1051
+2025-11-03 17:04:15.723 Df kernel[0:147ae2] () [VSPSerialPort:D]: 54 54 54 54 54 54 54 54 54 54 54 54 54 54 54 54 54 54 54 54 54 54 54 54 54 54 54 54 54 54
+2025-11-03 17:04:15.723 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-4] rxPI=3153 rxCI=2102 bytesWritten=1051
+2025-11-03 17:04:15.723 Df kernel[0:147ae2] () [VSPSerialPort:D]: sendResponse: completed with ret=0x0
+2025-11-03 17:04:17.228 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-0] called with sizeIn=1051
+2025-11-03 17:04:17.228 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-1] rxPI=3153 rxCI=3153 capacity=16384 sizeIn=1051
+2025-11-03 17:04:17.228 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-2] rxPI=3153 rxCI=3153 free=13231 toWrite=1051 cap=16384
+2025-11-03 17:04:17.228 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-L] rxPI=3153 rxCI=3153 toWrite=1051 cap=16384
+2025-11-03 17:04:17.228 Df kernel[0:147824] () [VSPSerialPort:D]: Dump buffer=0x10096cc51 len=1051
+2025-11-03 17:04:17.228 Df kernel[0:147824] () [VSPSerialPort:D]: 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55 55
+2025-11-03 17:04:17.228 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: [IOSPI-RX-4] rxPI=4204 rxCI=3153 bytesWritten=1051
+2025-11-03 17:04:17.228 Df kernel[0:147824] () [VSPSerialPort:D]: sendResponse: completed with ret=0x0
+2025-11-03 17:04:17.636 Df kernel[0:147824] () [VSPSerialPort:D]: RxFreeSpaceAvailable called.
+2025-11-03 17:04:18.138 Df kernel[0:147824] () [VSPSerialPort:D]: DisconnectQueues called
+
