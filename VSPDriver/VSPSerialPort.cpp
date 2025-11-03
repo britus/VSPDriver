@@ -1174,9 +1174,9 @@ static inline void dbg_dump_buffer(const uint8_t* data, uint64_t size)
         strlcat(dump, hex, 1023);
     }
 
-    VSPLog(LOG_PREFIX, "sendResponse: Dump buffer=0x%llx len=%llu\n",
+    VSPLog(LOG_PREFIX, "Dump buffer=0x%llx len=%llu\n",
            (uint64_t)data, (unsigned long long)size);
-    VSPLog(LOG_PREFIX, "sendResponse: %{public}s\n", (const char*) dump);
+    VSPLog(LOG_PREFIX, "%{public}s\n", (const char*) dump);
 }
 #endif
 
@@ -1517,6 +1517,8 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
     if (rxPI >= capacity || rxCI >= capacity) {
         VSPErr(LOG_PREFIX, "sendResponse: Index corruption detected! rxPI=%llu rxCI=%llu sizeIn=%llu cap=%llu\n",
                rxPI, rxCI, sizeIn, capacity);
+        ivars->m_spi->rxPI = 0;
+        ivars->m_spi->rxCI = 0;
         return kIOReturnInvalid;
     }
 
@@ -1615,7 +1617,7 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
         // raise DSR signal
         setDataSetReady(true);
         // notify OS ready to read from ring buffer
-        this->RxDataAvailable_Impl();
+        RxDataAvailable();
     }
     
 done:
