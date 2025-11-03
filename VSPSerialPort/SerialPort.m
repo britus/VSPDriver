@@ -544,7 +544,7 @@ void writeReceivedData(NSData* data, size_t bufferSize, NSString* filename) {
                 return;
             }
             
-            [NSThread sleepForTimeInterval:0.5]; // delay
+            [NSThread sleepForTimeInterval:0.08]; // delay
             
         } // for
         if (completion) {
@@ -658,10 +658,12 @@ void writeReceivedData(NSData* data, size_t bufferSize, NSString* filename) {
                 // TODO: debug only
                 writeReceivedData(data, bytesRead, @"received.txt");
                 
-                [self notifyDelegateReceivedData:data];
+                if ([self.delegate respondsToSelector:@selector(serialPortDidReceiveData:)]) {
+                    [self notifyDelegateReceivedData:data];
+                }
             }
             
-            [NSThread sleepForTimeInterval:0.25]; // Poll
+            [NSThread sleepForTimeInterval:0.05]; // Poll
         }
         
         // If we exit the loop, disconnect

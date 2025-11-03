@@ -706,9 +706,7 @@ kern_return_t VSPSerialPort::getDeviceName(char* result, const uint32_t size)
 void VSPSerialPort::setClearToSend(bool cts)
 {
     if (IS_BIT(ivars->m_hwStatus, MODEM_STATUS_CTS) != cts) {
-        VSPAquireLock(ivars);
         UPDATE_BIT(ivars->m_hwStatus, MODEM_STATUS_CTS, cts);
-        VSPUnlock(ivars);
         reportModemStatus();
     }
 }
@@ -719,9 +717,7 @@ void VSPSerialPort::setClearToSend(bool cts)
 void VSPSerialPort::setDataSetReady(bool dsr)
 {
     if (IS_BIT(ivars->m_hwStatus, MODEM_STATUS_DSR) != dsr) {
-        VSPAquireLock(ivars);
         UPDATE_BIT(ivars->m_hwStatus, MODEM_STATUS_DSR, dsr);
-        VSPUnlock(ivars);
         reportModemStatus();
     }
 }
@@ -732,9 +728,7 @@ void VSPSerialPort::setDataSetReady(bool dsr)
 void VSPSerialPort::setRingIndicator(bool ri)
 {
     if (IS_BIT(ivars->m_hwStatus, MODEM_STATUS_RI) != ri) {
-        VSPAquireLock(ivars);
         UPDATE_BIT(ivars->m_hwStatus, MODEM_STATUS_RI, ri);
-        VSPUnlock(ivars);
         reportModemStatus();
     }
 }
@@ -745,9 +739,7 @@ void VSPSerialPort::setRingIndicator(bool ri)
 void VSPSerialPort::setDataCarrierDetect(bool dcd)
 {
     if (IS_BIT(ivars->m_hwStatus, MODEM_STATUS_DCD) != dcd) {
-        VSPAquireLock(ivars);
         UPDATE_BIT(ivars->m_hwStatus, MODEM_STATUS_DCD, dcd);
-        VSPUnlock(ivars);
         reportModemStatus();
     }
 }
@@ -1585,7 +1577,6 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
             // Copy second chunk to top of ring buffer
             memcpy(base, src + firstChunk, secondChunk);
             ivars->rx_secondChunk = secondChunk;
-            //isWrapped = true;
 
             if ((traceFlags() & TRACE_PORT_RX) /*&& (traceFlags() & TRACE_PORT_IO)*/) {
                 dbg_dump_buffer(base, secondChunk);
