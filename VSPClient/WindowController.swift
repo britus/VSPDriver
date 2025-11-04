@@ -129,9 +129,6 @@ class WindowController: NSWindowController {
         
         // Handle window resizing constraints
         window.delegate = self
-        
-        // Add a resize indicator view to show dimensions (optional)
-        // setupResizeIndicator()
     }
     
     // Method to center window on multiple screens (if needed)
@@ -167,6 +164,8 @@ class WindowController: NSWindowController {
         DispatchQueue.main.async {
             self.tbPortLinks.isEnabled = state
             self.tbSerialPorts.isEnabled = state
+            self.tbMessages.isEnabled = state
+            self.tbSerialTest.isEnabled = state
         }
     }
     
@@ -210,6 +209,8 @@ extension WindowController: NSWindowDelegate {
         DisconnectDriver()
     }
 }
+
+// MARK: - DriverManagerObserver
 
 extension WindowController: DriverManagerObserver {
     func willLoadDriver() {
