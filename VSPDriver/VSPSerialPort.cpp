@@ -3,7 +3,7 @@
 //
 // Copyright © 2025 by EoF Software Labs
 // Copyright © 2024 Apple Inc. (some copied parts)
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: GPLv3
 // ********************************************************************
 
 // -- OS
@@ -149,11 +149,6 @@ struct TResponseActionInfo {
     VSPSerialPort* self = NULL;
 };
 
-// Dirty code!
-// Note: The DEXT crash if the mutex already locked in the same thread
-// Alt.: IOLockTryLock() return false if already locked.
-// TODO: We need to know how to obtain current thread ID
-// TODO: and than check lock agains thread ID
 static inline void VSPAquireLock(VSPSerialPort_IVars* ivars)
 {
     IORecursiveLockLock(ivars->m_lock);
