@@ -76,7 +76,7 @@ $> csrutil enable
 $> csrutil clear
 ```
 
-### Setup NVRAM to disable signing checks
+### Setup NVRAM to disable signing checks (Intel MacOS only!)
 
 ```
 $> sudo nvram boot-args="dk=0x8001"

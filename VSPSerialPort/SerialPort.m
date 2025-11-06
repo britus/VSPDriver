@@ -545,13 +545,13 @@ void deviceRemovalCallback(
     }
     
     // Create queues with port name included
-    self.pinsigQueue = [self createQueueWithName:@"vsp.psq"
+    self.pinsigQueue = [self createBkgQueueWithName:@"vsp.psq"
                                     filePath:self.portPath
                                   attributes:DISPATCH_QUEUE_CONCURRENT];
-    self.readerQueue = [self createQueueWithName:@"vsp.rdq"
+    self.readerQueue = [self createBkgQueueWithName:@"vsp.rdq"
                                     filePath:self.portPath
                                   attributes:DISPATCH_QUEUE_CONCURRENT];
-    self.writeQueue = [self createQueueWithName:@"vsp.wrq"
+    self.writeQueue = [self createBkgQueueWithName:@"vsp.wrq"
                                     filePath:self.portPath
                                   attributes:DISPATCH_QUEUE_SERIAL];
     
