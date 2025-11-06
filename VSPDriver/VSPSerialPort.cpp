@@ -46,9 +46,9 @@
 //#include <DriverKit/IOReporterDefs.h>
 //#include <DriverKit/IOSimpleReporter.h>
 
-// Used for RX management
-#include <DriverKit/IOCommandPool.h>
-#include <DriverKit/IOCommand.h>
+// --
+//#include <DriverKit/IOCommandPool.h>
+//#include <DriverKit/IOCommand.h>
 
 // -- SerialDriverKit
 #include <SerialDriverKit/SerialDriverKit.h>
