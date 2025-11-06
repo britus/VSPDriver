@@ -1311,11 +1311,15 @@ void VSPSerialPort::dispatchResponse(void* context)
    
     // call response routing if available
     if (ivars->m_portLinkId) {
-        sendToPortLink(ctx, buffer, seg.length);
+        ret = sendToPortLink(ctx, buffer, seg.length);
     } else {
-        sendResponse(ctx, buffer, seg.length);
+        ret = sendResponse(ctx, buffer, seg.length);
     }
-     
+    if (ret == kIOReturnNoSpace) {
+        enqueueResponse(ctx);
+        return;
+    }
+    
     VSPAquireLock(ivars);
     OSSafeReleaseNULL(ctx->bmd);
     IOSafeDeleteNULL(ctx, TResponseInfo, 1);
@@ -1641,7 +1645,6 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
                 VSPLog(LOG_PREFIX, "sendResponse: Buffer full! enqueue again.\n");
             }
             VSPUnlock(ivars);
-            enqueueResponse(ctx);
             return kIOReturnNoSpace;
         }
     }

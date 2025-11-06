@@ -733,7 +733,7 @@
                                         <action selector="onPortLinks:" target="B8D-0N-5wS" id="uCn-cR-8vH"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="880DF24F-774E-4530-8EB4-B781D1A9F712" explicitItemIdentifier="tbMessages" label="Messages" paletteLabel="Messages" tag="-1" image="macwindow" catalog="system" bordered="YES" sizingBehavior="auto" id="nRL-aW-mxg">
+                                <toolbarItem implicitItemIdentifier="880DF24F-774E-4530-8EB4-B781D1A9F712" explicitItemIdentifier="tbMessages" label="Driver Traces" paletteLabel="Driver Traces" tag="-1" image="macwindow" catalog="system" bordered="YES" sizingBehavior="auto" id="nRL-aW-mxg">
                                     <connections>
                                         <action selector="onSMessageView:" target="B8D-0N-5wS" id="kxY-oj-Mm1"/>
                                     </connections>
@@ -1396,13 +1396,13 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <box title="Parameter checks" translatesAutoresizingMaskIntoConstraints="NO" id="p8Z-vX-8PT">
-                                <rect key="frame" x="17" y="274" width="287" height="156"/>
+                                <rect key="frame" x="17" y="300" width="287" height="130"/>
                                 <view key="contentView" id="CY5-O0-wyT">
-                                    <rect key="frame" x="4" y="5" width="279" height="136"/>
+                                    <rect key="frame" x="4" y="5" width="279" height="110"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button identifier="cbxCheckBaudRate" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ow1-fW-VMN">
-                                            <rect key="frame" x="18" y="105" width="85" height="18"/>
+                                            <rect key="frame" x="18" y="79" width="85" height="18"/>
                                             <buttonCell key="cell" type="check" title="Baud rate" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Jhe-L3-k7Z">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -1412,7 +1412,7 @@
                                             </connections>
                                         </button>
                                         <button identifier="cbxCheckDataBits" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lKJ-GW-pJu">
-                                            <rect key="frame" x="18" y="83" width="81" height="18"/>
+                                            <rect key="frame" x="18" y="57" width="81" height="18"/>
                                             <buttonCell key="cell" type="check" title="Data bits" bezelStyle="regularSquare" imagePosition="left" inset="2" id="cdi-to-tLy">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -1422,7 +1422,7 @@
                                             </connections>
                                         </button>
                                         <button identifier="cbxCheckStopBits" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Dkb-R7-yHa">
-                                            <rect key="frame" x="18" y="61" width="81" height="18"/>
+                                            <rect key="frame" x="18" y="35" width="81" height="18"/>
                                             <buttonCell key="cell" type="check" title="Stop bits" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Cun-Wa-wcj">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -1432,7 +1432,7 @@
                                             </connections>
                                         </button>
                                         <button identifier="cbxCheckParity" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wyx-NL-S7e">
-                                            <rect key="frame" x="126" y="105" width="61" height="18"/>
+                                            <rect key="frame" x="126" y="79" width="61" height="18"/>
                                             <buttonCell key="cell" type="check" title="Parity" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Odz-Np-MuU">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -1442,7 +1442,7 @@
                                             </connections>
                                         </button>
                                         <button identifier="cbxCheckFlowCtrl" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TUg-F0-qZ2">
-                                            <rect key="frame" x="126" y="80" width="100" height="18"/>
+                                            <rect key="frame" x="126" y="54" width="100" height="18"/>
                                             <buttonCell key="cell" type="check" title="Flow control" bezelStyle="regularSquare" imagePosition="left" inset="2" id="qye-5b-X1d">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -1453,31 +1453,28 @@
                                         </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="TUg-F0-qZ2" secondAttribute="trailing" constant="53" id="730-Ax-wfV"/>
-                                        <constraint firstItem="Ow1-fW-VMN" firstAttribute="leading" secondItem="lKJ-GW-pJu" secondAttribute="leading" id="7NM-m4-1RG"/>
-                                        <constraint firstItem="TUg-F0-qZ2" firstAttribute="top" secondItem="wyx-NL-S7e" secondAttribute="bottom" constant="9" id="A49-fe-U9a"/>
-                                        <constraint firstItem="TUg-F0-qZ2" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="lKJ-GW-pJu" secondAttribute="trailing" constant="8" symbolic="YES" id="GAU-YC-eY3"/>
-                                        <constraint firstItem="Ow1-fW-VMN" firstAttribute="leading" secondItem="CY5-O0-wyT" secondAttribute="leading" constant="20" symbolic="YES" id="IHN-Rl-g1U"/>
-                                        <constraint firstItem="wyx-NL-S7e" firstAttribute="leading" secondItem="Ow1-fW-VMN" secondAttribute="trailing" constant="25" id="Jtf-EC-xOl"/>
-                                        <constraint firstItem="wyx-NL-S7e" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TUg-F0-qZ2" secondAttribute="leading" id="KFi-dt-Ru4"/>
-                                        <constraint firstItem="Ow1-fW-VMN" firstAttribute="top" secondItem="CY5-O0-wyT" secondAttribute="top" constant="14" id="P6I-x9-DgN"/>
-                                        <constraint firstItem="Ow1-fW-VMN" firstAttribute="baseline" secondItem="wyx-NL-S7e" secondAttribute="baseline" id="PhS-IT-NNc"/>
-                                        <constraint firstItem="Dkb-R7-yHa" firstAttribute="top" secondItem="lKJ-GW-pJu" secondAttribute="bottom" constant="6" symbolic="YES" id="R2P-Vu-QaV"/>
-                                        <constraint firstItem="lKJ-GW-pJu" firstAttribute="top" secondItem="Ow1-fW-VMN" secondAttribute="bottom" constant="6" symbolic="YES" id="TaF-b8-tMT"/>
-                                        <constraint firstItem="lKJ-GW-pJu" firstAttribute="leading" secondItem="Dkb-R7-yHa" secondAttribute="leading" id="aFC-Tp-oYD"/>
-                                        <constraint firstAttribute="trailing" secondItem="wyx-NL-S7e" secondAttribute="trailing" constant="92" id="gSy-js-oGV"/>
-                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Dkb-R7-yHa" secondAttribute="trailing" constant="20" symbolic="YES" id="xge-cb-LPJ"/>
+                                        <constraint firstItem="lKJ-GW-pJu" firstAttribute="top" secondItem="Ow1-fW-VMN" secondAttribute="bottom" constant="6" symbolic="YES" id="6fe-Hn-WQc"/>
+                                        <constraint firstItem="Ow1-fW-VMN" firstAttribute="baseline" secondItem="wyx-NL-S7e" secondAttribute="baseline" id="81b-gz-TFl"/>
+                                        <constraint firstItem="Ow1-fW-VMN" firstAttribute="leading" secondItem="CY5-O0-wyT" secondAttribute="leading" constant="20" symbolic="YES" id="TEL-Tq-Y5r"/>
+                                        <constraint firstItem="Ow1-fW-VMN" firstAttribute="leading" secondItem="lKJ-GW-pJu" secondAttribute="leading" id="Uhy-zY-1oh"/>
+                                        <constraint firstItem="lKJ-GW-pJu" firstAttribute="leading" secondItem="Dkb-R7-yHa" secondAttribute="leading" id="Y92-a1-1CC"/>
+                                        <constraint firstItem="TUg-F0-qZ2" firstAttribute="top" secondItem="wyx-NL-S7e" secondAttribute="bottom" constant="9" id="cOM-f9-dFt"/>
+                                        <constraint firstItem="Ow1-fW-VMN" firstAttribute="top" secondItem="CY5-O0-wyT" secondAttribute="top" constant="14" id="dgb-ae-vHQ"/>
+                                        <constraint firstItem="Dkb-R7-yHa" firstAttribute="top" secondItem="lKJ-GW-pJu" secondAttribute="bottom" constant="6" symbolic="YES" id="oEs-6U-xDd"/>
+                                        <constraint firstItem="wyx-NL-S7e" firstAttribute="leading" secondItem="TUg-F0-qZ2" secondAttribute="leading" id="tWn-jo-QRG"/>
+                                        <constraint firstItem="wyx-NL-S7e" firstAttribute="leading" secondItem="Ow1-fW-VMN" secondAttribute="trailing" constant="25" id="x3T-rA-2fR"/>
+                                        <constraint firstAttribute="trailing" secondItem="TUg-F0-qZ2" secondAttribute="trailing" constant="53" id="ykk-de-EQX"/>
                                     </constraints>
                                 </view>
                             </box>
                             <box horizontalHuggingPriority="249" title="Traces" translatesAutoresizingMaskIntoConstraints="NO" id="0M0-Tb-nFw">
-                                <rect key="frame" x="306" y="274" width="220" height="156"/>
+                                <rect key="frame" x="306" y="300" width="220" height="130"/>
                                 <view key="contentView" id="1py-oh-19D">
-                                    <rect key="frame" x="4" y="5" width="212" height="136"/>
+                                    <rect key="frame" x="4" y="5" width="212" height="110"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button identifier="cbxTraceRx" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tCV-sS-8Z9">
-                                            <rect key="frame" x="18" y="77" width="81" height="18"/>
+                                            <rect key="frame" x="18" y="51" width="81" height="18"/>
                                             <buttonCell key="cell" type="check" title="Trace RX" bezelStyle="regularSquare" imagePosition="left" inset="2" id="XBH-bi-RKM">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -1487,7 +1484,7 @@
                                             </connections>
                                         </button>
                                         <button identifier="cbxTraceCtrl" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WsK-V4-fm0">
-                                            <rect key="frame" x="18" y="99" width="106" height="18"/>
+                                            <rect key="frame" x="18" y="73" width="106" height="18"/>
                                             <buttonCell key="cell" type="check" title="Trace control" bezelStyle="regularSquare" imagePosition="left" inset="2" id="kA3-bi-9AN">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -1497,7 +1494,7 @@
                                             </connections>
                                         </button>
                                         <button identifier="cbxTraceTx" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mnh-rx-MuA">
-                                            <rect key="frame" x="18" y="55" width="81" height="18"/>
+                                            <rect key="frame" x="18" y="29" width="81" height="18"/>
                                             <buttonCell key="cell" type="check" title="Trace TX" bezelStyle="regularSquare" imagePosition="left" inset="2" id="1Ue-IS-7L6">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -1508,31 +1505,28 @@
                                         </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="WsK-V4-fm0" firstAttribute="leading" secondItem="1py-oh-19D" secondAttribute="leading" constant="20" symbolic="YES" id="0ky-A6-5Tg"/>
-                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tCV-sS-8Z9" secondAttribute="trailing" constant="20" symbolic="YES" id="FgT-zj-bnF"/>
-                                        <constraint firstAttribute="bottom" secondItem="mnh-rx-MuA" secondAttribute="bottom" constant="56" id="Nu5-EQ-LWi"/>
-                                        <constraint firstItem="tCV-sS-8Z9" firstAttribute="leading" secondItem="mnh-rx-MuA" secondAttribute="leading" id="S4N-Ls-YuL"/>
-                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="WsK-V4-fm0" secondAttribute="trailing" constant="20" symbolic="YES" id="aBC-WA-bpF"/>
-                                        <constraint firstItem="mnh-rx-MuA" firstAttribute="top" secondItem="tCV-sS-8Z9" secondAttribute="bottom" constant="6" symbolic="YES" id="bRA-43-peQ"/>
-                                        <constraint firstItem="WsK-V4-fm0" firstAttribute="top" secondItem="1py-oh-19D" secondAttribute="top" constant="20" symbolic="YES" id="gZK-aj-eKf"/>
-                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="mnh-rx-MuA" secondAttribute="trailing" constant="20" symbolic="YES" id="oRX-Ni-Wap"/>
-                                        <constraint firstItem="tCV-sS-8Z9" firstAttribute="top" secondItem="WsK-V4-fm0" secondAttribute="bottom" constant="6" symbolic="YES" id="u8e-4r-zOi"/>
-                                        <constraint firstItem="WsK-V4-fm0" firstAttribute="leading" secondItem="tCV-sS-8Z9" secondAttribute="leading" id="xgt-Hu-wth"/>
+                                        <constraint firstAttribute="bottom" secondItem="mnh-rx-MuA" secondAttribute="bottom" constant="30" id="33R-CI-YDz"/>
+                                        <constraint firstItem="mnh-rx-MuA" firstAttribute="top" secondItem="tCV-sS-8Z9" secondAttribute="bottom" constant="6" symbolic="YES" id="6is-aO-pfi"/>
+                                        <constraint firstItem="WsK-V4-fm0" firstAttribute="leading" secondItem="tCV-sS-8Z9" secondAttribute="leading" id="9WV-O6-BGQ"/>
+                                        <constraint firstItem="tCV-sS-8Z9" firstAttribute="leading" secondItem="mnh-rx-MuA" secondAttribute="leading" id="Eyx-bG-MDD"/>
+                                        <constraint firstItem="tCV-sS-8Z9" firstAttribute="top" secondItem="WsK-V4-fm0" secondAttribute="bottom" constant="6" symbolic="YES" id="JE1-p5-5Wt"/>
+                                        <constraint firstItem="WsK-V4-fm0" firstAttribute="leading" secondItem="1py-oh-19D" secondAttribute="leading" constant="20" symbolic="YES" id="O8R-Dl-2rk"/>
+                                        <constraint firstItem="WsK-V4-fm0" firstAttribute="top" secondItem="1py-oh-19D" secondAttribute="top" constant="20" symbolic="YES" id="jch-pJ-Fjj"/>
                                     </constraints>
                                 </view>
                             </box>
                             <scrollView identifier="txLogView" borderType="line" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" horizontalScrollElasticity="allowed" verticalScrollElasticity="allowed" translatesAutoresizingMaskIntoConstraints="NO" id="Tuh-Qa-9aP">
-                                <rect key="frame" x="20" y="20" width="503" height="205"/>
+                                <rect key="frame" x="20" y="20" width="503" height="157"/>
                                 <clipView key="contentView" drawsBackground="NO" id="wUQ-xR-HuT">
-                                    <rect key="frame" x="1" y="1" width="501" height="203"/>
+                                    <rect key="frame" x="1" y="1" width="501" height="155"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView wantsLayer="YES" editable="NO" importsGraphics="NO" verticallyResizable="YES" selectionGranularity="word" findStyle="bar" allowsDocumentBackgroundColorChange="YES" id="q3x-u4-Qrr">
-                                            <rect key="frame" x="0.0" y="0.0" width="501" height="203"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="501" height="155"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="minSize" width="501" height="203"/>
+                                            <size key="minSize" width="501" height="155"/>
                                             <size key="maxSize" width="503" height="10000000"/>
                                         </textView>
                                     </subviews>
@@ -1547,7 +1541,7 @@
                                 </scroller>
                             </scrollView>
                             <button identifier="pbSaveTraces" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dd9-Hw-bFg">
-                                <rect key="frame" x="466" y="238" width="64" height="32"/>
+                                <rect key="frame" x="466" y="257" width="64" height="32"/>
                                 <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="O4U-Eb-CYu">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -1556,21 +1550,37 @@
                                     <action selector="onSaveTraces:" target="K7D-6w-Oiz" id="XGv-fL-PSx"/>
                                 </connections>
                             </button>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="hLV-HT-CG2">
+                                <rect key="frame" x="18" y="185" width="507" height="71"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="71" id="bEB-l7-R0z"/>
+                                </constraints>
+                                <textFieldCell key="cell" selectable="YES" alignment="left" id="eYX-hD-z1w">
+                                    <font key="font" metaFont="system"/>
+                                    <string key="title">The view below shows the messages exchanged between the driver and the application. To view the VSP traces, use the macOS logging mechanism:
+
+log stream --style compact --color always --process "kernel" |grep 'VSP'</string>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="dd9-Hw-bFg" firstAttribute="top" secondItem="0M0-Tb-nFw" secondAttribute="bottom" constant="13" id="8h9-94-Y1W"/>
-                            <constraint firstItem="p8Z-vX-8PT" firstAttribute="leading" secondItem="H5z-6A-Bn1" secondAttribute="leading" constant="20" symbolic="YES" id="Ay8-fR-DeF"/>
-                            <constraint firstItem="dd9-Hw-bFg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="H5z-6A-Bn1" secondAttribute="leading" constant="20" symbolic="YES" id="B4z-kf-0iW"/>
-                            <constraint firstItem="p8Z-vX-8PT" firstAttribute="top" secondItem="H5z-6A-Bn1" secondAttribute="top" constant="20" symbolic="YES" id="C31-Xz-s61"/>
-                            <constraint firstItem="Tuh-Qa-9aP" firstAttribute="top" secondItem="dd9-Hw-bFg" secondAttribute="bottom" constant="20" symbolic="YES" id="F5D-aU-uHl"/>
-                            <constraint firstItem="dd9-Hw-bFg" firstAttribute="trailing" secondItem="Tuh-Qa-9aP" secondAttribute="trailing" id="SXE-vO-t8g"/>
-                            <constraint firstItem="p8Z-vX-8PT" firstAttribute="baseline" secondItem="0M0-Tb-nFw" secondAttribute="baseline" id="Wh1-we-4gV"/>
-                            <constraint firstItem="0M0-Tb-nFw" firstAttribute="leading" secondItem="p8Z-vX-8PT" secondAttribute="trailing" constant="8" symbolic="YES" id="YsK-se-6xk"/>
-                            <constraint firstAttribute="trailing" secondItem="0M0-Tb-nFw" secondAttribute="trailing" constant="20" symbolic="YES" id="Yxv-Bd-1BL"/>
-                            <constraint firstItem="0M0-Tb-nFw" firstAttribute="trailing" secondItem="dd9-Hw-bFg" secondAttribute="trailing" id="hHm-Yw-W7H"/>
-                            <constraint firstAttribute="bottom" secondItem="Tuh-Qa-9aP" secondAttribute="bottom" constant="20" symbolic="YES" id="ss7-RE-bQm"/>
-                            <constraint firstItem="p8Z-vX-8PT" firstAttribute="top" secondItem="0M0-Tb-nFw" secondAttribute="top" id="tXy-4W-opW"/>
-                            <constraint firstItem="p8Z-vX-8PT" firstAttribute="leading" secondItem="Tuh-Qa-9aP" secondAttribute="leading" id="vdD-0X-lUo"/>
+                            <constraint firstItem="hLV-HT-CG2" firstAttribute="leading" secondItem="Tuh-Qa-9aP" secondAttribute="leading" id="1yP-jJ-W5q"/>
+                            <constraint firstItem="p8Z-vX-8PT" firstAttribute="leading" secondItem="H5z-6A-Bn1" secondAttribute="leading" constant="20" symbolic="YES" id="AtD-Ti-dwr"/>
+                            <constraint firstItem="0M0-Tb-nFw" firstAttribute="trailing" secondItem="dd9-Hw-bFg" secondAttribute="trailing" id="Ddd-BU-0xG"/>
+                            <constraint firstItem="p8Z-vX-8PT" firstAttribute="leading" secondItem="hLV-HT-CG2" secondAttribute="leading" id="GKu-yY-a4A"/>
+                            <constraint firstItem="dd9-Hw-bFg" firstAttribute="trailing" secondItem="hLV-HT-CG2" secondAttribute="trailing" id="KJC-5J-YSe"/>
+                            <constraint firstItem="p8Z-vX-8PT" firstAttribute="top" secondItem="H5z-6A-Bn1" secondAttribute="top" constant="20" symbolic="YES" id="Kpv-MJ-mgO"/>
+                            <constraint firstItem="p8Z-vX-8PT" firstAttribute="top" secondItem="0M0-Tb-nFw" secondAttribute="top" id="LIH-n0-83m"/>
+                            <constraint firstAttribute="trailing" secondItem="0M0-Tb-nFw" secondAttribute="trailing" constant="20" symbolic="YES" id="OHf-6R-sdB"/>
+                            <constraint firstItem="hLV-HT-CG2" firstAttribute="trailing" secondItem="Tuh-Qa-9aP" secondAttribute="trailing" id="Tiz-By-Yfq"/>
+                            <constraint firstItem="hLV-HT-CG2" firstAttribute="top" secondItem="dd9-Hw-bFg" secondAttribute="bottom" constant="8" symbolic="YES" id="bVd-5G-eDU"/>
+                            <constraint firstItem="p8Z-vX-8PT" firstAttribute="baseline" secondItem="0M0-Tb-nFw" secondAttribute="baseline" id="bnA-WA-4Qw"/>
+                            <constraint firstItem="dd9-Hw-bFg" firstAttribute="top" secondItem="0M0-Tb-nFw" secondAttribute="bottom" constant="20" symbolic="YES" id="caG-iR-1hy"/>
+                            <constraint firstAttribute="bottom" secondItem="Tuh-Qa-9aP" secondAttribute="bottom" constant="20" symbolic="YES" id="iiW-sa-4eY"/>
+                            <constraint firstItem="Tuh-Qa-9aP" firstAttribute="top" secondItem="hLV-HT-CG2" secondAttribute="bottom" constant="8" symbolic="YES" id="mN7-Iv-kcz"/>
+                            <constraint firstItem="0M0-Tb-nFw" firstAttribute="leading" secondItem="p8Z-vX-8PT" secondAttribute="trailing" constant="8" symbolic="YES" id="s66-kt-ixo"/>
                         </constraints>
                     </view>
                     <connections>
