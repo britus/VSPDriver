@@ -64,7 +64,6 @@ typedef NS_ENUM(NSInteger, SerialPortErrorType) {
 - (instancetype)initWithPortPath:(NSString *)portPath;
 - (instancetype)initWithPathAndParameters:(NSString *)portPath
                       parameters:(SerialPortParameters*)parameters;
-
 - (void)setParameters:(SerialPortParameters *)newParams NS_SWIFT_NAME(setParameters(_:));
 - (BOOL)connect NS_SWIFT_NAME(connect());
 - (void)disconnect NS_SWIFT_NAME(disconnect());
@@ -72,6 +71,7 @@ typedef NS_ENUM(NSInteger, SerialPortErrorType) {
 - (void)sendFileAtPath:(NSString *)filePath
             chunkSize:(NSUInteger)chunkSize
            completion:(void (^)(BOOL success, NSError *error))completion;
+- (BOOL)startMonitoring;
 // State management
 - (void)updateState:(SerialPortState)state;
 - (NSString *)stateDescription:(SerialPortState)state;

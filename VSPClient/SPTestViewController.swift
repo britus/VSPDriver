@@ -203,7 +203,6 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
     }
 
     @objc func serialPortDidDisconnect() {
-        print("Serial port disconnected")
         DispatchQueue.main.async {
             self.isLooperRunning = false
             self.logMessage("Disconnected from serial port.")
@@ -272,28 +271,32 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
     }
     
     @objc func serialPort(_ port: Any, didUpdatePinoutSignals DCD: Bool, dtr DTR: Bool, dsr DSR: Bool, rts RTS: Bool, cts CTS: Bool, ri RI: Bool) {
+        var notify : Bool = false        
         if (serialPins.DCD != DCD) {
             serialPins.DCD = DCD
-            notifyPinsChanged(serialPins)
+            notify = true
         }
         if (serialPins.DTR != DTR) {
             serialPins.DTR = DTR
-            notifyPinsChanged(serialPins)
+            notify = true
         }
         if (serialPins.DSR != DSR) {
             serialPins.DSR = DSR
-            notifyPinsChanged(serialPins)
+            notify = true
         }
         if (serialPins.RTS != RTS) {
             serialPins.RTS = RTS
-            notifyPinsChanged(serialPins)
+            notify = true
         }
         if (serialPins.CTS != CTS) {
             serialPins.CTS = CTS
-            notifyPinsChanged(serialPins)
+            notify = true
         }
         if (serialPins.RI != RI) {
             serialPins.RI = RI
+            notify = true
+        }
+        if notify {
             notifyPinsChanged(serialPins)
         }
     }

@@ -29,6 +29,9 @@
 @property (nonatomic, strong) NSMutableData *receivedData;
 @property (nonatomic, assign) SerialPortState currentState;
 @property (nonatomic, strong) NSString *lastErrorMessage;
+@property (nonatomic, assign) io_connect_t serialPortRef;
+@property (nonatomic, assign) IONotificationPortRef notificationPort;
+@property (nonatomic, assign) CFRunLoopSourceRef runLoopSource;
 @end
 
 #ifdef DEBUG // For debug purposes only (O.o)
@@ -85,6 +88,9 @@ void writeReceivedData(NSData* data, size_t bufferSize, NSString* filename) {
         _portAccessLock = [[NSLock alloc] init];
         _portPath = portPath;
         _fdDevice = -1;
+        _serialPortRef = 0;
+        _notificationPort = MACH_PORT_NULL;
+        _runLoopSource = NULL;
     }
     return self;
 }
@@ -146,7 +152,63 @@ void writeReceivedData(NSData* data, size_t bufferSize, NSString* filename) {
         NSString *path = (__bridge_transfer NSString *)cfPath;
         return path;
     }
-    return @"";
+    return NULL;
+}
+
+- (NSString *)getBsdDevicePath:(io_service_t)service {
+    NSString *path = @"";
+    
+    CFStringRef key = CFSTR(kIOBSDNameKey);
+    CFTypeRef property = IORegistryEntryCreateCFProperty(
+        service,
+        key,
+        kCFAllocatorDefault,
+        0
+    );
+    
+    if (property) {
+        NSString *bsdName = (__bridge NSString *)property;
+        path = [NSString stringWithFormat:@"/dev/%@", bsdName];
+        CFRelease(property);
+    }
+    
+    return path;
+}
+
+// Callback function for device removal
+void deviceRemovalCallback(
+    void *refCon,
+    io_service_t service,
+    natural_t messageType,
+    void *messageArgument
+) {
+    SerialPort *monitor = (__bridge SerialPort *)refCon;
+    
+    // Handle device removal
+    NSLog(@"Serial port device removed: %@", monitor.portPath);
+    [monitor disconnect];
+}
+
+- (void)setupNotification:(io_service_t)service {
+    IONotificationPortRef port = IONotificationPortCreate(kIOMainPortDefault);
+    
+    CFRunLoopSourceRef runLoopSource = IONotificationPortGetRunLoopSource(port);
+    CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
+    
+    // Create notification for device removal
+    io_object_t notification = 0;
+    kern_return_t result = IOServiceAddInterestNotification(
+        port,
+        service,
+        kIOGeneralInterest,
+        deviceRemovalCallback,
+        (__bridge void *)self,
+        &notification
+    );
+    
+    if (result != KERN_SUCCESS) {
+        NSLog(@"Failed to add device removal notification");
+    }
 }
 
 - (NSError *)createErrorWithCode:(NSInteger)code
@@ -365,7 +427,6 @@ void writeReceivedData(NSData* data, size_t bufferSize, NSString* filename) {
     // Generate unique queue name based on base name and device name
     NSString *devName = [filePath lastPathComponent];
     NSString *queueName = [NSString stringWithFormat:@"%@_%@", baseName, devName];
-    
     const char* name = [queueName UTF8String];
     return dispatch_queue_create(name, attributes);
 }
@@ -394,6 +455,64 @@ void writeReceivedData(NSData* data, size_t bufferSize, NSString* filename) {
     return filePath;
 }
 
+- (BOOL)startMonitoring {
+    CFURLRef url = CFURLCreateWithFileSystemPath(
+        kCFAllocatorDefault,
+        (CFStringRef)self.portPath,
+        kCFURLPOSIXPathStyle,
+        false
+    );
+    
+    if (!url) {
+        NSLog(@"Invalid port path");
+        return NO;
+    }
+    
+    // Create notification port
+    IONotificationPortRef port = IONotificationPortCreate(kIOMainPortDefault);
+    self.notificationPort = port;
+    
+    // Create run loop source
+    CFRunLoopSourceRef runLoopSource = IONotificationPortGetRunLoopSource(port);
+    CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
+    
+    // Set up matching dictionary for serial devices
+    CFMutableDictionaryRef matchingDict = IOServiceMatching(kIOSerialBSDServiceValue);
+    
+    if (!matchingDict) {
+        NSLog(@"Failed to create matching dictionary");
+        return NO;
+    }
+    
+    // Create iterator for matching services
+    io_iterator_t iterator;
+    kern_return_t result = IOServiceGetMatchingServices(kIOMainPortDefault, matchingDict, &iterator);
+    
+    if (result != KERN_SUCCESS) {
+        NSLog(@"Failed to get matching services");
+        return NO;
+    }
+    
+    // Find our specific serial port device
+    io_service_t service = 0;
+    while ((service = IOIteratorNext(iterator)) != MACH_PORT_NULL) {
+        // Check if this is our specific port
+        NSString *devicePath = [self getBsdDevicePath:service];
+        
+        if ([devicePath isEqualToString:self.portPath]) {
+            // Set up notification for this service
+            [self setupNotification:service];
+            break;
+        }
+        
+        IOObjectRelease(service);
+    }
+    
+    IOIteratorReset(iterator);
+    IOObjectRelease(iterator);
+    return YES;
+}
+
 - (BOOL)connect {
     if (self.currentState == SerialPortStateConnected) {
         return YES;
@@ -420,6 +539,11 @@ void writeReceivedData(NSData* data, size_t bufferSize, NSString* filename) {
      * non blocking for each read */
     const int fdflags = (O_RDWR | O_NOCTTY);
     const char *_devpath = [self.portPath UTF8String];
+
+    /* monitor serial port */
+    if (!self.startMonitoring) {
+        
+    }
     
     if ((self.fdDevice = open(_devpath, fdflags)) == -1) {
         NSError *error = [self createErrorWithCode:errno
@@ -450,24 +574,21 @@ void writeReceivedData(NSData* data, size_t bufferSize, NSString* filename) {
 - (void)disconnect {
     [self updateState:SerialPortStateDisconnecting];
     
-    /* dispatch_release() not available in ARC mode */
-#if 0
-    if (self.readerQueue != NULL) {
-        dispatch_release(self.readerQueue);
+    [self.portAccessLock lock];
+    {
+        // Remove IOKit notifications
+        if (self.notificationPort != NULL) {
+            IONotificationPortDestroy(self.notificationPort);
+            self.notificationPort = NULL;
+        }
+        
+        if (self.fdDevice != -1) {
+            close(self.fdDevice);
+            self.fdDevice = -1;
+        }
     }
-    if (self.writeQueue != NULL) {
-        dispatch_release(self.writeQueue);
-    }
-    if (self.pinsigQueue != NULL) {
-        dispatch_release(self.pinsigQueue);
-    }
-#endif // 0
-    
-    if (self.fdDevice != -1) {
-        close(self.fdDevice);
-        self.fdDevice = -1;
-    }
-    
+    [self.portAccessLock unlock];
+
     [self updateState:SerialPortStateDisconnected];
 }
 
@@ -640,18 +761,18 @@ void writeReceivedData(NSData* data, size_t bufferSize, NSString* filename) {
         int flags;
         
         while (self.fdDevice != -1 && self.currentState == SerialPortStateConnected) {
-            
+        
             // Acquire read lock before accessing fdPort
             [self.portAccessLock lock];
             flags = fcntl(self.fdDevice, F_GETFL, 0);
             fcntl(self.fdDevice, F_SETFL, flags | O_NONBLOCK);
             
             bytesRead = read(self.fdDevice, buffer, sizeof(buffer));
-
+            
             flags = fcntl(self.fdDevice, F_GETFL, 0);
             fcntl(self.fdDevice, F_SETFL, flags & ~O_NONBLOCK);
             [self.portAccessLock unlock];
-
+            
             if (bytesRead < 0) {
                 // Handle read error
                 if (errno == EAGAIN || errno == EWOULDBLOCK) {
@@ -660,8 +781,8 @@ void writeReceivedData(NSData* data, size_t bufferSize, NSString* filename) {
                 } else {
                     // Actual error occurred
                     NSError *error = [self createErrorWithCode:errno
-                              message:[NSString stringWithUTF8String:strerror(errno)]
-                            errorType:SerialPortErrorTypeReadTimeout];
+                               message:[NSString stringWithUTF8String:strerror(errno)]
+                             errorType:SerialPortErrorTypeReadTimeout];
                     [self fireErrorEvent:error withType:SerialPortErrorTypeReadTimeout];
                     break;
                 }
@@ -671,8 +792,8 @@ void writeReceivedData(NSData* data, size_t bufferSize, NSString* filename) {
             } else if (bytesRead > 0) {
                 // Data received
                 NSData *data = [NSData dataWithBytes:buffer length:(size_t)bytesRead];
-               
-#ifdef DEBUG
+                
+#ifdef DEBUG_FILE
                 writeReceivedData(data, bytesRead, @"received.txt");
 #endif
                 
@@ -681,9 +802,9 @@ void writeReceivedData(NSData* data, size_t bufferSize, NSString* filename) {
                 }
             }
             
-            [NSThread sleepForTimeInterval:0.05];
+            [NSThread sleepForTimeInterval:0.01];
         }
-        
+
         // If we exit the loop, disconnect
         if (self.currentState != SerialPortStateDisconnected) {
             [self disconnect];
