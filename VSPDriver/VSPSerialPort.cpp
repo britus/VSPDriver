@@ -1653,6 +1653,7 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
             if (traceFlags() & TRACE_PORT_RX) {
                 VSPLog(LOG_PREFIX, "sendResponse: Buffer full! enqueue again.\n");
             }
+            VSPUnlock(ivars);
             enqueueResponse(ctx);
             return kIOReturnNoSpace;
         }
