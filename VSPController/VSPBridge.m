@@ -11,6 +11,7 @@
 * C to Swift callbaks
 */
 extern void SwiftDataReady(TVSPControllerData* data, int32_t size);
+extern void VSPErrorOccured(uint64_t code, NSString* message);
 extern void VSPLogMessage(NSString* message);
 
 /**
@@ -29,8 +30,23 @@ void ConvertDataFromCPP(const void *pInput, size_t size) {
 void SendLogMessage(const char* buffer, size_t size)
 {
     // Convert buffer to NSString and call Swift callback
-    NSString *message = buffer ? [NSString stringWithUTF8String:buffer] : @"";
-    if (message) {
-        VSPLogMessage(message);
+    NSString *msg = buffer
+        ? [NSString stringWithUTF8String:buffer]
+        : @"\\_o.O_/";
+    if (msg) {
+        VSPLogMessage(msg);
+    }
+}
+
+/**
+ * Send VSP controller error event
+ */
+void DextErrorOccured(uint64_t error, const char* message, size_t size)
+{
+    NSString *msg = message
+        ? [NSString stringWithUTF8String:message]
+        : @"Unknown error!?";
+    if (msg) {
+        VSPErrorOccured(error, msg);
     }
 }

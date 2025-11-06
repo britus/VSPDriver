@@ -65,6 +65,7 @@ public struct TVSPSystemError {
     case connected
     case disconnected
     case dataError
+    case driverError
 }
 
 protocol DriverManagerObserver: AnyObject {
@@ -74,6 +75,61 @@ protocol DriverManagerObserver: AnyObject {
 
 protocol DriverDataObserver: AnyObject {
     func dataDidAvailable(_ data: TVSPControllerData?)
+}
+
+// -----------------------------------------------------------------
+// VSP controller callback interface used in VSPController.cpp
+// -----------------------------------------------------------------
+
+@_silgen_name("VSPDriverConnected")
+func VSPDriverConnected() {
+    DriverManager.shared.driverConnected()
+}
+
+@_silgen_name("VSPDriverDisconnected")
+func VSPDriverDisconnected() {
+    DriverManager.shared.driverDisconnected()
+}
+
+@_silgen_name("SwiftDataReady")
+func SwiftDataReady(_ args: TVSPControllerData?, numArgs: Int32) {
+
+    // Sanity checks
+    guard let args = args else {
+        DriverManager.shared.dataError(0xbe000001,
+                "Unexpected nil pointer in prarameter args.")
+        return
+    }
+    guard numArgs != MemoryLayout<TVSPControllerData>.size else {
+        DriverManager.shared.dataError(0xbe000002, "Unexpected data size.")
+        return
+    }
+    
+    DriverManager.shared.dataReady(args)
+}
+
+@_silgen_name("VSPLogMessage")
+func VSPLogMessage(_ message: NSString?) {
+    // Sanity checks
+    guard let message = message else {
+        DriverManager.shared.dataError(0xbe000010,
+            "Unexpected nil pointer in prarameter message.")
+        return
+    }
+    
+    DriverManager.shared.logMessage(String(message))
+}
+
+@_silgen_name("VSPErrorOccured")
+func VSPErrorOccured(_ code: UInt64, _ message: NSString?) {
+    // Sanity checks
+    guard let message = message else {
+        DriverManager.shared.dataError(0xbe000011,
+            "Unexpected nil pointer in prarameter message.")
+        return
+    }
+    
+    DriverManager.shared.driverErrorOccured(code, String(message))
 }
 
 final class DriverManager: NSObject, ObservableObject {
@@ -186,6 +242,14 @@ final class DriverManager: NSObject, ObservableObject {
         }
     }
 
+    public func driverErrorOccured(_ code: UInt64, _ message: String) {
+        for observer in observers.allObjects {
+            (observer as? DriverManagerObserver)?
+                .driverStatusDidChange(.driverError, //
+                    code: code, domain: errorDomain, message: message)
+        }
+    }
+
     private func notify(_ status: DriverStatus, code: UInt64, domain: String, message: String) {
         self.status = status
         for observer in observers.allObjects {
@@ -259,45 +323,4 @@ extension DriverManager: OSSystemExtensionRequestDelegate {
                message: "Updating driver to a newer version.")
         return .replace
     }
-}
-
-// -----------------------------------------------------------------
-// VSP controller callback interface used in VSPController.cpp
-// -----------------------------------------------------------------
-
-@_silgen_name("SwiftDataReady")
-func SwiftDataReady(_ args: TVSPControllerData?, numArgs: Int32) {
-
-    // Sanity checks
-    guard let args = args else {
-        DriverManager.shared.dataError(0xbe000001, "Unexpected nil pointer in prarameter args")
-        return
-    }
-    guard numArgs != MemoryLayout<TVSPControllerData>.size else {
-        DriverManager.shared.dataError(0xbe000002, "Unexpected data size")
-        return
-    }
-    
-    DriverManager.shared.dataReady(args)
-}
-
-@_silgen_name("VSPLogMessage")
-func VSPLogMessage(_ message: NSString?) {
-    // Sanity checks
-    guard let message = message else {
-        DriverManager.shared.dataError(0xbe000010, "Unexpected nil pointer in prarameter args")
-        return
-    }
-    
-    DriverManager.shared.logMessage(String(message))
-}
-
-@_silgen_name("VSPDriverConnected")
-func VSPDriverConnected() {
-    DriverManager.shared.driverConnected()
-}
-
-@_silgen_name("VSPDriverDisconnected")
-func VSPDriverDisconnected() {
-    DriverManager.shared.driverDisconnected()
 }

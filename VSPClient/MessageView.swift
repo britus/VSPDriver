@@ -160,5 +160,12 @@ class MessageProxy: DriverManagerObserver {
     
     func driverStatusDidChange(_ status: DriverStatus, code: UInt64, domain: String, message: String) {
         parent.logMessage("Driver status: \(status.rawValue), code: \(code), message: \(message)")
+        if code > 0 {
+            DispatchQueue.main.async {
+                UITools.showMessage(
+                    message: "Error \(String(format: "0x%llx", code)):\n\n\(message)",
+                    withCompletion: { NSApp.terminate(self) })
+            }
+        }
     }
 }

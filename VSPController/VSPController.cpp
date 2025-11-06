@@ -11,6 +11,14 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <string>
+#include <sstream>
+#include <iomanip>
+#include <format>  // C++20
+// OR for older C++ standards:
+// #include <fmt/format.h>  // if using the fmt library
+#include <cstdio>
+
 /* VSP controller data and class */
 #include "VSPController.h"
 
@@ -20,8 +28,12 @@
 #define VSP_DEBUG
 #endif
 
-extern "C" { // for Swift ->
+extern "C" { // Swift bridge
+extern void VSPDriverConnected();
+extern void VSPDriverDisconnected();
+extern void DextErrorOccured(uint64_t error, const char* message, size_t size);
 extern void ConvertDataFromCPP(const void *pInput, size_t size);
+extern void SwiftDataReady(const void* data, int32_t size);
 extern void SendLogMessage(const char* buffer, size_t size);
 }
 
@@ -140,7 +152,7 @@ static void DeviceAdded(void *refcon, io_iterator_t iterator)
     io_name_t deviceName = {};
     io_name_t devicePath = {};
 
-    fprintf(stdout, "[VSPCTL] DeviceAdded(): ref=0x%llx\n", (uint64_t) refcon);
+    //fprintf(stdout, "[VSPCTL] DeviceAdded(): ref=0x%llx\n", (uint64_t) refcon);
 
     // reset, emit disconnect if m_drv is not null
     p->setConnection(IO_OBJECT_NULL);
@@ -153,7 +165,7 @@ static void DeviceAdded(void *refcon, io_iterator_t iterator)
             p->reportError(ret, "Get service registry path failed.");
         }
 
-        fprintf(stdout, "[VSPCTL] Open service: %s: %s\n", deviceName, devicePath);
+        //fprintf(stdout, "[VSPCTL] Open service: %s: %s\n", deviceName, devicePath);
         if (strlen(deviceName) > 0 && strlen(devicePath) > 0) {
             p->setNameAndPath(deviceName, devicePath);
         }
@@ -183,7 +195,7 @@ static void DeviceRemoved(void *refcon, io_iterator_t iterator)
     if ((p = (VSPController *) refcon)) {
         io_service_t device = IO_OBJECT_NULL;
         
-        fprintf(stdout, "[VSPCTL] DeviceRemoved(): ref=0x%llx\n", (uint64_t) refcon);
+        //fprintf(stdout, "[VSPCTL] DeviceRemoved(): ref=0x%llx\n", (uint64_t) refcon);
         
         while ((device = IOIteratorNext(iterator)) != IO_OBJECT_NULL) {
             IOObjectRelease(device);
@@ -452,15 +464,27 @@ void VSPController::reportError(IOReturn error, const char *message)
         .sub    = err_get_sub(error),
         .code   = err_get_code(error),
     };
+    
+    // Build the error message using C++ string operations
+    std::ostringstream oss;
+    oss << "[VSP Driver Error] ---------------------------------\n";
+    oss << "\tOS Code..: 0x"
+        << std::hex << std::uppercase
+        << std::setfill('0') << std::setw(8) << m_errorInfo.oscode << "\n";
+    oss << "\tSystem...: 0x"
+        << std::hex << std::uppercase
+        << std::setfill('0') << std::setw(4) << m_errorInfo.system << "\n";
+    oss << "\tSubsystem: 0x"
+        << std::hex << std::uppercase
+        << std::setfill('0') << std::setw(4) << m_errorInfo.sub << "\n";
+    oss << "\tCode.....: 0x"
+        << std::hex << std::uppercase
+    << std::setfill('0') << std::setw(4) << m_errorInfo.code << "\n";
 
-    fprintf(stderr, "[VSP Driver Error] ---------------------------------\n");
-    fprintf(stderr, "%s\n", message);
-    fprintf(stderr, "\tOS Code..: 0x%08x\n", m_errorInfo.oscode);
-    fprintf(stderr, "\tSystem...: 0x%04x\n", m_errorInfo.system);
-    fprintf(stderr, "\tSubsystem: 0x%04x\n", m_errorInfo.code);
-    fprintf(stderr, "\tCode.....: 0x%04x\n", m_errorInfo.code);
-
-    //m_controller->OnErrorOccured(m_errorInfo, message);
+    // call Swift callback
+    std::string str = oss.str();
+    SendLogMessage(str.c_str(), str.length());
+    DextErrorOccured(error, str.c_str(), str.length());
 }
 
 void VSPController::setNameAndPath(const char *name, const char *path)
@@ -608,7 +632,6 @@ inline bool VSPController::asyncCall(CVSPDriverData *input)
         // by DEXT. We must unmap later!
         mach_vm_address_t address = 0;
         mach_vm_size_t size = 0;
-
         ret = IOConnectMapMemory64( //
             m_connection,                  // connection from IOServiceOpen
             input->command,         // memoryType -> this is interpreted by VSP driver IOUserClient

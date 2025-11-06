@@ -223,9 +223,7 @@ extension WindowController: DriverManagerObserver {
         if code > 0 {
             UITools.showMessage(
                 message: "Error 0x\(String(code, radix: 16)): \(message).",
-                withCompletion: {
-                    NSApp.terminate(self)
-            })
+                withCompletion: { NSApp.terminate(self) })
         } else {
             UITools.showBasicNotification(body: "\(message).")
             // C bridge async

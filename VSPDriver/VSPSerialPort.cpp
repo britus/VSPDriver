@@ -58,7 +58,6 @@ using namespace driverkit::serial;
 
 // -- My
 #include "VSPSerialPort.h"
-#include "VSPResponseCommand.h"
 #include "VSPController.h"
 #include "VSPLogger.h"
 #include "VSPDriver.h"

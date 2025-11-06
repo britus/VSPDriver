@@ -60,12 +60,3 @@ private:
     // Called by IOConnectCallAsyncStructMethod async callback
     inline bool asyncCall(CVSPDriverData *input);
 };
-
-/**
- * C to Swift callbaks
- */
-extern "C" {
-extern void VSPDriverConnected();
-extern void VSPDriverDisconnected();
-extern void SwiftDataReady(const void* data, int32_t size);
-}
