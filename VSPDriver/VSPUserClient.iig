@@ -1,9 +1,6 @@
 // ********************************************************************
 // VSPUserClient.iig - VSP controller object
 //
-// The IOKit Interface Generator file that declares
-// the driver's methods.
-//
 // Copyright © 2025 by EoF Software Labs
 // Copyright © 2024 Apple Inc. (some copied parts)
 // SPDX-License-Identifier: GPLv3

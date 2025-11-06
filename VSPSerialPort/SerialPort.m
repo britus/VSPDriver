@@ -31,7 +31,19 @@
 @property (nonatomic, strong) NSString *lastErrorMessage;
 @end
 
-// For debug purposes only (O.o)
+#ifdef DEBUG // For debug purposes only (O.o)
+void removeFile(NSString* filename) {
+    NSString* homeDirectory = NSHomeDirectory();
+    NSString* filePath = [homeDirectory stringByAppendingPathComponent:filename];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:filePath]) {
+        NSError *error;
+        BOOL success = [fileManager removeItemAtPath:filePath error:&error];
+        if (!success) {
+            NSLog(@"Error deleting file: %@\n%@", filename, error.localizedDescription);
+        }
+    }
+}
 void writeReceivedData(NSData* data, size_t bufferSize, NSString* filename) {
     NSString* homeDirectory = NSHomeDirectory();
     NSString* filePath = [homeDirectory stringByAppendingPathComponent:filename];
@@ -53,6 +65,7 @@ void writeReceivedData(NSData* data, size_t bufferSize, NSString* filename) {
         }
     }
 }
+#endif
 
 @implementation SerialPort
 
@@ -422,6 +435,10 @@ void writeReceivedData(NSData* data, size_t bufferSize, NSString* filename) {
         return NO;
     }
     
+#ifdef DEBUG
+    removeFile(@"received.txt");
+#endif
+    
     [self configureSerialPort:self.fdDevice];
     [self updateState:SerialPortStateConnected];
     [self monitorPinoutSignals];
@@ -532,9 +549,8 @@ void writeReceivedData(NSData* data, size_t bufferSize, NSString* filename) {
                             createErrorWithCode:EBADF
                                         message:@"Partial write occurred"
                                       errorType:SerialPortErrorTypeWriteFailed];
-#if 0
+#if 1
                 [self fireErrorEvent:error withType:SerialPortErrorTypeWriteFailed];
-                return;
 #else
                 NSLog(@"Write error? written=%zd < length=%lu", written, (unsigned long)length);
 #endif // 0
@@ -544,7 +560,8 @@ void writeReceivedData(NSData* data, size_t bufferSize, NSString* filename) {
                 return;
             }
             
-            [NSThread sleepForTimeInterval:0.08]; // delay
+            // delay
+            [NSThread sleepForTimeInterval:0.1];
             
         } // for
         if (completion) {
@@ -655,15 +672,16 @@ void writeReceivedData(NSData* data, size_t bufferSize, NSString* filename) {
                 // Data received
                 NSData *data = [NSData dataWithBytes:buffer length:(size_t)bytesRead];
                
-                // TODO: debug only
+#ifdef DEBUG
                 writeReceivedData(data, bytesRead, @"received.txt");
+#endif
                 
                 if ([self.delegate respondsToSelector:@selector(serialPortDidReceiveData:)]) {
                     [self notifyDelegateReceivedData:data];
                 }
             }
             
-            [NSThread sleepForTimeInterval:0.05]; // Poll
+            [NSThread sleepForTimeInterval:0.05];
         }
         
         // If we exit the loop, disconnect
@@ -731,7 +749,7 @@ void writeReceivedData(NSData* data, size_t bufferSize, NSString* filename) {
                 }
             }
             
-            [NSThread sleepForTimeInterval:0.5]; // Poll every 500ms
+            [NSThread sleepForTimeInterval:0.05];
         }
     });
 }

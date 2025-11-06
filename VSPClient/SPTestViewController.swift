@@ -119,20 +119,14 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
         
         let bytes = Array(data)
         
-        // Format hex bytes (30 32 33 34 35 36 37 38 39 71 07 0D)
-        let hexPart = bytes.map { String(format: "%02X", $0) }.joined(separator: " ")
-        
-        // Format ASCII characters (0123456789G.)
-        let asciiPart = bytes.map { byte in
-            if byte >= 32 && byte <= 126 {
-                return String(UnicodeScalar(byte))
-            } else {
-                return "."
-            }
-        }.joined()
+        // Format hex bytes
+        // (30 32 33 34 35 36 37 38 39 71 07 0D)
+        let hexPart = bytes.map {
+            String(format: "%02X", $0)
+        }.joined(separator: " ")
         
         // Format with proper spacing
-        return String(format: "RECIEVED:\n%-30s | %s", hexPart, asciiPart)
+        return hexPart;
     }
 
     private func logMessage(_ msg: String)
@@ -142,9 +136,15 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
             if !_text.endsWith("\n") {
                 _text.append("\n")
             }
-            let _buffer = (self.txLogView.string as NSString).appending(_text)
-            self.txLogView.setText(_buffer)
-            self.txLogView.scrollToTextEnd()
+            if let stg = self.txLogView.textStorage {
+                if stg.length < 16386 {
+                    let _buffer = (stg.string as NSString).appending(_text)
+                    self.txLogView.setText(_buffer)
+                } else {
+                    self.txLogView.setText(_text)
+                }
+                self.txLogView.scrollToTextEnd()
+            }
         }
     }
     
@@ -339,11 +339,11 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
                 #endif
                 logMessage(">: Send file \(fileURL.path)")
                 pbIoSendFile.isEnabled = false
-                serialPort?.sendFile(atPath: fileURL.path, chunkSize: 1024, completion:{_,_ in
+                serialPort?.sendFile(atPath: fileURL.path,
+                                     chunkSize: 1024,
+                                     completion:{_,_ in
                     DispatchQueue.main.async {
                         self.pbIoSendFile.isEnabled = true
-                        self.serialPort?.disconnect();
-                        self.connectToSerialPort();
                     }
                 })
             }
@@ -382,7 +382,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
                         index = 0
                     }
                     
-                    Thread.sleep(forTimeInterval: 1.500) // 1.5 seconds
+                    Thread.sleep(forTimeInterval: 0.5)
                     
                     if (!buffer.contains("\r") && self.isAddCrEnabled) {
                         buffer += "\r"

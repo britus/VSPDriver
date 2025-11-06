@@ -697,7 +697,9 @@ extension NSTextView {
         let attributedString = NSAttributedString(string: text, attributes: attributes)
         
         // Set the attributed string to the text view
-        self.textStorage?.setAttributedString(attributedString)
+        if (attributedString.length > 0) {
+            self.textStorage?.setAttributedString(attributedString)
+        }
     }
     
     public func setLineWrapping(_ enable: Bool) {

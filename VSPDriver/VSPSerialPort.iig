@@ -1,9 +1,6 @@
 // ********************************************************************
 // VSPSerialPort - VSPSerialPort.iig
 //
-// The IOKit Interface Generator file that declares
-// the driver's methods.
-//
 // Copyright © 2025 by EoF Software Labs
 // Copyright © 2024 Apple Inc. (some copied parts)
 // SPDX-License-Identifier: GPLv3
@@ -18,7 +15,6 @@
 #include <DriverKit/IOMemoryDescriptor.iig>
 #include <DriverKit/IOBufferMemoryDescriptor.iig>
 #include <DriverKit/IODataQueueDispatchSource.iig>
-#include <DriverKit/IOTimerDispatchSource.iig>
 
 #include <SerialDriverKit/IOUserSerial.iig>
 
@@ -54,20 +50,16 @@ public:
             uint8_t                    in_txqlogsz) override;
     virtual kern_return_t DisconnectQueues() override;
 
-    virtual void RxDataAvailable() override;
     virtual void TxDataAvailable() override;
     virtual void RxFreeSpaceAvailable() override;
-    virtual void TxFreeSpaceAvailable() override;
 
-    virtual kern_return_t SetModemStatus(bool cts, bool dsr, bool ri, bool dcd) override;
     virtual kern_return_t RxError(bool overrun, bool gotBreak, bool framingError, bool parityError) override;
-    
+    virtual kern_return_t SetModemStatus(bool cts, bool dsr, bool ri, bool dcd) override;
+
     virtual kern_return_t HwActivate() override;
     virtual kern_return_t HwDeactivate() override;
-    
     virtual kern_return_t HwResetFIFO(bool tx, bool rx) override;
     virtual kern_return_t HwSendBreak(bool sendBreak) override;
-    
     virtual kern_return_t HwGetModemStatus(bool* cts, bool* dsr, bool* ri, bool* dcd) override;
     virtual kern_return_t HwProgramUART(uint32_t baudRate, uint8_t nDataBits, uint8_t nHalfStopBits, uint8_t parity) override;
     virtual kern_return_t HwProgramBaudRate(uint32_t baudRate) override;
@@ -96,9 +88,12 @@ public:
     kern_return_t getDeviceName(char* result, const uint32_t size) LOCALONLY;
     
     // Routing through port link
+    void triggerDispatch() LOCALONLY;
+    void dispatchResponse(void* context) LOCALONLY;
+    bool scheduleResponse(uint8_t* buffer, uint64_t size) LOCALONLY;
+    kern_return_t enqueueResponse(void* ctx) LOCALONLY;
+    kern_return_t dequeueResponse(void** ctx) LOCALONLY;
     kern_return_t sendToPortLink(void* ctx, const void* buffer, const uint64_t size) LOCALONLY;
-
-    // Update rxqbmd
     kern_return_t sendResponse(void* ctx, const void* buffer, const uint64_t size) LOCALONLY;
     
     uint64_t traceFlags() LOCALONLY;
