@@ -419,18 +419,6 @@ void deviceRemovalCallback(
     }
 }
 
-// Method to create queues with custom names
-- (dispatch_queue_t)createQueueWithName:(NSString *)baseName
-                                filePath:(NSString *)filePath
-                              attributes:(dispatch_queue_attr_t)attributes {
-    
-    // Generate unique queue name based on base name and device name
-    NSString *devName = [filePath lastPathComponent];
-    NSString *queueName = [NSString stringWithFormat:@"%@_%@", baseName, devName];
-    const char* name = [queueName UTF8String];
-    return dispatch_queue_create(name, attributes);
-}
-
 // Method to get the call-in device path (tty)
 - (NSString *)getCallInPath:(NSString *)filePath {
     // Extract the basename and replace "cu." with "tty."
@@ -453,6 +441,38 @@ void deviceRemovalCallback(
                 [basename substringFromIndex:4]];
     }
     return filePath;
+}
+
+// Method to create queues with custom names
+- (dispatch_queue_t)createBkgQueueWithName:(NSString *)baseName
+                                filePath:(NSString *)filePath
+                              attributes:(dispatch_queue_attr_t)attributes {
+    
+    // Generate unique queue name based on base name and device name
+    NSString *devName = [filePath lastPathComponent];
+    NSString *queueName = [NSString stringWithFormat:@"%@_%@", baseName, devName];
+    const char* name = [queueName UTF8String];
+    
+    // Create queue with background priority using modern API
+    dispatch_queue_t queue = dispatch_queue_create(name, attributes);
+    
+    // Set the queue to run with background priority
+    dispatch_queue_t backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0);
+    dispatch_set_target_queue(queue, backgroundQueue);
+
+    return queue;
+}
+
+// Method to create queues with custom names
+- (dispatch_queue_t)createQueueWithName:(NSString *)baseName
+                                filePath:(NSString *)filePath
+                              attributes:(dispatch_queue_attr_t)attributes {
+    
+    // Generate unique queue name based on base name and device name
+    NSString *devName = [filePath lastPathComponent];
+    NSString *queueName = [NSString stringWithFormat:@"%@_%@", baseName, devName];
+    const char* name = [queueName UTF8String];
+    return dispatch_queue_create(name, attributes);
 }
 
 - (BOOL)startMonitoring {
