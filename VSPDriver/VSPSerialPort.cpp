@@ -1289,7 +1289,7 @@ void VSPSerialPort::dispatchResponse(void* context)
     IOReturn ret;
 
     if (traceFlags() & TRACE_PORT_RX) {
-        VSPLog(LOG_PREFIX, "dispatchResponse called. itemId=%llu rxPI=%u rxCI=%u\n",
+        VSPLog(LOG_PREFIX, "dispatchResponse: itemId=%llu rxPI=%u rxCI=%u\n",
                ctx->itemId, ivars->m_spi->rxPI, ivars->m_spi->rxCI);
     }
 
@@ -1384,7 +1384,7 @@ bool VSPSerialPort::scheduleResponse(uint8_t* buffer, uint64_t size)
     VSPUnlock(ivars);
 
     if (traceFlags() & TRACE_PORT_RX) {
-        VSPLog(LOG_PREFIX, "scheduleResponse: schedule itemId=%llu rxPI=%u rxCI=%u\n",
+        VSPLog(LOG_PREFIX, "scheduleResponse: itemId=%llu rxPI=%u rxCI=%u\n",
                ctx->itemId, ivars->m_spi->rxPI, ivars->m_spi->rxCI);
     }
 
@@ -1397,11 +1397,6 @@ bool VSPSerialPort::scheduleResponse(uint8_t* buffer, uint64_t size)
 // TX data ready to read from m_txqbmd segment
 void IMPL(VSPSerialPort, TxDataAvailable)
 {
-    if (traceFlags() & TRACE_PORT_TX) {
-        VSPLog(LOG_PREFIX, "--------------------------------------------------\n");
-        VSPLog(LOG_PREFIX, "TxDataAvailable called.\n");
-    }
-    
     if (!ivars->m_spi || !ivars->m_txqbmd) {
         VSPErr(LOG_PREFIX, "TxDataAvailable: SPI or TX memory descriptor is null");
         return;
@@ -1506,10 +1501,6 @@ finish:
         setClearToSend(true);
         TxFreeSpaceAvailable();
     }
-
-    if (traceFlags() & TRACE_PORT_TX) {
-        VSPLog(LOG_PREFIX, "TxDataAvailable complete.\n");
-    }
 }
 
 // --------------------------------------------------------------------
@@ -1550,7 +1541,7 @@ kern_return_t VSPSerialPort::sendToPortLink(void* context, const void* buffer, c
     uint8_t myPortId = ivars->m_portId;
 
     if (traceFlags() & TRACE_PORT_RX) {
-        VSPLog(LOG_PREFIX, "sendToPortLink called. using linkId=%d myPortId=%d\n", myLinkId, myPortId);
+        VSPLog(LOG_PREFIX, "sendToPortLink: Using linkId=%d myPortId=%d\n", myLinkId, myPortId);
     }
     
     ret = ivars->m_parent->getPortLinkById(myLinkId, &item, sizeof(TVSPLinkItem));
@@ -1581,7 +1572,7 @@ kern_return_t VSPSerialPort::sendToPortLink(void* context, const void* buffer, c
     }
    
     if (traceFlags() & TRACE_PORT_RX) {
-        VSPLog(LOG_PREFIX, "sendToPortLink: Enqueue on targetId=%d\n",
+        VSPLog(LOG_PREFIX, "sendToPortLink: Send on target portId=%d\n",
                port->getPortIdentifier());
     }
 
@@ -1594,11 +1585,7 @@ kern_return_t VSPSerialPort::sendToPortLink(void* context, const void* buffer, c
     if ((ret = port->sendResponse(context, buffer, size)) != kIOReturnSuccess) {
         return ret;
     }
-    
-    if (traceFlags() & TRACE_PORT_RX) {
-        VSPLog(LOG_PREFIX, "sendToPortLink complete.\n");
-    }
-    
+
     return kIOReturnSuccess;
 }
 
