@@ -1287,24 +1287,6 @@ void VSPSerialPort::dispatchResponse(void* context)
     IOAddressSegment seg = {};
     IOReturn ret;
 
-    // Check buffer overflow condition
-    if (ivars->m_spi->rxPI >= ivars->m_rxseg.length) {
-        if (ivars->m_spi->rxPI == ivars->m_spi->rxCI) {
-            if (traceFlags() & TRACE_PORT_RX) {
-                VSPLog(LOG_PREFIX, "dispatchResponse: Reset rxPI and rxCI *******\n");
-            }
-            ivars->m_spi->rxPI = 0;
-            ivars->m_spi->rxCI = 0;
-        }
-        else {
-            if (traceFlags() & TRACE_PORT_RX) {
-                VSPLog(LOG_PREFIX, "dispatchResponse: Buffer full! enqueue again.\n");
-            }
-            enqueueResponse(ctx);
-            return;
-        }
-    }
-
     if (traceFlags() & TRACE_PORT_RX) {
         VSPLog(LOG_PREFIX, "dispatchResponse called. itemId=%llu rxPI=%u rxCI=%u\n",
                ctx->itemId, ivars->m_spi->rxPI, ivars->m_spi->rxCI);
@@ -1657,6 +1639,23 @@ kern_return_t VSPSerialPort::sendResponse(void* context, const void* buffer, con
     }
     
     VSPAquireLock(ivars);
+    // Check buffer overflow condition
+    if (ivars->m_spi->rxPI >= ivars->m_rxseg.length) {
+        if (ivars->m_spi->rxPI == ivars->m_spi->rxCI) {
+            if (traceFlags() & TRACE_PORT_RX) {
+                VSPLog(LOG_PREFIX, "sendResponse: Reset rxPI and rxCI\n");
+            }
+            ivars->m_spi->rxPI = 0;
+            ivars->m_spi->rxCI = 0;
+        }
+        else {
+            if (traceFlags() & TRACE_PORT_RX) {
+                VSPLog(LOG_PREFIX, "sendResponse: Buffer full! enqueue again.\n");
+            }
+            enqueueResponse(ctx);
+            return kIOReturnNoSpace;
+        }
+    }
     const uint64_t rxPI = ivars->m_spi->rxPI;
     const uint64_t rxCI = ivars->m_spi->rxCI;
     VSPUnlock(ivars);
