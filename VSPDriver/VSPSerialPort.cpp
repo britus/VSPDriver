@@ -1177,37 +1177,38 @@ kern_return_t VSPSerialPort::enqueueResponse(void* context)
     TResponseInfo* ctx = reinterpret_cast<TResponseInfo*>(context);
 
     VSPAquireLock(ivars);
-    
-    // Sort the list by itemId (lowest itemId first)
-    TResponseInfo** current = &ivars->m_response_head;
-    TResponseInfo* previous = nullptr;
-    
-    // Find the correct position to insert
-    while (*current && (*current)->itemId < ctx->itemId) {
-        previous = *current;
-        current = &((*current)->next);
+    {
+        // Sort the list by itemId (lowest itemId first)
+        TResponseInfo** current = &ivars->m_response_head;
+        TResponseInfo* previous = nullptr;
+        
+        // Find the correct position to insert
+        while (*current && (*current)->itemId < ctx->itemId) {
+            previous = *current;
+            current = &((*current)->next);
+        }
+        
+        // Insert the new node
+        ctx->next = *current;
+        
+        if (previous) {
+            previous->next = ctx;
+        } else {
+            ivars->m_response_head = ctx;
+        }
+        
+        // Update tail if needed
+        TResponseInfo* temp = ctx;
+        while (temp->next) {
+            temp = temp->next;
+        }
+        ivars->m_response_tail = temp;
+        
+        // increment item counter
+        ivars->m_response_count++;
     }
-    
-    // Insert the new node
-    ctx->next = *current;
-    
-    if (previous) {
-        previous->next = ctx;
-    } else {
-        ivars->m_response_head = ctx;
-    }
-    
-    // Update tail if needed
-    TResponseInfo* temp = ctx;
-    while (temp->next) {
-        temp = temp->next;
-    }
-    ivars->m_response_tail = temp;
-    
-    // increment item counter
-    ivars->m_response_count++;
-    
     VSPUnlock(ivars);
+    
     return kIOReturnSuccess;
 }
 
