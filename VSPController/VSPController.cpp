@@ -12,6 +12,7 @@
 #include <string.h>
 
 #include <string>
+#include <thread>
 #include <sstream>
 #include <iomanip>
 #include <format>  // C++20
@@ -504,7 +505,8 @@ bool VSPController::userClientSetup(void *refcon)
         return false;
     }
 
-    fprintf(stderr, "[VSPCTL] UserClientSetup() ref=0x%llx className=%s\n", (uint64_t) refcon, m_dextClassName);
+    //fprintf(stderr, "[VSPCTL] UserClientSetup() ref=0x%llx className=%s\n", //
+    //        (uint64_t) refcon, m_dextClassName);
 
     m_runLoop = CFRunLoopGetCurrent();
     if (m_runLoop == NULL) {
@@ -538,12 +540,11 @@ bool VSPController::userClientSetup(void *refcon)
         return false;
     }
 
-    fprintf(stdout, "[VSPCTL] Lookup DEXT identifier: %s\n", m_dextClassName);
+    //fprintf(stdout, "[VSPCTL] Lookup DEXT identifier: %s\n", m_dextClassName);
 
     // Establish our notifications in the run loop, so we can get callbacks.
     CFRunLoopAddSource(m_runLoop, m_runLoopSource, kCFRunLoopDefaultMode);
 
-    /// - Tag: SetUpMatchingNotification
     CFMutableDictionaryRef matchingDictionary = IOServiceNameMatching(m_dextClassName);
     if (matchingDictionary == NULL) {
         reportError(kIOReturnError, "Failed to initialize matching dictionary.");
@@ -556,7 +557,11 @@ bool VSPController::userClientSetup(void *refcon)
     matchingDictionary = (CFMutableDictionaryRef) CFRetain(matchingDictionary);
 
     // retain for callback
-    ret = IOServiceAddMatchingNotification(m_notificationPort, kIOTerminatedNotification, matchingDictionary, DeviceRemoved, refcon, &m_deviceRemovedIter);
+    ret = IOServiceAddMatchingNotification(m_notificationPort, //
+                                           kIOTerminatedNotification, //
+                                           matchingDictionary, //
+                                           DeviceRemoved, refcon, //
+                                           &m_deviceRemovedIter);
     if (ret != kIOReturnSuccess) {
         reportError(ret, "Add termination notification failed.");
         userClientTeardown();
@@ -564,7 +569,11 @@ bool VSPController::userClientSetup(void *refcon)
     }
     DeviceRemoved(refcon, m_deviceRemovedIter);
 
-    ret = IOServiceAddMatchingNotification(m_notificationPort, kIOFirstMatchNotification, matchingDictionary, DeviceAdded, refcon, &m_deviceAddedIter);
+    ret = IOServiceAddMatchingNotification(m_notificationPort, //
+                                           kIOFirstMatchNotification, //
+                                           matchingDictionary, //
+                                           DeviceAdded, refcon, //
+                                           &m_deviceAddedIter);
     if (ret != kIOReturnSuccess) {
         reportError(ret, "Add matching notification failed.");
         userClientTeardown();
@@ -572,11 +581,29 @@ bool VSPController::userClientSetup(void *refcon)
     }
     DeviceAdded(refcon, m_deviceAddedIter);
 
+    // Launch a background thread to handle runloop events
+    std::thread([this]() {
+        m_runLoop = CFRunLoopGetCurrent();
+        CFRetain(m_runLoop);
+
+        // Attach notification port source
+        CFRunLoopAddSource(m_runLoop, m_runLoopSource, kCFRunLoopDefaultMode);
+
+        // Run the loop indefinitely
+        CFRunLoopRun();
+
+        // Cleanup when runloop exits
+        CFRelease(m_runLoop);
+        m_runLoop = nullptr;
+    }).detach();
+    
     return (ret == kIOReturnSuccess) && (m_connection != 0);
 }
 
 inline void VSPController::userClientTeardown(void)
 {
+    setConnection(0);
+    
     if (m_vspResponse) {
         IOConnectUnmapMemory(m_connection, 0, mach_task_self(), (mach_vm_address_t) m_vspResponse);
         m_vspResponse = nullptr;
@@ -607,9 +634,9 @@ inline bool VSPController::asyncCall(CVSPDriverData *input)
     kern_return_t ret = kIOReturnSuccess;
     io_async_ref64_t descriptor = {};
 
-#ifdef VSP_DEBUG
+//#ifdef VSP_DEBUG
     printStruct("asyncCall-Request", input);
-#endif
+//#endif
 
     // set magic control
     input->status.flags = (MAGIC_CONTROL | BIT(input->command));
@@ -681,9 +708,9 @@ inline bool VSPController::asyncCall(CVSPDriverData *input)
         return false;
     }
 
-#ifdef VSP_DEBUG
+//#ifdef VSP_DEBUG
     printStruct("asyncCall-Return", m_vspResponse);
-#endif
+//#endif
     
     try {
         // Call Objective-C bridge function

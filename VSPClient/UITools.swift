@@ -12,91 +12,6 @@ import SwiftUI
 
 private var progressIndicatorKey: UInt8 = 0
 
-// MARK: - NSWindow Extension
-extension NSWindow {
-    
-    private static let progressIndicatorTag = 9999
-    
-    private var progressIndicator: NSProgressIndicator? {
-        get { objc_getAssociatedObject(self, &progressIndicatorKey) as? NSProgressIndicator }
-        set { objc_setAssociatedObject(self, &progressIndicatorKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
-    }
-    
-    /// Shows a centered, indeterminate progress indicator on the window
-    func showProgress() {
-        // Avoid duplicates
-        if progressIndicator != nil { return }
-        
-        let indicator = NSProgressIndicator()
-        indicator.style = .spinning
-        indicator.controlSize = .regular
-        indicator.isIndeterminate = true
-        indicator.usesThreadedAnimation = true
-        indicator.startAnimation(nil)
-        indicator.translatesAutoresizingMaskIntoConstraints = false
-        
-        guard let contentView = self.contentView else { return }
-        contentView.addSubview(indicator)
-        
-        NSLayoutConstraint.activate([
-            indicator.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            indicator.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
-        ])
-        
-        self.progressIndicator = indicator
-    }
-    
-    /// Updates a determinate progress indicator’s value.
-    func updateProgress(to value: Double) {
-        guard let indicator = progressIndicator else { return }
-        
-        if indicator.isIndeterminate {
-            indicator.isIndeterminate = false
-            indicator.minValue = 0.0
-            indicator.maxValue = 1.0
-        }
-        indicator.doubleValue = value
-    }
-    
-    /// Hides and removes the progress indicator.
-    func hideProgress() {
-        guard let indicator = progressIndicator else { return }
-        indicator.stopAnimation(nil)
-        indicator.removeFromSuperview()
-        progressIndicator = nil
-    }
-}
-
-// MARK: - NSViewController Extension
-extension NSViewController {
-    func showProgress() {
-        view.window?.showProgress()
-    }
-
-    func updateProgress(to value: Double) {
-        view.window?.updateProgress(to: value)
-    }
-
-    func hideProgress() {
-        view.window?.hideProgress()
-    }
-}
-
-// MARK: - NSWindowController Extension
-extension NSWindowController {
-    func showProgress() {
-        window?.showProgress()
-    }
-
-    func updateProgress(to value: Double) {
-        window?.updateProgress(to: value)
-    }
-
-    func hideProgress() {
-        window?.hideProgress()
-    }
-}
-
 class UITools {
     
     public static var isNotifyGranted: Bool = false
@@ -150,12 +65,14 @@ class UITools {
             messageLabel.font = NSFont.boldSystemFont(ofSize: 14)
             messageLabel.alignment = .left
             messageLabel.isSelectable = false
-            messageLabel.lineBreakMode = .byWordWrapping
             messageLabel.maximumNumberOfLines = 0 // max
             messageLabel.isSelectable = true
             messageLabel.cell?.isScrollable = true
             messageLabel.allowsDefaultTighteningForTruncation = true
-
+            messageLabel.translatesAutoresizingMaskIntoConstraints = false
+            messageLabel.lineBreakMode = .byWordWrapping
+            messageLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+    
             // Buttons
             let okButton = NSButton(title: "OK", target: self, //
                                     action: #selector(okButtonClicked))
@@ -173,13 +90,21 @@ class UITools {
             
             // Constraints
             mainStackView.translatesAutoresizingMaskIntoConstraints = false
+            
             NSLayoutConstraint.activate([
-                mainStackView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 20),
-                mainStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
-                mainStackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
-                mainStackView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -20)
+                mainStackView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 16),
+                mainStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+                mainStackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+                mainStackView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -16),
+
+                // hier wird die maximale Breite explizit limitiert
+                messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 380),
             ])
             
+            self.view.layoutSubtreeIfNeeded()
+            let fittingSize = mainStackView.fittingSize
+            self.preferredContentSize = NSSize(width: 380,
+                                               height: fittingSize.height + 40)
             updateLayout()
         }
         
@@ -484,6 +409,8 @@ class UITools {
     }
 }
 
+// MARK: - String Extension
+
 extension String {
     /// Checks if the string starts with the specified substring
     /// - Parameter with: The substring to check for at the beginning
@@ -541,6 +468,7 @@ extension BidirectionalCollection {
 }
 
 // MARK: - String numeric conversions
+
 extension String {
     /// Trimmed copy used by all conversions.
     private var trimmed: String {
@@ -595,6 +523,7 @@ extension String {
 }
 
 // MARK: - NSAttributedString convenience
+
 extension NSAttributedString {
     /// Numeric parsing forwarded from the attributed string's `string` property.
     var intValue: Int? { return self.string.intValue }
@@ -609,6 +538,8 @@ extension NSAttributedString {
 extension NSMutableAttributedString {
     // Inherits the NSAttributedString computed properties; these extensions exist so they're discoverable on NSMutableAttributedString too.
 }
+
+// MARK: - NSTextView Extension
 
 extension NSTextView {
     public func scrollToEndOfTextView() {
@@ -729,3 +660,134 @@ extension NSTextView {
     }
 }
 
+// MARK: - NSView Extension
+
+extension NSView {
+    
+    /// Enables or disables all NSControl-based subviews recursively.
+    /// - Parameter enabled: Pass `true` to enable controls, `false` to disable.
+    public func setControlsEnabled(_ enabled: Bool) {
+        // If this view is a control (e.g., NSButton, NSTextField), toggle its enabled state
+        if let control = self as? NSControl {
+            control.isEnabled = enabled
+        }
+
+        // Recursively update all child views
+        for subview in subviews {
+            subview.setControlsEnabled(enabled)
+        }
+    }
+    
+    /// Returns `true` if all NSControl-based subviews are enabled, `false` otherwise.
+    /// (Checks recursively.)
+    public func areAllControlsEnabled() -> Bool {
+        if let control = self as? NSControl, control.isEnabled == false {
+            return false
+        }
+        
+        for subview in subviews {
+            if subview.areAllControlsEnabled() == false {
+                return false
+            }
+        }
+        return true
+    }
+    
+    /// Convenient computed property for enabling/disabling all controls.
+    public var isViewEnabled: Bool {
+        get {
+            return areAllControlsEnabled()
+        }
+        set {
+            setControlsEnabled(newValue)
+        }
+    }
+}
+
+// MARK: - NSWindow Extension
+
+extension NSWindow {
+    
+    private static let progressIndicatorTag = 9999
+    
+    private var progressIndicator: NSProgressIndicator? {
+        get { objc_getAssociatedObject(self, &progressIndicatorKey) as? NSProgressIndicator }
+        set { objc_setAssociatedObject(self, &progressIndicatorKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+    }
+    
+    /// Shows a centered, indeterminate progress indicator on the window
+    func showProgress() {
+        // Avoid duplicates
+        if progressIndicator != nil { return }
+        
+        let indicator = NSProgressIndicator()
+        indicator.style = .spinning
+        indicator.controlSize = .regular
+        indicator.isIndeterminate = true
+        indicator.usesThreadedAnimation = true
+        indicator.startAnimation(nil)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        
+        guard let contentView = self.contentView else { return }
+        contentView.addSubview(indicator)
+        
+        NSLayoutConstraint.activate([
+            indicator.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            indicator.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+        ])
+        
+        self.progressIndicator = indicator
+    }
+    
+    /// Updates a determinate progress indicator’s value.
+    func updateProgress(to value: Double) {
+        guard let indicator = progressIndicator else { return }
+        
+        if indicator.isIndeterminate {
+            indicator.isIndeterminate = false
+            indicator.minValue = 0.0
+            indicator.maxValue = 1.0
+        }
+        indicator.doubleValue = value
+    }
+    
+    /// Hides and removes the progress indicator.
+    func hideProgress() {
+        guard let indicator = progressIndicator else { return }
+        indicator.stopAnimation(nil)
+        indicator.removeFromSuperview()
+        progressIndicator = nil
+    }
+}
+
+// MARK: - NSViewController Extension
+
+extension NSViewController {
+    func showProgress() {
+        view.window?.showProgress()
+    }
+
+    func updateProgress(to value: Double) {
+        view.window?.updateProgress(to: value)
+    }
+
+    func hideProgress() {
+        view.window?.hideProgress()
+    }
+}
+
+// MARK: - NSWindowController Extension
+
+extension NSWindowController {
+    func showProgress() {
+        window?.showProgress()
+    }
+
+    func updateProgress(to value: Double) {
+        window?.updateProgress(to: value)
+    }
+
+    func hideProgress() {
+        window?.hideProgress()
+    }
+}

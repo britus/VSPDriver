@@ -142,7 +142,11 @@ void writeReceivedData(NSData* data, size_t bufferSize, NSString* filename) {
     }
 
     IOObjectRelease(serviceIterator);
-    return ports;
+    
+    // Sort the ports array by name
+    return [ports sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 compare:obj2];
+    }];
 }
 
 // Helper: retrieve kIOCalloutDeviceKey property from IORegistry

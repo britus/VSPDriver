@@ -733,7 +733,7 @@
                                         <action selector="onPortLinks:" target="B8D-0N-5wS" id="uCn-cR-8vH"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="880DF24F-774E-4530-8EB4-B781D1A9F712" explicitItemIdentifier="tbMessages" label="Driver Traces" paletteLabel="Driver Traces" tag="-1" image="macwindow" catalog="system" bordered="YES" sizingBehavior="auto" id="nRL-aW-mxg">
+                                <toolbarItem implicitItemIdentifier="880DF24F-774E-4530-8EB4-B781D1A9F712" explicitItemIdentifier="tbDriverTraces" label="Driver Traces" paletteLabel="Driver Traces" tag="-1" image="macwindow" catalog="system" bordered="YES" sizingBehavior="auto" id="nRL-aW-mxg">
                                     <connections>
                                         <action selector="onSMessageView:" target="B8D-0N-5wS" id="kxY-oj-Mm1"/>
                                     </connections>
@@ -809,7 +809,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="293"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NaG-4e-ZPr">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NaG-4e-ZPr">
                                 <rect key="frame" x="18" y="257" width="124" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Serial Port" id="C0f-oz-RV0">
                                     <font key="font" usesAppearanceFont="YES"/>
@@ -820,7 +820,7 @@
                             <customView identifier="pnlSerialPort" translatesAutoresizingMaskIntoConstraints="NO" id="VK7-Iv-MVb">
                                 <rect key="frame" x="20" y="104" width="560" height="145"/>
                                 <subviews>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3Ym-g7-jzE">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3Ym-g7-jzE">
                                         <rect key="frame" x="13" y="109" width="67" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Baud rate:" id="y9D-fu-5bz">
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -828,7 +828,7 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aGf-Yh-KmN">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aGf-Yh-KmN">
                                         <rect key="frame" x="13" y="79" width="62" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Data bits:" id="8Wq-NW-IHG">
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -836,7 +836,7 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sKv-zQ-Pjt">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sKv-zQ-Pjt">
                                         <rect key="frame" x="277" y="109" width="82" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Flow control:" id="hNF-8p-5En">
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -844,7 +844,7 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kYd-Xk-CDh">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kYd-Xk-CDh">
                                         <rect key="frame" x="277" y="79" width="43" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Parity:" id="hAx-7q-y9r">
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -852,7 +852,7 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <comboBox identifier="cbxBaudRate" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dxb-O5-Jjy" customClass="ComboBox" customModule="VSPClient">
+                                    <comboBox identifier="cbxBaudRate" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dxb-O5-Jjy" customClass="ComboBox" customModule="VSPClient">
                                         <rect key="frame" x="87" y="105" width="187" height="23"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="183" id="t87-E1-nSn"/>
@@ -876,7 +876,7 @@
                                             <action selector="onBaudRateChanged:" target="ZIW-2U-PMf" id="EaJ-x9-5fB"/>
                                         </connections>
                                     </comboBox>
-                                    <comboBox identifier="cbxDataBits" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Gra-dV-qtV" customClass="ComboBox" customModule="VSPClient">
+                                    <comboBox identifier="cbxDataBits" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Gra-dV-qtV" customClass="ComboBox" customModule="VSPClient">
                                         <rect key="frame" x="87" y="75" width="187" height="23"/>
                                         <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="8sP-th-z6O">
                                             <font key="font" metaFont="system"/>
@@ -893,7 +893,7 @@
                                             <action selector="onDataBitsChanged:" target="ZIW-2U-PMf" id="MWJ-8q-o9c"/>
                                         </connections>
                                     </comboBox>
-                                    <comboBox identifier="cbxFlowCtrl" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dGY-0P-4mD" customClass="ComboBox" customModule="VSPClient">
+                                    <comboBox identifier="cbxFlowCtrl" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dGY-0P-4mD" customClass="ComboBox" customModule="VSPClient">
                                         <rect key="frame" x="364" y="105" width="179" height="23"/>
                                         <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="GFu-9z-p9B">
                                             <font key="font" metaFont="system"/>
@@ -909,7 +909,7 @@
                                             <action selector="onFlowCtrlChanged:" target="ZIW-2U-PMf" id="z9c-Kk-dfE"/>
                                         </connections>
                                     </comboBox>
-                                    <comboBox identifier="cbxParity" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eqF-dY-Wae" customClass="ComboBox" customModule="VSPClient">
+                                    <comboBox identifier="cbxParity" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eqF-dY-Wae" customClass="ComboBox" customModule="VSPClient">
                                         <rect key="frame" x="364" y="75" width="179" height="23"/>
                                         <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="zKO-M7-NKW">
                                             <font key="font" metaFont="system"/>
@@ -929,7 +929,7 @@
                                             <action selector="onParityChanged:" target="ZIW-2U-PMf" id="G9O-cS-eWC"/>
                                         </connections>
                                     </comboBox>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RL6-YX-gWN">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RL6-YX-gWN">
                                         <rect key="frame" x="13" y="51" width="62" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Stop bits:" id="41p-MW-fBq">
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -937,7 +937,7 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <comboBox identifier="cbxStopBits" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GoH-oL-fgz" customClass="ComboBox" customModule="VSPClient">
+                                    <comboBox identifier="cbxStopBits" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GoH-oL-fgz" customClass="ComboBox" customModule="VSPClient">
                                         <rect key="frame" x="87" y="47" width="187" height="23"/>
                                         <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="oiP-eL-pWg">
                                             <font key="font" metaFont="system"/>
@@ -953,12 +953,13 @@
                                             <action selector="onStopBitsChanged:" target="ZIW-2U-PMf" id="PJ2-j5-Y8B"/>
                                         </connections>
                                     </comboBox>
-                                    <button identifier="pbCreatePort" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uHG-UO-3Rg">
+                                    <button identifier="pbCreatePort" toolTip="Create a virtual serial port" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uHG-UO-3Rg">
                                         <rect key="frame" x="443" y="20" width="104" height="32"/>
                                         <buttonCell key="cell" type="push" title="Create Port" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8hw-WL-uAN">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
+                                        <accessibility description="Create a virtual serial port" identifier="pbCreatePort"/>
                                         <connections>
                                             <action selector="onCreatePort:" target="ZIW-2U-PMf" id="UtA-Pa-2Wb"/>
                                         </connections>
@@ -999,7 +1000,7 @@
                                     <constraint firstItem="RL6-YX-gWN" firstAttribute="baseline" secondItem="GoH-oL-fgz" secondAttribute="baseline" id="wId-JY-u5e"/>
                                 </constraints>
                             </customView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ymH-kV-jb9">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ymH-kV-jb9">
                                 <rect key="frame" x="18" y="80" width="150" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Available Ports" id="9cd-M9-qKd">
                                     <font key="font" metaFont="system"/>
@@ -1037,7 +1038,7 @@
                                                             <rect key="frame" x="18" y="0.0" width="114" height="24"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="sb5-rC-M5h">
+                                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="sb5-rC-M5h">
                                                                     <rect key="frame" x="0.0" y="4" width="114" height="16"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="ell-Nx-Tzt">
                                                                         <font key="font" usesAppearanceFont="YES"/>
@@ -1073,7 +1074,7 @@
                                                             <rect key="frame" x="149" y="0.0" width="390" height="24"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Fu8-A2-blV">
+                                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Fu8-A2-blV">
                                                                     <rect key="frame" x="0.0" y="4" width="375" height="16"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="xZ9-FK-Gi8">
                                                                         <font key="font" usesAppearanceFont="YES"/>
@@ -1094,6 +1095,7 @@
                                                     </prototypeCellViews>
                                                 </tableColumn>
                                             </tableColumns>
+                                            <accessibility description="List of available virtual ports" identifier="tbvPortList"/>
                                         </tableView>
                                     </subviews>
                                     <nil key="backgroundColor"/>
@@ -1102,7 +1104,7 @@
                                     <rect key="frame" x="1" y="23" width="126" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="T0v-MH-jC4">
+                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.015193370165802023" horizontal="NO" id="T0v-MH-jC4">
                                     <rect key="frame" x="423" y="29" width="15" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
@@ -1153,7 +1155,7 @@
                 </viewController>
                 <customObject id="5Bc-4t-byK" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-768" y="1302.5"/>
+            <point key="canvasLocation" x="-768" y="1279"/>
         </scene>
         <!--Port Links-->
         <scene sceneID="sYW-to-Uwo">
@@ -1163,7 +1165,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="259"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CaK-cl-2Wv">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CaK-cl-2Wv">
                                 <rect key="frame" x="18" y="223" width="102" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Create Port Link" id="Afa-f7-iSy">
                                     <font key="font" usesAppearanceFont="YES"/>
@@ -1174,7 +1176,7 @@
                             <customView identifier="pnlPortLink" translatesAutoresizingMaskIntoConstraints="NO" id="2K7-sY-vDh">
                                 <rect key="frame" x="20" y="87" width="440" height="128"/>
                                 <subviews>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PiX-gm-q1o">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PiX-gm-q1o">
                                         <rect key="frame" x="18" y="92" width="64" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="First Port:" id="L8F-EC-msn">
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -1182,7 +1184,7 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aS6-Lk-DMB">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aS6-Lk-DMB">
                                         <rect key="frame" x="18" y="62" width="83" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Second Port:" id="80n-fH-Hna">
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -1190,7 +1192,7 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <comboBox identifier="cbxFirstPort" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="G8u-tc-pqy" customClass="ComboBox" customModule="VSPClient">
+                                    <comboBox identifier="cbxFirstPort" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="G8u-tc-pqy" customClass="ComboBox" customModule="VSPClient">
                                         <rect key="frame" x="106" y="86" width="317" height="23"/>
                                         <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="16" id="qEI-zB-jNi">
                                             <font key="font" metaFont="system"/>
@@ -1204,7 +1206,7 @@
                                             <action selector="onFirstPortSelected:" target="wtm-15-t3Q" id="3qq-Zi-1mg"/>
                                         </connections>
                                     </comboBox>
-                                    <comboBox identifier="cbxSecondPort" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="R2l-ef-LME" customClass="ComboBox" customModule="VSPClient">
+                                    <comboBox identifier="cbxSecondPort" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="R2l-ef-LME" customClass="ComboBox" customModule="VSPClient">
                                         <rect key="frame" x="106" y="58" width="317" height="23"/>
                                         <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="16" id="se8-6e-29w">
                                             <font key="font" metaFont="system"/>
@@ -1218,12 +1220,13 @@
                                             <action selector="onSecondPortSelected:" target="wtm-15-t3Q" id="iVd-T2-rhQ"/>
                                         </connections>
                                     </comboBox>
-                                    <button identifier="pbCreateLink" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kat-t8-Loc">
+                                    <button identifier="pbCreateLink" toolTip="Create a link between selected ports" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kat-t8-Loc">
                                         <rect key="frame" x="324" y="13" width="103" height="32"/>
                                         <buttonCell key="cell" type="push" title="Create Link" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Xci-5l-X1t">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
+                                        <accessibility description="Create a link between selected ports" identifier="pbCreateLink"/>
                                         <connections>
                                             <action selector="onCreateLink:" target="wtm-15-t3Q" id="r5v-tT-WGs"/>
                                         </connections>
@@ -1247,7 +1250,7 @@
                                     <constraint firstItem="PiX-gm-q1o" firstAttribute="leading" secondItem="aS6-Lk-DMB" secondAttribute="leading" id="uXE-yB-uNx"/>
                                 </constraints>
                             </customView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Pkw-bh-kKj">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Pkw-bh-kKj">
                                 <rect key="frame" x="18" y="58" width="93" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Available Links" id="f7h-SC-Y0p">
                                     <font key="font" metaFont="system"/>
@@ -1261,7 +1264,7 @@
                                     <rect key="frame" x="1" y="1" width="423" height="30"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView identifier="tbvLinkList" toolTip="List of available virtual ports" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="sequential" selectionHighlightStyle="sourceList" columnReordering="NO" multipleSelection="NO" emptySelection="NO" typeSelect="NO" autosaveName="tbvPortList" rowHeight="30" rowSizeStyle="automatic" headerView="Ift-Lb-MjA" viewBased="YES" floatsGroupRows="NO" id="G68-gM-Ydt" customClass="TableView" customModule="VSPClient">
+                                        <tableView identifier="tbvLinkList" toolTip="List of available port links" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="sequential" selectionHighlightStyle="sourceList" columnReordering="NO" multipleSelection="NO" emptySelection="NO" typeSelect="NO" autosaveName="tbvLinkList" rowHeight="30" rowSizeStyle="automatic" headerView="Ift-Lb-MjA" viewBased="YES" floatsGroupRows="NO" id="G68-gM-Ydt" customClass="TableView" customModule="VSPClient">
                                             <rect key="frame" x="0.0" y="0.0" width="423" height="30"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
@@ -1285,7 +1288,7 @@
                                                             <rect key="frame" x="18" y="0.0" width="114" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="z8F-cU-EZj">
+                                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="z8F-cU-EZj">
                                                                     <rect key="frame" x="0.0" y="7" width="114" height="16"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="QHp-NL-UNP">
                                                                         <font key="font" usesAppearanceFont="YES"/>
@@ -1321,7 +1324,7 @@
                                                             <rect key="frame" x="149" y="0.0" width="255" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Oav-1s-EVb">
+                                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Oav-1s-EVb">
                                                                     <rect key="frame" x="0.0" y="7" width="96" height="16"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="rcD-Ic-Gpv">
                                                                         <font key="font" usesAppearanceFont="YES"/>
@@ -1342,6 +1345,7 @@
                                                     </prototypeCellViews>
                                                 </tableColumn>
                                             </tableColumns>
+                                            <accessibility description="List of available port links" identifier="tbvLinkList"/>
                                         </tableView>
                                     </subviews>
                                     <nil key="backgroundColor"/>
@@ -1350,7 +1354,7 @@
                                     <rect key="frame" x="1" y="16" width="423" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.2857142857142857" horizontal="NO" id="Of2-F3-idj">
+                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.28107734806630486" horizontal="NO" id="Of2-F3-idj">
                                     <rect key="frame" x="424" y="29" width="15" height="2"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
@@ -1387,10 +1391,10 @@
             </objects>
             <point key="canvasLocation" x="453" y="1261.5"/>
         </scene>
-        <!--Messages-->
+        <!--Driver Traces-->
         <scene sceneID="pBJ-sc-nUi">
             <objects>
-                <viewController title="Messages" id="K7D-6w-Oiz" customClass="MessageView" customModule="VSPClient" sceneMemberID="viewController">
+                <viewController title="Driver Traces" id="K7D-6w-Oiz" customClass="MessageView" customModule="VSPClient" sceneMemberID="viewController">
                     <view key="view" id="H5z-6A-Bn1">
                         <rect key="frame" x="0.0" y="0.0" width="543" height="450"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1458,10 +1462,13 @@
                                         <constraint firstItem="Ow1-fW-VMN" firstAttribute="leading" secondItem="CY5-O0-wyT" secondAttribute="leading" constant="20" symbolic="YES" id="TEL-Tq-Y5r"/>
                                         <constraint firstItem="Ow1-fW-VMN" firstAttribute="leading" secondItem="lKJ-GW-pJu" secondAttribute="leading" id="Uhy-zY-1oh"/>
                                         <constraint firstItem="lKJ-GW-pJu" firstAttribute="leading" secondItem="Dkb-R7-yHa" secondAttribute="leading" id="Y92-a1-1CC"/>
+                                        <constraint firstItem="TUg-F0-qZ2" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="lKJ-GW-pJu" secondAttribute="trailing" constant="8" symbolic="YES" id="b0f-TG-Gof"/>
                                         <constraint firstItem="TUg-F0-qZ2" firstAttribute="top" secondItem="wyx-NL-S7e" secondAttribute="bottom" constant="9" id="cOM-f9-dFt"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Dkb-R7-yHa" secondAttribute="trailing" constant="20" symbolic="YES" id="cyD-4a-KL6"/>
                                         <constraint firstItem="Ow1-fW-VMN" firstAttribute="top" secondItem="CY5-O0-wyT" secondAttribute="top" constant="14" id="dgb-ae-vHQ"/>
                                         <constraint firstItem="Dkb-R7-yHa" firstAttribute="top" secondItem="lKJ-GW-pJu" secondAttribute="bottom" constant="6" symbolic="YES" id="oEs-6U-xDd"/>
-                                        <constraint firstItem="wyx-NL-S7e" firstAttribute="leading" secondItem="TUg-F0-qZ2" secondAttribute="leading" id="tWn-jo-QRG"/>
+                                        <constraint firstItem="wyx-NL-S7e" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TUg-F0-qZ2" secondAttribute="leading" id="tWn-jo-QRG"/>
+                                        <constraint firstAttribute="trailing" secondItem="wyx-NL-S7e" secondAttribute="trailing" constant="92" id="vIw-th-R6J"/>
                                         <constraint firstItem="wyx-NL-S7e" firstAttribute="leading" secondItem="Ow1-fW-VMN" secondAttribute="trailing" constant="25" id="x3T-rA-2fR"/>
                                         <constraint firstAttribute="trailing" secondItem="TUg-F0-qZ2" secondAttribute="trailing" constant="53" id="ykk-de-EQX"/>
                                     </constraints>
@@ -1511,23 +1518,27 @@
                                         <constraint firstItem="tCV-sS-8Z9" firstAttribute="leading" secondItem="mnh-rx-MuA" secondAttribute="leading" id="Eyx-bG-MDD"/>
                                         <constraint firstItem="tCV-sS-8Z9" firstAttribute="top" secondItem="WsK-V4-fm0" secondAttribute="bottom" constant="6" symbolic="YES" id="JE1-p5-5Wt"/>
                                         <constraint firstItem="WsK-V4-fm0" firstAttribute="leading" secondItem="1py-oh-19D" secondAttribute="leading" constant="20" symbolic="YES" id="O8R-Dl-2rk"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="mnh-rx-MuA" secondAttribute="trailing" constant="20" symbolic="YES" id="j1p-6w-QXj"/>
                                         <constraint firstItem="WsK-V4-fm0" firstAttribute="top" secondItem="1py-oh-19D" secondAttribute="top" constant="20" symbolic="YES" id="jch-pJ-Fjj"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="WsK-V4-fm0" secondAttribute="trailing" constant="20" symbolic="YES" id="oos-at-TOy"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tCV-sS-8Z9" secondAttribute="trailing" constant="20" symbolic="YES" id="wTL-Jd-zDK"/>
                                     </constraints>
                                 </view>
                             </box>
-                            <scrollView identifier="txLogView" borderType="line" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" horizontalScrollElasticity="allowed" verticalScrollElasticity="allowed" translatesAutoresizingMaskIntoConstraints="NO" id="Tuh-Qa-9aP">
+                            <scrollView borderType="line" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" horizontalScrollElasticity="allowed" verticalScrollElasticity="allowed" translatesAutoresizingMaskIntoConstraints="NO" id="Tuh-Qa-9aP">
                                 <rect key="frame" x="20" y="20" width="503" height="157"/>
                                 <clipView key="contentView" drawsBackground="NO" id="wUQ-xR-HuT">
                                     <rect key="frame" x="1" y="1" width="501" height="155"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textView wantsLayer="YES" editable="NO" importsGraphics="NO" verticallyResizable="YES" selectionGranularity="word" findStyle="bar" allowsDocumentBackgroundColorChange="YES" id="q3x-u4-Qrr">
+                                        <textView identifier="txLogView" toolTip="Shows driver messages" wantsLayer="YES" editable="NO" importsGraphics="NO" verticallyResizable="YES" selectionGranularity="word" findStyle="bar" allowsDocumentBackgroundColorChange="YES" id="q3x-u4-Qrr">
                                             <rect key="frame" x="0.0" y="0.0" width="501" height="155"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="minSize" width="501" height="155"/>
+                                            <size key="minSize" width="436" height="140"/>
                                             <size key="maxSize" width="503" height="10000000"/>
+                                            <accessibility identifier="txLogView"/>
                                         </textView>
                                     </subviews>
                                 </clipView>
@@ -1540,17 +1551,18 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
-                            <button identifier="pbSaveTraces" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dd9-Hw-bFg">
+                            <button identifier="pbSaveTraces" toolTip="Save configured traces and checks." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dd9-Hw-bFg">
                                 <rect key="frame" x="466" y="257" width="64" height="32"/>
                                 <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="O4U-Eb-CYu">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <accessibility description="Save configured traces and checks." identifier="pbSaveTraces"/>
                                 <connections>
                                     <action selector="onSaveTraces:" target="K7D-6w-Oiz" id="XGv-fL-PSx"/>
                                 </connections>
                             </button>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="hLV-HT-CG2">
+                            <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="hLV-HT-CG2">
                                 <rect key="frame" x="18" y="185" width="507" height="71"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="71" id="bEB-l7-R0z"/>
@@ -1567,6 +1579,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                         </subviews>
                         <constraints>
                             <constraint firstItem="hLV-HT-CG2" firstAttribute="leading" secondItem="Tuh-Qa-9aP" secondAttribute="leading" id="1yP-jJ-W5q"/>
+                            <constraint firstItem="dd9-Hw-bFg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="H5z-6A-Bn1" secondAttribute="leading" constant="20" symbolic="YES" id="9xy-3V-q6D"/>
                             <constraint firstItem="p8Z-vX-8PT" firstAttribute="leading" secondItem="H5z-6A-Bn1" secondAttribute="leading" constant="20" symbolic="YES" id="AtD-Ti-dwr"/>
                             <constraint firstItem="0M0-Tb-nFw" firstAttribute="trailing" secondItem="dd9-Hw-bFg" secondAttribute="trailing" id="Ddd-BU-0xG"/>
                             <constraint firstItem="p8Z-vX-8PT" firstAttribute="leading" secondItem="hLV-HT-CG2" secondAttribute="leading" id="GKu-yY-a4A"/>
@@ -1598,7 +1611,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                 </viewController>
                 <customObject id="oZV-S3-bbK" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-96.5" y="1721"/>
+            <point key="canvasLocation" x="-117" y="1353"/>
         </scene>
         <!--Serial Test-->
         <scene sceneID="SZ6-EG-2EZ">
@@ -1611,7 +1624,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                             <customView identifier="pnlTestSerialPort" translatesAutoresizingMaskIntoConstraints="NO" id="wsr-Sh-NAn">
                                 <rect key="frame" x="20" y="-1332" width="513" height="1903"/>
                                 <subviews>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pOf-Zz-Ouf">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pOf-Zz-Ouf">
                                         <rect key="frame" x="13" y="1829" width="67" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Baud rate:" id="NPn-Wu-Kxw">
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -1619,7 +1632,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eYq-sO-2yH">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eYq-sO-2yH">
                                         <rect key="frame" x="13" y="1799" width="62" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Data bits:" id="LrJ-YV-KrO">
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -1627,7 +1640,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="X6f-N8-3ES">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="X6f-N8-3ES">
                                         <rect key="frame" x="238" y="1829" width="82" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Flow control:" id="ixk-14-YSf">
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -1635,7 +1648,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="t5A-KL-rky">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="t5A-KL-rky">
                                         <rect key="frame" x="238" y="1799" width="43" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Parity:" id="aly-7P-q2n">
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -1643,7 +1656,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <comboBox identifier="cbxTestBaudRate" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ffe-SH-4g5" customClass="ComboBox" customModule="VSPClient">
+                                    <comboBox identifier="cbxTestBaudRate" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ffe-SH-4g5" customClass="ComboBox" customModule="VSPClient">
                                         <rect key="frame" x="87" y="1825" width="130" height="23"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="126" id="7jU-eV-YnW"/>
@@ -1667,7 +1680,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                             <action selector="onBaudRateChanged:" target="oDf-uy-sA9" id="Ixr-XS-Siw"/>
                                         </connections>
                                     </comboBox>
-                                    <comboBox identifier="cbxTestDataBits" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gws-e2-yTC" customClass="ComboBox" customModule="VSPClient">
+                                    <comboBox identifier="cbxTestDataBits" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gws-e2-yTC" customClass="ComboBox" customModule="VSPClient">
                                         <rect key="frame" x="87" y="1795" width="130" height="23"/>
                                         <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="A5M-0Q-9F0">
                                             <font key="font" metaFont="system"/>
@@ -1684,7 +1697,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                             <action selector="onDataBitsChanged:" target="oDf-uy-sA9" id="F5A-Z8-Mse"/>
                                         </connections>
                                     </comboBox>
-                                    <comboBox identifier="cbxTestFlowCtrl" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4TS-SE-hbV" customClass="ComboBox" customModule="VSPClient">
+                                    <comboBox identifier="cbxTestFlowCtrl" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4TS-SE-hbV" customClass="ComboBox" customModule="VSPClient">
                                         <rect key="frame" x="325" y="1825" width="171" height="23"/>
                                         <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="mNB-Qs-zXO">
                                             <font key="font" metaFont="system"/>
@@ -1700,7 +1713,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                             <action selector="onFlowCtrlChanged:" target="oDf-uy-sA9" id="KPX-YP-eew"/>
                                         </connections>
                                     </comboBox>
-                                    <comboBox identifier="cbxTestParity" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zwo-h7-7Dd" customClass="ComboBox" customModule="VSPClient">
+                                    <comboBox identifier="cbxTestParity" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zwo-h7-7Dd" customClass="ComboBox" customModule="VSPClient">
                                         <rect key="frame" x="325" y="1795" width="171" height="23"/>
                                         <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="bvX-mO-NRn">
                                             <font key="font" metaFont="system"/>
@@ -1718,7 +1731,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                             <action selector="onParityChanged:" target="oDf-uy-sA9" id="pz7-Iz-cOc"/>
                                         </connections>
                                     </comboBox>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pb9-K2-rE0">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pb9-K2-rE0">
                                         <rect key="frame" x="13" y="1771" width="62" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Stop bits:" id="Tub-lb-Kkc">
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -1726,7 +1739,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <comboBox identifier="cbxTestStopBits" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vuu-i9-M1e" customClass="ComboBox" customModule="VSPClient">
+                                    <comboBox identifier="cbxTestStopBits" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vuu-i9-M1e" customClass="ComboBox" customModule="VSPClient">
                                         <rect key="frame" x="87" y="1767" width="130" height="23"/>
                                         <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="Xza-js-NT8">
                                             <font key="font" metaFont="system"/>
@@ -1762,7 +1775,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                             <action selector="onClosePort:" target="oDf-uy-sA9" id="5bA-7L-EPG"/>
                                         </connections>
                                     </button>
-                                    <comboBox identifier="cbxSerialPorts" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="91g-N4-5qP" customClass="ComboBox" customModule="VSPClient">
+                                    <comboBox identifier="cbxSerialPorts" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="91g-N4-5qP" customClass="ComboBox" customModule="VSPClient">
                                         <rect key="frame" x="89" y="1853" width="407" height="23"/>
                                         <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="8" id="ohd-o2-ASz">
                                             <font key="font" metaFont="system"/>
@@ -1776,7 +1789,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                             <action selector="onSerialPortChanged:" target="oDf-uy-sA9" id="oBT-Kg-kx0"/>
                                         </connections>
                                     </comboBox>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w98-c2-9XY">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w98-c2-9XY">
                                         <rect key="frame" x="13" y="1857" width="71" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Serial port:" id="6ww-MT-Dun">
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -1825,7 +1838,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                     <constraint firstItem="Vuu-i9-M1e" firstAttribute="top" secondItem="gws-e2-yTC" secondAttribute="bottom" constant="8" symbolic="YES" id="zKw-0v-Fiw"/>
                                 </constraints>
                             </customView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="An8-sY-KmC">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="An8-sY-KmC">
                                 <rect key="frame" x="18" y="579" width="67" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Serial Port" id="DsV-IL-efy">
                                     <font key="font" usesAppearanceFont="YES"/>
@@ -1839,7 +1852,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                     <rect key="frame" x="4" y="5" width="511" height="344"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mBk-aB-PDV">
+                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mBk-aB-PDV">
                                             <rect key="frame" x="18" y="309" width="86" height="15"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="15" id="qZ6-Ph-SaX"/>
@@ -1850,7 +1863,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField identifier="edTestMessage" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pN8-n1-dsm">
+                                        <textField identifier="edTestMessage" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pN8-n1-dsm">
                                             <rect key="frame" x="110" y="304" width="250" height="20"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="FnS-jl-axT">
                                                 <font key="font" metaFont="system"/>
@@ -1861,23 +1874,25 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                                 <action selector="onTextChanged:" target="oDf-uy-sA9" id="05H-CB-65a"/>
                                             </connections>
                                         </textField>
-                                        <button identifier="pbLooper" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3DR-4b-Gyb">
+                                        <button identifier="pbLooper" toolTip="Start or stop the transmission loop" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3DR-4b-Gyb">
                                             <rect key="frame" x="448" y="296" width="50" height="32"/>
                                             <buttonCell key="cell" type="push" alternateTitle="Loop" bezelStyle="rounded" imagePosition="leading" alignment="left" alternateImage="point.forward.to.point.capsulepath.fill" catalog="system" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bNh-gn-jKR">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                                 <imageReference key="image" image="point.forward.to.point.capsulepath" catalog="system" symbolScale="medium"/>
                                             </buttonCell>
+                                            <accessibility description="Start or stop the transmission loop" identifier="pbLooper"/>
                                             <connections>
                                                 <action selector="onRunLooper:" target="oDf-uy-sA9" id="UYz-NR-Eaq"/>
                                             </connections>
                                         </button>
-                                        <button identifier="pbSendFile" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f7J-Sh-Skw">
+                                        <button identifier="pbSendFile" toolTip="Send a selected file" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f7J-Sh-Skw">
                                             <rect key="frame" x="406" y="296" width="44" height="32"/>
                                             <buttonCell key="cell" type="push" alternateTitle="Send file..." bezelStyle="rounded" image="text.document.fill" catalog="system" imagePosition="leading" alignment="center" alternateImage="dock.arrow.up.rectangle" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="apk-M9-83j">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <accessibility description="Send a selected file" identifier="pbSendFile"/>
                                             <connections>
                                                 <action selector="onSendFile:" target="oDf-uy-sA9" id="8sc-iV-qNh"/>
                                             </connections>
@@ -1917,7 +1932,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                         </scrollView>
-                                        <textField identifier="edAutoTextLen" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="je5-Td-nxU">
+                                        <textField identifier="edAutoTextLen" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="je5-Td-nxU">
                                             <rect key="frame" x="110" y="271" width="116" height="21"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" state="on" borderStyle="bezel" alignment="left" title="64" placeholderString="64" drawsBackground="YES" id="K90-HJ-IXm">
                                                 <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="A9T-y3-3tI"/>
@@ -1930,7 +1945,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                             </connections>
                                         </textField>
                                         <button identifier="cbxSendTextAddCR" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EX0-ni-LWp">
-                                            <rect key="frame" x="232" y="273" width="72" height="18"/>
+                                            <rect key="frame" x="232" y="273.52002762430857" width="72" height="16.919889502762089"/>
                                             <buttonCell key="cell" type="check" title="Add CR" bezelStyle="regularSquare" imagePosition="left" enabled="NO" state="on" inset="2" id="MD4-Hh-xcw">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -1940,7 +1955,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                             </connections>
                                         </button>
                                         <button identifier="cbxSendTextAddLF" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ip5-P1-WPC">
-                                            <rect key="frame" x="310" y="273" width="69" height="18"/>
+                                            <rect key="frame" x="310" y="273.52002762430857" width="69" height="16.919889502762089"/>
                                             <buttonCell key="cell" type="check" title="Add LF" bezelStyle="regularSquare" imagePosition="left" enabled="NO" state="on" inset="2" id="ee5-W9-4p4">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -1949,7 +1964,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                                 <action selector="onSendTextAddLF:" target="oDf-uy-sA9" id="baP-SF-Feh"/>
                                             </connections>
                                         </button>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GEF-e2-YVE">
+                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GEF-e2-YVE">
                                             <rect key="frame" x="18" y="276" width="86" height="16"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Loop-Length:" id="Gxb-KM-xKD">
                                                 <font key="font" metaFont="system"/>
@@ -1957,12 +1972,13 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <button identifier="pbSendText" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hJT-IE-umo">
+                                        <button identifier="pbSendText" toolTip="Send the text" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hJT-IE-umo">
                                             <rect key="frame" x="361" y="296" width="47" height="32"/>
                                             <buttonCell key="cell" type="push" alternateTitle="Send text" bezelStyle="rounded" image="transmission" catalog="system" imagePosition="leading" alignment="center" alternateImage="NSFollowLinkFreestandingTemplate" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="US5-dx-9UZ">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <accessibility description="Send the text" identifier="pbSendText"/>
                                             <connections>
                                                 <action selector="onSendText:" target="oDf-uy-sA9" id="XD6-mO-yNe"/>
                                             </connections>
@@ -2036,7 +2052,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                 </viewController>
                 <customObject id="FKF-3c-hUV" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="995.5" y="1435.5"/>
+            <point key="canvasLocation" x="1032" y="1440"/>
         </scene>
     </scenes>
     <resources>

@@ -221,6 +221,7 @@ extension WindowController: DriverManagerObserver {
         hideProgress()
         
         if code > 0 {
+            tabView.isEnabled = false
             UITools.showMessage(
                 message: "Error 0x\(String(code, radix: 16)): \(message).",
                 withCompletion: { NSApp.terminate(self) })
@@ -243,13 +244,12 @@ extension WindowController: DriverManagerObserver {
         hideProgress()
 
         if code > 0 {
+            tabView.isEnabled = false
             UITools.showMessage(
-                message: "Error 0x\(String(code, radix: 16)): \(message).",
-                withCompletion: {
-                NSApp.terminate(self)
-            })
+                message: "VSP Error 0x\(String(code, radix: 16)):\n\n\(message)",
+                withCompletion: { NSApp.terminate(self) })
         } else {
-            UITools.showMessage(message: "\(message).")
+            UITools.showMessage(message: message)
         }
     }
     
@@ -258,6 +258,7 @@ extension WindowController: DriverManagerObserver {
     }
     
     func didUnload(withStatus code: UInt64, message: String) {
+        tabView.isEnabled = false
         if code > 0 {
             UITools.showMessage(
                 message: "Error 0x\(String(code, radix: 16)): \(message).")
@@ -267,20 +268,23 @@ extension WindowController: DriverManagerObserver {
     }
     
     func controllerConnected() {
-       
+        hideProgress()
+        tabView.isEnabled = true;
+
+        UITools.showNotificationWithBadge(
+            body: "VSP Driver connected", badgeCount: 1)
+        
         // C bridge async
         DispatchQueue.global(qos: .background).asyncAfter(//
                 deadline: .now() + .milliseconds(100)) {
             GetStatus()
         }
-
-        hideProgress()
-
-        UITools.showNotificationWithBadge(
-            body: "VSP Driver connected", badgeCount: 1)
     }
     
     func controllerDisconnected() {
+        hideProgress()
+        tabView.isEnabled = false;
+
         UITools.showNotificationWithBadge(
             body: "VSP Driver disconnected", badgeCount: 1)
     }
@@ -327,17 +331,18 @@ extension WindowController: DriverManagerObserver {
                 }
                 break
             case .requiresUserApproval:
-                DispatchQueue.main.async {
-                    UITools.showMessage(message: message) {
-                        if !IsDriverConnected() {
+                UITools.showMessage(message: message) {
+                    if !IsDriverConnected() {
+                        UITools.showMessage(message:
+                            "Unable to connect VSP driver.\nPlease reboot your computer.") {
                             NSApp.terminate(self)
                         }
                     }
                 }
                 break
             case .willCompleteAfterReboot:
-                DispatchQueue.main.async {
-                    self.didFail(withError: code, message: message)
+                UITools.showMessage(message: message) {
+                    NSApp.terminate(self)
                 }
                 break
             case .connected:

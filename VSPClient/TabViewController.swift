@@ -12,7 +12,17 @@ class TabViewController: NSTabViewController {
     private var isConnected: Bool = false
     private let manager = DriverManager.shared
     private var model : DataModel = DataModel.shared
+    private var pagesEnabled: Bool = false
     private var page : NSTabViewItem?
+    
+    public var isEnabled : Bool {
+        get {
+            return pageEnabled()
+        }
+        set {
+            setPageEnabled(newValue)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,9 +45,31 @@ class TabViewController: NSTabViewController {
     override func viewDidDisappear() {
         super.viewDidDisappear()
     }
-     
+    
+    public func pageEnabled() -> Bool {
+        guard let pg = page else {
+            return false
+        }
+        guard let tv = pg.tabView else {
+            return false
+        }
+        return tv.isViewEnabled
+    }
+
+    public func setPageEnabled(_ enabled: Bool) {
+        guard let pg = page else {
+            return
+        }
+        guard let tv = pg.tabView else {
+            return
+        }
+        tv.setControlsEnabled(enabled)
+        self.pagesEnabled = enabled
+    }
+
     override func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
         page = tabViewItem
+        setPageEnabled(pagesEnabled)
         if (IsDriverConnected()) {
             DispatchQueue.global(qos: .background).asyncAfter(//
                 deadline: .now() + .milliseconds(100)) {
@@ -51,7 +83,7 @@ extension TabViewController: DriverDataObserver {
     
     func dataError(withCode code: UInt64, message: String) {
         if code > 0 {
-            UITools.showMessage(message: "Error \(String(code, radix: 16)): \(message).")
+            UITools.showMessage(message: "VSP Error \(String(format: "0x%llx", code)):\n\n\(message).")
         } else {
             UITools.showMessage(message: "\(message).")
         }
@@ -89,18 +121,18 @@ extension TabViewController: DriverDataObserver {
                         break
                     default:
                         dataError(withCode: UInt64(input.status.code), //
-                                  message: "Driver Error \(String(format: "0x%llx", input.status.code))")
+                                  message: "VSP Error \(String(format: "0x%llx", input.status.code))")
                         break
                 }
                 break
             case 0xfa000000:
                 dataError(withCode: UInt64(input.status.code), //
-                          message: "Driver Error \(String(format: "0x%llx", input.status.code))")
+                          message: "VSP Error \(String(format: "0x%llx", input.status.code))")
                 break
             default:
                 if input.status.code > 0 {
                     dataError(withCode: UInt64(input.status.code), //
-                             message: "Driver Error \(String(format: "0x%llx", input.status.code))")
+                             message: "VSP Error \(String(format: "0x%llx", input.status.code))")
                 }
                 break
             }

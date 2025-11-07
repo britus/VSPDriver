@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "9868510_device_cable_power_usb_plug_icon.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "9868510_device_cable_power_usb_plug_icon 1.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "9868510_device_cable_power_usb_plug_icon 2.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

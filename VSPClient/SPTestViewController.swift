@@ -52,6 +52,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
         pbIoLooper.isEnabled = false
         pbIoSendFile.isEnabled = false
         pbIoSendText.isEnabled = false
+        pbPortOpen.isEnabled = false
         pbPortClose.isEnabled = false
         edTextField.isEnabled = false
         edTextField.delegate = self
@@ -103,6 +104,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
         cbxDevice.isEnabled = (cbxDevice.numberOfItems > 0)
         if (cbxDevice.isEnabled) {
             cbxDevice.selectItem(at: 0)
+            onSerialPortChanged(cbxDevice)
         }
     }
     
@@ -437,6 +439,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
         guard let value = UITools.selectedValueFrom(sender) as? String else {
             return
         }
+        pbPortOpen.isEnabled = true;
         deviceName = value
     }
     

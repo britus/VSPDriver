@@ -286,6 +286,7 @@ extension DriverManager: OSSystemExtensionRequestDelegate {
                 else if isDriverUnload == true {
                     notify(.unloaded, code: 0, domain: errorDomain,//
                            message: "Driver deactivated successfully")
+                    driverDisconnected();
                 }
                 else {
                     notify(.willCompleteAfterReboot, code: 0, domain: errorDomain, //
@@ -302,13 +303,16 @@ extension DriverManager: OSSystemExtensionRequestDelegate {
 
     internal func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {
         let nsError = error as NSError
-        notify(.failure, code: UInt64(nsError.code), domain: nsError.domain, message: error.localizedDescription)
+        notify(.failure,
+               code: UInt64(nsError.code),
+               domain: nsError.domain,
+               message: error.localizedDescription)
     }
 
     internal func requestNeedsUserApproval(_ request: OSSystemExtensionRequest) {
         notify(.requiresUserApproval, code: 0, domain: errorDomain,
                message: "User must approve in System Settings " //
-               + "→ Privacy & Security\nfollowing driver extension:\n\nVirtual Serial Port Driver")
+               + "→ Privacy & Security following driver extension:\n\nVirtual Serial Port Driver")
     }
 
     internal func request(
