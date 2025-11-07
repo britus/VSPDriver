@@ -297,8 +297,8 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
             self.jsRunner.scriptFile = selectedFileURL
             self.pbIoLooper.isEnabled = false
             self.pbIoSendFile.isEnabled = false
-            self.pbIoSendText.isEnabled = false
-            self.edTextField.isEnabled = false
+            self.pbIoSendText.isEnabled = serialPort?.isConnected ?? false
+            self.edTextField.isEnabled = serialPort?.isConnected ?? false
             self.edAutoTextLen.isEnabled = false
         }
     }
