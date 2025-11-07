@@ -114,7 +114,8 @@ class MessageView: NSViewController, DriverDataObserver {
             }
             let _buffer = (self.txLogView.string as NSString).appending(_text)
             self.txLogView.setText(_buffer)
-            self.txLogView.scrollToTextEnd()
+            //self.txLogView.scrollToTextEnd()
+            self.txLogView.scrollToTextViewEnd()
         }
     }
 

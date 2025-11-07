@@ -8,8 +8,10 @@ import Cocoa
 import AppKit
 import Foundation
 import Darwin
+import JavaScriptCore
 
-class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDelegate {
+class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutionDelegate, NSTextFieldDelegate {
+    
     @IBOutlet weak var cbxDevice: ComboBox!
     @IBOutlet weak var cbxBaudRate: ComboBox!
     @IBOutlet weak var cbxDataBits: ComboBox!
@@ -27,6 +29,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
     @IBOutlet weak var edAutoTextLen: NSTextField!
     @IBOutlet weak var cbxSendTextAddCR: NSButton!
     @IBOutlet weak var cbxSendTextAddLF: NSButton!
+    @IBOutlet weak var pbRunScript: NSButton!
     
     struct SerialPortPinouts {
         var DCD: Bool = false
@@ -46,10 +49,12 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
     private var autoTextLen: UInt32 = 16
     private var isAddCrEnabled: Bool = true
     private var isAddLfEnabled: Bool = true
+    private let jsRunner: JSRunner = JSRunner()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         pbIoLooper.isEnabled = false
+        pbRunScript.isEnabled = true
         pbIoSendFile.isEnabled = false
         pbIoSendText.isEnabled = false
         pbPortOpen.isEnabled = false
@@ -63,6 +68,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
         cbxSendTextAddLF.state = .on
         txLogView.string = ""
         txLogView.setLineWrapping(false)
+        jsRunner.delegate = self
         
         let formatter = NumberFormatter()
         formatter.numberStyle = .none               // or .currency, .percent, etc.
@@ -139,13 +145,14 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
                 _text.append("\n")
             }
             if let stg = self.txLogView.textStorage {
-                if stg.length < 16386 {
+                if stg.length < 32394 {
                     let _buffer = (stg.string as NSString).appending(_text)
                     self.txLogView.setText(_buffer)
                 } else {
                     self.txLogView.setText(_text)
                 }
-                self.txLogView.scrollToTextEnd()
+                //self.txLogView.scrollToTextEnd()
+                self.txLogView.scrollToTextViewEnd()
             }
         }
     }
@@ -172,15 +179,230 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
             return
         }
     }
+    
+    func scriptExecutionDidStart(_ context: JSContext) {
+        //
+    }
+    
+    func scriptExecutionDidFinish(_ context: JSContext) {
+        //
+    }
+    
+    func scriptExecutionDidFail(_ message: String) {
+        self.logMessage(message)
+    }
+    
+    @objc func onNewScript() {
+        var fileURL: URL?
+        // Create JavaScript file in App Home directory
+        if let homeDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            fileURL = homeDir.appendingPathComponent("newScript.js")
+        }
+        else if let documentsDirectory = FileManager.default.urls(for: .userDirectory, in: .userDomainMask).first {
+            fileURL = documentsDirectory.appendingPathComponent("newScript.js")
+        }
+        else {
+            UITools.showMessage(message: "Unable to create VSP script template.")
+            return;
+        }
+
+        // JavaScript template content
+        let jsTemplate = """
+        // VSP Test Script (JS)
+
+        function main() {
+            // notify VSP App
+            onStart("JS: Start - Hello");
+        
+            // Displays the value of the received global
+            // property "receivedData". The value type 
+            // is a byte array. [UInt8]
+            if (dataAvailable === true) {
+                onMessage("JS: Received data: " + receivedData);
+            }
+        
+            // --
+            // TODO: Do something here
+            // --
+            
+            // Send text to linked port.
+            onSendText("JS: device command / AT Command");
+            
+            // notify VSP App
+            onComplete("JS: finished.");
+        }
+        
+        // --[Main]--
+        main();
+        """
+        
+        // Write template to file
+        do {
+            guard let url = fileURL else {
+                UITools.showMessage(message: "Invalid script URL.")
+                return
+            }
+            try jsTemplate.write(to: url, atomically: true, encoding: .utf8)
+            //print("New script created at: $fileURL.path)")
+            // open the file in editor or show in Finder
+            NSWorkspace.shared.open(url)
+        } catch {
+            UITools.showMessage(message: "Error creating script file: \(error)")
+        }
+    }
+    
+    @objc func onStartScripting() {
+        // check current port selection. Port must be
+        // linked othewise loopback raise condition
+        let model = DataModel.shared
+        let count = model.recordCount()
+        var found : Bool = false
+        for i in 0..<count {
+            guard let r = model.getRecord(index: i, byType: .PortItem) else {
+                continue
+            }
+            if deviceName.contains(r.port.name) {
+                if model.isPortAssigned(portId: r.port.id) {
+                    found = true
+                    break
+                }
+            }
+        }
+        if !found {
+            UITools.showMessage(message:
+                    "Serial port must be linked with another port.")
+            return
+        }
+        // Create open file dialog
+        let openPanel = NSOpenPanel()
+        openPanel.canChooseFiles = true
+        openPanel.canChooseDirectories = false
+        openPanel.allowsMultipleSelection = false
+        //openPanel.allowedFileTypes = ["js"]
+        openPanel.prompt = "Execute"
+
+        // Create JavaScript file in App Home directory
+        if let homeDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            openPanel.directoryURL = homeDir
+        }
+        else if let docDir = FileManager.default.urls(for: .userDirectory, in: .userDomainMask).first {
+            openPanel.directoryURL = docDir
+        }
+        
+        // Show the dialog
+        if openPanel.runModal() == .OK {
+            guard let selectedFileURL = openPanel.url else {
+                return
+            }
+            self.jsRunner.scriptFile = selectedFileURL
+            self.pbIoLooper.isEnabled = false
+            self.pbIoSendFile.isEnabled = false
+            self.pbIoSendText.isEnabled = false
+            self.edTextField.isEnabled = false
+            self.edAutoTextLen.isEnabled = false
+        }
+    }
+    
+    @objc func onStopScripting() {
+        self.jsRunner.scriptFile = nil
+        self.pbIoLooper.isEnabled = serialPort?.isConnected ?? false
+        self.pbIoSendFile.isEnabled = serialPort?.isConnected ?? false
+        self.pbIoSendText.isEnabled = serialPort?.isConnected ?? false
+        self.edTextField.isEnabled = serialPort?.isConnected ?? false
+        self.edAutoTextLen.isEnabled = serialPort?.isConnected ?? false
+    }
+  
+    private func addEoL(_ text: String) -> String
+    {
+        var _text = text
+
+        // Check if \r is second last character before \n
+        if _text.count >= 2 {
+            let lastTwoChars = String(_text.suffix(2))
+            if lastTwoChars == "\r\n" {
+                // \r is already second last character
+            } else if lastTwoChars == "\n" {
+                // Only \n at the end, so we need to add \r before it
+                _text.insert("\r", at: _text.index(_text.endIndex, offsetBy: -1))
+            } else {
+                // No line ending at all
+                if self.isAddCrEnabled {
+                    _text += "\r"
+                }
+                if self.isAddLfEnabled {
+                    _text += "\n"
+                }
+            }
+        } else {
+            // Text is too short
+            if self.isAddCrEnabled {
+                _text += "\r"
+            }
+            if self.isAddLfEnabled {
+                _text += "\n"
+            }
+        }
+        return _text
+    }
+    
+    private func runScriptFile(_ isSender: Bool, _ data: Data) -> Bool
+    {
+        guard let scriptFile = self.jsRunner.scriptFile else {
+            return false
+        }
+        do {
+            let script = try String(
+                contentsOf: scriptFile as URL,
+                  encoding: .utf8)
+            self.jsRunner.onStart = { message in
+                self.logMessage("onStart:\n\(message)")
+            }
+            self.jsRunner.onComplete = { message in
+                self.logMessage("onComplete:\n\(message)")
+            }
+            self.jsRunner.onMessage = { message in
+                self.logMessage("onMessage:\n\(message)")
+            }
+            self.jsRunner.onSendText = { message in
+                self.serialPort?.send(self.addEoL(message).data(using: .utf8)!)
+            }
+            self.jsRunner.setVarialble("dataAvailable", !data.isEmpty)
+            self.jsRunner.setVarialble("receivedData", data)
+            self.jsRunner.run(script: script)
+        } catch {
+            self.isLooperRunning = false // force stop if looping
+            UITools.showMessage(message: "Error reading script file: \(error)")
+        }
+        return true
+    }
+    
+    @objc func serialPortDidReceive(_ data: Data) {
+        if !self.runScriptFile(false, data) {
+            self.logMessage(toHexLog(data))
+        }
+    }
+
+    @objc func serialPortStateChanged(_ state: SerialPortState) {
+        DispatchQueue.main.async {
+            if state == .connected {
+                self.serialPortDidConnect()
+            }
+            if state == .disconnected {
+                self.isLooperRunning = false
+                self.serialPortDidDisconnect()
+            }
+        }
+    }
 
     @objc func serialPortDidError(_ error: any Error, with errorType: SerialPortErrorType) {
         DispatchQueue.main.async {
             self.isLooperRunning = false
-            self.logMessage("Error \(String(describing: error))")
+            self.logMessage("\(String(describing: error))\nType: \(errorType.rawValue)")
             self.pbPortOpen.isEnabled = true
             self.pbPortClose.isEnabled = false
             self.edTextField.isEnabled = false
             self.pbIoLooper.isEnabled = false
+            //self.pbRunScript.isEnabled = false
             self.pbIoSendFile.isEnabled = false
             self.pbIoSendText.isEnabled = false
             self.edAutoTextLen.isEnabled = false
@@ -194,13 +416,13 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
             self.logMessage("Connected to serial port.")
             self.pbPortOpen.isEnabled = false
             self.pbPortClose.isEnabled = true
-            self.edTextField.isEnabled = true
-            self.pbIoLooper.isEnabled = true
-            self.pbIoSendFile.isEnabled = true
-            self.pbIoSendText.isEnabled = true
-            self.edAutoTextLen.isEnabled = true
             self.cbxSendTextAddCR.isEnabled = true
             self.cbxSendTextAddLF.isEnabled = true
+            self.edTextField.isEnabled = self.jsRunner.scriptFile == nil
+            self.edAutoTextLen.isEnabled = self.jsRunner.scriptFile == nil
+            self.pbIoLooper.isEnabled = self.jsRunner.scriptFile == nil
+            self.pbIoSendFile.isEnabled = self.jsRunner.scriptFile == nil
+            self.pbIoSendText.isEnabled = self.jsRunner.scriptFile == nil
         }
     }
 
@@ -210,13 +432,13 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
             self.logMessage("Disconnected from serial port.")
             self.pbPortOpen.isEnabled = true
             self.pbPortClose.isEnabled = false
+            self.cbxSendTextAddCR.isEnabled = false
+            self.cbxSendTextAddLF.isEnabled = false
             self.edTextField.isEnabled = false
             self.pbIoLooper.isEnabled = false
             self.pbIoSendFile.isEnabled = false
             self.pbIoSendText.isEnabled = false
             self.edAutoTextLen.isEnabled = false
-            self.cbxSendTextAddCR.isEnabled = false
-            self.cbxSendTextAddLF.isEnabled = false
         }
     }
 
@@ -234,22 +456,6 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
             self.cbxSendTextAddCR.isEnabled = false
             self.cbxSendTextAddLF.isEnabled = false
         }
-    }
-    
-    @objc func serialPortStateChanged(_ state: SerialPortState) {
-        DispatchQueue.main.async {
-            if state == .connected {
-                self.serialPortDidConnect()
-            }
-            if state == .disconnected {
-                self.isLooperRunning = false
-                self.serialPortDidDisconnect()
-            }
-        }
-    }
-
-    @objc func serialPortDidReceive(_ data: Data) {
-        logMessage(toHexLog(data))
     }
     
     @objc func serialPort(_ port: Any, didChangeBaudRate baudRate: UInt) {
@@ -324,27 +530,10 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
         // Show panel and handle response
         if openPanel.runModal() == .OK {
             if let fileURL = openPanel.url {
-                #if false
-                let fileManager = FileManager.default
-                do {
-                    let attributes = try fileManager.attributesOfItem(atPath: fileURL.path)
-                    if let fileSize = attributes[.size] as? NSNumber {
-                        // 1 KB = 1024 bytes
-                        let maxKb = UInt64(16 * 1024)
-                        if fileSize.uint64Value >= maxKb {
-                            let msg = "Files larger than or equal to 16 KByte cannot be transferred."
-                            UITools.showMessage(message: msg)
-                            return
-                        }
-                    }
-                } catch {
-                    logMessage("Error getting file size: \(error)")
-                    return
-                }
-                #endif
-                logMessage(">: Send file \(fileURL.path)")
-                pbIoSendFile.isEnabled = false
-                serialPort?.sendFile(atPath: fileURL.path,
+                self.logMessage(">: Send file \(fileURL.path)")
+                self.jsRunner.scriptFile = nil //disable scripting
+                self.pbIoSendFile.isEnabled = false
+                self.serialPort?.sendFile(atPath: fileURL.path,
                                      chunkSize: 1024,
                                      completion:{_,_ in
                     DispatchQueue.main.async {
@@ -359,13 +548,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
         if textToSend.isEmpty {
             textToSend = edTextField.stringValue
         }
-        var text = textToSend
-        if (!text.contains("\r") && isAddCrEnabled) {
-            text += "\r"
-        }
-        if (!text.endsWith("\n") && isAddLfEnabled) {
-            text += "\n"
-        }
+        let text = self.addEoL(textToSend)
         logMessage(">: \(text)")
         serialPort?.send(text.data(using: .utf8)!)
     }
@@ -386,9 +569,6 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
                     if index >= chars.count {
                         index = 0
                     }
-                    
-                    Thread.sleep(forTimeInterval: 0.5)
-                    
                     if (!buffer.contains("\r") && self.isAddCrEnabled) {
                         buffer += "\r"
                     }
@@ -398,6 +578,8 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
                     
                     self.logMessage(">: \(buffer)")
                     self.serialPort?.send(buffer.data(using: .utf8)!)
+                
+                    Thread.sleep(forTimeInterval: 0.5)
                 }
             }
         } else {
@@ -405,6 +587,31 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
         }
     }
     
+    @IBAction func onRunScript(_ sender: NSButton) {
+        // Create popup menu
+        let menu = NSMenu()
+        
+        // Create "New Script" menu item with icon
+        let newScriptItem = NSMenuItem(title: "New Script", action: #selector(onNewScript), keyEquivalent: "")
+        newScriptItem.image = NSImage(systemSymbolName: "plus.circle", accessibilityDescription: "New Script")
+        menu.addItem(newScriptItem)
+        
+        // Create "Execute Script" menu item with icon
+        let startScriptItem = NSMenuItem(title: "Start Scripting", action: #selector(onStartScripting), keyEquivalent: "")
+        startScriptItem.image = NSImage(systemSymbolName: "play.circle", accessibilityDescription: "Start Scripting")
+        menu.addItem(startScriptItem)
+
+        let stopScriptItem = NSMenuItem(title: "Stop Scripting", action: #selector(onStopScripting), keyEquivalent: "")
+        stopScriptItem.image = NSImage(systemSymbolName: "stop.circle", accessibilityDescription: "Stop Scripting")
+        menu.addItem(stopScriptItem)
+
+        // Calculate bottom-left corner of the button in its own coordinate space
+        let popupPoint = NSPoint(x: 0, y: 0)
+        
+        // Show the popup menu at bottom-left of the button
+        menu.popUp(positioning: nil, at: popupPoint, in: sender)
+    }
+  
     // This method is called when the user presses Enter or Return
     func controlTextDidEndEditing(_ obj: Notification) {
         if let textField = obj.object as? NSTextField {
@@ -439,8 +646,9 @@ class SPTestViewController: NSViewController, SerialPortDelegate, NSTextFieldDel
         guard let value = UITools.selectedValueFrom(sender) as? String else {
             return
         }
-        pbPortOpen.isEnabled = true;
+        self.title = "Serial Test [\(value)]"
         deviceName = value
+        pbPortOpen.isEnabled = true;
     }
     
     @IBAction func onBaudRateChanged(_ sender: ComboBox) {

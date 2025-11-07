@@ -148,7 +148,7 @@ class DataModel: NSObject {
     public func saveModel(_ settings: UserDefaults) -> Void {
         //TODO: implement save to userDefaults
     }
-
+    
     public func appendRecord(_ record: TDataRecord, notify: Bool = true) -> Void {
         let _ = mutex.synchronized {
             m_records.append(record)

@@ -591,6 +591,7 @@ void deviceRemovalCallback(
     [self updateState:SerialPortStateConnected];
     [self monitorPinoutSignals];
     [self startReading];
+    _isConnected = YES;
     
     return YES;
 }
@@ -610,6 +611,8 @@ void deviceRemovalCallback(
             close(self.fdDevice);
             self.fdDevice = -1;
         }
+        
+        _isConnected = NO;
     }
     [self.portAccessLock unlock];
 

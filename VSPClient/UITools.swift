@@ -61,18 +61,17 @@ class UITools {
             messageLabel.isEditable = false
             messageLabel.isBordered = false
             messageLabel.backgroundColor = .clear
-            messageLabel.stringValue = messageText
             messageLabel.font = NSFont.boldSystemFont(ofSize: 14)
             messageLabel.alignment = .left
-            messageLabel.isSelectable = false
-            messageLabel.maximumNumberOfLines = 0 // max
             messageLabel.isSelectable = true
             messageLabel.cell?.isScrollable = true
+            messageLabel.maximumNumberOfLines = 0 // max
             messageLabel.allowsDefaultTighteningForTruncation = true
             messageLabel.translatesAutoresizingMaskIntoConstraints = false
-            messageLabel.lineBreakMode = .byWordWrapping
             messageLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-    
+            messageLabel.lineBreakMode = .byWordWrapping
+            messageLabel.stringValue = messageText
+
             // Buttons
             let okButton = NSButton(title: "OK", target: self, //
                                     action: #selector(okButtonClicked))
@@ -103,8 +102,7 @@ class UITools {
             
             self.view.layoutSubtreeIfNeeded()
             let fittingSize = mainStackView.fittingSize
-            self.preferredContentSize = NSSize(width: 380,
-                                               height: fittingSize.height + 40)
+            self.preferredContentSize = NSSize(width: 380, height: fittingSize.height + 50)
             updateLayout()
         }
         
@@ -585,17 +583,27 @@ extension NSTextView {
               let textContainer = self.textContainer else { return }
         let _ : Bool = layoutManager.isProxy() /* fix swift bullshit warning */
         
+        // Ensure layout is up to date
+        layoutManager.ensureLayout(for: textContainer)
+
         // Alternative approach using the text container's actual size
-        let contentSize = textContainer.size
-        
+        //let contentSize = textContainer.size
+
         // Get the visible rectangle to calculate proper scroll position
-        let visibleRect = self.visibleRect
-        
+        //let visibleRect = self.visibleRect
+        // Get the used rectangle (actual text layout area)
+        let usedRect = layoutManager.usedRect(for: textContainer)
+
         // Calculate the bottom position (this is more accurate)
-        let scrollY = max(0, contentSize.height - visibleRect.height)
-        
+        let contentHeight = max(0, usedRect.height)
+        let visibleHeight = max(1, self.visibleRect.height)
+        let rawScrollY = contentHeight - visibleHeight
+        //let scrollY = max(0, min(contentHeight - visibleHeight, CGFloat.greatestFiniteMagnitude))
+        // Clamp to valid scroll range
+        let scrollYfix = max(0, min(rawScrollY, CGFloat.greatestFiniteMagnitude))
+
         // Scroll to the calculated point
-        self.scroll(NSPoint(x: 0, y: scrollY))
+        self.scroll(NSPoint(x: 0, y: scrollYfix))
         
         // Additional safety - ensure we're at the very end
         if let textStorage = self.textStorage {
@@ -631,31 +639,63 @@ extension NSTextView {
         if (attributedString.length > 0) {
             self.textStorage?.setAttributedString(attributedString)
         }
+        // Update text view frame and container size to match text width
+        if let scrollView = self.enclosingScrollView {
+            let contentWidth = scrollView.contentSize.width + 15
+            self.frame.size.width = max(contentWidth, scrollView.contentSize.width)
+            textContainer?.containerSize = CGSize(
+                width: Swift.Double.greatestFiniteMagnitude,
+                height: Swift.Double.greatestFiniteMagnitude
+            )
+        }
+        // Force layout recalculation to update horizontal scroller
+        self.layoutManager?.ensureLayout(for: textContainer!)
+        self.invalidateIntrinsicContentSize()
+        self.needsDisplay = true
     }
     
-    public func setLineWrapping(_ enable: Bool) {
-        if enable {
-            /// Matching width is also important here.
-            guard let sz = self.enclosingScrollView?.contentSize else { //
-                return
-            }
-            self.frame = CGRect(x: 0, y: 0, width: sz.width, height: 0)
-            self.textContainer?.containerSize = CGSize(width: sz.width, height: CGFloat.greatestFiniteMagnitude)
+    public func setLineWrapping(_ enableWrap: Bool) {
+        guard let scrollView = self.enclosingScrollView else { return }
+        
+        if enableWrap {
+            // Ensure the text container wraps at character boundaries
+            self.textContainer?.lineBreakMode = .byCharWrapping
             self.textContainer?.widthTracksTextView = true
-        }
-        else {
+            self.textContainerInset = .zero
+            
+            // Match content width to the scroll view’s visible width
+            let contentWidth = scrollView.contentSize.width + 15
+            self.frame = CGRect(x: 0, y: 0, width: contentWidth, height: 0)
+            self.textContainer?.containerSize = CGSize(
+                width: contentWidth,
+                height: .greatestFiniteMagnitude
+            )
+            
+            // Disable horizontal scrolling for wrapping mode
+            scrollView.hasHorizontalScroller = false
+            self.isHorizontallyResizable = false
+            self.autoresizingMask = [.width]
+        } else {
+            // Disable wrapping — allow full text expansion
+            self.textContainer?.lineBreakMode = .byClipping
+            self.textContainer?.widthTracksTextView = false
+            self.textContainer?.containerSize = CGSize(
+                width: Swift.Double.greatestFiniteMagnitude,
+                height: Swift.Double.greatestFiniteMagnitude
+            )
+            
+            // Allow both directions to resize
             self.isVerticallyResizable = true
             self.isHorizontallyResizable = true
-            self.enclosingScrollView?.autoresizingMask = [
-                NSView.AutoresizingMask.width,
-                NSView.AutoresizingMask.height]
-            self.autoresizingMask = [
-                NSView.AutoresizingMask.width,
-                NSView.AutoresizingMask.height]
-            self.textContainer?.widthTracksTextView = true
-            self.textContainer?.containerSize = CGSize(
-                width: CGFloat.greatestFiniteMagnitude,
-                height: CGFloat.greatestFiniteMagnitude)
+            self.autoresizingMask = [.width, .height]
+            
+            scrollView.hasHorizontalScroller = true
+            scrollView.autoresizingMask = [.width, .height]
+            
+            // Force layout recalculation to update horizontal scroller
+            self.layoutManager?.ensureLayout(for: textContainer!)
+            self.invalidateIntrinsicContentSize()
+            self.needsDisplay = true
         }
     }
 }
@@ -790,4 +830,11 @@ extension NSWindowController {
     func hideProgress() {
         window?.hideProgress()
     }
+}
+
+// MARK: Extension to add system symbol image support
+extension NSImage {
+    //convenience init?(systemSymbolName: String, accessibilityDescription: String?) {
+    //    self.init(systemSymbolName: systemSymbolName, accessibilityDescription: accessibilityDescription)
+    //}
 }

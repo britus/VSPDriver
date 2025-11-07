@@ -35,6 +35,7 @@
 		88B47EC82D59B30600868CA5 /* VSPUserClient.iig in Sources */ = {isa = PBXBuildFile; fileRef = 884F6EC42D59A58D0066353A /* VSPUserClient.iig */; };
 		88B47ECA2D59B43800868CA5 /* VSPController.h in Headers */ = {isa = PBXBuildFile; fileRef = 88B47EC92D59B43800868CA5 /* VSPController.h */; };
 		88DA7BA92D532C6800C8F759 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 88DA7BA72D532C6700C8F759 /* LICENSE */; };
+		F71E68412EBE0A51003FBD57 /* JSRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71E68402EBE0A51003FBD57 /* JSRunner.swift */; };
 		F76A60AC2EB2812D004DF0C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F76A60AA2EB2812D004DF0C7 /* Main.storyboard */; };
 		F77B0ECF2EB27DA7000FA9A7 /* VSPControllerStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = F77B0EBE2EB27DA7000FA9A7 /* VSPControllerStatus.m */; };
 		F77B0ED02EB27DA7000FA9A7 /* VSPPortListItem..m in Sources */ = {isa = PBXBuildFile; fileRef = F77B0ECA2EB27DA7000FA9A7 /* VSPPortListItem..m */; };
@@ -148,6 +149,7 @@
 		88F12FF02DCDBECE00E0486A /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		88F12FF22DCDBED600E0486A /* IOBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOBluetooth.framework; path = System/Library/Frameworks/IOBluetooth.framework; sourceTree = SDKROOT; };
 		88F12FF32DCDBED600E0486A /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		F71E68402EBE0A51003FBD57 /* JSRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSRunner.swift; sourceTree = "<group>"; };
 		F76A60AB2EB2812D004DF0C7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F77B0EB22EB27DA7000FA9A7 /* VSPBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VSPBridge.h; sourceTree = "<group>"; };
 		F77B0EB32EB27DA7000FA9A7 /* VSPBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VSPBridge.m; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 				F77B0EDD2EB27DEA000FA9A7 /* ComboBox.swift */,
 				F77B0EDE2EB27DEA000FA9A7 /* DataModel.swift */,
 				F77B0EDF2EB27DEA000FA9A7 /* DriverManager.swift */,
+				F71E68402EBE0A51003FBD57 /* JSRunner.swift */,
 				F77B0EE02EB27DEA000FA9A7 /* MessageView.swift */,
 				F77B0EE12EB27DEA000FA9A7 /* SLViewController.swift */,
 				F77B0EE22EB27DEA000FA9A7 /* SPTestViewController.swift */,
@@ -537,6 +540,7 @@
 			files = (
 				F77B0ECF2EB27DA7000FA9A7 /* VSPControllerStatus.m in Sources */,
 				F77B0ED02EB27DA7000FA9A7 /* VSPPortListItem..m in Sources */,
+				F71E68412EBE0A51003FBD57 /* JSRunner.swift in Sources */,
 				F77B0ED12EB27DA7000FA9A7 /* VSPController.cpp in Sources */,
 				F77B0EEA2EB27DEA000FA9A7 /* Application.swift in Sources */,
 				F77B0EEB2EB27DEA000FA9A7 /* SPViewController.swift in Sources */,
@@ -624,7 +628,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 154;
+				CURRENT_PROJECT_VERSION = 155;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -702,7 +706,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 154;
+				CURRENT_PROJECT_VERSION = 155;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -968,7 +972,7 @@
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 154;
+				CURRENT_PROJECT_VERSION = 155;
 				DRIVERKIT_DEPLOYMENT_TARGET = 23.6;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1003,7 +1007,7 @@
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 154;
+				CURRENT_PROJECT_VERSION = 155;
 				DRIVERKIT_DEPLOYMENT_TARGET = 23.6;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				FRAMEWORK_SEARCH_PATHS = (
