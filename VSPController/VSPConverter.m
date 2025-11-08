@@ -6,7 +6,6 @@
 // ********************************************************************
 #import <Foundation/Foundation.h>
 #import "VSPConverter.h"
-
 #import "VSPDriverDataModel.h"
 
 @implementation TVSPConverter
