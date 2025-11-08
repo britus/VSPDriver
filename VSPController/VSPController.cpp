@@ -678,7 +678,7 @@ inline bool VSPController::asyncCall(CVSPDriverData *input)
     // - do it --
     size_t resultSize = VSP_UCD_SIZE;
     ret = IOConnectCallAsyncStructMethod( //
-        m_connection,                            // Connection from IOServiceOpen
+        m_connection,                     // Connection from IOServiceOpen
         input->command,                   // Method selector
         m_machPort,                       // Notification port
         descriptor,                       // Call back structure
