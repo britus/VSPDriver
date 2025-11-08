@@ -891,8 +891,18 @@ extension NSWindowController {
 }
 
 // MARK: Extension to add system symbol image support
+
 extension NSImage {
     //convenience init?(systemSymbolName: String, accessibilityDescription: String?) {
     //    self.init(systemSymbolName: systemSymbolName, accessibilityDescription: accessibilityDescription)
     //}
+}
+
+// MARK: Extension to filter system files in open/save dialog
+
+extension SPTestViewController: NSOpenSavePanelDelegate {
+    func panel(_ sender: Any, shouldEnable url: URL) -> Bool {
+        // Filter out system files if needed
+        return !url.path.startsWith(".")
+    }
 }

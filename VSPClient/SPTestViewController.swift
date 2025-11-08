@@ -91,6 +91,12 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
         portConfig.flowCtrl = 0
     }
     
+    deinit {
+        self.isLooperRunning = false
+        self.serialPort?.disconnect()
+        self.serialPort = nil
+    }
+    
     private func populateComboBoxes() {
         UITools.populateBaudRateComboBox(cbxBaudRate)
         UITools.populateDataBitsComboBox(cbxDataBits)
@@ -688,12 +694,5 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
             return
         }
         portConfig.flowCtrl = UInt(value)
-    }
-}
-
-extension SPTestViewController: NSOpenSavePanelDelegate {
-    func panel(_ sender: Any, shouldEnable url: URL) -> Bool {
-        // Filter out system files if needed
-        return !url.path.startsWith(".")
     }
 }
