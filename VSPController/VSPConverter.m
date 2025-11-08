@@ -42,8 +42,9 @@
                          name:name];
         [portItems addObject:item];
     }
-    TVSPPortList *ports = [[TVSPPortList alloc] initWithCount:cppData->ports.count
-                                                        items:portItems];
+    TVSPPortList *ports = [[TVSPPortList alloc]
+               initWithCount:cppData->ports.count
+                       items:portItems];
 
     // LinkList
     NSMutableArray<NSNumber *> *linkNumbers = [NSMutableArray array];
