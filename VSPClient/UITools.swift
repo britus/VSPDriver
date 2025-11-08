@@ -201,25 +201,26 @@ class UITools {
         if (!UITools.isNotifyGranted) {
             return
         }
-
-        //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
-        let mr = UNNotificationRequest(
-            identifier: "mr_\(id)",
-            content: content,
-            trigger: nil
-        )
-        
-        UNUserNotificationCenter.current().add(mr) { e in
-            if let error = e {
-                print("Failed to schedule main notification: \(error)")
+        DispatchQueue.global().async {
+            //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
+            let mr = UNNotificationRequest(
+                identifier: "mr_\(id)",
+                content: content,
+                trigger: nil
+            )
+            UNUserNotificationCenter.current().add(mr) { e in
+                if let error = e {
+                    print("Failed to schedule main notification: \(error)")
+                }
             }
         }
     }
     
     // Show a basic notification
-    static public func showBasicNotification(title: String = applicationName(),
-                                    body: String,
-                                    subtitle: String? = nil) {
+    static public func showNotification(
+                            title: String = applicationName(),
+                             body: String,
+                         subtitle: String? = nil) {
         if (!UITools.isNotifyGranted) {
             return
         }
@@ -237,9 +238,10 @@ class UITools {
     }
     
     // Show notification with action button
-    static public func showNotificationWithAction(title: String = applicationName(),
-                                         body: String,
-                                         actionTitle: String = "View") {
+    static public func showNotificationWithAction(
+                            title: String = applicationName(),
+                             body: String,
+                      actionTitle: String = "View") {
         if (!UITools.isNotifyGranted) {
              return
         }
@@ -271,9 +273,10 @@ class UITools {
     }
     
     // Show notification with custom sound
-    static public func showNotificationWithCustomSound(title: String = applicationName(),
-                                              body: String,
-                                              soundName: String? = nil) {
+    static public func showNotificationWithCustomSound(
+                             title: String = applicationName(),
+                              body: String,
+                         soundName: String? = nil) {
         if (!UITools.isNotifyGranted) {
             return
         }
@@ -292,9 +295,10 @@ class UITools {
     }
     
     // Schedule notification with delay
-    static public func scheduleNotification(title: String = applicationName(),
-                                   body: String,
-                                   delaySeconds: TimeInterval = 5) {
+    static public func scheduleNotification(
+                            title: String = applicationName(),
+                             body: String,
+                     delaySeconds: TimeInterval = 5) {
         if (!UITools.isNotifyGranted) {
             return
         }
@@ -308,9 +312,10 @@ class UITools {
     }
     
     // Show notification with attachment (image, etc.)
-    static public func showNotificationWithAttachment(title: String = applicationName(),
-                                             body: String,
-                                             attachmentURL: URL) {
+    static public func showNotificationWithAttachment(
+                            title: String = applicationName(),
+                             body: String,
+                    attachmentURL: URL) {
         if (!UITools.isNotifyGranted) {
             return
         }
@@ -335,13 +340,14 @@ class UITools {
     }
     
     // Show notification with badge
-    static func showNotificationWithBadge(title: String = applicationName(),
-                                        body: String,
-                                        badgeCount: Int) {
+    static func showNotificationWithBadge(
+                        title: String = applicationName(),
+                         body: String,
+                   badgeCount: Int) {
         if (!UITools.isNotifyGranted) {
             return
         }
-        
+
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body
@@ -355,8 +361,7 @@ class UITools {
     static func populateBaudRateComboBox(_ comboBox: ComboBox) {
         let values: [UInt32] = [
             50, 75, 110, 134, 150, 200, 300, 600, 1200, 1800, 2400, 4800,
-            7200, 9600, 14400, 19200, 28800, 38400, 57600, 115200
-            ,128000,
+            7200, 9600, 14400, 19200, 28800, 38400, 57600, 115200 ,128000,
             230400, 256000, 460800, 512000, 921600, 1024000, 1843200, 2048000,
             3686400, 4096000, 7372800, 14745600, 29491200, 38400000, 76800000
         ]

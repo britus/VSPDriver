@@ -139,6 +139,8 @@ final class DriverManager: NSObject, ObservableObject {
     
     // The DriverKit extension bundle identifier
     private let driverIdentifier = "org.eof.tools.VSPDriver"
+    
+    // --
     private let errorDomain = "VSPDMErrorDomain"
     private var isDriverLoad: Bool = false
     private var isDriverUnload: Bool = false
@@ -171,6 +173,15 @@ final class DriverManager: NSObject, ObservableObject {
 
     public func removeObserver(_ observer: DriverDataObserver) {
         observers.remove(observer)
+    }
+
+    private func notify(_ status: DriverStatus, code: UInt64, domain: String, message: String) {
+        self.status = status
+        for observer in observers.allObjects {
+            (observer as? DriverManagerObserver)?
+                .driverStatusDidChange(status, //
+                    code: code, domain: errorDomain, message: message)
+        }
     }
 
     // MARK: - Load DriverKit Extension
@@ -210,22 +221,24 @@ final class DriverManager: NSObject, ObservableObject {
     }
     
     public func driverConnected() {
-        notify(.connected, code: 0, domain: errorDomain,//
+        notify(.connected, code: 0, domain: errorDomain, //
                message: "Driver successfully connected.")
     }
     
     public func driverDisconnected() {
-        notify(.disconnected, code: 0, domain: errorDomain,//
+        notify(.disconnected, code: 0, domain: errorDomain, //
                message: "Driver successfully disconnected.")
     }
     
     public func dataError(_ code: UInt64, _ message: String)
     {
-        for observer in observers.allObjects {
-            (observer as? DriverManagerObserver)?
-                .driverStatusDidChange(.dataError, //
-                        code: code, domain: errorDomain, message: message)
-        }
+        notify(.dataError, code: code, domain: errorDomain, //
+               message: message)
+    }
+
+    public func driverErrorOccured(_ code: UInt64, _ message: String) {
+        notify(.driverError, code: code, domain: errorDomain, //
+               message: message)
     }
     
     public func dataReady(_ data: TVSPControllerData?) {
@@ -239,23 +252,6 @@ final class DriverManager: NSObject, ObservableObject {
         for observer in observers.allObjects {
             (observer as? DriverManagerObserver)?
                 .logMessageDidAvailable(message)
-        }
-    }
-
-    public func driverErrorOccured(_ code: UInt64, _ message: String) {
-        for observer in observers.allObjects {
-            (observer as? DriverManagerObserver)?
-                .driverStatusDidChange(.driverError, //
-                    code: code, domain: errorDomain, message: message)
-        }
-    }
-
-    private func notify(_ status: DriverStatus, code: UInt64, domain: String, message: String) {
-        self.status = status
-        for observer in observers.allObjects {
-            (observer as? DriverManagerObserver)?
-                .driverStatusDidChange(status, //
-                        code: code, domain: domain, message: message)
         }
     }
 }
@@ -322,7 +318,7 @@ extension DriverManager: OSSystemExtensionRequestDelegate {
     ) -> OSSystemExtensionRequest.ReplacementAction {
         let current = existing.description
         let newstr = replacement.description
-        print("[VSPDRV] Replacing extension: \(current) with \(newstr)")
+        //print("[VSPDRV] Replacing extension: \(current) with \(newstr)")
         notify(.loading, code: 0, domain: errorDomain, //
                message: "Updating driver to a newer version.")
         return .replace

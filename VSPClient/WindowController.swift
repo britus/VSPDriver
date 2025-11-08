@@ -225,7 +225,7 @@ extension WindowController: DriverManagerObserver {
                 message: "Error 0x\(String(code, radix: 16)): \(message).",
                 withCompletion: { NSApp.terminate(self) })
         } else {
-            UITools.showBasicNotification(body: "\(message).")
+            UITools.showNotification(body: "\(message).")
             // C bridge async
             DispatchQueue.global(qos: .background).asyncAfter(//
                 deadline: .now() + .milliseconds(100)) {
@@ -262,17 +262,15 @@ extension WindowController: DriverManagerObserver {
             UITools.showMessage(
                 message: "Error 0x\(String(code, radix: 16)): \(message).")
         } else {
-            UITools.showNotificationWithBadge(body: message, badgeCount: 1)
+            UITools.showNotification(body: message)
         }
     }
     
     func controllerConnected() {
         hideProgress()
         tabView.isEnabled = true;
-        updateButtons(true)
-        
-        UITools.showNotificationWithBadge(
-            body: "VSP Driver connected", badgeCount: 1)
+        updateButtons(tabView.isEnabled)
+        UITools.showNotification(body: "VSP Driver connected")
         
         // C bridge async
         DispatchQueue.global(qos: .background).asyncAfter(//
@@ -284,9 +282,8 @@ extension WindowController: DriverManagerObserver {
     func controllerDisconnected() {
         hideProgress()
         tabView.isEnabled = false;
-
-        UITools.showNotificationWithBadge(
-            body: "VSP Driver disconnected", badgeCount: 1)
+        updateButtons(tabView.isEnabled)
+        UITools.showNotification(body: "VSP Driver disconnected")
     }
     
     func logMessageDidAvailable(_ message: String?) {
@@ -301,7 +298,7 @@ extension WindowController: DriverManagerObserver {
         switch status {
             case .notLoaded:
                 DispatchQueue.main.async {
-                    UITools.showBasicNotification(body: message)
+                    UITools.showNotification(body: message)
                 }
                 break
             case .loading:

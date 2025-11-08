@@ -162,6 +162,6 @@ class MessageProxy: DriverManagerObserver {
     }
     
     func driverStatusDidChange(_ status: DriverStatus, code: UInt64, domain: String, message: String) {
-        parent.logMessage("Driver status: \(status.rawValue), code: \(code), message: \(message)")
+        parent.logMessage("Driver status: \(status.rawValue), code: \(code), message:\n\(message)")
     }
 }
