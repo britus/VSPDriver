@@ -73,6 +73,7 @@ static inline void printArray(const char *ctx, const int64_t *ptr, const uint32_
         #undef BUFFER_APPEND
     }
 }
+#endif
 
 static inline void printStruct(const char *ctx, const CVSPDriverData *ptr)
 {
@@ -133,7 +134,6 @@ static inline void printStruct(const char *ctx, const CVSPDriverData *ptr)
         #undef BUFFER_APPEND
     }
 }
-#endif // VSP_DEBUG
 
 /* -------------------------------------------------------------------
  * DriverKit DEXT IOUserClient connect / disconnect callbacks
