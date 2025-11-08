@@ -8,7 +8,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <IOKit/IOKitLib.h>
 #include <IOKit/IOTypes.h>
-#include "VSPDriverDataModel.h"
+#include "VSPDataModel.h"
 
 class VSPController
 {

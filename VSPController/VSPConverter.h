@@ -17,7 +17,7 @@
 #import "VSPLinkList.h"
 
 // C++ Structs
-#import "VSPDriverDataModel.h"
+#import "VSPDataModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

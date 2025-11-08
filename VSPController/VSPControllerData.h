@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import "VSPUserContext.h"
-#import "VSPControlCommand.h"
+#import "VSPCommands.h"
 #import "VSPControllerStatus.h"
 #import "VSPControllerParameter.h"
 #import "VSPPortList.h"

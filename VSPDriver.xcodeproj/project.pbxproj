@@ -153,7 +153,7 @@
 		F76A60AB2EB2812D004DF0C7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F77B0EB22EB27DA7000FA9A7 /* VSPBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VSPBridge.h; sourceTree = "<group>"; };
 		F77B0EB32EB27DA7000FA9A7 /* VSPBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VSPBridge.m; sourceTree = "<group>"; };
-		F77B0EB42EB27DA7000FA9A7 /* VSPControlCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VSPControlCommand.h; sourceTree = "<group>"; };
+		F77B0EB42EB27DA7000FA9A7 /* VSPCommands.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VSPCommands.h; sourceTree = "<group>"; };
 		F77B0EB52EB27DA7000FA9A7 /* VSPController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VSPController.h; sourceTree = "<group>"; };
 		F77B0EB62EB27DA7000FA9A7 /* VSPController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VSPController.cpp; sourceTree = "<group>"; };
 		F77B0EB72EB27DA7000FA9A7 /* VSPControllerBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VSPControllerBridge.h; sourceTree = "<group>"; };
@@ -166,7 +166,7 @@
 		F77B0EBE2EB27DA7000FA9A7 /* VSPControllerStatus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VSPControllerStatus.m; sourceTree = "<group>"; };
 		F77B0EBF2EB27DA7000FA9A7 /* VSPConverter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VSPConverter.h; sourceTree = "<group>"; };
 		F77B0EC02EB27DA7000FA9A7 /* VSPConverter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VSPConverter.m; sourceTree = "<group>"; };
-		F77B0EC12EB27DA7000FA9A7 /* VSPDriverDataModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VSPDriverDataModel.h; sourceTree = "<group>"; };
+		F77B0EC12EB27DA7000FA9A7 /* VSPDataModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VSPDataModel.h; sourceTree = "<group>"; };
 		F77B0EC22EB27DA7000FA9A7 /* VSPFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VSPFramework.h; sourceTree = "<group>"; };
 		F77B0EC32EB27DA7000FA9A7 /* VSPLinkList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VSPLinkList.h; sourceTree = "<group>"; };
 		F77B0EC42EB27DA7000FA9A7 /* VSPLinkList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VSPLinkList.m; sourceTree = "<group>"; };
@@ -364,7 +364,7 @@
 			children = (
 				F77B0EB22EB27DA7000FA9A7 /* VSPBridge.h */,
 				F77B0EB32EB27DA7000FA9A7 /* VSPBridge.m */,
-				F77B0EB42EB27DA7000FA9A7 /* VSPControlCommand.h */,
+				F77B0EB42EB27DA7000FA9A7 /* VSPCommands.h */,
 				F77B0EB52EB27DA7000FA9A7 /* VSPController.h */,
 				F77B0EB62EB27DA7000FA9A7 /* VSPController.cpp */,
 				F77B0EB72EB27DA7000FA9A7 /* VSPControllerBridge.h */,
@@ -377,7 +377,7 @@
 				F77B0EBE2EB27DA7000FA9A7 /* VSPControllerStatus.m */,
 				F77B0EBF2EB27DA7000FA9A7 /* VSPConverter.h */,
 				F77B0EC02EB27DA7000FA9A7 /* VSPConverter.m */,
-				F77B0EC12EB27DA7000FA9A7 /* VSPDriverDataModel.h */,
+				F77B0EC12EB27DA7000FA9A7 /* VSPDataModel.h */,
 				F77B0EC22EB27DA7000FA9A7 /* VSPFramework.h */,
 				F77B0EC32EB27DA7000FA9A7 /* VSPLinkList.h */,
 				F77B0EC42EB27DA7000FA9A7 /* VSPLinkList.m */,
