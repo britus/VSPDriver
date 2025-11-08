@@ -213,7 +213,7 @@ extension WindowController: NSWindowDelegate {
 
 extension WindowController: DriverManagerObserver {
     func willLoadDriver() {
-        NSLog("Loading driver extension...")
+        //NSLog("Loading driver extension...")
     }
     
     func didFinish(withResult code: UInt64, message: String) {
