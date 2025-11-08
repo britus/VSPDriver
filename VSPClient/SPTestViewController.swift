@@ -235,19 +235,45 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
             // notify VSP App
             onStart("JS: Start - Hello");
         
-            // Displays the value of the received global
-            // property "receivedData". The value type 
+            // Using the value of the global property
+            // named "receivedData". The value type 
             // is a byte array. [UInt8]
             if (dataAvailable === true) {
-                onMessage("JS: Received data: " + receivedData);
+                switch (parseInt(receivedData[0])) {
+                    case 50: {
+                        onSendText("ATQ\\r\\nOK\\r\\n");
+                        break;
+                    }        
+                    case 51: {
+                        onSendText("AT\\r\\nOK\\r\\n");
+                        break;
+                    }
+                    case 52: {
+                        onSendText("ATZ\\r\\nOK\\r\\n");
+                        break;
+                    }
+                    case 53: {
+                        onSendText(":CPIN=?\\r\\nOK\\r\\n");
+                        break;
+                    }
+                    case 54: {
+                        onSendText(":ATI\\r\\nOK\\r\\n");
+                        break;
+                    }
+                    case 55: {
+                        onSendText("AT0\\r\\nOK\\r\\n");
+                        break;
+                    }
+                    case 57: {
+                        onSendText("AT1\\r\\nOK\\r\\n");
+                        break;
+                    }
+                    default: {
+                        onMessage("JS: Data=" + receivedData);
+                        break;
+                    }    
+                }
             }
-        
-            // --
-            // TODO: Do something here
-            // --
-            
-            // Send text to linked port.
-            onSendText("JS: device command / AT Command");
             
             // notify VSP App
             onComplete("JS: finished.");

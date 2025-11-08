@@ -31,8 +31,8 @@ class JSRunner {
         // Handle JS exceptions
         context.exceptionHandler = { _, exception in
             if let exception = exception {
-                let msg = "\(String(describing: exception))"
-                NSLog("JS Exception: \(msg)")
+                let msg = "JS: \(String(describing: exception))"
+                //NSLog("JS Exception: \(msg)")
                 // Notify about error
                 self.delegate?.scriptExecutionDidFail(msg)
             }
