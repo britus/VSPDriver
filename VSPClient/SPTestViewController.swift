@@ -50,6 +50,9 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
     private var isAddCrEnabled: Bool = true
     private var isAddLfEnabled: Bool = true
     private let jsRunner: JSRunner = JSRunner()
+    private var imgFirstTinted: NSImage?
+    private var imgSecondTinted: NSImage?
+    private var imgOriginalIoLoop: NSImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,7 +80,15 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
         formatter.maximumFractionDigits = 0         // optional, for precision control
         formatter.minimumFractionDigits = 0
         edAutoTextLen.formatter = formatter
-        
+      
+        if let originalImage = pbIoLooper.image {
+            imgOriginalIoLoop = originalImage
+            // Create first tinted version (e.g., red)
+            imgFirstTinted = tintImage(originalImage, with: NSColor.red)
+            // Create second tinted version (e.g., blue)
+            imgSecondTinted = tintImage(originalImage, with: NSColor.blue)
+        }
+
         // catch view/window close event
         onWindowClose { [weak self] in
             guard let self = self else {
@@ -110,6 +121,29 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
     
     deinit {
         removeWindowCloseHandler()
+    }
+    
+    private func tintImage(_ image: NSImage, with color: NSColor) -> NSImage {
+        guard let _ = image.copy() as? NSImage else {
+            return image
+        }
+        
+        // Create a new image with the same size
+        let newImage = NSImage(size: image.size)
+        newImage.lockFocus()
+        
+        // Fill with the tint color
+        color.set()
+        NSRect(origin: .zero, size: image.size).fill()
+        
+        // Draw the original image on top with sourceAtop blending
+        image.draw(in: NSRect(origin: .zero, size: image.size),
+                   from: NSRect(origin: .zero, size: image.size),
+                   operation: .destinationIn,
+                   fraction: 1.0)
+        
+        newImage.unlockFocus()
+        return newImage
     }
 
     private func populateComboBoxes() {
@@ -607,6 +641,9 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
     @IBAction func onRunLooper(_ sender: NSButton) {
         if !isLooperRunning && serialPort != nil {
             onTextLengthChanged(edAutoTextLen)
+            if let img = self.imgFirstTinted {
+                self.pbIoLooper.image = img
+            }
             DispatchQueue.global().async {
                 let chars: String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
                 var index = 0;
@@ -632,9 +669,17 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
                 
                     Thread.sleep(forTimeInterval: 0.5)
                 }
+                DispatchQueue.main.async {
+                    if let img = self.imgOriginalIoLoop {
+                        self.pbIoLooper.image = img
+                    }
+                }
             }
         } else {
             isLooperRunning = false
+            if let img = self.imgOriginalIoLoop {
+                self.pbIoLooper.image = img
+            }
         }
     }
     
