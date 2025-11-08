@@ -42,7 +42,7 @@ extern void ConvertDataFromCPP(const void *pInput, size_t size);
 // MARK: Private Section
 // -------------------------------------------------------------------
 
-#ifdef VSP_DEBUG
+#ifdef VSP_DEBUG_CB
 static inline void printArray(const char *ctx, const int64_t *ptr, const uint32_t length)
 {
     if (ptr && length) {
