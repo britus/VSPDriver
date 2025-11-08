@@ -324,7 +324,9 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
                 // \r is already second last character
             } else if lastTwoChars == "\n" {
                 // Only \n at the end, so we need to add \r before it
-                _text.insert("\r", at: _text.index(_text.endIndex, offsetBy: -1))
+                if self.isAddCrEnabled {
+                    _text.insert("\r", at: _text.index(_text.endIndex, offsetBy: -1))
+                }
             } else {
                 // No line ending at all
                 if self.isAddCrEnabled {
