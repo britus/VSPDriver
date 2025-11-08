@@ -12,6 +12,7 @@ import SwiftUI
 
 private var progressIndicatorKey: UInt8 = 0xf1
 private var progressOverlayKey: UInt8 = 0xf2
+private var viewControllerKey: UInt8 = 0xf3
 
 class UITools {
     
@@ -763,8 +764,6 @@ extension NSView {
 
 extension NSWindow {
     
-    private static let progressIndicatorTag = 9999
-    
     private var progressIndicator: NSProgressIndicator? {
         get { objc_getAssociatedObject(self, &progressIndicatorKey) as? NSProgressIndicator }
         set { objc_setAssociatedObject(self, &progressIndicatorKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
@@ -844,7 +843,8 @@ extension NSWindow {
         
         indicator.stopAnimation(nil)
         
-        // Remove the entire container view (which includes both overlay and indicator)
+        // Remove the entire container view (which
+        // includes both overlay and indicator)
         if let overlayView = progressOverlayView {
             // Remove the overlay view first
             overlayView.removeFromSuperview()
@@ -873,6 +873,79 @@ extension NSViewController {
         view.window?.hideProgress()
     }
 }
+
+// Extension to handle window close events
+extension NSViewController {
+    
+    private var observedViewController: NSViewController? {
+        get { objc_getAssociatedObject(self, &viewControllerKey) as? NSViewController }
+        set { objc_setAssociatedObject(self, &viewControllerKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+    }
+
+    // MARK: - Window Close Handler
+    
+    /// Add window close observer with callback
+    private func addWindowCloseObserver(completion: @escaping () -> Void) {
+        // Store the observer token to prevent memory leaks
+        let token = NotificationCenter.default.addObserver(
+            forName: NSWindow.willCloseNotification,
+            object: nil,
+            queue: .main
+        ) { notification in
+            // Check if the window belongs to this view controller
+            guard let window = notification.object as? NSWindow,
+                  let viewController = window.contentViewController,
+                  viewController == self else { return }
+            
+            completion()
+        }
+        
+        // Store the token in a property (you might want
+        // to use a more robust storage solution)
+        self.observedViewController = self
+    }
+    
+    /// Add window close handler with completion closure
+    func onWindowClose(completion: @escaping () -> Void) {
+        addWindowCloseObserver(completion: completion)
+    }
+
+    /// Alternative approach: Override viewDidDisappear to detect window closing
+    func setupWillCloseHandler() {
+        // Add observer for window will close notification
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(windowWillClose(_:)),
+            name: NSWindow.willCloseNotification,
+            object: nil
+        )
+    }
+
+    @objc private func windowWillClose(_ notification: Notification) {
+        // This will be called when any window is about to close
+        // You can filter by specific window if needed
+        
+        guard let window = notification.object as? NSWindow else { return }
+        
+        // Check if this view controller's window is closing
+        if let viewController = window.contentViewController, viewController == self {
+            viewWillClose()
+        }
+    }
+    
+    /// Override this method in your subclass to handle window close
+    @objc func viewWillClose() {
+        // Default implementation - override in subclasses
+    }
+    
+    /// Remove window close handler
+    func removeWindowCloseHandler() {
+        if let observer = observedViewController {
+            NotificationCenter.default.removeObserver(observer)
+        }
+    }
+}
+
 
 // MARK: - NSWindowController Extension
 

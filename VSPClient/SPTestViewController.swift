@@ -53,6 +53,15 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Using the cleaner extension
+        onWindowClose { [weak self] in
+            guard let self = self else {
+                return
+            }
+            viewWillClose()
+        }
+
         pbIoLooper.isEnabled = false
         pbRunScript.isEnabled = true
         pbIoSendFile.isEnabled = false
@@ -91,12 +100,18 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
         portConfig.flowCtrl = 0
     }
     
-    deinit {
+    override func viewWillClose() {
         self.isLooperRunning = false
-        self.serialPort?.disconnect()
-        self.serialPort = nil
+        DispatchQueue.global().async {
+            self.serialPort?.disconnect()
+            self.serialPort = nil
+        }
     }
     
+    deinit {
+        removeWindowCloseHandler()
+    }
+
     private func populateComboBoxes() {
         UITools.populateBaudRateComboBox(cbxBaudRate)
         UITools.populateDataBitsComboBox(cbxDataBits)
