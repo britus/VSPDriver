@@ -53,6 +53,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
     private var imgFirstTinted: NSImage?
     private var imgSecondTinted: NSImage?
     private var imgOriginalIoLoop: NSImage?
+    private var imgOriginalScript: NSImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,8 +86,11 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
             imgOriginalIoLoop = originalImage
             // Create first tinted version (e.g., red)
             imgFirstTinted = tintImage(originalImage, with: NSColor.red)
+        }
+        if let originalImage = pbRunScript.image {
+            imgOriginalScript = originalImage
             // Create second tinted version (e.g., blue)
-            imgSecondTinted = tintImage(originalImage, with: NSColor.blue)
+            imgSecondTinted = tintImage(originalImage, with: NSColor.green)
         }
 
         // catch view/window close event
@@ -382,6 +386,9 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
             self.edTextField.isEnabled = serialPort?.isConnected ?? false
             self.edAutoTextLen.isEnabled = false
             self.isLooperRunning = false //teminate
+            if let img = self.imgSecondTinted {
+                self.pbRunScript.image = img
+            }
         }
     }
     
@@ -392,6 +399,9 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
         self.pbIoSendText.isEnabled = serialPort?.isConnected ?? false
         self.edTextField.isEnabled = serialPort?.isConnected ?? false
         self.edAutoTextLen.isEnabled = serialPort?.isConnected ?? false
+        if let img = self.imgOriginalScript {
+            self.pbRunScript.image = img
+        }
     }
   
     private func addEoL(_ text: String) -> String
