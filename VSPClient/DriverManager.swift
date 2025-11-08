@@ -320,7 +320,7 @@ extension DriverManager: OSSystemExtensionRequestDelegate {
         let newstr = replacement.description
         //print("[VSPDRV] Replacing extension: \(current) with \(newstr)")
         notify(.loading, code: 0, domain: errorDomain, //
-               message: "Updating driver to a newer version.")
+               message: "Updating driver to a newer version.\nFrom: \(current)\nTo: \(newstr)")
         return .replace
     }
 }

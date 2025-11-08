@@ -875,8 +875,8 @@ extension NSViewController {
 // Extension to handle window close events
 extension NSViewController {
     
-    private var observedViewController: NSViewController? {
-        get { objc_getAssociatedObject(self, &viewControllerKey) as? NSViewController }
+    private var viewObserverToken: Any? {
+        get { objc_getAssociatedObject(self, &viewControllerKey) }
         set { objc_setAssociatedObject(self, &viewControllerKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }
 
@@ -900,9 +900,16 @@ extension NSViewController {
         
         // Store the token in a property (you might want
         // to use a more robust storage solution)
-        self.observedViewController = self
+        self.viewObserverToken = token
     }
     
+    /// Remove window close handler
+    func removeWindowCloseHandler() {
+        if let observer = viewObserverToken {
+            NotificationCenter.default.removeObserver(observer)
+        }
+    }
+
     /// Add window close handler with completion closure
     func onWindowClose(completion: @escaping () -> Void) {
         addWindowCloseObserver(completion: completion)
@@ -934,13 +941,6 @@ extension NSViewController {
     /// Override this method in your subclass to handle window close
     @objc func viewWillClose() {
         // Default implementation - override in subclasses
-    }
-    
-    /// Remove window close handler
-    func removeWindowCloseHandler() {
-        if let observer = observedViewController {
-            NotificationCenter.default.removeObserver(observer)
-        }
     }
 }
 
