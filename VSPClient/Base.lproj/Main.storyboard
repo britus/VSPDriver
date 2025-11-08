@@ -25,7 +25,7 @@
                                         <menuItem isSeparatorItem="YES" hidden="YES" id="VOq-y0-SEH"/>
                                         <menuItem title="Preferences…" hidden="YES" keyEquivalent="," id="BOF-NM-1cW"/>
                                         <menuItem isSeparatorItem="YES" hidden="YES" id="wFC-TO-SCJ"/>
-                                        <menuItem title="Services" hidden="YES" id="NMo-om-nkz">
+                                        <menuItem title="Services" id="NMo-om-nkz">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Services" systemMenu="services" id="hz9-B4-Xy5"/>
                                         </menuItem>
@@ -716,8 +716,8 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController showSeguePresentationStyle="single" id="B8D-0N-5wS" customClass="WindowController" customModule="VSPClient" sceneMemberID="viewController">
-                    <window key="window" title="VSP Controller" subtitle="1.10.65" separatorStyle="shadow" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" frameAutosaveName="mainWindow" animationBehavior="default" id="IQv-IB-iLA">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                    <window key="window" identifier="vspWindow" title="VSP Controller" subtitle="1.10.65" separatorStyle="shadow" autorecalculatesKeyViewLoop="NO" restorable="NO" visibleAtLaunch="NO" frameAutosaveName="vspWindow" animationBehavior="default" id="IQv-IB-iLA">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" texturedBackground="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
@@ -757,6 +757,7 @@
                                 <toolbarItem reference="iLg-sI-zXO"/>
                             </defaultToolbarItems>
                         </toolbar>
+                        <accessibility description="VSP Controller Window" identifier="vspWindow"/>
                         <connections>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
                         </connections>
@@ -772,7 +773,7 @@
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="81" y="259"/>
+            <point key="canvasLocation" x="81" y="289"/>
         </scene>
         <!--VSP Controller Tabs-->
         <scene sceneID="GRi-dY-0xO">

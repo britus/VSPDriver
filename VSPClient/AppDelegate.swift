@@ -47,11 +47,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
+        // Register for window restoration
+        NSApp.setActivationPolicy(.regular)
+        // Disable assistant for this app
+        UserDefaults.standard.set(false, forKey: "NSAssistantEnabled")
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
+        if IsDriverConnected() {
+            DisconnectDriver()
+        }
     }
     
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {

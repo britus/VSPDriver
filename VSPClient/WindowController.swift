@@ -23,6 +23,14 @@ class WindowController: NSWindowController {
     private let minWindowSize = WindowController.initialSize
     private let preferredWindowSize = WindowController.initialSize
     private var progress : NSProgressIndicator? = nil
+  
+    static func restoreWindow(
+            withIdentifier identifier: NSUserInterfaceItemIdentifier,
+                                state: NSCoder,
+                    completionHandler: @escaping (NSWindow?, (any Error)?) -> Void)
+    {
+        NSLog("WC: restoreWindow(...)")
+    }
     
     override func windowWillLoad() {
         manager.addObserver(self)
