@@ -70,6 +70,7 @@ class TabViewController: NSTabViewController {
     override func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
         page = tabViewItem
         setPageEnabled(pagesEnabled)
+        showProgress()
         if (IsDriverConnected()) {
             DispatchQueue.global(qos: .background).asyncAfter(//
                 deadline: .now() + .milliseconds(100)) {
@@ -95,6 +96,10 @@ extension TabViewController: DriverDataObserver {
         if (data == nil) {
             UITools.showMessage(message: "Invalid data detected.")
             return
+        }
+        
+        DispatchQueue.main.async {
+            self.hideProgress()
         }
 
         let input : TVSPControllerData = data!
