@@ -630,7 +630,7 @@ inline bool VSPController::asyncCall(CVSPDriverData *input)
     io_async_ref64_t descriptor = {};
 
 //#ifdef VSP_DEBUG
-    printStruct("asyncCall-Request", input);
+    printStruct("UC-Request", input);
 //#endif
 
     // set magic control
@@ -655,7 +655,7 @@ inline bool VSPController::asyncCall(CVSPDriverData *input)
         mach_vm_address_t address = 0;
         mach_vm_size_t size = 0;
         ret = IOConnectMapMemory64( //
-            m_connection,                  // connection from IOServiceOpen
+            m_connection,           // connection from IOServiceOpen
             input->command,         // memoryType -> this is interpreted by VSP driver IOUserClient
             mach_task_self(),       // The task port for the task in which to create the mapping.
             &address,               // Returned address if success (kIOMapAnywhere)
@@ -708,7 +708,7 @@ inline bool VSPController::asyncCall(CVSPDriverData *input)
     }
     
 //#ifdef VSP_DEBUG
-    printStruct("asyncCall-Return", m_vspResponse);
+    printStruct("UC-Return", m_vspResponse);
 //#endif
     
     try {
