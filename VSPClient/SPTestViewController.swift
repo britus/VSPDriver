@@ -300,6 +300,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
             self.pbIoSendText.isEnabled = serialPort?.isConnected ?? false
             self.edTextField.isEnabled = serialPort?.isConnected ?? false
             self.edAutoTextLen.isEnabled = false
+            self.isLooperRunning = false //teminate
         }
     }
     
