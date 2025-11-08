@@ -91,8 +91,8 @@ func VSPDriverDisconnected() {
     DriverManager.shared.driverDisconnected()
 }
 
-@_silgen_name("SwiftDataReady")
-func SwiftDataReady(_ args: TVSPControllerData?, numArgs: Int32) {
+@_silgen_name("VSPDataReady")
+func VSPDataReady(_ args: TVSPControllerData?, numArgs: Int32) {
 
     // Sanity checks
     guard let args = args else {

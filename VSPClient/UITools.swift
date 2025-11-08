@@ -10,7 +10,8 @@ import AppKit
 import UserNotifications
 import SwiftUI
 
-private var progressIndicatorKey: UInt8 = 0
+private var progressIndicatorKey: UInt8 = 0xf1
+private var progressOverlayKey: UInt8 = 0xf2
 
 class UITools {
     
@@ -197,6 +198,10 @@ class UITools {
     
     static private func scheduleNotification(id: String = UUID().uuidString, content: UNMutableNotificationContent)
     {
+        if (!UITools.isNotifyGranted) {
+            return
+        }
+
         //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
         let mr = UNNotificationRequest(
             identifier: "mr_\(id)",
@@ -218,6 +223,7 @@ class UITools {
         if (!UITools.isNotifyGranted) {
             return
         }
+        
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body
@@ -271,6 +277,7 @@ class UITools {
         if (!UITools.isNotifyGranted) {
             return
         }
+        
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body
@@ -291,6 +298,7 @@ class UITools {
         if (!UITools.isNotifyGranted) {
             return
         }
+        
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body
@@ -306,6 +314,7 @@ class UITools {
         if (!UITools.isNotifyGranted) {
             return
         }
+        
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body
@@ -332,6 +341,7 @@ class UITools {
         if (!UITools.isNotifyGranted) {
             return
         }
+        
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body
@@ -755,11 +765,28 @@ extension NSWindow {
         set { objc_setAssociatedObject(self, &progressIndicatorKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }
     
+    private var progressOverlayView: NSView? {
+        get { objc_getAssociatedObject(self, &progressOverlayKey) as? NSView }
+        set { objc_setAssociatedObject(self, &progressOverlayKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+    }
+    
     /// Shows a centered, indeterminate progress indicator on the window
     func showProgress() {
         // Avoid duplicates
-        if progressIndicator != nil { return }
-        
+        if progressIndicator != nil {
+            return
+        }
+       
+        guard let contentView = self.contentView else {
+            return
+        }
+
+        // Create overlay view with 50% opacity
+        let overlayView = NSView()
+        overlayView.wantsLayer = true
+        overlayView.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.5).cgColor
+        overlayView.translatesAutoresizingMaskIntoConstraints = false
+
         let indicator = NSProgressIndicator()
         indicator.style = .spinning
         indicator.controlSize = .regular
@@ -768,15 +795,28 @@ extension NSWindow {
         indicator.startAnimation(nil)
         indicator.translatesAutoresizingMaskIntoConstraints = false
         
-        guard let contentView = self.contentView else { return }
-        contentView.addSubview(indicator)
-        
+        // Add progress indicator to overlay view
+        overlayView.addSubview(indicator)
+       
+        // Add overlay on top
+        contentView.addSubview(overlayView)
+       
+        // Set up constraints for overlay view (full size of content view)
         NSLayoutConstraint.activate([
-            indicator.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            indicator.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+            overlayView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            overlayView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            overlayView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            overlayView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
-        
+
+        // Set up constraints for progress indicator (centered)
+        NSLayoutConstraint.activate([
+            indicator.centerXAnchor.constraint(equalTo: overlayView.centerXAnchor),
+            indicator.centerYAnchor.constraint(equalTo: overlayView.centerYAnchor)
+        ])
+
         self.progressIndicator = indicator
+        self.progressOverlayView = overlayView
     }
     
     /// Updates a determinate progress indicator’s value.
@@ -793,10 +833,23 @@ extension NSWindow {
     
     /// Hides and removes the progress indicator.
     func hideProgress() {
-        guard let indicator = progressIndicator else { return }
+        guard let indicator = progressIndicator else {
+            return
+        }
+        
         indicator.stopAnimation(nil)
+        
+        // Remove the entire container view (which includes both overlay and indicator)
+        if let overlayView = progressOverlayView {
+            // Remove the overlay view first
+            overlayView.removeFromSuperview()
+        }
+        
+        // Remove the indicator (in case it's not already removed)
         indicator.removeFromSuperview()
+        
         progressIndicator = nil
+        progressOverlayView = nil
     }
 }
 

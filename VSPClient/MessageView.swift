@@ -40,6 +40,7 @@ class MessageView: NSViewController, DriverDataObserver {
     }
     
     @IBAction func onSaveTraces(_ sender: NSButton) {
+        self.showProgress()
         DispatchQueue.global(qos: .background).asyncAfter(//
             deadline: .now() + .milliseconds(50)) {
                 EnableChecksAndTrace(0, self.m_checkFlags, self.m_traceFlags)
@@ -124,6 +125,8 @@ class MessageView: NSViewController, DriverDataObserver {
             return
         }
         DispatchQueue.main.async { [self] in
+            self.m_traceFlags = d.traceFlags
+            self.m_checkFlags = d.checkFlags
             self.cbxCheckBaudRate.state = isBit(CHECK_BAUD, d.checkFlags) ? .on : .off
             self.cbxCheckDataBits.state = isBit(CHECK_DATA_SIZE, d.checkFlags) ? .on : .off
             self.cbxCheckStopBits.state = isBit(CHECK_STOP_BITS, d.checkFlags) ? .on : .off
@@ -132,8 +135,7 @@ class MessageView: NSViewController, DriverDataObserver {
             self.cbxTraceRx.state = isBit(TRACE_PORT_RX, d.traceFlags) ? .on : .off
             self.cbxTraceTx.state = isBit(TRACE_PORT_TX, d.traceFlags) ? .on : .off
             self.cbxTraceCtrl.state = isBit(TRACE_PORT_IO, d.traceFlags) ? .on : .off
-            m_traceFlags = d.traceFlags
-            m_checkFlags = d.checkFlags
+            self.hideProgress()
         }
     }
 }

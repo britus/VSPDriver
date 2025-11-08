@@ -7,8 +7,6 @@
 import Cocoa
 import SwiftUI
 
-let SP_TEST_VIEW_ID = "TestSerialViewController"
-
 class WindowController: NSWindowController {
     @IBOutlet weak var tbSerialPorts: NSToolbarItem!
     @IBOutlet weak var tbSerialTest: NSToolbarItem!
@@ -26,14 +24,15 @@ class WindowController: NSWindowController {
     private let preferredWindowSize = WindowController.initialSize
     private var progress : NSProgressIndicator? = nil
     
-    override func windowDidLoad() {
-        NSLog("\(String(describing: self.contentViewController))")
-        let vc = self.contentViewController
-        configureWindow()
-
-        tabView = (vc as! TabViewController)
+    override func windowWillLoad() {
         manager.addObserver(self)
+    }
 
+    override func windowDidLoad() {
+        let vc = self.contentViewController
+        tabView = (vc as! TabViewController)
+        updateButtons(false)
+        configureWindow()
         showProgress()
 
         // Request permission first (required)
@@ -270,7 +269,8 @@ extension WindowController: DriverManagerObserver {
     func controllerConnected() {
         hideProgress()
         tabView.isEnabled = true;
-
+        updateButtons(true)
+        
         UITools.showNotificationWithBadge(
             body: "VSP Driver connected", badgeCount: 1)
         
@@ -290,12 +290,11 @@ extension WindowController: DriverManagerObserver {
     }
     
     func logMessageDidAvailable(_ message: String?) {
-        guard let msg = message, !msg.isEmpty else {
-            return
-        }
-        
+        //guard let msg = message, !msg.isEmpty else {
+        //    return
+        //}
         // TODO: Make tool window with message text view
-        NSLog("\(msg)\n")
+        // NSLog("\(msg)\n")
     }
     
     func driverStatusDidChange(_ status: DriverStatus, code: UInt64, domain: String, message: String) {

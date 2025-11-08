@@ -17,7 +17,7 @@ class SLViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
     private var m_firstPort : UInt8 = 0
     private var m_secondPort: UInt8 = 0
     
-    var hoveredRow: Int = -1
+    var selectedRow: Int = -1
     lazy var hoverButton: NSButton = createHoverButton()
     
     override func viewDidLoad() {
@@ -48,23 +48,35 @@ class SLViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
         model.removeObserver(self)
         super.viewWillDisappear()
     }
+    
+    // Handle key events for the table view
+    override func keyDown(with event: NSEvent) {
+        // Backspace key code
+        if event.keyCode == 51 {
+            selectedRow = tableView.selectedRow
+            onDelete(tableView)
+            return
+        }
+
+        super.keyDown(with: event)
+    }
 
     override func mouseMoved(with event: NSEvent) {
         let location = tableView.convert(event.locationInWindow, from: nil)
         let row = tableView.row(at: location)
         
-        if row != hoveredRow {
-            hoveredRow = row
+        if row != selectedRow {
+            selectedRow = row
             updateHoverButtonPosition()
         }
     }
     
     func updateHoverButtonPosition() {
-        hoverButton.isHidden = (hoveredRow < 0)
+        hoverButton.isHidden = (selectedRow < 0)
         
-        guard hoveredRow >= 0 else { return }
+        guard selectedRow >= 0 else { return }
         
-        let rect = tableView.rect(ofRow: hoveredRow)
+        let rect = tableView.rect(ofRow: selectedRow)
         let converted = tableView.convert(rect, to: view)
         
         hoverButton.frame = NSRect(
@@ -96,6 +108,7 @@ class SLViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
     }
     
     @IBAction func onCreateLink(_ sender: NSButton) {
+        self.showProgress()
         DispatchQueue.global(qos: .background).asyncAfter(//
             deadline: .now() + .milliseconds(100)) {
             LinkPorts(self.m_firstPort, self.m_secondPort)
@@ -178,7 +191,7 @@ class SLViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
             self.tableView.isEnabled = !(data?.isEmpty ?? false)
             if (self.tableView.isEnabled) {
                 self.tableView.selectRowIndexes(IndexSet(//
-                    integer: self.hoveredRow > 0 ? self.hoveredRow - 1 : 0),//
+                    integer: self.selectedRow > 0 ? self.selectedRow - 1 : 0),//
                                                 byExtendingSelection: false)
             }
             if self.cbxFirstPort.numberOfItems > 0 {
@@ -190,6 +203,7 @@ class SLViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
                 self.cbxSecondPort.isEnabled = true
             }
             self.pbCreateLink.isEnabled = (self.m_firstPort != self.m_secondPort)
+            self.hideProgress()
         }
     }
     
@@ -200,8 +214,8 @@ class SLViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
     }
     
     @objc func onDelete(_ sender: Any?) {
-        guard hoveredRow >= 0, let record : TDataRecord = //
-                model.getRecord(index: hoveredRow, byType: TDataType.PortLink) else {
+        guard selectedRow >= 0, let record : TDataRecord = //
+                model.getRecord(index: selectedRow, byType: TDataType.PortLink) else {
             return
         }
         if record.type != .PortLink {
@@ -211,7 +225,8 @@ class SLViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
         hoverButton.isHidden = true
         if UITools.showQuestionDialog(self, "Delete this record?") {
             self.tableView.beginUpdates()
-            model.removeRecord(index: hoveredRow)
+            model.removeRecord(index: selectedRow)
+            showProgress()
             DispatchQueue.global(qos: .background).asyncAfter(//
                 deadline: .now() + .milliseconds(100)) {
                 UnlinkPorts(record.link.source.id, record.link.target.id)

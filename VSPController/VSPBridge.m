@@ -10,7 +10,7 @@
 /**
 * C to Swift callbaks
 */
-extern void SwiftDataReady(TVSPControllerData* data, int32_t size);
+extern void VSPDataReady(TVSPControllerData* data, int32_t size);
 extern void VSPErrorOccured(uint64_t code, NSString* message);
 extern void VSPLogMessage(NSString* message);
 
@@ -20,14 +20,14 @@ extern void VSPLogMessage(NSString* message);
 void ConvertDataFromCPP(const void *pInput, size_t size) {
     TVSPControllerData * data = [TVSPConverter convertFromCPP:pInput size:size];
     if (data != NULL) {
-        SwiftDataReady(data, (int32_t) size);
+        VSPDataReady(data, (int32_t) size);
     }
 }
 
 /**
  * Send VSP controller log message
  */
-void SendLogMessage(const char* buffer, size_t size)
+void DextLogMessage(const char* buffer, size_t size)
 {
     // Convert buffer to NSString and call Swift callback
     NSString *msg = buffer

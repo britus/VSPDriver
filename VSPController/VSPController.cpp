@@ -32,10 +32,10 @@
 extern "C" { // Swift bridge
 extern void VSPDriverConnected();
 extern void VSPDriverDisconnected();
+extern void DextLogMessage(const char* buffer, size_t size);
 extern void DextErrorOccured(uint64_t error, const char* message, size_t size);
+extern void VSPDataReady(const void* data, int32_t size);
 extern void ConvertDataFromCPP(const void *pInput, size_t size);
-extern void SwiftDataReady(const void* data, int32_t size);
-extern void SendLogMessage(const char* buffer, size_t size);
 }
 
 // -------------------------------------------------------------------
@@ -63,12 +63,12 @@ static inline void printArray(const char *ctx, const int64_t *ptr, const uint32_
         
         BUFFER_APPEND("[%s] --------------------------\n{\n", ctx);
         for (uint32_t idx = 0; idx < length; ++idx) {
-            BUFFER_APPEND("\tptr[%02u] = %llu\n", idx, (unsigned long long)ptr[idx]);
+            BUFFER_APPEND("\tptr[%02u] = 0x%llx\n", idx, (unsigned long long)ptr[idx]);
         }
         BUFFER_APPEND("}\n");
         
         // call Swift callback
-        SendLogMessage(buffer, offset);
+        DextLogMessage(buffer, offset);
 
         #undef BUFFER_APPEND
     }
@@ -128,7 +128,7 @@ static inline void printStruct(const char *ctx, const CVSPDriverData *ptr)
         BUFFER_APPEND("}\n");
         
         // call Swift callback
-        SendLogMessage(buffer, offset);
+        DextLogMessage(buffer, offset);
 
         #undef BUFFER_APPEND
     }
@@ -291,20 +291,15 @@ void VSPController::asyncCallback(IOReturn result, void **args, UInt32 numArgs)
         reportError(result, "Driver error occured.");
     }
 
-#ifdef VSP_DEBUG
-    printArray("asyncCallback", msg, numArgs);
-#endif
-
     // invalid driver signature
     if ((msg[0] & MAGIC_CONTROL) != MAGIC_CONTROL) {
         reportError(result, "Invalid driver signature.");
         return;
     }
-
-    if (!m_vspResponse) {
-        reportError(kIOReturnNotResponding, "[UC] No VSP async results.");
-        return;
-    }
+    
+    //#ifdef VSP_DEBUG
+    //printArray("asyncCallback", msg, numArgs);
+    //#endif
 }
 
 bool VSPController::ConnectDriver()
@@ -449,7 +444,7 @@ const char *VSPController::devicePath() const
 inline bool VSPController::setDextClassName(const char *name)
 {
     if (name && strlen(name) < sizeof(TDextIdentifier)) {
-        fprintf(stdout, "[VSPCTL] Using DEXT class name: %s\n", name);
+        //fprintf(stdout, "[VSPCTL] Using DEXT class name: %s\n", name);
         strncpy(m_dextClassName, name, sizeof(TDextIdentifier));
         return true;
     }
@@ -484,7 +479,7 @@ void VSPController::reportError(IOReturn error, const char *message)
 
     // call Swift callback
     std::string str = oss.str();
-    SendLogMessage(str.c_str(), str.length());
+    //SendLogMessage(str.c_str(), str.length());
     DextErrorOccured(error, str.c_str(), str.length());
 }
 
@@ -708,6 +703,10 @@ inline bool VSPController::asyncCall(CVSPDriverData *input)
         return false;
     }
 
+    if (m_vspResponse->status.flags & MAGIC_CONTROL) {
+        m_vspResponse->status.flags &= ~MAGIC_CONTROL;
+    }
+    
 //#ifdef VSP_DEBUG
     printStruct("asyncCall-Return", m_vspResponse);
 //#endif
