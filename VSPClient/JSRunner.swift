@@ -20,7 +20,7 @@ class JSRunner {
     var onSendText: ((String) -> Void)?
 
     public var rlTerminate: Bool = false
-    var delegate: ScriptExecutionDelegate? = nil
+    public var delegate: ScriptExecutionDelegate? = nil
 
     init() {
         context = JSContext()
