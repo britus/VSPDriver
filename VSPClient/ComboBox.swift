@@ -112,7 +112,9 @@ class ComboBox: NSComboBox, NSComboBoxDelegate, NSTextFieldDelegate, NSComboBoxD
         var index = 0
         dataObjects.forEach { (data) in
             if (data.value as? AnyHashable) == (id as? AnyHashable) {
-                super.selectItem(at: index)
+                if super.indexOfSelectedItem != data.id {
+                    super.selectItem(at: index)
+                }
                 return
             }
             index += 1
@@ -139,6 +141,9 @@ class ComboBox: NSComboBox, NSComboBoxDelegate, NSTextFieldDelegate, NSComboBoxD
         if index < 0 || index >= dataObjects.count {
             return nil
         }
+        // pre select by data object id
+        selectItem(withObjectValue: index)
+        // return linked data object
         return dataObjects[index].value
     }
 
