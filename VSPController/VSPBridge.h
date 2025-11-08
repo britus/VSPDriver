@@ -25,6 +25,16 @@ extern "C" {
  */
 void ConvertDataFromCPP(const void *pInput, size_t size);
 
+/**
+ * Bridge function callable from C++.
+ */
+void DextLogMessage(const char* buffer, size_t size);
+
+/**
+ * Bridge function callable from C++.
+ */
+void DextErrorOccured(uint64_t error, const char* message, size_t size);
+
 #ifdef __cplusplus
 }
 #endif
