@@ -29,7 +29,7 @@
 #define VSP_DEBUG
 #endif
 
-extern "C" { // Swift bridge
+extern "C" { // Objective-C to Swift bridge
 extern void VSPDriverConnected();
 extern void VSPDriverDisconnected();
 extern void DextLogMessage(const char* buffer, size_t size);
