@@ -518,6 +518,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
     }
     
     @IBAction func onClosePort(_ sender: NSButton) {
+        isLooperRunning = false
         serialPort?.disconnect()
         serialPort = nil
     }
