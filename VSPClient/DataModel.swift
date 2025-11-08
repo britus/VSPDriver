@@ -154,7 +154,7 @@ class DataModel: NSObject {
             m_records.append(record)
         }
         if notify {
-            notifyObservers()
+            updated()
         }
     }
     
@@ -201,7 +201,7 @@ class DataModel: NSObject {
             self.m_records.removeAll()
         }
         if (notyfy) {
-            notifyObservers()
+            updated()
         }
     }
     
@@ -209,13 +209,13 @@ class DataModel: NSObject {
         let _ = mutex.synchronized {
             self.m_records.remove(at: index)
         }
-        notifyObservers()
+        updated()
     }
     
     public func removeRecord(_ record: TDataRecord) -> Void {
         if let index = m_records.firstIndex(of: record) {
             m_records.remove(at: index)
-            notifyObservers()
+            updated()
         }
     }
     
