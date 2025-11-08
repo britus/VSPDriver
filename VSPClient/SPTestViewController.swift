@@ -54,14 +54,6 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Using the cleaner extension
-        onWindowClose { [weak self] in
-            guard let self = self else {
-                return
-            }
-            viewWillClose()
-        }
-
         pbIoLooper.isEnabled = false
         pbRunScript.isEnabled = true
         pbIoSendFile.isEnabled = false
@@ -85,6 +77,14 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
         formatter.maximumFractionDigits = 0         // optional, for precision control
         formatter.minimumFractionDigits = 0
         edAutoTextLen.formatter = formatter
+        
+        // catch view/window close event
+        onWindowClose { [weak self] in
+            guard let self = self else {
+                return
+            }
+            viewWillClose()
+        }
 
         // find available serial port devices (IOReg access)
         populateSerialPorts()
