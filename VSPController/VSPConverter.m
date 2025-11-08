@@ -11,7 +11,7 @@
 @implementation TVSPConverter
 
 + (TVSPControllerData *)convertFromCPP:(const void *)cppPointer size:(size_t)size {
-    if (!cppPointer || size < sizeof(CVSPDriverData)) {
+    if (!cppPointer || size < VSP_UCD_SIZE) {
         return nil;
     }
 
