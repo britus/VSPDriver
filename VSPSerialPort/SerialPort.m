@@ -458,10 +458,11 @@ void deviceRemovalCallback(
     const char* name = [queueName UTF8String];
     
     // Create queue with background priority using modern API
+    // attributes is DISPATCH_QUEUE_SERIAL or DISPATCH_QUEUE_BACKGROUND
     dispatch_queue_t queue = dispatch_queue_create(name, attributes);
     
     // Set the queue to run with background priority
-    dispatch_queue_t backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0);
+    dispatch_queue_t backgroundQueue = dispatch_get_global_queue(QOS_CLASS_UTILITY, 0);
     dispatch_set_target_queue(queue, backgroundQueue);
 
     return queue;
@@ -557,7 +558,7 @@ void deviceRemovalCallback(
                                   attributes:DISPATCH_QUEUE_CONCURRENT];
     self.writeQueue = [self createBkgQueueWithName:@"vsp.wrq"
                                     filePath:self.portPath
-                                  attributes:DISPATCH_QUEUE_SERIAL];
+                                  attributes:DISPATCH_QUEUE_CONCURRENT];
     
     /* default blocking mode. Reader queue set to
      * non blocking for each read */
@@ -722,6 +723,8 @@ void deviceRemovalCallback(
 - (BOOL)sendData:(NSData *)data {
     __block BOOL success = NO;
     
+    //NSLog(@"SerialPort::sendData: enter");
+    
     if (!self.writeQueue) {
         NSError *error = [self createErrorWithCode:EINVAL
                   message:[NSString stringWithUTF8String:strerror(errno)]
@@ -730,8 +733,12 @@ void deviceRemovalCallback(
         return NO;
     }
 
+    //NSLog(@"SerialPort::sendData: dispatch");
+   
     dispatch_sync(self.writeQueue, ^{
       
+        //NSLog(@"SerialPort::sendData: dispatch enter");
+        
         // Acquire read lock before accessing fdPort
         [self.portAccessLock lock];
         
@@ -744,6 +751,8 @@ void deviceRemovalCallback(
             return;
         }
         
+        //NSLog(@"SerialPort::sendData: dispatch write device");
+      
         const uint8_t *bytes = [data bytes];
         size_t length = [data length];
         ssize_t written;
@@ -769,6 +778,8 @@ void deviceRemovalCallback(
 
         success = YES;
         [self.portAccessLock unlock];
+        
+        //NSLog(@"SerialPort::sendData: dispatch done");
     });
       
     return success;
@@ -829,7 +840,7 @@ void deviceRemovalCallback(
                 }
             }
             
-            [NSThread sleepForTimeInterval:0.01];
+            [NSThread sleepForTimeInterval:0.02];
         }
 
         // If we exit the loop, disconnect
@@ -897,7 +908,7 @@ void deviceRemovalCallback(
                 }
             }
             
-            [NSThread sleepForTimeInterval:0.05];
+            [NSThread sleepForTimeInterval:0.15];
         }
     });
 }

@@ -67,6 +67,8 @@
 		F77B0EFE2EB27F60000FA9A7 /* SerialPortParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = F77B0EFC2EB27F60000FA9A7 /* SerialPortParameters.m */; };
 		F77B0EFF2EB27F60000FA9A7 /* SerialPort.m in Sources */ = {isa = PBXBuildFile; fileRef = F77B0EFA2EB27F60000FA9A7 /* SerialPort.m */; };
 		F79BA82E2EAB8F590051F2DC /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F79BA82D2EAB8F590051F2DC /* AppKit.framework */; };
+		F7C2E1752EC22CC9007814C5 /* VSPTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C2E1742EC22CC9007814C5 /* VSPTextView.swift */; };
+		F7C2E1772EC280E7007814C5 /* quectel-sim.js in Resources */ = {isa = PBXBuildFile; fileRef = F7C2E1762EC280E7007814C5 /* quectel-sim.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -199,6 +201,8 @@
 		F77B0EFB2EB27F60000FA9A7 /* SerialPortParameters.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SerialPortParameters.h; sourceTree = "<group>"; };
 		F77B0EFC2EB27F60000FA9A7 /* SerialPortParameters.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SerialPortParameters.m; sourceTree = "<group>"; };
 		F79BA82D2EAB8F590051F2DC /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		F7C2E1742EC22CC9007814C5 /* VSPTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSPTextView.swift; sourceTree = "<group>"; };
+		F7C2E1762EC280E7007814C5 /* quectel-sim.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "quectel-sim.js"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,6 +254,7 @@
 				880539F12D4BAFBF00E55104 /* VSPClient.entitlements */,
 				880539F52D4BB0F900E55104 /* Info.plist */,
 				88906F452D4CCA9400E500BB /* VSPClient-Bridging-Header.h */,
+				F7C2E1742EC22CC9007814C5 /* VSPTextView.swift */,
 			);
 			path = VSPClient;
 			sourceTree = "<group>";
@@ -294,6 +299,7 @@
 				88A671302D68DDE000CE4E12 /* ani */,
 				88A671322D68DDE000CE4E12 /* icns */,
 				88A671442D68DDE000CE4E12 /* png */,
+				F7C2E1762EC280E7007814C5 /* quectel-sim.js */,
 				88A671472D68DDE000CE4E12 /* InfoPlist.strings */,
 			);
 			path = Resources;
@@ -508,6 +514,7 @@
 			files = (
 				880539ED2D4BAFBF00E55104 /* Assets.xcassets in Resources */,
 				F76A60AC2EB2812D004DF0C7 /* Main.storyboard in Resources */,
+				F7C2E1772EC280E7007814C5 /* quectel-sim.js in Resources */,
 				88A6714B2D68DDE000CE4E12 /* InfoPlist.strings in Resources */,
 				88A6714A2D68DDE000CE4E12 /* vspclient.icns in Resources */,
 				88698B912D76DDD70008EF6B /* vspclient_16x16@2x.png in Resources */,
@@ -551,6 +558,7 @@
 				F77B0EF02EB27DEA000FA9A7 /* SPTestViewController.swift in Sources */,
 				F77B0EF12EB27DEA000FA9A7 /* SLViewController.swift in Sources */,
 				F77B0EF22EB27DEA000FA9A7 /* DataModel.swift in Sources */,
+				F7C2E1752EC22CC9007814C5 /* VSPTextView.swift in Sources */,
 				F77B0EF32EB27DEA000FA9A7 /* TableView.swift in Sources */,
 				F77B0EF42EB27DEA000FA9A7 /* TabViewItem.swift in Sources */,
 				F77B0EF52EB27DEA000FA9A7 /* DriverManager.swift in Sources */,
@@ -628,7 +636,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 162;
+				CURRENT_PROJECT_VERSION = 163;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -677,7 +685,7 @@
 					"$(inherited)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.6;
-				MARKETING_VERSION = 1.24;
+				MARKETING_VERSION = 1.25;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -706,7 +714,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 162;
+				CURRENT_PROJECT_VERSION = 163;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -755,7 +763,7 @@
 					"$(inherited)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.6;
-				MARKETING_VERSION = 1.24;
+				MARKETING_VERSION = 1.25;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -972,7 +980,7 @@
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 162;
+				CURRENT_PROJECT_VERSION = 163;
 				DRIVERKIT_DEPLOYMENT_TARGET = 23.6;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -988,7 +996,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/System/DriverKit/usr/lib/system",
 				);
-				MARKETING_VERSION = 1.24;
+				MARKETING_VERSION = 1.25;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPDriver;
 				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1007,7 +1015,7 @@
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 162;
+				CURRENT_PROJECT_VERSION = 163;
 				DRIVERKIT_DEPLOYMENT_TARGET = 23.6;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1023,7 +1031,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/System/DriverKit/usr/lib/system",
 				);
-				MARKETING_VERSION = 1.24;
+				MARKETING_VERSION = 1.25;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPDriver;
 				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

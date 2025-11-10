@@ -14,6 +14,26 @@ private var progressIndicatorKey: UInt8 = 0xf1
 private var progressOverlayKey: UInt8 = 0xf2
 private var viewControllerKey: UInt8 = 0xf3
 
+// MARK: Extension to add queue checking to DispatchQueue
+
+extension DispatchQueue {
+    static func getCurrentQueueName() -> String {
+        return Thread.current.name ?? "Unknown"
+    }
+    
+    static func isMainQueue() -> Bool {
+        let name = DispatchQueue.getCurrentQueueName()
+        let main = DispatchQueue.main.label
+        return main == name
+    }
+    
+    static func isOnMainQueue() -> Bool {
+        return Thread.isMainThread
+    }
+}
+
+// MARK: Tools
+
 class UITools {
     
     public static var isNotifyGranted: Bool = false
