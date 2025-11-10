@@ -777,6 +777,8 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
         stopScriptItem.image = NSImage(systemSymbolName: "stop.circle", accessibilityDescription: "Stop Scripting")
         menu.addItem(stopScriptItem)
 
+        menu.addItem(NSMenuItem(title: "-", action: nil, keyEquivalent: ""))
+                     
         // Get the URL to the file in the bundle
         if let url = Bundle.main.url(forResource: "quectel-sim", withExtension: "js") {
             let fileScriptItem = NSMenuItem(
