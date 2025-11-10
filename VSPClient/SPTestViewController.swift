@@ -84,12 +84,12 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
       
         if let originalImage = pbIoLooper.image {
             imgOriginalIoLoop = originalImage
-            // Create first tinted version (e.g., red)
+            // Create first tinted version
             imgFirstTinted = tintImage(originalImage, with: NSColor.red)
         }
         if let originalImage = pbRunScript.image {
             imgOriginalScript = originalImage
-            // Create second tinted version (e.g., blue)
+            // Create second tinted version
             imgSecondTinted = tintImage(originalImage, with: NSColor.green)
         }
 
