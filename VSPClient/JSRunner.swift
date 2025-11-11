@@ -28,12 +28,13 @@ class JSRunner {
 
     public var rlTerminate: Bool = false
     public var delegate: ScriptExecutionDelegate? = nil
+    private let context: JSContext = JSContext()
 
-    init(_ context: JSContext) {
-        setupContext(context)
+    init() {
+        setupContext()
     }
     
-    private func setupContext(_ context: JSContext) {
+    private func setupContext() {
         // Handle JS exceptions
         context.exceptionHandler = { _, exception in
             if let exception = exception {
@@ -43,7 +44,7 @@ class JSRunner {
                 self.delegate?.scriptExecutionDidFail(msg)
             }
         }
-        
+
         // Expose Swift callbacks
         context.setObject(
             unsafeBitCast({ [weak self] (message: String) in
@@ -74,7 +75,7 @@ class JSRunner {
         )
     }
     
-    func setVarialble(_ context: JSContext, _ name: String, _ data: Data)
+    func setVarialble(_ name: String, _ data: Data)
     {
         JSRunner.lock.lock()
         let  buffer = Array(data).map { UInt8($0) }
@@ -82,7 +83,7 @@ class JSRunner {
         JSRunner.lock.unlock()
     }
     
-    func setVarialble(_ context: JSContext, _ name: String, _ state: Bool)
+    func setVarialble(_ name: String, _ state: Bool)
     {
         JSRunner.lock.lock()
         context.setObject(state, forKeyedSubscript: name as NSString)
@@ -90,20 +91,20 @@ class JSRunner {
     }
 
     /// Execute a JavaScript string
-    func run(_ context: JSContext, script: String) {
+    func run(script: String) {
         let code: () -> Void = {
             JSRunner.lock.lock()
             //NSLog("JS: \(String(describing: context.virtualMachine.description))")
             //NSLog("JS: \(String(describing: context.virtualMachine.publisher))")
 
             // Notify before execution
-            self.delegate?.scriptExecutionDidStart(context)
+            self.delegate?.scriptExecutionDidStart(self.context)
             
             // Execute the script
-            context.evaluateScript(script)
+            self.context.evaluateScript(script)
             
             // Notify after successful execution
-            self.delegate?.scriptExecutionDidFinish(context)
+            self.delegate?.scriptExecutionDidFinish(self.context)
             
             self.complete()
             JSRunner.lock.unlock()

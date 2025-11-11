@@ -54,6 +54,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
     private var imgOriginalIoLoop: NSImage?
     private var imgOriginalScript: NSImage?
     private var scriptFile: URL?
+    private var fileHistory: FileHistory = FileHistory.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -171,7 +172,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
             onSerialPortChanged(cbxDevice)
         }
     }
-    
+
     private func notifyPinsChanged(_ pins: SerialPortPinouts)
     {
         let text = "DTR:\(pins.DTR) DSR:\(pins.DSR) RTS:\(pins.RTS) CTS:\(pins.CTS) RI:\(pins.RI)"
@@ -327,9 +328,9 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
                 return
             }
             try jsTemplate.write(to: url, atomically: true, encoding: .utf8)
-            //print("New script created at: $fileURL.path)")
-            // open the file in editor or show in Finder
-            NSWorkspace.shared.open(url)
+            if let _url = fileHistory.addToHistory(url) {
+                NSWorkspace.shared.open(_url)
+            }
         } catch {
             UITools.showMessage(message: "Error creating script file: \(error)")
         }
@@ -362,63 +363,43 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
     }
     
     @objc func onStartScriptingEx(_ fileUrl: URL?) {
-        // check valid VSP port
-        if !isPortLinked() {
-            return
-        }
-        
-        self.scriptFile = fileUrl
-        self.pbIoLooper.isEnabled = false
-        self.pbIoSendFile.isEnabled = false
-        self.pbIoSendText.isEnabled = serialPort?.isConnected ?? false
-        self.edTextField.isEnabled = serialPort?.isConnected ?? false
-        self.edAutoTextLen.isEnabled = false
-        self.isLooperRunning = false //teminate
-        
-        if let img = self.imgSecondTinted {
-            self.pbRunScript.image = img
+        if let url = fileUrl {
+            // check valid VSP port
+            if !isPortLinked() {
+                return
+            }
+            self.scriptFile = url
+            self.pbIoLooper.isEnabled = false
+            self.pbIoSendFile.isEnabled = false
+            self.pbIoSendText.isEnabled = serialPort?.isConnected ?? false
+            self.edTextField.isEnabled = serialPort?.isConnected ?? false
+            self.edAutoTextLen.isEnabled = false
+            self.isLooperRunning = false //teminate
+            if let img = self.imgSecondTinted {
+                self.pbRunScript.image = img
+            }
         }
     }
 
-    @objc func onStartScripting2() {
-        if let url = scriptFile {
-            NSWorkspace.shared.open(url)
+    @objc func onOpenFromHistory(sender: NSMenuItem) {
+        if !UITools.showQuestionDialog(self, "Open selected file in editor?") {
+            onStartScriptingEx(fileHistory.url(at: sender.tag))
+        } else {
+            fileHistory.openFile(at: sender.tag)
         }
     }
     
-    @objc func onStartScripting3() {
+    @objc func onOpenSampleFile(sender: NSMenuItem) {
         if let url = Bundle.main.url(forResource: "quectel-sim", withExtension: "js") {
             NSWorkspace.shared.open(url)
         }
     }
     
-    @objc func onStartScripting() {
-       // Create open file dialog
-        let openPanel = NSOpenPanel()
-        openPanel.canChooseFiles = true
-        openPanel.canChooseDirectories = false
-        openPanel.allowsMultipleSelection = false
-        //openPanel.allowedFileTypes = ["js"]
-        openPanel.prompt = "Execute"
-
-        // Create JavaScript file in App Home directory
-        if let homeDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-            openPanel.directoryURL = homeDir
-        }
-        else if let docDir = FileManager.default.urls(for: .userDirectory, in: .userDomainMask).first {
-            openPanel.directoryURL = docDir
-        }
-        
-        // Show the dialog
-        if openPanel.runModal() == .OK {
-            guard let selectedFileURL = openPanel.url else {
-                return
-            }
-            onStartScriptingEx(selectedFileURL)
-        }
+    @objc func onStartScripting(sender: NSMenuItem) {
+        onStartScriptingEx(fileHistory.openFileAndAddToHistory())
     }
     
-    @objc func onStopScripting() {
+    @objc func onStopScripting(sender: NSMenuItem) {
         self.scriptFile = nil
         self.pbIoLooper.isEnabled = serialPort?.isConnected ?? false
         self.pbIoSendFile.isEnabled = serialPort?.isConnected ?? false
@@ -469,10 +450,12 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
     
     private func runScriptFile(_ isSender: Bool, _ data: Data) -> Bool
     {
-        //NSLog("SP: (runScriptFile) isSender: \(isSender) data:\(String(describing: data))")
-        
-        guard let scriptFile = self.scriptFile else {
+        guard let url : URL = self.scriptFile else {
             NSLog("SP: No script file url available, skip.")
+            return false
+        }
+        guard url.startAccessingSecurityScopedResource() else {
+            logMessage("SP: Unable to access script file: \(url.relativePath)")
             return false
         }
         guard callBalance == 0 else {
@@ -487,44 +470,47 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
         callBalance += 1;
         
         do {
-            let script = try String(
-            contentsOf: scriptFile as URL,
-              encoding: .utf8)
+            let script = try String(contentsOf: url, encoding: .utf8)
+            url.stopAccessingSecurityScopedResource()
             
-            //NSLog("SP: Run JS script \(scriptFile)")
-            
-            let context : JSContext = JSContext()
-            let jsRunner: JSRunner = JSRunner(context)
+            let jsRunner: JSRunner = JSRunner()
            
             jsRunner.delegate = self
             
             jsRunner.onStart = { message in
-                //NSLog("SP: (onStart) message=\(message)")
                 self.logMessage("onStart: \(message)")
             }
             
             jsRunner.onComplete = { message in
-                //NSLog("SP: (onComplete) message=\(message)")
                 self.logMessage("onComplete: \(message)")
             }
             
             jsRunner.onMessage = { message in
-                //NSLog("SP: (onMessage) message=\(message)")
                 self.logMessage("onMessage: \(message)")
             }
             
             jsRunner.onSendText = { message in
-                //NSLog("SP: (onSendText) enter: callBalance=\(self.callBalance)")
                 self.serialPort?.send(self.addEoL(message).data(using: .utf8)!)
-                //NSLog("SP: (onSendText) leave: callBalance=\(self.callBalance)")
             }
             
-            jsRunner.setVarialble(context, "dataAvailable", data.isEmpty == false)
-            jsRunner.setVarialble(context, "receivedData", data)
-            jsRunner.run(context, script: script)
+            jsRunner.setVarialble("dataAvailable", data.isEmpty == false)
+            jsRunner.setVarialble("receivedData", data)
+            jsRunner.run(script: script)
                   
         } catch {
-            UITools.showMessage(message: "Error reading script file: \(error)")
+            // stop scripting first!
+            url.stopAccessingSecurityScopedResource()
+            scriptFile = nil
+            DispatchQueue.main.async {
+                // for UI update
+                self.onStopScripting(sender: NSMenuItem())
+                // notify
+                UITools.showAlert(
+                             title: UITools.applicationName(),
+                           message: "Error reading script file:\n\(error.localizedDescription)",
+                        completion: {
+                })
+            }
         }
          
         //NSLog("SP: (runScriptFile) exit")
@@ -764,44 +750,66 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
         let menu = NSMenu()
         
         // Create "New Script" menu item with icon
-        let newScriptItem = NSMenuItem(title: "New Script", action: #selector(onNewScript), keyEquivalent: "")
-        newScriptItem.image = NSImage(systemSymbolName: "plus.circle", accessibilityDescription: "New Script")
+        let newScriptItem = NSMenuItem(
+            title: "New Script",
+            action: #selector(onNewScript),
+            keyEquivalent: "")
+        newScriptItem.image = NSImage(
+            systemSymbolName: "plus.circle",
+            accessibilityDescription: newScriptItem.title)
         menu.addItem(newScriptItem)
         
         // Create "Execute Script" menu item with icon
-        let startScriptItem = NSMenuItem(title: "Start Scripting", action: #selector(onStartScripting), keyEquivalent: "")
-        startScriptItem.image = NSImage(systemSymbolName: "play.circle", accessibilityDescription: "Start Scripting")
+        let startScriptItem = NSMenuItem(
+            title: "Start Scripting",
+            action: #selector(onStartScripting),
+            keyEquivalent: "")
+        startScriptItem.image = NSImage(
+            systemSymbolName: "play.circle",
+            accessibilityDescription: startScriptItem.title)
         menu.addItem(startScriptItem)
 
-        let stopScriptItem = NSMenuItem(title: "Stop Scripting", action: #selector(onStopScripting), keyEquivalent: "")
-        stopScriptItem.image = NSImage(systemSymbolName: "stop.circle", accessibilityDescription: "Stop Scripting")
+        let stopScriptItem = NSMenuItem(
+                title: "Stop Scripting",
+                action: #selector(onStopScripting),
+                keyEquivalent: "")
+        stopScriptItem.image = NSImage(
+                systemSymbolName: "stop.circle",
+                accessibilityDescription: stopScriptItem.title)
         menu.addItem(stopScriptItem)
 
-        menu.addItem(NSMenuItem(title: "-", action: nil, keyEquivalent: ""))
+        menu.addItem(NSMenuItem(title: "- Sample -", action: nil, keyEquivalent: ""))
                      
-        // Get the URL to the file in the bundle
+        // Get the URL to the bundled sample file
         if let url = Bundle.main.url(forResource: "quectel-sim", withExtension: "js") {
             let fileScriptItem = NSMenuItem(
                 title: url.lastPathComponent,
-                action: #selector(onStartScripting3),
+                action: #selector(onOpenSampleFile),
                 keyEquivalent: "")
             fileScriptItem.image = NSImage(
                 systemSymbolName: "document",
-                accessibilityDescription: url.lastPathComponent)
+                accessibilityDescription: fileScriptItem.title)
             menu.addItem(fileScriptItem)
         }
 
-        if let file = self.scriptFile {
-            let fileScriptItem = NSMenuItem(
-                title: file.relativePath,
-                action: #selector(onStartScripting2),
-                keyEquivalent: "")
-            fileScriptItem.image = NSImage(
-                systemSymbolName: "document",
-                accessibilityDescription: file.relativePath)
-            menu.addItem(fileScriptItem)
+        if !fileHistory.isEmpty {
+            menu.addItem(NSMenuItem(title: "- History -", action: nil, keyEquivalent: ""))
+            let urls = fileHistory.allHistoryURLs()
+            for (url) in urls {
+                if let index = fileHistory.indexOfUrl(url) {
+                    let fileScriptItem = NSMenuItem(
+                        title: url.lastPathComponent,
+                        action: #selector(onOpenFromHistory),
+                        keyEquivalent: "")
+                    fileScriptItem.tag = index
+                    fileScriptItem.image = NSImage(
+                        systemSymbolName: "document",
+                        accessibilityDescription: fileScriptItem.title)
+                    menu.addItem(fileScriptItem)
+                }
+            }
         }
-            
+        
         // Calculate bottom-left corner of the button in its own coordinate space
         let popupPoint = NSPoint(x: 0, y: 0)
         

@@ -151,16 +151,25 @@ class UITools {
             window: NSWindow? = nil,
             completion: (() -> Void)? = nil)
     {
-        let vcAlert = CustomAlertViewController( //
-            title: title, message: message, completion: completion)
-        //NSApp.mainWindow?.contentViewController?.presentAsModalWindow(vcAlert)
-        NSApp.mainWindow?.contentViewController?.presentAsSheet(vcAlert)
+        if DispatchQueue.isOnMainQueue() {
+            let vcAlert = CustomAlertViewController( //
+                title: title, message: message, completion: completion)
+            //NSApp.mainWindow?.contentViewController?.presentAsModalWindow(vcAlert)
+            NSApp.mainWindow?.contentViewController?.presentAsSheet(vcAlert)
+        } else {
+            DispatchQueue.main.async {
+                let vcAlert = CustomAlertViewController( //
+                    title: title, message: message, completion: completion)
+                //NSApp.mainWindow?.contentViewController?.presentAsModalWindow(vcAlert)
+                NSApp.mainWindow?.contentViewController?.presentAsSheet(vcAlert)
+            }
+        }
     }
     
     // Show alert dialog async
     static public func showMessage(message: String, info: String? = nil, withCompletion completion: (() -> Void)? = nil) {
-        var text: String = message
         DispatchQueue.main.async {
+            var text: String = message
             if let infoText = info {
                 text += "\n\(infoText)"
             }
