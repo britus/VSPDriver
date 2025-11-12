@@ -478,11 +478,14 @@ function executeCommand(command) {
     if (params.length < 1 || cmd.length === 0) {
         onMessage("ERROR: Command not set.")
         return
-    } else if (params.length === 2) {
+    } 
+    
+    if (params.length === 2) {
         sfx = params[1]
-    } else if (params.length > 2) {
+    } 
+    else if (params.length > 2) {
         for (i = 1; i < params.length; i++) {
-            sfx = sfx + ((sfx.length == 0) ? "" : ",") + params[i]
+            sfx = sfx + ((sfx.length === 0) ? "" : ",") + params[i]
         }
     }
 
@@ -587,7 +590,6 @@ function main() {
     addFunction('AT+COPS?', cmd_cops_q)
     addFunction('AT+QNWINFO', cmd_qnwinfo_q)
 
-
     /*
     addFunction('AT+', cmd__q)
     addFunction('AT+', cmd__q)
@@ -641,7 +643,6 @@ function main() {
 
 // --[Main]--
 try {
-
     main()
 } catch (error) {
     console.error(error)
