@@ -308,7 +308,7 @@ var cmd_cscs_q = function (pfx, sfx) {
 }
 
 var cmd_csca_q = function (pfx, sfx) {
-    return 'AT+CSCA?\r\n+CSCA: +002123456789,145\r\nOK\r\n'
+    return 'AT+CSCA?\r\n+CSCA: +232123456789,145\r\nOK\r\n'
 }
 
 var cmd_csca_s = function (pfx, sfx) {
@@ -316,7 +316,7 @@ var cmd_csca_s = function (pfx, sfx) {
 }
 
 var cmd_cnum_q = function (pfx, sfx) {
-    return 'AT+CNUM\r\n+CNUM: +0029087651234,145\r\nOK\r\n'
+    return 'AT+CNUM\r\n+CNUM: +2329087651234,145\r\nOK\r\n'
 }
 
 var cmd_gcap_q = function (pfx, sfx) {
@@ -324,7 +324,7 @@ var cmd_gcap_q = function (pfx, sfx) {
 }
 
 var cmd_copn_q = function (pfx, sfx) {
-    return 'AT+COPN\r\n+COPN: "00101","Test PLMN 1-1"\r\nOK\r\n'
+    return 'AT+COPN\r\n+COPN: "AA101","Test PLMN 1-1"\r\nOK\r\n'
 }
 
 var cmd_qadc_q = function (pfx, sfx) {
@@ -336,7 +336,7 @@ var cmd_csq_q = function (pfx, sfx) {
 }
 
 var cmd_creg_q = function (pfx, sfx) {
-    return 'AT+CREG?\r\n+CREG: 2,1,"ABCD","22A1BCD",7\r\nOK\r\n'
+    return 'AT+CREG?\r\n+CREG: 2,1,"AA101","AA101",7\r\nOK\r\n'
 }
 
 var cmd_creg_s = function (pfx, sfx) {
@@ -344,7 +344,7 @@ var cmd_creg_s = function (pfx, sfx) {
 }
 
 var cmd_cgreg_q = function (pfx, sfx) {
-    return 'AT+CGREG?\r\n+CGREG: 2,1,"ABCD","22A1BCD",7\r\nOK\r\n'
+    return 'AT+CGREG?\r\n+CGREG: 2,1,"AA101","AA101",7\r\nOK\r\n'
 }
 
 var cmd_cgreg_s = function (pfx, sfx) {
@@ -352,7 +352,7 @@ var cmd_cgreg_s = function (pfx, sfx) {
 }
 
 var cmd_cereg_q = function (pfx, sfx) {
-    return 'AT+CEREG?\r\n+CEREG: 2,1,"ABCD","22A1BCD",7\r\nOK\r\n'
+    return 'AT+CEREG?\r\n+CEREG: 2,1,"AA101","AA101",7\r\nOK\r\n'
 }
 
 var cmd_cereg_s = function (pfx, sfx) {
@@ -461,6 +461,10 @@ var cmd_cops_q = function (pfx, sfx) {
 
 var cmd_qnwinfo_q = function (pfx, sfx) {
     return 'AT+QNWINFO\r\n+QNWINFO: "FDD LTE","AA101","LTE BAND 20",9900\r\nOK\r\n'
+}
+
+var cmd_cgml_q = function (pfx, sfx) {
+    return 'AT+CMGL\r\n+CMGL: 0\r\nOK\r\n'
 }
 
 // Dummy
@@ -589,6 +593,7 @@ function main() {
     addFunction('AT+QENG', cmd_qeng_q)
     addFunction('AT+COPS?', cmd_cops_q)
     addFunction('AT+QNWINFO', cmd_qnwinfo_q)
+    addFunction('AT+CMGL', cmd_cgml_q)
 
     /*
     addFunction('AT+', cmd__q)

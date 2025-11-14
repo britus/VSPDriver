@@ -389,6 +389,12 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
         }
     }
     
+    @objc func onDeleteHistory(sender: NSMenuItem) {
+        if UITools.showQuestionDialog(self, "Do you want to delete file history?") {
+            fileHistory.clearHistory()
+        }
+    }
+    
     @objc func onOpenSampleFile(sender: NSMenuItem) {
         if let url = Bundle.main.url(forResource: "quectel-sim", withExtension: "js") {
             NSWorkspace.shared.open(url)
@@ -755,7 +761,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
             action: #selector(onNewScript),
             keyEquivalent: "")
         newScriptItem.image = NSImage(
-            systemSymbolName: "plus.circle",
+                    systemSymbolName: "plus.circle",
             accessibilityDescription: newScriptItem.title)
         menu.addItem(newScriptItem)
         
@@ -765,7 +771,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
             action: #selector(onStartScripting),
             keyEquivalent: "")
         startScriptItem.image = NSImage(
-            systemSymbolName: "play.circle",
+                        systemSymbolName: "play.circle",
             accessibilityDescription: startScriptItem.title)
         menu.addItem(startScriptItem)
 
@@ -774,11 +780,11 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
                 action: #selector(onStopScripting),
                 keyEquivalent: "")
         stopScriptItem.image = NSImage(
-                systemSymbolName: "stop.circle",
+                        systemSymbolName: "stop.circle",
                 accessibilityDescription: stopScriptItem.title)
         menu.addItem(stopScriptItem)
 
-        menu.addItem(NSMenuItem(title: "- Sample -", action: nil, keyEquivalent: ""))
+        menu.addItem(NSMenuItem(title: "", action: nil, keyEquivalent: ""))
                      
         // Get the URL to the bundled sample file
         if let url = Bundle.main.url(forResource: "quectel-sim", withExtension: "js") {
@@ -787,13 +793,14 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
                 action: #selector(onOpenSampleFile),
                 keyEquivalent: "")
             fileScriptItem.image = NSImage(
-                systemSymbolName: "document",
+                        systemSymbolName: "document",
                 accessibilityDescription: fileScriptItem.title)
+            fileScriptItem.toolTip = url.absoluteString
             menu.addItem(fileScriptItem)
         }
 
         if !fileHistory.isEmpty {
-            menu.addItem(NSMenuItem(title: "- History -", action: nil, keyEquivalent: ""))
+            menu.addItem(NSMenuItem(title: "", action: nil, keyEquivalent: ""))
             let urls = fileHistory.allHistoryURLs()
             for (url) in urls {
                 if let index = fileHistory.indexOfUrl(url) {
@@ -803,11 +810,21 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
                         keyEquivalent: "")
                     fileScriptItem.tag = index
                     fileScriptItem.image = NSImage(
-                        systemSymbolName: "document",
+                                systemSymbolName: "document",
                         accessibilityDescription: fileScriptItem.title)
+                    fileScriptItem.toolTip = url.absoluteString
                     menu.addItem(fileScriptItem)
                 }
             }
+            menu.addItem(NSMenuItem(title: "", action: nil, keyEquivalent: ""))
+            let delScriptItem = NSMenuItem(
+                    title: "Delete History",
+                    action: #selector(onDeleteHistory),
+                    keyEquivalent: "")
+            delScriptItem.image = NSImage(
+                            systemSymbolName: "trash",
+                    accessibilityDescription: delScriptItem.title)
+            menu.addItem(delScriptItem)
         }
         
         // Calculate bottom-left corner of the button in its own coordinate space

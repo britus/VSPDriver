@@ -1660,7 +1660,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                     <comboBox identifier="cbxTestBaudRate" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ffe-SH-4g5" customClass="ComboBox" customModule="VSPClient">
                                         <rect key="frame" x="87" y="1825" width="130" height="23"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="126" id="qFX-eW-FtS"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="126" id="qFX-eW-FtS"/>
                                         </constraints>
                                         <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" title="Baud rate" placeholderString="Baud rate" drawsBackground="YES" completes="NO" numberOfVisibleItems="15" id="JRg-fN-8k0">
                                             <font key="font" metaFont="system"/>
@@ -1949,10 +1949,10 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                         </textField>
                                         <button identifier="pbLooper" toolTip="Start or stop the transmission loop" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3DR-4b-Gyb">
                                             <rect key="frame" x="400" y="265" width="50" height="32"/>
-                                            <buttonCell key="cell" type="push" alternateTitle="Loop" bezelStyle="rounded" imagePosition="leading" alignment="left" alternateImage="point.forward.to.point.capsulepath.fill" catalog="system" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bNh-gn-jKR">
+                                            <buttonCell key="cell" type="push" alternateTitle="Loop" bezelStyle="rounded" imagePosition="only" alignment="left" alternateImage="point.forward.to.point.capsulepath.fill" catalog="system" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bNh-gn-jKR">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <imageReference key="image" image="point.forward.to.point.capsulepath" catalog="system" symbolScale="medium"/>
+                                                <imageReference key="image" image="point.forward.to.point.capsulepath" catalog="system" symbolScale="default"/>
                                             </buttonCell>
                                             <accessibility description="Start or stop the transmission loop" identifier="pbLooper"/>
                                             <connections>
@@ -1961,7 +1961,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                         </button>
                                         <button identifier="pbScripting" toolTip="Execute a JavaScript for each received data element." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Dxx-0S-18B">
                                             <rect key="frame" x="448" y="265" width="50" height="32"/>
-                                            <buttonCell key="cell" type="push" alternateTitle="Loop" bezelStyle="rounded" imagePosition="only" alignment="left" alternateImage="point.forward.to.point.capsulepath.fill" catalog="system" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WSf-Vw-WIm">
+                                            <buttonCell key="cell" type="push" alternateTitle="Scripting" bezelStyle="rounded" imagePosition="only" alignment="left" alternateImage="NSActionTemplate" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WSf-Vw-WIm">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                                 <imageReference key="image" image="NSAdvanced" symbolScale="medium"/>
@@ -1973,7 +1973,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                         </button>
                                         <button identifier="pbSendText" toolTip="Send the text" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hJT-IE-umo">
                                             <rect key="frame" x="400" y="296" width="50" height="32"/>
-                                            <buttonCell key="cell" type="push" alternateTitle="Send text" bezelStyle="rounded" image="transmission" catalog="system" imagePosition="leading" alignment="center" alternateImage="NSFollowLinkFreestandingTemplate" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="US5-dx-9UZ">
+                                            <buttonCell key="cell" type="push" alternateTitle="Send text" bezelStyle="rounded" image="paperplane.circle" catalog="system" imagePosition="only" alignment="center" alternateImage="NSFollowLinkFreestandingTemplate" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="US5-dx-9UZ">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -1984,7 +1984,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
                                         </button>
                                         <button identifier="pbSendFile" toolTip="Send a selected file" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f7J-Sh-Skw">
                                             <rect key="frame" x="448" y="296" width="50" height="32"/>
-                                            <buttonCell key="cell" type="push" alternateTitle="Send file..." bezelStyle="rounded" image="text.document.fill" catalog="system" imagePosition="only" alignment="center" alternateImage="dock.arrow.up.rectangle" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="apk-M9-83j">
+                                            <buttonCell key="cell" type="push" alternateTitle="Send file..." bezelStyle="rounded" image="text.document.fill" catalog="system" imagePosition="only" alignment="center" alternateImage="square.and.arrow.up.badge.clock" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="apk-M9-83j">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -2074,16 +2074,17 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
         </scene>
     </scenes>
     <resources>
+        <image name="NSActionTemplate" width="20" height="20"/>
         <image name="NSAdvanced" width="32" height="32"/>
         <image name="NSFollowLinkFreestandingTemplate" width="20" height="20"/>
         <image name="cable.connector.horizontal" catalog="system" width="19" height="7"/>
         <image name="cable.connector.video" catalog="system" width="17" height="16"/>
-        <image name="dock.arrow.up.rectangle" catalog="system" width="18" height="14"/>
         <image name="macwindow" catalog="system" width="18" height="14"/>
+        <image name="paperplane.circle" catalog="system" width="15" height="15"/>
         <image name="point.forward.to.point.capsulepath" catalog="system" width="20" height="13"/>
         <image name="point.forward.to.point.capsulepath.fill" catalog="system" width="20" height="13"/>
         <image name="rectangle.connected.to.line.below" catalog="system" width="15" height="16"/>
+        <image name="square.and.arrow.up.badge.clock" catalog="system" width="17" height="20"/>
         <image name="text.document.fill" catalog="system" width="14" height="16"/>
-        <image name="transmission" catalog="system" width="17" height="17"/>
     </resources>
 </document>

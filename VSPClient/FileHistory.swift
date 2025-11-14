@@ -111,6 +111,11 @@ final class FileHistory {
 
     //  Adds a new URL to the history and stores its security-scoped bookmark.
     public func addToHistory(_ url: URL) -> URL? {
+        // prevent duplicates...
+        if let _ = indexOfUrl(url) {
+            return url
+        }
+        // --
         do {
             let bookmark = try url.bookmarkData(
                 options: [.withSecurityScope],
