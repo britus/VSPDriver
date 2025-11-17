@@ -36,7 +36,7 @@ public final class PSKManager: NSObject, ObservableObject {
     public func refresh()
     {
         Task {
-            await refreshRecipt()
+            await refreshReceipt()
         }
     }
 
@@ -49,7 +49,7 @@ public final class PSKManager: NSObject, ObservableObject {
         }
     }
     
-    private func refreshRecipt() async
+    private func refreshReceipt() async
     {
         do {
             let result = try await AppTransaction.refresh()
