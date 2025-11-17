@@ -10,7 +10,6 @@ import SwiftUI
 class WindowController: NSWindowController {
     @IBOutlet weak var toolBar: NSToolbar!
     
-    // Window size constants Size: 615 × 622
     private static let initialSize = NSSize(width: 620, height: 450)
     private weak var tabView: TabViewController!
     private let manager = DriverManager.shared
@@ -18,15 +17,7 @@ class WindowController: NSWindowController {
     private let minWindowSize = WindowController.initialSize
     private let preferredWindowSize = WindowController.initialSize
     private var progress : NSProgressIndicator? = nil
-  
-    static func restoreWindow(
-            withIdentifier identifier: NSUserInterfaceItemIdentifier,
-                                state: NSCoder,
-                    completionHandler: @escaping (NSWindow?, (any Error)?) -> Void)
-    {
-        NSLog("WC: restoreWindow(...)")
-    }
-    
+      
     override func windowWillLoad() {
         manager.addObserver(self)
         pskmgr.addObserver(self)
@@ -39,12 +30,9 @@ class WindowController: NSWindowController {
         configureWindow()
         showProgress()
        
-        // check App purchase state.
-        PSKManager.shared.query()
-
         // Request permission first (required)
         UITools.requestNotificationPermission { granted in
-            // --
+            PSKManager.shared.query()
         }
     }
     
@@ -186,7 +174,6 @@ extension WindowController: NSWindowDelegate {
 extension WindowController: PSKManagerObserver {
     func statusChanged(_ verified: Bool) {
         if (verified) {
-            // this closure run always
             if (!IsDriverConnected()) {
                 // C bridge async
                 DispatchQueue.global(qos: .background).asyncAfter(//
@@ -196,18 +183,18 @@ extension WindowController: PSKManagerObserver {
                     }
                 }
             }
+            return // fine :)
         }
-        else {
-            DispatchQueue.main.async {
-                let msg = 
-                    "The status of your app cannot be verified in the Apple App Store.\n" + //
-                    "Would you like to refresh your app status?"
-                if UITools.showQuestionDialog(self, msg) {
-                    self.pskmgr.refresh()
-                } else {
-                    ShutdownDriver()
-                    NSApp.terminate(self)
-                }
+        
+        // retry App verification
+        DispatchQueue.main.async {
+            let msg =
+                "The status of your app cannot be verified in the Apple App Store.\n" + //
+                "Would you like to refresh your app status?"
+            if UITools.showQuestionDialog(self, msg) {
+                self.pskmgr.refresh()
+            } else {
+                NSApp.terminate(self)
             }
         }
     }

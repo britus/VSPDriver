@@ -43,15 +43,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction func onShutdownDriver(_ sender: Any) {
         //DriverManager.shared.unloadDriver()
-        UITools.showMessage(message:
-            "Before to continue, open Terminal window and\n" +
+        if UITools.showQuestionDialog(self, "Do you want to continue?", info:
+            "Before to continue, open Terminal window and " +
             "enter following commands:\n\n" +
             "systemextensionsctl developer on\n" +
-            "systemextensionsctl reset.\n\n" +
-            "Be careful! This command will remove ALL of your\nsystem extensions! " +
-            "If you have more than\nVirtual Serial Port Driver, you can " +
-            "Install all\nother system extensions manually.", info: nil) //
-        {
+            "systemextensionsctl reset\n\n" +
+            "Be careful! This command will remove ALL of your system extensions!\n" +
+            "If you have more than Virtual Serial Port Driver, you can " +
+            "Install all other system extensions manually.") {
             ShutdownDriver();
             NSApp.terminate(nil)
         }

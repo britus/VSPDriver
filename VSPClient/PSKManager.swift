@@ -91,19 +91,19 @@ public final class PSKManager: NSObject, ObservableObject {
     
     private func handleVerifiedTransaction(_ txn: AppTransaction)
     {
-        NSLog("Verified App Transaction:")
-        NSLog(" • Original App Version: \(txn.originalAppVersion)")
-        NSLog(" • Original Purchase Date: \(txn.originalPurchaseDate)")
-        NSLog(" • Environment: \(txn.environment.rawValue)")
+        //NSLog("Verified App Transaction:")
+        //NSLog(" Original App Version: \(txn.originalAppVersion)")
+        //NSLog(" Original Purchase Date: \(txn.originalPurchaseDate)")
+        //NSLog(" Environment: \(txn.environment.rawValue)")
         notifyObservers(true)
     }
 
     private func handleUnverifiedTransaction(appTxn: AppTransaction, error: VerificationResult<AppTransaction>.VerificationError)
     {
-        NSLog("Unverified App Transaction:")
-        NSLog(" • Reason: \(error.localizedDescription)")
-        NSLog(" • Original App Version: \(appTxn.originalAppVersion)")
-        NSLog(" • Original Purchase Date: \(appTxn.originalPurchaseDate)")
+        //NSLog("Unverified App Transaction:")
+        //NSLog(" Reason: \(error.localizedDescription)")
+        //NSLog(" Original App Version: \(appTxn.originalAppVersion)")
+        //NSLog(" Original Purchase Date: \(appTxn.originalPurchaseDate)")
         notifyObservers(false)
     }
 
