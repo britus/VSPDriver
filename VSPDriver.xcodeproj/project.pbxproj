@@ -49,7 +49,6 @@
 		F77B0ED82EB27DA7000FA9A7 /* VSPBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = F77B0EB32EB27DA7000FA9A7 /* VSPBridge.m */; };
 		F77B0ED92EB27DA7000FA9A7 /* VSPControllerParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = F77B0EBC2EB27DA7000FA9A7 /* VSPControllerParameter.m */; };
 		F77B0EDA2EB27DA7000FA9A7 /* VSPPortLink.m in Sources */ = {isa = PBXBuildFile; fileRef = F77B0EC62EB27DA7000FA9A7 /* VSPPortLink.m */; };
-		F77B0EEA2EB27DEA000FA9A7 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77B0EDC2EB27DEA000FA9A7 /* Application.swift */; };
 		F77B0EEB2EB27DEA000FA9A7 /* SPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77B0EE32EB27DEA000FA9A7 /* SPViewController.swift */; };
 		F77B0EEC2EB27DEA000FA9A7 /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77B0EE52EB27DEA000FA9A7 /* TabView.swift */; };
 		F77B0EED2EB27DEA000FA9A7 /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77B0EE62EB27DEA000FA9A7 /* TabViewController.swift */; };
@@ -67,6 +66,7 @@
 		F77B0EFE2EB27F60000FA9A7 /* SerialPortParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = F77B0EFC2EB27F60000FA9A7 /* SerialPortParameters.m */; };
 		F77B0EFF2EB27F60000FA9A7 /* SerialPort.m in Sources */ = {isa = PBXBuildFile; fileRef = F77B0EFA2EB27F60000FA9A7 /* SerialPort.m */; };
 		F79BA82E2EAB8F590051F2DC /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F79BA82D2EAB8F590051F2DC /* AppKit.framework */; };
+		F7B7D4782ECACF76001707D2 /* PSKManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B7D4772ECACF76001707D2 /* PSKManager.swift */; };
 		F7C2E1752EC22CC9007814C5 /* VSPTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C2E1742EC22CC9007814C5 /* VSPTextView.swift */; };
 		F7C2E1772EC280E7007814C5 /* quectel-sim.js in Resources */ = {isa = PBXBuildFile; fileRef = F7C2E1762EC280E7007814C5 /* quectel-sim.js */; };
 		F7C2E1792EC33C44007814C5 /* FileHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C2E1782EC33C44007814C5 /* FileHistory.swift */; };
@@ -183,7 +183,6 @@
 		F77B0ECC2EB27DA7000FA9A7 /* VSPPortParameters.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VSPPortParameters.m; sourceTree = "<group>"; };
 		F77B0ECD2EB27DA7000FA9A7 /* VSPUserContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VSPUserContext.h; sourceTree = "<group>"; };
 		F77B0EDB2EB27DEA000FA9A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F77B0EDC2EB27DEA000FA9A7 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		F77B0EDD2EB27DEA000FA9A7 /* ComboBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboBox.swift; sourceTree = "<group>"; };
 		F77B0EDE2EB27DEA000FA9A7 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		F77B0EDF2EB27DEA000FA9A7 /* DriverManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverManager.swift; sourceTree = "<group>"; };
@@ -202,6 +201,7 @@
 		F77B0EFB2EB27F60000FA9A7 /* SerialPortParameters.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SerialPortParameters.h; sourceTree = "<group>"; };
 		F77B0EFC2EB27F60000FA9A7 /* SerialPortParameters.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SerialPortParameters.m; sourceTree = "<group>"; };
 		F79BA82D2EAB8F590051F2DC /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		F7B7D4772ECACF76001707D2 /* PSKManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSKManager.swift; sourceTree = "<group>"; };
 		F7C2E1742EC22CC9007814C5 /* VSPTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSPTextView.swift; sourceTree = "<group>"; };
 		F7C2E1762EC280E7007814C5 /* quectel-sim.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "quectel-sim.js"; sourceTree = "<group>"; };
 		F7C2E1782EC33C44007814C5 /* FileHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileHistory.swift; sourceTree = "<group>"; };
@@ -235,7 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				F77B0EDB2EB27DEA000FA9A7 /* AppDelegate.swift */,
-				F77B0EDC2EB27DEA000FA9A7 /* Application.swift */,
+				F7B7D4772ECACF76001707D2 /* PSKManager.swift */,
 				F77B0EDD2EB27DEA000FA9A7 /* ComboBox.swift */,
 				F77B0EDE2EB27DEA000FA9A7 /* DataModel.swift */,
 				F77B0EDF2EB27DEA000FA9A7 /* DriverManager.swift */,
@@ -552,7 +552,6 @@
 				F77B0ED02EB27DA7000FA9A7 /* VSPPortListItem..m in Sources */,
 				F71E68412EBE0A51003FBD57 /* JSRunner.swift in Sources */,
 				F77B0ED12EB27DA7000FA9A7 /* VSPController.cpp in Sources */,
-				F77B0EEA2EB27DEA000FA9A7 /* Application.swift in Sources */,
 				F77B0EEB2EB27DEA000FA9A7 /* SPViewController.swift in Sources */,
 				F77B0EEC2EB27DEA000FA9A7 /* TabView.swift in Sources */,
 				F77B0EED2EB27DEA000FA9A7 /* TabViewController.swift in Sources */,
@@ -569,6 +568,7 @@
 				F77B0EF72EB27DEA000FA9A7 /* MessageView.swift in Sources */,
 				F77B0EF82EB27DEA000FA9A7 /* AppDelegate.swift in Sources */,
 				F77B0EFE2EB27F60000FA9A7 /* SerialPortParameters.m in Sources */,
+				F7B7D4782ECACF76001707D2 /* PSKManager.swift in Sources */,
 				F77B0EFF2EB27F60000FA9A7 /* SerialPort.m in Sources */,
 				F77B0ED22EB27DA7000FA9A7 /* VSPControllerBridge.cpp in Sources */,
 				F77B0ED32EB27DA7000FA9A7 /* VSPPortList.m in Sources */,
@@ -640,7 +640,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 167;
+				CURRENT_PROJECT_VERSION = 169;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -689,7 +689,7 @@
 					"$(inherited)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.6;
-				MARKETING_VERSION = 1.28;
+				MARKETING_VERSION = 1.29;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -718,7 +718,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 167;
+				CURRENT_PROJECT_VERSION = 169;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -767,7 +767,7 @@
 					"$(inherited)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.6;
-				MARKETING_VERSION = 1.28;
+				MARKETING_VERSION = 1.29;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -984,7 +984,7 @@
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 167;
+				CURRENT_PROJECT_VERSION = 169;
 				DRIVERKIT_DEPLOYMENT_TARGET = 23.6;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1000,7 +1000,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/System/DriverKit/usr/lib/system",
 				);
-				MARKETING_VERSION = 1.28;
+				MARKETING_VERSION = 1.29;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPDriver;
 				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1019,7 +1019,7 @@
 				CODE_SIGN_ENTITLEMENTS = VSPDriver/VSPDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 167;
+				CURRENT_PROJECT_VERSION = 169;
 				DRIVERKIT_DEPLOYMENT_TARGET = 23.6;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1035,7 +1035,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/System/DriverKit/usr/lib/system",
 				);
-				MARKETING_VERSION = 1.28;
+				MARKETING_VERSION = 1.29;
 				PRODUCT_BUNDLE_IDENTIFIER = org.eof.tools.VSPDriver;
 				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

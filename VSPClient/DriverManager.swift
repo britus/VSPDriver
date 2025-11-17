@@ -52,8 +52,8 @@ public struct TVSPSystemError {
     }
 }
 
-/// Represents the lifecycle state of the DriverKit extension.
-@objc enum DriverStatus: Int {
+// Represents the lifecycle state of the DriverKit extension.
+@objc public enum DriverStatus: Int {
     case notLoaded
     case loading
     case loaded
@@ -68,12 +68,12 @@ public struct TVSPSystemError {
     case driverError
 }
 
-protocol DriverManagerObserver: AnyObject {
+public protocol DriverManagerObserver: AnyObject {
     func driverStatusDidChange(_ status: DriverStatus, code: UInt64, domain: String, message: String)
     func logMessageDidAvailable(_ message: String?)
 }
 
-protocol DriverDataObserver: AnyObject {
+public protocol DriverDataObserver: AnyObject {
     func dataDidAvailable(_ data: TVSPControllerData?)
 }
 

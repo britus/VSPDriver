@@ -150,11 +150,6 @@ kern_return_t IMPL(VSPDriver, Start)
         VSPErr(LOG_PREFIX, "Start: Copy dispatch queue failed. code=%x\n", ret);
         return ret;
     }
-
-    // Create 4 serial port instances with each IOSerialBSDClient as a child instance
-    if ((ret = CreateSerialPort(provider, 4)) != kIOReturnSuccess) {
-        goto finish;
-    }
     
     // Register driver instance to IOReg
     if ((ret = RegisterService()) != kIOReturnSuccess) {

@@ -8,18 +8,13 @@ import Cocoa
 import SwiftUI
 
 class WindowController: NSWindowController {
-    @IBOutlet weak var tbSerialPorts: NSToolbarItem!
-    @IBOutlet weak var tbSerialTest: NSToolbarItem!
-    @IBOutlet weak var tbPortLinks: NSToolbarItem!
-    @IBOutlet weak var tbMessages: NSToolbarItem!
     @IBOutlet weak var toolBar: NSToolbar!
- 
-    private let manager = DriverManager.shared
-    private weak var tabView: TabViewController!
-    
-    private static let initialSize = NSSize(width: 620, height: 450)
     
     // Window size constants Size: 615 × 622
+    private static let initialSize = NSSize(width: 620, height: 450)
+    private weak var tabView: TabViewController!
+    private let manager = DriverManager.shared
+    private let pskmgr = PSKManager.shared
     private let minWindowSize = WindowController.initialSize
     private let preferredWindowSize = WindowController.initialSize
     private var progress : NSProgressIndicator? = nil
@@ -34,27 +29,22 @@ class WindowController: NSWindowController {
     
     override func windowWillLoad() {
         manager.addObserver(self)
+        pskmgr.addObserver(self)
     }
 
     override func windowDidLoad() {
-        let vc = self.contentViewController
-        tabView = (vc as! TabViewController)
-        updateButtons(false)
+        AppDelegate.viewController = self.contentViewController
+        tabView = (AppDelegate.viewController as! TabViewController)
+        setEnableState(false)
         configureWindow()
         showProgress()
+       
+        // check App purchase state.
+        PSKManager.shared.query()
 
         // Request permission first (required)
         UITools.requestNotificationPermission { granted in
-            // this closure run always
-            if (!IsDriverConnected()) {
-                // C bridge async
-                DispatchQueue.global(qos: .background).asyncAfter(//
-                    deadline: .now() + .milliseconds(100)) {
-                    if (!ConnectDriver()) {
-                        self.manager.loadDriver()
-                    }
-                }
-            }
+            // --
         }
     }
     
@@ -65,19 +55,21 @@ class WindowController: NSWindowController {
     }
     
     @IBAction func onSerialPorts(_ sender: Any) {
-        tabView.selectedTabViewItemIndex = 0
+        if !AppDelegate.isRestricted {
+            tabView.selectedTabViewItemIndex = 0
+        }
     }
     
     @IBAction func onPortLinks(_ sender: Any) {
-        tabView.selectedTabViewItemIndex = 1
+        if !AppDelegate.isRestricted {
+            tabView.selectedTabViewItemIndex = 1
+        }
     }
     
     @IBAction func onSMessageView(_ sender: Any) {
-        tabView.selectedTabViewItemIndex = 2
-    }
-    
-    @IBAction func onSerialTest(_ sender: Any) {
-        //tabViewController.selectedTabViewItemIndex = 3
+        if !AppDelegate.isRestricted {
+            tabView.selectedTabViewItemIndex = 2
+        }
     }
     
     private func setupWindowSizeConstraints() {
@@ -90,7 +82,7 @@ class WindowController: NSWindowController {
         window.isRestorable = true
     }
     
-    private func centerWindowOnScreen() {
+    private func centerWindow() {
         guard let window = self.window else { return }
         
         // Use the current screen's visible frame
@@ -137,42 +129,14 @@ class WindowController: NSWindowController {
         // Handle window resizing constraints
         window.delegate = self
     }
-    
-    // Method to center window on multiple screens (if needed)
-    func centerWindowOnMainScreen() {
-        guard let window = self.window else { return }
         
-        // Get main screen
-        let mainScreen = NSScreen.main ?? NSScreen.screens.first!
-        
-        // Get visible frame (excluding menu bar and dock)
-        let screenVisibleFrame = mainScreen.visibleFrame
-        
-        // Calculate center position
-        let windowWidth = preferredWindowSize.width
-        let windowHeight = preferredWindowSize.height
-        
-        let centerX = (screenVisibleFrame.width - windowWidth) / 2
-        let centerY = (screenVisibleFrame.height - windowHeight) / 2
-        
-        // Set window frame
-        let newFrame = NSRect(
-            x: screenVisibleFrame.origin.x + centerX,
-            y: screenVisibleFrame.origin.y + centerY,
-            width: windowWidth,
-            height: windowHeight
-        )
-        
-        window.setFrame(newFrame, display: true)
-    }
-    
-    internal func updateButtons(_ state: Bool)
+    internal func setEnableState(_ state: Bool)
     {
         DispatchQueue.main.async {
-            self.tbPortLinks.isEnabled = state
-            self.tbSerialPorts.isEnabled = state
-            self.tbMessages.isEnabled = state
-            self.tbSerialTest.isEnabled = state
+            self.tabView.isEnabled = state;
+            self.toolBar.items.forEach { tb in
+                tb.isHidden = (state == false)
+            }
         }
     }
     
@@ -189,10 +153,10 @@ class WindowController: NSWindowController {
 
         // Set up minimum size constraints
         setupWindowSizeConstraints()
-        // Center window on screen
-        centerWindowOnScreen()
         // Configure additional window properties
         configureWindowAppearance()
+        // Center window on screen
+        centerWindow()
     }
 }
 
@@ -217,6 +181,38 @@ extension WindowController: NSWindowDelegate {
     }
 }
 
+// MARK: - PSKManagerObserver
+
+extension WindowController: PSKManagerObserver {
+    func statusChanged(_ verified: Bool) {
+        if (verified) {
+            // this closure run always
+            if (!IsDriverConnected()) {
+                // C bridge async
+                DispatchQueue.global(qos: .background).asyncAfter(//
+                    deadline: .now() + .milliseconds(100)) {
+                    if (!ConnectDriver()) {
+                        self.manager.loadDriver()
+                    }
+                }
+            }
+        }
+        else {
+            DispatchQueue.main.async {
+                let msg = 
+                    "The status of your app cannot be verified in the Apple App Store.\n" + //
+                    "Would you like to refresh your app status?"
+                if UITools.showQuestionDialog(self, msg) {
+                    self.pskmgr.refresh()
+                } else {
+                    ShutdownDriver()
+                    NSApp.terminate(self)
+                }
+            }
+        }
+    }
+}
+
 // MARK: - DriverManagerObserver
 
 extension WindowController: DriverManagerObserver {
@@ -228,7 +224,7 @@ extension WindowController: DriverManagerObserver {
         hideProgress()
         
         if code > 0 {
-            tabView.isEnabled = false
+            setEnableState(false)
             UITools.showMessage(
                 message: "Error 0x\(String(code, radix: 16)): \(message).",
                 withCompletion: { NSApp.terminate(self) })
@@ -241,7 +237,7 @@ extension WindowController: DriverManagerObserver {
                     UITools.showMessage(message://
                         "\(message),\nbut failed to connect driver." //
                         + "\nPlease reboot your computer to complete the setup.")
-                    self.updateButtons(false)
+                    self.setEnableState(false)
                 }
             }
         }
@@ -251,7 +247,7 @@ extension WindowController: DriverManagerObserver {
         hideProgress()
 
         if code > 0 {
-            tabView.isEnabled = false
+            setEnableState(false)
             UITools.showMessage(
                 message: "VSP Error 0x\(String(code, radix: 16)):\n\n\(message)",
                 withCompletion: { NSApp.terminate(self) })
@@ -265,7 +261,7 @@ extension WindowController: DriverManagerObserver {
     }
     
     func didUnload(withStatus code: UInt64, message: String) {
-        tabView.isEnabled = false
+        setEnableState(false)
         if code > 0 {
             UITools.showMessage(
                 message: "Error 0x\(String(code, radix: 16)): \(message).")
@@ -276,10 +272,8 @@ extension WindowController: DriverManagerObserver {
     
     func controllerConnected() {
         hideProgress()
-        tabView.isEnabled = true;
-        updateButtons(tabView.isEnabled)
+        setEnableState(!AppDelegate.isRestricted)
         UITools.showNotification(body: "VSP Driver connected")
-        
         // C bridge async
         DispatchQueue.global(qos: .background).asyncAfter(//
                 deadline: .now() + .milliseconds(100)) {
@@ -289,8 +283,7 @@ extension WindowController: DriverManagerObserver {
     
     func controllerDisconnected() {
         hideProgress()
-        tabView.isEnabled = false;
-        updateButtons(tabView.isEnabled)
+        setEnableState(false)
         UITools.showNotification(body: "VSP Driver disconnected")
     }
     

@@ -9,7 +9,7 @@
         <!--Application-->
         <scene sceneID="JPo-4y-FX3">
             <objects>
-                <application id="hnw-xV-0zn" customClass="Application" customModule="VSPClient" sceneMemberID="viewController">
+                <application id="hnw-xV-0zn" sceneMemberID="viewController">
                     <menu key="mainMenu" title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
                         <items>
                             <menuItem title="VSPClient" id="1Xt-HY-uBw">
@@ -22,26 +22,32 @@
                                                 <action selector="orderFrontStandardAboutPanel:" target="Ady-hI-5gd" id="Exp-CZ-Vem"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem isSeparatorItem="YES" hidden="YES" id="VOq-y0-SEH"/>
+                                        <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
+                                        <menuItem title="Like or Unlike..." id="gFb-nn-4Xp">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="onLikeOrUnlike:" target="Voe-Tx-rLC" id="ppK-aX-sfX"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Preferences…" hidden="YES" keyEquivalent="," id="BOF-NM-1cW"/>
-                                        <menuItem isSeparatorItem="YES" hidden="YES" id="wFC-TO-SCJ"/>
+                                        <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
                                         <menuItem title="Services" id="NMo-om-nkz">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Services" systemMenu="services" id="hz9-B4-Xy5"/>
                                         </menuItem>
-                                        <menuItem isSeparatorItem="YES" hidden="YES" id="4je-JR-u6R"/>
-                                        <menuItem title="Hide VSPClient" hidden="YES" keyEquivalent="h" id="Olw-nP-bQN">
+                                        <menuItem isSeparatorItem="YES" id="4je-JR-u6R"/>
+                                        <menuItem title="Hide VSPClient" keyEquivalent="h" id="Olw-nP-bQN">
                                             <connections>
                                                 <action selector="hide:" target="Ady-hI-5gd" id="PnN-Uc-m68"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Hide Others" hidden="YES" keyEquivalent="h" id="Vdr-fp-XzO">
+                                        <menuItem title="Hide Others" keyEquivalent="h" id="Vdr-fp-XzO">
                                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
                                                 <action selector="hideOtherApplications:" target="Ady-hI-5gd" id="VT4-aY-XCT"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Show All" hidden="YES" id="Kd2-mp-pUS">
+                                        <menuItem title="Show All" id="Kd2-mp-pUS">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="unhideAllApplications:" target="Ady-hI-5gd" id="Dhg-Le-xox"/>
@@ -703,8 +709,10 @@
                 </application>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="VSPClient">
                     <connections>
+                        <outlet property="m_about" destination="5kV-Vb-QxS" id="coZ-ZN-IU7"/>
                         <outlet property="m_driverInstall" destination="vlu-a2-VOl" id="AqX-VN-JVs"/>
                         <outlet property="m_driverUninstall" destination="G1c-ZN-R8P" id="MxI-1S-TN4"/>
+                        <outlet property="m_likeOrUnlike" destination="gFb-nn-4Xp" id="O7t-Dv-DhY"/>
                     </connections>
                 </customObject>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
@@ -741,8 +749,7 @@
                                 <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="iLg-sI-zXO"/>
                                 <toolbarItem implicitItemIdentifier="87DB7091-5306-46E3-8CCC-9EC97904D316" explicitItemIdentifier="tbSerialTest" label="Port Test" paletteLabel="Port Test" tag="-1" image="rectangle.connected.to.line.below" catalog="system" bordered="YES" sizingBehavior="auto" id="VGD-Op-Cb8">
                                     <connections>
-                                        <action selector="onSerialTest:" target="B8D-0N-5wS" id="MLd-TA-8bw"/>
-                                        <segue destination="oDf-uy-sA9" kind="show" id="Phn-oC-EyC"/>
+                                        <segue destination="oDf-uy-sA9" kind="show" id="FQB-P7-mOE"/>
                                     </connections>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="4r2-g8-Vyq"/>
@@ -763,11 +770,7 @@
                         </connections>
                     </window>
                     <connections>
-                        <outlet property="tbMessages" destination="nRL-aW-mxg" id="xe1-RQ-6zG"/>
-                        <outlet property="tbPortLinks" destination="fUr-tN-NQc" id="Qbr-8E-6cC"/>
-                        <outlet property="tbSerialPorts" destination="uGa-5K-GMw" id="Hcd-cs-xBa"/>
-                        <outlet property="tbSerialTest" destination="VGD-Op-Cb8" id="QuK-w4-NRN"/>
-                        <outlet property="toolBar" destination="YCb-dp-l7n" id="27D-7c-Wob"/>
+                        <outlet property="toolBar" destination="YCb-dp-l7n" id="8N0-ZS-ZVk"/>
                         <segue destination="CrN-AT-EFl" kind="relationship" relationship="window.shadowedContentViewController" id="Px4-he-Ae2"/>
                     </connections>
                 </windowController>
@@ -1617,7 +1620,7 @@ log stream --style compact --color always --process "kernel" |grep 'VSP'</string
         <!--Serial Test-->
         <scene sceneID="SZ6-EG-2EZ">
             <objects>
-                <viewController title="Serial Test" identifier="serialTestView" storyboardIdentifier="TestSerialViewController" id="oDf-uy-sA9" customClass="SPTestViewController" customModule="VSPClient" sceneMemberID="viewController">
+                <viewController title="Serial Test" identifier="serialTestView" storyboardIdentifier="serialTestView" id="oDf-uy-sA9" customClass="SPTestViewController" customModule="VSPClient" sceneMemberID="viewController">
                     <view key="view" id="nGD-dK-HQc">
                         <rect key="frame" x="0.0" y="0.0" width="553" height="615"/>
                         <autoresizingMask key="autoresizingMask"/>

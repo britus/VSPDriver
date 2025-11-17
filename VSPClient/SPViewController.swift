@@ -22,15 +22,16 @@ class SPViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
     
     private var model: DataModel = DataModel.shared
 
-    var selectedRow: Int = -1
-    lazy var hoverButton: NSButton = createHoverButton()
+    private var selectedRow: Int = -1
+    private var hoverButton: NSButton?
     private var parameters: SerialPortParameters = SerialPortParameters()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        hoverButton = createHoverButton()
+
         tableView.delegate = self
         tableView.dataSource = self
-        
         // Enable row tracking
         tableView.addTrackingArea(NSTrackingArea(//
             rect: tableView.bounds,
@@ -64,14 +65,12 @@ class SPViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
             onDelete(tableView)
             return
         }
-
         super.keyDown(with: event)
     }
 
     override func mouseMoved(with event: NSEvent) {
         let location = tableView.convert(event.locationInWindow, from: nil)
         let row = tableView.row(at: location)
-
         if row != selectedRow {
             selectedRow = row
             updateHoverButtonPosition()
@@ -79,14 +78,13 @@ class SPViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
     }
 
     private func updateHoverButtonPosition() {
-        hoverButton.isHidden = (selectedRow < 0)
-
+        hoverButton?.isHidden = (selectedRow < 0)
         guard selectedRow >= 0 else { return }
 
         let rect = tableView.rect(ofRow: selectedRow)
         let converted = tableView.convert(rect, to: view)
 
-        hoverButton.frame = NSRect(
+        hoverButton?.frame = NSRect(
             x: converted.maxX - 36,
             y: converted.midY - 8,
             width: 24,
@@ -147,12 +145,12 @@ class SPViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
         showProgress()
         // C Bridge
         DispatchQueue.global(qos: .background).asyncAfter(//
-             deadline: .now() + .milliseconds(100)) {
-            CreatePort(UInt32(self.parameters.baudRate),
-                       UInt8(self.parameters.dataBits),
-                       UInt8(self.parameters.stopBits),
-                       UInt8(self.parameters.parity),
-                       UInt8(self.parameters.flowCtrl))
+            deadline: .now() + .milliseconds(100)) {
+                CreatePort(UInt32(self.parameters.baudRate),
+                           UInt8(self.parameters.dataBits),
+                           UInt8(self.parameters.stopBits),
+                           UInt8(self.parameters.parity),
+                           UInt8(self.parameters.flowCtrl))
         }
     }
     
@@ -210,14 +208,15 @@ class SPViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
                     integer: self.selectedRow > 0 ? self.selectedRow - 1 : 0),//
                                                 byExtendingSelection: false)
             }
-            self.pbCreatePort.isEnabled = self.tableView.numberOfRows < MAX_SERIAL_PORTS
+            self.pbCreatePort.isEnabled =
+                (self.tableView.numberOfRows < MAX_SERIAL_PORTS)
+                && !AppDelegate.isRestricted
             self.hideProgress()
         }
     }
     
     private func createPopupMenu() -> NSMenu {
         let menu = NSMenu(title: "Select")
-        //menu.addItem(withTitle: "Link", action: #selector(onLinkTo(_:)), keyEquivalent: "")
         menu.addItem(withTitle: "Delete", action: #selector(onDelete(_:)), keyEquivalent: "")
         return menu
     }
@@ -233,7 +232,7 @@ class SPViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
             UITools.showMessage(message: "Can't delete non-port item")
             return
         }
-        hoverButton.isHidden = true
+        hoverButton?.isHidden = true
         if UITools.showQuestionDialog(self, "Delete this record?") {
             showProgress()
             DispatchQueue.global(qos: .background).asyncAfter(//
@@ -242,20 +241,19 @@ class SPViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
                 GetStatus()
             }
             model.removeRecord(index: selectedRow)
+            tableView.reloadData()
         }
     }
     
     private func createHoverButton() -> NSButton {
-        let btn = NSButton(title: "⋯", target: self, action: #selector(hoverButtonClicked(_:)))
+        let btn = NSButton(title: "", target: self, action: #selector(onDelete(_:)))
+        btn.image = NSImage(systemSymbolName: "trash", accessibilityDescription: "Delete")
+        btn.imagePosition = .imageOnly
         btn.bezelStyle = .inline
         btn.isBordered = true
         btn.isHidden = true  // hidden until hover
+        btn.isEnabled = true
         view.addSubview(btn)
         return btn
-    }
-
-    @objc func hoverButtonClicked(_ sender: NSButton) {
-        NSMenu.popUpContextMenu(createPopupMenu(), with: NSApp.currentEvent!, for: sender)
-        hoverButton.isHidden = true
     }
 }

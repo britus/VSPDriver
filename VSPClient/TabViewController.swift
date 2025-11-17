@@ -12,9 +12,8 @@ class TabViewController: NSTabViewController {
     private var isConnected: Bool = false
     private let manager = DriverManager.shared
     private var model : DataModel = DataModel.shared
-    private var pagesEnabled: Bool = false
     private var page : NSTabViewItem?
-    
+
     public var isEnabled : Bool {
         get {
             return pageEnabled()
@@ -26,10 +25,12 @@ class TabViewController: NSTabViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // hide stupid tab buttons
         self.tabStyle = .unspecified
-        
+        // set main view controller
+        AppDelegate.viewController = self
+        // query purchase state
+        PSKManager.shared.query()
     }
     
     override func viewDidAppear() {
@@ -64,16 +65,15 @@ class TabViewController: NSTabViewController {
             return
         }
         tv.setControlsEnabled(enabled)
-        self.pagesEnabled = enabled
     }
 
     override func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
         page = tabViewItem
-        setPageEnabled(pagesEnabled)
-        showProgress()
+        setPageEnabled(false)
         if (IsDriverConnected()) {
+            showProgress()
             DispatchQueue.global(qos: .background).asyncAfter(//
-                deadline: .now() + .milliseconds(100)) {
+                                 deadline: .now() + .milliseconds(100)) {
                 GetStatus()
             }
         }
@@ -99,6 +99,7 @@ extension TabViewController: DriverDataObserver {
         }
         
         DispatchQueue.main.async {
+            self.setPageEnabled(!AppDelegate.isRestricted)
             self.hideProgress()
         }
 

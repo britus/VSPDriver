@@ -7,20 +7,31 @@
 import Cocoa
 import AppKit
 import SwiftUI
+import StoreKit
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
     
-    static var shared: AppDelegate {
+    static public var shared: AppDelegate {
         return NSApp.delegate as! AppDelegate
     }
     
-    static var window: NSWindow? {
+    static public var window: NSWindow? {
         return NSApp.mainWindow
     }
+
+    static public var viewController: NSViewController?
     
-    @IBOutlet public weak var m_driverInstall: NSMenuItem!
-    @IBOutlet public weak var m_driverUninstall: NSMenuItem!
+    static public var isRestricted: Bool {
+        get {
+            return PSKManager.shared.isRestricted
+        }
+    }
+    
+    @IBOutlet weak var m_likeOrUnlike: NSMenuItem!
+    @IBOutlet weak var m_about: NSMenuItem!
+    @IBOutlet weak var m_driverInstall: NSMenuItem!
+    @IBOutlet weak var m_driverUninstall: NSMenuItem!
     
     @IBAction func onInstallDriver(_ sender: Any) {
         DriverManager.shared.loadDriver()
@@ -45,7 +56,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             NSApp.terminate(nil)
         }
     }
-
+    
+    @IBAction func onLikeOrUnlike(_ sender: NSMenuItem) {
+        if let vc = AppDelegate.viewController {
+            PSKManager.shared.review(vc)
+        }
+    }
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Register for window restoration
         NSApp.setActivationPolicy(.regular)

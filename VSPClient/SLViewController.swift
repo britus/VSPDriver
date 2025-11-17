@@ -94,7 +94,7 @@ class SLViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
             return
         }
         m_firstPort = port.id
-        self.pbCreateLink.isEnabled = (self.m_firstPort != self.m_secondPort)
+        self.pbCreateLink.isEnabled = (self.m_firstPort != self.m_secondPort) && !AppDelegate.isRestricted
     }
     
     @IBAction func onSecondPortSelected(_ sender: ComboBox) {
@@ -104,7 +104,7 @@ class SLViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
             return
         }
         m_secondPort = port.id
-        self.pbCreateLink.isEnabled = (self.m_firstPort != self.m_secondPort)
+        self.pbCreateLink.isEnabled = (self.m_firstPort != self.m_secondPort) && !AppDelegate.isRestricted
     }
     
     @IBAction func onCreateLink(_ sender: NSButton) {
@@ -202,7 +202,7 @@ class SLViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
                 self.cbxSecondPort.selectItem(at: 0)
                 self.cbxSecondPort.isEnabled = true
             }
-            self.pbCreateLink.isEnabled = (self.m_firstPort != self.m_secondPort)
+            self.pbCreateLink.isEnabled = (self.m_firstPort != self.m_secondPort) && !AppDelegate.isRestricted
             self.hideProgress()
         }
     }
@@ -238,6 +238,8 @@ class SLViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
     
     func createHoverButton() -> NSButton {
         let btn = NSButton(title: "⋯", target: self, action: #selector(hoverButtonClicked(_:)))
+        btn.image = NSImage(systemSymbolName: "trash", accessibilityDescription: "Delete")
+        btn.imagePosition = .imageOnly
         btn.bezelStyle = .inline
         btn.isBordered = true
         btn.isHidden = true  // hidden until hover

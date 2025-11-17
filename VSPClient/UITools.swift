@@ -39,17 +39,29 @@ class UITools {
     public static var isNotifyGranted: Bool = false
 
     static public func applicationName() -> String {
-        Bundle.main.infoDictionary?["CFBundleDisplayName"] as! String
+        return Bundle.main.infoDictionary?["CFBundleDisplayName"] as! String
     }
     
     static public func applicationVersion() -> String {
-        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+        return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
     }
 
     static public func applicationBuild() -> String {
-        Bundle.main.infoDictionary?["CFBundleVersion"] as! String
+        return Bundle.main.infoDictionary?["CFBundleVersion"] as! String
+    }
+
+    static public func bundleId() -> String {
+        return Bundle.main.bundleIdentifier!
     }
     
+    static public func bundleResourceUrl() -> URL {
+        return Bundle.main.resourceURL!
+    }
+
+    static public func bundleResourcePath() -> String {
+        return Bundle.main.resourcePath!
+    }
+
     class CustomAlertViewController: NSViewController {
         let messageLabel = NSTextField()
         let buttonStackView = NSStackView()
@@ -453,32 +465,32 @@ class UITools {
 // MARK: - String Extension
 
 extension String {
-    /// Checks if the string starts with the specified substring
-    /// - Parameter with: The substring to check for at the beginning
-    /// - Returns: true if the string starts with the specified substring, false otherwise
+    // Checks if the string starts with the specified substring
+    // - Parameter with: The substring to check for at the beginning
+    // - Returns: true if the string starts with the specified substring, false otherwise
     func startsWith(_ value: String) -> Bool {
         return self.hasPrefix(value)
     }
     
-    /// Checks if the string ends with the specified substring
-    /// - Parameter with: The substring to check for at the end
-    /// - Returns: true if the string ends with the specified substring, false otherwise
+    // Checks if the string ends with the specified substring
+    // - Parameter with: The substring to check for at the end
+    // - Returns: true if the string ends with the specified substring, false otherwise
     func endsWith(_ value: String) -> Bool {
         return self.hasSuffix(value)
     }
 }
 
 extension NSMutableAttributedString {
-    /// Checks if the string starts with the specified substring
-    /// - Parameter with: The substring to check for at the beginning
-    /// - Returns: true if the string starts with the specified substring, false otherwise
+    // Checks if the string starts with the specified substring
+    // - Parameter with: The substring to check for at the beginning
+    // - Returns: true if the string starts with the specified substring, false otherwise
     func startsWith(_ value: String) -> Bool {
         return self.string.hasPrefix(value)
     }
     
-    /// Checks if the string ends with the specified substring
-    /// - Parameter with: The substring to check for at the end
-    /// - Returns: true if the string ends with the specified substring, false otherwise
+    // Checks if the string ends with the specified substring
+    // - Parameter with: The substring to check for at the end
+    // - Returns: true if the string ends with the specified substring, false otherwise
     func endsWith(_ value: String) -> Bool {
         return self.string.hasSuffix(value)
     }
@@ -511,48 +523,48 @@ extension BidirectionalCollection {
 // MARK: - String numeric conversions
 
 extension String {
-    /// Trimmed copy used by all conversions.
+    // Trimmed copy used by all conversions.
     private var trimmed: String {
         return self.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
     }
 
-    /// Converts the string to an `Int` if possible.
+    // Converts the string to an `Int` if possible.
     var intValue: Int? {
         return Int(trimmed)
     }
 
-    /// Converts the string to a `Double` if possible.
+    // Converts the string to a `Double` if possible.
     var doubleValue: Double? {
         return Double(trimmed)
     }
 
-    /// Converts the string to a `Float` if possible.
+    // Converts the string to a `Float` if possible.
     var floatValue: Float? {
         return Float(trimmed)
     }
 
-    /// Converts the string to an `Int64` if possible.
+    // Converts the string to an `Int64` if possible.
     var int64Value: Int64? {
         return Int64(trimmed)
     }
 
-    /// Converts the string to an `UInt32` if possible.
+    // Converts the string to an `UInt32` if possible.
     var uint32Value: UInt32? {
         return UInt32(trimmed)
     }
 
-    /// Converts the string to an `UInt32` if possible.
+    // Converts the string to an `UInt32` if possible.
     var uint64Value: UInt64? {
         return UInt64(trimmed)
     }
 
-    /// Converts the string to a `Decimal` if possible.
+    // Converts the string to a `Decimal` if possible.
     var decimalValue: Decimal? {
         return Decimal(string: trimmed)
     }
 
-    /// Detects and converts the string to an `NSNumber` (Int or Double) using a NumberFormatter.
-    /// Returns nil if the string cannot be parsed as a number.
+    // Detects and converts the string to an `NSNumber` (Int or Double) using a NumberFormatter.
+    // Returns nil if the string cannot be parsed as a number.
     var numericValue: NSNumber? {
         let formatter = NumberFormatter()
         // use a stable locale to avoid surprises (decimal separators).
@@ -566,7 +578,7 @@ extension String {
 // MARK: - NSAttributedString convenience
 
 extension NSAttributedString {
-    /// Numeric parsing forwarded from the attributed string's `string` property.
+    // Numeric parsing forwarded from the attributed string's `string` property.
     var intValue: Int? { return self.string.intValue }
     var doubleValue: Double? { return self.string.doubleValue }
     var floatValue: Float? { return self.string.floatValue }
@@ -655,13 +667,13 @@ extension NSTextView {
         }
     }
     
-    /// Format text with specific background color, foreground color, and font
-    /// - Parameters:
-    ///   - text: The text to format
-    ///   - backgroundColor: Background color for the text
-    ///   - textColor: Foreground color (text color)
-    ///   - fontName: Font name (e.g., "Menlo", "Monaco")
-    ///   - fontSize: Font size
+    // Format text with specific background color, foreground color, and font
+    // - Parameters:
+    //   - text: The text to format
+    //   - backgroundColor: Background color for the text
+    //   - textColor: Foreground color (text color)
+    //   - fontName: Font name (e.g., "Menlo", "Monaco")
+    //   - fontSize: Font size
     public func setText(_ text: String,
                    backgroundColor: NSColor = .clear,
                    textColor: NSColor = .white,
@@ -747,27 +759,25 @@ extension NSTextView {
 
 extension NSView {
     
-    /// Enables or disables all NSControl-based subviews recursively.
-    /// - Parameter enabled: Pass `true` to enable controls, `false` to disable.
+    // Enables or disables all NSControl-based subviews recursively.
+    // - Parameter enabled: Pass `true` to enable controls, `false` to disable.
     public func setControlsEnabled(_ enabled: Bool) {
         // If this view is a control (e.g., NSButton, NSTextField), toggle its enabled state
         if let control = self as? NSControl {
             control.isEnabled = enabled
         }
-
         // Recursively update all child views
         for subview in subviews {
             subview.setControlsEnabled(enabled)
         }
     }
     
-    /// Returns `true` if all NSControl-based subviews are enabled, `false` otherwise.
-    /// (Checks recursively.)
+    // Returns `true` if all NSControl-based subviews are enabled, `false` otherwise.
+    // (Checks recursively.)
     public func areAllControlsEnabled() -> Bool {
         if let control = self as? NSControl, control.isEnabled == false {
             return false
         }
-        
         for subview in subviews {
             if subview.areAllControlsEnabled() == false {
                 return false
@@ -776,7 +786,7 @@ extension NSView {
         return true
     }
     
-    /// Convenient computed property for enabling/disabling all controls.
+    // Convenient computed property for enabling/disabling all controls.
     public var isViewEnabled: Bool {
         get {
             return areAllControlsEnabled()
@@ -801,7 +811,7 @@ extension NSWindow {
         set { objc_setAssociatedObject(self, &progressOverlayKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }
     
-    /// Shows a centered, indeterminate progress indicator on the window
+    // Shows a centered, indeterminate progress indicator on the window
     func showProgress() {
         // Avoid duplicates
         if progressIndicator != nil {
@@ -850,7 +860,7 @@ extension NSWindow {
         self.progressOverlayView = overlayView
     }
     
-    /// Updates a determinate progress indicator’s value.
+    // Updates a determinate progress indicator’s value.
     func updateProgress(to value: Double) {
         guard let indicator = progressIndicator else { return }
         
@@ -862,7 +872,7 @@ extension NSWindow {
         indicator.doubleValue = value
     }
     
-    /// Hides and removes the progress indicator.
+    // Hides and removes the progress indicator.
     func hideProgress() {
         guard let indicator = progressIndicator else {
             return
@@ -911,7 +921,7 @@ extension NSViewController {
 
     // MARK: - Window Close Handler
     
-    /// Add window close observer with callback
+    // Add window close observer with callback
     private func addWindowCloseObserver(completion: @escaping () -> Void) {
         // Store the observer token to prevent memory leaks
         let token = NotificationCenter.default.addObserver(
@@ -932,19 +942,19 @@ extension NSViewController {
         self.viewObserverToken = token
     }
     
-    /// Remove window close handler
+    // Remove window close handler
     func removeWindowCloseHandler() {
         if let observer = viewObserverToken {
             NotificationCenter.default.removeObserver(observer)
         }
     }
 
-    /// Add window close handler with completion closure
+    // Add window close handler with completion closure
     func onWindowClose(completion: @escaping () -> Void) {
         addWindowCloseObserver(completion: completion)
     }
 
-    /// Alternative approach: Override viewDidDisappear to detect window closing
+    // Alternative approach: Override viewDidDisappear to detect window closing
     func setupWillCloseHandler() {
         // Add observer for window will close notification
         NotificationCenter.default.addObserver(
@@ -967,7 +977,7 @@ extension NSViewController {
         }
     }
     
-    /// Override this method in your subclass to handle window close
+    // Override this method in your subclass to handle window close
     @objc func viewWillClose() {
         // Default implementation - override in subclasses
     }
@@ -1004,5 +1014,16 @@ extension SPTestViewController: NSOpenSavePanelDelegate {
     func panel(_ sender: Any, shouldEnable url: URL) -> Bool {
         // Filter out system files if needed
         return !url.path.startsWith(".")
+    }
+}
+
+// MARK: Extension NSApplication
+
+extension NSApplication {
+    var isDarkMode: Bool {
+        return effectiveAppearance.name == .darkAqua
+    }
+    var isLightMode: Bool {
+        return effectiveAppearance.name == .aqua
     }
 }

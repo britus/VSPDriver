@@ -467,6 +467,10 @@ var cmd_cgml_q = function (pfx, sfx) {
     return 'AT+CMGL\r\n+CMGL: 0\r\nOK\r\n'
 }
 
+var cmd_qpowd_s = function (pfx, sfx) {
+    return 'RDY\r\nDONE\r\n+CPIN: SIM PIN\r\n'
+}
+
 // Dummy
 var cmd__q = function (pfx, sfx) {
     return 'OK\r\n'
@@ -478,9 +482,11 @@ function executeCommand(command) {
     var sfx = ""
     var params = parseCommand(command)
     var cmd = params[0]
+        
+    onMessage("RCV: " + command)
 
     if (params.length < 1 || cmd.length === 0) {
-        onMessage("ERROR: Command not set.")
+        onComplete("ERROR: Command not set.")
         return
     } 
     
@@ -494,13 +500,11 @@ function executeCommand(command) {
     }
 
     // --
-    var func = getFunction(cmd)
-    if (func) {
-        var result = func(pfx, sfx)
-        //onMessage("SND: " + result);
-        onSendText(result)
+    //var func
+    if ((func = getFunction(cmd))) {
+        onSendText(func(pfx, sfx))
     } else {
-        onMessage("ERROR: Cannot find entry point: " + cmd)
+        onComplete("ERROR: Cannot find entry point: " + cmd)
     }
 }
 
@@ -594,6 +598,7 @@ function main() {
     addFunction('AT+COPS?', cmd_cops_q)
     addFunction('AT+QNWINFO', cmd_qnwinfo_q)
     addFunction('AT+CMGL', cmd_cgml_q)
+    addFunction('AT+QPOWD', cmd_qpowd_s)
 
     /*
     addFunction('AT+', cmd__q)
@@ -638,7 +643,6 @@ function main() {
             throw new Error('W:Empty command line, skip')
         }
 
-        onMessage("RCV: " + currentLine)
         executeCommand(currentLine)
     }
 
@@ -650,6 +654,5 @@ function main() {
 try {
     main()
 } catch (error) {
-    console.error(error)
     onComplete(error)
 }
