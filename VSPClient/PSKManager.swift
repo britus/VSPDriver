@@ -155,7 +155,7 @@ public final class PSKManager: NSObject, ObservableObject {
         } else {
             var info = ""
             let err = error as NSError
-            let msg = "AppStore refresh error: \(String(format:"0x%x", err.code)) \(err.description)"
+            let msg = "AppStore refresh error: \(String(format:"0x%x", err.code))\n\(err.description)"
             switch (error) {
             case .invalidCertificateChain:
                 info = "Invalid certificate chain"
