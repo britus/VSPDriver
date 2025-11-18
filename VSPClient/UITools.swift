@@ -129,8 +129,6 @@ class UITools {
                 mainStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
                 mainStackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
                 mainStackView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -16),
-
-                // hier wird die maximale Breite explizit limitiert
                 messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 380),
             ])
             
@@ -150,30 +148,38 @@ class UITools {
         }
         
         @objc func okButtonClicked() {
-            NSApp.mainWindow?.contentViewController?.dismiss(self)
+            AppDelegate.window?.contentViewController?.dismiss(self)
             DispatchQueue.main.async {
                 self.completion?()
             }
         }
     }
     
-    static func showAlert( //
-            title: String,
-            message: String,
-            window: NSWindow? = nil,
-            completion: (() -> Void)? = nil)
+    static private func presentAlert(_ vcAlert: CustomAlertViewController) {
+        guard let window = AppDelegate.window else {
+            NSLog("UITools: No main window!")
+            return
+        }
+        guard let cvc = window.contentViewController else {
+            NSLog("UITools: No content view controller!")
+            window.contentViewController = vcAlert
+            return
+        }
+        cvc.presentAsModalWindow(vcAlert)
+        //cvc.presentAsSheet(vcAlert)
+    }
+    
+    static public func showAlert(title: String, message: String, completion: (() -> Void)? = nil)
     {
         if DispatchQueue.isOnMainQueue() {
             let vcAlert = CustomAlertViewController( //
                 title: title, message: message, completion: completion)
-            //NSApp.mainWindow?.contentViewController?.presentAsModalWindow(vcAlert)
-            NSApp.mainWindow?.contentViewController?.presentAsSheet(vcAlert)
+            presentAlert(vcAlert)
         } else {
             DispatchQueue.main.async {
                 let vcAlert = CustomAlertViewController( //
                     title: title, message: message, completion: completion)
-                //NSApp.mainWindow?.contentViewController?.presentAsModalWindow(vcAlert)
-                NSApp.mainWindow?.contentViewController?.presentAsSheet(vcAlert)
+                presentAlert(vcAlert)
             }
         }
     }
@@ -195,31 +201,31 @@ class UITools {
     }
     
     static func showQuestionDialog(_ sender: Any, _ message: String, info: String? = nil) -> Bool {
-            // Create the alert
-            let alert = NSAlert()
+        // Create the alert
+        let alert = NSAlert()
+    
+        // Configure the alert
+        alert.window.title = applicationName()
+        alert.messageText = message
+        alert.informativeText = ((info?.isEmpty) != nil) ? info! : ""
+        alert.alertStyle = .informational
         
-            // Configure the alert
-            alert.window.title = applicationName()
-            alert.messageText = message
-            alert.informativeText = ((info?.isEmpty) != nil) ? info! : ""
-            alert.alertStyle = .informational
-            
-            // Add buttons
-            alert.addButton(withTitle: "Yes")
-            alert.addButton(withTitle: "No")
-            
-            // Show the alert and get the response
-            let response = alert.runModal()
-            
-            // Handle the response
-            switch response {
-                case .alertFirstButtonReturn: // "Yes" button
-                    return true
-                case .alertSecondButtonReturn: // "No" button
-                    return false
-                default:
-                    return false
-            }
+        // Add buttons
+        alert.addButton(withTitle: "Yes")
+        alert.addButton(withTitle: "No")
+        
+        // Show the alert and get the response
+        let response = alert.runModal()
+        
+        // Handle the response
+        switch response {
+            case .alertFirstButtonReturn: // "Yes" button
+                return true
+            case .alertSecondButtonReturn: // "No" button
+                return false
+            default:
+                return false
+        }
     }
     
     // Request notification permissions (required for macOS 10.14+)

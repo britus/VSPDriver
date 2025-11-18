@@ -27,10 +27,6 @@ class TabViewController: NSTabViewController {
         super.viewDidLoad()
         // hide stupid tab buttons
         self.tabStyle = .unspecified
-        // set main view controller
-        AppDelegate.viewController = self
-        // query purchase state
-        PSKManager.shared.query()
     }
     
     override func viewDidAppear() {

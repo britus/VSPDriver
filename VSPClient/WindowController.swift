@@ -24,6 +24,11 @@ class WindowController: NSWindowController {
     }
 
     override func windowDidLoad() {
+        if let w = self.window {
+            AppDelegate.window = w
+        } else {
+            AppDelegate.window = NSApp.mainWindow
+        }
         AppDelegate.viewController = self.contentViewController
         tabView = (AppDelegate.viewController as! TabViewController)
         setEnableState(false)
@@ -32,7 +37,7 @@ class WindowController: NSWindowController {
        
         // Request permission first (required)
         UITools.requestNotificationPermission { granted in
-            PSKManager.shared.query()
+            self.pskmgr.query()
         }
     }
     
@@ -166,12 +171,15 @@ extension WindowController: NSWindowDelegate {
     
     func windowWillClose(_ notification: Notification) {
         DisconnectDriver()
+        pskmgr.removeObserver(self)
+        manager.removeObserver(self)
     }
 }
 
 // MARK: - PSKManagerObserver
 
 extension WindowController: PSKManagerObserver {
+    
     func statusChanged(_ verified: Bool) {
         if (verified) {
             if (!IsDriverConnected()) {
@@ -184,18 +192,6 @@ extension WindowController: PSKManagerObserver {
                 }
             }
             return // fine :)
-        }
-        
-        // retry App verification
-        DispatchQueue.main.async {
-            let msg =
-                "The status of your app cannot be verified in the Apple App Store.\n" + //
-                "Would you like to refresh your app status?"
-            if UITools.showQuestionDialog(self, msg) {
-                self.pskmgr.refresh()
-            } else {
-                NSApp.terminate(self)
-            }
         }
     }
 }

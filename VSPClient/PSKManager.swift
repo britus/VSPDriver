@@ -12,10 +12,20 @@ public protocol PSKManagerObserver: AnyObject {
 }
 
 public final class PSKManager: NSObject, ObservableObject {
+    typealias VerificationError = VerificationResult<AppTransaction>.VerificationError
+
+    struct AppStatus {
+        var appVersion: String?
+        var purchaseDate: Date?
+        var environment: AppStore.Environment?
+        var error: VerificationError?
+    }
     
     static public let shared: PSKManager = PSKManager()
+    
     @Published @objc dynamic private(set) var isRestricted: Bool = true
-
+    @Published dynamic private(set) var appStatus: AppStatus?
+    
     private var observers = NSHashTable<AnyObject>.weakObjects()
     
     public func addObserver(_ observer: PSKManagerObserver) {
@@ -28,44 +38,58 @@ public final class PSKManager: NSObject, ObservableObject {
 
     public func query()
     {
-        Task {
-            await validateReceipt()
+        DispatchQueue.global(qos: .background).async {
+            Task {
+                await self.validateReceipt()
+            }
         }
     }
 
     public func refresh()
     {
-        Task {
-            await refreshReceipt()
+        DispatchQueue.global(qos: .background).async {
+            Task {
+                await self.refreshReceipt()
+            }
+        }
+    }
+
+    private func askUserForRefresh() {
+        // retry App verification
+        DispatchQueue.main.async {
+            let msg =
+            "The status of your app cannot be verified in the Apple App Store.\n" + //
+            "Would you like to refresh your app status?"
+            if UITools.showQuestionDialog(self, msg) {
+                self.refresh()
+            } else {
+                NSApp.terminate(self)
+            }
+        }
+    }
+
+    func errorOccured(_ what: Int, error: Error) {
+        NSLog("[PSKMGR] Error getting AppTransaction [\(what)]: \(error)")
+        if what == 1 {
+            askUserForRefresh()
+        } else {
+            let error = error as NSError
+            let msg = "AppStore refresh error: \(String(format:"0x%x", error.code))"
+            UITools.showMessage(message: msg, info: error.localizedDescription) {
+                NSApp.terminate(self)
+            }
         }
     }
 
     private func notifyObservers(_ verified: Bool)
     {
         isRestricted = (verified == false)
-        for observer in observers.allObjects {
-            (observer as? PSKManagerObserver)?
-                .statusChanged(verified)
-        }
-    }
-    
-    private func refreshReceipt() async
-    {
-        do {
-            let result = try await AppTransaction.refresh()
-            switch result {
-                case .verified(let appTxn):
-                    handleVerifiedTransaction(appTxn)
-                    break
-                // Handle unverified case. You still get `appTxn` with data, and an error.
-                case .unverified(let appTxn, let error):
-                    handleUnverifiedTransaction(appTxn: appTxn, error: error)
-                    break
+        
+        DispatchQueue.global(qos: .background).async {
+            for observer in self.observers.allObjects {
+                (observer as? PSKManagerObserver)?
+                    .statusChanged(verified)
             }
-        }
-        catch {
-            NSLog("[PSKMGR] Error fetching AppTransaction: \(error)")
-            notifyObservers(false)
         }
     }
     
@@ -79,32 +103,56 @@ public final class PSKManager: NSObject, ObservableObject {
                     break
                 // Handle unverified case. You still get `appTxn` with data, and an error.
                 case .unverified(let appTxn, let error):
-                    handleUnverifiedTransaction(appTxn: appTxn, error: error)
+                    handleUnverifiedTransaction(1, appTxn: appTxn, error: error)
                     break
             }
         }
         catch {
-            NSLog("[PSKMGR] Error fetching AppTransaction: \(error)")
-            notifyObservers(false)
+            errorOccured(1, error: error)
         }
     }
-    
-    private func handleVerifiedTransaction(_ txn: AppTransaction)
+
+    private func refreshReceipt() async
     {
-        //NSLog("Verified App Transaction:")
-        //NSLog(" Original App Version: \(txn.originalAppVersion)")
-        //NSLog(" Original Purchase Date: \(txn.originalPurchaseDate)")
-        //NSLog(" Environment: \(txn.environment.rawValue)")
+        do {
+            let result = try await AppTransaction.refresh()
+            switch result {
+            case .verified(let appTxn):
+                handleVerifiedTransaction(appTxn)
+                break
+                // Handle unverified case. You still get `appTxn` with data, and an error.
+            case .unverified(let appTxn, let error):
+                handleUnverifiedTransaction(2, appTxn: appTxn, error: error)
+                break
+            }
+        }
+        catch {
+            errorOccured(2, error: error)
+        }
+    }
+
+    private func handleVerifiedTransaction(_ appTxn: AppTransaction)
+    {
+        appStatus = AppStatus()
+        appStatus?.appVersion = appTxn.originalAppVersion
+        appStatus?.purchaseDate = appTxn.originalPurchaseDate
+        appStatus?.environment = appTxn.environment
         notifyObservers(true)
     }
 
-    private func handleUnverifiedTransaction(appTxn: AppTransaction, error: VerificationResult<AppTransaction>.VerificationError)
+    private func handleUnverifiedTransaction(_ what: Int, appTxn: AppTransaction, error: VerificationError)
     {
-        //NSLog("Unverified App Transaction:")
-        //NSLog(" Reason: \(error.localizedDescription)")
-        //NSLog(" Original App Version: \(appTxn.originalAppVersion)")
-        //NSLog(" Original Purchase Date: \(appTxn.originalPurchaseDate)")
+        appStatus = AppStatus()
+        appStatus?.appVersion = appTxn.originalAppVersion
+        appStatus?.purchaseDate = appTxn.originalPurchaseDate
+        appStatus?.environment = appTxn.environment
+        appStatus?.error = error
         notifyObservers(false)
+        
+        // do not on refresh
+        if what == 1 {
+            askUserForRefresh()
+        }
     }
 
     @MainActor public func review(_ vc: NSViewController)

@@ -36,16 +36,16 @@ class ComboBox: NSComboBox, NSComboBoxDelegate, NSTextFieldDelegate, NSComboBoxD
     
     private var dataObjects: [DataObject] = []
     
-    
     override init(frame: NSRect) {
         super.init(frame: frame)
+        self.usesDataSource = true
         self.dataSource = self
         self.delegate = self
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        self.dataSource = self
+        //self.dataSource = self
         self.delegate = self
     }
     
@@ -54,18 +54,18 @@ class ComboBox: NSComboBox, NSComboBoxDelegate, NSTextFieldDelegate, NSComboBoxD
     }
     
     override func viewDidHide() {
-        self.dataSource = nil
+        //self.dataSource = nil
         self.delegate = nil
     }
     
     override func viewDidUnhide() {
-        self.dataSource = self
+        //self.dataSource = self
         self.delegate = self
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.dataSource = self
+        //self.dataSource = self
         self.delegate = self
     }
 

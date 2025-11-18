@@ -16,10 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return NSApp.delegate as! AppDelegate
     }
     
-    static public var window: NSWindow? {
-        return NSApp.mainWindow
-    }
-
+    static public var window: NSWindow?
     static public var viewController: NSViewController?
     
     static public var isRestricted: Bool {
