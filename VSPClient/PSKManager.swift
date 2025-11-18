@@ -152,6 +152,36 @@ public final class PSKManager: NSObject, ObservableObject {
         // do not on refresh
         if what == 1 {
             askUserForRefresh()
+        } else {
+            var info = ""
+            let err = error as NSError
+            let msg = "AppStore refresh error: \(String(format:"0x%x", err.code)) \(err.description)"
+            switch (error) {
+            case .invalidCertificateChain:
+                info = "Invalid certificate chain"
+                break
+            case .invalidDeviceVerification:
+                info = "Invalid device verification"
+                break
+            case .invalidEncoding:
+                info = "Invalid encoding"
+                break
+            case .invalidSignature:
+                info = "Invalid signature"
+                break
+            case .missingRequiredProperties:
+                info = "Missing required properties"
+                break
+            case .revokedCertificate:
+                info = "Revoked certificate"
+                break
+            @unknown default:
+                info = "Unknwon reason"
+                break
+            }
+            UITools.showMessage(message: msg, info: info) {
+                NSApp.terminate(self)
+            }
         }
     }
 
