@@ -209,7 +209,7 @@ extension WindowController: DriverManagerObserver {
         if code > 0 {
             setEnableState(false)
             UITools.showMessage(
-                message: "Error 0x\(String(code, radix: 16)): \(message).",
+                message: "Error \(String(format: "0x%x", code)):\n\n\(message).",
                 withCompletion: { NSApp.terminate(self) })
         } else {
             UITools.showNotification(body: "\(message).")
@@ -232,7 +232,7 @@ extension WindowController: DriverManagerObserver {
         if code > 0 {
             setEnableState(false)
             UITools.showMessage(
-                message: "VSP Error 0x\(String(code, radix: 16)):\n\n\(message)",
+                message: "VSP Error \(String(format: "0x%x", code)):\n\n\(message)",
                 withCompletion: { NSApp.terminate(self) })
         } else {
             UITools.showMessage(message: message)
@@ -247,7 +247,7 @@ extension WindowController: DriverManagerObserver {
         setEnableState(false)
         if code > 0 {
             UITools.showMessage(
-                message: "Error 0x\(String(code, radix: 16)): \(message).")
+                message: "VSP Error \(String(format: "0x%x", code)):\n\n\(message).")
         } else {
             UITools.showNotification(body: message)
         }
@@ -281,9 +281,7 @@ extension WindowController: DriverManagerObserver {
     func driverStatusDidChange(_ status: DriverStatus, code: UInt64, domain: String, message: String) {
         switch status {
             case .notLoaded:
-                DispatchQueue.main.async {
-                    UITools.showNotification(body: message)
-                }
+                UITools.showNotification(body: message)
                 break
             case .loading:
                 DispatchQueue.main.async {

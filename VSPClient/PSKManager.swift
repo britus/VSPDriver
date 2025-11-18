@@ -70,15 +70,11 @@ public final class PSKManager: NSObject, ObservableObject {
 
     func errorOccured(_ what: Int, error: Error) {
         NSLog("[PSKMGR] Error getting AppTransaction [\(what)]: \(error)")
-        if what == 1 {
-            askUserForRefresh()
-        } else {
-            let error = error as NSError
-            let msg = "AppStore refresh error: \(String(format:"0x%x", error.code))"
-            UITools.showMessage(message: msg, info: error.localizedDescription) {
-                NSApp.terminate(self)
-            }
-        }
+        let error = error as NSError
+        let msg1 = "Error \(String(format:"0x%x", error.code == 0 ? what : error.code))"
+        let msg2 = "Unable to verify your app status.\n\(error.localizedDescription)"
+        UITools.showNotificationWithBadge(subTitle: msg1, body: msg2, badgeCount: what)
+        notifyObservers(true)
     }
 
     private func notifyObservers(_ verified: Bool)
@@ -149,13 +145,16 @@ public final class PSKManager: NSObject, ObservableObject {
         appStatus?.error = error
         notifyObservers(false)
         
+        var info = ""
+        let err = error as NSError
+        let msg = "AppStore refresh error: \(String(format:"0x%x", err.code))\n\(err.description)"
+
+        NSLog("[PSKMGR] (\(what)) \(msg)\n\(err.description)")
+
         // do not on refresh
         if what == 1 {
             askUserForRefresh()
         } else {
-            var info = ""
-            let err = error as NSError
-            let msg = "AppStore refresh error: \(String(format:"0x%x", err.code))\n\(err.description)"
             switch (error) {
             case .invalidCertificateChain:
                 info = "Invalid certificate chain"
@@ -179,9 +178,8 @@ public final class PSKManager: NSObject, ObservableObject {
                 info = "Unknwon reason"
                 break
             }
-            UITools.showMessage(message: msg, info: info) {
-                NSApp.terminate(self)
-            }
+            UITools.showNotificationWithBadge(subTitle: info, body: msg, badgeCount: what)
+            notifyObservers(true)
         }
     }
 

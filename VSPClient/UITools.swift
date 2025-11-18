@@ -63,98 +63,149 @@ class UITools {
     }
 
     class CustomAlertViewController: NSViewController {
-        let messageLabel = NSTextField()
-        let buttonStackView = NSStackView()
 
-        let width = 280
-        let height = 160
+        private let titleLabel = NSTextField(labelWithString: "")
+        private let subtitleLabel = NSTextField(labelWithString: "")
+        
+        private let textView = NSTextView()
+        private let scrollView = NSScrollView()
+        
+        private let separator = NSBox()
+        private let okButton = NSButton()
+        
         var titleText: String = ""
+        var subtitleText: String = ""     // Optional, can be empty
         var messageText: String = ""
         var completion: (() -> Void)?
-        
-        init(title: String, message: String, completion: (() -> Void)? = nil) {
+
+        init(title: String,
+             subtitle: String = "",
+             message: String,
+             completion: (() -> Void)? = nil)
+        {
+            super.init(nibName: nil, bundle: nil)
             self.titleText = title
+            self.subtitleText = subtitle
             self.messageText = message
             self.completion = completion
-            super.init(nibName: nil, bundle: nil)
         }
-        
+
         required init?(coder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
 
         override func loadView() {
-            self.view = NSView(frame: NSRect(x: 0, y: 0, width: width, height: height))
-            self.preferredContentSize = self.view.frame.size
+            self.view = NSView()
+            self.view.translatesAutoresizingMaskIntoConstraints = false
+            self.preferredContentSize = NSSize(width: 420, height: 260)
         }
-        
+
         override func viewDidLoad() {
             super.viewDidLoad()
-
-            // Message Label
-            messageLabel.isEditable = false
-            messageLabel.isBordered = false
-            messageLabel.backgroundColor = .clear
-            messageLabel.font = NSFont.boldSystemFont(ofSize: 14)
-            messageLabel.alignment = .left
-            messageLabel.isSelectable = true
-            messageLabel.cell?.isScrollable = true
-            messageLabel.maximumNumberOfLines = 0 // max
-            messageLabel.allowsDefaultTighteningForTruncation = true
-            messageLabel.translatesAutoresizingMaskIntoConstraints = false
-            messageLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-            messageLabel.lineBreakMode = .byWordWrapping
-            messageLabel.stringValue = messageText
-
-            // Buttons
-            let okButton = NSButton(title: "OK", target: self, //
-                                    action: #selector(okButtonClicked))
-            
-            buttonStackView.orientation = .horizontal
-            buttonStackView.distribution = .fillEqually
-            buttonStackView.addView(okButton, in: .trailing)
-            
-            let mainStackView = NSStackView(views: [messageLabel, buttonStackView])
-            mainStackView.orientation = .vertical
-            mainStackView.distribution = .fill
-            mainStackView.spacing = 15
-            
-            self.view.addSubview(mainStackView)
-            
-            // Constraints
-            mainStackView.translatesAutoresizingMaskIntoConstraints = false
-            
-            NSLayoutConstraint.activate([
-                mainStackView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 16),
-                mainStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
-                mainStackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
-                mainStackView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -16),
-                messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 380),
-            ])
-            
-            self.view.layoutSubtreeIfNeeded()
-            let fittingSize = mainStackView.fittingSize
-            self.preferredContentSize = NSSize(width: 380, height: fittingSize.height + 50)
-            updateLayout()
+            configureWindow()
+            buildUILayout()
+            applyConstraints()
         }
-        
+
         override func viewWillAppear() {
             super.viewWillAppear()
-            self.view.window?.title = self.titleText
+            self.view.window?.title = titleText
         }
-        
-        func updateLayout() {
-            self.view.window?.layoutIfNeeded()
-        }
-        
-        @objc func okButtonClicked() {
-            AppDelegate.window?.contentViewController?.dismiss(self)
-            DispatchQueue.main.async {
-                self.completion?()
+
+        private func configureWindow() {
+            if let w = self.view.window {
+                w.styleMask.insert(.resizable)
             }
         }
+
+        private func buildUILayout() {
+
+            // Title
+            titleLabel.stringValue = titleText
+            titleLabel.font = NSFont.boldSystemFont(ofSize: 16)
+            titleLabel.alignment = .left
+
+            // Subtitle
+            subtitleLabel.stringValue = subtitleText
+            subtitleLabel.font = NSFont.systemFont(ofSize: 12)
+            subtitleLabel.textColor = .secondaryLabelColor
+            subtitleLabel.alignment = .left
+
+            // Text View inside Scroll View
+            textView.isEditable = false
+            textView.isSelectable = true
+            textView.string = messageText
+            textView.font = NSFont.systemFont(ofSize: 13)
+            textView.textContainerInset = NSSize(width: 8, height: 8)
+            textView.isVerticallyResizable = true
+            textView.isHorizontallyResizable = false
+            textView.autoresizingMask = [.width]
+
+            // IMPORTANT: Wrap text properly
+            if let container = textView.textContainer {
+                container.widthTracksTextView = true
+                container.heightTracksTextView = false
+                container.lineFragmentPadding = 4
+            }
+
+            scrollView.documentView = textView
+            scrollView.hasVerticalScroller = true
+            scrollView.borderType = .bezelBorder
+            scrollView.translatesAutoresizingMaskIntoConstraints = false
+
+            // Separator
+            separator.boxType = .separator
+
+            // OK Button
+            okButton.title = "OK"
+            okButton.target = self
+            okButton.action = #selector(okButtonClicked)
+
+            // Add to view
+            [titleLabel, subtitleLabel, scrollView, separator, okButton].forEach {
+                $0.translatesAutoresizingMaskIntoConstraints = false
+                view.addSubview($0)
+            }
+        }
+
+        private func applyConstraints() {
+
+            NSLayoutConstraint.activate([
+
+                // Title
+                titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
+                titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+                titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+
+                // Subtitle
+                subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+                subtitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+                subtitleLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
+
+                // Scroll View
+                scrollView.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 12),
+                scrollView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+                scrollView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
+                scrollView.bottomAnchor.constraint(equalTo: separator.topAnchor, constant: -12),
+
+                // Separator
+                separator.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                separator.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                separator.heightAnchor.constraint(equalToConstant: 1),
+                separator.bottomAnchor.constraint(equalTo: okButton.topAnchor, constant: -12),
+
+                // OK Button bottom-right
+                okButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+                okButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12)
+            ])
+        }
+
+        @objc private func okButtonClicked() {
+            AppDelegate.window?.contentViewController?.dismiss(self)
+            DispatchQueue.main.async { self.completion?() }
+        }
     }
-    
+
     static private func presentAlert(_ vcAlert: CustomAlertViewController) {
         guard let window = AppDelegate.window else {
             NSLog("UITools: No main window!")
@@ -165,8 +216,8 @@ class UITools {
             window.contentViewController = vcAlert
             return
         }
-        cvc.presentAsModalWindow(vcAlert)
-        //cvc.presentAsSheet(vcAlert)
+        //cvc.presentAsModalWindow(vcAlert)
+        cvc.presentAsSheet(vcAlert)
     }
     
     static public func showAlert(title: String, message: String, completion: (() -> Void)? = nil)
@@ -191,7 +242,7 @@ class UITools {
             if let infoText = info {
                 text += "\n\(infoText)"
             }
-            showAlert(title: applicationName(), message: text, completion: completion)
+            showAlert(title: "Notice", message: text, completion: completion)
         }
     }
     
@@ -244,18 +295,19 @@ class UITools {
         }
     }
     
-    static private func scheduleNotification(id: String = UUID().uuidString, content: UNMutableNotificationContent)
+    static private func scheduleNotification(content: UNMutableNotificationContent)
     {
         if (!UITools.isNotifyGranted) {
             return
         }
-        DispatchQueue.global().async {
+        DispatchQueue.main.async {
             //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
             let mr = UNNotificationRequest(
-                identifier: "mr_\(id)",
-                content: content,
-                trigger: nil
-            )
+                        identifier: UUID().uuidString,
+                           content: content,
+                           trigger: nil)
+            UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
             UNUserNotificationCenter.current().add(mr) { e in
                 if let error = e {
                     print("Failed to schedule main notification: \(error)")
@@ -269,19 +321,13 @@ class UITools {
                             title: String = applicationName(),
                              body: String,
                          subtitle: String? = nil) {
-        if (!UITools.isNotifyGranted) {
-            return
-        }
-        
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body
         content.subtitle = subtitle ?? ""
         content.sound = UNNotificationSound.default
-        
         // Add badge if needed
         content.badge = 1
-        
         scheduleNotification(content: content)
     }
     
@@ -290,10 +336,6 @@ class UITools {
                             title: String = applicationName(),
                              body: String,
                       actionTitle: String = "View") {
-        if (!UITools.isNotifyGranted) {
-             return
-        }
-        
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body
@@ -325,14 +367,10 @@ class UITools {
                              title: String = applicationName(),
                               body: String,
                          soundName: String? = nil) {
-        if (!UITools.isNotifyGranted) {
-            return
-        }
-        
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body
-        
+                             
         if let soundName = soundName {
             content.sound = UNNotificationSound(named: UNNotificationSoundName(soundName))
         } else {
@@ -341,33 +379,12 @@ class UITools {
 
         scheduleNotification(content: content)
     }
-    
-    // Schedule notification with delay
-    static public func scheduleNotification(
-                            title: String = applicationName(),
-                             body: String,
-                     delaySeconds: TimeInterval = 5) {
-        if (!UITools.isNotifyGranted) {
-            return
-        }
-        
-        let content = UNMutableNotificationContent()
-        content.title = title
-        content.body = body
-        content.sound = UNNotificationSound.default
-        
-        scheduleNotification(content: content)
-    }
-    
+     
     // Show notification with attachment (image, etc.)
     static public func showNotificationWithAttachment(
                             title: String = applicationName(),
                              body: String,
                     attachmentURL: URL) {
-        if (!UITools.isNotifyGranted) {
-            return
-        }
-        
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body
@@ -381,7 +398,7 @@ class UITools {
             )
             content.attachments = [attachment]
         } catch {
-            print("Failed to create attachment: $error)")
+            NSLog("UITools: Failed to create attachment: \(error)")
         }
         
         scheduleNotification(content: content)
@@ -389,19 +406,16 @@ class UITools {
     
     // Show notification with badge
     static func showNotificationWithBadge(
-                        title: String = applicationName(),
-                         body: String,
-                   badgeCount: Int) {
-        if (!UITools.isNotifyGranted) {
-            return
-        }
-
+                           title: String = applicationName(),
+                        subTitle: String = "Notice",
+                            body: String,
+                      badgeCount: Int) {
         let content = UNMutableNotificationContent()
         content.title = title
+        content.subtitle = subTitle
         content.body = body
         content.sound = UNNotificationSound.default
         content.badge = NSNumber(value: badgeCount)
-
         scheduleNotification(content: content)
     }
     
