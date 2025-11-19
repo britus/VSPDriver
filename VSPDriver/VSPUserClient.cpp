@@ -232,6 +232,7 @@ bool VSPUserClient::init()
         result = false;
         goto finish;
     }
+    
     VSPLog(LOG_PREFIX, "init finished.\n");
     return true;
     
@@ -301,7 +302,6 @@ kern_return_t IMPL(VSPUserClient, Start)
         goto error_exit;
     }
     
-    // --
     // Register driver instance to IOReg
     if ((ret = RegisterService()) != kIOReturnSuccess) {
         VSPErr(LOG_PREFIX, "Start: RegisterService failed. code=%x\n", ret);
@@ -440,21 +440,23 @@ kern_return_t VSPUserClient::ExternalMethod(uint64_t selector,
                                             void* reference)
 {
     kern_return_t ret = kIOReturnSuccess;
-    
+#if 0
     VSPLog(LOG_PREFIX, "ExternalMethod called. selector=%llu arguments=0x%llx dispatch=0x%llx target=0x%llx reference=0x%llx\n",
            selector,
            (uint64_t)arguments,
            (uint64_t)dispatch,
            (uint64_t)target,
            (uint64_t)reference);
-
+#endif
+    
     if (selector >= vspLastCommand) {
         VSPErr(LOG_PREFIX, "Invalid method selector detected, skip.");
         return kIOReturnBadArgument;
     }
 
     VSP_CHECK_PARAM_RETURN("arguments", arguments);
-   
+    
+#if 0
     VSPLog(LOG_PREFIX,
            "args: scalarInputCount=%llu scalarOutputCount=%llu "
            "structureOutputMaximumSize=%llu "
@@ -466,7 +468,8 @@ kern_return_t VSPUserClient::ExternalMethod(uint64_t selector,
            arguments->structureInputDescriptor,
            arguments->structureOutput,
            arguments->completion);
-
+#endif
+    
     if (!arguments->completion) {
         arguments->completion = ivars->m_evAction;
     }
@@ -589,8 +592,7 @@ kern_return_t VSPUserClient::prepareResponse(void* reference, IOUserClientMethod
         ivars->m_cbAction->retain();
     }
     
-    // Fill event data with response. It action GetReference() returns NULL
-    // if the action object doesn't belong to the current process.
+    // Fill event data with response.
     if ((evData = ivars->m_evAction->GetReference()) != nullptr) {
         memcpy(evData, response, VSP_UCD_SIZE);
     }
@@ -652,7 +654,7 @@ inline static IOReturn toRequest(IOUserClientMethodArguments* arguments, TVSPCon
         ret = arguments->structureInputDescriptor->CreateMapping(0, 0, 0, 0, 0, &inputMap);
         if (ret != kIOReturnSuccess || !inputMap)
         {
-            VSPErr(LOG_PREFIX, "toRequest: Failed to create mapping for descriptor with error: 0x%08x", ret);
+            VSPErr(LOG_PREFIX, "toRequest: Create mapping for descriptor failed with error: 0x%08x", ret);
             return kIOReturnBadArgument;
         }
         size = inputMap->GetLength();

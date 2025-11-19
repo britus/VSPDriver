@@ -74,27 +74,27 @@ bool VSPDriver::init(void)
     VSPLog(LOG_PREFIX, "init called.\n");
     
     if (!(result = super::init())) {
-        VSPErr(LOG_PREFIX, "free (super) falsed. result=%d\n", result);
+        VSPErr(LOG_PREFIX, "init (super) failed.\n");
         goto finish;
     }
     
     // Create instance state resource
     ivars = IONewZero(VSPDriver_IVars, 1);
     if (!ivars) {
-        VSPErr(LOG_PREFIX, "Unable to allocate driver data.\n");
+        VSPErr(LOG_PREFIX, "init: Unable to allocate driver data.\n");
         result = false;
         goto finish;
     }
     
     ivars->m_ports = IONewZero(TVSPPortItem, MAX_SERIAL_PORTS);
     if (!ivars->m_ports) {
-        VSPErr(LOG_PREFIX, "CreateSerialPort: Out of memory.\n");
+        VSPErr(LOG_PREFIX, "init: Out of memory.\n");
         return false;
     }
     
     ivars->m_links = IONewZero(TVSPLinkItem, MAX_PORT_LINKS);
     if (!ivars->m_links) {
-        VSPErr(LOG_PREFIX, "CreateSerialPort: Out of memory.\n");
+        VSPErr(LOG_PREFIX, "init: Out of memory.\n");
         return false;
     }
     
@@ -120,6 +120,7 @@ void VSPDriver::free(void)
     
     // Release instance state resource
     IOSafeDeleteNULL(ivars, VSPDriver_IVars, 1);
+    
     super::free();
 }
 
@@ -352,7 +353,6 @@ kern_return_t VSPDriver::getPortList(void* list, uint8_t count)
     
     for(uint8_t i = 0, j = 0; i < MAX_SERIAL_PORTS && j < count; i++) {
         if (ivars->m_ports[i].id && (port = ivars->m_ports[i].port)) {
-            items[j].id = ivars->m_ports[i].id;
             if (port->getDeviceName(name, sizeof(IOPropertyName)) != kIOReturnSuccess) {
                 continue;
             }
