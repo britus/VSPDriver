@@ -33,9 +33,14 @@ final class FileHistory {
         panel.canChooseFiles = true
         panel.canChooseDirectories = false
         panel.title = "Select File"
+        
+        // Allow multiple JavaScript-related file types
+        panel.allowedContentTypes = [.javaScript,.script,.text]
+
         guard panel.runModal() == .OK, let url = panel.url else {
             return nil
         }
+        
         return addToHistory(url)
     }
 

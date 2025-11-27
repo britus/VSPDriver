@@ -38,11 +38,11 @@ typedef NS_ENUM(NSInteger, SerialPortErrorType) {
 };
 
 @protocol SerialPortDelegate <NSObject>
-- (void)serialPortDidReceiveData:(NSData *)data;
 - (void)serialPortDidConnect;
-- (void)serialPortDidDisconnect:(NSError *)error;
+- (void)serialPortDidDisconnect;
 - (void)serialPortStateChanged:(SerialPortState)state;
 - (void)serialPortDidError:(NSError *)error withType:(SerialPortErrorType)errorType;
+- (void)serialPortDidReceiveData:(NSData *)data;
 - (void)serialPort:(id)port didChangeBaudRate:(NSUInteger)baudRate;
 - (void)serialPort:(id)port didChangeDataBits:(NSUInteger)dataBits;
 - (void)serialPort:(id)port didChangeStopBits:(NSUInteger)stopBits;
@@ -75,15 +75,6 @@ typedef NS_ENUM(NSInteger, SerialPortErrorType) {
 // State management
 - (void)updateState:(SerialPortState)state;
 - (NSString *)stateDescription:(SerialPortState)state;
-
-// Error handling
-- (NSError *)createErrorWithCode:(NSInteger)code
-                           message:(NSString *)message
-                          errorType:(SerialPortErrorType)errorType;
-- (void)fireErrorEvent:(NSError *)error withType:(SerialPortErrorType)errorType;
-- (void)fireConnectError:(NSString *)errorMessage
-                    errorType:(SerialPortErrorType)errorType;
-
 @end
 
 NS_ASSUME_NONNULL_END

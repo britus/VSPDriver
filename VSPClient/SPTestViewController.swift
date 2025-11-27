@@ -374,7 +374,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
             self.pbIoSendText.isEnabled = serialPort?.isConnected ?? false
             self.edTextField.isEnabled = serialPort?.isConnected ?? false
             self.edAutoTextLen.isEnabled = false
-            self.isLooperRunning = false //teminate
+            self.isLooperRunning = false
             if let img = self.imgSecondTinted {
                 self.pbRunScript.image = img
             }
@@ -457,7 +457,6 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
     private func runScriptFile(_ isSender: Bool, _ data: Data) -> Bool
     {
         guard let url : URL = self.scriptFile else {
-            NSLog("SP: No script file url available, skip.")
             return false
         }
         guard url.startAccessingSecurityScopedResource() else {
@@ -535,26 +534,19 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
     }
 
     @objc func serialPortStateChanged(_ state: SerialPortState) {
-        DispatchQueue.main.async {
-            if state == .connected {
-                self.serialPortDidConnect()
-            }
-            if state == .disconnected {
-                self.isLooperRunning = false
-                self.serialPortDidDisconnect()
-            }
+        if state == .disconnecting {
+            self.isLooperRunning = false
         }
     }
 
     @objc func serialPortDidError(_ error: any Error, with errorType: SerialPortErrorType) {
         DispatchQueue.main.async {
-            self.isLooperRunning = false
             self.logMessage("\(String(describing: error))\nType: \(errorType.rawValue)")
+            self.isLooperRunning = false
             self.pbPortOpen.isEnabled = true
             self.pbPortClose.isEnabled = false
             self.edTextField.isEnabled = false
             self.pbIoLooper.isEnabled = false
-            //self.pbRunScript.isEnabled = false
             self.pbIoSendFile.isEnabled = false
             self.pbIoSendText.isEnabled = false
             self.edAutoTextLen.isEnabled = false
@@ -580,33 +572,17 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
 
     @objc func serialPortDidDisconnect() {
         DispatchQueue.main.async {
-            self.isLooperRunning = false
             self.logMessage("Disconnected from serial port.")
-            self.pbPortOpen.isEnabled = true
-            self.pbPortClose.isEnabled = false
-            self.cbxSendTextAddCR.isEnabled = false
-            self.cbxSendTextAddLF.isEnabled = false
-            self.edTextField.isEnabled = false
-            self.pbIoLooper.isEnabled = false
-            self.pbIoSendFile.isEnabled = false
-            self.pbIoSendText.isEnabled = false
-            self.edAutoTextLen.isEnabled = false
-        }
-    }
-
-    @objc func serialPortDidDisconnect(_ error: (any Error)) {
-        DispatchQueue.main.async {
             self.isLooperRunning = false
-            self.logMessage("Error \(String(describing: error))")
             self.pbPortOpen.isEnabled = true
             self.pbPortClose.isEnabled = false
+            self.cbxSendTextAddCR.isEnabled = false
+            self.cbxSendTextAddLF.isEnabled = false
             self.edTextField.isEnabled = false
             self.pbIoLooper.isEnabled = false
             self.pbIoSendFile.isEnabled = false
             self.pbIoSendText.isEnabled = false
             self.edAutoTextLen.isEnabled = false
-            self.cbxSendTextAddCR.isEnabled = false
-            self.cbxSendTextAddLF.isEnabled = false
         }
     }
     
@@ -836,11 +812,10 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
   
     // This method is called when the user presses Enter or Return
     func controlTextDidEndEditing(_ obj: Notification) {
-        if let textField = obj.object as? NSTextField {
-            if textField == self.edTextField {
-                textToSend = edTextField.stringValue
-                onSendText(pbIoSendText)
-            }
+        if let field = obj.object as? NSTextField, field == edTextField {
+            textToSend = field.stringValue
+            //onSendText(pbIoSendText)
+            return
         }
     }
 

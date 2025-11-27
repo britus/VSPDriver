@@ -195,8 +195,8 @@ var cmd_atx4 = function (pfx, sfx) {
 }
 
 var cmd_cpin_q = function (pfx, sfx) {
-    //return ':CPIN\r\nSIM PIN\r\nOK\r\n';
-    return 'AT+CPIN=READY\r\nOK\r\n'
+    //return '+CPIN: SIM PIN\r\nOK\r\n'
+    return '+CPIN: READY\r\nOK\r\n'
 }
 
 var cmd_cpin_s = function (pfx, sfx) {
