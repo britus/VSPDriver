@@ -1685,33 +1685,22 @@ extension NSViewController {
     }
 
     // Add window close handler with completion closure
-    func onWindowClose(
-        completion: @escaping () -> Void
-    ) {
+    func onWindowClose(completion: @escaping () -> Void) {
         addWindowCloseObserver(
             completion: completion
         )
     }
 
-    // Alternative approach: Override viewDidDisappear to detect window closing
     func setupWillCloseHandler() {
         // Add observer for window will close notification
         NotificationCenter.default
-            .addObserver(
-                self,
-                selector: #selector(
-                    windowWillClose(
-                        _:
-                    )
-                ),
+            .addObserver(self, selector: #selector(windowWillClose(_:)),
                 name: NSWindow.willCloseNotification,
                 object: nil
             )
     }
 
-    @objc private func windowWillClose(
-        _ notification: Notification
-    ) {
+    @objc private func windowWillClose(_ notification: Notification) {
         // This will be called when any window is about to close
         // You can filter by specific window if needed
 
@@ -1737,22 +1726,15 @@ extension NSViewController {
 
 extension NSWindowController {
     public func showProgress() {
-        window?
-            .showProgress()
+        window?.showProgress()
     }
 
-    public func updateProgress(
-        to value: Double
-    ) {
-        window?
-            .updateProgress(
-                to: value
-            )
+    public func updateProgress(to value: Double) {
+        window?.updateProgress(to: value)
     }
 
     public func hideProgress() {
-        window?
-            .hideProgress()
+        window?.hideProgress()
     }
 }
 
@@ -1763,13 +1745,9 @@ extension NSTextField {
         return self.currentEditor()
     }
 
-    open override func performKeyEquivalent(
-        with event: NSEvent
-    ) -> Bool {
+    open override func performKeyEquivalent(with event: NSEvent) -> Bool {
         guard let characters = event.charactersIgnoringModifiers else {
-            return super.performKeyEquivalent(
-                with: event
-            )
+            return super.performKeyEquivalent(with: event)
         }
         guard let editor = editor else {
             return super.performKeyEquivalent(
@@ -1778,47 +1756,30 @@ extension NSTextField {
         }
 
         // ⌘C, ⌘X, ⌘V and ⌘Backspace
-        if event.modifierFlags
-            .contains(
-                .command
-            )
+        if event.modifierFlags.contains(.command)
         {
-            switch characters
-                .lowercased()
+            switch characters.lowercased()
             {
-            case "c":
-                editor
-                    .copy(
-                        nil
-                    )
-                return true
-            case "x":
-                if editor.isEditable {
-                    editor
-                        .cut(
-                            nil
-                        )
-                }
-                return true
-            case "v":
-                if editor.isEditable {
-                    editor
-                        .paste(
-                            nil
-                        )
-                }
-                return true
-            case String(
-                UnicodeScalar(
-                    NSDeleteCharacter
-                )!
-            ):
-                if editor.isEditable {
-                    self.stringValue = ""
-                }
-                return true
-            default:
-                break
+                case "c":
+                    editor.copy(nil)
+                    return true
+                case "x":
+                    if editor.isEditable {
+                        editor.cut(nil)
+                    }
+                    return true
+                case "v":
+                    if editor.isEditable {
+                        editor.paste(nil)
+                    }
+                    return true
+                case String(UnicodeScalar(NSDeleteCharacter)!):
+                    if editor.isEditable {
+                        self.stringValue = ""
+                    }
+                    return true
+                default:
+                    break
             }
         }
 
@@ -1832,56 +1793,37 @@ extension NSTextField {
 
 extension NSTextView {
 
-    open override func performKeyEquivalent(
-        with event: NSEvent
-    ) -> Bool {
+    open override func performKeyEquivalent(with event: NSEvent) -> Bool {
         guard let characters = event.charactersIgnoringModifiers else {
-            return super.performKeyEquivalent(
-                with: event
-            )
+            return super.performKeyEquivalent(with: event)
         }
 
         // ⌘C, ⌘X, ⌘V and ⌘Backspace
-        if event.modifierFlags
-            .contains(
-                .command
-            )
+        if event.modifierFlags.contains(.command)
         {
-            switch characters
-                .lowercased()
-            {
-            // Copy
-            case "c":
-                self.copy(
-                    nil
-                )
-                return true
-            // Cut
-            case "x":
-                if self.isEditable {
-                    self.cut(
-                        nil
-                    )
-                }
-                return true
-            // Paste
-            case "v":
-                if self.isEditable {
-                    self.paste(
-                        nil
-                    )
-                }
-                return true
-            // force delete content anyway
-            case String(
-                UnicodeScalar(
-                    NSDeleteCharacter
-                )!
-            ):
-                self.string = ""
-                return true
-            default:
-                break
+            switch characters.lowercased() {
+                // Copy
+                case "c":
+                    self.copy(nil)
+                    return true
+                // Cut
+                case "x":
+                    if self.isEditable {
+                        self.cut(nil)
+                    }
+                    return true
+                // Paste
+                case "v":
+                    if self.isEditable {
+                        self.paste(nil)
+                    }
+                    return true
+                // force delete content anyway
+                case String(UnicodeScalar(NSDeleteCharacter)!):
+                    self.string = ""
+                    return true
+                default:
+                    break
             }
         }
 
@@ -1902,15 +1844,9 @@ extension NSImage {
 // MARK: Extension to filter system files in open/save dialog
 
 extension SPTestViewController: NSOpenSavePanelDelegate {
-    func panel(
-        _ sender: Any,
-        shouldEnable url: URL
-    ) -> Bool {
-        // Filter out system files if needed
-        return !url.path
-            .startsWith(
-                "."
-            )
+    // Filter out system files
+    func panel(_ sender: Any,shouldEnable url: URL) -> Bool {
+        return !url.path.startsWith(".")
     }
 }
 

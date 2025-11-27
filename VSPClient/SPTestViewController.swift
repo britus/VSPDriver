@@ -674,9 +674,7 @@ class SPTestViewController: NSViewController, SerialPortDelegate, ScriptExecutio
     }
     
     @IBAction func onSendText(_ sender: NSButton) {
-        if textToSend.isEmpty {
-            textToSend = edTextField.stringValue
-        }
+        onTextChanged(edTextField)
         let text = self.addEoL(textToSend)
         logMessage(">: \(text)")
         serialPort?.send(text.data(using: .utf8)!)
