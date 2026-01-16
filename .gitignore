@@ -1,0 +1,148 @@
+# Build
+/build/
+
+# Sub modules
+*/build/
+
+# Xcode stuff
+*/xcuserdata/
+*/project.xcworkspace/xcuserdata/
+*/project.xcworkspace
+
+/QT/
+/Release/
+/Debug/
+/VSPSetup.build/
+/VSPController.build/
+/VSPClientUI.build/
+/XCBuildData/
+
+VSPClientUI/xcode/Debug/
+VSPClientUI/xcode/Release/
+VSPClientUI/xcode/VSPClientUI.build/
+VSPClientUI/xcode/XCBuildData/
+
+VSPController/xcode/Debug/
+VSPController/xcode/Release/
+VSPController/xcode/VSPController.build/
+VSPController/xcode/XCBuildData/
+
+VSPSetup/xcode/Debug/
+VSPSetup/xcode/Release/
+VSPSetup/xcode/VSPSetup.build/
+VSPSetup/xcode/XCBuildData/
+
+/vsp_qt5_x68_64.xcworkspace/xcuserdata/
+/vsp_qt6_arm64.xcworkspace/xcuserdata/
+
+vspremove.sh 
+
+Info*.xml
+entitlements*.xml
+
+.DS*
+.private
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+*~
+*.autosave
+*.a
+*.core
+*.moc
+*.o
+*.obj
+*.orig
+*.rej
+*.so
+*.so.*
+*_pch.h.cpp
+*_resource.rc
+*.qm
+.#*
+*.*#
+core
+!core/
+tags
+.DS_Store
+.directory
+*.debug
+Makefile*
+*.prl
+*.app
+moc_*.cpp
+ui_*.h
+qrc_*.cpp
+Thumbs.db
+*.res
+*.rc
+/.qmake.cache
+/.qmake.stash
+
+# qtcreator generated files
+*.pro.user*
+
+# xemacs temporary files
+*.flc
+
+# Vim temporary files
+.*.swp
+
+# Visual Studio generated files
+*.ib_pdb_index
+*.idb
+*.ilk
+*.pdb
+*.sln
+*.suo
+*.vcproj
+*vcproj.*.*.user
+*.ncb
+*.sdf
+*.opensdf
+*.vcxproj
+*vcxproj.*
+
+# MinGW generated files
+*.Debug
+*.Release
+
+# Python byte code
+*.pyc
+
+# Binaries
+# --------
+*.dll
+*.exe
+
