@@ -2,7 +2,11 @@
 
 This is a macOS DriverKit driver implementation including a user interface App.
 
-## Release
+## Get Started
+
+- [The app in depth](https://github.com/britus/VSPDriver/blob/master/README_usage_en.md)
+
+## Beta / Release Archive
 
 - [All releases](https://github.com/britus/VSPClient_Releases)
 
